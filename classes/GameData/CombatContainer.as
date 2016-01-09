@@ -805,12 +805,12 @@ package classes.GameData
 					if (pc.lust() >= pc.lustMax())
 					{
 						clearOutput();
-						output("<b>It's no use- you're simply too turned on to fight back right now!</b>");
+						output("<b>It’s no use - you’re simply too turned on to fight back right now!</b>");
 					}
 					else
 					{
 						clearOutput();
-						output("<b>It's no use- you're simply too worn out to fight back right now!</b>");
+						output("<b>It’s no use - you’re simply too worn out to fight back right now!</b>");
 					}
 				}
 				return;
@@ -2632,7 +2632,15 @@ package classes.GameData
 		{
 			var tEnemy:Creature;
 			
-			if (playerLossCondition())
+			var lossCondition:Boolean = playerLossCondition();
+			
+			// Naleen special loss handling
+			if (!lossCondition)
+			{
+				lossCondition = (hasEnemyOfClass(Naleen) || hasEnemyOfClass(NaleenMale)) && (pc.hasStatusEffect("Naleen Venom") && (pc.physique() == 0 || pc.willpower() == 0));
+			}
+			
+			if (lossCondition)
 			{
 				if (victoryCondition == CombatManager.SPECIFIC_TARGET_DEFEATED)
 				{
@@ -2643,65 +2651,33 @@ package classes.GameData
 					tEnemy = _hostiles[0];
 				}
 				
-				kGAMECLASS.setEnemy(tEnemy);
+				CombatManager.showCombatUI();
 				
-				clearOutput();
-				
-				if (pc.lust() >= pc.lustMax() || pc.HP() <= 0) 
-				{
-					if (pc.HP() <= 0) 
-					{
-						if(tEnemy.isPlural || _hostiles.length > 1) output("<b>Your enemies have knocked you off your " + pc.feet() + "!</b>\n\n");
-						else output("<b>" + tEnemy.capitalA + tEnemy.short + " has knocked you off your " + pc.feet() + "!</b>\n\n");
+				clearMenu();
+				addButton(0, "Defeat", function(t_enemy:Creature, t_lossFunctor:Function):Function {
+					return function():void {
+						clearOutput();
+						
+						if (pc.lust() >= pc.lustMax() || pc.HP() <= 0) 
+						{
+							if (pc.HP() <= 0) 
+							{
+								if(CombatManager.multipleEnemies()) output("\n\n<b>Your enemies have knocked you off your " + pc.feet() + "!</b>\n\n");
+								else output("\n\n<b>" + t_enemy.capitalA + t_enemy.short + " has knocked you off your " + pc.feet() + "!</b>\n\n");
+							}
+							else
+							{
+								if (CombatManager.multipleEnemies()) output("\n\n<b>Your enemies have turned you on too much to keep fighting. You give in....</b>\n\n");
+								else output("\n\n<b>" + t_enemy.capitalA + t_enemy.short + " has turned you on too much to keep fighting. You give in....</b>\n\n");
+							}
+						}
+						
+						kGAMECLASS.setEnemy(t_enemy);
+						CombatManager.showCombatUI();
+						t_lossFunctor();
 					}
-					else
-					{
-						if (_hostiles.length > 1 || tEnemy.isPlural) output("<b>" + tEnemy.capitalA + tEnemy.short + " have turned you on too much to keep fighting. You give in....</b>\n\n");
-						else output("<b>" + tEnemy.capitalA + tEnemy.short + " has turned you on too much to keep fighting. You give in....</b>\n\n");
-					}
-				}
-				
-				userInterface().showPlayerParty(_friendlies);
-				userInterface().showHostileParty(_hostiles);
-				_lossFunction();
+				}(tEnemy, _lossFunction));
 				return true;
-			}
-			else if (hasEnemyOfClass(Naleen) || hasEnemyOfClass(NaleenMale))
-			{
-				if (pc.hasStatusEffect("Naleen Venom") && (pc.physique() == 0 || pc.willpower() == 0))
-				{
-					if (victoryCondition == CombatManager.SPECIFIC_TARGET_DEFEATED)
-					{
-						tEnemy = victoryArgument;
-					}
-					else
-					{
-						tEnemy = _hostiles[0];
-					}
-					
-					kGAMECLASS.setEnemy(tEnemy);
-					
-					clearOutput();
-					
-					if (pc.lust() >= pc.lustMax() || pc.HP() <= 0) 
-					{
-						if (pc.HP() <= 0) 
-						{
-							if(tEnemy.isPlural || _hostiles.length > 1) output("<b>Your enemies have knocked you off your " + pc.feet() + "!</b>\n\n");
-							else output("<b>" + tEnemy.capitalA + tEnemy.short + " has knocked you off your " + pc.feet() + "!</b>\n\n");
-						}
-						else
-						{
-							if (_hostiles.length > 1 || tEnemy.isPlural) output("<b>" + tEnemy.capitalA + tEnemy.short + " have turned you on too much to keep fighting. You give in....</b>\n\n");
-							else output("<b>" + tEnemy.capitalA + tEnemy.short + " has turned you on too much to keep fighting. You give in....</b>\n\n");
-						}
-					}
-				
-					userInterface().showPlayerParty(_friendlies);
-					userInterface().showHostileParty(_hostiles);
-					_lossFunction();
-					return true;
-				}
 			}
 			return false;
 		}
@@ -2736,22 +2712,28 @@ package classes.GameData
 				{
 					tEnemy = _hostiles[0];
 				}
-				kGAMECLASS.setEnemy(tEnemy);
 				
-				clearOutput();
+				CombatManager.showCombatUI();
 				
-				if (tEnemy.HP() <= 0) output("You’ve knocked the resistance out of " + tEnemy.a + tEnemy.uniqueName + ".</b>\n\n");
-				else if (tEnemy.lust() >= 100) 
-				{
-					output("<b>" + tEnemy.capitalA + tEnemy.short + " </b>");
-					if(tEnemy.isPlural) output("<b>are </b>");
-					else output("<b>is </b>");
-					output("<b>too turned on to fight.</b>\n\n");
-				}
-				
-				userInterface().showPlayerParty(_friendlies);
-				userInterface().showHostileParty(_hostiles); // Force-display the selected enemy
-				_victoryFunction();
+				clearMenu();
+				addButton(0, "Victory", function(t_enemy:Creature, t_victoryFunctor:Function):Function {
+					return function():void {
+						clearOutput();
+						
+						if (t_enemy.HP() <= 0) output("<b>You’ve knocked the resistance out of " + t_enemy.a + t_enemy.uniqueName + ".</b>\n\n");
+						else if (t_enemy.lust() >= 100) 
+						{
+							output("<b>" + t_enemy.capitalA + t_enemy.short + " </b>");
+							if(CombatManager.multipleEnemies()) output("<b>are </b>");
+							else output("<b>is </b>");
+							output("<b>too turned on to fight.</b>\n\n");
+						}
+						
+						kGAMECLASS.setEnemy(t_enemy);
+						CombatManager.showCombatUI();
+						t_victoryFunctor();
+					}
+				}(tEnemy, _victoryFunction));
 				return true;
 			}
 			return false;
@@ -3108,8 +3090,8 @@ package classes.GameData
 				kGAMECLASS.setEnemy(null);
 				
 				if(roundCounter == 1) output("\n\nVictor instructs, <i>“<b>Try and strike her, " + pc.short + ". Use a melee attack.</b>”</i>\n");
-			else if(roundCounter == 2) output("\n\n<i>“Some foes are more vulnerable to ranged attacks than melee attacks or vice versa. <b>Why don’t you try using your gun?</b> Don’t worry, it won’t kill her.”</i> Victor suggests.\n");
-			else if(roundCounter == 3) output("\n\n<i>“Didn’t work, did it? Celise’s race does pretty well against kinetic damage. Thermal weapons would work, but you don’t have any of those. You’ve still got one more weapon that galotians can’t handle - sexual allure. They’re something of a sexual predator, but their libidos are so high that teasing them back often turns them on to the point where they masturbate into a puddle of quivering sex.”</i> Victor chuckles. <i>“<b>Go ahead, try teasing her.</b> Fighting aliens is about using the right types of attacks in the right situations.”</i>\n");
+				else if(roundCounter == 2) output("\n\n<i>“Some foes are more vulnerable to ranged attacks than melee attacks or vice versa. <b>Why don’t you try using your gun?</b> Don’t worry, it won’t kill her.”</i> Victor suggests.\n");
+				else if(roundCounter == 3) output("\n\n<i>“Didn’t work, did it? Celise’s race does pretty well against kinetic damage. Thermal weapons would work, but you don’t have any of those. You’ve still got one more weapon that galotians can’t handle - sexual allure. They’re something of a sexual predator, but their libidos are so high that teasing them back often turns them on to the point where they masturbate into a puddle of quivering sex.”</i> Victor chuckles. <i>“<b>Go ahead, try teasing her.</b> Fighting aliens is about using the right types of attacks in the right situations.”</i>\n");
 				return;
 			}
 			
@@ -3308,9 +3290,14 @@ package classes.GameData
 				if (_hostiles[i].isDefeated() && _hostiles[i].alreadyDefeated == false)
 				{
 					_hostiles[i].alreadyDefeated = true;
-					output("\n\n" + _hostiles[i].capitalA + _hostiles[i].uniqueName + " falls to the ground,");
-					if (_hostiles[i].HP() <= 0) output(" defeated.");
-					else output(" stricken with lust.");
+					
+					// Legacy mode kinda- if we're in a single-enemy fight, don't output anything.
+					if (_hostiles.length > 1)
+					{
+						output("\n\n" + _hostiles[i].capitalA + _hostiles[i].uniqueName + " falls to the ground,");
+						if (_hostiles[i].HP() <= 0) output(" defeated.");
+						else output(" stricken with lust.");
+					}
 				}
 				else if (_hostiles[i].isDefeated() && _hostiles[i].alreadyDefeated == true)
 				{

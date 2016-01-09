@@ -1,5 +1,7 @@
 ﻿import classes.Characters.GardeBot;
 import classes.Characters.MyrInfectedFemale;
+import classes.Creature;
+import classes.GameData.CombatManager;
 public function showInfectedMyr(nude:Boolean = false):void
 {
 	if(inCombat())
@@ -65,6 +67,7 @@ public function winVsInfectedMyr():void
 {
 	output("As you deal the finishing blow, your codex lights up. A brief glance at the screen nets you a warning that despite the fungi’s inability to parasitize non-insectile races there could be other side effects. It advises shying away from physical contact. Looks like you have a choice to make.");
 	processTime(1);
+	clearMenu();
 	//[Sex] [Compassion] [Watch] [Leave]
 	//Red femyr fuck/loss
 	//accounts for male and female. Not taur friendly, yes naga friendly
@@ -747,11 +750,12 @@ public function gardeBotBonusButtons():void
 
 public function gardeBotMove(arg:int = 1):void
 {
-	enemy.setStatusValue("Sporebutt",1,arg);
+	var tEnemy:Creature = CombatManager.getHostileCharacters()[0];
+	
+	tEnemy.setStatusValue("Sporebutt",1,arg);
 	clearOutput();
 	output("You shift into a different section of the cavern");
-	if (enemy is GardeBot && (enemy as GardeBot).pcHasSporeShield()) output(" where the spores can still protect you");
-	output(".\n");
+	if ((tEnemy as GardeBot).pcHasSporeShield()) output(" where the spores can still protect you");
 	CombatManager.processCombat();
 }
 
