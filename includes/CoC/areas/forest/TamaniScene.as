@@ -776,7 +776,7 @@ internal function tamaniKnockUp():void {
 public function encounterTamani():void {
 	//if (pc.hasCock && flags[kFLAGS.TAMANI_DAUGHTER_PREGGO_COUNTDOWN] == 0 && flags[kFLAGS.TAMANI_NUMBER_OF_DAUGHTERS] >= 24) {
 	//tamaniDaughtersScene.encounterTamanisDaughters();
-	if (flags["COC.TAMANI_DEFEATS"] = undefined) flags["COC.TAMANI_DEFEATS"] = 0;
+	if (flags["COC.TAMANI_DEFEATS"] == undefined) flags["COC.TAMANI_DEFEATS"] = 0;
 	
 	//Fems:
 	if (!pc.hasCock()) {

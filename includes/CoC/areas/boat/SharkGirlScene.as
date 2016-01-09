@@ -117,7 +117,7 @@ internal function sharkWinChoices():void {
 	
 	if (pc.lust() >= 33 && pc.hasGenitals()) {
 		output("  Do you have your way with her or leave?\n\n");
-		if (pc.hasCock());
+		if (pc.hasCock())
 			addButton(0, "Use Dick", sharkgirlDickFuck);
 		if(pc.hasVagina())
 			addButton(1, "Pussy w/69", sharkgirlSixtyNine);
