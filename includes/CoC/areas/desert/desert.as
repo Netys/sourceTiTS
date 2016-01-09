@@ -40,7 +40,7 @@ public function exploreDesert():void
 	
 	if ((pc.level >= 4 || flags["COC.EXPLORED_DESERT"] > 45) && IncrementFlag("COC.DISCOVERED_WITCH_DUNGEON", false) == 0) {
 		choice.push(TravelToDesertCave);
-		chance.push(15);
+		chance.push(5);
 	}
 	
 	//if (sandWitchScene.pregnancy.event == 2 && rand(4) == 0) {

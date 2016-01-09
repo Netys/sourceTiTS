@@ -214,15 +214,15 @@ package classes.Characters.CoC
 			clearOutput();
 			clearMenu();
 			output("It's all or nothing!  With a bellowing cry you charge down the treacherous slope and smite the sandtrap as hard as you can!  ");
-			SandTrapLevel( -4);
 			var damage:TypeCollection = kGAMECLASS.pc.meleeDamage();
 			trace("Before: " + damage.getTotal());
-			damage.add(damage.getTotal() * SandTrapLevel());
+			damage.add(damage.getTotal() * (SandTrapLevel() - 1));
 			trace("After: " + damage.getTotal());
 			damageRand(damage, 15);
 			applyDamage(damage, kGAMECLASS.pc, this, "melee");
-			//if (this.HP() > 0) addButton(0, "Next", processCombat);
-			//else processCombat();
+			SandTrapLevel( -4);
+			if (this.HP() > 0) addButton(0, "Next", CombatManager.processCombat);
+			else CombatManager.processCombat();
 		}
 				
 		public function SandTrapRunaway():void {
@@ -280,9 +280,9 @@ package classes.Characters.CoC
 				SandTrapLevel(-1);
 			}
 			target.removeStatusEffect("Climbed");
-			if (SandTrapLevel() == 1)
+			if (SandTrapLevel() <= 1)
 			{
-				kGAMECLASS.sandtrapmentLoss();
+				target.lust(target.lustMax(), true); // really, hardcode for custom loss condition from ai?
 				return;
 			}
 			//if (SandTrapLevel() == 4 && findStatusAffect(StatusAffects.Climbed) < 0) nestleQuikSandAttack();
