@@ -1,6 +1,10 @@
 package classes.Characters.CoC
 {
 	import classes.Creature;
+	import classes.Engine.Combat.applyDamage;
+	import classes.Engine.Combat.DamageTypes.DamageFlag;
+	import classes.Engine.Combat.DamageTypes.TypeCollection;
+	import classes.Engine.Combat.rangedCombatMiss;
 	import classes.GameData.CombatAttacks;
 	import classes.GLOBAL;
 	import classes.Items.Miscellaneous.*;
@@ -185,7 +189,77 @@ package classes.Characters.CoC
 			var target:Creature = selectTarget(hostileCreatures);
 			if (target == null) return;
 			
-			CombatAttacks.MeleeAttack(this, target); // TODO: stub
+			var moves:Array = [];
+			
+			if (!target.hasStatusEffect("Grappled")) {
+				 moves.push(nagaConstrict);
+				 moves.push(MeleeAttack, MeleeAttack, nagaTailWhip, nagaTailWhip, nagaPoisonBiteAttack, nagaPoisonBiteAttack);
+			} else {
+				 moves.push(MeleeAttack, nagaPoisonBiteAttack, nagaPoisonBiteAttack);
+			}
+			
+			moves[rand(moves.length)](target);
+		}
+		
+		public function onCleanup(target:Creature):void {
+			if(target.hasStatusEffect("Naga Venom")) {
+				target.reflexes(target.statusEffectv1("Naga Venom"));
+				target.removeStatusEffect("Naga Venom");
+			}
+		}
+		
+		protected function MeleeAttack(target:Creature):void {
+			CombatAttacks.MeleeAttack(this, target);
+		}
+		
+		//2a)  Ability -  Poison Bite - poisons player
+		protected function nagaPoisonBiteAttack(target:Creature):void {
+			//(Deals damage over 4-5 turns, invariably reducing 
+			//your speed. It wears off once combat is over.)
+			output("The naga strikes with the speed of a cobra, sinking her fangs into your flesh!  ");
+			if(!target.hasStatusEffect("Naga Venom")) {
+				output("The venom's effects are almost instantaneous; your vision begins to blur and it becomes increasingly harder to stand.  ");
+				var damage:Number = Math.min(3, int(target.reflexes() - 1));
+				damage = Math.max(damage, 0);
+				target.reflexes( -damage);
+				target.createStatusEffect("Naga Venom", damage, 0, 0, 0, false, "Icon_Poison", "You are poisoned by naga venom!", true);
+				
+				if(damage < 3)
+					applyDamage(new TypeCollection( { poison : (3 + rand(3)) + (3 + rand(3)) * (3 - damage) / 3 } ), this, target);
+			}
+			else {
+				output("The venom's effects intensify as your vision begins to blur and it becomes increasingly harder to stand.  ");
+				
+				var damage:Number = Math.min(2, int(target.reflexes() - 1));
+				damage = Math.max(damage, 0);
+				target.reflexes( -damage);
+				target.addStatusValue("Naga Venom", 1, damage);
+				
+				applyDamage(new TypeCollection( { poison : (3 + rand(3)) + (3 + rand(3)) * (2 - damage) / 2 } ), this, target);
+			}
+		}
+		
+		//2b)  Ability - Constrict - entangles player, raises lust 
+		//every turn until you break free
+		protected function nagaConstrict(target:Creature):void {
+			output("The naga draws close and suddenly wraps herself around you, binding you in place! You can't help but feel strangely aroused by the sensation of her scales rubbing against your body. All you can do is struggle as she begins to squeeze tighter!");
+			
+			target.createStatusEffect("Grappled", 0, 0, 0, 0, false, "Icon_Constricted", "You are entangled by naga's coils!", true);
+			applyDamage(new TypeCollection( { kinetic : 2+rand(4) }, DamageFlag.CRUSHING ), this, target);
+		}
+		
+		//2c) Abiliy - Tail Whip - minus ??? HP 
+		//(base it on toughness?)
+		protected function nagaTailWhip(target:Creature):void {
+			output("The naga tenses and twists herself forcefully.  ");
+			//[if evaded]
+			if(rangedCombatMiss(this, target) || target.reflexes() > rand(300)) {
+				output("You see her tail whipping toward you and jump out of the way at the last second. You quickly roll back onto your [pc.feet].  ");
+			}
+			else {
+				output("Before you can even think, you feel a sharp pain at your side as the naga's tail slams into you and shoves you into the sands. You pick yourself up, wincing at the pain in your side.  ");
+				applyDamage(new TypeCollection( { kinetic : 10 + rand(10) }, DamageFlag.CRUSHING ), this, target);
+			}
 		}
 	}
 }

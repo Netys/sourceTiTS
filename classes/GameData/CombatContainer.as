@@ -1209,6 +1209,13 @@ package classes.GameData
 		{
 			// TODO Tweak the shit out of this probably for other NPCs to be able to call into it			
 			if (target is PlayerCharacter) clearOutput();
+			
+			for (var i:int = 0; i < _hostiles.length; i++)
+				if (_hostiles[i].hasOwnProperty("doStruggleRecover")) {
+					_hostiles[i].doStruggleRecover(target);
+					return;
+				}
+			
 			else if (target is Anno)
 			{
 				(target as Anno).grappleStruggle();
@@ -3018,7 +3025,7 @@ package classes.GameData
 		{
 			kGAMECLASS.setEnemy(null);
 			kGAMECLASS.setAttacker(null);
-			kGAMECLASS.setTarget(null);
+			kGAMECLASS.setTarget(null);	
 			
 			doCleanup(_friendlies);
 		}
@@ -3027,12 +3034,17 @@ package classes.GameData
 		{
 			for (var i:int = 0; i < group.length; i++)
 			{
-				doCleanupFor(group[i]);
+				doCleanupFor(group[i]);	
 			}
 		}
 		
 		private function doCleanupFor(target:Creature):void
-		{
+		{			
+			for (var l:int = 0; l < _hostiles.length; l++)
+				if (_hostiles[l].hasOwnProperty("onCleanup")) _hostiles[l].onCleanup(target);			
+			for (var k:int = 0; k < _friendlies.length; k++)
+				if (_friendlies[k].hasOwnProperty("onCleanup")) _friendlies[k].onCleanup(target);
+			
 			// Remove all combat effects
 			target.clearCombatStatuses();
 			target.alreadyDefeated = false;
