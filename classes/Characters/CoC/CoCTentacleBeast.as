@@ -1,12 +1,18 @@
 package classes.Characters.CoC
 {
+	import classes.Characters.PlayerCharacter;
 	import classes.CockClass;
 	import classes.Creature;
 	import classes.Engine.Combat.applyDamage;
 	import classes.Engine.Combat.combatMiss;
 	import classes.Engine.Combat.DamageTypes.DamageFlag;
 	import classes.Engine.Combat.DamageTypes.TypeCollection;
+	import classes.Engine.Combat.rangedCombatMiss;
+	import classes.GameData.CombatAttacks;
 	import classes.GLOBAL;
+	import classes.kGAMECLASS;
+	import classes.Engine.Interfaces.*;
+	import classes.Engine.Utility.*;
 	
 	public class CoCTentacleBeast extends Creature
 	{
@@ -19,13 +25,13 @@ package classes.Characters.CoC
 			
 			this.short = "tentacle beast";
 			this.originalRace = "abomination";
-			this.a = "the ";
-			this.capitalA = "The ";
+			this.a = "it ";
+			this.capitalA = "It ";
 			this.tallness = 24 + rand(36);
 			this.scaleColor = "green";
 			this.long = "You see the massive, shambling form of the tentacle beast before you.  Appearing as a large shrub, it shifts its bulbous mass and reveals a collection of thorny tendrils and cephalopodic limbs.";
 			this.customDodge = "The tentacle beast sways aside at the last second!";
-			this.customBlock = "Your attack deflects off the cock vine's bark!";
+			this.customBlock = "Your attack deflects off the beast's skin!";
 			
 			this.meleeWeapon.attackVerb = "lash";
 			this.meleeWeapon.attackNoun = "tendrils";
@@ -37,37 +43,39 @@ package classes.Characters.CoC
 			this.meleeWeapon.longName = "whip-tendril";
 			this.meleeWeapon.hasRandomProperties = true;
 			
-			this.armor.longName = "rubbery skin";
-			this.armor.defense = 0;
+			this.armor.longName = "bark";
+			this.armor.defense = 1;
 			this.armor.hasRandomProperties = true;
-			
-			this.physiqueRaw = 12;
-			this.reflexesRaw = 15;
-			this.aimRaw = 3;
-			this.intelligenceRaw = 1;
-			this.willpowerRaw = 1;
-			this.libidoRaw = 90;
-			this.shieldsRaw = 0;
-			this.energyRaw = 100;
-			this.lustRaw = 10;
 			
 			baseHPResistances = new TypeCollection();
 			baseHPResistances.tease.resistanceValue = -20.0;
-			baseHPResistances.kinetic.resistanceValue = 50.0;
+			baseHPResistances.kinetic.resistanceValue = 20.0;
 			baseHPResistances.burning.resistanceValue = -50.0;
 			
 			this.XPRaw = 250;
 			this.level = 6;
 			this.credits = (rand(15) + 5) * 10;
-			this.HPMod = 0;
+			this.HPMod = 250;
+			this.shieldsRaw = this.shieldsMax();
 			this.HPRaw = this.HPMax();
 			
+			this.physiqueRaw = 58 / 20 * this.level;
+			this.reflexesRaw = 35 / 20 * this.level;
+			this.aimRaw = 35 / 20 * this.level;
+			this.intelligenceRaw = 45 / 20 * this.level;
+			this.willpowerRaw = 45 / 20 * this.level;
+			this.libidoRaw = 90;
+			this.shieldsRaw = 0;
+			this.energyRaw = 100;
+			this.lustRaw = 10;			
+			
 			this.femininity = 50;
+			this.tallness = rand(9) + 70;
 			this.eyeType = 0;
 			this.eyeColor = "red";
 			this.thickness = 1;
 			this.tone = 80;
-			this.hairColor = "red";
+			this.hairColor = "green";
 			this.furColor = "tawny";
 			this.hairLength = 0;
 			this.hairType = 0;
@@ -132,9 +140,17 @@ package classes.Characters.CoC
 			this.buttRatingRaw = 0;
 			//No dicks here!
 			this.cocks = new Array();
+			this.createCock(40);
+			this.shiftCock(cocks.length - 1, GLOBAL.TYPE_TENTACLE);
+			this.createCock(60);
+			this.shiftCock(cocks.length - 1, GLOBAL.TYPE_TENTACLE);
+			this.createCock(50);
+			this.shiftCock(cocks.length - 1, GLOBAL.TYPE_TENTACLE);
+			this.createCock(20);
+			this.shiftCock(cocks.length - 1, GLOBAL.TYPE_TENTACLE);
 			//balls
 			this.balls = 0;
-			this.cumMultiplierRaw = 2;
+			this.cumMultiplierRaw = 3;
 			//Multiplicative value used for impregnation odds. 0 is infertile. Higher is better.
 			this.cumQualityRaw = 1;
 			this.cumType = GLOBAL.FLUID_TYPE_CUM;
@@ -146,9 +162,9 @@ package classes.Characters.CoC
 			this.refractoryRate = 1;
 			this.minutesSinceCum = 9000;
 			this.timesCum = 122;
-			this.cockVirgin = true;
+			this.cockVirgin = false;
 			this.vaginalVirgin = false;
-			this.analVirgin = true;
+			this.analVirgin = false;
 			//Goo is hyper friendly!
 			this.elasticity = 3;
 			//Fertility is a % out of 100. 
@@ -162,7 +178,8 @@ package classes.Characters.CoC
 			this.milkType = GLOBAL.FLUID_TYPE_MILK;
 			//The rate at which you produce milk. Scales from 0 to INFINITY.
 			this.milkRate = 1;
-			this.ass.wetnessRaw = 0;
+			this.ass.loosenessRaw = 1;
+			this.ass.wetnessRaw = 4;
 			
 			this.fertilityRaw = 1.0;
 			this.cumQualityRaw = 1.0;
@@ -170,15 +187,28 @@ package classes.Characters.CoC
 			
 			this.createStatusEffect("Disarm Immune");
 			this.createStatusEffect("Force It Gender");
-			
-			this.cocks = [];
-			this.createCock();
-			(this.cocks[0] as CockClass).cLengthRaw = 8;
-			(this.cocks[0] as CockClass).cType = GLOBAL.TYPE_COCKVINE;
-			
-			sexualPreferences.setRandomPrefs(5+rand(3));
+						
+			sexualPreferences.setRandomPrefs(5 + rand(3));
 			
 			this._isLoading = false;
+		}
+		
+		public function additionalCombatMenuEntries():void
+		{
+			var pc:PlayerCharacter = kGAMECLASS.pc;
+			
+			if (pc.hasStatusEffect("Grappled")) {
+				addButton(4, "Do Nothing", tentacleEntice, pc);
+			}
+		}
+		
+		public function processHostileGroupActions():void
+		{
+			if (hasStatusEffect("TentacleCoolDown")) {
+				addStatusValue("TentacleCoolDown", 1, -1);
+				if (statusEffectv1("TentacleCoolDown") <= 0)
+					removeStatusEffect("TentacleCoolDown");
+			}
 		}
 		
 		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void
@@ -186,105 +216,76 @@ package classes.Characters.CoC
 			var target:Creature = selectTarget(hostileCreatures);
 			if (target == null) return;
 			
-			// Reset the struggle-indicator
-			if (target.statusEffectv2("Tentacle Bind") == 1)
-			{
-				target.setStatusValue("Tentacle Bind", 2, 0);
-			}
-			
-			// Trigger various effects based on grip-level
-			if (target.statusEffectv1("Tentacle Bind") == 0)
-			{
-				if (target.hasStatusEffect("Evasion Reduction")) target.removeStatusEffect("Evasion Reduction");
-				if (target.hasStatusEffect("Grappled")) target.removeStatusEffect("Grappled");
-			}
-			else
-			{
-				if (target.statusEffectv1("Tentacle Bind") == 1)
-				{
-					if (!target.hasStatusEffect("Evasion Reduction")) target.createStatusEffect("Evasion Reduction", 10, 0, 0, 0, true, "", "", true, 0);
-					else target.setStatusValue("Evasion Reduction", 1, 10);
-				}
-
-				if (target.statusEffectv1("Tentacle Bind") >= 2)
-				{
-					if (!target.hasStatusEffect("Evasion Reduction")) target.createStatusEffect("Evasion Reduction", 20, 0, 0, 0, true, "", "", true, 0);
-					else target.setStatusValue("Evasion Reduction", 1, 20);
-
-					target.energyRaw -= 5;
-					target.lustRaw += 2 + rand(target.libido() / 15);
-				}
-
-				if (target.statusEffectv1("Tentacle Bind") == 3)
-				{
-					target.createStatusEffect("Grappled", 1000, 0, 0, 0, true, "", "", true, 0);
-				}
-			}
-			
-			if (target.statusEffectv1("Tentacle Bind") <= 0 && rand(3) == 0) tentacleEntwine(target);
-			else tentaclePhysicalAttack(target);
+			if (!hasStatusEffect("TentacleCoolDown") && !target.hasStatusEffect("Grappled") && rand(2) == 0)
+				tentacleEntwine(target);
+			else 
+				tentaclePhysicalAttack(target);
 		}
-
-		public function tentaclePhysicalAttack(target:Creature):void {
+		
+		private function tentaclePhysicalAttack(target:Creature):void {
 			output("The shambling horror throws its tentacles at you with a murderous force.\n");
+			var temp:int = int((PQ() + attack(true)) - Math.random() * (target.PQ()) - target.armor.defense);
+			
+			if(temp < 0) temp = 0;
 			//Miss
-			if(target.statusEffectv1("Tentacle Bind") <= 0 && combatMiss(this, target)) {
-				output("However, you quickly evade the clumsy efforts of the abomination to strike you.");
+			if(temp == 0 || combatMiss(this, target)) {
+				output("However, you quickly evade the clumsy efforts of the abomination to strike you.  ");
 			}
 			//Hit
 			else {
-				output("The tentacles crash upon your body mercilessly. ");
-				var damage:TypeCollection = new TypeCollection( { kinetic: 15 * (0.5 + (target.statusEffectv1("Tentacle Bind") / 2)) }, DamageFlag.CRUSHING);
-				applyDamage(damage, this, target);
+				output("The tentacles crash upon your body mercilessly.  ");
+				CombatAttacks.MeleeAttack(this, target);
 			}
 		}
-
-		public function tentacleEntwine(target:Creature):void {
+		
+		private function tentacleEntwine(target:Creature):void {
 			output("The beast lunges its tentacles at you from all directions in an attempt to immobilize you.\n");
+			createStatusEffect("TentacleCoolDown", 3, 0, 0, 0, true, "", "", true);
 			//Not Trapped yet
-			if(target.statusEffectv1("Tentacle Bind") < 0) {
+			if(!target.hasStatusEffect("Grappled")) {
 				//Success
-				if(rand(Math.max(target.RQ(), target.PQ())) > 65) {
+				if(rangedCombatMiss(this, target)) {  //if(int(Math.random()*(((player.spe)/2))) > 15 || (player.findPerk(PerkLib.Evade) >= 0 && int(Math.random()*(((player.spe)/2))) > 15)) {
 					output("In an impressive display of gymnastics, you dodge, duck, dip, dive, and roll away from the shower of grab-happy arms trying to hold you. Your instincts tell you that this was a GOOD thing.\n");
 				}
 				//Fail
 				else {
 					output("While you attempt to avoid the onslaught of pseudopods, one catches you around your [pc.foot] and drags you to the ground. You attempt to reach for it to pull it off only to have all of the other tentacles grab you in various places and immobilize you in the air. You are trapped and helpless!!!\n\n");
 					//Male/Herm Version:
-					if(target.hasCock()) output("The creature, having immobilized you, coils a long tendril about your penis. You shudder as the creature begins stroking your cock like a maid at a dairy farm in an attempt to provoke a response from you. Unable to resist, your [pc.cocks] easily becomes erect, signaling to the creature that you are responsive to harsher stimulation.\n");
+					if(target.hasCock()) output("The creature, having immobilized you, coils a long tendril about your penis. You shudder as the creature begins stroking your cock like a maid at a dairy farm in an attempt to provoke a response from you. Unable to resist, your [pc.eachCock] easily becomes erect, signaling to the creature that you are responsive to harsher stimulation.\n");
 					//Female Version:
 					else if(target.hasVagina()) output("The creature quickly positions a long tentacle with a single sucker over your clitoris. You feel the power of the suction on you, and your body quickly heats up.  Your clit engorges, prompting the beast to latch the sucker onto your [pc.clit].\n");
 					//Genderless
 					else output("The creature quickly positions a long tentacle against your [pc.asshole]. It circles your pucker with slow, delicate strokes that bring unexpected warmth to your body.\n");
-					applyDamage(new TypeCollection( { tease: (8 + target.libido() / 20) } ), this, target, "minimal");
-					target.addStatusValue("Tentacle Bind", 1, 1);
+					
+					target.createStatusEffect("Grappled", 0, 0, 0, 0, false, "Icon_Constricted", "You are entangled by tentacles!", true);
+					applyDamage(new TypeCollection( { tease : 8 + target.libido() / 20 } ), this, target);
 				}
 			}
 		}
-
+		
 		private function tentacleEntice(target:Creature):void {
 			//Spoiler for Entice Attack Male/Herm: 
 			if(target.hasCock()) {
 				if(rand(2) == 0) {
-					output("In an effort to distract the creature, you begin gyrating your hips and swinging your penis in a shameless imitation of MeatSpin. The Tentacled Horror briefly pauses to observe your actions and rears similar to a posturing spider, considering your next actions.\n\n");
-					applyDamage(new TypeCollection( { tease: (10 + rand(5)) }), target, this, "minimal");
+					output("  In an effort to distract the creature, you begin gyrating your hips and swinging your penis in a shameless imitation of MeatSpin. The Tentacled Horror briefly pauses to observe your actions and rears similar to a posturing spider, considering your next actions.  ");
+					applyDamage(new TypeCollection( { tease : 10 + rand(5) } ), target, this);
 				}
 				//Failure:
-				else output("You grab your penis and shake it feverishly at the creature in order to distract it.  It swats a tentacle at you, forcing you to adroitly dodge the reprisal.  Apparently, the beast found you unimpressive.\n\n");
+				else output("  You grab your penis and shake it feverishly at the creature in order to distract it.  It swats a tentacle at you, forcing you to adroitly dodge the reprisal.  Apparently, the beast found you unimpressive.");
 			}
 			//Spoiler for Entice Attack-Female: 
 			else {
 				//Success:
 				if(rand(2) == 0) {
 					//GENDERLEZZ
-					if(!target.hasGenitals()) output("You brazenly turn your back on the creature and, glancing over your shoulder, begin bending over and presenting your [pc.asshole] to the beast. It pauses and observes while you bend over further, presenting a full view of your [pc.asshole]. You shift from side to side and observe the beast match your movements. You have obtained its attention to say the least.\n\n");
+					if(!target.hasGenitals()) output("  You brazenly turn your back on the creature and, glancing over your shoulder, begin bending over and presenting your " + target.buttDescript() + " to the beast. It pauses and observes while you bend over further, presenting a full view of both your back door and your " + target.assholeDescript() + ". You shift from side to side and observe the beast match your movements. You have obtained its attention to say the least.  ");
 					//CHICKS
-					else output("You brazenly turn your back on the creature and, glancing over your shoulder, begin bending over and presenting your [pc.ass] to the beast. It pauses and observes while you bend over further, presenting a full view of both your back door and your honey hole. You shift from side to side and observe the beast match your movements. You have obtained its attention to say the least.\n\n");
-					applyDamage(new TypeCollection( { tease: (10 + rand(5)) }), target, this, "minimal");
+					else output("  You brazenly turn your back on the creature and, glancing over your shoulder, begin bending over and presenting your " + target.buttDescript() + " to the beast. It pauses and observes while you bend over further, presenting a full view of both your [pc.asshole] and your [pc.vagina]. You shift from side to side and observe the beast match your movements. You have obtained its attention to say the least.  ");
+					applyDamage(new TypeCollection( { tease : 10 + rand(5) } ), target, this);
 				}
 				//Failure
 				else {
-					output("You begin shaking your hips and grabbing your [pc.fullChest] to distract the creature. However, the near-miss from the tentacle it attempted to swat you with convinces you of its desire to beat your ass, rather than fuck it.\n\n");
+					output("  You begin shaking your hips and grabbing your " + target.allBreastsDescript() + " to distract the creature. However, the near-miss from the tentacle it attempted to swat you with convinces you of its desire to beat your ass, rather than fuck it.  ");
 				}
 			}
 		}

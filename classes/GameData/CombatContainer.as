@@ -3289,6 +3289,11 @@ package classes.GameData
 			updateStatusEffects(_friendlies);
 			updateCooldowns(_friendlies);
 			
+			for (var l:int = 0; l < _hostiles.length; l++)
+				if (_hostiles[l].hasOwnProperty("processFriendlyGroupActions")) _hostiles[l].processFriendlyGroupActions();			
+			for (var k:int = 0; k < _friendlies.length; k++)
+				if (_friendlies[k].hasOwnProperty("processFriendlyGroupActions")) _friendlies[k].processFriendlyGroupActions();
+				
 			// Mark anything that the players group has beaten as done so now, so that it
 			// cannot act during the next hostile group update
 			for (var i:int = 0; i < _hostiles.length; i++)
@@ -3383,6 +3388,11 @@ package classes.GameData
 			applyHostileActions();
 			updateStatusEffects(_hostiles);
 			updateCooldowns(_hostiles);
+			
+			for (var l:int = 0; l < _hostiles.length; l++)
+				if (_hostiles[l].hasOwnProperty("processHostileGroupActions")) _hostiles[l].processHostileGroupActions();			
+			for (var k:int = 0; k < _friendlies.length; k++)
+				if (_friendlies[k].hasOwnProperty("processHostileGroupActions")) _friendlies[k].processHostileGroupActions();
 			
 			// Early-out in case a DOT tick defeated enemies
 			if (checkForVictory()) return;

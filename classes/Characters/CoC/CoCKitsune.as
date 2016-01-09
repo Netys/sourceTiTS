@@ -6,7 +6,6 @@ package classes.Characters.CoC
 	import classes.Engine.Combat.DamageTypes.TypeCollection;
 	import classes.Engine.Interfaces.*;
 	import classes.Engine.Utility.*;
-	import classes.GameData.CombatAttacks;
 	import classes.GameData.CombatManager;
 	import classes.GLOBAL;
 	import classes.Items.Drinks.*;
