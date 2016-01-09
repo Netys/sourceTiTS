@@ -43,7 +43,7 @@ package classes.Characters.CoC
 			this.balls = 2;
 			this.ballSizeRaw = 2 + rand(13);
 			
-			this.XPRaw = 500;
+			this.XPRaw = 250;
 			this.level = 4;
 			this.credits = 0;
 			this.HPMod = 20 + rand(this.ballSize()*2);

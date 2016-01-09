@@ -274,6 +274,12 @@ package classes.Items.Transformatives
 				output("[pc.nipples].  They have turned an onyx black!");
 				changes++;
 			}
+			//Nipples Turn Black:
+			if (pc.lipColor != "black" && rand(6) == 0 && changes < changeLimit) {
+				output("\n\nA tickling sensation plucks at your [pc.lips]...  They have turned an onyx black!");
+				pc.lipColor = "black";
+				changes++;
+			}
 			//Remove odd eyes
 			//if (pc.eyeType == EYES_FOUR_SPIDER_EYES && rand(2) == 0 && changes < changeLimit) {
 				//output("\n\nYou blink and stumble, a wave of vertigo threatening to pull your " + pc.feet() + " from under you.  As you steady and open your eyes, you realize something seems different.  Your vision is changed somehow.", false);

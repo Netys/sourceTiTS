@@ -8,21 +8,28 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
+private function minotaurSprite():void
+{
+	//if (enemy.hairColor == "blonde") spriteSelect(105);
+	//else if (enemy.hairColor == "black") spriteSelect(104);
+	//else spriteSelect(106);
+	if (enemy == null || !(enemy is CoCMinotaur))
+		setEnemy(new CoCMinotaur());
+	userInterface.showName("MINOTAUR");
+}
+
 private function minotaurPrepare():void {
-	//randomly assign hair color anc create refetence to use
-	if (enemy == null || !(enemy is CoCMinotaur)) {
-		CombatManager.newGroundCombat();
-		CombatManager.setFriendlyCharacters(pc);
-		CombatManager.setHostileCharacters(new CoCMinotaur());
-		CombatManager.victoryScene(CoCMinotaurDefeated);
-		CombatManager.lossScene(CoCMinotaurWon);
-		CombatManager.displayLocation("MINOTAUR");
-	}
+	CombatManager.newGroundCombat();
+	CombatManager.setFriendlyCharacters(pc);
+	CombatManager.setHostileCharacters(new CoCMinotaur());
+	CombatManager.victoryScene(CoCMinotaurDefeated);
+	CombatManager.lossScene(CoCMinotaurWon);
+	CombatManager.displayLocation("MINOTAUR");
 }
 
 // TODO: oviposition scenes, breastfeed scene, addiction
 public function encounterMinotaur():void {
-	//spriteSelect(44);
+	minotaurSprite();
 	clearOutput();
 	clearMenu();
 	userInterface.showName("MINOTAUR");
@@ -121,12 +128,11 @@ public function encounterMinotaur():void {
 	//}
 	
 	getRapedByMinotaur(true);
-	//spriteSelect(44);
 }
 
 public function joinBeingAMinoCumSlut():void
 {
-	minotaurPrepare();
+	minotaurSprite();
 	clearOutput();
 	output("The prospect of getting a huge dose of that fresh minotaur cum is just too much to bear.  Before you realize what's happening, you're moving out of your rocky hiding spot and making your way down to the two bovine creatures, stripping your [armor] as you go.  By the time you reach the two figures, you're as naked as they are.  You shiver softly, whether due to some chill in the air or desperate anticipation, you can't say.");
 	output("\n\nThe cow-girl is bent over, her hands on a low ledge with the minotaurs hands on either side of her ample ass.  She moans, more like a moo than a human groan, as the minotaur plunges into her quaking depths.  As you step forward, suddenly unsure of yourself, both the bull and the cow turn their sharp gazes on to you.  You feel very small");
@@ -252,6 +258,9 @@ public function joinBeingAMinoCumSlut():void
 	//(Acquired minotaur cum!)
 	processTime(60 + rand(30));
 		
+	clearMenu();
+	setEnemy(null);
+		
 	itemScreen = mainGameMenu;
 	lootScreen = mainGameMenu;
 	useItemFunction = mainGameMenu;
@@ -269,6 +278,8 @@ public function watchAMinoCumSlut():void
 	//[Next]
 	pc.lust(10);
 	processTime(10);
+	clearMenu();
+	setEnemy(null);
 	addButton(0, "Next", watchMinoCumSlutII);
 }
 
@@ -281,6 +292,8 @@ public function watchMinoCumSlutII():void
 	output("\n\nOnly now do you notice other faces peeking over ledges and ridges.  You count at least two goblins and one imp who quickly pull back.  From the sounds, they were busy getting themselves off.  Apparently this isn't an uncommon show, and the locals enjoy it immensely.");
 	pc.lust(25);
 	processTime(10 + rand(5));
+	clearMenu();
+	setEnemy(null);
 	addButton(0, "Next", mainGameMenu);
 }
 
@@ -303,16 +316,18 @@ public function continueMinoVoyeurism():void {
 	//Lust!
 	processTime(40 + rand(30));
 	pc.lust(5 + pc.libido() / 20 + pc.bovineScore() + pc.cowScore());
+	clearMenu();
+	setEnemy(null);
 	addButton(0, "Next", mainGameMenu);
 }
 
 public function MinotaurLootAndLeave():void {
-	CombatManager.genericVictory();
 	processTime(15 + rand(5));
+	CombatManager.genericVictory();
 }
 
 public function minoVictoryRapeChoices():void {
-	//spriteSelect(44);
+	minotaurSprite();
 	clearOutput();
 	clearMenu();
 	
@@ -393,7 +408,7 @@ public function minoVictoryRapeChoices():void {
 //Tentacle scenes require multi dicks at minimum
 //(dicks > 1 && tentacledicks > 0)
 private function rapeMinotaurTentacles():void {
-	//spriteSelect(44);
+	minotaurSprite();
 	clearOutput()
 	clearMenu();
 	//multicock but single tentalce rape scene
@@ -472,7 +487,7 @@ private function rapeMinotaurTentacles():void {
 }
 
 private function rapeMinotaurTentacle():void {
-	//spriteSelect(44);
+	minotaurSprite();
 	clearOutput();
 	clearMenu();
 	minoRapeIntro();
@@ -535,7 +550,7 @@ private function rapeMinotaurTentacle():void {
 }
 
 //private function AddictNagaOnMinotaur():void {
-	////spriteSelect(44);
+	//minotaurSprite();
 	//clearOutput();
 	////[if(enemy.lust >= 99)
 	//if(enemy.lust > 99) output("You slither towards the fallen monster, wishing to taste his addictive semen.  He's currently engaged in stroking his enormous shaft up and down with both of his hands, but offers little resistance when you push him over to a sitting position.  You pull his hands away and replace them with yours, running your fingers up and down along his thickness, working yourself up with anticipation.  He leans back and exhales loudly, clearly appreciative.\n\n", false);
@@ -557,7 +572,7 @@ private function rapeMinotaurTentacle():void {
 //}
 
 private function minoUrethralPen():void {
-	//spriteSelect(44);
+	minotaurSprite();
 	clearOutput();
 	clearMenu();
 	minoRapeIntro();
@@ -618,7 +633,7 @@ private function minoUrethralPen():void {
 }
 
 private function minoRapeIntro():void {	
-	//spriteSelect(44);
+	minotaurSprite();
 	clearOutput();
 	//Monster got ass whupped
 	if(enemy.HP() <= 1) {
@@ -639,7 +654,7 @@ private function minoRapeIntro():void {
 
 //Man buttrapes a minotaur butt.
 private function bumRapeaMinotaur():void {
-	//spriteSelect(44);
+	minotaurSprite();
 	clearOutput();
 	clearMenu();
 	var x:Number = pc.cockThatFits(enemy.analCapacity());
@@ -690,7 +705,7 @@ private function bumRapeaMinotaur():void {
 	CombatManager.genericVictory();
 }
 private function girlRapeAMinotaur():void {
-	//spriteSelect(44);
+	minotaurSprite();
 	clearOutput();
 	clearMenu();
 	minoRapeIntro();
@@ -742,7 +757,7 @@ private function girlRapeAMinotaur():void {
 	CombatManager.genericVictory();
 }
 private function minotaurGetsRapedByHerms():void {
-	//spriteSelect(44);
+	minotaurSprite();
 	clearOutput();
 	clearMenu();
 	minoRapeIntro();
@@ -784,7 +799,7 @@ private function fightMinotaur():void {
 
 
 public function getRapedByMinotaur(autoRape:Boolean = false):void {
-	//spriteSelect(44);
+	minotaurSprite();
 	//pc.slimeFeed();
 	clearOutput();
 	clearMenu();
@@ -837,9 +852,7 @@ public function getRapedByMinotaur(autoRape:Boolean = false):void {
 		}
 	
 	}
-	
-	minotaurPrepare();
-	
+		
 	//Normal RAEP
 	if(pc.vaginas.length > 0) {
 		output("The bull-man roughly grabs your hair and begins rubbing the flared head of his penis along your [pc.vagina].  ");
@@ -855,7 +868,7 @@ public function getRapedByMinotaur(autoRape:Boolean = false):void {
 	}
 	
 	if(pc.isTaur()) output("\n\nHe positions himself behind your rear legs, and roughly impales you onto his shaft, forcing himself as far into you as he can manage. You cry out, and you feel your stomach distending to accommodate his incredible size. Grabbing your ass, he begins to violently pound your backside with his massive member.  "); // RLY? He is far from leithan-grade, TBH
-	else output("\n\nHe lifts you into the air, hefting your insignificant weight with little effort, and roughly impales you onto his shaft, forcing himself as far into you as he can manage. You cry out, and looking down you can see your stomach distending to accommodate his incredible size. Using you like a [pc.rase] cock-sleeve, he simply holds you by the torso and begins lifting you up and down.  ");
+	else output("\n\nHe lifts you into the air, hefting your insignificant weight with little effort, and roughly impales you onto his shaft, forcing himself as far into you as he can manage. You cry out, and looking down you can see your stomach distending to accommodate his incredible size. Using you like a [pc.race] cock-sleeve, he simply holds you by the torso and begins lifting you up and down.  ");
 	
 	//Vag stretch texts
 	var capacityBefore:Number = pc.vaginalCapacity();
@@ -916,14 +929,17 @@ public function getRapedByMinotaur(autoRape:Boolean = false):void {
 	else output("asshole.\n\n");
 	
 	processTime(60 * 2 + rand(60));
-	clearMenu();
 	if (inCombat()) CombatManager.genericLoss();	
-	else addButton(0, "Next", mainGameMenu);
+	else {
+		clearMenu();
+		setEnemy(null);
+		addButton(0, "Next", mainGameMenu);
+	}
 }
 
 
 private function getOralRapedByMinotaur():void {
-	//spriteSelect(44);
+	minotaurSprite();
 	clearOutput();
 	clearMenu();
 	output("The huge bull-man grabs you around the waist with one hand and flips you over. You hang upside down in his grip, your [pc.legs] splayed in the air.  The minotaur rubs your face across his sweat-slick balls, smearing his musk into your skin. Each of the minotaur's testicles is bigger than a man's head, and the skin of his sack is pulled taut over his cum-filled balls.\n\n");
@@ -959,13 +975,16 @@ private function getOralRapedByMinotaur():void {
 	pc.loadInMouth(enemy);
 	
 	processTime(60 * 2 + rand(60));
-	clearMenu();
 	if (inCombat()) CombatManager.genericLoss();	
-	else addButton(0, "Next", mainGameMenu);
+	else {
+		clearMenu();
+		setEnemy(null);
+		addButton(0, "Next", mainGameMenu);
+	}
 }
 
 //private function minoGetsTitFucked():void {
-	//spriteSelect(44);
+	//minotaurSprite();
 	//pc.slimeFeed();
 	//if(pc.isNaga()) {
 		//AddictNagaOnMinotaur();
@@ -1003,7 +1022,7 @@ private function getOralRapedByMinotaur():void {
 
 //(Direct Injection) – GIGITY!
 private function takeMinoCumDirectly():void {
-	//spriteSelect(44);
+	minotaurSprite();
 	clearOutput();
 	clearMenu();
 	
@@ -1149,7 +1168,7 @@ private function takeMinoCumDirectly():void {
 //}
 //
 //public function minoAddictionFuck():void {
-	//spriteSelect(44);
+	//minotaurSprite();
 	//clearOutput();
 	//output("While exploring the mountains, a familiar musky scent works its way into your nostrils.   Sniffing hungrily, you begin shaking, nearly convulsing with need.   You don't think, you act, sprinting heedlessly around the rock obstructions that litter the jagged mountain-side, chasing down your need.  Rounding a sharp bend, you sigh happily as the smell noticably increases in strength.  A few feet away is a minotaur, covered in shaggy fur and snacking on fruit.  Ecstatic, you scrabble forwards, sending tiny rocks everywhere.   The minotaur looks up, at first with a frown, then with a gradually widening grin as he recognizes the look in your eyes.\n\n", false);
 		//
@@ -1164,7 +1183,7 @@ private function takeMinoCumDirectly():void {
 //
 ////[Optional Bad-End For Uber-Addicted]
 //public function minoAddictionBadEndEncounter():void {
-	//spriteSelect(44);
+	//minotaurSprite();
 	//clearOutput();
 	//output("While exploring the mountains you catch a strong whiff of your favorite scent.  Tipping your head to the side, you take in a few deep lungfuls and sigh.   Judging by the strength of the smell, there must be MANY minotaurs gathered together.   Immediate visions of being surrounded by the muscly monsters fill your mind.   In your fantasy your holes are plugged and you're soaked in their wondrous stuff.  You desperately want it to be a reality, and all you need to do is follow your nose...\n\n", false);
 //
@@ -1183,7 +1202,7 @@ private function takeMinoCumDirectly():void {
 //}
 //
 //private function minoAddictionBadEnd2():void {
-	//spriteSelect(44);
+	//minotaurSprite();
 	//clearOutput();
 	//output("You grin and stumble up the mountain, inhaling deep breaths from moment to moment to make sure you're on the right track.  The scent gets stronger and stronger, making you ", false);
 	//if(pc.hasVagina()) {
@@ -1216,7 +1235,7 @@ private function takeMinoCumDirectly():void {
 //}
 ////[PAGE 2]
 //private function minoCumAddictBadEnd3():void {
-	//spriteSelect(44);
+	//minotaurSprite();
 	//hideUpDown();
 	//clearOutput();
 	//output("Days and weeks pass in a half-remembered haze.  You're violated countless time, and after the first day they don't even bother to keep you on a leash.  Why would they need to restrain such an eager slave?  You're tossed to the side whenever you're not needed as a cum-dump, but as soon as you start to come out of your daze, you crawl back, gaping, dripping, and ready for another dose.  For their part, your new masters seem happy to take care of your needs.  The only time you aren't drugged is when the minotaurs are sleeping, but the minitaurs seem all too happy to let you suckle the pre from their tiny horse-cocks in the huddled slave-pile.\n\n", false);
@@ -1227,7 +1246,7 @@ private function takeMinoCumDirectly():void {
 //}
 
 //private function minotaurDrinksMilkNewsAtEleven():void {
-	//spriteSelect(44);
+	//minotaurSprite();
 	//clearOutput();
 	//output("You kneel next to the exhausted minotaur, lifting his head up to your " + breastDescript(0) + ". He turns his muzzle away from them, still trying to defy you. You force his head back toward your chest and push your " + nippleDescript(0) + " against his mouth, but he keeps his lips tightly shut. You pound your fist on his stomach, forcing a gasp of air out of his mouth as you cram your nipple inside. The minotaur is trying to shake his head to free up his mouth but you're holding his fur too firmly for him to wriggle free. His struggling only causes sips of milk to trickle down into his mouth. You squeeze your breast and send streams of milk down his throat. He soon stops fighting and just starts nursing. He's sucking hard, pulling the milk out of you, and stopping every few minutes to take a deep breath. He soon empties that teat and you put the other one up to his mouth. He obediently begins to nurse on that one, but he's a bit winded from the other, so his suckling is gentle and soothing. It takes him a bit longer for him to empty this nipple, but having such a strong minotaur reduced to a weak, suckling calf pleases you greatly for some reason.\n\n", false);
 //
@@ -1243,7 +1262,7 @@ private function takeMinoCumDirectly():void {
 
 //should be restricted to PCs with 36" cocks or less (arm length-ish) since you're holding the minotaur's horns; centaur addition matches to same length because you're welcome
 private function minotaurBlowjob():void {
-	//spriteSelect(44);
+	minotaurSprite();
 	clearOutput();
 	var x:Number = pc.cockThatFits(enemy.analCapacity());
 	output("You step towards the minotaur, ");
@@ -1377,7 +1396,7 @@ private function getMinoHawtDawged():void {
 	clearOutput();
 	clearMenu();
 	
-	minotaurPrepare();
+	minotaurSprite();
 		
 	if (pc.LQ() >= 99) {
 		output("You collapse to your knees, hands racing to your crotch and your ");
@@ -1432,9 +1451,12 @@ private function getMinoHawtDawged():void {
 	//minoCumAddiction(5);
 	
 	processTime(1 * 60 + rand(60));
-	clearMenu();
 	if (inCombat()) CombatManager.genericLoss();
-	else addButton(0, "Next", mainGameMenu);
+	else {
+		clearMenu();
+		setEnemy(null);
+		addButton(0, "Next", mainGameMenu);
+	}
 }
 
 public function CoCMinotaurWon():void

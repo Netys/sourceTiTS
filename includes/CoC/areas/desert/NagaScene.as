@@ -1,5 +1,6 @@
 import classes.Characters.CoC.CoCNaga;
 import classes.Characters.PlayerCharacter;
+import classes.GameData.CombatManager;
 import classes.GLOBAL;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
@@ -261,10 +262,8 @@ private function gooNagaRape():void {
 	} 
 	output("  For a moment you just sit there in post orgasmic bliss, the walls of the naga convulsing around your gooey half. You decide that the snake woman has had enough and slowly withdraw yourself from her abused love canal. You gather up your things and head back to your camp, leaving the naga lying in the sands.", false);
 	
+	processTime(20+rand(10));
 	CombatManager.genericVictory();
-	processTime(60);
-	clearMenu();
-	addButton(0, "Next", mainGameMenu);
 }
 
 //3) Victory male
@@ -356,10 +355,8 @@ private function nagaVictoryMale():void {
 	output("You think it would be a very good idea to come to the desert more often.\n\n", false);
 	pc.orgasm();
 	
+	processTime(20+rand(10));
 	CombatManager.genericVictory();
-	processTime(60);
-	clearMenu();
-	addButton(0, "Next", mainGameMenu);
 }
 
 private function nagaVictoryFemale():void {
@@ -416,10 +413,8 @@ private function nagaVictoryFemale():void {
 	output("You think it would be a very good idea to come to the desert more often.\n\n", false);
 	pc.orgasm();
 
+	processTime(20+rand(10));
 	CombatManager.genericVictory();
-	processTime(60);
-	clearMenu();
-	addButton(0, "Next", mainGameMenu);
 }
 
 private function nagaVictoryGenderless():void {
@@ -459,10 +454,8 @@ private function nagaVictoryGenderless():void {
 	output("You think it would be a very good idea to come to the desert more often.\n\n", false);
 	pc.orgasm();
 	
+	processTime(20+rand(10));
 	CombatManager.genericVictory();
-	processTime(60);
-	clearMenu();
-	addButton(0, "Next", mainGameMenu);
 }
 
 internal function nagaFUCKSJOOOOOO():void {
@@ -718,10 +711,8 @@ internal function nagaFUCKSJOOOOOO():void {
 	}
 	pc.orgasm();
 	
+	processTime(20+rand(10));
 	CombatManager.genericLoss();
-	processTime(60);
-	clearMenu();
-	addButton(0, "Next", mainGameMenu);
 }
 
 public function nagaRapeChoice():void {
@@ -736,10 +727,9 @@ public function nagaRapeChoice():void {
 	if (pc.lust() >= 33) {
 		output("Your body aches for further satisfaction - do you rape the snake woman?\n\n", false);
 		addButton(14, "Leave", function():* {
-			CombatManager.genericVictory();
-			processTime(60);
-			clearMenu();
-			addButton(0, "Next", mainGameMenu); } );
+			processTime(10 + rand(5));
+			CombatManager.genericVictory(); 
+			} );
 		
 		if (pc.hasCock()) addButton(0, "As Male", nagaVictoryMale);
 		if (pc.hasVagina())	addButton(1, "As Female", nagaVictoryFemale);		
@@ -749,10 +739,8 @@ public function nagaRapeChoice():void {
 	}
 	else 
 	{
+		processTime(10 + rand(5));
 		CombatManager.genericVictory();
-		processTime(60);
-		clearMenu();
-		addButton(0, "Next", mainGameMenu);
 	}
 }
 

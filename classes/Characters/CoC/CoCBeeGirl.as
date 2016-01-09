@@ -45,7 +45,7 @@ package classes.Characters.CoC
 			baseHPResistances.pheromone.resistanceValue = 10.0;
 			baseHPResistances.tease.resistanceValue = 10.0;
 			
-			this.XPRaw = 50;
+			this.XPRaw = 100;
 			this.level = 4;
 			this.credits = (rand(15) + 1) * 10;
 			this.HPMod = 4;

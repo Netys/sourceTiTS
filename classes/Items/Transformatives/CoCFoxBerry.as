@@ -336,7 +336,7 @@ package classes.Items.Transformatives
 			//FIRST
 			if (!pc.hasTail(GLOBAL.TYPE_VULPINE) && changes < changeLimit && rand(4) == 0) {
 				//from no tail
-				if (!pc.hasTail()) output("\n\nA pressure builds on your backside.  You feel under your [armor] and discover a strange nodule growing there that seems to be getting larger by the second.  With a sudden flourish of movement, it bursts out into a long and bushy tail that sways hypnotically, as if it had a mind of its own.  <b>You now have a fox's tail!</b>");
+				if (!pc.hasTail()) output("\n\nA pressure builds on your backside.  You feel under your [pc.armor] and discover a strange nodule growing there that seems to be getting larger by the second.  With a sudden flourish of movement, it bursts out into a long and bushy tail that sways hypnotically, as if it had a mind of its own.  <b>You now have a fox's tail!</b>");
 				//from another type of tail
 				else output("\n\nPain lances through your lower back as your tail shifts violently.  With one final aberrant twitch, it fluffs out into a long, bushy fox tail that whips around in an almost hypnotic fashion.  <b>You now have a fox's tail!</b>");
 				pc.tailType = GLOBAL.TYPE_VULPINE;

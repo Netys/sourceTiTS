@@ -45,7 +45,7 @@ public function exploreForest():void
 	chance.push(1);
 	
 	// Jojo
-	if ((cor() >= 25 || pc.level > 4) && (flags["COC.JOJO_IN_CAMP"] == undefined || flags["COC.JOJO_IN_CAMP"] == 0)) {
+	if ((pc.cor() >= 25 || pc.level >= 4) && (flags["COC.JOJO_IN_CAMP"] == undefined || flags["COC.JOJO_IN_CAMP"] == 0)) {
 		choice.push(forestEventJojo);
 		chance.push(1);
 	}

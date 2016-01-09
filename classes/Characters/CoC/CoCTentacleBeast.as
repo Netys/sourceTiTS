@@ -58,7 +58,7 @@ package classes.Characters.CoC
 			
 			this.XPRaw = 250;
 			this.level = 6;
-			this.credits = rand(150)+50;
+			this.credits = (rand(15) + 5) * 10;
 			this.HPMod = 0;
 			this.HPRaw = this.HPMax();
 			
