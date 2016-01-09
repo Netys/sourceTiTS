@@ -191,6 +191,9 @@ package classes.GameData
 		 */
 		private function postHostileTurnActions():Boolean
 		{
+			for (var i:int = 0; i < _hostiles.length; i++)
+				if (_hostiles[i].hasOwnProperty("postHostileTurnActions")) _hostiles[i].postHostileTurnActions();
+				
 			// seductionChance()
 			if (pc.hasStatusEffect("Attempt Seduction"))
 			{
@@ -885,6 +888,9 @@ package classes.GameData
 				}
 				
 				addButton(4, "Do Nothing", waitRound);
+				
+				for (var i:int = 0; i < _hostiles.length; i++)
+					if (_hostiles[i].hasOwnProperty("additionalCombatMenuEntries")) _hostiles[i].additionalCombatMenuEntries();
 				return;
 			}
 			

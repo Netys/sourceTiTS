@@ -65,7 +65,8 @@ public function DesertCaveEntrance():Boolean {
 			
 		if(flags["COC.BEATEN_SANURA_COUNT"] > 0) {
 			addButton(1, "Fuck", fuckDatSphinx, null, "Fuck", "Use Sanura to get off.");
-		}
+		} else 
+			addButton(1, "Uh, FIGHT!", fuckItAttackSphinx, null, "Uh, FIGHT!", "Screw the riddles, fight her instead!");
 	}
 
 	if(flags["COC.DISCOVERED_WITCH_DUNGEON"] != 1) {

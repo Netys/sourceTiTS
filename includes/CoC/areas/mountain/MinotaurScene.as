@@ -279,7 +279,6 @@ public function watchAMinoCumSlut():void
 	pc.lust(10);
 	processTime(10);
 	clearMenu();
-	setEnemy(null);
 	addButton(0, "Next", watchMinoCumSlutII);
 }
 

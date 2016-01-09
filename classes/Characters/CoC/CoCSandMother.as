@@ -287,7 +287,7 @@ package classes.Characters.CoC
 			}
 			else if (sizeMod >= 200)
 				output(".  It drags you through the air before slamming you into the wall!  You're glad for your mass, as she couldn't seem to accelerate you into the stone as fast as she'd like.  Sometimes eating plenty pays off.  ");
-			else if (sizeMod >= 200)
+			else
 				output(" and throwing you into the wall!  ");
 			//0 thickness, 4' tall: 124
 			//100 thickness, 4' tall: 172

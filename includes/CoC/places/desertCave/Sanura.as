@@ -43,7 +43,7 @@ public function answerCorrectSmartAss(riddles:Array):void {
 		else {
 			output("\"<i>Tsk, I lose again!</i>\" Sanura pouts, crossing her arms.  \"<i>I suppose you'll just have to give me a victory ravishing, won't you?  Go easy, though... you've already damaged my pride so....</i>\"");
 		}
-		flags["COC.BEATEN_SANURA_COUNT"]++;
+		IncrementFlag("COC.BEATEN_SANURA_COUNT");
 		output("\n\nWhat do you do?");
 		//(Display Options: [Fuck Her] [Door] [Leave])
 		clearMenu();
@@ -251,6 +251,7 @@ public function fuckDatSphinx():void {
 	//Male Options: [Get Blown] [Pawjob]
 	//Female Options: [Force Dildos]
 	clearMenu();
+	IncrementFlag("COC.TIMES_WINFUCKED_SANURA");
 	//Req Cock
 	addDisabledButton(0, "Fuck Her", "Fuck Her", "This scene requires you to have cock.");
 	addDisabledButton(1, "Get Blown", "Get Blown", "This scene requires you to have cock.");
@@ -418,7 +419,7 @@ public function fuckDatLionPussah():void {
 //Submission Options
 public function sphinxSubmissionOptions():void {
 	clearOutput();
-	flags["COC.TIMES_SUBMITTED_TO_SANURA"]++;
+	IncrementFlag("COC.TIMES_SUBMITTED_TO_SANURA");
 	output("Having lost the Riddle Game, you do as the sphinx-girl commands: you pull off your [pc.gear], leaving yourself bare under the desert sun. \"<i>Now then, my dull little pet, what shall I do with you...</i>\"");
 	clearMenu();
 	//SUBMISSION:

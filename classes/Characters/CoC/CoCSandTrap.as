@@ -16,7 +16,7 @@ package classes.Characters.CoC
 	import classes.kGAMECLASS;
 	import classes.Util.*;
 	
-	public dynamic class CoCSandTrap extends Creature
+	public class CoCSandTrap extends Creature
 	{
 		public function CoCSandTrap() 
 		{
@@ -31,7 +31,6 @@ package classes.Characters.CoC
 			this.long = "You are fighting the sandtrap.  It sits half buried at the bottom of its huge conical pit, only its lean human anatomy on show, leering at you from beneath its shoulder length black hair with its six equally sable eyes.  You cannot say whether its long, soft face with its pointed chin is very pretty or very handsome - every time the creature's face moves, its gender seems to shift.  Its lithe, brown flat-chested body supports four arms, long fingers playing with the rivulets of powder sand surrounding it.  Beneath its belly you occasionally catch glimpses of its insect half: a massive sand-coloured abdomen which anchors it to the desert, with who knows what kind of anatomy.";
 			this.customDodge = "";
 			this.customBlock = "";
-			this.plural = false;
 			
 			this.meleeWeapon.attack = 1;
 			this.meleeWeapon.longName = "claws";
@@ -174,8 +173,6 @@ package classes.Characters.CoC
 			this.createStatusEffect("Disarm Immune");
 			this.createStatusEffect("Force It Gender");
 			
-			this.additionalCombatMenuEntries = SandTrapCombatMenuAddition; // sort of dirty hack - this class is declared as dynamic
-			
 			credits = (2 + rand(5)) * 10;
 			tallness = rand(8) + 150;
 			
@@ -190,7 +187,7 @@ package classes.Characters.CoC
 			this._isLoading = false;
 		}
 		
-		public function SandTrapCombatMenuAddition():void
+		public function additionalCombatMenuEntries():void
 		{
 			//[(new PG for PC height levels)PC level 4: 
 			if(SandTrapLevel() == 4) output("\n\nYou are right at the edge of its pit.  If you can just manage to keep your footing here, you'll be safe.");

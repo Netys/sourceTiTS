@@ -19,16 +19,20 @@ import classes.Engine.Utility.*;
 //Uses a scepter as a weapon
 //*Encounter:
 
-private function sandWitchMotherPrepare():void {
-	userInterface.showName("SAND\nMOTHER");
+private function sandWitchMotherShow():void {
 	if (enemy == null || !(enemy is CoCSandMother)) {
-		CombatManager.newGroundCombat();
-		CombatManager.setFriendlyCharacters(pc);
-		CombatManager.setHostileCharacters(new CoCSandMother());
-		CombatManager.victoryScene(defeatTheSandMother);
-		CombatManager.lossScene(loseToTheSandMother);
-		CombatManager.displayLocation("SAND\nMOTHER");
+		setEnemy(new CoCSandMother());
 	}
+	userInterface.showName("SAND\nMOTHER");
+}
+
+private function sandWitchMotherPrepare():void {
+	CombatManager.newGroundCombat();
+	CombatManager.setFriendlyCharacters(pc);
+	CombatManager.setHostileCharacters(new CoCSandMother());
+	CombatManager.victoryScene(defeatTheSandMother);
+	CombatManager.lossScene(loseToTheSandMother);
+	CombatManager.displayLocation("SAND\nMOTHER");
 }
 
 public function sandWitchMotherFriendlyMenu():void {	
@@ -47,7 +51,11 @@ public function sandWitchMotherFriendlyMenu():void {
 		//addButton(7,"Free Slaves",slavesDiscussion, null, null, null, "Request the Sand Mother to release a slave.");
 	if (pc.lust() >= 33) addButton(8, "Sex", sexWithFriendlySandMother, null, "Sex", "Have some sexy time with the Sand Mother.");
 	
-	addButton(14,"Leave",mainGameMenu);
+	addButton(14, "Leave", function():*{
+		setEnemy(null);
+		clearMenu();
+		mainGameMenu();
+	});
 }
 
 //public function slavesDiscussion():void {
@@ -190,7 +198,7 @@ public function sandMotherPOMenu():void {
 
 
 public function sandMotherStuffGOA():void {
-	sandWitchMotherPrepare();
+	sandWitchMotherShow();
 	clearOutput();
 	//*Encounter Repeat: Friendly:
 	if(flags["COC.SAND_WITCHES_FRIENDLY"] > 0) {
@@ -307,7 +315,7 @@ public function talkDownTheMother():void {
 	
 	output("\n\n\"<i>Very well.  You are either not a demon agent or the most clever spy this side of Marae's Lake,</i>\" the regal enchantress admits, quietly fixing her hair.  \"<i>Either way, it seems I have no choice but to take you at your word until your actions prove otherwise.</i>\"  She finishes with her hair and idly folds her hands across her lap, which only serves to strain her silken robe tighter around her double-bust.");
 	
-	output("\n\n\"<i>Is there something you would like to discuss, or aid you would request?  It has been a great deal of time since I have had the pleasure of discourse with an outsider.</i>\"");
+	output("\n\n\"<i>Is there something you would like to discuss, or aid you would request?  It has been a great deal of time since I have had the pleasure of discourse with an outsider.</i>\"\n\n");
 	//pc.XP += 200;
 	//mainView.statsView.showStatUp( 'xp' );
 	// xpUp.visible = true;
@@ -316,10 +324,8 @@ public function talkDownTheMother():void {
 	flags["COC.SAND_WITCHES_FRIENDLY"] = 1;
 	
 	processTime(3 + rand(3));
-	CombatManager.genericVictory();
-	clearMenu();
-	
-	sandWitchMotherFriendlyMenu();
+	CombatManager.genericVictory();	
+	//sandWitchMotherFriendlyMenu();
 }
 //*Tentacle Gangbang
 public function tentacleGangBang():void {
@@ -338,7 +344,7 @@ public function tentacleGangBang():void {
 	
 	output("\n\nThe Sand Mother gasps as she's firmly wrapped up with dick, subsumed in squirming cocks that rapidly immobilize her arms and legs.  The one between her tits arcs around the side of one, then zips through the tits again, horizontally.  It continues its voyage, squirming and sliding around the quad-breasts until all four are tightly bound in tentacle, massaged by its every motion and squeezed just hard enough to make them squirt and leak their bountiful milk.  The rest of your cock-tentacles aren't idle, and at the same time, they encircle her neck and hips, a pair of them poising above the slick openings below.  Tiring of having a sub-par view of the action, you flex one of your members and easily tear the supple fabric, ripping it from the large matron's frame.");
 	
-	output("\n\nNow fully exposed, you're treated to the magnificent sight of the dark-skinned enchantress all trussed up with green cock.  The swollen, purple heads of your many members leave behind smears of shining pre-cum as they move, turning the queen of the sand witches into little more than a cock-stained slut.  While the view and sensation of her glossy skin combine to make you dizzy, you crave more.  [EachCock] is achingly hard and ready to go, and you desperately need something to sheath them in.  You pause long enough to judge your target's readiness.  She's gasping, blushing and squirming in your restraints, not in panic but in lust.  Her nipples are hard, milk-squirting bullets.  You flick one to test its firmness and get rewarded with a thick gout of creme.  She's ready.");
+	output("\n\nNow fully exposed, you're treated to the magnificent sight of the dark-skinned enchantress all trussed up with green cock.  The swollen, purple heads of your many members leave behind smears of shining pre-cum as they move, turning the queen of the sand witches into little more than a cock-stained slut.  While the view and sensation of her glossy skin combine to make you dizzy, you crave more.  [pc.EachCock] is achingly hard and ready to go, and you desperately need something to sheath them in.  You pause long enough to judge your target's readiness.  She's gasping, blushing and squirming in your restraints, not in panic but in lust.  Her nipples are hard, milk-squirting bullets.  You flick one to test its firmness and get rewarded with a thick gout of creme.  She's ready.");
 	
 	output("\n\nAs one, you take your twin, cunt-hungry tentacle cocks and thrust them forward.  A cacophony of liquid squelches signal your successful penetration, and each cock can feel the other through the narrow divide.  The twin shafts gleefully double-penetrate the witch without even touching her anus... yet.  Even after a foot of cock is inside her, you keep pushing further, pushing past cervixes in order to curl your penises about in the warm, welcoming wombs.  You shudder from feeling the tight cervical ring around yourself and nearly cum, but you hold back, waiting until you can tend to all of your needs.");
 	
@@ -380,7 +386,11 @@ public function tentacleGangBang():void {
 	pc.cor(1);
 	if (!inCombat()) {
 		clearMenu();
-		addButton(0, "Next", mainGameMenu);
+		addButton(0, "Next", function():*{
+			setEnemy(null);
+			clearMenu();
+			mainGameMenu();
+		});
 	}
 	else CombatManager.genericVictory();
 }
@@ -388,7 +398,7 @@ public function tentacleGangBang():void {
 //>Sets to resisting with options for repeat rapes.
 public function fuckTheSandMothersCunt():void {
 	clearOutput();
-	sandWitchMotherPrepare();
+	sandWitchMotherShow();
 	var x:int = pc.cockThatFits(enemy.vaginalCapacity());
 	var y:int = pc.cockThatFits2(enemy.vaginalCapacity());
 	output("You admire your prize for a moment, reveling triumphantly in your victory as you hastily disrobe.  The Sand Mother, defeated and weak, declares, \"<i>Fine then, do as you will.  You won't break me.</i>\"  The venom in her voice takes you off-guard - she still thinks you're a demonic agent!  You shrug and roll her over, pulling her up onto her hands and knees.  She can think what she wants, but you're going to tap her super-curvy body regardless.  You smack the weakened Queen through her sheer robes and admire the ripple that moves from one side of her well-endowed tush to the other.");
@@ -424,7 +434,7 @@ public function fuckTheSandMothersCunt():void {
 	
 	output("\n\nYou tell her that if she wants to be fucked like a bitch, she needs to beg like a bitch - face down, ass up, and whimpering like the needy slut that she is.  Hope sparks in her eyes, warring with suppressed pride, and she gingerly lowers her face to the ground, not daring to meet your gaze as she lifts her rump high and spreads her legs.  A pitiful whine so quiet that you can barely hear it squeaks from her lips.  Not good enough.  You tell her that you aren't convinced.  She doesn't sound like a horny bitch just begging to be plugged full of cock.  Again, the witch whines, but this time, it's high and keening, a plaintive wail that's part moan and part encouragement.  Juices drip freely down her legs as she gives in completely, her knees twitching, her twin pussies opening, blooming like flowers and pulsing with hungry dilations, still slightly gaped from your fuck.");
 	
-	output("\n\nWatching her debase herself like this, [eachCock] grows even harder, oozing and aching to cum.  You congratulate the simpering excuse for a sorceress on her proper mewling by pushing back inside her sweltering snatch");
+	output("\n\nWatching her debase herself like this, [pc.EachCock] grows even harder, oozing and aching to cum.  You congratulate the simpering excuse for a sorceress on her proper mewling by pushing back inside her sweltering snatch");
 	if(y >= 0) output("es");
 	output(".  Fucking her hard and fast, you pay little heed to her pleasure and simply mount her, rutting her roughly.  She doesn't even stop her begging either, and every now and then you can actually pick out words like, \"<i>Please,</i>\" and \"<i>Cum.</i>\"  You grab a fistful of her hair and pull her head back, commanding her to cum for you, even as you feel your orgasm rising, welling up within you.");
 	
@@ -458,7 +468,11 @@ public function fuckTheSandMothersCunt():void {
 	pc.cor(1);
 	if (!inCombat()) {
 		clearMenu();
-		addButton(0, "Next", mainGameMenu);
+		addButton(0, "Next", function():*{
+			setEnemy(null);
+			clearMenu();
+			mainGameMenu();
+		});
 	}
 	else CombatManager.genericVictory();
 }
@@ -512,7 +526,11 @@ public function scissorAndDrink():void {
 	pc.cor(1);
 	if (!inCombat()) {
 		clearMenu();
-		addButton(0, "Next", mainGameMenu);
+		addButton(0, "Next", function():*{
+			setEnemy(null);
+			clearMenu();
+			mainGameMenu();
+		});
 	}
 	else CombatManager.genericVictory();
 }
@@ -549,7 +567,7 @@ public function loseToSandMotherBadEnd():void {
 	if(pc.hasVagina()) output(" and ignored womanhood");
 	output(", but there is a hint of foreign female musk that you can detect as well.  Four bullet-like nipples are visible in the Sand Mother's thin silk robe, pressing out lewdly and staining it with damp, milky moisture.  The sight sends a pleasant tingle to your overloaded groin, adding to the heavy heat that's been building under the practiced fondling.");
 	
-	output("\n\n[EachCock] thickens in anticipation, flexing hard enough to lift clear of your middle.  Internal muscles clench and quiver, pumping slick warmth through your middle, a bubbling load just ready to burst.  Without warning, the enchantress pushes her foot down harder, squeezing [oneCock] back into your pre-puddle.  \"<i>Go on, let it out,</i>\" she encourages, quickly sliding up and down while keeping up the pleasure.  \"<i>I promise, I'll make your new life enjoyable.</i>\"  The agonizingly intense sensation triggers an gigantic wave of hot bliss inside you, and you arch your back, pinned as you are.  Lewdly pumping your [cock biggest] into the slippery arch, you cum, [eachCock] bouncing and dilating as it fires ribbons of fresh, salty cream across your body.");
+	output("\n\n[pc.EachCock] thickens in anticipation, flexing hard enough to lift clear of your middle.  Internal muscles clench and quiver, pumping slick warmth through your middle, a bubbling load just ready to burst.  Without warning, the enchantress pushes her foot down harder, squeezing [oneCock] back into your pre-puddle.  \"<i>Go on, let it out,</i>\" she encourages, quickly sliding up and down while keeping up the pleasure.  \"<i>I promise, I'll make your new life enjoyable.</i>\"  The agonizingly intense sensation triggers an gigantic wave of hot bliss inside you, and you arch your back, pinned as you are.  Lewdly pumping your [cock biggest] into the slippery arch, you cum, [pc.EachCock] bouncing and dilating as it fires ribbons of fresh, salty cream across your body.");
 	if(pc.cumQ() >= 500) output("  Wave after wave of jism washes across you, thoroughly drenching you with your spooge, the alabaster spunk soaking you from crown to waist with sticky slickness.");
 	if(pc.cumQ() >= 3000) output("  A puddle pools around you, deepening nicely as your boundless virility does its work, inching up your body until you feel as if you'll float away in your own pearly jism.");
 	
@@ -571,7 +589,7 @@ public function loseToSandMotherBadEnd():void {
 	
 	output("\n\nA quiet hum buzzes in your ears along with a gradual, growing tingle in your temples.  A pinkish glow can be seen from the edges of your vision as the chant finishes, and the droning intensifies, thrumming through your head powerfully.  Between the sensations from your loins and the potent magics seeping into your mind, your thoughts are scattered, shattering apart even as you try to scrape the pieces together into meaningful consciousness.  You aren't accustomed to anything like this, and you keep trying to think, to react, to do anything, but every single time, the half-born cogitation vibrates apart, melting away into a syrupy soup of nothingness.  After a while, you just give up.  Feeling... experiencing the here and now... that becomes your whole world.");
 	
-	output("\n\nYou don't react when your memories begin to fragment, vibrating apart into little pieces.  They slip into the pink morass in the bottom of your skull, dissolving into the pink sea of pleasure one by one.  That time you got caught stealing fades, along with a year or two of your childhood, replaced by a rising tide of sensational, unthinking bliss.  [EachCock] erupts again, spurting fitfully at the Cum Witch's command, each jet timed perfectly to the tempo of her dark, pistoning member.  With every spurt, more memories and knowledge melt away into sludge.  Soon, even your purpose is gone.  Your eyes roll back as you continue to cum unceasingly, an empty vessel of nothing but orgasmic pleasure.");
+	output("\n\nYou don't react when your memories begin to fragment, vibrating apart into little pieces.  They slip into the pink morass in the bottom of your skull, dissolving into the pink sea of pleasure one by one.  That time you got caught stealing fades, along with a year or two of your childhood, replaced by a rising tide of sensational, unthinking bliss.  [pc.EachCock] erupts again, spurting fitfully at the Cum Witch's command, each jet timed perfectly to the tempo of her dark, pistoning member.  With every spurt, more memories and knowledge melt away into sludge.  Soon, even your purpose is gone.  Your eyes roll back as you continue to cum unceasingly, an empty vessel of nothing but orgasmic pleasure.");
 	
 	output("\n\nThe midnight-hued magician abruptly pulls away, the pink light fading from your vision.  She's fully erect, her glans huge and engorged, shuddering with every beat of her heart as she struggles not to cum.  Even without her touches, you continue to orgasm, subsumed in bliss that doesn't end, not even when your [pc.balls] ");
 	if(pc.balls > 0) output("empty");
@@ -731,7 +749,7 @@ public function sandMotherBadEndsLadiesEpilogue():void {
 //>Fuck her friendly style.
 public function friendlySandMotherFuck():void {
 	clearOutput();
-	sandWitchMotherPrepare();
+	sandWitchMotherShow();
 	var x:int = pc.cockThatFits(enemy.vaginalCapacity());
 	var y:int = pc.cockThatFits2(enemy.vaginalCapacity());
 	//First Time:
@@ -832,7 +850,7 @@ public function friendlySandMotherFuck():void {
 		else output("erupts");
 		output(", splattering the throne with a fresh, lactic offering.  If you weren't mindlessly jamming yourself into her cunt, you'd wonder if she approves of your offering, but every neuron is busy sending your body to a mind-blowing climax.");
 	}
-	output("  You grunt as the heat inside your clenching [pc.balls] radiates through your groin and towards [eachCock].");
+	output("  You grunt as the heat inside your clenching [pc.balls] radiates through your groin and towards [pc.EachCock].");
 	//Newline
 	output("\n\n");
 	//More than 2 dongs or one doesn't fit
@@ -873,7 +891,11 @@ public function friendlySandMotherFuck():void {
 	IncrementFlag("COC.TIMES_FRIENDLY_FUCKED_SAND_MOTHER");
 	pc.orgasm();
 	clearMenu();
-	addButton(0, "Next", mainGameMenu);
+	addButton(0, "Next", function():*{
+		setEnemy(null);
+		clearMenu();
+		mainGameMenu();
+	});
 }
 
 //*Friendly Milk-Ride (Optional?)
@@ -947,7 +969,11 @@ public function lesboMilkFilling():void {
 	output("\n\n\"<i>Perhaps we can tend to our needs the next time they get out of hand,</i>\" she suggests.  Yes, you just might have to. ");
 	pc.orgasm();
 	clearMenu();
-	addButton(0, "Next", mainGameMenu);
+	addButton(0, "Next", function():*{
+		setEnemy(null);
+		clearMenu();
+		mainGameMenu();
+	});
 }
 	
 //*History
@@ -1037,7 +1063,11 @@ public function discussCumWitches():void {
 	//[Send Them Out] [Back]
 	//[Keep Them In] [Back]
 	//[Bolster Numbers] [Back]
-	addButton(4, "Back", mainGameMenu);
+	addButton(4, "Next", function():*{
+		setEnemy(null);
+		clearMenu();
+		mainGameMenu();
+	});
 }
 
 //Send them out:
@@ -1058,7 +1088,11 @@ public function keepCumWitchesIn():void {
 public function sendOutOrKeepInEnding():void {
 	output("\n\nThe Sand Mother nods and graciously answers, \"<i>Very well.  I will honor your request, for now.  I cannot speak for the other covens, but you are unlikely to stray into their territory.  When our time of ascendance comes, do not expect me to honor your requests so freely.  We will stop the Demon Queen however we must, regardless of your wishes.</i>\"");
 	clearMenu();
-	addButton(0, "Next", mainGameMenu);
+	addButton(0, "Next", function():*{
+		setEnemy(null);
+		clearMenu();
+		mainGameMenu();
+	});
 }
 
 //Bolster Numbers:
@@ -1069,7 +1103,11 @@ public function moreCumWitchesPlease():void {
 		output("Wouldn't it be better if there were like, lots of cum witches, with yummy cocks that you could suck?");
 		output("\n\n\"<i>No, it wouldn't,</i>\" the Sand Mother retorts, ending the conversation.");
 		clearMenu();
-		addButton(0, "Next", mainGameMenu);
+		addButton(0, "Next", function():*{
+			setEnemy(null);
+			clearMenu();
+			mainGameMenu();
+		});
 	}
 	output("You ask her if it wouldn't be more humane to simply create a few more cum witches, allowing them to split their duties and actually have time to serve in other ways, either as normal sisters or perhaps helping with the recruitment.");
 	output("\n\n\"<i>Doing so would reduce milk production and our breeding population somewhat,</i>\" the Dune Mother protests.  \"<i>We have done things this way for nearly two decades... it is the most efficient way.</i>\"");
@@ -1137,7 +1175,11 @@ public function leaveAloneSendLackeysToggle():void {
 		flags["COC.SAND_WITCH_LEAVE_ME_ALONE"] = 0;
 	}
 	clearMenu();
-	addButton(0, "Next", mainGameMenu);
+	addButton(0, "Next", function():*{
+		setEnemy(null);
+		clearMenu();
+		mainGameMenu();
+	});
 }
 //*Lactaid
 //>Get lactaid
@@ -1195,7 +1237,11 @@ public function unfriendlyWitchToggle():void {
 		flags["COC.SAND_WITCH_LEAVE_ME_ALONE"] = 0;
 	}
 	clearMenu();
-	addButton(0, "Next", mainGameMenu);
+	addButton(0, "Next", function():*{
+		setEnemy(null);
+		clearMenu();
+		mainGameMenu();
+	});
 }
 
 //addButton(5,"Get LaBova",takeLaBovaOrLactaid, false);

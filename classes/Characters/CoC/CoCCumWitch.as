@@ -206,7 +206,7 @@ package classes.Characters.CoC
 			if(target.isHerm()) choices[choices.length] = cumWitchGenderConfusionAttack;
 			//VAGOOZLES
 			if(target.hasVagina()) choices[choices.length] = cumHungerAttack;
-			choices[rand(choices.length)]();
+			choices[rand(choices.length)](target);
 		}
 
 		//*Attack: Bukkake
