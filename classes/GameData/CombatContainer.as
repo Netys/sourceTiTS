@@ -2742,6 +2742,11 @@ package classes.GameData
 							output("<b>too turned on to fight.</b>\n\n");
 						}
 						
+						for (var l:int = 0; l < _hostiles.length; l++)
+							if (_hostiles[l].hasOwnProperty("onPlayerVictory")) _hostiles[l].onPlayerVictory();			
+						for (var k:int = 0; k < _friendlies.length; k++)
+							if (_friendlies[k].hasOwnProperty("onPlayerVictory")) _friendlies[k].onPlayerVictory();
+						
 						kGAMECLASS.setEnemy(t_enemy);
 						CombatManager.showCombatUI();
 						t_victoryFunctor();
@@ -3039,12 +3044,7 @@ package classes.GameData
 		}
 		
 		private function doCleanupFor(target:Creature):void
-		{			
-			for (var l:int = 0; l < _hostiles.length; l++)
-				if (_hostiles[l].hasOwnProperty("onCleanup")) _hostiles[l].onCleanup(target);			
-			for (var k:int = 0; k < _friendlies.length; k++)
-				if (_friendlies[k].hasOwnProperty("onCleanup")) _friendlies[k].onCleanup(target);
-			
+		{
 			// Remove all combat effects
 			target.clearCombatStatuses();
 			target.alreadyDefeated = false;

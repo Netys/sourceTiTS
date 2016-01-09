@@ -8,6 +8,7 @@ package classes.Characters.CoC
 	import classes.GameData.CombatAttacks;
 	import classes.GLOBAL;
 	import classes.Items.Miscellaneous.*;
+	import classes.kGAMECLASS;
 	
 	public class CoCNaga extends Creature
 	{
@@ -201,10 +202,10 @@ package classes.Characters.CoC
 			moves[rand(moves.length)](target);
 		}
 		
-		public function onCleanup(target:Creature):void {
-			if(target.hasStatusEffect("Naga Venom")) {
-				target.reflexes(target.statusEffectv1("Naga Venom"));
-				target.removeStatusEffect("Naga Venom");
+		public function onPlayerVictory():void {
+			if(kGAMECLASS.pc.hasStatusEffect("Naga Venom")) {
+				kGAMECLASS.pc.reflexes(kGAMECLASS.pc.statusEffectv1("Naga Venom"));
+				kGAMECLASS.pc.removeStatusEffect("Naga Venom");
 			}
 		}
 		
@@ -217,9 +218,10 @@ package classes.Characters.CoC
 			//(Deals damage over 4-5 turns, invariably reducing 
 			//your speed. It wears off once combat is over.)
 			output("The naga strikes with the speed of a cobra, sinking her fangs into your flesh!  ");
+			var damage:Number;
 			if(!target.hasStatusEffect("Naga Venom")) {
 				output("The venom's effects are almost instantaneous; your vision begins to blur and it becomes increasingly harder to stand.  ");
-				var damage:Number = Math.min(3, int(target.reflexes() - 1));
+				damage = Math.min(3, int(target.reflexes() - 1));
 				damage = Math.max(damage, 0);
 				target.reflexes( -damage);
 				target.createStatusEffect("Naga Venom", damage, 0, 0, 0, false, "Icon_Poison", "You are poisoned by naga venom!", true);
@@ -230,7 +232,7 @@ package classes.Characters.CoC
 			else {
 				output("The venom's effects intensify as your vision begins to blur and it becomes increasingly harder to stand.  ");
 				
-				var damage:Number = Math.min(2, int(target.reflexes() - 1));
+				damage = Math.min(2, int(target.reflexes() - 1));
 				damage = Math.max(damage, 0);
 				target.reflexes( -damage);
 				target.addStatusValue("Naga Venom", 1, damage);

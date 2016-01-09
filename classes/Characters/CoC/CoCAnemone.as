@@ -7,6 +7,7 @@ package classes.Characters.CoC
 	import classes.Items.Drinks.*;
 	import classes.Items.Miscellaneous.EmptySlot;
 	import classes.Items.Transformatives.*;
+	import classes.kGAMECLASS;
 	import classes.TITSSaveEdit.Data.CoCTypeDefs;
 	
 	public class CoCAnemone extends Creature
@@ -131,7 +132,7 @@ package classes.Characters.CoC
 			
 			this.createVagina();
 			this.girlCumType = GLOBAL.FLUID_TYPE_GIRLCUM;
-			this.vaginas[0].type = GLOBAL.TYPE_HUMAN;
+			this.vaginas[0].type = GLOBAL.TYPE_ANEMONE;
 			this.vaginalVirgin = false;
 			this.vaginas[0].loosenessRaw = 3;
 			this.vaginas[0].wetnessRaw = 3;
@@ -157,6 +158,16 @@ package classes.Characters.CoC
 			
 			this._isLoading = false;
 		}
+		
+		public function onPlayerVictory():void {
+			trace("Anemone cleanup: " + kGAMECLASS.pc.hasStatusEffect("Anemone Venom"));
+			if (kGAMECLASS.pc.hasStatusEffect("Anemone Venom")) {
+				trace("Venom cleanup: " + kGAMECLASS.pc.statusEffectv1("Anemone Venom") + " / " + kGAMECLASS.pc.statusEffectv2("Anemone Venom"));
+				kGAMECLASS.pc.physique(kGAMECLASS.pc.statusEffectv1("Anemone Venom"));
+				kGAMECLASS.pc.reflexes(kGAMECLASS.pc.statusEffectv2("Anemone Venom"));
+				kGAMECLASS.pc.removeStatusEffect("Anemone Venom");
+			}
+		}
 
 		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void
 		{
@@ -164,9 +175,15 @@ package classes.Characters.CoC
 			if (target == null) return;
 			
 			output("Giggling playfully, the anemone launches several tentacles at you.  Most are aimed for your crotch, but a few attempt to caress your chest and face.");
+			
+			if (target.hasArmor() && target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)) { // airtight armors are really OP in CoC world...
+				output("  Futile attempt, your armor is sealed!");
+				return;
+			}
+			
 			output(" You jink and dodge valiantly but the tentacles are too numerous and coming from too many directions.  A few get past your guard and caress your skin, leaving a tingling, warm sensation that arouses you further.  ");
 			
-			var str:Number = rand(4 + target.libido() / 20) + 1;
+			var str:Number = rand(4 + target.libido() / 20 - target.reflexes() / 20) + 1;
 			//First application
 			if (!target.hasStatusEffect("Anemone Venom")) target.createStatusEffect("Anemone Venom", 0, 0, 0, 0, false, "LustUp", "Anemone venom is arousing you!");
 			//Gain some lust
@@ -177,32 +194,22 @@ package classes.Characters.CoC
 			//Loop through applying 1 point of venom at a time.
 			while (str > 0) {
 				str--;
-				// Need some SAFE method to temporary alter stats.
-				////Str bottommed out, convert to lust
-				//if (pc.physiqueRaw < 2) pc.lust(2);
-				////Lose a point of str.
-				//else {
-					//pc.physiqueRaw--;
-					//pc.addStatusValue("Anemone Venom", 1, 1);
-				//}
-				////Spe bottomed out, convert to lust
-				//if (pc.reflexesRaw < 2) pc.lust(2);
-				////Lose a point of spe.
-				//else {
-					//pc.reflexesRaw--;
-					//pc.addStatusValue("Anemone Venom", 2, 1);
-				//}
-				
 				//Str bottommed out, convert to lust
-				if (target.physiqueRaw < target.statusEffectv1("Anemone Venom")) applyDamage(new TypeCollection( { drug: 2 } ), this, target);
-				//Lose a point of str.
+				if (target.physique() <= 1) {
+					applyDamage(new TypeCollection( { drug: 2 } ), this, target);
+				}
 				else {
+					//Lose a point of str.
+					target.physique( -1);
 					target.addStatusValue("Anemone Venom", 1, 1);
 				}
 				//Spe bottomed out, convert to lust
-				if (target.reflexesRaw < target.statusEffectv2("Anemone Venom")) applyDamage(new TypeCollection( { drug: 2 } ), this, target);
+				if (target.reflexes() <= 1) {
+					applyDamage(new TypeCollection( { drug: 2 } ), this, target);
+				}
 				//Lose a point of spe.
 				else {
+					target.reflexes( -1);
 					target.addStatusValue("Anemone Venom", 2, 1);
 				}
 			}
