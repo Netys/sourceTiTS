@@ -279,6 +279,9 @@ package classes.GameData
 					return;
 				}
 			}
+			
+			for (var i:int = 0; i < _hostiles.length; i++)
+				if (_hostiles[i].hasOwnProperty("additionalCombatMenuEntries")) _hostiles[i].additionalCombatMenuEntries();
 		}
 		
 		/**

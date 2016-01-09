@@ -374,7 +374,7 @@ public function feedCost(effectName:String, feedCost:int):void
 public function mimbraneFeed(target:String = "regular", feedValue:int = 1):void
 {
 	var i:int;
-	if (mimbraneDebug) trace("Feeding Mimbrane Group [" + target + "] " + feedValue + " time(s).");
+	//if (mimbraneDebug) trace("Feeding Mimbrane Group [" + target + "] " + feedValue + " time(s).");
 
 	if (target == "all")
 	{

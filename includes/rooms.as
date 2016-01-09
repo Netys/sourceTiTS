@@ -37,6 +37,7 @@ public function initializeRooms():void
 	rooms["SHIP INTERIOR"].outText = "Exit";
 	rooms["SHIP INTERIOR"].moveMinutes = 2;
 	rooms["SHIP INTERIOR"].runOnEnter = shipMenu;
+	rooms["SHIP INTERIOR"].westExit = "VR_POD_ROOM";
 	rooms["SHIP INTERIOR"].addFlag(GLOBAL.INDOOR);
 	rooms["SHIP INTERIOR"].addFlag(GLOBAL.BED);
 	rooms["SHIP INTERIOR"].addFlag(GLOBAL.PRIVATE);
@@ -4893,6 +4894,8 @@ public function initializeRooms():void
 	rooms["DEBUG3"].northExit = "DEBUG2";
 	rooms["DEBUG3"].addFlag(GLOBAL.INDOOR);
 	rooms["DEBUG3"].runOnEnter = debugMenusThree;
+	
+	include "../includes/CoC/rooms.as";
 }
 
 /*

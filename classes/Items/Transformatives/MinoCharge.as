@@ -259,11 +259,7 @@ package classes.Items.Transformatives
 							if (target.vaginas[i].loosenessRaw < 1) target.vaginas[i].loosenessRaw == 1;
 							target.vaginas[i].minLooseness = 1;
 						}
-						if (target.vaginas[i].wetness > 0)
-						{
-							target.vaginas[i].wetness--;
-							if (target.vaginas[i].wetness < 0) target.vaginas[i].wetness == 0;
-						}
+						target.vaginas[i].wetness(-1);
 						if (target.elasticity > 1)
 						{
 							target.elasticity--;

@@ -259,7 +259,8 @@ public function shop(keeper:Creature):void {
 	shopkeep = keeper;
 	//Menuuuu!
 	this.clearMenu();
-	this.addButton(0,"Buy Item",buyItem);
+	if(keeper.inventory.length > 0) 
+		this.addButton(0,"Buy Item",buyItem);
 	if(keeper.typesBought.length > 0) 
 		this.addButton(1,"Sell Item",sellItem);
 	this.addButton(14,"Back",mainGameMenu);
@@ -376,7 +377,7 @@ public function sellItemGo(arg:ItemSlotClass):void {
 	this.addButton(0,"Next",sellItem);
 }
 
-public function getSellPrice(keeper:Creature,basePrice:Number):Number {
+public function getSellPrice(keeper:Creature, basePrice:Number):Number {
 	var sellPrice:Number = basePrice * keeper.buyMarkdown * pc.sellMarkup;
 	if(pc.hasPerk("Supply And Demand")) sellPrice *= 1.1;
 	sellPrice = Math.round(sellPrice);

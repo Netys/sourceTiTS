@@ -1338,7 +1338,7 @@ public function vanaeHuntressTentaSex(selScene:String):void
 	output(", making you squirm with pleasure.");
 	if (isCunt) output(" You gush around her [enemy.tail]");
 	else if (pc.vaginas.length == 1) output(" Your [pc.pussies] are glistening wet");
-	else if (pc.vaginas.legth == 2) output(" Your [pc.cunt] is glistening wet");
+	else if (pc.vaginas.length == 2) output(" Your [pc.cunt] is glistening wet");
 	else if (pc.hasCock()) output(" Pre-cum dribbles from your [pc.cocks]");
 	else output(" You swoon");
 	output(" as she teases and screws you with her assorted tentacles.");

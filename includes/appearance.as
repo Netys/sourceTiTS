@@ -578,7 +578,7 @@ public function appearance(forTarget:Creature):void
 			if(target.hasArmFlag(GLOBAL.FLAG_GOOEY)) output2(" gooey");
 			output2(" digit in shiny black. You can still feel through them all the same.")
 		}
-		else if(target.armType == GLOBAL.TYPE_CANINE) 
+		else if(target.armType == GLOBAL.TYPE_CANINE || target.armType == GLOBAL.TYPE_VULPINE) 
 		{
 			if(target.skinType != GLOBAL.SKIN_TYPE_FUR && target.hasArmFlag(GLOBAL.FLAG_FURRED)) output2(" A coat of " + target.furColor + " fur covers your arms, giving them a distinctly animalistic bent.");
 			output2(" Your fingers are tipped with short, canine claws as well, just like one of the ausar.");

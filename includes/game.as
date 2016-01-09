@@ -1783,6 +1783,7 @@ public function processTime(arg:int):void {
 			}
 		}
 		arg--;
+		notifyTimeProcessListeners(); // for CoC listeners
 	}
 	//Check to see if something changed in body part notices
 	milkMultiplierGainNotificationCheck();

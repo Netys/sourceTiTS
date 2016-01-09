@@ -114,15 +114,15 @@ package classes {
 		public var accessory: ItemSlotClass = new EmptySlot();
 		public var shield: ItemSlotClass = new EmptySlot();
 
-		public var inventory: Array = new Array();
+		public var inventory: /*ItemSlotClass*/ Array = new Array();
 
-		public var typesBought: Array = new Array();
+		public var typesBought: /*int*/ Array = new Array();
 		public var sellMarkup: Number = 1;
 		public var buyMarkdown: Number = 1;
 		public var keeperGreeting: String = "<i>“Hello and welcome to my shop. Take a gander and let me know if you see anything you like,”</i> " + a + short + " says with a smile.";
 		public var keeperBuy: String = "What would you like to buy?\n";
 		public var keeperSell: String = "What would you like to sell?\n";
-
+		
 		//Primary stats
 		private var _physiqueRaw: Number = 3;
 		public function get physiqueRaw():Number
@@ -895,7 +895,7 @@ package classes {
 		}
 		
 		//Key items
-		public var keyItems: Array;
+		public var keyItems: /*StorageClass*/ Array;
 
 		//Piercings
 		public var nipplesPierced: Number = 0;
@@ -918,7 +918,7 @@ package classes {
 		public var nosePLong: String = "";
 
 		//Sexual Stuff
-		public var cocks: Array;
+		public var cocks: /*CockClass*/ Array;
 		public function cockLengthUnlocked(cockIndex:int, newCockLength:Number):Boolean
 		{
 			if(hasStatusEffect("Goo Crotch")) return false;
@@ -1082,7 +1082,7 @@ package classes {
 		public var minutesSinceCum: Number = 0;
 		public var timesCum: Number = 0;
 		public var cockVirgin: Boolean = true;
-		public var vaginas: Array;
+		public var vaginas: /*VaginaClass*/ Array;
 
 		public function vaginaTypeUnlocked(vagIndex:int, newVagType:int):Boolean
 		{
@@ -1160,7 +1160,7 @@ package classes {
 		}
 		
 		public var vaginalVirgin: Boolean = true;
-		public var breastRows: Array;
+		public var breastRows : /*BreastRowClass*/ Array;
 
 		public function breastsUnlocked(bRowIndex:int, newBreastCount:Number):Boolean
 		{
@@ -1282,8 +1282,8 @@ package classes {
 
 		public var ass:VaginaClass = new VaginaClass(false);
 		public var analVirgin: Boolean = true;
-		public var perks: Array;
-		public var statusEffects: Array;		
+		public var perks: /*StorageClass*/ Array;
+		public var statusEffects: /*StorageClass*/ Array;		
 
 		//Used for misc shit
 		private var list:Array = new Array();
@@ -2128,6 +2128,23 @@ package classes {
 			if(foundAmount >= amount) return true;
 			return false;
 		}
+		/**
+		 * Accepts String as name, ItemSlotClass object as name source, or Class for class comparation.
+		 */
+		public function itemCount(arg:*,amount:int = 1):int
+		{
+			if (inventory.length == 0) return 0;
+			
+			var key:String = (arg is ItemSlotClass) ? arg.shortName : key = arg;			
+			var foundAmount:int = 0;
+			for(var x:int = 0; x < inventory.length; x++)
+			{
+				if (key is String && inventory[x].shortName == key 
+				|| key is Class && inventory[x] is (key as Class)
+				) foundAmount += inventory[x].quantity;
+			}
+			return foundAmount;
+		}
 		public function hasItemByName(arg:String, amount:int = 1):Boolean
 		{
 			if (inventory.length == 0) return false;
@@ -2639,14 +2656,18 @@ package classes {
 		{
 			return (mf("m", "f") == "f");
 		}
-		public function isBimbo():Boolean
+		public function isBimbo(perm:Boolean=false):Boolean
 		{
-			if(hasStatusEffect("Temporary Treatment")) return true;
+			if (hasStatusEffect("Temporary Treatment") && !perm) return true;
+			if (hasStatusEffect("Bimbo Champagne") && !perm) return true;
+			if (hasPerk("Bimbo Brains")) return true;
+			if (hasPerk("Futa Faculties")) return true;
 			if (this is PlayerCharacter && flags["DR_BADGER_BIMBOED_PC"] != undefined) return true;
 			return hasPerk("Ditz Speech");
 		}
-		public function isBro():Boolean
+		public function isBro(perm:Boolean=false):Boolean
 		{
+			if(hasPerk("Bro Brains")) return true;
 			return hasPerk("Brute Speech");	
 		}
 		/**
@@ -2808,6 +2829,11 @@ package classes {
 		}
 		public function maxOutEnergy(): void {
 			energyRaw = energyMax();
+		}
+		/** % of max lust. Can be useful for determining self-control level. */
+		public function LQ():Number
+		{
+			return Math.round(lust()/lustMax()*100);
 		}
 		//Lust
 		public function lust(arg:Number = 0, apply:Boolean = false): Number 
@@ -3067,6 +3093,8 @@ package classes {
 			if (hasStatusEffect("Myr Venom")) currLib += Math.floor(currLib * 0.15);
 			if (accessory is Allure) currLib += 20;
 			if (hasStatusEffect("Myr Venom Withdrawal")) currLib /= 2;
+			if (hasStatusEffect("Heat")) currLib += statusEffectv2("Heat");
+			if (hasStatusEffect("Rut")) currLib += statusEffectv2("Rut");
 			
 			if (currLib > libidoMax())
 			{
@@ -3087,11 +3115,23 @@ package classes {
 			bonus += perkv1("Inhuman Desire");
 			//trace("Max lust: " + (bonus + 100));
 			if(hasPerk("Venom Slut") && hasStatusEffect("Red Myr Venom")) bonus += 35;
+			if (hasPerk("Bimbo Body") || hasPerk("Bro Body") || hasPerk("Futa Form")) bonus += 50; // should be 20 and 25% resistance
+			if (hasPerk("Omnibus' Gift")) bonus += 30; // should be 15 and 15% resistance
 			return (100 + bonus);
 		}
 		public function lustMin(): Number {
 			var bonus:int = 0;
 			if (hasPerk("Drug Fucked")) bonus += 10;
+			if (hasPerk("Bimbo Body") || hasPerk("Bro Body") || hasPerk("Futa Form")) {
+				if(bonus > 40) bonus += 10;
+				else if(bonus >= 20) bonus += 20;
+				else bonus += 40;
+			}
+			if (hasPerk("Omnibus' Gift")) {
+				if(bonus > 40) bonus += 10;
+				else if(bonus >= 20) bonus += 20;
+				else bonus += 35;
+			}
 			if (hasStatusEffect("Ellie's Milk")) bonus += 33;
 			if (hasStatusEffect("Lane Detoxing Weakness"))
 			{
@@ -3131,43 +3171,69 @@ package classes {
 		public function slowStatGain(stat:String, arg:Number = 0):Number {
 			var statCurrent: Number = 0;
 			var change: Number = 0;
+			var mod: Number = 0;
 			// Affinity
 			if(stat == affinity)
 			{
-				arg *= 1.5;
+				arg *= arg >= 0 ? 1.5 : 0.66;
 			}
 			// Normal
-			if (stat == "physique") statCurrent = physique();
-			else if (stat == "reflexes") statCurrent = reflexes();
-			else if (stat == "aim") statCurrent = aim();
-			else if (stat == "intelligence") statCurrent = intelligence();
-			else if (stat == "willpower") statCurrent = willpower();
-			else if (stat == "libido") statCurrent = libido();
+			if (stat == "physique" || stat == "p") statCurrent = physique();
+			else if (stat == "reflexes" || stat == "r") statCurrent = reflexes();
+			else if (stat == "aim" || stat == "a") statCurrent = aim();
+			else if (stat == "intelligence" || stat == "i") statCurrent = intelligence();
+			else if (stat == "willpower" || stat == "w") statCurrent = willpower();
+			else if (stat == "libido" || stat == "l") statCurrent = libido();
 			else {
 				kGAMECLASS.output("ERROR: slowStatGain called with stat argument of " + stat + ". This isn't a real stat!");
 				return 0;
 			}
+			
+			//if(arg < 0) // loss - diminishing loss on low stat
+				//while (arg < 0) {
+					//mod = Math.max(arg, -1);
+					//arg++;
+					//if(arg > 0) arg = 0;
+					//if (statCurrent + change < 30) mod = .1;
+					//else if (statCurrent + change < 40) mod = .15;
+					//else if (statCurrent + change < 50) mod = .2;
+					//else if (statCurrent + change < 60) mod = .25;
+					//else if (statCurrent + change < 65) mod = .3;
+					//else if (statCurrent + change < 70) mod = .4;
+					//else if (statCurrent + change < 75) mod = .5;
+					//else if (statCurrent + change < 80) mod = .6;
+					//else if (statCurrent + change < 85) mod = .7;
+					//else if (statCurrent + change < 90) mod = .8;
+					//else if (statCurrent + change < 95) mod = .9;
+					//else mod = 1;
+					//change += mod;
+				//}
+			//else // gain - diminishing gain on high stat
 			while (arg > 0) {
+				mod = Math.min(arg, 1); // to support fractional arguments
 				arg--;
-				if (statCurrent + change < 30) change++;
-				else if (statCurrent + change < 40) change += .9;
-				else if (statCurrent + change < 50) change += .8;
-				else if (statCurrent + change < 60) change += .7;
-				else if (statCurrent + change < 65) change += .6;
-				else if (statCurrent + change < 70) change += .5;
-				else if (statCurrent + change < 75) change += .4;
-				else if (statCurrent + change < 80) change += .3;
-				else if (statCurrent + change < 85) change += .25;
-				else if (statCurrent + change < 90) change += .2;
-				else if (statCurrent + change < 95) change += .15;
 				if(arg < 0) arg = 0;
+				if (statCurrent + change < 30) mod *= 1;
+				else if (statCurrent + change < 40) mod *= .9;
+				else if (statCurrent + change < 50) mod *= .8;
+				else if (statCurrent + change < 60) mod *= .7;
+				else if (statCurrent + change < 65) mod *= .6;
+				else if (statCurrent + change < 70) mod *= .5;
+				else if (statCurrent + change < 75) mod *= .4;
+				else if (statCurrent + change < 80) mod *= .3;
+				else if (statCurrent + change < 85) mod *= .25;
+				else if (statCurrent + change < 90) mod *= .2;
+				else if (statCurrent + change < 95) mod *= .15;
+				else mod *= .1;
+				change += mod;
 			}
-			if (stat == "physique") return physique(change);
-			else if (stat == "reflexes") return reflexes(change);
-			else if (stat == "aim") return aim(change);
-			else if (stat == "intelligence") return intelligence(change);
-			else if (stat == "willpower") return willpower(change);
-			else if (stat == "libido") return libido(change);
+			
+			if (stat == "physique" || stat == "p") return physique(change);
+			else if (stat == "reflexes" || stat == "r") return reflexes(change);
+			else if (stat == "aim" || stat == "a") return aim(change);
+			else if (stat == "intelligence" || stat == "i") return intelligence(change);
+			else if (stat == "willpower" || stat == "w") return willpower(change);
+			else if (stat == "libido" || stat == "l") return libido(change);
 			else {
 				trace("ERROR: slowStatGain got to the end with a stat that should've called the earlier error. Looks like the function has been changed, added to, or bugged. Make sure top stat list matches bottom!");
 				return 0;
@@ -5549,9 +5615,9 @@ package classes {
 
 		//Grow
 		public function increaseCock(increase: Number, cockNum: Number): Number {
-			if (hasPerk("Big Cock") >= 0) increase *= perks[hasPerk("Big Cock")].value1;
-			if (hasPerk("Phallic Potential") >= 0) increase *= 1.5;
-			if (hasPerk("Phallic Restraint") >= 0) increase *= .25;
+			if (hasPerk("Big Cock")) increase *= perkv1("Big Cock");
+			if (hasPerk("Phallic Potential")) increase *= 1.5;
+			if (hasPerk("Phallic Restraint")) increase *= .25;
 			return cocks[cockNum].growCock(increase);
 		}
 		//BreastCup
@@ -7204,14 +7270,15 @@ package classes {
 			return totalClits() > 0;
 		}
 		public function findFirstOfcType(type: Number = 0): Number {
+			if(!hasCock()) return -1;
 			var index: Number = 0;
 			if (cocks[index].cType == type) return index;
 			while (index < cocks.length) {
-				index++;
 				if (cocks[index].cType == type) return index;
+				index++;
 			}
 			trace("creature.findFirstOfcType ERROR - searched for cType: " + type + " and could not find it.");
-			return 0;
+			return -1;
 		}
 		//How many cocks?
 		//Expanded to use an argument and replace horseCocks(), dogCocks(), etc.
@@ -7874,6 +7941,8 @@ package classes {
 			var race:String = "human";
 			//Determine race type
 			if (horseScore() >= 3) race = equineRace(); // Horse-morphs
+			if (foxScore() >= 4) race = faceType == GLOBAL.TYPE_VULPINE ? "fox-morph" : mf("fox-man", "fox-girl");
+			if (kitsuneScore() >= 5 && (race.indexOf("fox") == -1 || tailCount > 1)) race = "kitsune";
 			if (ovirScore() >= 3 && race == "human") race = "half-ovir";
 			if (ausarScore() >= 2 && race == "human") race = "half-ausar"; // Fucking Ausar forever overriding other shit. EXTERMINATUS.
 			if (kaithritScore() >= 3 && race == "human") race = "half-kaithrit";
@@ -7884,10 +7953,12 @@ package classes {
 			if (raskvelScore() >= 4) race = "raskvel-morph";
 			if (pandaScore() >= 4) race = "panda-morph";
 			if (ausarScore() >= 4) race = "ausar"
+			if (dogScore() >= 4 && race != "ausar") race = faceType == GLOBAL.TYPE_CANINE ? "dog-morph" : mf("dog-man", "dog-girl");
 			if (demonScore() >= 5) race = "demon-morph";
 			if (gabilaniScore() >= 5) race = "gabilani";
 			if (frogScore() >= 5) race = "kerokoras";
 			if (kaithritScore() >= 6) race = "kaithrit"
+			if (catScore() >= 5 && race != "kaithrit") race = faceType == GLOBAL.TYPE_FELINE ? "cat-morph" : mf("cat-man", "cat-girl");
 			if (leithanScore() >= 6) race = "leithan";
 			if (nukiScore() >= 6) race = "kui-tan";
 			if (vanaeScore() >= 6) race = "vanae-morph";
@@ -7982,6 +8053,137 @@ package classes {
 			if (race().indexOf("half-") != -1) return true;
 			if (race().indexOf("half ") != -1) return true;
 			return false;
+		}
+		public function dogScore():int {
+			var dogCounter:Number = 0;
+			if (faceType == GLOBAL.TYPE_CANINE)
+				dogCounter++;
+			if (earType == GLOBAL.TYPE_CANINE)
+				dogCounter++;
+			if (tailType == GLOBAL.TYPE_CANINE)
+				dogCounter++;
+			if (legType == GLOBAL.TYPE_CANINE)
+				dogCounter++;
+			if (armType == GLOBAL.TYPE_CANINE)
+				dogCounter++;
+			if (hasCock(GLOBAL.TYPE_CANINE) || hasVagina() && vaginas[0].type == GLOBAL.TYPE_CANINE)
+				dogCounter++;
+			if (breastRows.length > 1)
+				dogCounter++;
+			if (breastRows.length == 3)
+				dogCounter++;
+			if (breastRows.length > 3)
+				dogCounter--;
+			//Fur only counts if some canine features are present
+			if (hasFur() && dogCounter > 0)
+				dogCounter++;
+			return dogCounter;
+		}
+		public function catScore():Number
+		{
+			var catCounter:Number = 0;
+			if (faceType == GLOBAL.TYPE_FELINE)
+				catCounter++;
+			if (earType == GLOBAL.TYPE_FELINE)
+				catCounter++;
+			if (tailType == GLOBAL.TYPE_FELINE)
+				catCounter++;
+			if (legType == GLOBAL.TYPE_FELINE)
+				catCounter++;
+			if (armType == GLOBAL.TYPE_FELINE)
+				catCounter++;
+			if (eyeType == GLOBAL.TYPE_FELINE)
+				catCounter++;
+			if (hasCock(GLOBAL.TYPE_FELINE))
+				catCounter++;
+			if (breastRows.length > 1 && catCounter > 0)
+				catCounter++;
+			if (breastRows.length == 3 && catCounter > 0)
+				catCounter++;
+			if (breastRows.length > 3)
+				catCounter -= 2;
+			//Fur only counts if some canine features are present
+			if (hasFur() && catCounter > 0)
+				catCounter++;
+			return catCounter;
+		}
+		public function foxScore():Number
+		{
+			var foxCounter:Number = 0;
+			if (faceType == GLOBAL.TYPE_VULPINE)
+				foxCounter++;
+			if (earType == GLOBAL.TYPE_VULPINE)
+				foxCounter++;
+			if (tailType == GLOBAL.TYPE_VULPINE)
+				foxCounter++;
+			if (legType == GLOBAL.TYPE_VULPINE)
+				foxCounter++;
+			if (armType == GLOBAL.TYPE_VULPINE || armType == GLOBAL.TYPE_CANINE && foxCounter > 0)
+				foxCounter++;
+			if (hasCock(GLOBAL.TYPE_VULPINE) || hasCock(GLOBAL.TYPE_CANINE) && foxCounter > 0)
+				foxCounter++;
+			if (hasVagina(GLOBAL.TYPE_VULPINE) || hasVagina(GLOBAL.TYPE_CANINE) && foxCounter > 0)
+				foxCounter++;
+			if (breastRows.length > 1 && foxCounter > 0)
+				foxCounter++;
+			if (breastRows.length == 3 && foxCounter > 0)
+				foxCounter++;
+			if (breastRows.length == 4 && foxCounter > 0)
+				foxCounter++;
+			//Fur only counts if some canine features are present
+			if (hasFur() && foxCounter > 0)
+				foxCounter++;
+			return foxCounter;
+		}
+		//Determine kitsune Rating
+		public function kitsuneScore():Number
+		{
+			var kitsuneCounter:int = 0;
+			//If the character has fox ears, +1
+			if (earType == GLOBAL.TYPE_VULPINE)
+				kitsuneCounter++;
+			//If the character has a fox tail, +1
+			if (hasTail(GLOBAL.TYPE_VULPINE))
+				kitsuneCounter++;
+			//If the character has two or more fox tails, +2
+			if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount >= 2)
+				kitsuneCounter += 2;
+			if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9)
+				kitsuneCounter += 1;
+			//If the character has tattooed skin, +1
+			//9999
+			//If the character has a 'vag of holding', +1
+			if (vaginalCapacity() >= 8000)
+				kitsuneCounter++;
+			//If the character's kitsune score is greater than 0 and:
+			//If the character has a normal face, +1
+			if (kitsuneCounter > 0 && (faceType == GLOBAL.TYPE_HUMAN || faceType == GLOBAL.TYPE_VULPINE))
+				kitsuneCounter++;
+			//If the character's kitsune score is greater than 1 and:
+			//If the character has "blonde","black","red","white", or "silver" hair, +1
+			if (kitsuneCounter > 0 && (InCollection(furColor, kGAMECLASS.basicKitsuneHair, kGAMECLASS.elderKitsuneColors, kGAMECLASS.corruptKitsuneColors)))
+				kitsuneCounter++;
+			//If the character's femininity is 40 or higher, +1
+			if (kitsuneCounter > 0 && femininity >= 40)
+				kitsuneCounter++;
+			//If the character has fur of non-foxy type
+			if (skinType == GLOBAL.SKIN_TYPE_FUR && !InCollection(furColor, kGAMECLASS.basicKitsuneFur, kGAMECLASS.elderKitsuneColors, kGAMECLASS.corruptKitsuneColors))
+				kitsuneCounter--;
+			if (skinType > GLOBAL.SKIN_TYPE_FUR)
+				kitsuneCounter -= 2;  // Not skin or fur
+			//If the character has abnormal legs, -1
+			if (legType != GLOBAL.TYPE_HUMAN && legType != GLOBAL.TYPE_VULPINE)
+				kitsuneCounter--;
+			//If the character has a nonhuman face, -1
+			if (faceType != GLOBAL.TYPE_HUMAN && faceType != GLOBAL.TYPE_VULPINE)
+				kitsuneCounter--;
+			//If the character has ears other than fox ears, -1
+			if (earType != GLOBAL.TYPE_VULPINE)
+				kitsuneCounter--;
+			//If the character has tail(s) other than fox tails, -1
+			if (hasTail() && tailType != GLOBAL.TYPE_VULPINE)
+				kitsuneCounter--;
+			return kitsuneCounter;
 		}
 		public function humanScore(): int {
 			var counter: int = 0;
@@ -9858,12 +10060,15 @@ package classes {
 						desc += RandomInCollection(["horse-pussy", "mare-cunt", "fuck-hole", "horse-twat", "mare-twat", "centaur-snatch", "animal-pussy", "mare-pussy", "horse-cunt"]);
 				}
 				//Maybe doge?
-				else if (type == GLOBAL.TYPE_CANINE)
+				else if (type == GLOBAL.TYPE_CANINE || type == GLOBAL.TYPE_VULPINE)
 				{
 					if (!simple)
 						desc += RandomInCollection(["canine gash", "small-lipped vagina", "animalistic cunny", "canine honeypot", "canine snatch", "canine cunt", "animalistic pussy", "fragrant dog-cunt"]);
 					else
 						desc += RandomInCollection(["dog-pussy", "bitch-cunt", "fuck-hole", "dog-twat", "animal-twat", "animal-pussy", "dog-pussy", "dog-cunt"]);
+					if (foxScore() > 4) {
+						desc = desc.replace("dog", "fox");
+					}
 				}
 				else if (type == GLOBAL.TYPE_SIREN || type == GLOBAL.TYPE_ANEMONE)
 				{
@@ -12037,7 +12242,8 @@ package classes {
 		public function cumQuality():Number
 		{
 			var bonus:Number = 0;
-			if(hasPerk("Virile")) bonus += perkv1("Virile");
+			if (hasPerk("Virile")) bonus += perkv1("Virile");
+			if (hasStatusEffect("Rut")) bonus += statusEffectv1("Rut") / 100;
 			return (cumQualityRaw + cumQualityMod + bonus);
 		}
 		
@@ -12075,7 +12281,10 @@ package classes {
 		{
 			if (hasStatusEffect("Infertile")) return 0;
 			
-			return fertilityRaw + fertilityMod;
+			var bonus:Number = 0;
+			if (hasStatusEffect("Heat")) bonus += statusEffectv1("Heat") / 100;
+			
+			return fertilityRaw + fertilityMod + bonus;
 		}
 		
 		public var pregnancyIncubationBonusMotherRaw:Number = 1;
@@ -12108,7 +12317,7 @@ package classes {
 		}
 		
 		// Pregnancy Data Storage
-		public var pregnancyData:Array = new Array();
+		public var pregnancyData:/*PregnancyData*/Array = new Array();
 		
 		// Pregnancy Utility Methods
 		
@@ -12931,6 +13140,22 @@ package classes {
 			
 			return description;
 		}
+
+		public function cor(arg:Number = 0, apply:Boolean = false): Number 
+		{
+			if (kGAMECLASS.flags["COC.CORRUPTION"] == undefined) kGAMECLASS.flags["COC.CORRUPTION"] = 0;
+			if (apply) 
+				kGAMECLASS.flags["COC.CORRUPTION"] = arg;
+			else if (arg != 0) 
+			{
+				kGAMECLASS.flags["COC.CORRUPTION"] += arg;
+				if (kGAMECLASS.flags["COC.CORRUPTION"] > 100)
+					kGAMECLASS.flags["COC.CORRUPTION"] = 100;
+				if (kGAMECLASS.flags["COC.CORRUPTION"] < 0) 
+					kGAMECLASS.flags["COC.CORRUPTION"] =0;
+			}
+			return kGAMECLASS.flags["COC.CORRUPTION"];
+		}
 		
 		public function isDefeated():Boolean
 		{
@@ -13052,4 +13277,5 @@ package classes {
 		public var buttonText:String; // Transient version of ^ with a unique ID appended
 		
 	}
+	
 }

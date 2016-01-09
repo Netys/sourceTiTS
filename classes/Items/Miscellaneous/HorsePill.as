@@ -301,7 +301,7 @@
 				//#4 Increase wetness by a very small amount.
 				else if(select == 4)
 				{
-					if (target.wetnessUnlocked(target.lowestWetnessIndex(), target.vaginas[target.lowestWetnessIndex].wetness + 0.5))
+					if (target.wetnessUnlocked(target.lowestWetnessIndex(), target.vaginas[target.lowestWetnessIndex].wetness(0.5)))
 					{
 						//Multicunt
 						if(target.vaginaTotal() > 1)
@@ -319,7 +319,7 @@
 						//Both
 						kGAMECLASS.eventBuffer += " It takes some effort not to masturbate on the spot.";
 						x = target.lowestWetnessIndex();
-						target.vaginas[x].wetness += 0.5;
+						target.vaginas[x].wetness(0.5);
 						target.lust(10);
 					}
 					else
@@ -682,7 +682,7 @@
 							if(target.breastRows[x].breastRating() > biggestLowTits) biggestLowTits = target.breastRows[x].breastRating();
 						}
 						if(biggestLowTits < 1) kGAMECLASS.eventBuffer += "practically flat aside from the slight bumps of your " + target.nippleDescript(1) + ".";
-						else if(target.breastRows[0].breastRating < 1) kGAMECLASS.eventBuffer += "getting closer to your top side's flatness.";
+						else if(target.breastRows[0].breastRating() < 1) kGAMECLASS.eventBuffer += "getting closer to your top side's flatness.";
 						else kGAMECLASS.eventBuffer += "getting increasingly closer to flatness. If this happens much more you're not going to have much more than a few extra nipples to show your multibreastedness.";
 					}
 					else
@@ -1017,7 +1017,7 @@
 			if(target.bRows() <= 1) return false;
 			for(var x:int = 1; x < target.bRows(); x++)
 			{
-				if(target.breastRows[x].breastRating >= 1) return true;
+				if(target.breastRows[x].breastRating() >= 1) return true;
 			}
 			return false;
 		}

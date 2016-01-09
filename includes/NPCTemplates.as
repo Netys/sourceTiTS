@@ -2,6 +2,7 @@
 {
 	trace("initializeNPCs Called, just doing cleanup?", justUpdate)
 	
+	include "CoC/characters/hookCharacters.as";
 	prepChar(justUpdate, "CELISE", Celise);
 	prepChar(justUpdate, "RIVAL", Rival);
 	prepChar(justUpdate, "GEOFF", Geoff);

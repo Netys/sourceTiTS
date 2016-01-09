@@ -267,7 +267,7 @@ public function victoryFuckSyrisBunghole():void {
 
 	output("\n\nSyri starts to speak, but her voice catches as you push in, instead coming out as a high-pitched squeal as your prick spreads her wide, battering past her spasming sphincter and into the dark, warm, wet channel beyond. She grabs the table, trying to steady herself as your hips rock slowly forward, giving her just enough time to adjust to each and every one of your " + possessive(pc.cockDescript(x)));
 	//{if cockLength >= 12:}
-	if(pc.cocks[x].cLength >= 12) output(" many");
+	if(pc.cocks[x].cLength() >= 12) output(" many");
 	output(" inches.");
 
 	output("\n\n<i>“Oh, fuck. Fuckfuckfuck,”</i>  the ausar girl whines as you utterly spear her on your cock, her legs and tail twitching and her cock spasming as your thick length pushes inch after inch across her over-sensitive prostate. The act milks so much pre out of her in just one thrust that it pools between her paw-like feet, a white lake in contrast to her dark fur. For a moment, you stop your onslaught, [pc.chest] heaving as you revel in the vice-like grip of Syri's ass, trembling in pleasure as you feel her heartbeat pulsing through her body. Her battered pucker is gently squeezing your cock, practically massaging your dick as your [pc.cockHead " + x + "] squirts out the first thick glob of pre into your submissive little ausar slut's bowels.");

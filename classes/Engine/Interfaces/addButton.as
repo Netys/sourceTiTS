@@ -9,5 +9,4 @@ package classes.Engine.Interfaces
 	{
 		kGAMECLASS.addButton(slot, cap, func, arg, ttHeader, ttBody);
 	}
-
 }
