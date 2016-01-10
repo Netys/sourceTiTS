@@ -115,7 +115,8 @@ public function nagaEncounter():void {
 			pc.cuntChange(0,30,true,false,true);
 			pc.orgasm();
 			output("You think it would be a very good idea to come to the desert more often.", false);
-			doNext(returnToCampUseFourHours);
+			processTime(15 + rand(10));
+			addButton(0, "Next", mainGameMenu);
 			return;
 		}
 		//Genderleast
@@ -131,7 +132,8 @@ public function nagaEncounter():void {
 		}
 		output("You think it would be a very good idea to come to the desert more often.", false);
 		pc.lust(pc.libido() / 5);
-		doNext(returnToCampUseOneHour);
+		processTime(15 + rand(10));
+		addButton(0, "Next", mainGameMenu);
 		return;
 	}
 	//If player's last fight did not involve them being a naga
@@ -145,7 +147,8 @@ public function nagaEncounter():void {
 		//No fight for this encounter, brings you back to the camp. Next time you see her, she will attack you unless you turn back into a naga in the meantime
 		flags["COC.MET_NAGA_LAST_STATUS"] = 0;
 		output("You walk in the desert for what feels like an eternity, thinking of how much easier it was to move across the sand back when you had a tail, but then you're brought back to reality by a familiar hissing. The identity of your follower is no secret to you. As you open your mouth to greet your naga friend, you find yourself unable to pronounce any words. The girl comes towards you and slithers around in a confused way, trying to communicate. But the sounds that once formed words and phrases now seem to slip through you; all you can do is stand there, unable to grasp what she's trying to tell you. Realizing that you're not who you used to be anymore, she sadly looks down and turns around. The naga slithers away into the distance until she's nothing but a blink on the horizon.", false);
-		doNext(returnToCampUseOneHour);
+		processTime(10 + rand(5));
+		addButton(0, "Next", mainGameMenu);
 		return;
 	}
 	//if (flags[kFLAGS.CODEX_ENTRY_NAGAS] <= 0) {
@@ -688,7 +691,7 @@ internal function nagaFUCKSJOOOOOO():void {
 			output("  As the tip of her tail finally comes to rest against your cervix, you find yourself succumbing to another orgasm, your wails of pleasure encouraging the naga to continue. As you begin to calm down again, you believe that this is the deepest the naga will go. Then, as she reaches her hand to grab your other shoulder, you realize she still has plans. Her tail begins to bash itself against your cervix, the tip searching for the weak point. Her hands hold you steady, as her thrusts begin to increase in intensity, sometimes even shaking your entire body. It is not long into this rough tail-fuck that you find yourself on the verge of orgasm yet again, as the scaly surface of her tail rubs across the soft flesh of your " + pc.vaginaDescript(0) + ".  The naga grits her teeth, and, with one last, powerful thrust, forces her tail inside your womb, forcing her way through your cervix. She manages to stuff enough tail inside you to cause a visible bulge in your stomach. This combination of sensations is enough to send your head spinning and as your climax reaches its peak, you feel your mind begin to weaken, your vision fading. The last thing you see is the naga's smiling face, her cheeks flushed and her eyes full of passion.", false);
 		}
 		output("  ", false);
-		pc.cuntChange(0,40,true);
+		pc.cuntChange(0, 40, true);
 	}
 	//d) genderless
 	else {
@@ -711,7 +714,7 @@ internal function nagaFUCKSJOOOOOO():void {
 	}
 	pc.orgasm();
 	
-	processTime(20+rand(10));
+	processTime(20 + rand(10));
 	CombatManager.genericLoss();
 }
 

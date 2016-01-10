@@ -147,12 +147,14 @@ internal function sandwitchRape():void {
 	//spriteSelect(50);
 	//pc.clearStatuses(false);
 	//LUST DEFEAT
+	clearOutput();
+	clearMenu();
 	if(pc.LQ() > 99) {
 		//BAD END START
 		if(pc.biggestTitSize() >= 9 && pc.milkRate >= 30 && pc.cor() >= 25) {
 			output("Overwhelmed by the intense pleasure caused by the vibrating sphere inside your body, you fall to your knees.\n\nYou whimper pathetically, desperate to cum, as the Sand Witch steps nearer to you and gently strokes your face. She smiles cruelly and lets her hands drop down to your chest, then tears your top away, letting your huge breasts bounce free. The mysterious woman firmly rubs and kneads them, making you gasp and writhe, until she starts lightly flicking your painfully hard nipples. You edge closer and closer to orgasm, panting like a whore while the witch teases you with her hands and magic.\n\n", true);
 			output("Just before you cum, she leans down to whisper to you, tickling your ear with her warm breath: \"<i>Evals klim ym emoceb llahs uoy.</i>\"\n\nA familiar pressure builds in your chest, but it's far stronger than ever before. You feel your breasts swell rapidly, and milk sprays from your nipples, splattering you and the witch with white droplets. Your eyes roll back and your tongue hangs out as you cum, mind nearly breaking from the world-shattering orgasm that thunders through you.\n\nYou black out.", false);
-			doNext(sandWitchBadEnd);
+			addButton(0, "Next", sandWitchBadEnd);
 			return;
 		}
 		pc.orgasm();
@@ -218,8 +220,7 @@ internal function sandwitchRape():void {
 		pc.libido(1);
 		flags["COC.SAND_WITCH_SAW_NAKED"] = 1;
 		CombatManager.genericLoss();
-		processTime(60);
-		clearMenu();
+		processTime(40 + rand(20));
 		addButton(0, "Next", mainGameMenu);
 	}
 	//HP DEFEAT
@@ -233,7 +234,6 @@ internal function sandwitchRape():void {
 		output("\n<b>You fall, defeated by the Sand Witch!</b>\n\n", false);
 		
 		processTime(20 + rand(10));
-		clearMenu();
 		CombatManager.genericLoss();
 	}
 }
@@ -322,7 +322,6 @@ private function sandwitchRaped():void {
 				output("Finally finished, you pull your [pc.cocksLight] from her well used slits, your [pc.cocksLight] drooling cum even now. With a grin, you walk away, happy with your little encounter.  ", false);
 			}
 			processTime(20 + rand(10));
-			clearMenu();
 			CombatManager.genericVictory();
 		}
 	}
@@ -349,7 +348,6 @@ private function sandwitchBewbs():void {
 	//output("\n", false);
 	
 	processTime(20 + rand(10));
-	clearMenu();
 	CombatManager.genericVictory();
 }
 private function sandwitchSex():void {
@@ -370,7 +368,6 @@ private function sandwitchSex():void {
 	pc.orgasm();
 
 	processTime(20 + rand(10));
-	clearMenu();
 	CombatManager.genericVictory();
 }
 /*
@@ -652,7 +649,6 @@ public function rapeSandwitchMultis():void {
 	output("You grin wickedly at the humiliated and whimpering witch as you rape her.  Between involuntary gasps of pleasure as you steadily pound into her sopping snatches, she looks afraid, not knowing the source of your mirth.  It soon becomes clear enough. She struggles a little once she hears the low buzzing of her own corrupted pleasure stone and bucks and thrashes as you push the persistent little charm into her tight, but well-cum-lubed ass.  The feel of the stone vibrating within her spreads through to your cocks, enhancing the pleasure as she clenches and spasmes while being violated multiple ways.  All too soon, it brings you to a gushing orgasm.  As you finally withdraw from the troublesome sand witch, you spit on her milk-oozing form and take your leave.", false);
 	pc.orgasm();
 	processTime(20 + rand(10));
-	clearMenu();
 	CombatManager.genericVictory();
 }
 
@@ -1085,7 +1081,6 @@ private function sandwitchSpanking():void {
 	pc.orgasm();
 	//dynStats("sen", 5);
 	processTime(60 + rand(30));
-	clearMenu();
 	CombatManager.genericLoss();
 }
 

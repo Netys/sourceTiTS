@@ -168,6 +168,10 @@ package classes.Characters.CoC
 				kGAMECLASS.pc.removeStatusEffect("Anemone Venom");
 			}
 		}
+		
+		public function onPlayerLoss():void {
+			onPlayerVictory();
+		}
 
 		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void
 		{

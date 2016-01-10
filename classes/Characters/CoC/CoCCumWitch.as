@@ -8,6 +8,8 @@ package classes.Characters.CoC
 	import classes.Engine.Utility.*;
 	import classes.GLOBAL;
 	import classes.Items.Drinks.*;
+	import classes.Items.Miscellaneous.CoCBookBlack;
+	import classes.Items.Miscellaneous.CoCBookWhite;
 	import classes.Items.Miscellaneous.CoCOvipositionElixir;
 	import classes.Items.Miscellaneous.EmptySlot;
 	import classes.Items.Transformatives.*;
@@ -165,7 +167,7 @@ package classes.Characters.CoC
 						
 			sexualPreferences.setRandomPrefs(2 + rand(3));
 			
-			inventory = [RandomInCollection([new CoCLactaid(), new CoCOvipositionElixir()])]; // TODO: tattered scroll, labova, b/w books
+			inventory = [RandomInCollection([new CoCLactaid(), new CoCOvipositionElixir(), new CoCBookWhite(), new CoCBookBlack()])]; // TODO: tattered scroll, labova
 			
 			this._isLoading = false;
 		}

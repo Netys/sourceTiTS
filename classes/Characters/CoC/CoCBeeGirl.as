@@ -7,6 +7,7 @@ package classes.Characters.CoC
 	import classes.GLOBAL;
 	import classes.Items.Drinks.*;
 	import classes.Items.Miscellaneous.CoCBlackChitin;
+	import classes.Items.Miscellaneous.CoCBookWhite;
 	import classes.Items.Miscellaneous.CoCOvipositionElixir;
 	import classes.Items.Transformatives.*;
 	import classes.kGAMECLASS;
@@ -182,9 +183,10 @@ package classes.Characters.CoC
 			
 			sexualPreferences.setRandomPrefs(2 + rand(3));
 			
-			inventory.push(kGAMECLASS.WeightedRandom(
-						[new CoCBlackChitin(), new CoCOvipositionElixir()] ,
-						[1,                    10], true)); // TODO 1/10 white book
+			if (rand(10) == 0) inventory.push(new CoCOvipositionElixir());
+			else if (rand(10) == 0)inventory.push(new CoCBookWhite());
+			else if (rand(2) == 0) inventory.push(new CoCBeeHoney());
+			else inventory.push(new CoCBlackChitin());
 			
 			this._isLoading = false;
 		}

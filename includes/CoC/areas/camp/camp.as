@@ -27,9 +27,6 @@ public function cocCampMenu():void {
 	
 	showExplorationButton(); // as well as places
 	
-	if (hasShipStorage()) addButton(3, "Stash", shipStorageMenuRoot);
-	else addDisabledButton(3, "Stash");
-
 	campFollowersButton(); campFollowersMenu(true);
 	campLoversButton();	
 	campSlavesButton();
@@ -45,7 +42,7 @@ public function cocCampMenu():void {
 }
 
 public function doDebugFunction():void {
-	//encounterAliseInDesert();
+	beeEncounterAfraidRepeatSex();
 }
 
 public function hasCompanions():Boolean {

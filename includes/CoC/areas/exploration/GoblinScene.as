@@ -250,8 +250,9 @@ public function gobboRapeIntro():void
 	}
 	//If cant rape or breastfeed
 	if (pc.lust() < 33 || !pc.hasGenitals()) {
-		CombatManager.genericVictory();
 		processTime(15);
+		clearMenu();
+		CombatManager.genericVictory();
 		return;
 	}
 	
@@ -549,7 +550,7 @@ private function rapeAGoblinCorruptTooBig():void
 	output("\n\nShe absolutely will.\n\n");
 	enemy.loadInCunt(pc);
 	pc.orgasm();
-	dynStats("cor", 1);
+	pc.cor(1);
 	processTime(15);
 	CombatManager.genericVictory();
 }

@@ -64,10 +64,10 @@ include "characters/JojoScene.as";
 include "characters/Rathazul.as";
 
 public function initCoCJunk():void {
-	if(flags["COC.CORRUPTION"] == undefined) flags["COC.CORRUPTION"] = 15;
+	if (flags["COC.CORRUPTION"] == undefined) flags["COC.CORRUPTION"] = int(pc.personality / 2.1) + 10;
 	//flags["COC.PC_GEMS"] = 0;
-	if(flags["COC.IN_MARETH"] == undefined) flags["COC.IN_MARETH"] = 0;
-	if(flags["COC.TIMES_TRANSFORMED"] == undefined) flags["COC.TIMES_TRANSFORMED"] = 0;
+	if (flags["COC.IN_MARETH"] == undefined) flags["COC.IN_MARETH"] = 0;
+	if (flags["COC.TIMES_TRANSFORMED"] == undefined) flags["COC.TIMES_TRANSFORMED"] = 0;
 }
 public function inMareth():Boolean {
 	return rooms[currentLocation].system == "PLANET: MARETH";

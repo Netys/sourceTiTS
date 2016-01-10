@@ -8,6 +8,8 @@ package classes.Characters.CoC
 	import classes.GameData.CombatAttacks;
 	import classes.GLOBAL;
 	import classes.Items.Drinks.*;
+	import classes.Items.Miscellaneous.CoCBookBlack;
+	import classes.Items.Miscellaneous.CoCBookWhite;
 	import classes.Items.Miscellaneous.CoCOvipositionElixir;
 	import classes.Items.Miscellaneous.EmptySlot;
 	import classes.Items.Transformatives.*;
@@ -160,12 +162,10 @@ package classes.Characters.CoC
 			
 			sexualPreferences.setRandomPrefs(2 + rand(3));
 			
-			inventory = [RandomInCollection([new CoCLactaid(), new CoCOvipositionElixir()])];
+			inventory = [RandomInCollection([new CoCLactaid(), new CoCOvipositionElixir(), new CoCBookWhite(), new CoCBookBlack()])];
 			// TODO:
 			//consumables.TSCROLL,
 			//consumables.LABOVA_,
-			//consumables.W__BOOK,
-			//consumables.B__BOOK,
 			//null);
 			
 			this._isLoading = false;

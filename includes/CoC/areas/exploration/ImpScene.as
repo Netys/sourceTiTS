@@ -188,11 +188,11 @@ private function rapeImpWithPussy():void {
 		output("  Your lust and desire spurs you into movement, driving you to bounce yourself up and down on the [enemy.cock].  His exquisite member pushes you to the very height of pleasure, your [pc.vagina " + pc.biggestVaginaIndex() + "] clenching tightly of its own accord each time you bottom out.  The tensing of the little demon's hips is the only warning you get before he cums inside you, hot demonic jizz pouring into your womb.  Your [pc.legs] give out, pushing him deeper as he finishes filling you.");
 		output("\n\nThe two of you lay there a moment while you recover, at last separating as you rise up off his [enemy.cock].  Spunk drips down your legs, quickly wicking into your skin and disappearing.\n\n");
 		//Taking it internal is more corruptive!
-		dynStats("cor", 1);
+		pc.cor(1);
 		pc.loadInCunt(enemy);
 	}
 	pc.orgasm();
-	dynStats("cor", 1);
+	pc.cor(1);
 	processTime(15);
 	CombatManager.genericVictory();
 }
@@ -1341,7 +1341,8 @@ public function CoCimpRapesYou():void {
 		output("With a sigh, he pulls his dick free, and you flop down, cum leaking out onto the ground from your well-fucked hole. If you could, like, focus at all, you'd totally be worrying about being, like, pregnant or whatever. But you lose consciousness.");
 		pc.loadInCunt(enemy);
 		pc.orgasm();
-		dynStats("lib", 1, "sen", 1, "cor", 1);
+		pc.libido(1);
+		pc.cor(1);
 		processTime(15);
 		CombatManager.genericLoss();
 		return;
@@ -1384,7 +1385,9 @@ public function CoCimpRapesYou():void {
 				}
 			}
 			pc.loadInCunt(enemy);
-			dynStats("lib", 1, "sen", 1, "lus", 1, "cor", 1);
+			pc.libido(1);
+			pc.lust(1);
+			pc.cor(1);
 			pc.orgasm();
 		}
 		//Male or genderless
@@ -1404,7 +1407,8 @@ public function CoCimpRapesYou():void {
 				pc.loadInMouth(enemy);
 				output("He slowly withdraws his still-pumping cock from you, coating your throat and then mouth with an almost continual spray of his unnaturally hot and sticky demon seed. The imp pulls out of your mouth just in time to splatter your face with his cum before his orgasm stops, coating your lips, nose, eyes, and hair with his incredibly thick and sticky cum.\n\n");
 				output("You fall to the ground gasping, exhausted and unable to move, the demon cum on your face and inside you still burning with intense heat and corruption. You lose consciousness, your [pc.cock] still firmly erect, your lust not sated.");
-				dynStats("lus", 20, "cor", 2);
+				pc.lust(20);
+				pc.cor(1);
 				processTime(15);
 				CombatManager.genericLoss();
 				return;					
@@ -1415,12 +1419,14 @@ public function CoCimpRapesYou():void {
 				output(".  As the imp presses a large bulk against your backside, you realize he has a massive penis!\n\nThe imp pushes his [enemy.cock] into your ass and fucks you hard, with little regard to your pleasure.  After a rough fucking, he cums, stuffing your ass full of hot demon cum.  His orgasm lasts far longer than any human's, leaving your belly slightly distended.");
 				pc.buttChange(enemy.cockVolume(0));
 				pc.loadInAss(enemy);
-				dynStats("lib", 1, "sen", 1, "lus", 1, "cor", 1);
+				pc.libido(1);
+				pc.lust(1);
+				pc.cor(1);
 				if(pc.libido() > 40) {
 					output("  You manage to orgasm from the feeling of being filled by hot cum.");
 					if(pc.hasCock()) output("  You jizz all over the ground in front of you, spraying cum in huge squirts in time with the demon's thrusts.");
 					pc.orgasm();
-					dynStats("cor", 1);
+					pc.cor(1);
 				}
 				output("\n\nYou drop to the ground when he's done with you, cum spilling from your abused ass all over the ground, too exhausted to move.  Consciousness fades.  ");
 			}
@@ -1431,7 +1437,7 @@ public function CoCimpRapesYou():void {
 		output("\n<b>You fall, defeated by the imp!</b>\nThe last thing you see before losing consciousness is the creature undoing its crude loincloth to reveal a rather disproportionately-sized member.");
 		pc.buttChange(enemy.cockVolume(0));
 		pc.loadInAss(enemy);
-		dynStats("cor", 1);
+		pc.cor(1);
 	}
 	processTime(15);
 	CombatManager.genericLoss();
@@ -1519,7 +1525,7 @@ private function noogaisNippleRape():void {
 	else output("You quickly get dressed and leave the imp to his slumbering, his hands still tied together by his loincloth.");
 	//Gain xp and gems here
 	pc.orgasm();
-	dynStats("sen", -3, "cor", 1);
+	pc.cor(1);
 	processTime(15);
 	CombatManager.genericVictory();
 }

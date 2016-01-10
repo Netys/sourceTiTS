@@ -2685,6 +2685,11 @@ package classes.GameData
 							}
 						}
 						
+						for (var l:int = 0; l < _hostiles.length; l++)
+							if (_hostiles[l].hasOwnProperty("onPlayerLoss")) _hostiles[l].onPlayerLoss();
+						for (var k:int = 0; k < _friendlies.length; k++)
+							if (_friendlies[k].hasOwnProperty("onPlayerLoss")) _friendlies[k].onPlayerLoss();
+						
 						kGAMECLASS.setEnemy(t_enemy);
 						CombatManager.showCombatUI();
 						t_lossFunctor();

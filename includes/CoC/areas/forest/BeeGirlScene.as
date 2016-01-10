@@ -5,6 +5,11 @@
 import classes.Characters.CoC.CoCBeeGirl;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
+import classes.Items.Miscellaneous.CoCBlackChitin;
+import classes.Items.Miscellaneous.CoCBookWhite;
+import classes.Items.Miscellaneous.CoCOvipositionElixir;
+import classes.Items.Transformatives.CoCBeeHoneyPure;
+import classes.Items.Transformatives.CoCBeeHoneySpecial;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -262,16 +267,23 @@ private function beeEncounterAfraidRepeatSex():void {
 	output("Eventually, her supply of eggs runs out, and she thanks you for the time that you spent together.  With the amount of pleasure you experienced, there is no question in your mind that it was quite worth it.  She does hand you a gift as a final thank you for your service before flying off.\n\n");
 	//if (!pc.isButtPregnant()) pc.buttKnockUpForce(PregnancyStore.PREGNANCY_BEE_EGGS, PregnancyStore.INCUBATION_BEE);
 	pc.orgasm();
+	processTime(20 + rand(10));
 	//pc.slimeFeed();
-	//switch (rand(10)) {
-		//case  0: inventory.takeItem(consumables.W__BOOK, returnToCampUseOneHour); break;
-		//case  1:
-		//case  2: inventory.takeItem(consumables.OVIELIX, returnToCampUseOneHour); break;
-		//case  3:
-		//case  4: inventory.takeItem(useables.B_CHITN,    returnToCampUseOneHour); break;
-		//default: inventory.takeItem(consumables.PURHONY, returnToCampUseOneHour);
-	//}
-	doNext(returnToCampUseOneHour);
+	
+	var foundLootItems:Array = new Array();
+	switch (rand(10)) {
+		case  0: foundLootItems.push(new CoCBookWhite()); break;
+		case  1:
+		case  2: foundLootItems.push(new CoCOvipositionElixir()); break;
+		case  3:
+		case  4: foundLootItems.push(new CoCBlackChitin()); break;
+		default: foundLootItems.push(new CoCBeeHoneyPure());
+	}
+	
+	itemScreen = mainGameMenu;
+	lootScreen = mainGameMenu;
+	useItemFunction = mainGameMenu;
+	itemCollect(foundLootItems);
 }
 
 private function beeEncounterDisgusted():void {
@@ -699,8 +711,13 @@ public function beeSexForCocks(clearScreen:Boolean = true):void {
 		pc.orgasm();
 		pc.libido(3);
 		pc.cor( -2);
-		//inventory.takeItem(consumables.SPHONEY, camp.returnToCampUseFourHours);
-		doNext(returnToCampUseFourHours);
+		
+		processTime(60 * 2 + rand(60));
+		
+		itemScreen = mainGameMenu;
+		lootScreen = mainGameMenu;
+		useItemFunction = mainGameMenu;
+		itemCollect([new CoCBeeHoneySpecial()]);
 	}
 }
 
@@ -739,8 +756,12 @@ private function beeSexForCocksPart2(giantCockIndex:int):void {
 	//dynStats("lib", 2, "sen", 2, "cor", -3);
 	pc.libido(3);
 	pc.cor( -2);
-	//inventory.takeItem(consumables.SPHONEY, camp.returnToCampUseFourHours);
-	doNext(returnToCampUseFourHours);
+	
+	processTime(15 + rand(5));
+	itemScreen = mainGameMenu;
+	lootScreen = mainGameMenu;
+	useItemFunction = mainGameMenu;
+	itemCollect([new CoCBeeHoneySpecial()]);
 }
 
 private function beeDroneBadEnd():void {
@@ -953,19 +974,25 @@ private function beeMaidenPlay():void {
 private function beeMaidenConversation():void {
 	clearOutput();
 	//spriteSelect(6);
-	if (conversationBeeGirl > 2 && cor() > 20) conversationBeeGirl = 2;
+	if (conversationBeeGirl > 2 && pc.cor() > 20) conversationBeeGirl = 2;
 	switch (conversationBeeGirl) {
 		case  0:
 				conversationBeeGirl = 1;
 				output("After giving you a chance to recover from the ordeal, your chitinous partner turns to you.  <i>“That wazzz fun, wazzzn’t it?  We zzzhoud do thizzz again zzzome time, maybe get to know each other too?”</i> she says before handing you a small bottle filled with honey.  <i>“Zzzome of mine for you, take it.”</i>  With that, she spreads her wings and flies off giving you one last wave.\n\n");
-				//inventory.takeItem(consumables.PURHONY, returnToCampUseOneHour);
-				doNext(returnToCampUseOneHour);
+				processTime(10 + rand(5));
+				itemScreen = mainGameMenu;
+				lootScreen = mainGameMenu;
+				useItemFunction = mainGameMenu;
+				itemCollect([new CoCBeeHoneyPure()]);
 				break;
 		case  1:
 				conversationBeeGirl = 2;
 				output("Once you’ve recovered, she gives a happy stretch.  <i>“It’zzz alwayzzz zzzo fun playing with zzzomeone more than onzzze.  Don’t you agree?”</i> she says as she puts one of her arms around your shoulders.  You don’t hesitate to tell her that it certainly was a fun experience.  <i>“Hey, what hive are you from?”</i> she asks you, <i>“Maybe I could come bring you a zzzurprise zzzome time?”</i>  You hesitate for a moment before telling her that you aren’t actually from a hive, you aren’t even actually a full bee girl.  Her eyes go wide before clapping her hand to her forehead in realization, <i>“Right!  Of course, no wonder you zzzeemed a bit off to me.”</i>  Suddenly she freezes, <i>“Zzzomeone is coming, they probably want my eggzzz and honey, let’zzz talk again zzzome other time.”</i>  She hands you another bottle of amber liquid before shooing you off.  You put your [pc.gear] back on before going too far.  You turn back just in time to see an imp jump into the bee’s arms.\n\n");
-				//inventory.takeItem(consumables.PURHONY, returnToCampUseOneHour);
-				doNext(returnToCampUseOneHour);
+				processTime(10 + rand(5));
+				itemScreen = mainGameMenu;
+				lootScreen = mainGameMenu;
+				useItemFunction = mainGameMenu;
+				itemCollect([new CoCBeeHoneyPure()]);
 				break;
 		case  2:
 				conversationBeeGirl = 3;
@@ -977,8 +1004,11 @@ private function beeMaidenConversation():void {
 					output("<i>“I’ve been thinking zzzizzzter, I feel zzzo bad that you don’t know the joy of hearing the mother’zzz voizzze.”</i>  You look at her confused and ask her what she means.  <i>“All uzzz beezzz can hear the voizzze of our mother, the queen.  It makezzz me feel zzzo bad when I think about how you can’t hear her voizzze.”</i>  She looks down with a sad expression on her face.  You wonder if maybe you should say something to her, but her feelings are so alien to you that you aren’t sure what exactly you should say.\n\n");
 					output("She looks back up at you with an excited look on her face and hands you another bottle of her honey before saying, <i>“Don’t worry zzzizzzter, I’ll try to think of zzzomthing!”</i>   With that she spreads her wings and flies off.  You’re surprised to see she left so suddenly like that.  Her abdomen is still full of eggs and she left her bag behind (you take a look inside it, but all you find is a bottle of her honey)...  She’ll probably be back for that before too long.  You shrug your shoulders, get dressed, gather up your things, and head back towards camp.\n\n");
 				}
-				//inventory.takeItem(consumables.PURHONY, returnToCampUseOneHour);
-				doNext(returnToCampUseOneHour);
+				processTime(10 + rand(5));
+				itemScreen = mainGameMenu;
+				lootScreen = mainGameMenu;
+				useItemFunction = mainGameMenu;
+				itemCollect([new CoCBeeHoneyPure()]);
 				break;
 		case  3:
 				conversationBeeGirl = 4;
@@ -1061,8 +1091,12 @@ private function freeHoneyEvent():void
 	output("You take the vial absently as you kneel between her legs and take in deep breaths of the scent.  It fills your head and groin with its warmth and sticky sweetness.  You part your lips, leaning ever closer to her delicate flower, tensing with anticipation.  When your tongue finally meets the slickened surface of her vulva you swoon.  The taste is better than anything you've ever experienced - sweet, pure, and yet totally sexual.  You dart over her clit, and are rewarded with a burst of heavenly sweetness.  The maddening taste of her ambrosia gets in your veins – you NEED more and you attack her honeypot mercilessly, until at last she squeals in orgasm, clamping her fuzz-covered thighs around your head.\n\n", false);
 	output("The force of her orgasm splatters you with the honey, far more than you could possibly try to lap up. You dimly remember the vial she gave to you, and steady it under the dripping fluid.  You catch as much of her sweetness as you can while still mashing your face against her quivering cunt.  You are in heaven, but after a time she pushes you back, smiling contentedly.  Her free hand offers you a small cork.   You reluctantly accept it and cap off the pure honey to save for later.\n\n", false);
 	output("She waves and stretches, picking up her pack and buzzing her wings as she takes off.  She blows a kiss over her shoulder and flies away, leaving you to return to your camp...", false);
-	//inventory.takeItem(consumables.PURHONY, returnToCampUseOneHour);
-	doNext(returnToCampUseOneHour);
+
+	processTime(15 + rand(5));
+	itemScreen = mainGameMenu;
+	lootScreen = mainGameMenu;
+	useItemFunction = mainGameMenu;
+	itemCollect([new CoCBeeHoneyPure()]);
 }
 
 private function seduceBeeGirl():void
@@ -1514,7 +1548,7 @@ private function rapeTheBeeGirlWithADick():void
 			output("Once you've come down from your incredible orgasm your attention shifts to the exhausted bee maiden beneath you. You take pity on her and pick up the giant bee as gently as possible. She hums gently in your arms as you carry her over to her flower, sliding her onto it", false);
 			//Huge cum amount:
 			if (pc.cumQ() >= 500) output(" and watching as her lower body sinks into your spunk like a thick white bath", false);
-			output(". Once she looks comfortable you make your way back to camp, thoroughly satisfied.", false);
+			output(". Once she looks comfortable you make your way back to camp, thoroughly satisfied.\n\n", false);
 		}
 		//Cock too long to penetrate her:
 		else {
@@ -1561,7 +1595,7 @@ private function rapeTheBeeGirlWithADick():void
 			output("You take pity on her and pick up the giant bee as gently as possible. She hums gently in your arms as you carry her over to her flower, sliding her onto it", false);
 			//Huge cum amount: 
 			if (pc.cumQ() >= 750) output(" and watching as her lower body sinks into your spunk like a thick white bath", false);
-			output(". Once she looks comfortable you make your way back to camp, thoroughly satisfied.", false);
+			output(". Once she looks comfortable you make your way back to camp, thoroughly satisfied.\n\n", false);
 		}
 		pc.orgasm();
 		CombatManager.genericVictory();
@@ -1588,7 +1622,7 @@ private function rapeTheBeeGirlWithADick():void
 		//high cum variances
 		if (pc.cumQ() >= 250 && pc.cumQ() < 500) output("You smile proudly at the steady stream of your cum that pours from her abused cunt, pooling underneath her.   Her abdomen even looks bloated with your seed.", false);
 		if (pc.cumQ() >= 500 && pc.cumQ() < 1000) output("You smile proudly at your handy-work, noting how bloated and distended the bee's abdomen is.  It bulges obscenely, nearly double its previous size.  A sizable river of your spunk drools from between your legs, but amazingly she seems able to keep most of your over-sized orgasm in.", false);
-		if (pc.cumQ() >= 1000) output("You giggle at your poor victim's state.  She really is a mess.  Her abdomen and belly are both swollen, making her look pregnant in both her bee AND human halves.   A practical river of spunk drools from her glossy pussy-lips, pooling below her.  Even her ovipositor dangles down, dripping with your seed, forced out from her abdomen by the sheer amount of spunk she's carrying.  It twitches, bulges moving along its length, eventually dropping egg after egg on the ground, unable to keep in its cargo.", false);
+		if (pc.cumQ() >= 1000) output("You giggle at your poor victim's state.  She really is a mess.  Her abdomen and belly are both swollen, making her look pregnant in both her bee AND human halves.   A practical river of spunk drools from her glossy pussy-lips, pooling below her.  Even her ovipositor dangles down, dripping with your seed, forced out from her abdomen by the sheer amount of spunk she's carrying.  It twitches, bulges moving along its length, eventually dropping egg after egg on the ground, unable to keep in its cargo.\n\n", false);
 		pc.orgasm();
 		CombatManager.genericVictory();
 	}
@@ -1597,7 +1631,7 @@ private function rapeTheBeeGirlWithADick():void
 		output("As you approach she starts to edge away, her battered wings flapping in a futile attempt to escape.  Reaching her, you grip her wrists before she can fight back, squeezing tightly as her struggling increases. Forcing her onto her back, you hold her wrists tightly in one hand to allow you to pull off your [pc.gear], freeing your erect member.  ", false);
 		output("You begin to push forward, sliding your [pc.cock " + x + "] against the soft folds of her pussy, her whimpers shifting gently into moans. Your grin widens as you penetrate her roughly in one strong stroke, the bee-girl's body tensing underneath you as a squeal leaves her lips. Looking into her eyes, you see a faint glimmer of defiance, and under your body you feel her shifting slightly, muscles growing firm and tense. The realization hits you, and you manage to shift before her stinger comes into contact with you. Moving your knee, you pin her thick abdomen down and remove the threat.\n\n", false);
 		output("Unhindered, you start to fuck her. Her pussy tightens and convulses around your cock, becoming slick with her juices and your pre-cum. You can smell the sickly combination of nectar, sweat and love juices hanging thickly in the air. Your breathing becomes heavy while her moans get deeper and lust-filled. Her reluctance evaporates, her struggling shifts into more receptive movements against your body, her hips rocking against yours with each thrust, forcing your [pc.cock " + x + "] deeper into her tight honeypot.\n\n", false);
-		output("Letting go of her arms, you grip the base of her abdomen for leverage and let her arms and legs slide around you as your pace increases. You feel her abdomen pressing against your rear as you drive into her, the pressure in your [pc.balls] building as her pussy tightens around you. With a groan you cum, your hot seed gushing inside of her. She clenches you tightly, her pussy milking your [pc.cock " + x + "] for every ounce, until the sticky white fluid is pouring from around your [pc.cock " + x + "]. Exhausted from the battle and the fuck, she relaxes and collapses on the ground, panting heavily and half-conscious.", false);
+		output("Letting go of her arms, you grip the base of her abdomen for leverage and let her arms and legs slide around you as your pace increases. You feel her abdomen pressing against your rear as you drive into her, the pressure in your [pc.balls] building as her pussy tightens around you. With a groan you cum, your hot seed gushing inside of her. She clenches you tightly, her pussy milking your [pc.cock " + x + "] for every ounce, until the sticky white fluid is pouring from around your [pc.cock " + x + "]. Exhausted from the battle and the fuck, she relaxes and collapses on the ground, panting heavily and half-conscious.\n\n", false);
 		pc.orgasm();
 		CombatManager.genericVictory();
 	}
@@ -1648,7 +1682,7 @@ private function rapeABeeGirlWithYourVagina():void
 		else output("Your vagina ripples and squeezes with enough force to hurt most normal cocks. Her exoskeleton protects her from the harmful effects though, and she slides her arm out of you as you cum.", false);
 		output("  In the afterglow you feel the wonderful sensation of something thick and sticky dripping off your back. Craning your neck to look, you see that as she was pleasuring you the bee maiden had also been grinding her box against you. Her own orgasms combined with the effort needed to both fight and pleasure you have clearly taken their toll on the frail looking creature, as she's passed out on top of you.\n\n", false);
 
-		output("You trot up to the flower and slide the exhausted creature off of you, then rearrange her to be more comfortable. With a final pat on the head and after collecting your things, you head back to camp on slightly wobbly legs.", false);
+		output("You trot up to the flower and slide the exhausted creature off of you, then rearrange her to be more comfortable. With a final pat on the head and after collecting your things, you head back to camp on slightly wobbly legs.\n\n", false);
 	}
 	else {
 		output("Firmly grasping her thighs at the joining of her smooth carapace and soft skin, you force them open, revealing the source of her irresistible scent.   She buzzes pitifully in protest as you disrobe, revealing your " + pc.vaginaDescript(0), false);
@@ -1667,8 +1701,8 @@ private function rapeABeeGirlWithYourVagina():void
 		if (pc.clitLength > 3 && pc.clitLength < 5) output("Your hips piston your huge clit into her mouth with no warning, forcing her to give your clit a blowjob.  Her slick black lips wrap around it immediately, sucking and licking, filling your body with lust and pleasure.  ", false);
 		if (pc.clitLength >= 5) output("Your hips shove your massive clit into her mouth without warning, stretching her slicked lips wide around your very un-womanly appendage.   She reacts immediately, sucking it into her mouth and throat.  Her tongue curls around it and begins to caress it sensually as she lets you hammer it in and out of her open throat.  Instinctively you mash your face into her sweetened cunt, losing all control of your lower body as it face-fucks her with reckless abandon.  ", false);
 		//New PG - orgasm
-		if (pc.isTaur()) output("You orgasm in no time, coating her face with girl-cum the process.  You return the favor and dive into her muff, planting kisses and licks down as a reward for your victim's rather skilled efforts.  The taste is sweet and sexy all at once, and you quickly lose track of your reward scheme, simply licking and slurping to get as much of her nectar as possible until she is satisfied as well.", false);
-		else output("In no time you both orgasm, sweet girl-cum coating both your faces as you work each other's cunt with desperation born of desire.  ", false);
+		if (pc.isTaur()) output("You orgasm in no time, coating her face with girl-cum the process.  You return the favor and dive into her muff, planting kisses and licks down as a reward for your victim's rather skilled efforts.  The taste is sweet and sexy all at once, and you quickly lose track of your reward scheme, simply licking and slurping to get as much of her nectar as possible until she is satisfied as well.\n\n", false);
+		else output("In no time you both orgasm, sweet girl-cum coating both your faces as you work each other's cunt with desperation born of desire.\n\n", false);
 	}
 	pc.orgasm();
 	CombatManager.genericVictory();
@@ -1748,6 +1782,7 @@ private function futaRapesBeeGirl():void
 		else output("Your body's cum supply eventually empties", false);
 		output(", and you turn your back on your soaked, cum-bloated conquest and the puddle of spooge that's rapidly wicking into the ground.", false);
 	}
+	output("\n\n");
 	pc.orgasm();
 	CombatManager.genericVictory();
 }
@@ -1816,7 +1851,7 @@ private function beeGirlRapeForTheDistinguishedGentleman():void
 	if (pc.hasCock() || pc.lactationQ() >= 100 || pc.wetness() >= 5) output(" and spray your sticky fluids all over her tortured groin", false);
 	output(".\n\n", false);
 
-	output("Damn, that probably did some ear damage but was it ever worth it!  The bee-girl, having finally redirected every egg she had into her own swollen butthole and ceased climaxing, passes out.  You gather your things and leave her contorted and soaked body behind you as you head back to camp.", false);
+	output("Damn, that probably did some ear damage but was it ever worth it!  The bee-girl, having finally redirected every egg she had into her own swollen butthole and ceased climaxing, passes out.  You gather your things and leave her contorted and soaked body behind you as you head back to camp.\n\n", false);
 	//(gain 20 fatigue if spd<50)
 	if (pc.RQ() < 50) pc.energy(-20);
 	pc.orgasm();
@@ -1887,6 +1922,7 @@ private function beeAlternate():void
 		else output(", your glorious but spent [pc.cocksLight] dangling under your belly,", false);
 		output(" and leave the completely exhausted and drenched woman on the forest floor, wings and legs still twitching slightly, sending a fine mist of cum across the ground around her.", false);
 	}
+	output("\n\n");
 	pc.orgasm();
 	CombatManager.genericVictory();
 }
@@ -2018,6 +2054,7 @@ private function nagaRapesPt2TheExtremeContinuationOfAwesome():void
 
 		output("You pull your hand out and futilely try to wipe away the gunk on a nearby bush. The handmaiden is collapsed in a heap, excreting eggs from her dilated organ, mumbling blissfully delirious nonsense.  Gathering your things, you slither away.", false);
 	}
+	output("\n\n");
 	if (pc.hasGenitals()){
 		pc.orgasm();
 	}
@@ -2046,8 +2083,8 @@ public function beeGirlsGetsDildoed():void {
 	output("You release it as she passes out, smiling when you realize she'll probably be leaking eggs with every step from now on.  ", false);
 	if(pc.cor() < 50) output("You feel kind of bad for her, but y", false);
 	else output("Y", false);
-	output("ou really need to get back to camp and get off after such an intense experience.  Maybe you should give your honey-flavored dildo a shot?", false);
-	pc.lust(20+pc.libido()/5+pc.cor()/10);
+	output("ou really need to get back to camp and get off after such an intense experience.  Maybe you should give your honey-flavored dildo a shot?\n\n", false);
+	pc.lust(20 + pc.libido() / 5 + pc.cor() / 10);
 	CombatManager.genericVictory();
 }
 

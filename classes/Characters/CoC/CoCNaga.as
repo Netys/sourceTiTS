@@ -209,6 +209,10 @@ package classes.Characters.CoC
 			}
 		}
 		
+		public function onPlayerLoss():void {
+			onPlayerVictory();
+		}
+		
 		protected function MeleeAttack(target:Creature):void {
 			CombatAttacks.MeleeAttack(this, target);
 		}
