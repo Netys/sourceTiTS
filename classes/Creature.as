@@ -3189,7 +3189,8 @@ package classes {
 				return 0;
 			}
 			
-			//if(arg < 0) // loss - diminishing loss on low stat
+			if (arg < 0) {// loss - diminishing loss on low stat
+				change = arg; // TODO
 				//while (arg < 0) {
 					//mod = Math.max(arg, -1);
 					//arg++;
@@ -3207,7 +3208,7 @@ package classes {
 					//else if (statCurrent + change < 95) mod = .9;
 					//else mod = 1;
 					//change += mod;
-				//}
+				}
 			//else // gain - diminishing gain on high stat
 			while (arg > 0) {
 				mod = Math.min(arg, 1); // to support fractional arguments

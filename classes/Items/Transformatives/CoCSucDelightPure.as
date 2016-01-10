@@ -22,7 +22,7 @@ package classes.Items.Transformatives
 			//Used on inventory buttons
 			this.shortName = "PS.Delight";
 			//Regular name
-			this.longName = "untainted bottle of \"Succubi's Delight\"";
+			this.longName = "untainted \"Succubi's Delight\"";
 			
 			TooltipManager.addFullName(this.shortName, StringUtil.toTitleCase(this.longName));
 			

@@ -11,6 +11,7 @@ package classes.Characters.CoC
 	import classes.Items.Miscellaneous.CoCBookBlack;
 	import classes.Items.Miscellaneous.CoCBookWhite;
 	import classes.Items.Miscellaneous.CoCOvipositionElixir;
+	import classes.Items.Miscellaneous.CoCTatteredScroll;
 	import classes.Items.Miscellaneous.EmptySlot;
 	import classes.Items.Transformatives.*;
 	import classes.Util.*;
@@ -162,11 +163,7 @@ package classes.Characters.CoC
 			
 			sexualPreferences.setRandomPrefs(2 + rand(3));
 			
-			inventory = [RandomInCollection([new CoCLactaid(), new CoCOvipositionElixir(), new CoCBookWhite(), new CoCBookBlack()])];
-			// TODO:
-			//consumables.TSCROLL,
-			//consumables.LABOVA_,
-			//null);
+			inventory = [RandomInCollection([new CoCLactaid(), new CoCOvipositionElixir(), new CoCBookWhite(), new CoCBookBlack(), new CoCTatteredScroll(), new CoCLaBova()])];
 			
 			this._isLoading = false;
 		}

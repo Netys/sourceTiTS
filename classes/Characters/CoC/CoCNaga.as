@@ -231,7 +231,7 @@ package classes.Characters.CoC
 				target.createStatusEffect("Naga Venom", damage, 0, 0, 0, false, "Icon_Poison", "You are poisoned by naga venom!", true);
 				
 				if(damage < 3)
-					applyDamage(new TypeCollection( { poison : (3 + rand(3)) + (3 + rand(3)) * (3 - damage) / 3 } ), this, target);
+					applyDamage(new TypeCollection( { poison : (3 + rand(3)) + (3 + rand(3)) * (3 - damage) / 3 }, DamageFlag.BYPASS_SHIELD ), this, target);
 			}
 			else {
 				output("The venom's effects intensify as your vision begins to blur and it becomes increasingly harder to stand.  ");
@@ -241,7 +241,7 @@ package classes.Characters.CoC
 				target.reflexes( -damage);
 				target.addStatusValue("Naga Venom", 1, damage);
 				
-				applyDamage(new TypeCollection( { poison : (3 + rand(3)) + (3 + rand(3)) * (2 - damage) / 2 } ), this, target);
+				applyDamage(new TypeCollection( { poison : (3 + rand(3)) + (3 + rand(3)) * (2 - damage) / 2 }, DamageFlag.BYPASS_SHIELD ), this, target);
 			}
 		}
 		

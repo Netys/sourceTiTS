@@ -86,16 +86,7 @@ public function encounterRathazul():void {
 	}
 	//Camp offer!
 	if (rathazulMoveToCampOffer()) return;
-	offered = rathazulWorkOffer();
-	if(!offered) {
-		output("He sighs dejectedly, \"<i>I am not sure what I can do for you, youngling.  This world is fraught with unimaginable dangers, and you're just scratching the surface of them.</i>\"\n\nYou nod and move on, leaving the depressed alchemist to his sadness.", false);
-		if (flags["COC.RATHAZUL_IN_CAMP"] == 1) {
-			processTime(5);
-			mainGameMenu();
-		}
-		else
-			doNext(returnToCampUseOneHour);
-	}
+	rathazulWorkOffer();
 }
 
 private function rathazulMoveToCampOffer():Boolean {
@@ -250,27 +241,11 @@ private function rathazulWorkOffer():Boolean {
 	if (pc.hasKeyItem("Tentacled Bark Plates") >= 0 || pc.hasKeyItem("Divine Bark Plates") >= 0) showArmorMenu = true;
 	var pCounter:int = 0;
 	//Item purification offer
-	if(pc.hasItem(new CoCIncubiD())) {
-		purify = true;
-		totalOffers++;
-		pCounter++;
-	}
-	if(pc.hasItem(new CoCSucMilk())) {
-		purify = true;
-		totalOffers++;
-		pCounter++;
-	}
-	if(pc.hasItem(new CoCSucDelight())) {
-		purify = true;
-		totalOffers++;
-		pCounter++;
-	}
-	if(pc.hasItemByName("La Bova")) {
-		purify = true;
-		totalOffers++;
-		pCounter++;
-	}
-	if(pc.hasItem(new CoCMinotaurCum())) {
+	if (pc.hasItem(new CoCIncubiD()) 
+		|| pc.hasItem(new CoCSucMilk()) 
+		|| pc.hasItem(new CoCSucDelight()) 
+		|| pc.hasItem(new CoCLaBova()) 
+		|| pc.hasItem(new CoCMinotaurCum())) {
 		purify = true;
 		totalOffers++;
 		pCounter++;
@@ -361,14 +336,13 @@ private function rathazulWorkOffer():Boolean {
 			//addButton(2, "Buy Oil", buyOils, null, "Buy Oil", "Ask him to make a skin oil for you. \n\nCost: 50 Gems.");
 			//addButton(3, "Buy Lotion", buyLotions, null, "Buy Lotion", "Ask him to make a body lotion for you. \n\nCost: 50 Gems.");
 		//}
-		if(purify)
-			addButton(4, "Purify", purifySomething, null, "Purify", "Ask him to purify any tainted potions. \n\nCost: 20 Gems.");
+		addButton(4, "Purify", rathPurify, null, "Purify", "Ask him to purify any tainted potions. \n\nCost: 20 Gems.");
 		
 		if (debimbo > 0) addButton(5, "Debimbo", makeADeBimboDraft, null, "Debimbo", "Ask Rathazul to make a debimbofying potion for you. \n\nCost: 250 Gems \nNeeds 5 Scholar Teas.");
 		//if (pc.hasItem(consumables.BEEHONY)) addButton(6, consumables.PURHONY.shortName, rathazulMakesPureHoney, null, null, null, "Ask him to distill a vial of bee honey into a pure honey. \n\nCost: 25 Gems \nNeeds 1 vial of Bee Honey");
 		//if (flags["COC.RATHAZUL_BOUGHT"] >= 5) addButton(7, "ProLactaid", rathazulMakesMilkPotion, null, null, null, "Ask him to brew a special lactation potion. \n\nCost: 250 Gems \nNeeds 5 Lactaids and 2 Purified LaBovas.");
 		//if (flags["COC.RATHAZUL_BOUGHT"] >= 5) addButton(8, "Taurinum", rathazulMakesTaurPotion, null, "Taurinum", "Ask him to brew a special potion that could aid in becoming a centaur. \n\nCost: 100 Gems \nNeeds 2 Equinum and 1 Minotaur Blood.");
-		if (reducto) addButton(9, "Reducto", buyReducto);
+		if (reducto) addButton(9, "Reducto", buyReducto, null);
 		
 		//if (lethiciteDefense != null) addButton(10, "Lethicite", lethiciteDefense, null, null, null, "Ask him if he can make use of that lethicite you've obtained from Marae.");
 		//if (pc.hasItem(consumables.PURHONY, 1) && pc.hasItem(consumables.C__MINT, 1) && pc.hasItem(consumables.PURPEAC, 1) && pc.hasKeyItem("Rathazul's Purity Potion") < 0 &&(flags[kFLAGS.MINERVA_PURIFICATION_RATHAZUL_TALKED] == 2 && flags[kFLAGS.MINERVA_PURIFICATION_PROGRESS] < 10)) {
@@ -384,51 +358,45 @@ private function rathazulWorkOffer():Boolean {
 	return false;
 }
 
-private function purifySomething():void {
-	//spriteSelect(49);
+public function rathPurify():void {
 	clearOutput();
-	output("Rathazul asks, \"<i>What would you like me to purify?</i>\"");
 	clearMenu();
+	output("Rathazul asks, \"<i>What would you like me to purify?</i>\"\n\n");
+	if(pc.credits < 200) output("Rathazul says, \"<i>You do not have enough gems for that service.</i>\"\n\n");
 	
-	if(pc.hasItem(new CoCIncubiD()))
-		addButton(0, "Incubi Draft", rathazulPurifyIncubiDraft);
-	else addDisabledButton(0, "Incubi Draft", "Incubi Draft", "You have no such thing!");
+	addButton(14, "Back", campRathazul);
 	
-	if(pc.hasItem(new CoCSucMilk()))
-		addButton(1, "SuccubiMilk", rathazulPurifySuccubiMilk);
-	else addDisabledButton(1, "SuccubiMilk", "Succubi Milk", "You have no such thing!");
+	var counter:int = 0;
+	function add(from:ItemSlotClass, to:ItemSlotClass):void {
+		if (pc.hasItem(from) && pc.credits >= 200)
+			addButton(counter, to.shortName, rathPurifyGo, [from, to]);
+		else
+			addDisabledButton(counter, from.shortName);
+		counter++;
+	}
 	
-	if(pc.hasItem(new CoCSucDelight()))
-		addButton(2, "S. Delight", rathazulPurifySuccubiDelight);
-	else addDisabledButton(2, "S. Delight", "Succubi Delight", "You have no such thing!");
-	
-	if(pc.hasItemByName("La Bova"))
-		addButton(3, "LaBova", rathazulPurifyLaBova);
-	else addDisabledButton(3, "La Bova", "La Bova", "You have no such thing!");
-	
-	if(pc.hasItem(new CoCMinotaurCum()))
-		addButton(4, "MinoCum", purifyMinoCum);
-	else addDisabledButton(4, "MinoCum", "Minotaur Cum", "You have no such thing!");
-	
-	addButton(14,"Back", campRathazul, false);
+	add(new CoCIncubiD(), new CoCIncubiDPure());
+	add(new CoCSucMilk(), new CoCSucMilkPure());
+	add(new CoCSucDelight(), new CoCSucDelightPure());
+	add(new CoCLaBova(), new CoCLaBovaPure());
+	add(new CoCMinotaurCum(), new CoCMinotaurCumPure());
 }
 
-
-private function rathazulPurifyIncubiDraft():void {
-	clearOutput();
-	if (pc.credits < 200) {
-		output("Rathazul says, \"<i>You do not have enough gems for that service.</i>\"");
-		doNext(campRathazul, false);
-		return;
-	}
-	if (!debug)
-		pc.destroyItem(new CoCIncubiD(), 1);
-	pc.credits -= 200;	
+public function rathPurifyGo(args:/*ItemSlotClass*/Array):void {
+	var from:ItemSlotClass = args[0];
+	var to:ItemSlotClass = args[1];
+	
+	pc.credits -= 20 * 10;
 	IncrementFlag("COC.RATHAZUL_BOUGHT");
-	itemScreen = campRathazul;
-	lootScreen = campRathazul;
-	useItemFunction = campRathazul;
-	itemCollect([new CoCIncubiDPure()]);
+	clearOutput();
+	output("It should be much safer now, but still, be careful...\n\n");
+	pc.destroyItem(from);
+	processTime(5 + rand(5));
+
+	itemScreen = rathPurify;
+	lootScreen = rathPurify;
+	useItemFunction = rathPurify;
+	itemCollect([to]);
 }
 
 //For Minerva purification.
@@ -460,57 +428,6 @@ private function rathazulMakesPurifyPotion():void {
 	pc.createKeyItem("Rathazul's Purity Potion", 0, 0, 0, 0);
 	clearMenu();
 	addButton(0, "Next", campRathazul);
-}
-
-private function rathazulPurifySuccubiMilk():void {
-	clearOutput();
-	if (pc.credits < 200) {
-		output("Rathazul says, \"<i>You do not have enough gems for that service.</i>\"");
-		doNext(campRathazul, false);
-		return;
-	}
-	if (!debug)
-		pc.destroyItem(new CoCSucMilk(), 1);	
-	pc.credits -= 200;
-	IncrementFlag("COC.RATHAZUL_BOUGHT");
-	itemScreen = campRathazul;
-	lootScreen = campRathazul;
-	useItemFunction = campRathazul;
-	itemCollect([new CoCSucMilkPure()]);
-}
-
-
-private function rathazulPurifySuccubiDelight():void {
-	clearOutput();
-	if (pc.credits < 200) {
-		output("Rathazul says, \"<i>You do not have enough gems for that service.</i>\"");
-		doNext(campRathazul, false);
-		return;
-	}
-	if (!debug)
-		pc.destroyItem(new CoCSucDelight());
-	pc.credits -= 200;	
-	IncrementFlag("COC.RATHAZUL_BOUGHT");
-	itemScreen = campRathazul;
-	lootScreen = campRathazul;
-	useItemFunction = campRathazul;
-	itemCollect([new CoCSucDelightPure()]);
-}
-
-
-private function rathazulPurifyLaBova():void {
-	clearOutput();
-	if (pc.credits < 200) {
-		output("Rathazul says, \"<i>You do not have enough gems for that service.</i>\"");
-		doNext(campRathazul, false);
-		return;
-	}
-	if (!debug)
-		//pc.destroyItem(consumables.LABOVA_, 1);
-	//inventory.takeItem(consumables.P_LBOVA, returnToRathazulMenu);
-	pc.credits -= 200;
-	flags["COC.RATHAZUL_BOUGHT"]++;
-	campRathazul(true);
 }
 
 private function rathazulDebimboOffer():void {
@@ -555,24 +472,6 @@ private function makeADeBimboDraft():void {
 	lootScreen = campRathazul;
 	useItemFunction = campRathazul;
 	itemCollect([new CoCDeBimbo()]);
-}
-
-//PURIFICATION
-private function purifyMinoCum():void{
-	clearOutput();
-	if (pc.credits < 200)
-	{
-		output("Rathazul says, \"<i>You do not have enough gems for that service.</i>\"");
-		doNext(campRathazul, false);
-		return;
-	}
-	if (!debug) pc.destroyItem(new CoCMinotaurCum());
-	pc.credits -= 200;
-	IncrementFlag("COC.RATHAZUL_BOUGHT");
-	itemScreen = campRathazul;
-	lootScreen = campRathazul;
-	useItemFunction = campRathazul;
-	itemCollect([new CoCMinotaurCumPure()]);
 }
 	
 public function rathazulArmorMenu():void {
