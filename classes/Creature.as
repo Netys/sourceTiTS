@@ -2401,6 +2401,7 @@ package classes {
 			||	hasStatusEffect("Grappled")
 			||	hasStatusEffect("Stunned")
 			||	hasStatusEffect("Paralyzed")
+			||	hasStatusEffect("Dysfunction")
 			)	return false;
 			return true;
 		}

@@ -8,6 +8,7 @@ package classes.Characters.CoC
 	import classes.GLOBAL;
 	import classes.Items.Melee.CoCMinotaurAxe;
 	import classes.Items.Miscellaneous.CoCMinotaurCum;
+	import classes.Items.Transformatives.CoCMinotaurBlood;
 	import classes.kGAMECLASS;
 	
 	public class CoCMinotaur extends Creature
@@ -192,10 +193,8 @@ package classes.Characters.CoC
 			
 			sexualPreferences.setRandomPrefs(2 + rand(3));
 			
-			if(rand(5) == 0)
-				inventory.push(kGAMECLASS.WeightedRandom( // TODO: blood TF
-						[new CoCMinotaurCum()] ,
-						[1]));
+			if (rand(5) == 0) inventory.push(new CoCMinotaurCum());
+			else inventory.push(new CoCMinotaurBlood());
 			
 			_isLoading = false;
 		}

@@ -325,36 +325,21 @@ package classes.Items.Transformatives
 						output("\n\nThat’s not enough for the drug, though. Not by a long shot! After a few moments, you see <b>thick, curly fur starts to grow on your new-grown legs</b>, covering them up to the upper thighs. At least you’ll be warm in the winter!");
 
 						output("\n\nThe bottoms of your legs take form: <b>rather than feet, they mutate into distinctly animalistic hooves.</b> You spend a good long while standing up and adjusting to your new gait, wobbling around until you get your footing. Or hoofing, as the case may be.");
-						
-						pc.legCount = 2;
-						pc.genitalSpot = 0;
 						pc.legType = GLOBAL.TYPE_BOVINE;
-						
-						pc.legFlags = [];
-						pc.addLegFlag(GLOBAL.FLAG_HOOVES);
-						pc.addLegFlag(GLOBAL.FLAG_FURRED);
+						pc.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_HOOVES, GLOBAL.FLAG_FURRED];
+						pc.legCount = 2;
+						pc.genitalSpot = 0;	
 					}
 					//PC was a taur:
 					else if (pc.isTaur())
 					{
 						output("\n\nYour bestial lower body is wracked with pain, and the mass of it starts convulsing, breaking apart at the seams. From the waist down, your body changes, becoming more and more humanoid as the minutes pass. When the transition ends, <b>you’re left with bipedal legs,</b> distinctly human in appearance.");
-						
-						if (pc.legType != GLOBAL.TYPE_BOVINE || !pc.hasLegFlag(GLOBAL.FLAG_FURRED))
-						{
-							output("\n\nThat’s not enough for the drug, though. Not by a long shot! After a few moments, you see <b>thick, curly fur starts to grow on your new-grown legs</b>, covering them up to the upper thighs. At least you’ll be warm in the winter!");
-							pc.legType = GLOBAL.TYPE_BOVINE;
-							pc.addLegFlag(GLOBAL.FLAG_FURRED);
-						}
-						pc.genitalSpot = 0;					
+						output("\n\nThat’s not enough for the drug, though. Not by a long shot! After a few moments, you see <b>thick, curly fur starts to grow on your new-grown legs</b>, covering them up to the upper thighs. At least you’ll be warm in the winter!");
+						output("\n\nThe bottoms of your legs take form: <b>rather than feet, they mutate into distinctly animalistic hooves.</b> You spend a good long while standing up and adjusting to your new gait, wobbling around until you get your footing. Or hoofing, as the case may be.");
+						pc.legType = GLOBAL.TYPE_BOVINE;
+						pc.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_HOOVES, GLOBAL.FLAG_FURRED];
 						pc.legCount = 2;
-						pc.legFlags = [];
-						pc.addLegFlag(GLOBAL.FLAG_PLANTIGRADE);
-
-						if (pc.hasLegFlag(GLOBAL.FLAG_HOOVES))
-						{
-							output("\n\nThe bottoms of your legs take form: <b>rather than feet, they mutate into distinctly animalistic hooves.</b> You spend a good long while standing up and adjusting to your new gait, wobbling around until you get your footing. Or hoofing, as the case may be.");
-							pc.addLegFlag(GLOBAL.FLAG_HOOVES);
-						}
+						pc.genitalSpot = 0;	
 					}
 					//PC was bipedal already:
 					else
@@ -363,10 +348,9 @@ package classes.Items.Transformatives
 						//if not already hooves: 
 						if(!pc.hasLegFlag(GLOBAL.FLAG_HOOVES)) output(" Your feet curl in, starting to become covered by a thick, black covering. You grunt and moan, rubbing your transforming body as your feet change. When they’re done, <b>you have a pair of cow-like hooves!</b>.");
 						pc.legType = GLOBAL.TYPE_BOVINE;
-						pc.legFlags = [];
-						pc.addLegFlag(GLOBAL.FLAG_PLANTIGRADE);
-						pc.addLegFlag(GLOBAL.FLAG_HOOVES);
-						pc.addLegFlag(GLOBAL.FLAG_FURRED);
+						pc.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_HOOVES, GLOBAL.FLAG_FURRED];
+						pc.legCount = 2;
+						pc.genitalSpot = 0;	
 					}
 					changes++;
 				}
