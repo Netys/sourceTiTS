@@ -7945,6 +7945,7 @@ package classes {
 			if (horseScore() >= 3) race = equineRace(); // Horse-morphs
 			if (foxScore() >= 4) race = faceType == GLOBAL.TYPE_VULPINE ? "fox-morph" : mf("fox-man", "fox-girl");
 			if (kitsuneScore() >= 5 && (race.indexOf("fox") == -1 || tailCount > 1)) race = "kitsune";
+			if (lizardScore() >= 4) race = "lizan";
 			if (ovirScore() >= 3 && race == "human") race = "half-ovir";
 			if (ausarScore() >= 2 && race == "human") race = "half-ausar"; // Fucking Ausar forever overriding other shit. EXTERMINATUS.
 			if (kaithritScore() >= 3 && race == "human") race = "half-kaithrit";
@@ -8186,6 +8187,28 @@ package classes {
 			if (hasTail() && tailType != GLOBAL.TYPE_VULPINE)
 				kitsuneCounter--;
 			return kitsuneCounter;
+		}
+		//Determine lizard rating
+		public function lizardScore():Number
+		{
+			var lizardCounter:Number = 0;
+			if (faceType == GLOBAL.TYPE_LIZAN)
+				lizardCounter++;
+			if (earType == GLOBAL.TYPE_LIZAN)
+				lizardCounter++;
+			if (tailType == GLOBAL.TYPE_LIZAN)
+				lizardCounter++;
+			if (legType == GLOBAL.TYPE_LIZAN)
+				lizardCounter++;
+			if (eyeType == GLOBAL.TYPE_SNAKE && lizardCounter > 0)
+				lizardCounter++;
+			if (cockTotal(GLOBAL.TYPE_SNAKE) > 0 && lizardCounter > 0)
+				lizardCounter++;
+			if (hasHorns(GLOBAL.TYPE_DRACONIC) && lizardCounter > 0)
+				lizardCounter++;
+			if (hasScales() && lizardCounter > 0)
+				lizardCounter++;
+			return lizardCounter;
 		}
 		public function humanScore(): int {
 			var counter: int = 0;

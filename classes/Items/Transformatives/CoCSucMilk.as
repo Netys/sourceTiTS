@@ -1,5 +1,6 @@
 package classes.Items.Transformatives
 {
+	import classes.Engine.Utility.IncrementFlag;
 	import classes.Engine.Utility.rand;
     import classes.ItemSlotClass;
     import classes.GLOBAL;
@@ -256,6 +257,7 @@ package classes.Items.Transformatives
 				if(target.femininity < 100) kGAMECLASS.output(target.modFem(1));
 				if (rand(3) == 0 && target.tone > 20) kGAMECLASS.output(target.modTone(-2));
 			}
+			IncrementFlag("COC.TIMES_TRANSFORMED");
 			return false;
         }
 		

@@ -1,15 +1,13 @@
 package classes.Items.Transformatives
 {
-	import classes.CockClass;
 	import classes.Creature;
-	import classes.GameData.TooltipManager;
-	import classes.ItemSlotClass;
-	import classes.kGAMECLASS;
-	import classes.StringUtil;
-	import classes.GLOBAL;
-	import classes.Util.*;
 	import classes.Engine.Interfaces.*;
 	import classes.Engine.Utility.*;
+	import classes.GameData.TooltipManager;
+	import classes.GLOBAL;
+	import classes.ItemSlotClass;
+	import classes.StringUtil;
+	import classes.Util.*;
 	
     public class CoCTrapOil extends ItemSlotClass
     {
@@ -320,7 +318,7 @@ package classes.Items.Transformatives
 			if (changes == 0) {
 				output("\n\nWell... that didn't amount to much.");
 			}
-			kGAMECLASS.flags["COC.TIMES_TRANSFORMED"] += changes;
+			IncrementFlag("COC.TIMES_TRANSFORMED");
 			return false;
 		}
 	}	

@@ -42,7 +42,8 @@ public function cocCampMenu():void {
 }
 
 public function doDebugFunction():void {
-	beeEncounterAfraidRepeatSex();
+	//beeEncounterAfraidRepeatSex();
+	quickLoot(new CoCReptilum());
 }
 
 public function hasCompanions():Boolean {

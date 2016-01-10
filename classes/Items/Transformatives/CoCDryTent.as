@@ -135,7 +135,7 @@ package classes.Items.Transformatives
 				changes++;
 			}
 			//pc.refillHunger(20);
-			kGAMECLASS.flags["COC.TIMES_TRANSFORMED"] += changes;
+			IncrementFlag("COC.TIMES_TRANSFORMED");
 			return false;
 		}
 	}	

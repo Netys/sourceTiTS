@@ -3,15 +3,9 @@ import classes.GameData.CombatManager;
 import classes.GLOBAL;
 import classes.Items.Apparel.CoCSluttySwimwear;
 import classes.Items.Drinks.CoCLustDraft;
-import classes.Items.Miscellaneous.EmptySlot;
-import classes.Items.Transformatives.CoCDryTent;
-import classes.Items.Transformatives.CoCEquinum;
-import classes.Items.Transformatives.CoCGoblinAle;
-import classes.Items.Transformatives.CoCImpFood;
-import classes.Items.Transformatives.CoCIncubiD;
-import classes.Items.Transformatives.CoCSharkTooth;
-import classes.Items.Transformatives.CoCSucMilk;
-import classes.Items.Transformatives.CoCWhiskerFruit;
+import classes.Items.Melee.CoCMinotaurAxe;
+import classes.Items.Miscellaneous.*;
+import classes.Items.Transformatives.*;
 import classes.ItemSlotClass;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
@@ -1306,25 +1300,25 @@ private function getAnemoneItem():void
 	}
 	else if (kidAXP() < 75) {
 		//White Book/Bee Honey/Ovi Elixir/Shark Tooth/S. Swimwear/Lust Draft/Bimbo Liqueur(same odds as player drop)
-		itype = RandomInCollection(/*consumables.W__BOOK,consumables.BEEHONY,consumables.OVIELIX,*/new CoCSharkTooth(), new CoCSluttySwimwear(), new CoCLustDraft());
-		//if (rand(100) == 0) itype = consumables.BIMBOLQ;
+		itype = RandomInCollection(new CoCBookWhite(), new CoCBeeHoney(), new CoCOvipositionElixir(), new CoCSharkTooth(), new CoCSluttySwimwear(), new CoCLustDraft());
+		if (rand(100) == 0) itype = new CoCBimboLiqueur();
 	}
 	else if (kidAXP() < 100) {
 		//Mino Blood/Large Axe/Comfortable Clothes/Lust Draft/Lust Dagger/Bro Brew(same odds as player drop)
-		itype = RandomInCollection(/*consumables.MINOBLO, weapons.L__AXE, armors.C_CLOTH, weapons.L_DAGGR,*/ new CoCLustDraft());
+		itype = RandomInCollection(new CoCMinotaurBlood(), new CoCMinotaurAxe(), /* armors.C_CLOTH, weapons.L_DAGGR,*/ new CoCLustDraft());
 		//if (rand(100) == 0) itype = consumables.BROBREW;
 	}
 	else {
 		//T.Shark Tooth/Pink Gossamer/Black Gossamer/Reptilum
 		var choice:Number = rand(100);
 		//if (choice == 0) itype = consumables.BROBREW;
-		//else if (choice == 1) itype = consumables.BIMBOLQ;
-		//else
-			//itype = RandomInCollection(consumables.TSTOOTH, consumables.S_GOSSR,consumables.B_GOSSR,consumables.REPTLUM);
+		if (choice == 1) itype = new CoCBimboLiqueur();
+		else
+			itype = RandomInCollection(/*consumables.TSTOOTH, consumables.S_GOSSR,consumables.B_GOSSR,*/new CoCReptilum());
 		itype = new CoCLustDraft(); // PLACEHOLDER!!!
 	}
 	output(itype.longName + ".");
-	//if (itype == weapons.L__AXE) output("  Holy... how did she drag this thing home!?");
+	if (itype is CoCMinotaurAxe) output("  Holy... how did she drag this thing home!?");
 	output("\n\n");
 	flags["COC.KID_ITEM_FIND_HOURS"] = timeAsStamp;
 

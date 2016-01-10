@@ -203,7 +203,7 @@ package classes.Items.Transformatives
 				output("\n\nNothing happened.  Weird.", false);
 			}
 			//pc.refillHunger(5);
-			kGAMECLASS.flags["COC.TIMES_TRANSFORMED"] += changes;
+			IncrementFlag("COC.TIMES_TRANSFORMED");
 		}
 	}	
 }

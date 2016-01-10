@@ -407,7 +407,7 @@
 					changes++;
 				}
 			}
-			else if (target.cockTotal() > 0)
+			else if (target.cockTotal() > target.cockTotal(GLOBAL.TYPE_NAGA))
 			{
 				kGAMECLASS.output("\n\n" + target.cockTypeLockedMessage());
 			}

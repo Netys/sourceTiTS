@@ -8,6 +8,8 @@ package classes.Characters.CoC
 	import classes.GameData.CombatAttacks;
 	import classes.GLOBAL;
 	import classes.Items.Miscellaneous.*;
+	import classes.Items.Transformatives.CoCReptilum;
+	import classes.Items.Transformatives.CoCSnakeOil;
 	import classes.kGAMECLASS;
 	
 	public class CoCNaga extends Creature
@@ -176,11 +178,8 @@ package classes.Characters.CoC
 			sexualPreferences.setRandomPrefs(2 + rand(3));
 			credits = (rand(5) + 8) * 10;
 			
-			this.inventory = [];			
-			//this.drop = new WeightedDrop().
-			//add(null,1).
-			//add(consumables.REPTLUM,5).
-			//add(consumables.SNAKOIL,4);
+			if (rand(2) == 0) inventory.push(new CoCSnakeOil());
+			else inventory.push(new CoCReptilum());
 			
 			this._isLoading = false;
 		}
