@@ -6,6 +6,7 @@ import classes.Creature;
 import classes.GLOBAL;
 import classes.Items.Miscellaneous.CoCMinotaurCum;
 import classes.Items.Transformatives.CoCDyes.*;
+import classes.Items.Transformatives.CoCHairSerum;
 import classes.ItemSlotClass;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
@@ -269,6 +270,7 @@ private function gloryholeImp():void {
 	}
 	pc.loadInMouth(new CoCImp());
 	output("Abruptly, the demon-dong slips through your grasp and out the hole.  You hear a loud thump as something lands on the ground. Poor thing.\n\n");
+	clearMenu();
 	addButton(0, "Next", hairDressingMainMenu);
 }
 
@@ -294,6 +296,7 @@ private function gloryholeDoggie():void {
 	}
 	pc.loadInMouth(new CoCHellHound()); // just to use someone
 	output("A young goblin comes by with a bowl for you to make your payment into.  You spit out the gunk and wipe your mouth, as the goblin carries the seed away.  You notice a trail of clear drops on the ground behind her.  She must be anticipating something...");
+	clearMenu();
 	addButton(0, "Next", hairDressingMainMenu);
 }
 private function gloryholeIncubus():void {
@@ -311,6 +314,7 @@ private function gloryholeIncubus():void {
 		
 	}
 	pc.loadInMouth(new CoCIncubusMechanic());
+	clearMenu();
 	addButton(0, "Next", hairDressingMainMenu);
 }
 
@@ -328,6 +332,7 @@ private function gloryholeMinotaur(): void {
 	pc.lust(33);
 	pc.cor(1);
 	pc.loadInMouth(new CoCMinotaur());
+	clearMenu();
 	addButton(0, "Next", hairDressingMainMenu);
 }
 
@@ -436,7 +441,7 @@ private function dyeMenu():void {
 	addButton(2, "Pink", buyDye, new CoCDyePink());
 	addButton(3, "Purple", buyDye, new CoCDyePurple());
 	addButton(4, "Green", buyDye, new CoCDyeGreen());
-	//addButton(5, "Ext.Serum", buyDye, consumables.EXTSERM);
+	addButton(5, "Ext.Serum", buyDye, new CoCHairSerum());
 	addButton(14, "Back", hairDressingMainMenu);
 }
 
@@ -863,3 +868,51 @@ public function LynetteTimePassedNotify():void {
 }
 private var LynetteTimePassedNotifyHook: * = LynetteTimePassedNotifyGrapple();
 private function LynetteTimePassedNotifyGrapple():* { timeChangeListeners.push(LynetteTimePassedNotify); }
+
+public function HairSerumTimePassedNotify():void {			
+	if (flags["COC.INCREASED_HAIR_GROWTH_SERUM_TIME"] > 0 && minutes == 0 && hours % (24 / flags["COC.INCREASED_HAIR_GROWTH_SERUM_POWER"]) == 0) { // every 24/12/8 hours
+		//trace("Serum tick! Before: " + pc.hairLength);
+		flags["COC.INCREASED_HAIR_GROWTH_SERUM_TIME"]--;
+		
+		eventBuffer += "\n\nYour scalp tingles and you";
+		if (pc.hairLength <= 0)
+		{
+			pc.hairLength = 1;
+			eventBuffer += " reach up to scratch it. Instead of [pc.skinFurScalesNoun], your fingers run across";
+			if(pc.hairType == GLOBAL.HAIR_TYPE_REGULAR)
+			{
+				eventBuffer += " patches of growing hair.";
+			}
+			else
+			{
+				eventBuffer += " a growing patch of tiny [pc.hairsNoun].";
+			}
+			eventBuffer += " <b>You now have [pc.hair]!</b>";
+		}
+		else
+		{
+			pc.hairLength++;
+			if (pc.hairLength <= 2)
+			{
+				eventBuffer += " reach up to touch your short [pc.hairNoun]. <b>It seems longer than it did before, growing out one more inch.</b>";
+			}
+			else
+			{
+				eventBuffer += " see your [pc.hairNoun] grow out, right in front of your [pc.eyes]. <b>Your hair has lengthened by another inch!</b>";
+			}
+		}
+		if(pc.hairStyle != "null" && pc.hairStyle != "tentacle")
+		{
+			eventBuffer += " It seems the growth has messed up your hair in the process... You might have to get it restyled later.";
+			pc.hairStyle = "null";
+		}
+		
+		if (flags["COC.INCREASED_HAIR_GROWTH_SERUM_TIME"] == 0) {
+			eventBuffer += "\n\nThe tingling on your scalp slowly fades away as the hair extension serum wears off.  Maybe it's time to go back to the salon for more?";
+			flags["COC.INCREASED_HAIR_GROWTH_SERUM_POWER"] = 0;
+		}
+		//trace("Serum tick! After: " + pc.hairLength);
+	}
+}
+private var HairSerumTimePassedNotifyHook: * = HairSerumTimePassedNotifyGrapple();
+private function HairSerumTimePassedNotifyGrapple():* { timeChangeListeners.push(HairSerumTimePassedNotify); }
