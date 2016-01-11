@@ -1,5 +1,6 @@
 import classes.Engine.Combat.DamageTypes.DamageType;
 import classes.GLOBAL;
+import classes.Items.Apparel.*;
 import classes.Items.Miscellaneous.*;
 import classes.Items.Transformatives.*;
 import classes.Util.*;
@@ -42,8 +43,9 @@ public function cocCampMenu():void {
 }
 
 public function doDebugFunction():void {
-	//beeEncounterAfraidRepeatSex();
-	quickLoot(new CoCReptilum());
+	meetFetishCultistAndHaveFun();
+	//quickLoot(new CoCCentaurSaddle());
+	new Catnip();
 }
 
 public function hasCompanions():Boolean {

@@ -37,6 +37,7 @@ include "areas/forest/TamaniScene.as";
 include "areas/forest/tentacleBeastScene.as";
 include "areas/lake/lake.as";
 include "areas/lake/CalluScene.as";
+include "areas/lake/FetishCultistScene.as";
 include "areas/lake/GooGirlScene.as";
 include "areas/lake/GreenSlimeScene.as";
 include "areas/lake/Kaiju.as";

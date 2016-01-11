@@ -24,6 +24,9 @@ package classes.Engine.Interfaces
 	public function get foes():/*Creature*/Array {
 		return kGAMECLASS.foes() }
 	
+	public function get enemy():Creature {
+		return kGAMECLASS.enemy; }
+	
 	public function addItemButton(slot:int, item:ItemSlotClass, func:Function = undefined, arg:* = undefined, ttHeader:String = null, ttBody:String = null, seller:Creature = null, buyer:Creature = null):void	{
 		kGAMECLASS.addItemButton(slot, item, func, arg:*, ttHeader, ttBody, seller, buyer); }
 		

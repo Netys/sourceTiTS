@@ -697,5 +697,14 @@
 			}
 			return "";
 		}
+		
+		
+		//public function get isUsable():Boolean {
+			//return _isUsable;
+		//}
+		//
+		//public function set isUsable(arg:Boolean):void {
+			//_isUsable = arg;
+		//}
 	}
 }

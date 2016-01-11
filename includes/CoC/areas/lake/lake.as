@@ -8,11 +8,9 @@ import classes.Engine.Utility.*;
 // TODO:
 // Pony April 1st event
 // Helia monogamy encounter
-// Egg chooser (pregs should be done first)
 // latexGirl
 // Izma
 // dick-dragging
-// FetishCultist (factory first)
 public function exploreLake():void
 {
 	//Increment exploration count
@@ -46,10 +44,10 @@ public function exploreLake():void
 	chance.push(1);
 	
 	//Fetish cultist not encountered till level 2
-	//if (pc.level >= 2 && flags["COC.FACTORY_SHUTDOWN"] != undefined) {
-		//choice.push(meetFetishCultistAndHaveFun);
-		//chance.push(1);
-	//}
+	if (pc.level >= 2 && flags["COC.FACTORY_SHUTDOWN"] > 0) {
+		choice.push(meetFetishCultistAndHaveFun);
+		chance.push(1);
+	}
 	
 	// semi-rare
 	if(flags["COC.EXPLORED_LAKE"] >= 5) { 
@@ -74,7 +72,7 @@ public function exploreLake():void
 	//if (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00230] > 0 && (pc.exploredLake >= 10) && (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00233] == 0 || pc.findStatusAffect(StatusAffects.Infested) < 0) && flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00238] <= 0)
 		//kGAMECLASS.izmaScene.meetIzmaAtLake();
 	//Rathazul
-	if (flags["COC.RATHAZUL_IN_CAMP"] == undefined) {
+	if (flags["COC.RATHAZUL_IN_CAMP"] != 1) {
 		choice.push(encounterRathazul);
 		chance.push(1);
 	}
@@ -190,19 +188,20 @@ public function meetWhitneyDuringExplorationMaybe():void {
 	}
 }
 
-//public function meetFetishCultistAndHaveFun():void {	
-	//clearOutput();
-	//if (flags["COC.FETISH_CULTIST_MET"] == undefined) {
-		//flags["COC.FETISH_CULTIST_MET"] = 1;
-		//output("While exploring, you notice something unusual on the lake.  This something is quickly moving towards you at a surprising rate, much faster than anything you've ever seen before.  Wary of meeting new things in this world after your previous experiences, you decide to slip behind a nearby hill and watch it while hidden.  Soon the object comes into view and you can see that it is a boat of some kind.  It looks almost like a large open box on the water with some kind of gazebo on it.  Despite how fast it is moving, you can't see any oars or means of moving the boat.  It slows somewhat when it gets close to the shore, but is still going about as fast as you can run when it hits the shore and extends some kind of gangplank onto the lake shore.  With a close up view, you estimate that it is six feet across, ten feet long, and doesn't actually seem to have very much of it underwater.  You guess that it must be magic in some way.  There are several robe-clad figures on board.\n\n", true);
-		//output("After a moment, a number of the figures disembark down the gangplank and immediately go off in different directions.  You count half a dozen of them, and guess that they are female when one of them passes by close to you and you see the hole in her outfit over her naughty bits.  You look back at the boat to see it close the gangplank, and move back onto the lake, with only one of the figures still on board.  Surprised to hear a sudden yell, you look to the side and see the clothing of the one who passed you earlier shift and twist before becoming some pink outfit that clings to her backside.  You are stunned for a moment as she disappears from sight before you shake your head and move on.  It seems there are new residents to the lake.\n\n<b>(Fetish Cultists can now be encountered!)</b>", false);
-		////(increase player lust from the sights they saw)
-		//pc.lust(5);
-		//doNext(returnToCampUseOneHour);
-		//return;
-	//}
-	//fetishCultistScene.fetishCultistEncounter();
-//}
+public function meetFetishCultistAndHaveFun():void {	
+	clearOutput();
+	if (IncrementFlag("COC.FETISH_CULTIST_MET") == 1) {
+		output("While exploring, you notice something unusual on the lake.  This something is quickly moving towards you at a surprising rate, much faster than anything you've ever seen before.  Wary of meeting new things in this world after your previous experiences, you decide to slip behind a nearby hill and watch it while hidden.  Soon the object comes into view and you can see that it is a boat of some kind.  It looks almost like a large open box on the water with some kind of gazebo on it.  Despite how fast it is moving, you can't see any oars or means of moving the boat.  It slows somewhat when it gets close to the shore, but is still going about as fast as you can run when it hits the shore and extends some kind of gangplank onto the lake shore.  With a close up view, you estimate that it is six feet across, ten feet long, and doesn't actually seem to have very much of it underwater.  You guess that it must be magic in some way.  There are several robe-clad figures on board.\n\n", true);
+		output("After a moment, a number of the figures disembark down the gangplank and immediately go off in different directions.  You count half a dozen of them, and guess that they are female when one of them passes by close to you and you see the hole in her outfit over her naughty bits.  You look back at the boat to see it close the gangplank, and move back onto the lake, with only one of the figures still on board.  Surprised to hear a sudden yell, you look to the side and see the clothing of the one who passed you earlier shift and twist before becoming some pink outfit that clings to her backside.  You are stunned for a moment as she disappears from sight before you shake your head and move on.  It seems there are new residents to the lake.\n\n<b>(Fetish Cultists can now be encountered!)</b>");
+		//(increase player lust from the sights they saw)
+		pc.lust(5);
+		processTime(15);
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
+		return;
+	}
+	fetishCultistEncounter();
+}
 
 	
 public function meetSomethingSlimyAndOoooozzzingAtTheShore():void {
