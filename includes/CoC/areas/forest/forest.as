@@ -6,13 +6,8 @@ import classes.Engine.Utility.*;
 // TODO:
 // Tamani preg
 // Tamani daughters
-// proper Tamani AI
-// Tamani loot
 // Jojo corruption, rape and combat
 // Marble meeting
-// Bee girl chitin
-// Bee girl AI
-// Bee girl items
 // Helia monogamy encounter
 // dick-dragging
 public function exploreForest():void

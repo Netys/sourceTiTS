@@ -9,6 +9,7 @@ package classes.Characters.CoC
 	import classes.Items.Drinks.*;
 	import classes.Items.Miscellaneous.EmptySlot;
 	import classes.Items.Transformatives.*;
+	import classes.Items.Transformatives.CoCDyes.*;
 	import classes.kGAMECLASS;
 	import classes.TITSSaveEdit.Data.CoCTypeDefs;
 	
@@ -157,8 +158,8 @@ package classes.Characters.CoC
 			sexualPreferences.setRandomPrefs(2 + rand(3));
 			
 			inventory.push(kGAMECLASS.WeightedRandom(
-						[new CoCGoblinAle(),	new CoCLustDraft()/*,	new PINKDYE(), new BLUEDYE(), new ORANGDY(), new PURPDYE()*/] ,
-						[5, 1/*, 1, 1, 1, 1*/]));
+						[new CoCGoblinAle(), new CoCLustDraft(), new CoCDyePink(), new CoCDyeBlue, new CoCDyeOrange(), new CoCDyePurple()] ,
+						[5,                  1,                  1,                1,              1,                  1]));
 			
 			this._isLoading = false;
 		}

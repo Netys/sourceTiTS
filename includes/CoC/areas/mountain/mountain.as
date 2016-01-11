@@ -90,9 +90,10 @@ public function exploreMountain():void {
 	//}
 	
 	//10% chance of hairdresser encounter if not found yet
-	//if (rand(10) == 0 && flags["COC.GOBLIN_SALON_FOUND"] == undefined) {
-		//GoblinSalonEnter();
-	//}
+	if (flags["COC.GOBLIN_SALON_FOUND"] != 1) {
+		choice.push(GoblinSalonEnter);
+		chance.push(5);
+	}
 	
 	//Boosts mino and hellhound rates!
 	//if (pc.findPerk(PerkLib.PiercedFurrite) >= 0 && rand(3) == 0) {

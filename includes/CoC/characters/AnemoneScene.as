@@ -3,6 +3,7 @@ import classes.GameData.CombatManager;
 import classes.GLOBAL;
 import classes.Items.Apparel.CoCSluttySwimwear;
 import classes.Items.Drinks.CoCLustDraft;
+import classes.Items.Melee.CoCLustDagger;
 import classes.Items.Melee.CoCMinotaurAxe;
 import classes.Items.Miscellaneous.*;
 import classes.Items.Transformatives.*;
@@ -1305,7 +1306,7 @@ private function getAnemoneItem():void
 	}
 	else if (kidAXP() < 100) {
 		//Mino Blood/Large Axe/Comfortable Clothes/Lust Draft/Lust Dagger/Bro Brew(same odds as player drop)
-		itype = RandomInCollection(new CoCMinotaurBlood(), new CoCMinotaurAxe(), /* armors.C_CLOTH, weapons.L_DAGGR,*/ new CoCLustDraft());
+		itype = RandomInCollection(new CoCMinotaurBlood(), new CoCMinotaurAxe(), /* armors.C_CLOTH,*/ new CoCLustDagger(), new CoCLustDraft());
 		//if (rand(100) == 0) itype = consumables.BROBREW;
 	}
 	else {

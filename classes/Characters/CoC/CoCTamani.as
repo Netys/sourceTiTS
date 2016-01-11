@@ -2,6 +2,7 @@ package classes.Characters.CoC
 {
 	import classes.Items.Drinks.*;
 	import classes.Items.Transformatives.*;
+	import classes.Items.Transformatives.CoCDyes.*;
 	import classes.Items.Transformatives.CoCEggs.CoCBlueEggLarge;
 	import classes.kGAMECLASS;
 	
@@ -48,8 +49,8 @@ package classes.Characters.CoC
 			
 			inventory = []; // subclass of goblin, gonna clean up generic loot
 			inventory.push(kGAMECLASS.WeightedRandom(
-						[new CoCGoblinAle(), new CoCLustDraft(), new CoCIncubiD(), new CoCReducto(), new CoCBlueEggLarge()],
-						[4,                  1,                  1,                1,                1]));
+						[new CoCGoblinAle(), new CoCLustDraft(), new CoCIncubiD(), new CoCReducto(), new CoCBlueEggLarge(), new CoCDyePink(), new CoCDyeBlue, new CoCDyeOrange(), new CoCDyePurple()],
+						[4,                  1,                  1,                1,                1,                     1,                1,              1,                  1]));
 			
 			//.addMany(1,
 					//consumables.PINKDYE,

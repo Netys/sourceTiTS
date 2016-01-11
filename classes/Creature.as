@@ -4044,12 +4044,14 @@ package classes {
 			return output;
 		}
 		public function femininityMax(): Number {
+			if (hasPerk("Androgyny")) return 100; // perk overrides other conditions
 			//Herms + genderless
 			if ((!hasVagina() && !hasCock()) || (hasCock() && hasVagina())) return 85;
 			else if (hasCock() && !hasVagina()) return 70;
 			else return 100;
 		}
 		public function femininityMin(): Number {
+			if (hasPerk("Androgyny")) return 0; // perk overrides other conditions
 			//Herms + genderless
 			if ((!hasVagina() && !hasCock()) || (hasCock() && hasVagina())) return 20;
 			else if (!hasCock() && hasVagina()) return 30;

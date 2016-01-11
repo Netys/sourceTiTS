@@ -1,9 +1,11 @@
+import classes.Characters.CoC.CoCTrader;
 import classes.Creature;
 import classes.GLOBAL;
 import classes.Items.Armor.CoCBeeArmor;
 import classes.Items.Armor.CoCGelArmor;
 import classes.Items.Miscellaneous.*;
 import classes.Items.Transformatives.*;
+import classes.Items.Transformatives.CoCDyes.*;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -57,6 +59,15 @@ private function followerCampMenuBlurbRathazulGrapple():* {
 	followerCampMenuBlurb.push(followerCampMenuBlurbRathazul);
 }
 
+public function RathazulTimePassedNotify():void {
+	if (hours == 0) {
+		if (flags["COC.RATHAZUL_MET"] == 1) IncrementFlag("COC.RATHAZUL_DAYS_KNOWN");
+		if (flags["COC.RATHAZUL_IN_CAMP"] == 1) IncrementFlag("COC.RATHAZUL_DAYS_IN_CAMP");
+	}
+}
+private var RathazulTimePassedNotifyHook: * = RathazulTimePassedNotifyGrapple();
+private function RathazulTimePassedNotifyGrapple():* { timeChangeListeners.push(RathazulTimePassedNotify); }
+
 // TODO: rewrite all that messy shit for good
 public function encounterRathazul():void {
 	//spriteSelect(49);
@@ -90,8 +101,7 @@ public function encounterRathazul():void {
 }
 
 private function rathazulMoveToCampOffer():Boolean {
-	trace("Rath bought: " + flags["COC.RATHAZUL_BOUGHT"] + " in camp: " + flags["COC.RATHAZUL_IN_CAMP"]);
-	if (flags["COC.RATHAZUL_IN_CAMP"] != 1 && flags["COC.RATHAZUL_BOUGHT"] >= 3 && pc.cor() < 75) {
+	if (flags["COC.RATHAZUL_IN_CAMP"] != 1 && flags["COC.RATHAZUL_DAYS_KNOWN"] >= 3 && pc.cor() < 75) {
 		clearMenu()
 		output("\"<i>You know, I think I might be able to do this worn-out world a lot more good from your camp than by wandering around this lake.  What do you say?</i>\" asks the rat.\n\n(Move Rathazul into your camp? You are quite sure this is one-time offer.)");
 		addButton(0, "Yes", rathazulMoveToCamp);
@@ -263,9 +273,10 @@ private function rathazulWorkOffer():Boolean {
 	}
 	//Offer dyes if offering something else.
 	if(pc.credits >= 500) {
-		output("Rathazul offers, \"<i>Since you have enough gems to cover the cost of materials for my dyes as well, you could buy one of my dyes for your hair.  ", false);
-		if (flags["COC.RATHAZUL_MET"] >= 8) output("I should be able to make exotic-colored dyes if you're interested.  ");
-		output("Or if you want some changes to your skin, I have skin oils and body lotions.  I will need 50 gems.</i>\"\n\n");
+		output("Rathazul offers, \"<i>Since you have enough gems to cover the cost of materials for my dyes as well, you could buy one of my dyes for your hair.  ");
+		if (flags["COC.RATHAZUL_DAYS_KNOWN"] >= 8) output("I should be able to make exotic-colored dyes if you're interested.  ");
+		//output("Or if you want some changes to your skin, I have skin oils and body lotions.  I will need 50 gems.</i>\"");
+		output("\n\n");
 		spoken = true;
 		totalOffers++;
 		dyes = true;
@@ -279,11 +290,8 @@ private function rathazulWorkOffer():Boolean {
 		output("The rat mentions, \"<i>You know, I could make something new if you're willing to hand over two of vials labeled \"Equinum\", one vial of minotaur blood and one hundred gems. Or five bottles of Lactaid and two bottles of purified LaBova along with 250 gems.</i>\"\n\n");
 	}
 	//Reducto
-	if(flags["COC.RATHAZUL_IN_CAMP"] > 0 && flags["COC.RATHAZUL_BOUGHT"] >= 4) {
-		output("The rat hurries over to his supplies and produces a container of paste, looking rather proud of himself, \"<i>Good news everyone!  I've developed a paste you could use to shrink down any, ah, oversized body parts.  The materials are expensive though, so I'll need ");
-		if(flags["COC.AMILY_MET_RATHAZUL"] >= 2) output("50");
-		else output("100");
-		output(" gems for each jar of ointment you want.</i>\"\n\n");
+	if(flags["COC.RATHAZUL_DAYS_IN_CAMP"] >= 4) {
+		output("The rat hurries over to his supplies and produces a container of paste, looking rather proud of himself, \"<i>Good news everyone!  I've developed a paste you could use to shrink down any, ah, oversized body parts.  The materials are expensive though, so I'll need 100 gems for each jar of ointment you want.</i>\"\n\n");
 		totalOffers++;
 		spoken = true;
 		reducto = true;
@@ -331,6 +339,7 @@ private function rathazulWorkOffer():Boolean {
 		output("Will you take him up on an offer or leave?", false);
 		//In camp has no time passage if left.
 		if (showArmorMenu) addButton(0, "Armor", rathazulArmorMenu, null, "Armor", "Ask Rathazul to make an armour for you.");
+		addButton(1, "Shop", rathShop, null, "Shop", "See what he can offer.");
 		//if (dyes) {
 			//addButton(1, "Buy Dye", buyDyes, null, "Buy Dye", "Ask him to make a dye for you. \n\nCost: 50 Gems.");
 			//addButton(2, "Buy Oil", buyOils, null, "Buy Oil", "Ask him to make a skin oil for you. \n\nCost: 50 Gems.");
@@ -342,7 +351,7 @@ private function rathazulWorkOffer():Boolean {
 		//if (pc.hasItem(consumables.BEEHONY)) addButton(6, consumables.PURHONY.shortName, rathazulMakesPureHoney, null, null, null, "Ask him to distill a vial of bee honey into a pure honey. \n\nCost: 25 Gems \nNeeds 1 vial of Bee Honey");
 		//if (flags["COC.RATHAZUL_BOUGHT"] >= 5) addButton(7, "ProLactaid", rathazulMakesMilkPotion, null, null, null, "Ask him to brew a special lactation potion. \n\nCost: 250 Gems \nNeeds 5 Lactaids and 2 Purified LaBovas.");
 		//if (flags["COC.RATHAZUL_BOUGHT"] >= 5) addButton(8, "Taurinum", rathazulMakesTaurPotion, null, "Taurinum", "Ask him to brew a special potion that could aid in becoming a centaur. \n\nCost: 100 Gems \nNeeds 2 Equinum and 1 Minotaur Blood.");
-		if (reducto) addButton(9, "Reducto", buyReducto, null);
+		//if (reducto) addButton(9, "Reducto", buyReducto, null);
 		
 		//if (lethiciteDefense != null) addButton(10, "Lethicite", lethiciteDefense, null, null, null, "Ask him if he can make use of that lethicite you've obtained from Marae.");
 		//if (pc.hasItem(consumables.PURHONY, 1) && pc.hasItem(consumables.C__MINT, 1) && pc.hasItem(consumables.PURPEAC, 1) && pc.hasKeyItem("Rathazul's Purity Potion") < 0 &&(flags[kFLAGS.MINERVA_PURIFICATION_RATHAZUL_TALKED] == 2 && flags[kFLAGS.MINERVA_PURIFICATION_PROGRESS] < 10)) {
@@ -356,6 +365,24 @@ private function rathazulWorkOffer():Boolean {
 		return true;
 	}
 	return false;
+}
+
+private function rathShop():void {
+	//spriteSelect(37);
+	shopkeep = new CoCTrader();
+	shopkeep.short = "Rathazul";
+	shopkeep.keeperBuy = "What would you want to buy?\n\n";
+	shopkeep.inventory = [];
+	shopkeep.sellMarkup = 2;
+	if (flags["COC.RATHAZUL_DAYS_IN_CAMP"] >= 4)
+		shopkeep.inventory.push(new CoCReducto());
+	shopkeep.inventory.push(new CoCDyeAuburn(), new CoCDyeBlack(), new CoCDyeBlond(), new CoCDyeBrown(), new CoCDyeRed(), new CoCDye(), new CoCDyeGray());
+	if (flags["COC.RATHAZUL_DAYS_KNOWN"] >= 8)
+		shopkeep.inventory.push(new CoCDyeBlue(), new CoCDyeGreen(), new CoCDyeOrange(), new CoCDyePurple(), new CoCDyePink());
+	if (flags["COC.RATHAZUL_DAYS_KNOWN"] >= 12)
+		shopkeep.inventory.push(new CoCDyeRainbow());
+	shopkeepBackFunctor = campRathazul;
+	buyItem();
 }
 
 public function rathPurify():void {

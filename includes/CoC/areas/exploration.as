@@ -113,11 +113,10 @@ public function placesKnown():Boolean { //Returns true as soon as any known plac
 }
 
 public function placesCount():int {
-	var places:int = 0;
+	var places:int = dungeonsKnown();
 	//if (flags[kFLAGS.BAZAAR_ENTERED] > 0) places++;
 	if (flags["COC.BOAT_DISCOVERED"] == 1) places++;
 	//if (flags[kFLAGS.FOUND_CATHEDRAL] > 0) places++;
-	//if (flags[kFLAGS.FACTORY_FOUND] >= 0 || flags[kFLAGS.DISCOVERED_DUNGEON_2_ZETAZ] > 0 || flags[kFLAGS.DISCOVERED_WITCH_DUNGEON] > 0) places++;
 	if (flags["COC.WHITNEY_MET"] >= 3) places++; 
 	//if (flags[kFLAGS.OWCA_UNLOCKED] > 0) places++;
 	//if (player.findStatusAffect(StatusAffects.HairdresserMeeting) >= 0) places++;
@@ -155,8 +154,8 @@ public function showPlacesMenu():Boolean {
 	if (dungeonsKnown() > 0) addButton(4, "Dungeons", showDungeonsMenu, null, "Dungeons", "Delve into dungeons.");
 	if (flags["COC.WHITNEY_MET"] >= 3) addButton(5, "Farm", farmExploreEncounter, null, "Farm", "Visit Whitney's farm.");
 	//if (flags[kFLAGS.OWCA_UNLOCKED] == 1) addButton(6, "Owca", kGAMECLASS.owca.gangbangVillageStuff, null, null, null, "Visit the sheep village of Owca, known for its pit where a person is hung on the pole weekly to be gang-raped by the demons.");
-	//if (player.findStatusAffect(StatusAffects.HairdresserMeeting) >= 0) addButton(7, "Salon", kGAMECLASS.mountain.salon.salonGreeting, null, null, null, "Visit the salon for hair services.");
-	if(flags["COC.TEL_ADRE_KNOWN"] >= 1) addButton(8, "Tel'Adre", telAdreMenu, null, "Tel'Adre", "Visit the city of Tel'Adre in desert, easily recognized by the massive tower.");
+	if (flags["COC.GOBLIN_SALON_FOUND"] > 0) addButton(7, "Salon", salonGreeting, null, "Salon", "Visit the salon for hair services.");
+	if (flags["COC.TEL_ADRE_KNOWN"] >= 1) addButton(8, "Tel'Adre", telAdreMenu, null, "Tel'Adre", "Visit the city of Tel'Adre in desert, easily recognized by the massive tower.");
 	//
 	//if (flags["COC.AMILY_VILLAGE_ACCESSIBLE"] > 0) addButton(10, "Town Ruins", exploreVillageRuin, null, "Town Ruins", "Visit the village ruins.\n\nTimes explored: " + flags["COC.EXPLORED_AMILY_VILLAGE"]);
 	//if (flags[kFLAGS.MET_MINERVA] >= 4) addButton(11, "Oasis Tower", kGAMECLASS.highMountains.minervaScene.encounterMinerva, null, null, null, "Visit the ruined tower in the high mountains where Minerva resides.");

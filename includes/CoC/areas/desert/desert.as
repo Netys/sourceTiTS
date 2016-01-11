@@ -9,8 +9,6 @@ import classes.Engine.Utility.*;
 // Helia encounter
 // camp chest
 // bigJunkDesertScene
-// naga: naga/reptile tf
-// sand witches: ton of loot
 // Phylla
 public function exploreDesert():void
 {
