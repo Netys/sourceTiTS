@@ -49,6 +49,7 @@ include "areas/mountain/WormsScene.as";
 include "areas/boat/boat.as";
 include "areas/boat/MaraeScene.as";
 include "areas/boat/SharkGirlScene.as";
+include "areas/boat/FetishZealotScene.as";
 
 // PLACES
 include "places/Farm.as";

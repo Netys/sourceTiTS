@@ -36,10 +36,10 @@ package classes.Characters.CoC
 			this.meleeWeapon.hasRandomProperties = true;
 			
 			baseHPResistances = new TypeCollection();
-			baseHPResistances.psionic.resistanceValue = -50.0;
-			baseHPResistances.drug.resistanceValue = -50.0;
-			baseHPResistances.pheromone.resistanceValue = -50.0;
-			baseHPResistances.tease.resistanceValue = -50.0;
+			baseHPResistances.psionic.resistanceValue = -25.0;
+			baseHPResistances.drug.resistanceValue = -25.0;
+			baseHPResistances.pheromone.resistanceValue = -25.0;
+			baseHPResistances.tease.resistanceValue = -25.0;
 			
 			this.armor.longName = FETISHY_OUTFIT;
 			this.armor.defense = 0;

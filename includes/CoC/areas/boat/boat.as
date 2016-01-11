@@ -56,11 +56,11 @@ public function boatExplore():void
 		choice.push(level3MaraeEncounter);
 		chance.push(20);
 	}
-	//
-	//if (flags["COC.FACTORY_SHUTDOWN"] != undefined && pc.level > 2) {
-		//choice.push(fetishZealotScene.zealotBoat);
-		//chance.push(1);
-	//}
+	
+	if (flags["COC.FACTORY_SHUTDOWN"] > 0 && pc.level > 2) {
+		choice.push(zealotBoat);
+		chance.push(1);
+	}
 	
 	choice.push(mortalAnemoneeeeee);
 	chance.push(2);

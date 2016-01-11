@@ -43,7 +43,7 @@ public function cocCampMenu():void {
 }
 
 public function doDebugFunction():void {
-	meetFetishCultistAndHaveFun();
+	zealotBoat();
 	//quickLoot(new CoCCentaurSaddle());
 	new Catnip();
 }
