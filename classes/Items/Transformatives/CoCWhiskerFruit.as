@@ -39,8 +39,6 @@ package classes.Items.Transformatives
             
             this.version = this._latestVersion;
         }
-		
-		public static var catFurColor:Vector.<String> = Vector.<String>(["brown", "chocolate", "auburn", "caramel", "orange", "sandy brown", "golden", "black", "midnight black", "dark gray", "gray", "light gray", "silver", "white", "orange and white", "brown and white", "black and white", "gray and white"]);
         
         //METHOD ACTING!
         override public function useFunction(pc:Creature, usingCreature:Creature = null):Boolean
@@ -255,57 +253,23 @@ package classes.Items.Transformatives
 				}
 			}
 			
-			//Body type changes.  Teh rarest of the rare.
 			// Ears!
 			if (rand(5) == 0 && changes < changeLimit && Mutator.changeEars(pc, GLOBAL.TYPE_FELINE)) changes++;
 			// Tail!
 			if (rand(5) == 0 && changes < changeLimit && Mutator.changeTail(pc, GLOBAL.TYPE_FELINE, 1, [GLOBAL.FLAG_LONG, GLOBAL.FLAG_FURRED])) changes++;
-			// Pawz for legz! After ears and tail.
+			// Paws for legs! After ears and tail.
 			if (pc.hasTail(GLOBAL.TYPE_FELINE) && pc.earType == GLOBAL.TYPE_FELINE && rand(5) == 0 && changes < changeLimit 
 				&& Mutator.changeLegs(pc, GLOBAL.TYPE_FELINE, [2, 6, 2, 2], [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_PAWS, GLOBAL.FLAG_FURRED])) changes++;
-			
-			if (changes < changeLimit && pc.armType != GLOBAL.TYPE_FELINE && pc.hasFur() && rand(4) == 0) {
-				output("\n\nYou scratch at your biceps absentmindedly, but no matter how much you scratch, it isn't getting rid of the itch.  Glancing down in irritation, you discover that your arms are changed!");
-				pc.armType = GLOBAL.TYPE_FELINE;
-				pc.armFlags = [GLOBAL.FLAG_FURRED];
-				changes++;
-			}
-			//TURN INTO A FURRAH!  OH SHIT
-			if (pc.hasTail(GLOBAL.TYPE_FELINE) && pc.earType == GLOBAL.TYPE_FELINE && rand(5) == 0 && changes < changeLimit && pc.legType == GLOBAL.TYPE_FELINE && !pc.hasFur()) {
-				output("\n\nYour [pc.skin] begins to tingle, then itch. ");
-				
-                pc.skinType = GLOBAL.SKIN_TYPE_FUR;
-                pc.clearSkinFlags();
-				
-				if(!InCollection(pc.furColor, catFurColor)) pc.furColor = RandomInCollection(catFurColor);
-				
-				output("You reach down to scratch your skin absent-mindedly and pull your fingers away to find strands of fur. Wait, fur?  What just happened?! You spend a moment examining yourself and discover that <b>you are now covered in glossy, soft " + pc.furColor + " fur.</b>");
-				changes++;
-			}
-			//CAT-FACE!  FULL ON FURRY!  RAGE AWAY NEKOZ
-			if (pc.hasTail(GLOBAL.TYPE_FELINE) && pc.earType == GLOBAL.TYPE_FELINE && rand(5) == 0 && changes < changeLimit && pc.legType == GLOBAL.TYPE_FELINE && (pc.hasFur() /*|| (pc.hasScales() && pc.dragonneScore() >= 4)*/) && pc.faceType != GLOBAL.TYPE_FELINE) {
-				//Gain cat face, replace old face
-				output(RandomInCollection([
-				"\n\nYour face is wracked with pain. You throw back your head and scream in agony as you feel your cheekbones breaking and shifting, reforming into something... different. You find a puddle to view your reflection and discover <b>your face is now a cross between human and feline features.</b>",
-				"\n\nMind-numbing pain courses through you as you feel your facial bones rearranging.  You clutch at your face in agony as your skin crawls and shifts, your visage reshaping to replace your facial characteristics with those of a feline. <b>You now have an anthropomorphic cat-face.</b>",
-				"\n\nYour face is wracked with pain. You throw back your head and scream in agony as you feel your cheekbones breaking and shifting, reforming into something else. <b>Your facial features rearrange to take on many feline aspects.</b>"
-				]));
-				
-				pc.clearFaceFlags();
-				pc.faceType = GLOBAL.TYPE_FELINE;
-                pc..addFaceFlag(GLOBAL.FLAG_MUZZLED);
-				
-				if (!InCollection(pc.eyeColor, ["emerald", "amber", "green", "blue", "gold"]))
-				{
-					var color:String = RandomInCollection(["emerald", "amber", "green", "blue", "gold"]);
-					if (pc.eyeColorUnlocked(color)) pc.eyeColor = color;
-				}
-					
-				output("\n\nYour [pc.eyes] start to water, and no matter how much you blink, your vision just grows fuzzier and fuzzier for several moments before seeming to clear all of a sudden. You have <b>a pair of [pc.eyeColor] cat-eyes, slitted and brilliantly-bright!</b>");
-                pc..eyeType = GLOBAL.TYPE_FELINE;
-					
-				changes++;
-			}
+			// Paws for arms! After furrr.
+			if (rand(4) == 0 && changes < changeLimit && pc.hasFur() && Mutator.changeArms(pc, GLOBAL.TYPE_FELINE, [GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS])) changes++;
+			// TURN INTO A FURRAH!  Groovy!
+			if (pc.hasTail(GLOBAL.TYPE_FELINE) && pc.earType == GLOBAL.TYPE_FELINE && rand(5) == 0 && changes < changeLimit && pc.legType == GLOBAL.TYPE_FELINE && !pc.hasFur() && Mutator.changeSkin(pc, GLOBAL.SKIN_TYPE_FUR, ["brown", "chocolate", "auburn", "caramel", "orange", "sandy brown", "golden", "black", "midnight black", "dark gray", "gray", "light gray", "silver", "white", "orange and white", "brown and white", "black and white", "gray and white"]))  changes++;
+			// Face ON!
+			if (pc.hasTail(GLOBAL.TYPE_FELINE) && pc.earType == GLOBAL.TYPE_FELINE && rand(5) == 0 && changes < changeLimit && pc.legType == GLOBAL.TYPE_FELINE && pc.hasFur() && Mutator.changeFace(pc, GLOBAL.TYPE_FELINE, [GLOBAL.FLAG_MUZZLED])) changes++;
+			// Eyes! Shining, slitted eyes!
+			if (pc.faceType == GLOBAL.TYPE_FELINE && rand(2) == 0 && Mutator.changeEyes(pc, GLOBAL.TYPE_FELINE, ["emerald", "amber", "green", "blue", "gold"])) changes++;
+			// Tongue! Bristly!
+			if (pc.faceType == GLOBAL.TYPE_FELINE && rand(2) == 0 && Mutator.changeTongue(pc, GLOBAL.TYPE_FELINE, [GLOBAL.FLAG_NUBBY])) changes++;
 			
 			if (rand(4) == 0 && pc.gills && changes < changeLimit) {
 				output("\n\nYour chest itches, and as you reach up to scratch it, you realize your gills have withdrawn into your skin.");

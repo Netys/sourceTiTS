@@ -740,6 +740,7 @@ package classes.Items.Transformatives
                     target.armType = GLOBAL.TYPE_FELINE;
                     target.clearArmFlags();
                     target.addArmFlag(GLOBAL.FLAG_FURRED);
+                    target.addArmFlag(GLOBAL.FLAG_PAWS);
                     changes++;
                 }
                 else kGAMECLASS.output(target.armTypeLockedMessage());

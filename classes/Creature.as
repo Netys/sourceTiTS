@@ -3803,7 +3803,7 @@ package classes {
 		public function earsDescript(forcedAdjectives:Boolean = false, forcedRace:Boolean = false): String {
 			return plural(earDescript(forcedAdjectives, forcedRace));
 		}
-		public function eyeDescript(): String {
+		public function eyeDescript(forcedAdjectives:Boolean = false): String {
 			var adjectives:Array = new Array();
 			var nouns:Array = ["eye"];
 			var description:String = "";
@@ -3811,7 +3811,7 @@ package classes {
 			adjectives[adjectives.length] = eyeColor;
 
 			//Show color 50% of the time
-			if(rand(2) == 0 && adjectives.length > 0) description = adjectives[rand(adjectives.length)] + " ";
+			if((forcedAdjectives || rand(2) == 0) && adjectives.length > 0) description = adjectives[rand(adjectives.length)] + " ";
 			//Pick a noun.
 			description += nouns[rand(nouns.length)];
 			return description;

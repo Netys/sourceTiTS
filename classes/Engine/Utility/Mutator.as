@@ -10,10 +10,14 @@ package classes.Engine.Utility
 	/**
 	 * This is generic mutation engine to use when you don't want to write custom transition scenes. All functions here should return either number of changes done or boolean if any changes done. Changes should be atomic when it makes sense.
 	 * 
+	 * TODO: slice and dice appearance.as and use it's parts to describe before and after states.
+	 * 
 	 * @author Etis
 	 */
 	public class Mutator
 	{
+		public static var buffer:String = "";
+		
 		/**
 		 * Change target ears.
 		 * @param	target
@@ -30,7 +34,7 @@ package classes.Engine.Utility
 			// check if already
 			if (target.earType == newType && (target.earLength == newLength || !InCollection(target.earType, supportsLength))) return false;
 			
-			var buffer:String = "";
+			buffer = "";
 			var changes:Number = 0;
 			
 			if(target.earType != newType)
@@ -62,6 +66,448 @@ package classes.Engine.Utility
 		}
 		
 		/**
+		 * Change target face. Changing type is atomic with flags.
+		 * @param	target
+		 * @param	newType type from Global or -1 to keep current
+		 * @param	newFlags flags to add, both during type change and as standalone.
+		 * @param	keepFlags flags which would remain during type change if present, but not added if not. Note, no need to double newFlags here.
+		 * @param	removeFlags flags which would be removed if present. Note, all flags not in keep list would be removed during type change. Only to change flags without changing type.
+		 * @param	display
+		 * @return is something changed
+		 */
+		public static function changeFace(target:Creature, newType:int, newFlags:/*int*/Array = null, keepFlags:/*int*/Array = null, removeFlags:/*int*/Array = null, display:Boolean = true):Boolean {
+			buffer = "";
+			var changes:Number = 0;
+			
+			if (newFlags == null) newFlags = [];
+			if (keepFlags == null) keepFlags = [];
+			if (removeFlags == null) removeFlags = [];
+			
+			if (newType == -1) newType = target.faceType;
+				
+			var toKeep:/*int*/Array = [];
+			var toRemove:/*int*/Array = [];
+			
+			var item:int;
+			
+			// basic case - change type
+			if(target.faceType != newType)
+			{
+				if (!target.faceTypeUnlocked(newType)) { // if have to, but unable to change type return - don't want to have flags weirdshit
+					buffer += "\n\n" + target.faceTypeLockedMessage();
+					if (display) output(buffer);
+					return changes > 0;
+				}
+				
+				// building keep/remove flags list to build flavored transition scene
+				for each (item in target.faceFlags) {
+					if (InCollection(item, keepFlags)) toKeep.push(item);
+					else if (InCollection(item, newFlags)) toKeep.push(item);
+					else toRemove.push(item); // since we are changing type now, ALL flags not in keep/add list are removed anyways
+				}
+				
+				buffer += "\n\nYour " + target.face(true) + " is itching, twitching and... Changing.";
+				
+				// what is lost
+				if (InCollection(GLOBAL.FLAG_SMOOTH, toRemove)) buffer += " Your face is not as smooth as it was.";
+				if (InCollection(GLOBAL.FLAG_LONG, toRemove)) buffer += " Your face shortens.";
+				if (InCollection(GLOBAL.FLAG_MUZZLED, toRemove)) buffer += " Your face is not resembling animal muzzle anymore.";
+				if (InCollection(GLOBAL.FLAG_ANGULAR, toRemove)) buffer += " Your face is not as angular as it was.";
+				//what is not changed or gained
+				if (InCollection(GLOBAL.FLAG_SMOOTH, toKeep)) buffer += " Your face is still very smooth.";
+				else if (InCollection(GLOBAL.FLAG_SMOOTH, newFlags)) buffer += " Your face is very smooth now.";
+				if (InCollection(GLOBAL.FLAG_LONG, toKeep)) buffer += " Your face is still quite long.";
+				else if (InCollection(GLOBAL.FLAG_LONG, newFlags)) buffer += " Your face elongates.";
+				if (InCollection(GLOBAL.FLAG_MUZZLED, toKeep)) buffer += " Your face is still muzzle-like.";
+				else if (InCollection(GLOBAL.FLAG_MUZZLED, newFlags)) buffer += " Your face is gaining feral muzzle.";
+				if (InCollection(GLOBAL.FLAG_ANGULAR, toKeep)) buffer += " Your face is still angular.";
+				else if (InCollection(GLOBAL.FLAG_ANGULAR, newFlags)) buffer += " Your face is gaining rough angles.";
+				
+				target.faceType = newType;
+				target.faceFlags = newFlags;
+				
+				buffer += " <b>You now have " + target.face(true) + "!</b>";
+				
+				changes++;				
+				if (display) output(buffer);
+				return changes > 0;
+			}
+			
+			// changing flags without changing type
+			var flagsUnlocked:Boolean = true;
+			for each (item in newFlags) {
+				if (target.hasFaceFlag(item)) continue; // skip existing
+				//if (!target.faceFlagsUnlocked(item)) flagsUnlocked = false; // no such function
+				toKeep.push(item);
+			}
+			
+			for each (item in removeFlags) {
+				if (!target.hasFaceFlag(item)) continue; // skip not present
+				//if (!target.faceFlagsUnlocked(item)) flagsUnlocked = false; // no such function
+				toRemove.push(item);
+			}
+			
+			if (toKeep.length > 0 || toRemove.length > 0) {
+				if (flagsUnlocked) {
+					buffer += "\n\nYour " + target.face(true) + " are itching, twitching and... Changing.";
+				
+					for each (item in toRemove) {
+						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your face is not as smooth as it was.";
+						if (item == GLOBAL.FLAG_LONG) buffer += " Your face shortens.";
+						if (item == GLOBAL.FLAG_MUZZLED) buffer += " Your face is not resembling animal muzzle anymore.";
+						if (item == GLOBAL.FLAG_ANGULAR) buffer += " Your face is not as angular as it was.";
+						target.faceFlags.splice(target.faceFlags.indexOf(item), 1);
+					}
+				
+					for each (item in toKeep)
+					{
+						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your face is very smooth now.";
+						if (item == GLOBAL.FLAG_LONG) buffer += " Your face elongates.";
+						if (item == GLOBAL.FLAG_MUZZLED) buffer += " Your face is gaining feral muzzle.";
+						if (item == GLOBAL.FLAG_ANGULAR) buffer += " Your face is gaining rough angles.";
+						target.addFaceFlag(item);
+					}
+					
+					changes++;
+				} //else buffer += "\n\n" + target.faceFlagsLockedMessage();
+			}
+			
+			
+			if (display) output(buffer);
+			return changes > 0;
+		}
+		
+		/**
+		 * Change target eyes. Type is NOT atomic with color, but color IS atomic with type. Color can be independant.
+		 * @param	target
+		 * @param	newType type from Global or -1 to keep current.
+		 * @param	display
+		 * @return is something changed
+		 */
+		public static function changeEyes(target:Creature, newType:int, newColors:/*String*/Array = null, display:Boolean = true):Boolean {
+			buffer = "";
+			var changes:Number = 0;
+			
+			if (newColors == null) newColors = [];			
+			if (newType == -1) newType = target.eyeType;
+				
+			var toKeep:/*int*/Array = [];
+			var toRemove:/*int*/Array = [];
+			
+			var newColor:String;
+			var item:int;
+			
+			// basic case - change type
+			if(target.eyeType != newType)
+			{
+				if (!target.eyeTypeUnlocked(newType)) { // if have to, but unable to change type return - don't want to have flags weirdshit
+					buffer += "\n\n" + target.eyeTypeLockedMessage();
+					if (display) output(buffer);
+					return changes > 0;
+				}
+				
+				buffer += "\n\nYour " + target.eyesDescript() + " are suddenly filled with tears and " + target.eyeColor + " mist... They are changing!";
+				
+				target.eyeType = newType;
+
+				if (newColors.length > 0 && !InCollection(target.eyeColor, newColors)) {
+					newColor = RandomInCollection(newColors);
+					if(target.eyeColorUnlocked(newColor)) {
+						buffer += " Your " + target.eyeColor + " eyes color changed to ";
+						target.eyeColor = RandomInCollection(newColors);
+						buffer += target.eyeColor + "!";
+						changes++;
+					}
+				}
+				
+				buffer += " <b>You now have " + target.eyesDescript() + "!</b>";
+				
+				changes++;
+				if (display) output(buffer);
+				return changes > 0;
+			}
+			
+			if (newColors.length > 0 && !InCollection(target.eyeColor, newColors)) {
+				newColor = RandomInCollection(newColors);
+				if(target.eyeColorUnlocked(newColor)) {
+					buffer += "\n\nYour " + target.eyesDescript() + " are suddenly filled with tears and " + target.eyeColor + " mist... They are changing!";
+					buffer += " Your " + target.eyeColor + " eyes color changed to ";
+					target.eyeColor = RandomInCollection(newColors);
+					buffer += target.eyeColor + "!";
+					buffer += " <b>You now have " + target.eyesDescript() + "!</b>";
+					changes++;
+				} else buffer += "\n\n" + target.eyeColorLockedMessage();
+			}			
+			
+			if (display) output(buffer);
+			return changes > 0;
+		}
+		
+		/**
+		 * Change target tongue. Changing type is atomic with flags.
+		 * @param	target
+		 * @param	newType type from Global or -1 to keep current
+		 * @param	newFlags flags to add, both during type change and as standalone.
+		 * @param	keepFlags flags which would remain during type change if present, but not added if not. Note, no need to double newFlags here.
+		 * @param	removeFlags flags which would be removed if present. Note, all flags not in keep list would be removed during type change. Only to change flags without changing type.
+		 * @param	display
+		 * @return is something changed
+		 */
+		public static function changeTongue(target:Creature, newType:int, newFlags:/*int*/Array = null, keepFlags:/*int*/Array = null, removeFlags:/*int*/Array = null, display:Boolean = true):Boolean {
+			buffer = "";
+			var changes:Number = 0;
+			
+			if (newFlags == null) newFlags = [];
+			if (keepFlags == null) keepFlags = [];
+			if (removeFlags == null) removeFlags = [];
+			
+			if (newType == -1) newType = target.tongueType;
+				
+			var toKeep:/*int*/Array = [];
+			var toRemove:/*int*/Array = [];
+			
+			var item:int;
+			
+			// basic case - change type
+			if(target.tongueType != newType)
+			{
+				if (!target.tongueTypeUnlocked(newType)) { // if have to, but unable to change type return - don't want to have flags weirdshit
+					buffer += "\n\n" + target.tongueTypeLockedMessage();
+					if (display) output(buffer);
+					return changes > 0;
+				}
+				
+				// building keep/remove flags list to build flavored transition scene
+				for each (item in target.tongueFlags) {
+					if (InCollection(item, keepFlags)) toKeep.push(item);
+					else if (InCollection(item, newFlags)) toKeep.push(item);
+					else toRemove.push(item); // since we are changing type now, ALL flags not in keep/add list are removed anyways
+				}
+				
+				buffer += "\n\nYour " + target.tongueDescript() + " is itching, twitching and... Changing.";
+				
+				// what is lost
+				if (InCollection(GLOBAL.FLAG_LONG, toRemove)) buffer += " Your tongue shortens.";
+				if (InCollection(GLOBAL.FLAG_PREHENSILE, toRemove)) buffer += " Your tongue is no longer prehensile.";
+				if (InCollection(GLOBAL.FLAG_HOLLOW, toRemove)) buffer += " Your tongue is no longer hollow.";
+				if (InCollection(GLOBAL.FLAG_LUBRICATED, toRemove)) buffer += " Your tongue is no longer lubricated.";
+				if (InCollection(GLOBAL.FLAG_SQUISHY, toRemove)) buffer += " Your tongue is no longer squishy.";
+				if (InCollection(GLOBAL.FLAG_APHRODISIAC_LACED, toRemove)) buffer += " Your tongue is no longer aphrodisiac laced.";
+				if (InCollection(GLOBAL.FLAG_GOOEY, toRemove)) buffer += " Your tongue is no longer gooey.";
+				if (InCollection(GLOBAL.FLAG_STICKY, toRemove)) buffer += " Your tongue is no longer sticky.";
+				//what is not changed or gained
+				if (InCollection(GLOBAL.FLAG_LONG, toKeep)) buffer += " Your tongue is still quite long.";
+				else if (InCollection(GLOBAL.FLAG_LONG, newFlags)) buffer += " Your tongue elongates.";
+				if (InCollection(GLOBAL.FLAG_PREHENSILE, toKeep)) buffer += " Your tongue is still prehensile.";
+				else if (InCollection(GLOBAL.FLAG_PREHENSILE, newFlags)) buffer += " Your tongue is now prehensile.";
+				if (InCollection(GLOBAL.FLAG_HOLLOW, toKeep)) buffer += " Your tongue is still hollow.";
+				else if (InCollection(GLOBAL.FLAG_HOLLOW, newFlags)) buffer += " Your tongue is now hollow.";
+				if (InCollection(GLOBAL.FLAG_LUBRICATED, toKeep)) buffer += " Your tongue is still lubricated.";
+				else if (InCollection(GLOBAL.FLAG_LUBRICATED, newFlags)) buffer += " Your tongue is now lubricated.";
+				if (InCollection(GLOBAL.FLAG_SQUISHY, toKeep)) buffer += " Your tongue is still squishy.";
+				else if (InCollection(GLOBAL.FLAG_SQUISHY, newFlags)) buffer += " Your tongue is now squishy.";
+				if (InCollection(GLOBAL.FLAG_APHRODISIAC_LACED, toKeep)) buffer += " Your tongue is still aphrodisiac laced.";
+				else if (InCollection(GLOBAL.FLAG_APHRODISIAC_LACED, newFlags)) buffer += " Your tongue is now aphrodisiac laced.";
+				if (InCollection(GLOBAL.FLAG_GOOEY, toKeep)) buffer += " Your tongue is still gooey.";
+				else if (InCollection(GLOBAL.FLAG_GOOEY, newFlags)) buffer += " Your tongue is now gooey.";
+				if (InCollection(GLOBAL.FLAG_STICKY, toKeep)) buffer += " Your tongue is still sticky.";
+				else if (InCollection(GLOBAL.FLAG_STICKY, newFlags)) buffer += " Your tongue is now sticky.";
+				
+				target.tongueType = newType;
+				target.tongueFlags = newFlags;
+				
+				buffer += " <b>You now have " + target.tongueDescript() + "!</b>";
+				
+				changes++;				
+				if (display) output(buffer);
+				return changes > 0;
+			}
+			
+			// changing flags without changing type
+			var flagsUnlocked:Boolean = true;
+			for each (item in newFlags) {
+				if (target.hasTongueFlag(item)) continue; // skip existing
+				//if (!target.tongueFlagsUnlocked(item)) flagsUnlocked = false; // no such function
+				toKeep.push(item);
+			}
+			
+			for each (item in removeFlags) {
+				if (!target.hasTongueFlag(item)) continue; // skip not present
+				//if (!target.tongueFlagsUnlocked(item)) flagsUnlocked = false; // no such function
+				toRemove.push(item);
+			}
+			
+			if (toKeep.length > 0 || toRemove.length > 0) {
+				if (flagsUnlocked) {
+					buffer += "\n\nYour " + target.tongueDescript() + " is itching, twitching and... Changing.";
+				
+					for each (item in toRemove) {
+						if (item == GLOBAL.FLAG_LONG) buffer += " Your tongue shortens.";
+						if (item == GLOBAL.FLAG_PREHENSILE) buffer += " Your tongue is no longer prehensile.";
+						if (item == GLOBAL.FLAG_HOLLOW) buffer += " Your tongue is no longer hollow.";
+						if (item == GLOBAL.FLAG_LUBRICATED) buffer += " Your tongue is no longer lubricated.";
+						if (item == GLOBAL.FLAG_SQUISHY) buffer += " Your tongue is no longer squishy.";
+						if (item == GLOBAL.FLAG_APHRODISIAC_LACED) buffer += " Your tongue is no longer aphrodisiac laced.";
+						if (item == GLOBAL.FLAG_GOOEY) buffer += " Your tongue is no longer gooey.";
+						if (item == GLOBAL.FLAG_STICKY) buffer += " Your tongue is no longer sticky.";
+						target.tongueFlags.splice(target.tongueFlags.indexOf(item), 1);
+					}
+				
+					for each (item in toKeep)
+					{
+						if (item == GLOBAL.FLAG_LONG) buffer += " Your tongue elongates.";
+						if (item == GLOBAL.FLAG_PREHENSILE) buffer += " Your tongue is now prehensile.";
+						if (item == GLOBAL.FLAG_HOLLOW) buffer += " Your tongue is now hollow.";
+						if (item == GLOBAL.FLAG_LUBRICATED) buffer += " Your tongue is now lubricated.";
+						if (item == GLOBAL.FLAG_SQUISHY) buffer += " Your tongue is now squishy.";
+						if (item == GLOBAL.FLAG_APHRODISIAC_LACED) buffer += " Your tongue is now aphrodisiac laced.";
+						if (item == GLOBAL.FLAG_GOOEY) buffer += " Your tongue is now gooey.";
+						if (item == GLOBAL.FLAG_STICKY) buffer += " Your tongue is now sticky.";
+						target.addTongueFlag(item);
+					}
+					
+					changes++;
+				} //else buffer += "\n\n" + target.tongueFlagsLockedMessage();
+			}
+			
+			
+			if (display) output(buffer);
+			return changes > 0;
+		}
+		
+		/**
+		 * Change target arms. Changing type is atomic with flags.
+		 * @param	target
+		 * @param	newType type from Global or -1 to keep current
+		 * @param	newFlags flags to add, both during type change and as standalone.
+		 * @param	keepFlags flags which would remain during type change if present, but not added if not. Note, no need to double newFlags here.
+		 * @param	removeFlags flags which would be removed if present. Note, all flags not in keep list would be removed during type change. Only to change flags without changing type.
+		 * @param	display
+		 * @return is something changed
+		 */
+		public static function changeArms(target:Creature, newType:int, newFlags:/*int*/Array = null, keepFlags:/*int*/Array = null, removeFlags:/*int*/Array = null, display:Boolean = true):Boolean {
+			buffer = "";
+			var changes:Number = 0;
+			
+			if (newFlags == null) newFlags = [];
+			if (keepFlags == null) keepFlags = [];
+			if (removeFlags == null) removeFlags = [];
+			
+			if (newType == -1) newType = target.armType;
+				
+			var toKeep:/*int*/Array = [];
+			var toRemove:/*int*/Array = [];
+			
+			var item:int;
+			
+			// basic case - change type
+			if(target.armType != newType)
+			{
+				if (!target.armTypeUnlocked(newType)) { // if have to, but unable to change type return - don't want to have flags weirdshit
+					buffer += "\n\n" + target.armTypeLockedMessage();
+					if (display) output(buffer);
+					return changes > 0;
+				}
+				
+				 // building keep/remove flags list to build flavored transition scene
+				for each (item in target.armFlags) {
+					if (InCollection(item, keepFlags)) toKeep.push(item);
+					else if (InCollection(item, newFlags)) toKeep.push(item);
+					else toRemove.push(item); // since we are changing type now, ALL flags not in keep/add list are removed anyways
+				}
+				
+				buffer += "\n\nYour " + target.armsDescript(true) + " are itching, twitching and... Changing.";
+				
+				// what is lost
+				if (InCollection(GLOBAL.FLAG_SMOOTH, toRemove)) buffer += " Your arms are not as smooth as they were.";
+				if (InCollection(GLOBAL.FLAG_PAWS, toRemove)) buffer += " Your arms are not resembling paws so much.";
+				if (InCollection(GLOBAL.FLAG_FURRED, toRemove)) buffer += " Your arms are shedding fur.";
+				if (InCollection(GLOBAL.FLAG_SCALED, toRemove)) buffer += " Your arms are shedding scales.";
+				if (InCollection(GLOBAL.FLAG_CHITINOUS, toRemove)) buffer += " Your arms are shedding chitin.";
+				if (InCollection(GLOBAL.FLAG_FEATHERED, toRemove)) buffer += " Your arms are shedding feathers.";
+				if (InCollection(GLOBAL.FLAG_GOOEY, toRemove)) buffer += " Your arms are now solidified from former goo-like condition.";
+				if (InCollection(GLOBAL.FLAG_AMORPHOUS, toRemove)) buffer += " Your arms are not amorphous anymore.";
+				//what is not changed or gained
+				if (InCollection(GLOBAL.FLAG_SMOOTH, toKeep)) buffer += " Your arms are still very smooth.";
+				else if (InCollection(GLOBAL.FLAG_SMOOTH, newFlags)) buffer += " Your arms are very smooth now.";
+				if (InCollection(GLOBAL.FLAG_PAWS, toKeep)) buffer += " Your arms are still resembling paws.";
+				else if (InCollection(GLOBAL.FLAG_PAWS, newFlags)) buffer += " Your arms are now paw-like.";
+				if (InCollection(GLOBAL.FLAG_FURRED, toKeep)) buffer += " Your arms are still furry.";
+				else if (InCollection(GLOBAL.FLAG_FURRED, newFlags)) buffer += " Your arms are furry now.";
+				if (InCollection(GLOBAL.FLAG_SCALED, toKeep)) buffer += " Your arms are still scaled.";
+				else if (InCollection(GLOBAL.FLAG_SCALED, newFlags)) buffer += " Your arms are scaled now.";
+				if (InCollection(GLOBAL.FLAG_CHITINOUS, toKeep)) buffer += " Your arms are still chitinous.";
+				else if (InCollection(GLOBAL.FLAG_CHITINOUS, newFlags)) buffer += " Your arms are chitinous now.";
+				if (InCollection(GLOBAL.FLAG_FEATHERED, toKeep)) buffer += " Your arms are still feathered.";
+				else if (InCollection(GLOBAL.FLAG_FEATHERED, newFlags)) buffer += " Your arms are feathered now.";
+				if (InCollection(GLOBAL.FLAG_GOOEY, toKeep)) buffer += " Your arms are still have goo-like condition.";
+				else if (InCollection(GLOBAL.FLAG_GOOEY, newFlags)) buffer += " Your arms are now solidified from former goo-like condition.";
+				if (InCollection(GLOBAL.FLAG_AMORPHOUS, toKeep)) buffer += " Your arms are still amorphous.";
+				else if (InCollection(GLOBAL.FLAG_AMORPHOUS, newFlags)) buffer += " Your arms are amorphous now.";
+				
+				target.armType = newType;
+				target.armFlags = newFlags;
+				
+				buffer += " <b>You now have " + target.armsDescript(true) + "!</b>";
+				
+				changes++;				
+				if (display) output(buffer);
+				return changes > 0;
+			}
+			
+			// changing flags without changing type
+			var flagsUnlocked:Boolean = true;
+			for each (item in newFlags) {
+				if (target.hasArmFlag(item)) continue; // skip existing
+				//if (!target.armFlagsUnlocked(item)) flagsUnlocked = false; // no such function
+				toKeep.push(item);
+			}
+			
+			for each (item in removeFlags) {
+				if (!target.hasArmFlag(item)) continue; // skip not present
+				//if (!target.armFlagsUnlocked(item)) flagsUnlocked = false; // no such function
+				toRemove.push(item);
+			}
+			
+			if (toKeep.length > 0 || toRemove.length > 0) {
+				if (flagsUnlocked) {
+					buffer += "\n\nYour " + target.armsDescript(true) + " are itching, twitching and... Changing.";
+				
+					for each (item in toRemove) {
+						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your arms are not as smooth as they were.";
+						if (item == GLOBAL.FLAG_PAWS) buffer += " Your arms are not resembling paws so much.";
+						if (item == GLOBAL.FLAG_FURRED) buffer += " Your arms are shedding fur.";
+						if (item == GLOBAL.FLAG_SCALED) buffer += " Your arms are shedding scales.";
+						if (item == GLOBAL.FLAG_CHITINOUS) buffer += " Your arms are shedding chitin.";
+						if (item == GLOBAL.FLAG_FEATHERED) buffer += " Your arms are shedding feathers.";
+						if (item == GLOBAL.FLAG_GOOEY) buffer += " Your arms are now solidified from former goo-like condition.";
+						if (item == GLOBAL.FLAG_AMORPHOUS) buffer += " Your arms are not amorphous anymore.";
+						target.armFlags.splice(target.armFlags.indexOf(item), 1);
+					}
+				
+					for each (item in toKeep)
+					{
+						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your arms are very smooth now.";
+						if (item == GLOBAL.FLAG_PAWS) buffer += " Your arms are now paw-like.";
+						if (item == GLOBAL.FLAG_FURRED) buffer += " Your arms are furry now.";
+						if (item == GLOBAL.FLAG_SCALED) buffer += " Your arms are scaled now.";
+						if (item == GLOBAL.FLAG_CHITINOUS) buffer += " Your arms are chitinous now.";
+						if (item == GLOBAL.FLAG_FEATHERED) buffer += " Your arms are feathered now.";
+						if (item == GLOBAL.FLAG_GOOEY) buffer += " Your arms are now solidified from former goo-like condition.";
+						if (item == GLOBAL.FLAG_AMORPHOUS) buffer += " Your arms are amorphous now.";
+						target.addArmFlag(item);
+					}
+					
+					changes++;
+				} //else buffer += "\n\n" + target.tailFlagsLockedMessage();
+			}
+			
+			
+			if (display) output(buffer);
+			return changes > 0;
+		}
+		
+		/**
 		 * Change target tail(s). Changing type is atomic with flags and count. Changing only count and flags are not atomic between.
 		 * @param	target
 		 * @param	newType type from Global or -1 to keep current
@@ -73,7 +519,7 @@ package classes.Engine.Utility
 		 * @return is something changed
 		 */
 		public static function changeTail(target:Creature, newType:int, newCount:Number = 1, newFlags:/*int*/Array = null, keepFlags:/*int*/Array = null, removeFlags:/*int*/Array = null, display:Boolean = true):Boolean {
-			var buffer:String = "";
+			buffer = "";
 			var changes:Number = 0;
 			
 			if (newFlags == null) newFlags = [];
@@ -159,14 +605,14 @@ package classes.Engine.Utility
 				} else { // already has tail(s)
 					buffer += "\n\nYour " + target.tailsDescript(true, true) + " " + (target.tailCount > 1 ? "are" : "is") + " itching, twitching and... Changing.";
 					
-					if (target.tailCount < newCount) {
+					if (target.tailCount > newCount) {
 						target.tailCount = newCount;
 						buffer += " They are merging, like liquid, until only " + num2Text(target.tailCount) + " is left.";
 					}
 					
-					itthey = (target.tailCount > 1 ? "they" : "it");
-					isare = (target.tailCount > 1 ? "are" : "is");
-					_s = (target.tailCount > 1 ? "s" : "");
+					itthey = (newCount > 1 ? "they" : "it");
+					isare = (newCount > 1 ? "are" : "is");
+					_s = (newCount > 1 ? "s" : "");
 					
 					// what is lost
 					if (InCollection(GLOBAL.FLAG_PREHENSILE, toRemove)) buffer += " Looks like you are losing fine control. Your tail" + _s + " " + isare + " not prehensile anymore.";
@@ -229,8 +675,6 @@ package classes.Engine.Utility
 						target.tailGenitalArg = GLOBAL.TYPE_FELINE; // PLACEHOLDER. TODO: either determine from race or pass as argument. That is if something is wrong with feline cocks. They are fine by me.
 						target.tailGenital = GLOBAL.TAIL_GENITAL_COCK;
 					}
-					
-					target.tailCount = 1;
 					buffer += " <b>You now have " + target.tailDescript(true, true) + "!</b>";
 					if(newCount > 1)
 						buffer += " But itching is only going stronger...";
@@ -349,7 +793,7 @@ package classes.Engine.Utility
 		 * @return is something changed
 		 */
 		public static function changeLegs(target:Creature, newType:int, newCount:* = 1, newFlags:/*int*/Array = null, keepFlags:/*int*/Array = null, removeFlags:/*int*/Array = null, display:Boolean = true):Boolean {
-			var buffer:String = "";
+			buffer = "";
 			var changes:Number = 0;
 			
 			if (newType == -1) newType = target.legType;
@@ -592,6 +1036,192 @@ package classes.Engine.Utility
 					
 					changes++;
 				} else buffer += "\n\n" + target.legFlagsLockedMessage();
+			}
+			
+			
+			if (display) output(buffer);
+			return changes > 0;
+		}
+		
+		/**
+		 * Change target skin type. Changing type is atomic with flags. Changing color is not atomic.
+		 * @param	target
+		 * @param	newType type from Global or -1 to keep current.
+		 * @param	newColors possible color options for skin/fur/scales depending on new type, can be null to leave current.
+		 * @param	newFlags flags to add, both during type change and as standalone.
+		 * @param	keepFlags flags which would remain during type change if present, but not added if not. Note, no need to double newFlags here.
+		 * @param	removeFlags flags which would be removed if present. Note, all flags not in keep list would be removed during type change. Only to change flags without changing type.
+		 * @param	display
+		 * @return is something changed
+		 */
+		public static function changeSkin(target:Creature, newType:int, newColors:/*int*/Array = null, newFlags:/*int*/Array = null, keepFlags:/*int*/Array = null, removeFlags:/*int*/Array = null, display:Boolean = true):Boolean {
+			buffer = "";
+			var changes:Number = 0;
+			
+			if (newColors == null) newColors = [];
+			if (newFlags == null) newFlags = [];
+			if (keepFlags == null) keepFlags = [];
+			if (removeFlags == null) removeFlags = [];
+			
+			if (newType == -1) newType = target.skinType;
+				
+			var toKeep:/*int*/Array = [];
+			var toRemove:/*int*/Array = [];
+			
+			var item:int;
+			
+			var newColor:String;
+			var newSkin:String = "";
+			var isAre:String = "is";
+			var key:String = "";
+			if (newType == GLOBAL.SKIN_TYPE_SKIN) {
+				newSkin = "skin";
+				key = "skinTone";
+			}
+			if (newType == GLOBAL.SKIN_TYPE_FUR) {
+				newSkin = "fur";
+				key = "furColor";
+			}
+			if (newType == GLOBAL.SKIN_TYPE_SCALES) {
+				newSkin = "scales";
+				isAre = "are";
+				key = "scaleColor";
+			}
+			if (newType == GLOBAL.SKIN_TYPE_GOO) {
+				newSkin = "membrane";
+				key = "skinTone";
+			}
+			if (newType == GLOBAL.SKIN_TYPE_CHITIN) {
+				newSkin = "chitin";
+				key = "scaleColor";
+			}
+			if (newType == GLOBAL.SKIN_TYPE_FEATHERS) {
+				newSkin = "feathers";
+				isAre = "are";
+				key = "furColor";
+			}
+			
+			// basic case - change type
+			if(target.skinType != newType)
+			{
+				if (!target.skinTypeUnlocked(newType)) { // if have to, but unable to change type return - don't want to have flags weirdshit
+					buffer += "\n\n" + target.skinTypeLockedMessage();
+					if (display) output(buffer);
+					return changes > 0;
+				}
+				
+				// building keep/remove flags list to build flavored transition scene
+				for each (item in target.skinFlags) {
+					if (InCollection(item, keepFlags)) toKeep.push(item);
+					else if (InCollection(item, newFlags)) toKeep.push(item);
+					else toRemove.push(item); // since we are changing type now, ALL flags not in keep/add list are removed anyways
+				}
+				
+				buffer += "\n\nYour " + target.skinFurScales(true, true) + " is itching and... Changing.";
+				
+				
+				// what is lost
+				if (target.skinType == GLOBAL.SKIN_TYPE_FUR) buffer += " You are shedding your fur.";
+				if (target.skinType == GLOBAL.SKIN_TYPE_SCALES) buffer += " You are shedding your scales.";
+				if (target.skinType == GLOBAL.SKIN_TYPE_GOO) buffer += " Your membrane is solidifying.";
+				if (target.skinType == GLOBAL.SKIN_TYPE_CHITIN) buffer += " You are shedding your chitin.";
+				if (target.skinType == GLOBAL.SKIN_TYPE_FEATHERS) buffer += " You are shedding your feathers.";
+				if (InCollection(GLOBAL.FLAG_SMOOTH, toRemove)) buffer += " Your skin is now less smooth.";
+				if (InCollection(GLOBAL.FLAG_THICK, toRemove)) buffer += " Your skin is now less thick.";
+				if (InCollection(GLOBAL.FLAG_STICKY, toRemove)) buffer += " Your skin is no longer sticky.";
+				if (InCollection(GLOBAL.FLAG_FLUFFY, toRemove)) buffer += " Your skin is no longer fluffy.";
+				if (InCollection(GLOBAL.FLAG_SQUISHY, toRemove)) buffer += " Your skin is no longer squishy.";
+				if (InCollection(GLOBAL.FLAG_LUBRICATED, toRemove)) buffer += " Your skin is no longer lubricated.";
+				if (target.skinType == GLOBAL.SKIN_TYPE_SKIN) buffer += " You skin is not just skin anymore.";
+				//what is not changed or gained
+				if (newType == GLOBAL.SKIN_TYPE_SKIN) buffer += " You now have bare skin.";
+				if (newType == GLOBAL.SKIN_TYPE_FUR) buffer += " You are growing fur.";
+				if (newType == GLOBAL.SKIN_TYPE_SCALES) buffer += " You are growing scales.";
+				if (newType == GLOBAL.SKIN_TYPE_GOO) buffer += " Your skin is liquifying to goo.";
+				if (newType == GLOBAL.SKIN_TYPE_CHITIN) buffer += " You are growing chitin.";
+				if (newType == GLOBAL.SKIN_TYPE_FEATHERS) buffer += " You are growing feathers.";
+				if (InCollection(GLOBAL.FLAG_SMOOTH, toKeep)) buffer += " Your " + newSkin + " " + isAre + " still smooth.";
+				else if (InCollection(GLOBAL.FLAG_SMOOTH, newFlags)) buffer += " Your " + newSkin + " " + isAre + " smooth now.";
+				if (InCollection(GLOBAL.FLAG_THICK, toKeep)) buffer += " Your " + newSkin + " " + isAre + " still thick.";
+				else if (InCollection(GLOBAL.FLAG_THICK, newFlags)) buffer += " Your " + newSkin + " " + isAre + " thick now.";
+				if (InCollection(GLOBAL.FLAG_STICKY, toKeep)) buffer += " Your " + newSkin + " " + isAre + " still sticky.";
+				else if (InCollection(GLOBAL.FLAG_STICKY, newFlags)) buffer += " Your " + newSkin + " " + isAre + " sticky now.";
+				if (InCollection(GLOBAL.FLAG_FLUFFY, toKeep)) buffer += " Your " + newSkin + " " + isAre + " still fluffy.";
+				else if (InCollection(GLOBAL.FLAG_FLUFFY, newFlags)) buffer += " Your " + newSkin + " " + isAre + " fluffy now.";
+				if (InCollection(GLOBAL.FLAG_SQUISHY, toKeep)) buffer += " Your " + newSkin + " " + isAre + " still squishy.";
+				else if (InCollection(GLOBAL.FLAG_SQUISHY, newFlags)) buffer += " Your " + newSkin + " " + isAre + " squishy now.";
+				if (InCollection(GLOBAL.FLAG_LUBRICATED, toKeep)) buffer += " Your " + newSkin + " " + isAre + " still lubricated.";
+				else if (InCollection(GLOBAL.FLAG_LUBRICATED, newFlags)) buffer += " Your " + newSkin + " " + isAre + " lubricated now.";
+				
+				if (newColors.length > 0 && !InCollection(target[key], newColors)) {
+					newColor = RandomInCollection(newColors);
+					if(target[key + "Unlocked"](newColor)) {
+						buffer += " Your " + newSkin + " " + isAre + " " + newColor + " now.";
+						changes++;
+					}
+				}
+				
+				target.skinType = newType;
+				target.skinFlags = newFlags;
+				
+				buffer += " <b>You now have " + target.skinFurScales(true, true) + "!</b>";
+				
+				changes++;				
+				if (display) output(buffer);
+				return changes > 0;
+			}
+			
+			// changing flags without changing type
+			var flagsUnlocked:Boolean = true;
+			for each (item in newFlags) {
+				if (target.hasSkinFlag(item)) continue; // skip existing
+				if (!target.skinFlagsUnlocked(item)) flagsUnlocked = false;
+				toKeep.push(item);
+			}
+			
+			for each (item in removeFlags) {
+				if (!target.hasSkinFlag(item)) continue; // skip not present
+				if (!target.skinFlagsUnlocked(item)) flagsUnlocked = false;
+				toRemove.push(item);
+			}
+			
+			if (toKeep.length > 0 || toRemove.length > 0) {
+				if (flagsUnlocked) {
+					buffer += "\n\nYour " + target.skinFurScales() + " is itching and... Changing.";
+				
+					for each (item in toRemove) {
+						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your " + newSkin + " " + isAre + " now less smooth.";
+						if (item == GLOBAL.FLAG_THICK) buffer += " Your " + newSkin + " " + isAre + " now less thick.";
+						if (item == GLOBAL.FLAG_STICKY) buffer += " Your " + newSkin + " " + isAre + " no longer sticky.";
+						if (item == GLOBAL.FLAG_FLUFFY) buffer += " Your " + newSkin + " " + isAre + " no longer fluffy.";
+						if (item == GLOBAL.FLAG_SQUISHY) buffer += " Your " + newSkin + " " + isAre + " no longer squishy.";
+						if (item == GLOBAL.FLAG_LUBRICATED) buffer += " Your " + newSkin + " " + isAre + " no longer lubricated.";
+						target.skinFlags.splice(target.skinFlags.indexOf(item), 1);
+					}
+				
+					for each (item in toKeep)
+					{
+						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your " + newSkin + " " + isAre + " smooth now.";
+						if (item == GLOBAL.FLAG_THICK) buffer += " Your " + newSkin + " " + isAre + " thick now.";
+						if (item == GLOBAL.FLAG_STICKY) buffer += " Your " + newSkin + " " + isAre + " sticky now.";
+						if (item == GLOBAL.FLAG_FLUFFY) buffer += " Your " + newSkin + " " + isAre + " fluffy now.";
+						if (item == GLOBAL.FLAG_SQUISHY) buffer += " Your " + newSkin + " " + isAre + " squishy now.";
+						if (item == GLOBAL.FLAG_LUBRICATED) buffer += " Your " + newSkin + " " + isAre + " lubricated now.";
+						target.addSkinFlag(item);
+					}
+					
+					changes++;
+				} else buffer += "\n\n" + target.skinFlagsLockedMessage();
+			}
+			
+			if (newColors.length > 0 && !InCollection(target[key], newColors)) {
+				newColor = RandomInCollection(newColors);
+				if(target[key + "Unlocked"](newColor)) {
+					buffer += "\n\nYour " + target.skinFurScales() + " are... Changing color!";
+					buffer += " Your " + newSkin + " " + isAre + " " + newColor + " now.";
+					buffer += " <b>You now have " + target.skinFurScales(true, true) + "!</b>";
+					changes++;
+				} else buffer += "\n\n" + target[key + "LockedMessage"]();
 			}
 			
 			
