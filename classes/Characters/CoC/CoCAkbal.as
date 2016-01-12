@@ -180,6 +180,14 @@ package classes.Characters.CoC
 			this._isLoading = false;
 		}
 		
+		public function onPlayerVictory():void {
+			kGAMECLASS.pc.removeStatusEffect("Whispered");
+		}
+		
+		public function onPlayerLoss():void {
+			onPlayerVictory();
+		}
+		
 		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void
 		{
 			var target:Creature = selectTarget(hostileCreatures);
@@ -258,7 +266,7 @@ package classes.Characters.CoC
 				output("You hear whispering in your head. Akbal begins speaking to you as he circles you, telling all the ways he'll dominate you once he beats the fight out of you.  ");
 				//(Lust increase)
 				applyDamage(new TypeCollection( { psionic : 7 + (100 - target.WQ()) / 10 } ), this, target);
-				target.createStatusEffect("Whispered", 0, 0, 0, 0, false, "LustUp", "You hear Akbal's whisper inside yor head!");
+				target.createStatusEffect("Whispered", 0, 0, 0, 0, false, "LustUp", "You hear Akbal's whisper inside yor head!", true);
 			}
 			//Continuous Lust Attack - 
 			else

@@ -3,7 +3,6 @@ import classes.Engine.Combat.applyDamage;
 import classes.Engine.Combat.DamageTypes.TypeCollection;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
-import classes.Items.Miscellaneous.Satyrite;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -20,7 +19,8 @@ public function satyrEncounter(location:int = 0):void {
 			//flags[kFLAGS.CODEX_ENTRY_SATYRS] = 1;
 			//output("\n\n<b>New codex entry unlocked: Satyrs!</b>")
 		//}
-		startSatyrCombat();
+		clearMenu();
+		addButton(0, "Next", startSatyrCombat);
 	}
 	//Non-aggressive Encounter (Z)
 	//Happens in either the plains or swamp

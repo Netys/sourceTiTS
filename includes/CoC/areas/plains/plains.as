@@ -78,9 +78,9 @@ public function explorePlains():void {
 	choice.push(satyrEncounter);
 	chance.push(1);
 	
-	//choice.push(gnollEncounter);
-	//chance.push(2);
-	//
+	choice.push(gnollEncounter);
+	chance.push(2);
+	
 	//choice.push(gnoll2Encounter);
 	//chance.push(2);
 
