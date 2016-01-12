@@ -74,10 +74,10 @@ public function explorePlains():void {
 	
 	//choice.push(bunnbunbunMeet);
 	//chance.push(1);
-	//
-	//choice.push(satyrEncounter);
-	//chance.push(1);
-	//
+	
+	choice.push(satyrEncounter);
+	chance.push(1);
+	
 	//choice.push(gnollEncounter);
 	//chance.push(2);
 	//
