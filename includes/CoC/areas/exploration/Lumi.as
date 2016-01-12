@@ -95,6 +95,7 @@ public function lumiEnhance():void {
 	
 	add(new CoCFoxBerry(), new CoCVixenVigor());
 	add(new CoCFoxJewel(), new CoCMysticJewel());
+	add(new CoCKangaFruit(), new CoCKangaFruitEnchanced());
 }
 	//var laBova:Function =null;
 	//if(pc.hasItem(consumables.LABOVA_))

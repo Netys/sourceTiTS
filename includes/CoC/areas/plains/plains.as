@@ -1,5 +1,6 @@
 import classes.GLOBAL;
 import classes.Items.Miscellaneous.CoCOvipositionElixir;
+import classes.Items.Transformatives.CoCKangaFruit;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -108,12 +109,12 @@ private function plainsLoot():void {
 	lootScreen = mainGameMenu;
 	useItemFunction = mainGameMenu;
 	
-	//if (rand(2) == 0) {
+	if (rand(2) == 0) {
 		output("While exploring the plains you nearly trip over a discarded, hexagonal bottle.  ");
 		itemCollect([new CoCOvipositionElixir()]);
-	//}
-	//else {
-		//output("While exploring the plains you come across a strange-looking plant.  As you peer at it, you realize it has some fruit you can get at.  ");
-		//itemCollect([new KANGAFT()]);
-	//}	
+	}
+	else {
+		output("While exploring the plains you come across a strange-looking plant.  As you peer at it, you realize it has some fruit you can get at.  ");
+		itemCollect([new CoCKangaFruit()]);
+	}	
 }

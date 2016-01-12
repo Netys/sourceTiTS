@@ -7962,6 +7962,7 @@ package classes {
 			if (foxScore() >= 4) race = faceType == GLOBAL.TYPE_VULPINE ? "fox-morph" : mf("fox-man", "fox-girl");
 			if (kitsuneScore() >= 5 && (race.indexOf("fox") == -1 || tailCount > 1)) race = "kitsune";
 			if (lizardScore() >= 4) race = "lizan";
+			if (kangaScore() >= 4) race = "kangaroo-morph";
 			if (ovirScore() >= 3 && race == "human") race = "half-ovir";
 			if (ausarScore() >= 2 && race == "human") race = "half-ausar"; // Fucking Ausar forever overriding other shit. EXTERMINATUS.
 			if (kaithritScore() >= 3 && race == "human") race = "half-kaithrit";
@@ -8225,6 +8226,24 @@ package classes {
 			if (hasScales() && lizardCounter > 0)
 				lizardCounter++;
 			return lizardCounter;
+		}
+		//Kangascore
+		public function kangaScore():Number
+		{
+			var kanga:Number = 0;
+			if (cockTotal(GLOBAL.TYPE_KANGAROO) > 0)
+				kanga++;
+			if (earType == GLOBAL.TYPE_KANGAROO)
+				kanga++;
+			if (tailType == GLOBAL.TYPE_KANGAROO)
+				kanga++;
+			if (legType == GLOBAL.TYPE_KANGAROO)
+				kanga++;
+			if (faceType == GLOBAL.TYPE_KANGAROO)
+				kanga++;
+			if (kanga >= 2 && hasFur())
+				kanga++;
+			return kanga;
 		}
 		public function humanScore(): int {
 			var counter: int = 0;

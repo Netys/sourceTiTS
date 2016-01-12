@@ -45,7 +45,7 @@ public function cocCampMenu():void {
 
 public function doDebugFunction():void {
 	//GoblinSalonEnter();
-	quickLoot(new CoCWhiskerFruit());
+	quickLoot(new CoCKangaFruitEnchanced());
 	new Catnip();
 }
 

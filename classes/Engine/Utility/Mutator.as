@@ -10,6 +10,8 @@ package classes.Engine.Utility
 	/**
 	 * This is generic mutation engine to use when you don't want to write custom transition scenes. All functions here should return either number of changes done or boolean if any changes done. Changes should be atomic when it makes sense.
 	 * 
+	 * TODO: anticlass for growTits to shrink towards configuration. Same thing for cocks.
+	 * 
 	 * TODO: slice and dice appearance.as and use it's parts to describe before and after states.
 	 * 
 	 * @author Etis
@@ -62,6 +64,105 @@ package classes.Engine.Utility
 			
 			if (display) output(buffer);
 			
+			return changes > 0;
+		}
+		
+		/**
+		 * Change target hair type. Changing type is atomic with flags. Changing color is not atomic.
+		 * @param	target
+		 * @param	newType type from Global or -1 to keep current.
+		 * @param	newColors possible color options for skin/fur/scales depending on new type, can be null to leave current.
+		 * @param	newFlags flags to add, both during type change and as standalone.
+		 * @param	keepFlags flags which would remain during type change if present, but not added if not. Note, no need to double newFlags here.
+		 * @param	removeFlags flags which would be removed if present. Note, all flags not in keep list would be removed during type change. Only to change flags without changing type.
+		 * @param	display
+		 * @return is something changed
+		 */
+		public static function changeHair(target:Creature, newType:int, newColors:/*int*/Array = null, display:Boolean = true):Boolean {
+			buffer = "";
+			var changes:Number = 0;
+			
+			if (newColors == null) newColors = [];
+			
+			if (newType == -1) newType = target.hairType;
+			
+			var item:int;
+			
+			var newColor:String;
+			var newHair:String = "";
+			if (newType == GLOBAL.HAIR_TYPE_REGULAR)
+				newHair = "hair";
+			if (newType == GLOBAL.HAIR_TYPE_FEATHERS)
+				newHair = "feather plume";
+			if (newType == GLOBAL.HAIR_TYPE_TRANSPARENT)
+				newHair = "transparent hair";
+			if (newType == GLOBAL.SKIN_TYPE_GOO)
+				newHair = "gooey hair";
+			if (newType == GLOBAL.HAIR_TYPE_TENTACLES)
+				newHair = "tentacle hair";
+			
+			// basic case - change type
+			if(target.hairType != newType)
+			{
+				if (!target.hairTypeUnlocked(newType)) { // if have to, but unable to change type return - don't want to have flags weirdshit
+					buffer += "\n\n" + target.hairTypeLockedMessage();
+					if (display) output(buffer);
+					return changes > 0;
+				}
+				
+				buffer += "\n\nYour head is itching...";
+				if (target.hasHair()) {
+					buffer += " Your " + target.hairDescript(true, true) + " is changing!";
+					
+					// what is lost
+					if (target.hairType == GLOBAL.HAIR_TYPE_REGULAR) buffer += " You are shedding your fur.";
+					if (target.hairType == GLOBAL.HAIR_TYPE_FEATHERS) buffer += " You are shedding your scales.";
+					if (target.hairType == GLOBAL.HAIR_TYPE_TRANSPARENT) buffer += " Your membrane is solidifying.";
+					if (target.hairType == GLOBAL.SKIN_TYPE_CHITIN) buffer += " You are shedding your chitin.";
+					if (target.hairType == GLOBAL.SKIN_TYPE_GOO) buffer += " You are shedding your feathers.";
+					if (target.hairType == GLOBAL.HAIR_TYPE_TENTACLES) buffer += " You skin is not just skin anymore.";
+					//what is not changed or gained
+					if (newType == GLOBAL.HAIR_TYPE_REGULAR) buffer += " You now have bare skin.";
+					if (newType == GLOBAL.HAIR_TYPE_FEATHERS) buffer += " You are growing fur.";
+					if (newType == GLOBAL.SKIN_TYPE_SCALES) buffer += " You are growing scales.";
+					if (newType == GLOBAL.SKIN_TYPE_GOO) buffer += " Your skin is liquifying to goo.";
+					if (newType == GLOBAL.SKIN_TYPE_CHITIN) buffer += " You are growing chitin.";
+					if (newType == GLOBAL.HAIR_TYPE_TENTACLES) buffer += " You are growing feathers.";
+				} else buffer += " Is something changing?";
+				
+				if (newColors.length > 0 && !InCollection(target.hairColor, newColors)) {
+					newColor = RandomInCollection(newColors);
+					if (target.hairColorUnlocked(newColor)) {
+						target.hairColor = newColor;
+						if(target.hasHair()) buffer += " Your " + newHair + " is " + newColor + " now.";
+						changes++;
+					}
+				}
+				
+				target.hairType = newType;
+				
+				if(target.hasHair()) buffer += " <b>You now have " + target.hairDescript(true, true) + "!</b>";
+				
+				changes++;				
+				if (display) output(buffer);
+				return changes > 0;
+			}
+			
+			if (newColors.length > 0 && !InCollection(target.hairColor, newColors)) {
+				newColor = RandomInCollection(newColors);
+				if(target.hairColorUnlocked(newColor)) {
+					target.hairColor = newColor;
+					if(target.hasHair())  {
+						buffer += "\n\nYour head is itching...";
+						buffer += " Your " + newHair + " is " + newColor + " now.";
+						buffer += " <b>You now have " + target.hairDescript(true, true) + "!</b>";
+					} else buffer += " Is something changing?";
+					changes++;
+				} else buffer += "\n\n" + target.hairColorLockedMessage();
+			}
+			
+			
+			if (display) output(buffer);
 			return changes > 0;
 		}
 		
@@ -1155,7 +1256,8 @@ package classes.Engine.Utility
 				
 				if (newColors.length > 0 && !InCollection(target[key], newColors)) {
 					newColor = RandomInCollection(newColors);
-					if(target[key + "Unlocked"](newColor)) {
+					if (target[key + "Unlocked"](newColor)) {
+						target[key] = newColor;
 						buffer += " Your " + newSkin + " " + isAre + " " + newColor + " now.";
 						changes++;
 					}
@@ -1219,6 +1321,7 @@ package classes.Engine.Utility
 				if(target[key + "Unlocked"](newColor)) {
 					buffer += "\n\nYour " + target.skinFurScales() + " are... Changing color!";
 					buffer += " Your " + newSkin + " " + isAre + " " + newColor + " now.";
+					target[key] = newColor;
 					buffer += " <b>You now have " + target.skinFurScales(true, true) + "!</b>";
 					changes++;
 				} else buffer += "\n\n" + target[key + "LockedMessage"]();
