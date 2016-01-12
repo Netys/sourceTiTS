@@ -122,10 +122,7 @@ package classes.Items.Transformatives
 			kGAMECLASS.clearOutput();
 			consume();
 			kGAMECLASS.output("You sink the needle into the flesh of your [pc.fullChest] injecting each with a portion of the needle.\n\n");
-			if (kGAMECLASS.pc.breastRows.length == 1)
-				kGAMECLASS.growTits(rand(5) + 1, 1, true, 1);
-			else
-				kGAMECLASS.growTits(rand(2) + 1, kGAMECLASS.pc.breastRows.length, true, 1);
+			Mutator.growTits(kGAMECLASS.pc, rand(5) + 1, kGAMECLASS.pc.breastRows.length, true, 1);
 			kGAMECLASS.pc.lust(10);
 			kGAMECLASS.clearMenu();
 			kGAMECLASS.addButton(0, "Next", kGAMECLASS.mainGameMenu);

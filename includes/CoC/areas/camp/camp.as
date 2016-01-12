@@ -3,6 +3,7 @@ import classes.GLOBAL;
 import classes.Items.Apparel.*;
 import classes.Items.Miscellaneous.*;
 import classes.Items.Transformatives.*;
+import classes.Items.Transformatives.CoCDyes.CoCDyeBlue;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -29,8 +30,8 @@ public function cocCampMenu():void {
 	showExplorationButton(); // as well as places
 	
 	campFollowersButton(); campFollowersMenu(true);
-	campLoversButton();	
-	campSlavesButton();
+	//campLoversButton();	
+	//campSlavesButton();
 	
 	addButton(5, "Debug", doDebugFunction);
 	
@@ -43,8 +44,8 @@ public function cocCampMenu():void {
 }
 
 public function doDebugFunction():void {
-	zealotBoat();
-	//quickLoot(new CoCCentaurSaddle());
+	//GoblinSalonEnter();
+	quickLoot(new CoCWhiskerFruit());
 	new Catnip();
 }
 

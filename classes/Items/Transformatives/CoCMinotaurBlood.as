@@ -330,7 +330,7 @@ package classes.Items.Transformatives
 			
 			//Males go into rut
 			if (rand(4) == 0) {
-				kGAMECLASS.goIntoRut(true);
+				Mutator.goIntoRut(pc, true);
 			}
 			
 			//Anti-masturbation status

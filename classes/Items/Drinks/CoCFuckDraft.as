@@ -64,9 +64,9 @@ package classes.Items.Drinks
 			target.lust(30 + rand(target.libido() / 10));
 
 			//Try to go into intense heat.
-			kGAMECLASS.goIntoHeat(true, 2);
+			Mutator.goIntoHeat(target, true, 2);
 			//Males go into rut
-			kGAMECLASS.goIntoRut(true);
+			Mutator.goIntoRut(target, true);
 				
 			output("\n\n");
 			return false;

@@ -133,10 +133,10 @@ package classes.Items.Transformatives
 		private function reductoBreasts():void {
 			clearOutput();
 			kGAMECLASS.output("You smear the foul-smelling ointment all over your [pc.chest], covering them entirely as the paste begins to get absorbed into your [pc.ckin].\n");
-			kGAMECLASS.shrinkTits();
+			Mutator.shrinkTits(kGAMECLASS.pc);
 			if (rand(2) == 0 && biggestTitSizeRaw() >= 1) {
 				output("\nThe effects of the paste continue to manifest themselves, and your body begins to change again...");
-				kGAMECLASS.shrinkTits();
+				Mutator.shrinkTits(kGAMECLASS.pc);
 			}
 			kGAMECLASS.output("\nThe last of it wicks away into your skin, completing the changes.");
 			

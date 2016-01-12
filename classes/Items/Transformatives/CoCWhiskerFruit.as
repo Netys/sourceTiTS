@@ -18,7 +18,7 @@ package classes.Items.Transformatives
             this._latestVersion = 1;
             
             this.quantity = 1;
-            this.stackSize = 5;
+            this.stackSize = 10;
             this.type = GLOBAL.POTION;
             //Used on inventory buttons
             this.shortName = "W.Fruit";
@@ -139,7 +139,7 @@ package classes.Items.Transformatives
 			{
 				var intensified:Boolean = pc.hasStatusEffect("Heat");
         
-				if (kGAMECLASS.goIntoHeat(false)) 
+				if (Mutator.goIntoHeat(pc, false)) 
 				{
 					if (intensified) 
 					{
@@ -194,6 +194,7 @@ package classes.Items.Transformatives
 				//Count that tits were shrunk
 				if (temp3 > 0) changes++;
 			}
+			
 			//Cat dangly-doo.
 			if (pc.cockTotal() > 0 && pc.cockTotal(GLOBAL.TYPE_FELINE) < pc.cockTotal() && (pc.earType == GLOBAL.TYPE_FELINE || rand(3) > 0) && (pc.tailType == GLOBAL.TYPE_FELINE || rand(3) > 0) && changes < changeLimit && rand(4) == 0) {
 				//loop through and find a non-cat wang.
@@ -253,70 +254,16 @@ package classes.Items.Transformatives
 					changes++;
 				}
 			}
+			
 			//Body type changes.  Teh rarest of the rare.
-			//DA EARZ
-			if (pc.earType != GLOBAL.TYPE_FELINE && rand(5) == 0 && changes < changeLimit) {
-				//human to cat:
-				if (pc..earType == GLOBAL.TYPE_HUMAN || pc..earType == GLOBAL.TYPE_HUMANMASKED || pc..earType == GLOBAL.TYPE_SYLVAN) {
-					output(RandomInCollection([
-					"\n\nThe skin on the sides of your face stretches painfully as your ears migrate upwards, towards the top of your head. They shift and elongate a little, fur growing on them as they become feline in nature. <b>You now have cat ears.</b>",
-					"\n\nYour ears begin to tingle. You reach up with one hand and gently rub them. They appear to be growing fur. Within a few moments, they've migrated up to the top of your head and increased in size. The tingling stops and you find yourself hearing noises in a whole new way. <b>You now have cat ears.</b>"
-					]));
-				}
-				//non human to cat:
-				else {
-					output(RandomInCollection([
-					"\n\nYour ears change shape, morphing into pointed, feline ears!  They swivel about reflexively as you adjust to them.  <b>You now have cat ears.</b>",
-					"\n\nYour ears tingle and begin to change shape. Within a few moments, they've become long and feline.  Thanks to the new fuzzy organs, you find yourself able to hear things that eluded your notice up until now. <b>You now have cat ears.</b>"
-					]));
-				}
-				pc.earType = GLOBAL.TYPE_FELINE;
-				changes++;
-			}
-			//DA TAIL (IF ALREADY HAZ URZ)
-			if (!pc.hasTail(GLOBAL.TYPE_FELINE) && pc.earType == GLOBAL.TYPE_FELINE && rand(5) == 0 && changes < changeLimit) {
-				
-				if(!pc.hasFur() && !InCollection(pc.furColor, catFurColor)) pc.furColor = RandomInCollection(catFurColor);
-				
-				if (!pc.hasTail()) {
-					output(RandomInCollection([
-					"\n\nA pressure builds in your backside. You feel under your [pc.gear] and discover an odd bump that seems to be growing larger by the moment. In seconds it passes between your fingers, bursts out the back of your clothes and grows most of the way to the ground. A thick coat of [pc.furColor] fur springs up to cover your new tail. You instinctively keep adjusting it to improve your balance. <b>You now have a cat-tail.</b>",
-					"\n\nYou feel your backside shift and change, flesh molding and displacing into a long, flexible [pc.furColor] tail! <b>You now have a cat tail.</b>",
-					"\n\nYou feel an odd tingling in your spine and your tail bone starts to throb and then swell. Within a few moments it begins to grow, adding new bones to your spine. Before you know it, you have a tail. Just before you think it's over, the tail begins to sprout soft, glossy [pc.furColor] fur. <b>You now have a cat tail.</b>"
-					]));
-				}
-				else output("\n\nYou pause and tilt your head... something feels different.  Ah, that's what it is; you turn around and look down at your tail as it starts to change shape, narrowing and sprouting glossy [pc.furColor] fur. <b>You now have a cat tail.</b>");
-				
-				pc.clearTailFlags();
-				pc.tailType = GLOBAL.TYPE_FELINE;
-				if(pc.tailCount > 6) pc.tailCount = 1;
-				pc.addTailFlag(GLOBAL.FLAG_LONG);
-				pc.addTailFlag(GLOBAL.FLAG_FURRED);
-				changes++;
-			}
-			//Da paws (if already haz ears & tail)
-			if (pc.hasTail(GLOBAL.TYPE_FELINE) && pc.earType == GLOBAL.TYPE_FELINE && rand(5) == 0 && changes < changeLimit && pc.legType != GLOBAL.TYPE_FELINE) {
-				//hoof to cat:
-				if (pc.hasLegFlag(GLOBAL.FLAG_HOOVES)) {
-					output("\n\nYou feel your hooves suddenly splinter, growing into five unique digits. Their flesh softens as your hooves reshape into furred cat paws. <b>You now have cat paws.</b>");
-				}
-				//Goo to cat
-				else if (pc.legType == GLOBAL.TYPE_GOOEY) {
-					output("\n\nYour lower body rushes inward, molding into two leg-like shapes that gradually stiffen up.  In moments they solidify into digitigrade legs, complete with soft, padded cat-paws.  <b>You now have cat-paws!</b>");
-				}
-				//non hoof to cat:
-				else output("\n\nYou scream in agony as you feel the bones in your " + pc.feet() + " break and begin to rearrange. When the pain fades, you feel surprisingly well-balanced. <b>You now have cat paws.</b>");
-				if (pc.isTaur()) output("  You feel woozy and collapse on your side.  When you wake, you're no longer a taur and your body has returned to a humanoid shape.");
-
-				pc.clearLegFlags();
-				pc.legType = GLOBAL.TYPE_FELINE;
-				pc.addLegFlag(GLOBAL.FLAG_DIGITIGRADE);
-				pc.addLegFlag(GLOBAL.FLAG_PAWS);
-				pc.addLegFlag(GLOBAL.FLAG_FURRED);
-				pc.legCount = 2;
-				pc.genitalSpot = 0;
-				changes++;
-			}
+			// Ears!
+			if (rand(5) == 0 && changes < changeLimit && Mutator.changeEars(pc, GLOBAL.TYPE_FELINE)) changes++;
+			// Tail!
+			if (rand(5) == 0 && changes < changeLimit && Mutator.changeTail(pc, GLOBAL.TYPE_FELINE, 1, [GLOBAL.FLAG_LONG, GLOBAL.FLAG_FURRED])) changes++;
+			// Pawz for legz! After ears and tail.
+			if (pc.hasTail(GLOBAL.TYPE_FELINE) && pc.earType == GLOBAL.TYPE_FELINE && rand(5) == 0 && changes < changeLimit 
+				&& Mutator.changeLegs(pc, GLOBAL.TYPE_FELINE, [2, 6, 2, 2], [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_PAWS, GLOBAL.FLAG_FURRED])) changes++;
+			
 			if (changes < changeLimit && pc.armType != GLOBAL.TYPE_FELINE && pc.hasFur() && rand(4) == 0) {
 				output("\n\nYou scratch at your biceps absentmindedly, but no matter how much you scratch, it isn't getting rid of the itch.  Glancing down in irritation, you discover that your arms are changed!");
 				pc.armType = GLOBAL.TYPE_FELINE;

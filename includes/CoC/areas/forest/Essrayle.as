@@ -195,13 +195,12 @@ private function plantsForMe2(BE:int = 0):void {
 		if(pc.bRows() > 1) output(", the top pair being largest, descending in size with each subsequent pair");
 		output(".");
 		//Boost size, set lactation quantity.
-		growTits(7,pc.bRows(),false,2);
-		pc.boostLactation(pc.bRows());
+		Mutator.growTits(pc, 7, pc.bRows(), false, 2);
         output("\n\nYou sit there for the next hour or two, milking your bloated bosom and giving the flora a generous watering in the process.  When all is taken care of, you stumble back upright with a brief struggle and don your gear once more.  The smell of fresh-cut flowers seems to linger on your [armor] as you depart.");
 	}
 	if (pc.hasBreasts() && pc.isLactating()) {
         pc.milked();
-        pc.boostLactation(1);
+        pc.boostLactation(5);
     }
 	pc.orgasm();
 	//dynStats("lib", 1);
@@ -374,7 +373,7 @@ private function acceptEssyPrizes():void {
 	//if four+ breasts: 
 	else {
 		output("your [fullChest] swell larger and larger under the expanding magic of the spell");
-		growTits(6, pc.bRows(), false, 2);
+		Mutator.growTits(pc, 6, pc.bRows(), false, 2);
 	}
 	pc.boostLactation(pc.bRows());
 	output(", filling with warm, fluid weight.  They jiggle and wobble against each other and your belly as they adjust to their brimming plumpness.  You now proudly sport [fullChest].");

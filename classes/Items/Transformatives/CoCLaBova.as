@@ -144,7 +144,7 @@ package classes.Items.Transformatives
 					temp3 -= .5;
 				}
 				temp3 += pc.increaseCock((rand(3) + 1) * -1, temp);
-				kGAMECLASS.lengthChange(temp3, 1);
+				Mutator.lengthChange(pc, temp3, 1);
 				if (pc.cocks[temp].cLength() < 2) {
 					output("  ");
 					if (pc.cockTotal() == 1 && !pc.hasVagina()) {
@@ -158,7 +158,7 @@ package classes.Items.Transformatives
 						pc.removeCock(0, 1);
 					}
 					else {
-						kGAMECLASS.killCocks(1);
+						Mutator.killCocks(pc, 1);
 					}
 				}
 				//if the last of the player's dicks are eliminated this way, they gain a virgin vagina;
@@ -178,7 +178,7 @@ package classes.Items.Transformatives
 			if (((tainted && pc.biggestTitSize() <= 11) || (!tainted && pc.biggestTitSize() <= 5)) && changes < changeLimit && (rand(3) == 0 || enhanced)) {
 				if (rand(2) == 0) output("\n\nYour " + pc.breastDescript(0) + " tingle for a moment before becoming larger.");
 				else output("\n\nYou feel a little weight added to your chest as your " + pc.breastDescript(0) + " seem to inflate and settle in a larger size.");
-				kGAMECLASS.growTits(1 + rand(3), 1, false, 3);
+				Mutator.growTits(pc, 1 + rand(3), 1, false, 3, 16);
 				changes++;
 				//dynStats("sen", .5);
 				boobsGrew = true;

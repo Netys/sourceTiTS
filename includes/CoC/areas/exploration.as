@@ -33,8 +33,7 @@ public function doExplore():void
 		addButton(4, "Mountain", exploreMountain, null, "Explore mountain", "Visit the mountain. \n\nRecommended level: 5\n\nTimes explored: " + flags["COC.EXPLORED_MOUNTAIN"]);
 	
 	if (flags["COC.EXPLORED_PLAINS"] != undefined) 
-		addDisabledButton(5, "Plains", "Plains", "NOT IMPLEMENTED.");
-		//addButton(5, "Plains", explorePlains, null, "Explore plains", "Visit the plains. \n\nRecommended level: 10\n\nTimes explored: " + flags["COC.EXPLORED_PLAINS"]);
+		addButton(5, "Plains", explorePlains, null, "Explore plains", "Visit the plains. \n\nRecommended level: 10\n\nTimes explored: " + flags["COC.EXPLORED_PLAINS"]);
 	
 	if (flags["COC.EXPLORED_SWAMP"] != undefined) 
 		addDisabledButton(6, "Swamp", "Swamp", "NOT IMPLEMENTED.");
@@ -55,7 +54,6 @@ public function doExplore():void
 }
 
 // placeholders
-public function explorePlains() { };
 public function exploreSwamp() { };
 public function exploreHighMountain() { };
 

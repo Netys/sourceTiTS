@@ -119,7 +119,7 @@ private function DemonFactoryDoTensionRelease():void {
 	if(flags["COC.FACTORY_TENSION_RELEASED"] == undefined) {
 		output("You nod and step forwards, allowing her to hook up a modified harness and inject you with the demonic concoction.  In no time heat boils through your veins, pooling on your chest and crotch.  ");
 		if(pc.biggestTitSize() < 10) {
-			growTits(1, (2+rand(3)), true, 1);
+			Mutator.growTits(pc, 1, (2+rand(3)), true, 1);
 			output("  ");
 		}
 		output("You glance over to the pile of glistening entwined bodies as they writhe in pleasure, and find yourself drawn in to the mass.  You spend the next four hours suckling tainted breast milk, fucking gaping pussies, and doing your damnedest to milk as much cum from the dick-girls around you.  Eventually the drugs work their way out of your system, leaving you to recover on the floor.  Cum, milk, and sweat drip from your nude form as you try to clean up and get dressed.");
@@ -138,7 +138,7 @@ private function DemonFactoryDoTensionRelease():void {
 			output("You eagerly put on the modified harness and let them inject you with more of those body-altering chemicals.  As they fill you with artificial lust and desire, you cry out and beg for more.  They oblige you and give you a larger dose than the first time.  ");
 			//Grow dick!
 			if(pc.hasCock()) {
-				lengthChange(pc.increaseCock(5,0), pc.cocks.length);
+				Mutator.lengthChange(pc, pc.increaseCock(5,0), pc.cocks.length);
 			}
 			//Grow chest
 			//(If player has 0 bewbs)
@@ -146,7 +146,7 @@ private function DemonFactoryDoTensionRelease():void {
 				pc.createBreastRow();
 				output("Your chest tingles, revealing a pair of pink nipples on your new mammory glands.  ", false);
 			}
-			growTits(1, (2+rand(3)), true, 1);
+			Mutator.growTits(pc, 1, (2+rand(3)), true, 1);
 			output("  ", false);
 			output("Your [pc.nipples] ", false);
 			if(pc.cocks.length > 0) output("and [pc.cocks]", false);

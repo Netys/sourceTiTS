@@ -664,7 +664,7 @@ private function bazaarNiamhSex():void {
 private function leaveWithBeerTits():void {
 	clearOutput();
 	output("The offer is tempting but right now you'd much rather deal with your boozy boobs privately.  You take off while trying to keep your [pc.gear] modestly in place over your tits but it's difficult.  Your nipples constantly leak and drip a trail of alcohol all the way back to camp.  Thankfully by the time you arrive the effects seem to have mostly worn off.  Your nipples return to dripping milk, but although they've shrunk back down a bit they don't quite shrink all the way, leaving you with somewhat larger endowments than you had before.");
-	growTits(2, pc.bRows(), false, 2);
+	Mutator.growTits(pc, 2, pc.bRows(), false, 2);
 	processTime(15);
 	clearMenu();
 	addButton(0, "Next", barTelAdre);
@@ -693,7 +693,7 @@ private function sellYourBooze():void {
 	output(".");
 	//If lust is low
 	if(pc.lust() < 50 || !pc.hasGenitals()) {
-		growTits(2, pc.bRows(), false, 2);
+		Mutator.growTits(pc, 2, pc.bRows(), false, 2);
 		output("\n\nYou feel flushed from the sensations, but finally you run dry.  Your breasts have shrunk back down, but they still feel a little larger than they were earlier.  As little droplets of milk instead of booze return to dripping from your nipples, Niamh hands you your cut of the gems you earned from the sales.");
 		//[LEAVE]
 		processTime(120 + rand(30));
@@ -842,7 +842,7 @@ private function barBeerOrgyTits():void {
 		output("\n\nThe next thing you're aware of is feeling an intense pressure in your gut.  As your vision returns you weakly make out the desert outside Tel'Adre passing you by.  As your senses return you realize you're riding on Edryn's back and Urta is sitting behind you.  \"<i>Hellooooo...</i>\"  A very drunk Urta whispers in your ear.  \"<i>Looks like you're awake.</i>\"  She reaches around and pats your bloated belly.  \"<i>You really took a lot.  We sort of felt we overdid it, so we decided to give you a lift back to your camp.</i>\"  Urta's cum is still spilling out of your crotch, soaking Edryn's sides.  Edryn's own hindquarters are leaking from the many loads you gave her.");
 		// IF [Player is pregnant but not with eggs] You pat your pregnant belly and silently hope Urta's ocean of cum hasn't drowned the child, if that's even possible.
 		output("\n\nThe two of them drop you off along with your clothes and gear back at camp.  Each of them winks and blows you a kiss as they travel back to Tel'Adre.  Your breasts are leaking milk again, and they appear to have grown permanently larger.");
-		growTits(2, pc.bRows(), false, 2);
+		Mutator.growTits(pc, 2, pc.bRows(), false, 2);
 	}
 	// IF [Urta but not Edryn is present in the bar and sex with her is unlocked and character has pussy]
 	else if(pc.hasVagina() && hours < 15 && flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"] > 0) {
@@ -859,7 +859,7 @@ private function barBeerOrgyTits():void {
 		if(!pc.isPregnant()) output("  Urta's small ocean of sperm streams out from your pussy like a river down your legs as you try to stand.");
 
 		output("\n\nWhen you're finally on your feet all the cum covering your body and filling your cleavage begins dripping down and pooling around your feet.  Milk is dripping from your nipples, signaling that the effects of Niamh's beer have finally worn off.  \"<i>Oi lass, I think ye be needin' a dip in a river.  Pity ye in a desert eh?</i>\"  She grins.  Still half drunk off booze and sex you haphazardly gather your things.  Urta graciously helps you out of the bar and through the streets of Tel'Adre until you've gathered your senses enough to find your way back to camp.  Your breasts ache from the pleasant ordeal, each one feeling fuller and larger than it was before this all began.");
-		growTits(2, pc.bRows(), false, 2);
+		Mutator.growTits(pc, 2, pc.bRows(), false, 2);
 	}
 	//=====
 	//Generic ending if the first two don't trigger
@@ -915,7 +915,7 @@ private function barBeerOrgyTits():void {
 					//break;
 			//}
 		}
-		growTits(2, pc.bRows(), false, 2);
+		Mutator.growTits(pc, 2, pc.bRows(), false, 2);
 	}
 	pc.orgasm();
 	processTime(60 * 2 + rand(60));

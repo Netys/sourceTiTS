@@ -523,7 +523,7 @@ package classes.Items.Transformatives
 			}
 			//Go into heat
 			if (rand(2) == 0 && changes < changeLimit) {
-				if(kGAMECLASS.goIntoHeat(true)) {
+				if(Mutator.goIntoHeat(pc, true)) {
 				  changes++;
 				}
 			}

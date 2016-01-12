@@ -3703,7 +3703,7 @@ package classes {
 			if(earLength >= 1 && InCollection(earType, GLOBAL.TYPE_SYLVAN, GLOBAL.TYPE_LEITHAN, GLOBAL.TYPE_RASKVEL, GLOBAL.TYPE_LAPINE, GLOBAL.TYPE_GABILANI, GLOBAL.TYPE_DEMONIC)) return true;
 			return false;
 		}
-		public function earDescript(): String
+		public function earDescript(forcedAdjectives:Boolean = false, forcedRace:Boolean = false): String
 		{
 			var adjectives:Array = new Array();
 			var nouns:Array = ["ear"];
@@ -3711,8 +3711,9 @@ package classes {
 			switch (earType)
 			{
 				case GLOBAL.TYPE_CANINE:
-					adjectives = ["pointed", "ausar", "upraised", "anubis-like"];
+					adjectives = ["canine", "pointed", "upraised", "anubis-like"];
 					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("furry");
+					if (race().indexOf("ausar") != -1) adjectives.push("ausar");
 					break;
 				case GLOBAL.TYPE_EQUINE:
 					adjectives = ["equine", "horse-like", "inhuman"];
@@ -3723,14 +3724,14 @@ package classes {
 					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("softly furred");
 					break;
 				case GLOBAL.TYPE_FELINE:
-					adjectives = ["pointed", "feline", "cat-like", "cat-like"];
+					adjectives = ["feline", "pointed", "cat-like", "cat-like"];
 					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("furry");
 					break;
 				case GLOBAL.TYPE_LIZAN:
 					adjectives = ["reptilian", "small", "circular"];
 					break;
 				case GLOBAL.TYPE_LAPINE:
-					adjectives = ["bunny", "rabbit-like", "lapine", "floppy"];
+					adjectives = ["lapine", "bunny", "rabbit-like", "floppy"];
 					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("furry");
 					break;
 				case GLOBAL.TYPE_KANGAROO:
@@ -3771,7 +3772,7 @@ package classes {
 					adjectives = ["elven", "sensitive", "pointy", "elvish"];
 					break;
 				case GLOBAL.TYPE_VANAE:
-					adjectives = ["pointy", "vanae", "fin-like", "inhuman"];
+					adjectives = ["vanae", "pointy", "fin-like", "inhuman"];
 					break;
 				case GLOBAL.TYPE_DEER:
 					adjectives = ["deer", "pointed", "oval-shaped", "pointy"];
@@ -3786,14 +3787,21 @@ package classes {
 			}
 			if (hasLongEars()) adjectives.push(num2Text(Math.round(earLength)) + "-inch long");
 			if (skinType == GLOBAL.SKIN_TYPE_GOO && rand(5) == 0) adjectives.push("gooey", "slimy", "slick");
+			
+			// if forced racial description show first adjective
+			if(forcedRace && adjectives.length > 0) description = adjectives.shift();
 			//Pick an adjective about 75% of the time
-			if (rand(4) < 3 && adjectives.length > 0) description = adjectives[rand(adjectives.length)] + " ";
+			else if ((rand(4) < 3 || forcedAdjectives) && adjectives.length > 0) {
+				if (description.length > 0) description += ", "; // in case of forced race
+				description += adjectives[rand(adjectives.length)];
+			}
+			if (description.length > 0) description += " ";
 			//Pick a noun.
 			description += nouns[rand(nouns.length)];
 			return description;
 		}
-		public function earsDescript(): String {
-			return plural(earDescript());
+		public function earsDescript(forcedAdjectives:Boolean = false, forcedRace:Boolean = false): String {
+			return plural(earDescript(forcedAdjectives, forcedRace));
 		}
 		public function eyeDescript(): String {
 			var adjectives:Array = new Array();
@@ -4497,7 +4505,7 @@ package classes {
 			if (legCount == 1) return leg(forceType, forceAdjective);
 			else return legs(forceType, forceAdjective);
 		}
-		public function tailDescript(): String {
+		public function tailDescript(forceType: Boolean = false, forceAdjective: Boolean = false): String {
 			var adjectives:Array = new Array();
 			var nouns:Array = ["tail"];
 			var description:String = "";
@@ -4505,7 +4513,7 @@ package classes {
 			switch (tailType)
 			{
 				case GLOBAL.TYPE_LAPINE:
-					adjectives = ["twitching", "rabbit-like", "lapine"];
+					adjectives = ["lapine", "twitching", "rabbit-like"];
 					break;
 				case GLOBAL.TYPE_EQUINE:
 					adjectives = ["equine", "horse-like"];
@@ -4532,10 +4540,10 @@ package classes {
 				case GLOBAL.TYPE_BEE:
 				case GLOBAL.TYPE_MYR:
 					nouns = ["abdomen"];
-					adjectives = ["dangling", "insectile", "insect-like"];
 					if (tailType == GLOBAL.TYPE_DRIDER || tailType == GLOBAL.TYPE_ARACHNID) adjectives.push("arachnid", "spherical");
 					if (tailType == GLOBAL.TYPE_BEE) adjectives.push("zil", "bee-like");
 					if (tailType == GLOBAL.TYPE_MYR) adjectives.push("myr", "ant-like");
+					adjectives.push("dangling", "insectile", "insect-like");
 					break;
 				case GLOBAL.TYPE_DEMONIC:
 					adjectives = ["demonic", "spade-tipped", "whip-like", "inhuman"];
@@ -4629,27 +4637,33 @@ package classes {
 			if (hasTailFlag(GLOBAL.FLAG_STICKY))
 				adjectives.push("sticky");
 			
+			// first adjective in list should be type
+			if (forceType && adjectives.length > 0) description += adjectives.shift();
 			//Show adjective 50% of the time
-			if (rand(2) == 0 && adjectives.length > 0) description = adjectives[rand(adjectives.length)] + " ";
+			if (rand(2) == 0 && adjectives.length > 0) {
+				if (description.length > 0) description += ", ";
+				description = adjectives[rand(adjectives.length)];
+			}
+			if (description.length > 0) description += " ";
 			//Pick a noun.
 			description += nouns[rand(nouns.length)];
 			return description;
 		}
-		public function oneTailDescript():String
+		public function oneTailDescript(forceType: Boolean = false, forceAdjective: Boolean = false):String
 		{
 			if (tailCount == 0) return "ERROR: No tails!";
-			else if (tailCount == 1) return "your " + tailDescript();
-			else return "one of your " + tailDescript();
+			else if (tailCount == 1) return "your " + tailDescript(forceType, forceAdjective);
+			else return "one of your " + tailDescript(forceType, forceAdjective);
 		}
-		public function eachTailDescript():String
+		public function eachTailDescript(forceType: Boolean = false, forceAdjective: Boolean = false):String
 		{
 			if (tailCount == 0) return "ERROR: No tails!";
-			else if (tailCount == 1) return "your " + tailDescript();
-			else return "each of your " + tailDescript();
+			else if (tailCount == 1) return "your " + tailDescript(forceType, forceAdjective);
+			else return "each of your " + tailDescript(forceType, forceAdjective);
 		}
-		public function tailsDescript():String {
-			if(tailCount == 1) return tailDescript();
-			else if(tailCount > 1) return plural(tailDescript());
+		public function tailsDescript(forceType: Boolean = false, forceAdjective: Boolean = false):String {
+			if(tailCount == 1) return tailDescript(forceType, forceAdjective);
+			else if(tailCount > 1) return plural(tailDescript(forceType, forceAdjective));
 			else return "<b>ERROR: Taildescript called with no tails present</b>";
 		}
 		public function wingDescript():String

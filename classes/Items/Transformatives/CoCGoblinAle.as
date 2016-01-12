@@ -99,7 +99,7 @@ package classes.Items.Transformatives
 			//Multidick killa!
 			if (pc.cocks.length > 1 && rand(3) == 0 && changes < changeLimit) {
 				output("\n\n", false);
-				kGAMECLASS.killCocks(1);
+				Mutator.killCocks(pc, 1);
 				changes++;
 			}
 			//Boost vaginal capacity without gaping
@@ -126,7 +126,7 @@ package classes.Items.Transformatives
 						temp3 -= .5;
 					}
 					temp3 += pc.increaseCock(0, (rand(3) + 1) * -1);
-					kGAMECLASS.lengthChange(temp3, 1);
+					Mutator.lengthChange(pc, temp3, 1);
 				}
 			}
 			//GENERAL APPEARANCE STUFF BELOW

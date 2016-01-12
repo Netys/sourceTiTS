@@ -6,6 +6,7 @@ import classes.Items.Armor.CoCGelArmor;
 import classes.Items.Miscellaneous.*;
 import classes.Items.Transformatives.*;
 import classes.Items.Transformatives.CoCDyes.*;
+import classes.ItemSlotClass;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -345,7 +346,7 @@ private function rathazulWorkOffer():Boolean {
 			//addButton(2, "Buy Oil", buyOils, null, "Buy Oil", "Ask him to make a skin oil for you. \n\nCost: 50 Gems.");
 			//addButton(3, "Buy Lotion", buyLotions, null, "Buy Lotion", "Ask him to make a body lotion for you. \n\nCost: 50 Gems.");
 		//}
-		addButton(4, "Purify", rathPurify, null, "Purify", "Ask him to purify any tainted potions. \n\nCost: 20 Gems.");
+		addButton(2, "Alchemy", rathPurify, null, "Alchemy", "Ask him to purify any tainted potions or make something from your ingridients. \n\nCost: 20 Gems.");
 		
 		if (debimbo > 0) addButton(5, "Debimbo", makeADeBimboDraft, null, "Debimbo", "Ask Rathazul to make a debimbofying potion for you. \n\nCost: 250 Gems \nNeeds 5 Scholar Teas.");
 		//if (pc.hasItem(consumables.BEEHONY)) addButton(6, consumables.PURHONY.shortName, rathazulMakesPureHoney, null, null, null, "Ask him to distill a vial of bee honey into a pure honey. \n\nCost: 25 Gems \nNeeds 1 vial of Bee Honey");
@@ -388,36 +389,61 @@ private function rathShop():void {
 public function rathPurify():void {
 	clearOutput();
 	clearMenu();
-	output("Rathazul asks, \"<i>What would you like me to purify?</i>\"\n\n");
-	if(pc.credits < 200) output("Rathazul says, \"<i>You do not have enough gems for that service.</i>\"\n\n");
+	output("Rathazul asks, \"<i>What would you like me to make?</i>\"\n");
+	//if(pc.credits < 200) output("Rathazul says, \"<i>You do not have enough gems for that service.</i>\"\n\n");
 	
 	addButton(14, "Back", campRathazul);
 	
+	function checkIngridients(arg:Object):Boolean {
+		var ret:Boolean = true;
+		output("\n	Gems x" + arg["gems"]);
+		if (pc.credits < arg["gems"] * 10) ret = false;
+		for (var key:* in arg) {
+			if (key != "gems") {
+				output("\n	" + key + " x" + arg[key]);
+				if(!pc.hasItemByName(key, arg[key])) ret = false
+			}
+		}
+		return ret;
+	}
+	
 	var counter:int = 0;
-	function add(from:ItemSlotClass, to:ItemSlotClass):void {
-		if (pc.hasItem(from) && pc.credits >= 200)
+	function add(from:Object, to:ItemSlotClass):void {
+		output("\n" + to.longName + ":");
+		if (checkIngridients(from))
 			addButton(counter, to.shortName, rathPurifyGo, [from, to]);
 		else
-			addDisabledButton(counter, from.shortName);
+			addDisabledButton(counter, to.shortName);
 		counter++;
 	}
 	
-	add(new CoCIncubiD(), new CoCIncubiDPure());
-	add(new CoCSucMilk(), new CoCSucMilkPure());
-	add(new CoCSucDelight(), new CoCSucDelightPure());
-	add(new CoCLaBova(), new CoCLaBovaPure());
-	add(new CoCMinotaurCum(), new CoCMinotaurCumPure());
+	add({ "IncubiD" : 1, "gems" : 20 }, new CoCIncubiDPure());
+	add({ "SucMilk" : 1, "gems" : 20 }, new CoCSucMilkPure());
+	add({ "S. Delight" : 1, "gems" : 20 }, new CoCSucDelightPure());
+	add({ "LaBova" : 1, "gems" : 20 }, new CoCLaBovaPure());
+	add({ "MinoCum" : 1, "gems" : 20 }, new CoCMinotaurCumPure());
+	
+	if (flags["COC.RATHAZUL_DAYS_KNOWN"] >= 5)
+		add({ "MinoBlo" : 1, "Equinum" : 2, "gems" : 100 }, new CoCTaurinum());
 }
 
 public function rathPurifyGo(args:/*ItemSlotClass*/Array):void {
-	var from:ItemSlotClass = args[0];
+	var from:Object = args[0];
 	var to:ItemSlotClass = args[1];
 	
 	pc.credits -= 20 * 10;
 	IncrementFlag("COC.RATHAZUL_BOUGHT");
 	clearOutput();
 	output("It should be much safer now, but still, be careful...\n\n");
-	pc.destroyItem(from);
+	
+	for (var key:* in from) {
+		if (key != "gems") {
+			pc.credits -= from[key] * 10;
+		} else {
+			pc.destroyItemByName(key, from[key]);
+		}
+	}
+	
 	processTime(5 + rand(5));
 
 	itemScreen = rathPurify;
@@ -820,53 +846,6 @@ private function craftCarapace():void {
 	//}
 //}
 
-//Hair dyes
-//private function buyDyes():void {
-	////spriteSelect(49);
-	//clearOutput();
-	//output("Rathazul smiles and pulls forth several vials of colored fluids.  Which type of dye would you like?");
-	//output("\n\n<b>(-50 Gems)</b>");
-	//pc.gems -= 50;
-	//statScreenRefresh();
-	//menu();
-	//addButton(0, "Auburn", buyDye, consumables.AUBURND);
-	//addButton(1, "Black", buyDye, consumables.BLACK_D);
-	//addButton(2, "Blond", buyDye, consumables.BLOND_D);
-	//addButton(3, "Brown", buyDye, consumables.BROWN_D);
-	//addButton(4, "Red", buyDye, consumables.RED_DYE);
-	//addButton(5, "White", buyDye, consumables.WHITEDY);
-	//addButton(6, "Gray", buyDye, consumables.GRAYDYE);
-	//if (pc.statusAffectv2(StatusAffects.MetRathazul) >= 8) {
-		//addButton(7, "Blue", buyDye, consumables.BLUEDYE);
-		//addButton(8, "Green", buyDye, consumables.GREEN_D);
-		//addButton(9, "Orange", buyDye, consumables.ORANGDY);
-		//addButton(10, "Purple", buyDye, consumables.PURPDYE);
-		//addButton(11, "Pink", buyDye, consumables.PINKDYE);
-	//}
-	//if (pc.statusAffectv2(StatusAffects.MetRathazul) >= 12) {
-		//addButton(12, "Rainbow", buyDye, consumables.RAINDYE);
-	//}
-	//addButton(14, "Nevermind", buyDyeNevermind);
-//}
-//
-//private function buyDye(dye:ItemType):void {
-	////spriteSelect(49);
-	//clearOutput();
-	//output(images.showImage("rathazul-buy-dye"));
-	//inventory.takeItem(dye, returnToRathazulMenu);
-	//statScreenRefresh();
-	//pc.addStatusValue(StatusAffects.MetRathazul, 2, 1);
-//}
-//
-//private function buyDyeNevermind():void {
-	////spriteSelect(49);
-	//clearOutput();
-	//output("You change your mind about the dye, and Rathazul returns your gems.\n\n<b>(+50 Gems)</b>");
-	//pc.gems += 50;
-	//statScreenRefresh();
-	//doNext(returnToRathazulMenu);
-//}
-//
 ////Skin Oils
 //private function buyOils():void {
 	////spriteSelect(49);

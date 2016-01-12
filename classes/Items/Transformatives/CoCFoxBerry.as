@@ -271,7 +271,7 @@ package classes.Items.Transformatives
 			}
 			//HEAT! If heat libido bonus is below 30.
 			if (pc.statusEffectv2("Heat") < 30 && rand(6) == 0 && changes < changeLimit) {
-				if(kGAMECLASS.goIntoHeat(true)) {
+				if(Mutator.goIntoHeat(pc, true)) {
 						changes++;
 				}
 			}

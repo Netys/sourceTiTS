@@ -66,7 +66,7 @@ package classes.Items.Transformatives.CoCEggs
 			if (!large) {
 				//Remove a dick
 				if (pc.cocks.length > 0) {
-					kGAMECLASS.killCocks(1);
+					Mutator.killCocks(pc, 1);
 					output("\n\n");
 				}
 				//remove balls
@@ -91,7 +91,7 @@ package classes.Items.Transformatives.CoCEggs
 			else {
 				//Remove a dick
 				if (pc.cocks.length > 0) {
-					kGAMECLASS.killCocks(-1);
+					Mutator.killCocks(pc, -1);
 					output("\n\n", false);
 				}
 				if (pc.balls > 0) {

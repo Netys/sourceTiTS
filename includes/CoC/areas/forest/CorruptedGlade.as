@@ -257,16 +257,16 @@ private function treeBoobFunCorruptedGlade():void {
 	if (rand(2) == 0) { //50% Chance of breast-growth
 		if (pc.biggestTitSize() > 5) {
 			output("  As you redress, you feel a sense of added weight on your chest.  After a few moments you realize your already-formidable chest has grown even larger.");
-			growTits(1, 1 + rand(3), false, 1);
+			Mutator.growTits(pc, 1, 1 + rand(3), false, 1);
 		}
 		else {
 			if (pc.biggestTitSize() == 0) { //No tits yet
 				output("  As you redress, you realize you have grown a pair of luscious breasts!  Perhaps this was a good idea after all...");
-				growTits(1, 2 + rand(3), false, 1);
+				Mutator.growTits(pc, 1, 2 + rand(3), false, 1);
 			}
 			else { //Small tits growth
 				output("  As you redress, you realize your breasts have gotten quite a bit larger!  Maybe you can come back later when you aren't so full and plump them up a bit more.");
-				growTits(1, 1 + rand(3), false, 1);
+				Mutator.growTits(pc, 1, 1 + rand(3), false, 1);
 			}
 		}
 	}

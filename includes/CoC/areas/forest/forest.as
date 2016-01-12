@@ -31,7 +31,6 @@ public function exploreForest():void
 
 	var choice:Array = [];
 	var chance:Array = [];
-	var select:int;
 	
 	//Build choice list!
 	

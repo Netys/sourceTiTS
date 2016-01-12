@@ -83,7 +83,7 @@ package classes.Items.Transformatives.CoCEggs
 							temp--;
 							temp2 = pc.increaseCock(rand(3) + 2, temp);
 						}
-						kGAMECLASS.lengthChange(temp2, pc.cocks.length);
+						Mutator.lengthChange(pc, temp2, pc.cocks.length);
 						pc.libido(1);
 						pc.lust(20);
 						//dynStats("lib", 1, "sen", 1, "lus", 20);
@@ -92,7 +92,7 @@ package classes.Items.Transformatives.CoCEggs
 					if (pc.cocks.length == 1) {
 						output("\n\nYour [pc.cocksLight] fills to its normal size... and begins growing... ");
 						temp2 = pc.increaseCock(0, rand(3) + 2);
-						kGAMECLASS.lengthChange(temp2, 1);
+						Mutator.lengthChange(pc, temp2, 1);
 						pc.libido(1);
 						pc.lust(20);
 						//dynStats("lib", 1, "sen", 1, "lus", 20);
@@ -131,7 +131,7 @@ package classes.Items.Transformatives.CoCEggs
 				//Shrink tits!
 				if (pc.biggestTitSize() > 0)
 				{
-					kGAMECLASS.shrinkTits();
+					Mutator.shrinkTits(pc);
 				}
 				if (pc.cocks.length > 0) {
 					//Multiz
@@ -142,7 +142,7 @@ package classes.Items.Transformatives.CoCEggs
 							temp--;
 							temp2 = pc.increaseCock(temp, rand(3) + 5);
 						}
-						kGAMECLASS.lengthChange(temp2, pc.cocks.length);
+						Mutator.lengthChange(pc, temp2, pc.cocks.length);
 						pc.libido(1);
 						pc.lust(20);
 						//dynStats("lib", 1, "sen", 1, "lus", 20);
@@ -151,7 +151,7 @@ package classes.Items.Transformatives.CoCEggs
 					if (pc.cocks.length == 1) {
 						output("\n\nYour [pc.cocksLight] fills to its normal size... and begins growing...");
 						temp2 = pc.increaseCock(0, rand(3) + 5);
-						kGAMECLASS.lengthChange(temp2, 1);
+						Mutator.lengthChange(pc, temp2, 1);
 						pc.libido(1);
 						pc.lust(20);
 						//dynStats("lib", 1, "sen", 1, "lus", 20);

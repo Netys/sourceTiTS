@@ -511,7 +511,7 @@ internal function tentacleLossRape():void {
 		if(pc.cockTotal() > 1) output("[pc.cocksLight] immediately become fully erect and leak pre-cum liberally from their tips.  ");
 		else output("member immediately becomes fully erect and pre-cum leaks liberally from your tip.  ");
 		output("  " + num2Text((pc.totalNipples())) + " thorny tentacles pierce your nipples, and you feel as if someone shot acid into your tits, which immediately begin to swell.");
-		growTits(1, pc.breastRows.length, false, 2);
+		Mutator.growTits(pc, 1, pc.breastRows.length, false, 2);
 		output("\n\nRealizing what is about to happen, you try to struggle. The beast responds by slamming you to the ground a few times, stunning you. In your daze you see a monstrous, hollow tentacle poised over your ");
 		if(pc.cockTotal() > 1) output("furious cocks.  ");
 		else output("furious cock.  ");

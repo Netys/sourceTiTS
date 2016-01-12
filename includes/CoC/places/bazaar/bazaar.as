@@ -39,6 +39,7 @@ private function approachBazaarGuard():void {
 }
 
 public function enterTheBazaar():void {
+	flags["COC.BAZAAR_ENTERED"] = 1;
 	//if (model.time.hours == 19 || model.time.hours == 20) {
 		//flags[kFLAGS.COUNTDOWN_TO_NIGHT_RAPE]++;
 		//if (flags[kFLAGS.COUNTDOWN_TO_NIGHT_RAPE] % 4 == 0 && (pc.gender == 1 || (pc.gender == 3 && pc.mf("m", "f") == "m"))) {
@@ -63,11 +64,11 @@ public function enterTheBazaar():void {
 //
 ////[Enter]
 //public function enterTheBazaarAndMenu(demons:Boolean = true):void {
+	////Make sure flags to allow entrance is set.
+	//flags["COC.BAZAAR_ENTERED"] = 1;
 	//clearOutput();
 	//spriteSelect(-1);
 	//output(images.showImage("location-bazaar"));
-	////Make sure flags to allow entrance is set.
-	//if(flags[kFLAGS.BAZAAR_ENTERED] == 0) flags[kFLAGS.BAZAAR_ENTERED] = 1;
 	//output("You breeze past the crimson guard and enter the interior of the Bizarre Bazaar.  The ground is hard-packed, trampled as if walked over by hundreds of hooves, paws, and feet.  A massive bonfire rages in the center of the clearing, crackling and popping as it consumes its fuel gluttonously.  Surrounding the blazing behemoth are tiny, wheeled food-carts with vendors hawking everything from sausage to something called a 'marshmallow'.  Huge wagons ring the clearing, many set up to display exotic wares or services.  You can see everything from dancing centaurs to demons browsing the wares, but it seems an uneasy truce of sorts reigns here.  Then again, maybe the demons have just not had the chance to openly attack this place yet.", false);
 	//output("\n\nOne of the wagons proudly proclaims itself to be \"Greta's Garments,\" though both 'G's are emphasized with cute, stylized devil horns, and the 'S' is shaped in the form of a spaded, demonic tail.  Obviously it must some kind of clothing shop.");
 	//roxanne.RoxanneAppearance();
