@@ -50,6 +50,7 @@ include "areas/mountain/GoblinSalon.as";
 include "areas/plains/plains.as";
 include "areas/plains/SatyrScene.as";
 include "areas/plains/GnollScene.as";
+include "areas/plains/GnollSpearThrowerScene.as";
 include "areas/boat/boat.as";
 include "areas/boat/MaraeScene.as";
 include "areas/boat/SharkGirlScene.as";

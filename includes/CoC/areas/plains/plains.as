@@ -81,8 +81,8 @@ public function explorePlains():void {
 	choice.push(gnollEncounter);
 	chance.push(2);
 	
-	//choice.push(gnoll2Encounter);
-	//chance.push(2);
+	choice.push(gnoll2Encounter);
+	chance.push(2);
 
 	//if (flags["COC.ISABELLA_PLAINS_DISABLED"] == 0) {
 		//choices[choices.length] = kGAMECLASS.isabellaScene.isabellaGreeting;

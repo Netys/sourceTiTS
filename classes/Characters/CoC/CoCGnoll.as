@@ -146,7 +146,7 @@ package classes.Characters.CoC
 			this.vaginas[0].type = GLOBAL.TYPE_HUMAN;			
 			this.vaginas[0].loosenessRaw = 3;
 			this.vaginas[0].wetnessRaw = 4;
-			this.clitLength = 12;
+			this.clitLength = 15;
 			
 			this.breastRows = [];
 			this.createBreastRow();

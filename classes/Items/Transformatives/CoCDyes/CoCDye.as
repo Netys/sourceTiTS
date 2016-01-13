@@ -78,6 +78,8 @@ package classes.Items.Transformatives.CoCDyes
 				kGAMECLASS.output("\n\nYou have no fur.");
 				kGAMECLASS.addDisabledButton(1, "Fur", "Fur", "You have no fur!");
 			}
+			
+			addButton(14, "Back", kGAMECLASS.inventory);
 			return true;
 		}
 		
