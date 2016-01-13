@@ -204,10 +204,10 @@ package classes.Characters.CoC
 				kGAMECLASS.userInterface.buttonTray.buttons[0].tooltipBody = "Your enemy is out of reach!";
 			}
 			
-			if (kGAMECLASS.pc.rangedWeapon.baseDamage.hasFlag(DamageFlag.BULLET) || kGAMECLASS.pc.rangedWeapon.baseDamage.hasFlag(DamageFlag.ENERGY_WEAPON))
+			if (kGAMECLASS.pc.rangedWeapon.baseDamage.hasFlag(DamageFlag.BULLET) || kGAMECLASS.pc.rangedWeapon.baseDamage.hasFlag(DamageFlag.LASER))
 				addButton(1, "Snipe", harpyUberSnipe, null, "Snipe", "She made a huge mistake allowing you to take good aim - your weapon is not affected by range as much!");
 			
-			addButton(8, "Wait", harpyUberWait, null, "Wait", "Attack sand trap with a melee strike. Damage is based on physique. <b>You can use your elevation to add some more weight to you attack, but it is all-or-nothing move.</b>");
+			addButton(8, "Wait", harpyUberWait, null, "Wait", "Take defensive stance and wait.");
 		}
 		
 		protected function harpyUberWait():void

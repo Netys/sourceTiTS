@@ -187,7 +187,7 @@ package classes.Characters.CoC
 			var target:Creature = selectTarget(hostileCreatures);
 			if (target == null) return;
 			
-			if (hasStatusEffect("Uber Charge") && CombatManager.getRoundCount() > statusEffectv1("Uber Charge") + 1 || isImmobilized() || hasStatusEffect("Blind")) {
+			if (hasStatusEffect("Uber Charge") && CombatManager.getRoundCount() > statusEffectv1("Uber Charge") + 1 || isImmobilized() || hasStatusEffect("Blinded")) {
 				output("The imps in the back were unable to finish their spell!\n");
 				removeStatusEffect("Uber Charge");
 			}
@@ -248,7 +248,7 @@ package classes.Characters.CoC
 				//Clear damage from last loop
 				damage = 0;
 				//Blind dodge change
-				if(hasStatusEffect("Blind") && rand(3) < 2) {
+				if(hasStatusEffect("Blinded") && rand(3) < 2) {
 					output("Their misguided spooge flies everywhere.  A few bursts of it don't even land anywhere close to you!\n");
 				}
 				//Determine if dodged!
@@ -282,7 +282,7 @@ package classes.Characters.CoC
 
 		public function ZetazCaveImpHordeImtacularMultiHitzilla(target:Creature):void {
 			//Multiattack:
-			if(!hasStatusEffect("Blind")) output("The imps come at you in a wave, tearing at you with claws!\n");
+			if(!hasStatusEffect("Blinded")) output("The imps come at you in a wave, tearing at you with claws!\n");
 			//(ALT BLINDED TEXT)
 			else output("In spite of their blindness, most of them manage to find you, aided by the clutching claws of their brothers.\n");
 			//(2-6 hits for 10 damage each)
@@ -294,7 +294,7 @@ package classes.Characters.CoC
 				//Clear damage from last loop
 				damage = 0;
 				//Blind dodge change
-				if(hasStatusEffect("Blind") && rand(3) < 2) {
+				if(hasStatusEffect("Blinded") && rand(3) < 2) {
 					output("The imp completely misses you with a blind attack!\n");
 				}
 				//Determine if dodged!

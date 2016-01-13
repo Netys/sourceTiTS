@@ -188,7 +188,7 @@ package classes.Characters.CoC
 				}
 			}
 			
-			if (this.hasStatusEffect("Gigafire") && CombatManager.getRoundCount() > this.statusEffectv3("Gigafire") + 1 || this.isImmobilized() || this.hasStatusEffect("Blind")) {
+			if (this.hasStatusEffect("Gigafire") && CombatManager.getRoundCount() > this.statusEffectv3("Gigafire") + 1 || this.isImmobilized() || this.hasStatusEffect("Blinded")) {
 				output("Her powerful spell was interrupted!\n");
 				this.removeStatusEffect("Gigafire");
 				this.isLustImmune = false;
@@ -200,7 +200,7 @@ package classes.Characters.CoC
 				{
 					if(rand(4) == 0) {
 						output("You eyes are full of sand and you barely can see!");
-						target.createStatusEffect("Blind", 2, 0, 0, 0, false, "Blind", "You're blinded by sand and cannot see! Accuracy is reduced, and ranged attacks are far more likely to miss.", true, 0);
+						target.createStatusEffect("Blinded", 2, 0, 0, 0, false, "Blind", "You're blinded by sand and cannot see! Accuracy is reduced, and ranged attacks are far more likely to miss.", true, 0);
 						output("\n");
 					}
 					output("Raging sandstorm is fleecing you!  ");

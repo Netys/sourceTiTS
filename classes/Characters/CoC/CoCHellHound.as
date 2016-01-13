@@ -185,7 +185,7 @@ package classes.Characters.CoC
 
 		public function hellhoundFire(target:Creature):void {
 			//Blind dodge change
-			if(hasStatusEffect("Blind")) {
+			if(hasStatusEffect("Blinded")) {
 				output(capitalA + short + " completely misses you with a wave of dark fire! Thank the gods it's blind!");
 			}
 			else if(rangedCombatMiss(this, target)) {

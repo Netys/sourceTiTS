@@ -192,7 +192,7 @@ package classes.Characters.CoC
 		private function hyenaPhysicalAttack(target:Creature):void {
 			var damage:Number = 0;
 			//Blind dodge change
-			if(hasStatusEffect("Blind") && rand(3) < 2) {
+			if(hasStatusEffect("Blinded") && rand(3) < 2) {
 				output(capitalA + short + " completely misses you with a blind attack!\n");
 				return;
 			}
@@ -234,7 +234,7 @@ package classes.Characters.CoC
 			var slow:int = 0;
 			//<Hyena Attack 2 – Javelin – Unsuccessful – Dodged>
 			//Blind dodge change
-			if(hasStatusEffect("Blind") && rand(3) < 2) {
+			if(hasStatusEffect("Blinded") && rand(3) < 2) {
 				output("The gnoll pulls a javelin from behind her and throws it at you, but blind as she is, it goes wide.");
 			}
 			//Determine if dodged!
@@ -273,7 +273,7 @@ package classes.Characters.CoC
 		//<Writer's Note: With the third attack, I intend that the damage be increased based on the breast size of the pc.  Thus, the text will vary if the player is flat-chested as indicated by colored text.>
 		private function hyenaSnapKicku(target:Creature):void {
 			//Blind dodge change
-			if(hasStatusEffect("Blind") && rand(3) < 2) {
+			if(hasStatusEffect("Blinded") && rand(3) < 2) {
 				output("The gnoll tries to catch you with a brutal snap-kick, but blind as she is, she completely misses.  ");
 			}
 			//Determine if dodged!

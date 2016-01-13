@@ -247,7 +247,10 @@ package classes.Items.Transformatives
 					output("Your bushy tails begin to glow with an eerie, ghostly light, and with a crackle of electrical energy, split into nine tails.  <b>You are now a nine-tails!  But something is wrong...  The cosmic power radiating from your body feels...  tainted somehow.  The corruption pouring off your body feels...  good.</b>");
 					output("\n\nYou have the inexplicable urge to set fire to the world, just to watch it burn.  With your newfound power, it's a goal that is well within reach.");
 					output("\n\n(Perk Gained: Corrupted Nine-tails - Grants two magical special attacks.)");
+					
 					pc.createPerk("Corrupted Nine-tails", 0, 0, 0, 0, "The mystical energy of the nine-tails surges through you, filling you with phenomenal cosmic power!  Your boundless magic allows you to recover quickly, but your method of attaining it has corrupted the transformation, preventing you from achieving true enlightenment.");
+					
+					kGAMECLASS.validatePlayerKitsuneElderColor();
 				}
 				else { // regrow lost
 					output("\n\nA tingling pressure builds on your backside, and your bushy tails begin to glow with an eerie, ghostly light.  With a crackle of electrical energy, one of your tails splits in two, giving you " + num2Text(pc.tailCount + 1) + "!  <b>You now have a cluster of " + num2Text(pc.tailCount + 1) + " fox-tails.</b>");

@@ -188,7 +188,7 @@ package classes.Characters.CoC
 		}
 		
 		public function DemonFactoryIncubusCockTripAttack(target:Creature):void {
-			if (hasStatusEffect("Blind")) { //Blind dodge change
+			if (hasStatusEffect("Blinded")) { //Blind dodge change
 				output(capitalA + short + " suddenly grows it's dick to obscene lengths and tries to trip you with it.  Thankfully he's so blind he wasn't aiming anywhere near you!");
 				return;
 			}
@@ -224,7 +224,7 @@ package classes.Characters.CoC
 		public function DemonFactoryIncubusSpoogeAttack(target:Creature):void {
 			lust( -10);
 			
-			if (hasStatusEffect("Blind")) { //Blind dodge change
+			if (hasStatusEffect("Blinded")) { //Blind dodge change
 				output(capitalA + short + " pumps and thrusts his hips lewdly before cumming with intense force in your direction!  Thankfully his aim was off due to the blindness currently affect him.");
 				return;
 			}

@@ -198,7 +198,7 @@ package classes.Characters.CoC
 		
 		private function helAttack(target:Creature):void {
 			//Blind dodge change
-			if (hasStatusEffect("Blind") && rand(3) < 1) {
+			if (hasStatusEffect("Blinded") && rand(3) < 1) {
 				output(capitalA + short + " completely misses you with a blind attack!\n");
 			}
 			//Determine if dodged!
@@ -230,7 +230,7 @@ package classes.Characters.CoC
 		//low dodge chance, lower damage
 		private function helAttack2(target:Creature):void {
 			//Blind dodge change
-			if (hasStatusEffect("Blind") && rand(3) < 1) {
+			if (hasStatusEffect("Blinded") && rand(3) < 1) {
 				output(capitalA + short + " completely misses you with a blind attack!\n");
 				return;
 			}

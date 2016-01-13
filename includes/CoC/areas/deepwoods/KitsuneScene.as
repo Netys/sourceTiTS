@@ -2476,16 +2476,6 @@ private function meditateLikeAKitsuneEhQuestionMark():void
 			pc.tailCount = 9;
 			pc.createPerk("Enlightened Nine-tails", 0, 0, 0, 0, "The mystical energy of the nine-tails surges through you, filling you with phenomenal cosmic power!  Your boundless magic allows you to recover quickly.");
 			
-			var eyeColors:/*String*/Array = ["luminous cerulean", "luminous azure", "luminous celeste"];
-			if (pc.eyeType != GLOBAL.TYPE_HUMAN && pc.eyeType != GLOBAL.TYPE_VULPINE) {
-				pc.eyeType = GLOBAL.TYPE_HUMAN;
-				pc.eyeColor = RandomInCollection(eyeColors);
-				output("\n\nYour eyes have changed! <b>They're now human-like with large [pc.eyeColor] irises</b>, unfathomable and serene, like clear sky.");
-			}
-			else if (!InCollection(pc.eyeColor, eyeColors)) {
-				pc.eyeColor = RandomInCollection(eyeColors);
-				output("\n\nYour eyes have changed color, <b>they're now [pc.eyeColor]</b>, unfathomable and serene, like clear sky.");
-			}
 			// Nine tail kitsunes have their fur/hair color golden, silver or pure white
 			validatePlayerKitsuneElderColor();
 		}
@@ -2555,11 +2545,25 @@ private function putKitsuneStatueBack():void
 
 public var basicKitsuneHair:Array = ["white", "black", "black", "black", "red", "red", "red"];
 public var basicKitsuneFur:Array = ["orange and white", "black", "black and white", "red", "red and white", "white"];
+
 public var elderKitsuneColors:Array = ["shimmering golden", "shimmering silver", "pure white", "iridescent gray"];
+public var elderKitsuneEyeColors:Array = ["luminous cerulean", "luminous azure", "luminous celeste"];
+
 public var corruptKitsuneColors:Array = ["pitch black", "ashen gray", "sable"];
+public var corruptKitsuneEyeColors:Array = ["sable"];
 
 public function validatePlayerKitsuneElderColor():void {
-	if(pc.hasPerk("Enlightened Nine-tails")) {
+	if (pc.hasPerk("Enlightened Nine-tails")) {
+		if (pc.eyeType != GLOBAL.TYPE_HUMAN && pc.eyeType != GLOBAL.TYPE_VULPINE) {
+			pc.eyeType = GLOBAL.TYPE_HUMAN;
+			pc.eyeColor = RandomInCollection(elderKitsuneEyeColors);
+			output("\n\nYour eyes have changed! <b>They're now human-like with large [pc.eyeColor] irises</b>, unfathomable and serene, like clear summer sky.");
+		}
+		else if (!InCollection(pc.eyeColor, elderKitsuneEyeColors)) {
+			pc.eyeColor = RandomInCollection(elderKitsuneEyeColors);
+			output("\n\nYour eyes have changed color, <b>they're now [pc.eyeColor]</b>, unfathomable and serene, like clear summer sky.");
+		}
+			
 		if (!InCollection(pc.hairColor, elderKitsuneColors)) // wrong hair color
 			if (pc.skinType == GLOBAL.SKIN_TYPE_FUR && InCollection(pc.furColor, elderKitsuneColors)) { // right fur color
 				pc.hairColor = pc.furColor;
@@ -2584,6 +2588,16 @@ public function validatePlayerKitsuneElderColor():void {
 	}
 	else 
 	if (pc.hasPerk("Corrupted Nine-tails")) { // imma lazy, yep
+		if (pc.eyeType != GLOBAL.TYPE_HUMAN && pc.eyeType != GLOBAL.TYPE_VULPINE) {
+			pc.eyeType = GLOBAL.TYPE_HUMAN;
+			pc.eyeColor = RandomInCollection(corruptKitsuneEyeColors);
+			output("\n\nYour eyes have changed! <b>They're now human-like with large [pc.eyeColor] irises</b>, cold and dull, like cloudy winter sky.");
+		}
+		else if (!InCollection(pc.eyeColor, corruptKitsuneEyeColors)) {
+			pc.eyeColor = RandomInCollection(corruptKitsuneEyeColors);
+			output("\n\nYour eyes have changed color, <b>they're now [pc.eyeColor]</b>, cold and dull, like cloudy winter sky.");
+		}
+		
 		if (!InCollection(pc.hairColor, corruptKitsuneColors)) // wrong hair color
 			if (pc.skinType == GLOBAL.SKIN_TYPE_FUR && InCollection(pc.furColor, corruptKitsuneColors)) { // right fur color
 				pc.hairColor = pc.furColor;

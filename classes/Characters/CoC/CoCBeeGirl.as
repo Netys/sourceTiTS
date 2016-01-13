@@ -201,7 +201,7 @@ package classes.Characters.CoC
 
 		private function beeStingAttack(target:Creature):void {
 			//Blind dodge change
-			if (hasStatusEffect("Blind")) {
+			if (hasStatusEffect("Blinded")) {
 				output(capitalA + short + " completely misses you with a blind sting!!");
 				return;
 			}

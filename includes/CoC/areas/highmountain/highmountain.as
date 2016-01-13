@@ -73,8 +73,8 @@ public function exploreHighMountain():void {
 	}
 	
 	// Basilisk!
-	//choice.push(basiliskGreeting);
-	//chance.push(1);
+	choice.push(basiliskGreeting);
+	chance.push(1);
 	
 	// Generic harpy
 	choice.push(harpyFight);

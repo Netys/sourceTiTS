@@ -206,7 +206,7 @@ package classes.Characters.CoC
 				output("The demoness grips her sizable breasts and squeezes, spraying milk at you.\n");
 			else output("Your foe curls up to pinch her nipples, tugging hard and squirting milk towards you.\n");
 			
-			if (hasStatusEffect("Blind")) { //Blind dodge change
+			if (hasStatusEffect("Blinded")) { //Blind dodge change
 				output("Thankfully her aim was off due to the blindness currently affect her.");
 				return;
 			}

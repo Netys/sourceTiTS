@@ -219,7 +219,7 @@ package classes.Characters.CoC
 			//Chances to miss:
 			var damage:Number = 0;
 			//Blind dodge change
-			if (hasStatusEffect("Blind"))
+			if (hasStatusEffect("Blinded"))
 				output("Akbal seems to have no problem guiding his attacks towards you, despite his blindness.\n");
 				
 			//Determine if dodged!
