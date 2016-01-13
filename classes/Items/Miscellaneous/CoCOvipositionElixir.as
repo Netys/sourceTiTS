@@ -112,6 +112,8 @@ package classes.Items.Miscellaneous
 				output("\n\nThe elixir has an immediate effect on your belly, causing it to swell out slightly as if pregnant.  You guess you'll be laying eggs sometime soon!");
 				PregnancyManager.findHandler("CoCOviElixEggs").tryKnockUp(pc, pc, 0);
 				pc.createStatusEffect("MagicColorfulEggs", rand(6), 0, 0, 0);
+				
+				if (kGAMECLASS.pc.hasPerk("Harpy Womb") && kGAMECLASS.pc.legType == GLOBAL.TYPE_AVIAN && kGAMECLASS.pc.hasTail(GLOBAL.TYPE_AVIAN)) pc.setStatusValue("MagicColorfulEggs", 2, 1);
 			}
 			return false;
 		}

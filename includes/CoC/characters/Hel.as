@@ -1112,7 +1112,7 @@ private function helChatMenu():void {
 		if (flags["COC.HEL_TALKED_ABOUT_BERSERKING"] != 1) addButton(1, "Berserking?", berserkMode);
 		if (flags["COC.HEL_TALKED_ABOUT_ATTACKING_YOU"] != 1) addButton(2, "Y Attack Me", askHelAboutAttackingYou);
 		addButton(3, "Seconds", askMommaHelForSecondsAfterDinner);
-		addButton(4, "MinosRBad", telHelToGetOffTheMInoCock);
+		//addButton(4, "MinosRBad", telHelToGetOffTheMInoCock);
 		addButton(14, "Leave", leaveHelAfterMinoThreeSomeChat);
 	}
 }

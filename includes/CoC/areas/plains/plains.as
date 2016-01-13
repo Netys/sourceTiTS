@@ -7,7 +7,6 @@ import classes.Engine.Utility.*;
 
 // TODO:
 // Sheila encounter
-// Hel encounter
 // Isabella encounter
 // Isabella/Hel interactions
 // Owca

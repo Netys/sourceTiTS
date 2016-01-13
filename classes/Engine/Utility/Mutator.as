@@ -115,19 +115,17 @@ package classes.Engine.Utility
 					buffer += " Your " + target.hairDescript(true, true) + " is changing!";
 					
 					// what is lost
-					if (target.hairType == GLOBAL.HAIR_TYPE_REGULAR) buffer += " You are shedding your fur.";
-					if (target.hairType == GLOBAL.HAIR_TYPE_FEATHERS) buffer += " You are shedding your scales.";
-					if (target.hairType == GLOBAL.HAIR_TYPE_TRANSPARENT) buffer += " Your membrane is solidifying.";
-					if (target.hairType == GLOBAL.SKIN_TYPE_CHITIN) buffer += " You are shedding your chitin.";
-					if (target.hairType == GLOBAL.SKIN_TYPE_GOO) buffer += " You are shedding your feathers.";
-					if (target.hairType == GLOBAL.HAIR_TYPE_TENTACLES) buffer += " You skin is not just skin anymore.";
+					if (target.hairType == GLOBAL.HAIR_TYPE_REGULAR) buffer += " Your hair is different now.";
+					if (target.hairType == GLOBAL.HAIR_TYPE_FEATHERS) buffer += " You hair is not feathery now.";
+					if (target.hairType == GLOBAL.HAIR_TYPE_TRANSPARENT) buffer += " You hair is not transpatent now.";
+					if (target.hairType == GLOBAL.HAIR_TYPE_GOO) buffer += " Your hair is solidifying.";
+					if (target.hairType == GLOBAL.HAIR_TYPE_TENTACLES) buffer += " You don't have tentacles for hair anymore.";
 					//what is not changed or gained
-					if (newType == GLOBAL.HAIR_TYPE_REGULAR) buffer += " You now have bare skin.";
-					if (newType == GLOBAL.HAIR_TYPE_FEATHERS) buffer += " You are growing fur.";
-					if (newType == GLOBAL.SKIN_TYPE_SCALES) buffer += " You are growing scales.";
-					if (newType == GLOBAL.SKIN_TYPE_GOO) buffer += " Your skin is liquifying to goo.";
-					if (newType == GLOBAL.SKIN_TYPE_CHITIN) buffer += " You are growing chitin.";
-					if (newType == GLOBAL.HAIR_TYPE_TENTACLES) buffer += " You are growing feathers.";
+					if (newType == GLOBAL.HAIR_TYPE_REGULAR) buffer += " You now have human-like hair.";
+					if (newType == GLOBAL.HAIR_TYPE_FEATHERS) buffer += " You have feathers on your head now.";
+					if (newType == GLOBAL.HAIR_TYPE_TRANSPARENT) buffer += " You hair is transparent now.";
+					if (newType == GLOBAL.HAIR_TYPE_GOO) buffer += " Your hair is liquifying to goo.";
+					if (newType == GLOBAL.HAIR_TYPE_TENTACLES) buffer += " You are having tentacles for hair now.";
 				} else buffer += " Is something changing?";
 				
 				if (newColors.length > 0 && !InCollection(target.hairColor, newColors)) {
@@ -1327,6 +1325,108 @@ package classes.Engine.Utility
 				} else buffer += "\n\n" + target[key + "LockedMessage"]();
 			}
 			
+			
+			if (display) output(buffer);
+			return changes > 0;
+		}
+		
+		/**
+		 * Change target hair type. Changing type is atomic with flags. Changing color is not atomic.
+		 * @param	target
+		 * @param	newType type from Global or -1 to keep current.
+		 * @param	display
+		 * @return is something changed
+		 */
+		public static function changeWings(target:Creature, newType:int, display:Boolean = true):Boolean {
+			buffer = "";
+			var changes:Number = 0;
+						
+			if (newType == -1) newType = target.wingType;
+			
+			// basic case - change type
+			if(target.wingType != newType)
+			{
+				if (!target.wingTypeUnlocked(newType)) {
+					buffer += "\n\n" + target.wingTypeLockedMessage();
+					if (display) output(buffer);
+					return changes > 0;
+				}
+				
+				if (newType == 0) buffer += " <b>Your " +  target.wingsDescript() + " are gone!</b>";
+				
+				target.wingType = newType;
+				
+				if (target.wingType != 0) buffer += " <b>You now have " + target.wingsDescript() + "!</b>";
+				
+				
+				changes++;
+				if (display) output(buffer);
+				return changes > 0;
+			}
+			
+			if (display) output(buffer);
+			return changes > 0;
+		}
+		
+		/**
+		 * Wrapper for Creature.modFem with some auto-ajust. Supports common Mutator buffer for suppressed output.
+		 * 
+		 * @param	pc target creature
+		 * @param	towards target feminity
+		 * @param	power desired amount to change, should be positive
+		 * @param	display show results of Creature.modFem in output
+		 * @return if something actually changed
+		 */
+		public static function modFem(pc:Creature, towards:Number, power:Number = 1, display:Boolean = true):Boolean {
+			buffer = "";
+			var changes:Number = 0;
+			
+			var current:Number = pc.femininity;
+			towards = Math.min(towards, pc.femininityMax());
+			towards = Math.max(towards, pc.femininityMin());
+			
+			if (current == towards) return changes > 0;
+			power = Math.abs(power); // failsafe
+			power = Math.min(power, Math.abs(current - towards));
+			if (current > towards) power *= -1;
+			if (!pc.femininityUnlocked(current + power)) {
+				buffer += "\n\n" + pc.femininityLockedMessage();
+			} else {
+				buffer += pc.modFem(power);
+				if(pc.femininity != current) changes++;
+			}
+			
+			if (display) output(buffer);
+			return changes > 0;
+		}
+		
+		/**
+		 * Wrapper for Creature.modThickness with some auto-ajust. Supports common Mutator buffer for suppressed output.
+		 * 
+		 * @param	pc target creature
+		 * @param	towards target thickness
+		 * @param	power desired amount to change, should be positive
+		 * @param	display show results of Creature.modThickness in output
+		 * @return if something actually changed
+		 */
+		public static function modThickness(pc:Creature, towards:Number, power:Number = 1, display:Boolean = true):Boolean {
+			buffer = "";
+			var changes:Number = 0;
+			
+			var current:Number = pc.thickness;
+			towards = Math.min(towards, pc.thicknessMax());
+			towards = Math.max(towards, pc.thicknessMin());
+			
+			if (current == towards) return changes > 0;
+			power = Math.abs(power); // failsafe
+			power = Math.min(power, Math.abs(current - towards));
+			if (current > towards) power *= -1;
+			if (!pc.thicknessUnlocked(current + power)) {
+				buffer += "\n\n" + pc.thicknessLockedMessage();
+			} else {
+				buffer += pc.modThickness(power);
+				if(pc.thickness != current) changes++;
+			}
 			
 			if (display) output(buffer);
 			return changes > 0;

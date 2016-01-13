@@ -7670,6 +7670,12 @@ package classes {
 					cocks[slot].knotMultiplier = 1;
 					cocks[slot].addFlag(GLOBAL.FLAG_PREHENSILE);
 					break;
+				case GLOBAL.TYPE_AVIAN:
+					cocks[slot].cockColor = RandomInCollection(["red", "red", "bright red"]);
+					cocks[slot].knotMultiplier = 1;
+					cocks[slot].addFlag(GLOBAL.FLAG_TAPERED);
+					cocks[slot].addFlag(GLOBAL.FLAG_SHEATHED);
+					break;
 				case GLOBAL.TYPE_GABILANI:
 					cocks[slot].knotMultiplier = 1;
 					cocks[slot].cockColor = RandomInCollection(["pink", "pink", "olive", "purple"]);
@@ -7964,6 +7970,7 @@ package classes {
 			if (lizardScore() >= 4) race = "lizan";
 			if (kangaScore() >= 4) race = "kangaroo-morph";
 			if (bunnyScore() >= 4) race = "bunny-" + mf("boy", "girl");
+			if (harpyScore() >= 4) race = mf("avian", "harpy");
 			if (ovirScore() >= 3 && race == "human") race = "half-ovir";
 			if (ausarScore() >= 2 && race == "human") race = "half-ausar"; // Fucking Ausar forever overriding other shit. EXTERMINATUS.
 			if (kaithritScore() >= 3 && race == "human") race = "half-kaithrit";
@@ -8270,6 +8277,26 @@ package classes {
 			if (bunnyCounter > 0 && !hasWings())
 				bunnyCounter++;
 			return bunnyCounter;
+		}
+		//Harpyscore
+		public function harpyScore():Number
+		{
+			var harpy:Number = 0;
+			if (armType == GLOBAL.TYPE_AVIAN)
+				harpy++;
+			if (hairType == GLOBAL.HAIR_TYPE_FEATHERS)
+				harpy++;
+			if (wingType == GLOBAL.TYPE_AVIAN)
+				harpy++;
+			if (hasTail(GLOBAL.TYPE_AVIAN))
+				harpy++;
+			if (legType == GLOBAL.TYPE_AVIAN)
+				harpy++;
+			if (harpy >= 2 && faceType == GLOBAL.TYPE_HUMAN)
+				harpy++;
+			if (harpy >= 2 && (earType == GLOBAL.TYPE_HUMAN || earType == GLOBAL.TYPE_SYLVAN))
+				harpy++;
+			return harpy;
 		}
 		public function humanScore(): int {
 			var counter: int = 0;
@@ -10846,6 +10873,9 @@ package classes {
 			} else if (type == GLOBAL.TYPE_SYDIAN) {
 				adjectives.push("sydian", "insectile", "inhuman", "bristly", "brush-like");
 				nouns.push("bug-cock", "bug-shaft", "bug-dick");
+			} else if (type == GLOBAL.TYPE_AVIAN) {
+				adjectives.push("avian", "bird-like");
+				nouns.push("bird-cock", "bird-shaft", "bird-dick");
 			} else if (type == GLOBAL.TYPE_GABILANI) {
 				adjectives.push("alien", "bulbous", "double-crowned", "gabilani", "goblin", "inhuman", "exotic", "two-headed");
 				nouns.push("goblin-dick", "goblin-cock", "goblin-prick", "gabilani-dick", "gabilani-cock", "gabilani-prick");

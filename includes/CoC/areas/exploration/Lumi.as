@@ -73,10 +73,10 @@ public function lumiEnhance():void {
 	//spriteSelect(37);
 	clearOutput();
 	clearMenu();
-	output("\"<i>Do you have 100 gems for de enhancement?</i>\" asks Lumi.\n\n", false); 
+	output("\"<i>Do you have 100 gems for de enhancement?</i>\" asks Lumi.\n\n"); 
 	//If (player has less than 100 gems)
 	if(pc.credits < 1000) {
-		output("You shake your head no, and Lumi gives you a disappointed look and says, \"<i>Den Lumi can do no enhancement for you. Anyfing else?</i>\"\n\n", false);
+		output("You shake your head no, and Lumi gives you a disappointed look and says, \"<i>Den Lumi can do no enhancement for you. Anyfing else?</i>\"\n\n");
 		//Return to main Lumi menu
 		addButton(0, "Next", lumiLabChoices);
 		return;
@@ -95,6 +95,7 @@ public function lumiEnhance():void {
 	
 	add(new CoCFoxBerry(), new CoCVixenVigor());
 	add(new CoCFoxJewel(), new CoCMysticJewel());
+	add(new CoCGoldenSeed(), new CoCMagicSeed());
 	add(new CoCKangaFruit(), new CoCKangaFruitEnchanced());
 }
 	//var laBova:Function =null;
@@ -106,12 +107,6 @@ public function lumiEnhance():void {
 	//var oviElix:Function =null;
 	////if(pc.hasItem(consumables.OVIELIX))
 	////	oviElix = lumiEnhanceOviElix;
-	//var seed:Function =null;
-	//if(pc.hasItem(consumables.GLDSEED))
-		//seed = lumiEnhanceGoldenSeed;
-	//var kanga:Function =null;
-	//if(pc.hasItem(consumables.KANGAFT))
-		//kanga = lumiEnhanceKanga;
 	//var kitsune:Function =null;
 	//var pigTruffle:Function = null;
 	//if(pc.hasItem(consumables.PIGTRUF))

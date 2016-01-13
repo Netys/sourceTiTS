@@ -140,6 +140,7 @@ package classes.GameData.Pregnancy.Handlers
 		public static function getEgg():ItemSlotClass {
 			var color:int = kGAMECLASS.pc.statusEffectv1("MagicColorfulEggs");
 			var large:Boolean = kGAMECLASS.pc.statusEffectv2("MagicColorfulEggs") == 1;
+			if (kGAMECLASS.pc.hasPerk("Harpy Womb") && kGAMECLASS.pc.legType == GLOBAL.TYPE_AVIAN && kGAMECLASS.pc.hasTail(GLOBAL.TYPE_AVIAN)) large = true;
 			var egg:ItemSlotClass;
 			switch(color)
 			{

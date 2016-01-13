@@ -18,7 +18,7 @@
 		private var _backgroundElem:Sprite;
 		private var _buttons:Vector.<MainButton>;
 		
-		public function get buttons():Array
+		public function get buttons():/*MainButton*/Array
 		{
 			var btnArray:Array = new Array();
 			for (var i:int = 0; i < _buttons.length; i++)

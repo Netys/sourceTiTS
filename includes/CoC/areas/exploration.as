@@ -43,8 +43,7 @@ public function doExplore():void
 		addButton(7, "Deepwoods", exploreDeepwoods, null, "Explore deepwoods", "Visit the dark, bioluminescent deepwoods. \n\nRecommended level: 5\n\nTimes explored: " + flags["COC.EXPLORED_DEEPWOODS"]);
 		
 	if (flags["COC.EXPLORED_HIGH_MOUNTAIN"] != undefined) 
-		addDisabledButton(8, "High Mountain", "High Mountain", "NOT IMPLEMENTED.");
-		//addButton(8, "High Mountain", exploreHighMountain, null, "Explore high mountains", "Visit the high mountains. \n\nRecommended level: 10\n\nTimes explored: " + flags["COC.EXPLORED_HIGH_MOUNTAIN"]);
+		addButton(8, "High Mountain", exploreHighMountain, null, "Explore high mountains", "Visit the high mountains. \n\nRecommended level: 10\n\nTimes explored: " + flags["COC.EXPLORED_HIGH_MOUNTAIN"]);
 
 	//if (flags[kFLAGS.BOG_EXPLORED] > 0) addButton(9, "Bog", kGAMECLASS.bog.exploreBog, null, null, null, "Visit the dark bog. \n\nRecommended level: 14" + (debug ? "\n\nTimes explored: " + flags[kFLAGS.BOG_EXPLORED] : ""));
 	//if (flags[kFLAGS.DISCOVERED_GLACIAL_RIFT] > 0) addButton(10, "Glacial Rift", kGAMECLASS.glacialRift.exploreGlacialRift, null, null, null, "Visit the chilly glacial rift. \n\nRecommended level: 16" + (debug ? "\n\nTimes explored: " + flags[kFLAGS.DISCOVERED_GLACIAL_RIFT] : ""));
@@ -55,7 +54,6 @@ public function doExplore():void
 
 // placeholders
 public function exploreSwamp() { };
-public function exploreHighMountain() { };
 
 //Try to find a new location - called from doExplore once the first location is found
 public function tryDiscover():void
