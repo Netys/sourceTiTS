@@ -70,6 +70,7 @@ include "places/desertCave/DesertCave.as";
 include "characters/AnemoneScene.as";
 include "characters/JojoScene.as";
 include "characters/Rathazul.as";
+include "characters/Hel.as";
 
 public function initCoCJunk():void {
 	if (flags["COC.CORRUPTION"] == undefined) flags["COC.CORRUPTION"] = int(pc.personality / 2.1) + 10;

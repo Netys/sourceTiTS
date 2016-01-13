@@ -7,7 +7,6 @@ import classes.Engine.Utility.*;
 
 // TODO:
 // Sheila encounter
-// Kaanga fruit
 // Hel encounter
 // Isabella encounter
 // Isabella/Hel interactions
@@ -89,8 +88,8 @@ public function explorePlains():void {
 		//choices[choices.length] = kGAMECLASS.isabellaScene.isabellaGreeting;
 	//}
 	//if (!kGAMECLASS.helScene.followerHel() && (flags["COC.HEL_REDUCED_ENCOUNTER_RATE"] == 0 || rand(2) == 0)) {
-		//choices[choices.length] = kGAMECLASS.helScene.encounterAJerkInThePlains;
-		//choices[choices.length] = kGAMECLASS.helScene.encounterAJerkInThePlains;
+		choice.push(encounterAJerkInThePlains);
+		chance.push(1);
 	//}
 	
 	//if (flags["COC.SHEILA_DISABLED"] != 1 && flags["COC.SHEILA_CLOCK"] >= 0) { //Aparently Sheila was supposed to be disabled after certain events - now fixed

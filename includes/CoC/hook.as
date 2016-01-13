@@ -63,9 +63,9 @@ public function enterCocVrPod():void {
 }
 
 public function abortIAmNotBloodyChampion():void {
-	author("Etis");
 	move("VR_POD_ROOM");
 	updatePCStats();
+	author("Etis");
 	clearOutput();
 	
 	output("System shutdown...\n\n");
