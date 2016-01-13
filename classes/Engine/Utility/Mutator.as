@@ -1373,7 +1373,7 @@ package classes.Engine.Utility
 					output("<b>Your smallest penis disappears, shrinking into your body and leaving you with just one [pc.cock].</b>");
 				}
 				if (pc.cocks.length > 1) {
-					output("<b>Your smallest penis disappears forever, leaving you with just your [pc.eachCock].</b>");
+					output("<b>Your smallest penis disappears forever, leaving you with just [pc.eachCock].</b>");
 				}
 			}
 			if (removed > 1) {

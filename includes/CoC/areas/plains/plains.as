@@ -72,8 +72,8 @@ public function explorePlains():void {
 	choice.push(plainsLoot);
 	chance.push(1);
 	
-	//choice.push(bunnbunbunMeet);
-	//chance.push(1);
+	choice.push(bunnbunbunMeet);
+	chance.push(1);
 	
 	choice.push(satyrEncounter);
 	chance.push(1);

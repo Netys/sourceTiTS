@@ -497,7 +497,7 @@ public function fenPutsHisShittyFetishInYoSphinx(submit:Boolean = true):void {
 	output("\n\nSanura reluctantly changes direction and begins to pull the immense length out of you.  She actually yanks it back far enough that the top flops out of your gaped orifice, flopping lewdly against a [pc.leg] as she lines back up for a second push.  As the sphinx nudges her tree-trunk-like totem into you, you try to fathom the size of the thing.  It must be several feet long and at least four inches wide by the way it's distending your innards, maybe five inches across at the tip.  Moaning, you helplessly give yourself over to the unusual feelings her ephemeral erection installs in your plugged-up pucker.");
 	
 	output("\n\n\"<i>Yeah, I knew you'd like it,</i>\" Sanura drawls, \"<i>I had you pegged for some kind of butt-slut when I met you.</i>\"  She lurches her hips forward to bury herself the rest of the way inside.  \"<i>Now, I just have you pegged.</i>\"  She smirks and resumes a long, slow reaming of your bowels.");
-	if(pc.cockTotal() > 0) output("  Pre-cum oozes from your [pc.eachCock] in steady strings that dangle onto the dirt, painting a swirled pattern beneath you as your prostate is pushed hard enough to squeeze trickles of your salty 'milk' from you.");
+	if(pc.cockTotal() > 0) output("  Pre-cum oozes from [pc.eachCock] in steady strings that dangle onto the dirt, painting a swirled pattern beneath you as your prostate is pushed hard enough to squeeze trickles of your salty 'milk' from you.");
 	
 	output("\n\nMoving faster now, Sanura descends into sexual frenzy.  She ruts your butthole like a beast possessed, and given the phantasmal nature of her equine dick, you have to wonder if that isn't what happened.  The leonine beauty savagely pounds your [pc.asshole] with long, heavy strokes, leaving nothing but tingling excitement in her wake.");
 	if(pc.cockTotal() > 0) output("  Whenever her flare slides past your prostate, the wide, blunt head squeezes it hard enough to express a huge strand of pre.");
@@ -521,7 +521,7 @@ public function getSphinxPawjob(skipped:Boolean = false):void {
 	clearOutput();
 	//[skip riddles, just request from menu (requires some event occurrence > 1)]
 	if(skipped) {
-		output("\"<i>Really, [pc.name]?</i>\"  Sanura smirks and shakes her head.  \"<i>I probably shouldn't do this sort of thing just because you ask for it, but your fascination with my paws is too cute to ignore.  Go on, then, strip for me and I'll get to it.</i>\"  You oblige, happily tossing aside your armor.  Your [pc.eachCock], already standing erect with anticipation, bounces freely before you.  The sphinx eyes ");
+		output("\"<i>Really, [pc.name]?</i>\"  Sanura smirks and shakes her head.  \"<i>I probably shouldn't do this sort of thing just because you ask for it, but your fascination with my paws is too cute to ignore.  Go on, then, strip for me and I'll get to it.</i>\"  You oblige, happily tossing aside your armor.  [pc.EachCock], already standing erect with anticipation, bounces freely before you.  The sphinx eyes ");
 		if(pc.cockTotal() == 1) output("it");
 		else output("them");
 		output(" lustfully, momentarily entranced by the swaying motions of your member");

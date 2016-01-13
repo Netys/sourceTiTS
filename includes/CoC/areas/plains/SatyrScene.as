@@ -301,7 +301,7 @@ private function femaleTakesAdvantageOfSatyr():void {
 	if(pc.hasCock()) {
 		output(", even going as far as to deliver a tongue-stroke or two to ");
 		if(pc.balls > 0) output("your [pc.sack]");
-		else output("the base of your [pc.eachCock]");
+		else output("the base of [pc.eachCock]");
 	}
 	output("; despite your earlier hint about how disobedience might be dealt with, the satyr bucks and thrusts against your hands, hoping to achieve release by any means available.  You scowl and grab hold of his shaft, slimy with pre-cum already, and squeeze it tightly to warn him to stay still and focus on licking you, gripping his head with your thighs in an effort to hold him in place.");
 	

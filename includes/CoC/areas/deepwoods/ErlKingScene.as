@@ -2,6 +2,7 @@ import classes.GLOBAL;
 import classes.Items.Miscellaneous.CoCPrincessPucker;
 import classes.Items.Transformatives.CoCCaninePepper;
 import classes.Items.Transformatives.CoCFoxBerry;
+import classes.Items.Transformatives.CoCNeonPinkEgg;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -478,17 +479,14 @@ protected function whatsMyPrize():void
 
 	output("<b>You found " + gemFind + " gems.</b>\n\n");
 	pc.credits += gemFind * 10;
-	// TODO: neon pink egg, golden ring
+	// TODO: golden ring
 	
 	processTime(10 + rand(5));
-	var foundLootItems:Array = new Array();
-	if (rand(2)==0) foundLootItems.push(new CoCCaninePepper());
-	else foundLootItems.push(new CoCFoxBerry());
 	
 	itemScreen = mainGameMenu;
 	lootScreen = mainGameMenu;
 	useItemFunction = mainGameMenu;
-	itemCollect(foundLootItems);
+	itemCollect([RandomInCollection(new CoCFoxBerry(), new CoCCaninePepper(), new CoCNeonPinkEgg())]);
 }
 
 protected function stopTheMadness():void

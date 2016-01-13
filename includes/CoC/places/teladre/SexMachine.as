@@ -59,7 +59,7 @@ private function useTheSexMachine():void {
 			if(pc.cockTotal() > 1) output("primary ");
 			output("cock, tightening around your member while beginning to hum softly.\n\n");
 
-			output("It takes little time for your [pc.eachCock] to grow hard, your lust betraying you as another phallic shaped metallic length is presented in front of your face. A small shock is delivered to your [pc.asshole], causing you to gasp, and allowing the phallic length to slip deep into your mouth, giving you little choice but to suck on the device. The tube-like length on your [pc.cock] continues its assault, humming and stroking your firm cock, starting to suck softly to pleasure your mighty rod; so much that you nearly don't notice as a small tube slips into the tip of your penis, beginning to slowly devour your leaking pre-cum.\n\n");
+			output("It takes little time for [pc.eachCock] to grow hard, your lust betraying you as another phallic shaped metallic length is presented in front of your face. A small shock is delivered to your [pc.asshole], causing you to gasp, and allowing the phallic length to slip deep into your mouth, giving you little choice but to suck on the device. The tube-like length on your [pc.cock] continues its assault, humming and stroking your firm cock, starting to suck softly to pleasure your mighty rod; so much that you nearly don't notice as a small tube slips into the tip of your penis, beginning to slowly devour your leaking pre-cum.\n\n");
 
 			output("Shaking your head as the machine forcibly pleasures you, you quickly realize that with each drop of cum your cock has drained from it, the phallus against your anus gets a little more moist. It's using your own pre-cum to lube your asshole!\n\n");
 

@@ -7963,6 +7963,7 @@ package classes {
 			if (kitsuneScore() >= 5 && (race.indexOf("fox") == -1 || tailCount > 1)) race = "kitsune";
 			if (lizardScore() >= 4) race = "lizan";
 			if (kangaScore() >= 4) race = "kangaroo-morph";
+			if (bunnyScore() >= 4) race = "bunny-" + mf("boy", "girl");
 			if (ovirScore() >= 3 && race == "human") race = "half-ovir";
 			if (ausarScore() >= 2 && race == "human") race = "half-ausar"; // Fucking Ausar forever overriding other shit. EXTERMINATUS.
 			if (kaithritScore() >= 3 && race == "human") race = "half-kaithrit";
@@ -8244,6 +8245,31 @@ package classes {
 			if (kanga >= 2 && hasFur())
 				kanga++;
 			return kanga;
+		}
+		//Bunnyscore
+		public function bunnyScore():Number
+		{
+			var bunnyCounter:Number = 0;
+			if (faceType == GLOBAL.TYPE_LAPINE)
+				bunnyCounter++;
+			if (hasTail(GLOBAL.TYPE_LAPINE))
+				bunnyCounter++;
+			if (earType == GLOBAL.TYPE_LAPINE)
+				bunnyCounter++;
+			if (legType == GLOBAL.TYPE_LAPINE)
+				bunnyCounter++;
+			//More than 2 balls reduces bunny score
+			if (balls > 2 && bunnyCounter > 0)
+				bunnyCounter--;
+			//Human skin on bunmorph adds
+			if (skinType == GLOBAL.SKIN_TYPE_SKIN && bunnyCounter > 1)
+				bunnyCounter++;
+			//No wings and antennae a plus
+			if (bunnyCounter > 0 && !hasAntennae())
+				bunnyCounter++;
+			if (bunnyCounter > 0 && !hasWings())
+				bunnyCounter++;
+			return bunnyCounter;
 		}
 		public function humanScore(): int {
 			var counter: int = 0;

@@ -261,10 +261,10 @@ package classes.Characters.CoC
 				output("Her eyes glaze over and you feel your mind suddenly becoming filled with a blur of every sexual perversion you could possibly think of, and then some.");
 				if(target.vaginas.length > 0) {
 					output("  You feel your [pc.vagina] soaking itself in a sudden burst");
-					if(target.cockTotal() > 0)  output(", while a sudden influx of pre-cum blurts out and streams down your [pc.eachCock], painfully hardened by a vast amount of blood rushing to your groin");
+					if(target.cockTotal() > 0)  output(", while a sudden influx of pre-cum blurts out and streams down [pc.eachCock], painfully hardened by a vast amount of blood rushing to your groin");
 					output(".");
 				}
-				else if(target.cockTotal() > 0) output("  A sudden influx of pre-cum blurts out and streams down your [pc.eachCock], painfully hardened by a vast amount of blood rushing to your groin.");
+				else if(target.cockTotal() > 0) output("  A sudden influx of pre-cum blurts out and streams down [pc.eachCock], painfully hardened by a vast amount of blood rushing to your groin.");
 				else if (!target.hasGenitals()) output("  Your genderless body is suddenly filled by a perverted warmth.  ");
 				applyDamage(new TypeCollection( { psionic : (lust() / 3 * (1 + target.cor() / 300)) } ), this, target);
 				

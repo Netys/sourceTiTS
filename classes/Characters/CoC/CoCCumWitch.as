@@ -249,7 +249,7 @@ package classes.Characters.CoC
 		//*Attack: Cum Magic
 		public function cumMagicAttack(target:Creature):void {
 			//*Used on males only, casts spell that causes balls to temporarily swell and increase lust by a moderate amount.  Unavoidable.
-			output("Gesticulating with her free hand, the Cum Witch utters impossible to pronounce words before closing her fingers tightly into a fist.  That same instant, you feel an onset of warmth in your [pc.balls], a spreading heat that makes you tremble with growing lust.  A second later, your [pc.eachCock] is throbbing, and a runner of cum trickles from the [pc.cockHeads], a hint of your temporarily-enhanced virility.  ");
+			output("Gesticulating with her free hand, the Cum Witch utters impossible to pronounce words before closing her fingers tightly into a fist.  That same instant, you feel an onset of warmth in your [pc.balls], a spreading heat that makes you tremble with growing lust.  A second later, [pc.eachCock] is throbbing, and a runner of cum trickles from the [pc.cockHeads], a hint of your temporarily-enhanced virility.  ");
 			//(15-30 lust, based on libido)
 			applyDamage(new TypeCollection( { psionic : 5 + target.libido() / 12 } ), this, target);
 			target.minutesSinceCum += 60 * 100;

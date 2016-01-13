@@ -97,7 +97,7 @@ public function turnIntoASammitch(volunteered:Boolean = false):void {
 	output("\n\nThe cum witch gives your impertinent bottom a slap to steady it, bursting an exclamation of pain from your mouth at the sudden rough treatment.  'She's so rough,' you mentally whine, but another voice answers, 'But she'll be so good to you!'  Sighing contently, you listen to that second, louder thought and lie there, watching your lover slowly line herself with your entrance.  When her cock's oozing tip first brushes your folds, an electric bolt of raw pleasure runs through your body, drawing out a slippery spurt of lady-spunk just from that touch.  Gods above and below, it's so hot, just touching it seems to make your pussy wetter.  If you didn't know better, you'd swear your pussy was boiling over with lust and frothing with need.");
 	
 	output("\n\nTwo huge tits come to rest on your back, pinning you underneath their enormous weight, smooth, sweat-slicked skin sliding across your body like silk as the hard shaft spreads your vulva wide and slides through the curtain of oozing fem-cum. You moan happily at that welcome intrusion, a sensation of amazing fullness - no, rightness - filling you up in the most perfect and womanly way.");
-	if(pc.hasCock()) output("  Your [pc.eachCock] throbs beneath you, hard as rock and crushed between your belly and the slippery-smooth wood.  It seems unimportant compared to what's going on above it.");
+	if(pc.hasCock()) output("  [pc.EachCock] throbs beneath you, hard as rock and crushed between your belly and the slippery-smooth wood.  It seems unimportant compared to what's going on above it.");
 	pc.cuntChange(0, enemy.cockVolume(0), true, true, false);
 	//Virgin check here!
 	
@@ -288,7 +288,7 @@ public function repeatLoseToCumWitchForDudes():void {
 	}
 	//Lust:
 	else {
-		output("Dropping down on your [pc.legs], you rip off your [armor] and flop onto your back so that you can focus on abusing your genitalia.  Your [pc.eachCock] is already hard enough to be leaking pre");
+		output("Dropping down on your [pc.legs], you rip off your [armor] and flop onto your back so that you can focus on abusing your genitalia.  [pc.EachCock] is already hard enough to be leaking pre");
 		if(pc.balls > 0) output(", and your [pc.balls] are practically quaking with need");
 		output(".  The ebony futanari laughs at you as she confidently strides forward and discards her hat.  \"<i>Did you really have any intention of fighting me, or did you ask the Sand Mother to send us out so that we could abuse your insatiable libido?  I don't know how you didn't wind up captured, but I suppose I can tend to your needs... this time.</i>\"");
 		
@@ -802,7 +802,7 @@ public function savinMakesAwesomeFemdom():void {
 	
 	//If PC has a cock:
 	if(pc.hasCock()) {
-		output("\n\nYour [pc.eachCock] sits half-erect, lying against your belly.  With a grin, the cum witch opens her robes, letting them hang on her shoulders to reveal her own endowments.  Her cock, a huge, throbbing pole of meat flops down atop yours, ");
+		output("\n\n[pc.EachCock] sits half-erect, lying against your belly.  With a grin, the cum witch opens her robes, letting them hang on her shoulders to reveal her own endowments.  Her cock, a huge, throbbing pole of meat flops down atop yours, ");
 		if(pc.longestCockLength() < 10) output("overshadowing your comparatively tiny little rod");
 		else if(pc.longestCockLength() < 15) output("nearly equal to your own [pc.cock]");
 		else output("seeming tiny compared to your monstrous shaft");

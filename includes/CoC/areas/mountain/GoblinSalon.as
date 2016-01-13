@@ -619,7 +619,7 @@ private function minotaurCumBukkakeInSalon():void {
 
 	output("\n\nYou slide down the twitching bull-shaft until your [pc.ass] slaps the wall, and you draw slowly away, but you push back harder, turned into a lewd, wanting whore by the massive quantity of minotaur seed in your belly, on your skin, and fogging up the air.  The beast pulls out and you whine plaintively, feeling empty and useless until he plunges back inside and reminds you of your purpose.  He starts to fuck you hard, not caring for your pleasure at all, slamming his horse-cock deep and fast.  Each of his three rings of prepuce ");
 	if(!pc.hasCock()) output("drags through your body, touching sensitive nerves you didn't even know you had until you cum, shuddering and shaking like a wanton whore.");
-	else output("presses on your prostate as it squeezes by, making your [pc.eachCock] drip and spurt freely until you can bear it no longer and cum, shaking and shuddering like a wanton whore.  Jizz drips and pours from your [pc.eachCock] in a steady stream that pools on the floor, slowly rolling towards a drain that doubtless empties into a tank or greedy goblin cunt.");
+	else output("presses on your prostate as it squeezes by, making [pc.eachCock] drip and spurt freely until you can bear it no longer and cum, shaking and shuddering like a wanton whore.  Jizz drips and pours from [pc.eachCock] in a steady stream that pools on the floor, slowly rolling towards a drain that doubtless empties into a tank or greedy goblin cunt.");
 	output("\n\n");
 	
 	pc.loadInAss(new CoCMinotaur());
