@@ -85,8 +85,8 @@ public function exploreHighMountain():void {
 	//chance.push(1);
 	
 	// Izumi
-	//choice.push(izumiScenesEncounter);
-	//chance.push(1);
+	choice.push(izumiScenesEncounter);
+	chance.push(1);
 	
 	
 	WeightedRandom(choice, chance, true)();
@@ -103,9 +103,4 @@ public function exploreHighMountain():void {
 		//if (flags[kFLAGS.MET_SOPHIE_COUNTER] == 0) kGAMECLASS.sophieScene.meetSophie();
 		//else kGAMECLASS.sophieScene.meetSophieRepeat();
 	//}
-//}
-//if (chooser == 3) 
-//{
-	//this.izumiScenes.encounter();
-	//return;
 //}
