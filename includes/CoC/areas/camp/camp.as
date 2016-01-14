@@ -4,6 +4,7 @@ import classes.Items.Apparel.*;
 import classes.Items.Miscellaneous.*;
 import classes.Items.Transformatives.*;
 import classes.Items.Transformatives.CoCDyes.CoCDyeBlue;
+import classes.kGAMECLASS;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -21,8 +22,8 @@ public function returnToCampUseFourHours():void { returnToCamp(4); } //Replaceme
 public function returnToCampUseEightHours():void { returnToCamp(8); } //Replacement for event number 16;
 
 public function cocCampMenu():void {
+	kGAMECLASS.userInterface.setLocation("", "YOUR CAMP", "PLANET: MARETH");
 	initCoCJunk();
-	
 	output("Your campsite is fairly simple at the moment.  Your tent and bedroll are set in front of the rocks that lead to the portal.  You have a small fire pit as well.  "); // there are no actual counter for time in Mareth...
 	output("You have a number of traps surrounding your makeshift home, but they are fairly simple and may not do much to deter a demon.  ");
 	output("The portal shimmers in the background as it always does, looking menacing and reminding you of why you came.\n\n");
