@@ -52,6 +52,7 @@ include "areas/highmountain/ChickenHarpy.as";
 include "areas/highmountain/HarpyScene.as";
 include "areas/highmountain/BasiliskScene.as";
 include "areas/highmountain/IzumiScene.as";
+include "areas/highmountain/MinervaScene.as";
 include "areas/plains/plains.as";
 include "areas/plains/SatyrScene.as";
 include "areas/plains/GnollScene.as";

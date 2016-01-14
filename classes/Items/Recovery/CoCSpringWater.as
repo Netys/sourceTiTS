@@ -1,7 +1,8 @@
-package classes.Items.Miscellaneous
+package classes.Items.Recovery
 {
 	import classes.Engine.Combat.inCombat;
 	import classes.Engine.Interfaces.output;
+	import classes.Engine.Utility.rand;
 	import classes.ItemSlotClass;
 	import classes.GLOBAL;
 	import classes.Creature;
@@ -10,10 +11,10 @@ package classes.Items.Miscellaneous
 	import classes.GameData.TooltipManager;
 	import classes.StringUtil;
 	
-	public class CoCPurePeach extends ItemSlotClass
+	public class CoCSpringWater extends ItemSlotClass
 	{
 		//constructor
-		public function CoCPurePeach()
+		public function CoCSpringWater()
 		{
 			this._latestVersion = 1;
 			
@@ -22,25 +23,25 @@ package classes.Items.Miscellaneous
 			this.type = GLOBAL.FOOD;
 			
 			//Used on inventory buttons
-			this.shortName = "PurPeac";
+			this.shortName = "SpringWtr";
 			
 			//Regular name
-			this.longName = "pure peach";
+			this.longName = "waterskin filled with spring water";
 			
 			TooltipManager.addFullName(this.shortName, StringUtil.toTitleCase(this.longName));
 			
 			//Longass shit, not sure what used for yet.
-			this.description = "a pure peach";
+			this.description = "a waterskin filled with spring water";
 			
 			//Displayed on tooltips during mouseovers
-			this.tooltip = "This is a peach from Minerva's spring, yellowy-orange with red stripes all over it.";
+			this.tooltip = "A waterskin full of purified water from Minerva's spring.  It's clean and clear, with a faint sweet scent to it.  You're sure it would be a very refreshing drink.";
 			
 			TooltipManager.addTooltip(this.shortName, this.tooltip);
 			
 			this.attackVerb = "";
 			
 			//Information
-			this.basePrice = 100;
+			this.basePrice = 60;
 			this.attack = 0;
 			this.defense = 0;
 			this.shieldDefense = 0;
@@ -64,15 +65,19 @@ package classes.Items.Miscellaneous
 				
 			if(target is PlayerCharacter)
 			{
-				output("You bite into the sweet, juicy peach, feeling a sensation of energy sweeping through your limbs and your mind.  You feel revitalized, refreshed, and somehow cleansed.  ");
+				output("The water is cool and sweet to the taste, and every swallow makes you feel calmer, cleaner, and refreshed.  You drink until your thirst is quenched, feeling purer in both mind and body. ");
 			}
 			else
 			{
-				output(target.capitalA + target.short + " bite into the sweet, juicy peach, feeling a sensation of energy sweeping through body and mind\n");
+				output("The water is cool and sweet to the taste, and every swallow makes " + target.capitalA + target.short + " feel calmer, cleaner, and refreshed.\n");
 			}
-			
-			target.energy(15);
-			target.HP(target.maxHP() / 4);
+						
+			target.energy(10);
+			target.lust( -25);
+			target.cor( -0.5);
+			target.HP(20 + (5 * target.level) + rand(5 * target.level))
+			if (target.cor() > 50) target.cor( -1);
+			if (target.cor() > 75) target.cor( -1);
 			return false;
 		}
 	}

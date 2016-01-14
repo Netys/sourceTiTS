@@ -91,7 +91,7 @@ package classes.Items.Transformatives.CoCEggs
 					//SINGLEZ
 					if (pc.cocks.length == 1) {
 						output("\n\nYour [pc.cocksLight] fills to its normal size... and begins growing... ");
-						temp2 = pc.increaseCock(0, rand(3) + 2);
+						temp2 = pc.increaseCock(rand(3) + 2, 0);
 						Mutator.lengthChange(pc, temp2, 1);
 						pc.libido(1);
 						pc.lust(20);

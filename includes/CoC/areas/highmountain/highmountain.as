@@ -14,6 +14,8 @@ import classes.Engine.Utility.*;
 public function exploreHighMountain():void {
 	IncrementFlag("COC.EXPLORED_HIGH_MOUNTAIN");
 	
+	processTime(20 + rand(10)); // take your time looking for trouble!
+	
 	var choice:Array = [];
 	var chance:Array = [];
 	
@@ -61,10 +63,10 @@ public function exploreHighMountain():void {
 	//}
 	
 	//Minerva
-	//if (flags["COC.EXPLORED_HIGH_MOUNTAIN"] % 8 == 0 && flags["COC.MET_MINERVA"] < 4) {
-		//encounterMinerva();
-		//return;
-	//}
+	if (flags["COC.EXPLORED_HIGH_MOUNTAIN"] % 8 == 0 && flags["COC.MET_MINERVA"] < 4) {
+		encounterMinerva();
+		return;
+	}
 
 	//Harpy odds!
 	if (pc.hasItem(new CoCOvipositionElixir()) || IncrementFlag("COC.TIMES_MET_CHICKEN_HARPY", false) <= 0) {

@@ -16,7 +16,6 @@ package classes.Characters.CoC
 	import classes.GLOBAL;
 	import classes.Items.Apparel.CoCWizardRobes;
 	import classes.Items.Drinks.*;
-	import classes.Items.Melee.CoCRidingCrop;
 	import classes.Items.Miscellaneous.*;
 	import classes.Items.Transformatives.*;
 	import classes.kGAMECLASS;

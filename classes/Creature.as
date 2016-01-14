@@ -3176,7 +3176,7 @@ package classes {
 			// Affinity
 			if(stat == affinity)
 			{
-				arg *= arg >= 0 ? 1.5 : 0.66;
+				arg *= arg >= 0 ? 1.5 : 0.66; // more gains and less losses for affinity stats
 			}
 			// Normal
 			if (stat == "physique" || stat == "p") statCurrent = physique();
@@ -3190,45 +3190,45 @@ package classes {
 				return 0;
 			}
 			
-			if (arg < 0) {// loss - diminishing loss on low stat
-				change = arg; // TODO
-				//while (arg < 0) {
-					//mod = Math.max(arg, -1);
-					//arg++;
-					//if(arg > 0) arg = 0;
-					//if (statCurrent + change < 30) mod = .1;
-					//else if (statCurrent + change < 40) mod = .15;
-					//else if (statCurrent + change < 50) mod = .2;
-					//else if (statCurrent + change < 60) mod = .25;
-					//else if (statCurrent + change < 65) mod = .3;
-					//else if (statCurrent + change < 70) mod = .4;
-					//else if (statCurrent + change < 75) mod = .5;
-					//else if (statCurrent + change < 80) mod = .6;
-					//else if (statCurrent + change < 85) mod = .7;
-					//else if (statCurrent + change < 90) mod = .8;
-					//else if (statCurrent + change < 95) mod = .9;
-					//else mod = 1;
-					//change += mod;
+			if (arg < 0) { // loss - diminishing loss on low stat
+				while (arg < 0) {
+					mod = Math.max(arg, -1); // to support fractional arguments
+					arg++;
+					if(arg > 0) arg = 0;
+					if (statCurrent + change < 5) mod *= .1;
+					else if (statCurrent + change < 10) mod *= .15;
+					else if (statCurrent + change < 15) mod *= .2;
+					else if (statCurrent + change < 20) mod *= .25;
+					else if (statCurrent + change < 25) mod *= .3;
+					else if (statCurrent + change < 30) mod *= .4;
+					else if (statCurrent + change < 35) mod *= .5;
+					else if (statCurrent + change < 40) mod *= .6;
+					else if (statCurrent + change < 50) mod *= .7;
+					else if (statCurrent + change < 60) mod *= .8;
+					else if (statCurrent + change < 70) mod *= .9;
+					else mod *= 1;
+					change += mod;
 				}
-			//else // gain - diminishing gain on high stat
-			while (arg > 0) {
-				mod = Math.min(arg, 1); // to support fractional arguments
-				arg--;
-				if(arg < 0) arg = 0;
-				if (statCurrent + change < 30) mod *= 1;
-				else if (statCurrent + change < 40) mod *= .9;
-				else if (statCurrent + change < 50) mod *= .8;
-				else if (statCurrent + change < 60) mod *= .7;
-				else if (statCurrent + change < 65) mod *= .6;
-				else if (statCurrent + change < 70) mod *= .5;
-				else if (statCurrent + change < 75) mod *= .4;
-				else if (statCurrent + change < 80) mod *= .3;
-				else if (statCurrent + change < 85) mod *= .25;
-				else if (statCurrent + change < 90) mod *= .2;
-				else if (statCurrent + change < 95) mod *= .15;
-				else mod *= .1;
-				change += mod;
 			}
+			else // gain - diminishing gain on high stat
+				while (arg > 0) {
+					mod = Math.min(arg, 1); // to support fractional arguments
+					arg--;
+					if(arg < 0) arg = 0;
+					if (statCurrent + change < 30) mod *= 1;
+					else if (statCurrent + change < 40) mod *= .9;
+					else if (statCurrent + change < 50) mod *= .8;
+					else if (statCurrent + change < 60) mod *= .7;
+					else if (statCurrent + change < 65) mod *= .6;
+					else if (statCurrent + change < 70) mod *= .5;
+					else if (statCurrent + change < 75) mod *= .4;
+					else if (statCurrent + change < 80) mod *= .3;
+					else if (statCurrent + change < 85) mod *= .25;
+					else if (statCurrent + change < 90) mod *= .2;
+					else if (statCurrent + change < 95) mod *= .15;
+					else mod *= .1;
+					change += mod;
+				}
 			
 			if (stat == "physique" || stat == "p") return physique(change);
 			else if (stat == "reflexes" || stat == "r") return reflexes(change);

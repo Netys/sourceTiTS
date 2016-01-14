@@ -118,7 +118,7 @@ public function placesCount():int {
 	//if (player.findStatusAffect(StatusAffects.HairdresserMeeting) >= 0) places++;
 	if (flags["COC.TEL_ADRE_KNOWN"] >= 1) places++;
 	//if (flags[kFLAGS.AMILY_VILLAGE_ACCESSIBLE] > 0) places++;
-	//if (flags[kFLAGS.MET_MINERVA] >= 4) places++;
+	if (flags["COC.MET_MINERVA"] >= 4) places++;
 	//if (flags[kFLAGS.PRISON_CAPTURE_COUNTER] > 0) places++;
 	return places;
 }
@@ -154,7 +154,7 @@ public function showPlacesMenu():Boolean {
 	if (flags["COC.TEL_ADRE_KNOWN"] >= 1) addButton(8, "Tel'Adre", telAdreMenu, null, "Tel'Adre", "Visit the city of Tel'Adre in desert, easily recognized by the massive tower.");
 	//
 	//if (flags["COC.AMILY_VILLAGE_ACCESSIBLE"] > 0) addButton(10, "Town Ruins", exploreVillageRuin, null, "Town Ruins", "Visit the village ruins.\n\nTimes explored: " + flags["COC.EXPLORED_AMILY_VILLAGE"]);
-	//if (flags[kFLAGS.MET_MINERVA] >= 4) addButton(11, "Oasis Tower", kGAMECLASS.highMountains.minervaScene.encounterMinerva, null, null, null, "Visit the ruined tower in the high mountains where Minerva resides.");
+	if (flags["COC.MET_MINERVA"] >= 4) addButton(11, "Oasis Tower", encounterMinerva, null, "Oasis Tower", "Visit the ruined tower in the high mountains where Minerva resides.");
 	//if (flags[kFLAGS.PRISON_CAPTURE_COUNTER] > 0) addButton(12, "Prison", kGAMECLASS.prison.prisonIntro, false, null, null, "Return to the prison and continue your life as Elly's slave.");
 	//if (debug) addButton(13, "Ingnam", kGAMECLASS.ingnam.returnToIngnam, null, null, null, "Return to Ingnam for debugging purposes. Night-time event weirdness might occur. You have been warned!");
 	
