@@ -750,18 +750,6 @@ public function flyTo(arg:String):void {
 		currentLocation = "SHIP HANGAR";
 		output("You fly to Mhen'ga");
 		output(" and step out of your ship.");
-		if(flags["LANDING_EVENT_CHECK"] == 1)
-		{
-			if((annoIsCrew() && flags["ANNOxSYRI_EVENT"] != undefined) || !annoIsCrew())
-			{
-				if(syriIsAFuckbuddy() && rand(5) == 0)
-				{
-					gettingSyrisPanties();
-					return;
-				}
-			}
-			flags["LANDING_EVENT_CHECK"] = undefined;
-		}
 	}
 	else if(arg == "Tavros") {
 		shipLocation = "TAVROS HANGAR";
@@ -792,27 +780,42 @@ public function flyTo(arg:String):void {
 		output("Electing to have a little fun, you set a course for Poe A and before long, the planet looms before you on the display. It’s not particularly large, for a civilized world, but the traffic for landing vehicles is a little ridiculous. Thousands of craft are coming in every minute, with no sign of the influx slowing down. They’re from all over the galaxy too, even models you’ve never heard of before. Taking your place in the landing queue, you look around at some of the other visitors, eyes watering with envy as you spot a few ships that probably cost as much as this whole planet. Apparently the stories of stars slumming it up during the festival weren’t exaggerated!");
 	}
 	
-	if (arg != "New Texas")
-	{
-		if(flags["LANDING_EVENT_CHECK"] == 1)
-		{
-			// Wild varmint stowaway!
-			if(varmintStowaway())
-			{
-				currentLocation = "SHIP INTERIOR";
-				getAPetVarmint();
-				return;
-			}
-			flags["LANDING_EVENT_CHECK"] = undefined;
-		}
-	}
-	
 	var timeFlown:Number = 600 + rand(30);
 	StatTracking.track("movement/time flown", timeFlown);
 	processTime(timeFlown);
+	
+	if(landingEventCheck(arg)) return;
 	flags["LANDING_EVENT_CHECK"] = 1;
+	
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
+}
+
+public function landingEventCheck(arg:String):Boolean
+{
+	if(flags["LANDING_EVENT_CHECK"] != 1) return false;
+	
+	flags["LANDING_EVENT_CHECK"] = undefined;
+	
+	if(arg == "Mhen'ga")
+	{
+		if(((annoIsCrew() && flags["ANNOxSYRI_EVENT"] != undefined) || !annoIsCrew()) && syriIsAFuckbuddy() && rand(5) == 0)
+		{
+			gettingSyrisPanties();
+			return true;
+		}
+	}
+	if(arg != "New Texas")
+	{
+		// Wild varmint stowaway!
+		if(varmintStowaway())
+		{
+			currentLocation = "SHIP INTERIOR";
+			getAPetVarmint();
+			return true;
+		}
+	}
+	return false;
 }
 
 public function showerMenu():void {
@@ -1175,6 +1178,21 @@ public function variableRoomUpdateCheck():void
 	
 	/* TARKUS */
 	
+	// Chasmfall entrance
+	if(flags["STELLAR_TETHER_CLOSED"] == undefined)
+	{
+		rooms["350"].addFlag(GLOBAL.HAZARD);
+		if(MailManager.isEntryViewed("annoweirdshit")) rooms["350"].addFlag(GLOBAL.OBJECTIVE);
+		else rooms["350"].removeFlag(GLOBAL.OBJECTIVE);
+	}
+	else
+	{
+		rooms["350"].removeFlag(GLOBAL.HAZARD);
+		rooms["350"].removeFlag(GLOBAL.OBJECTIVE);
+	}
+	// Stellar Tether probe clue
+	if(flags["TARKUS_BOMB_TIMER"] != undefined && flags["TARKUS_BOMB_TIMER"] <= 0 && flags["PLANET_3_UNLOCKED"] == undefined) rooms["WIDGET WAREHOUSE"].addFlag(GLOBAL.QUEST);
+	else rooms["WIDGET WAREHOUSE"].removeFlag(GLOBAL.QUEST);
 	//Handle planet explosions
 	if(flags["TARKUS_DESTROYED"] == 1 && rooms["211"].southExit != "") 
 	{
@@ -2484,11 +2502,14 @@ public function emailRoulette():void
 	if(!MailManager.isEntryUnlocked("cuzfuckball") && flags["TIMES_MET_FEMZIL"] != undefined && flags["BEEN_ON_TARKUS"] != undefined && pc.level >= 2)
 		mailList.push("cuzfuckball");
 	
-	/*
 	// SPAM: (9999: If does not have spamblocker upgrade toggled on for CODEX.)
-	if(SpamEmailKeys.length > 0 && flags["CODEX_SPAM_BLOCKER"] == undefined && rand(2) == 0)
-		mailList.push(SpamEmailKeys);
-	*/
+	if(SpamEmailKeys.length > 0 && flags["CODEX_SPAM_BLOCKER"] == undefined)
+	{
+		for(var i:int = 0; i < SpamEmailKeys.length; i++) 
+		{
+			if(!MailManager.isEntryUnlocked(SpamEmailKeys[i]) && rand(2) == 0) mailList.push(SpamEmailKeys[i]);
+		}
+	}
 	
 	if(mailList.length > 0) mailKey = mailList[rand(mailList.length)];
 	

@@ -363,7 +363,7 @@ public function statisticsScreen(showID:String = "All"):void
 					output2("\n<b>* Length, Erect: </b>" + prettifyLength(pc.cLength(x)));
 					output2("\n<b>* Thickness: </b>" + prettifyLength(pc.cThickness(x)));
 					if(pc.hasKnot(x)) output2("\n<b>* Knot Thickness: </b>" + prettifyLength(pc.knotThickness(x)));
-					if(pc.hasCockFlag(GLOBAL.FLAG_LUBRICATED, x) || pc.hasCockFlag(GLOBAL.FLAG_STICKY, x))
+					if(pc.cockVolume(x, false) != pc.cockVolume(x))
 					{
 						output2("\n<b>* Volume, Physical: </b>" + prettifyVolume(pc.cockVolume(x, false)));
 						output2("\n<b>* Volume, Effective: </b>" + prettifyVolume(pc.cockVolume(x)));
@@ -1317,18 +1317,24 @@ public function displayQuestLog(showID:String = "All"):void
 				if(flags["BADGER_QUEST"] >= 0 && flags["DR_BADGER_TURNED_IN"] == undefined) output2("\n<b><u>Doctor Badger’s Job Offer</u></b>");
 				else output2("\n<b><u>Doctor Badger’s Big Mistake</u></b>");
 				// Bimbo Raygun
-				output2("\n<b>* Bimbo Raygun, Status:</b>");
+				output2("\n<b>* Status:</b>");
 				if(flags["BADGER_QUEST"] == 1) output2(" <i>Find Penny!</i>");
 				else if(flags["PENNY_BADGER_WARNED"] != undefined)
 				{
 					output2(" Warned Penny");
 					if(flags["NO_ZAP_PENNY"] != undefined) output2(", Refused to zap her");
-					if(flags["NO_REPORTING_DOC_BADGER"] != undefined) output2(", Will not report Dr Badger");
-					if(flags["BADGER_QUEST"] == -1) output2(", Confiscated Raygun");
-					if(flags["BADGER_QUEST"] == -2) output2(", Reprogrammed Raygun, <i>Return to Dr Badger!</i>");
-					if(flags["BADGER_QUEST"] <= -3) output2(", Zapped Dr Badger instead, Rewarded, Completed");
+					if(flags["NO_REPORTING_DOC_BADGER"] != undefined) output2(", Will not report Dr. Badger");
+					if(flags["BADGER_QUEST"] == -1)
+					{
+						output2(", Confiscated Raygun");
+						if(pc.hasKeyItem("Doctor Badger's Bimbo Raygun - Still programmed for use on Penny.")) output2(", <i>Get reprogrammed from Dr. Lash!</i>");
+						else if(flags["BADGER_QUEST_TIMER"] == -1) output2(", <i>Return to Penny!</i>");
+					}
+					else if(flags["BADGER_QUEST"] == -2) output2(", Reprogrammed Raygun, <i>Return to Dr. Badger!</i>");
+					else if(flags["BADGER_QUEST"] <= -3) output2(", Zapped Dr. Badger, Rewarded, Completed");
+					if(flags["BADGER_QUEST"] >= 2) output2(",");
 				}
-				else if(flags["BADGER_QUEST"] == 2) output2(" Zapped Penny, <i>Mission accomplished! Report to Dr Badger!</i>");
+				if(flags["BADGER_QUEST"] == 2) output2(" Zapped Penny, <i>Mission accomplished! Report to Dr. Badger!</i>");
 				else if(flags["BADGER_QUEST"] >= 3) output2(" Zapped Penny, Rewarded, Completed");
 			}
 			// Deck 13
@@ -1547,13 +1553,17 @@ public function displayQuestLog(showID:String = "All"):void
 					if(flags["KQ2_SEX_PAY"] != undefined) output2(", Kara sexed you");
 					if(flags["KQ2_CREDS_FIRST"] != undefined) output2(", Kara paid you");
 					if(flags["KQ2_KHANS_FILES"] != undefined) output2(", Took Khan’s files");
+					if(flags["KQ2_LOST_TO_AMARA"] != undefined) output2(", Lost to Amara");
+					if(flags["KQ2_KARA_SACRIFICE"] != undefined) output2(", Kara sacrificed herself");
 					// Pirate Base
 					if(9999 == 0)
 					{
-						output2("\n<b>* Pirate Base, Kara, Status:</b>");
-						if(flags["KQ2_KARA_WITH_PC"] == 1) output2(" At your side");
-						if(flags["KQ2_KARA_WITH_PC"] == 2) output2(" At the radio tower");
+						output2("\n<b>* Kara, Status:</b>");
+						if(flags["KQ2_BETRAYED_KARA"] != undefined) output2(" Betrayed her");
+						else if(flags["KQ2_KARA_WITH_PC"] == 1) output2(" At your side");
+						else if(flags["KQ2_KARA_WITH_PC"] == 2) output2(" At the radio tower");
 						else output2(" <i>Unknown</i>");
+						if(flags["KQ2_SHADE_DEAD"] != undefined) output2(", Killed Shade");
 					}
 					if(9999 == 0)
 					{
@@ -1571,13 +1581,24 @@ public function displayQuestLog(showID:String = "All"):void
 						else if(flags["KQ2_RF_KENNEL_USED"] == 2) output2(" Used to upgrade Tam-wolf");
 						else output2(" Unused");
 					}
-					if(flags["KQ2_WATSTON_MET"] != undefined) output2("\n<b>* Pirate Base, Watston:</b> Met it");
+					if(flags["KQ2_WATSON_MET"] != undefined) output2("\n<b>* Pirate Base, Watson:</b> Met it");
 					if(flags["KQ2_DEFEATED_ENGINEER"] != undefined) output2("\n<b>* Pirate Base, Engineer:</b> Defeated her");
 					if(flags["KQ2_DEFEATED_JUGGERNAUT"] != undefined) output2("\n<b>* Pirate Base, Juggernaut:</b> Defeated him");
 					if(flags["KQ2_DEFEATED_KHAN"] != undefined)
 					{
 						output2("\n<b>* Pirate Base, Dr.Khan:</b> Met him, Defeated him");
 						if(9999 == 0) output2(", Sexed him with Kara");
+						if(flags["KQ2_KHAN_LOOTED"] != undefined)
+						{
+							output2(", Looted his room");
+							if(flags["KQ2_KHAN_LOOTED_COAT"] != undefined || flags["KQ2_KHAN_LOOTED_CASTER"] != undefined)
+							{
+								output2(" and took his");
+								if(flags["KQ2_KHAN_LOOTED_COAT"] != undefined) output2(" coat");
+								if(flags["KQ2_KHAN_LOOTED_COAT"] != undefined && flags["KQ2_KHAN_LOOTED_CASTER"] != undefined) output2(" and");
+								if(flags["KQ2_KHAN_LOOTED_CASTER"] != undefined) output2(" gun");
+							}
+						}
 					}
 					// Nuke 'em, Rico!
 					if(flags["KQ2_NUKE_STARTED"] != undefined)
@@ -2194,7 +2215,7 @@ public function displayEncounterLog(showID:String = "All"):void
 				output2("\n<b><u>New Texas Customs Office</u></b>");
 				// Ogram and Amma
 				output2("\n<b>* Ogram and Amma:</b> Met them");
-				if(flags["FUCKED_TEXAN_CUSTOMS"] != undefined) output2(", Sexed them");
+				if(flags["FUCKED_TEXAN_CUSTOMS"] != undefined) output2("\n<b>* Ogram and Amma, Times Sexed:</b> " + flags["FUCKED_TEXAN_CUSTOMS"]);
 				variousCount++;
 			}
 			// Public
@@ -3419,6 +3440,23 @@ public function displayEncounterLog(showID:String = "All"):void
 				}
 				variousCount++;
 			}
+			// School Time!
+			if(flags["THOLLUM_PASS_REQUESTED"] != undefined)
+			{
+				output2("\n<b><u>Thollum</u></b>");
+				output2("\n<b>* Status:</b> ");
+				if(pc.keyItemv1("Gildenmere Pass") >= 1) output2(" Allowed access");
+				else output2(" <i>Ask Lyralla for an entrance pass.</i>");
+				if(flags["THOLLUM_TOURED"] != undefined) output2(", Taken tour");
+				if(flags["MUSHROOM_TRACKER"] != undefined && flags["MUSHROOM_TRACKER"] > 0) output2("\n<b>* Mushroom Garden, Fluids Collected: </b>" + flags["MUSHROOM_TRACKER"] + " mLs");
+				// Yarasta
+				if(flags["MET_YARASTA"] != undefined) output2("\n<b>* Yarasta:</b> Met her");
+				if(flags["SEXED_YARASTA"] != undefined) output2("\n<b>* Yarasta, Times Sexed: </b>" + flags["SEXED_YARASTA"]);
+				// Yummy TiTS
+				if(flags["MET_GIALA"] != undefined) output2("\n<b>* Giala:</b> Met her");
+				if(flags["SEXED_GIALA"] != undefined) output2("\n<b>* Giala, Times Sexed: </b>" + flags["SEXED_GIALA"]);
+				variousCount++;
+			}
 			// Kressia, where all the gangstas chill
 			if(flags["LIEVE_INVITE"] != undefined || flags["MET_LIEVE"] != undefined)
 			{
@@ -3731,7 +3769,7 @@ public function displayEncounterLog(showID:String = "All"):void
 				{
 					output2("\n<b>* Radio Bunker:</b> Found");
 					if(flags["NO_ANTS_LAND_TAXI_UNLOCKED"] != undefined) output2(", Repaired radio communications");
-					if(flags["LOOTED_MYR_RIFLE"] != undefined) output2(", Looted bunker");
+					if(flags["LOOTED_MYR_RIFLE"] == 1) output2(", Looted bunker");
 				}
 				// Crash Site
 				if(flags["DEEP_CAVES_TAXI_UNLOCKED"] != undefined)
@@ -4006,7 +4044,9 @@ public function displayEncounterLog(showID:String = "All"):void
 			// Big like Cock-Box!
 			if(flags["LOOTED_COCKBOX"] != undefined)
 			{
-				output2("\n<b>* TamaniCorp, Dong Designer:</b> Taken");
+				output2("\n<b>* TamaniCorp, Dong Designer:</b>");
+				if(flags["LOOTED_COCKBOX"] == 0) output2(" Found");
+				else output2(" Taken");
 				if(flags["DONG_DESIGNER_INSTALLED"] != undefined) output2(", Installed");
 				if(flags["USED_DONG_DESIGNER"] == undefined) output2(", Unused");
 				else output2(", Used");
@@ -4017,8 +4057,9 @@ public function displayEncounterLog(showID:String = "All"):void
 			// GALO SENGAN
 			if(flags["ZODEE_GALOQUEST"] != undefined)
 			{
-				output2("\n<b>* Xenogen Biotech, GaloMax Pill:</b> Acquired from Zo’dee");
-				if(flags["GALOMAX_DOSES"] != undefined) output2(", Used " + flags["GALOMAX_DOSES"] + " times");
+				output2("\n<b>* Xenogen Biotech, GaloMax Pill:</b> Acquired");
+				if(flags["GALOMAX_DOSES"] != undefined) output2(", Used");
+				if(flags["GALOMAX_DOSES"] > 1) output2(" " + flags["GALOMAX_DOSES"] + " times");
 			}
 			// Horse wieners
 			if(flags["SYNTHSHEATH_ACQUIRED"] != undefined || flags["SYNTHSHEATH_TWO_FOUND"] != undefined)

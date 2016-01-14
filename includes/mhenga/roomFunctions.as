@@ -344,6 +344,30 @@ public function fastTravelToEsbeth():void
 	addButton(0,"Next",mainGameMenu);
 }
 
+public function genericSleep(baseTime:int = 480):void
+{
+	var totalTime:int = baseTime + (rand(baseTime / 3) - (baseTime / 6));
+	
+	sleepHeal();
+	processTime(totalTime);
+	
+	if ((pc.XPRaw >= pc.XPMax()) && pc.level < 8 && flags["LEVEL_UP_AVAILABLE"] == undefined)
+	{
+		(pc as PlayerCharacter).unspentStatPoints += 13;
+		(pc as PlayerCharacter).unclaimedClassPerks += 1;
+		(pc as PlayerCharacter).unclaimedGenericPerks += 1;
+		
+		pc.level++;
+		pc.XPRaw = 0;
+		pc.maxOutHP();
+		
+		// Enable the button
+		userInterface.levelUpButton.Activate();
+		
+		eventBuffer += "\n\nA nights rest is just what you needed; you feel faster... stronger... harder....\n<b>Level Up is available!</b>";
+	}
+}
+
 public function sleepInRuinedCamp():void
 {
 	clearOutput();
@@ -416,12 +440,16 @@ public function mhengaSalvageFromCamp():void
 {
 	clearOutput();
 	
-	if (flags["SALVAGED VANAE CAMP"] == undefined)
+	if (flags["SALVAGED VANAE CAMP"] == undefined || flags["SALVAGED VANAE CAMP"] == 0)
 	{
-		output("You find something of interest stashed in one of the many storage containers scattered around the camp. Gingerly lifting the lid of a heavily damaged container, you discover a set of some kind of augmented armor. "); // I have no idea what this item is supposed to look like.
+		if (flags["SALVAGED VANAE CAMP"] == undefined) output("You find something of interest stashed in one of the many storage containers scattered around the camp. Gingerly lifting the lid of a heavily damaged container, you discover a set of some kind of augmented armor. "); // I have no idea what this item is supposed to look like.
+		else output("You take the augmented armor you found from one of the storage containers at the camp.");
+		
 		output("\n\n");
-		quickLoot(new AtmaArmor());
 		flags["SALVAGED VANAE CAMP"] = 1;
+		var armor:AtmaArmor = new AtmaArmor();
+		lootScreen = mhengaSalvageArmorCheck;
+		itemCollect([armor]);
 		return;
 	}
 	else
@@ -434,6 +462,20 @@ public function mhengaSalvageFromCamp():void
 		clearMenu();
 		addButton(0, "Next", mainGameMenu); 
 	}
+}
+public function mhengaSalvageArmorCheck():void
+{
+	if(pc.armor is AtmaArmor || pc.hasItemByType(AtmaArmor))
+	{
+		mainGameMenu();
+		return;
+	}
+	
+	clearOutput();
+	output("Unable to carry the suit with you, you put it back where you found it.");
+	flags["SALVAGED VANAE CAMP"] = 0;
+	clearMenu();
+	addButton(0,"Next",mainGameMenu);
 }
 
 public function mhengaThickMistRoom1():Boolean

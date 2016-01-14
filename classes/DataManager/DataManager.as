@@ -989,6 +989,7 @@
 				trace("4. Load successful.");
 				
 				kGAMECLASS.userInterface.hideNPCStats();
+				kGAMECLASS.userInterface.resetPCStats();
 				kGAMECLASS.userInterface.showPCStats();
 				kGAMECLASS.updatePCStats();
 				kGAMECLASS.output2("\n\nGame loaded from file!");
@@ -1175,6 +1176,7 @@
 			if (!dataErrors)
 			{
 				kGAMECLASS.userInterface.hideNPCStats();
+				kGAMECLASS.userInterface.resetPCStats();
 				kGAMECLASS.userInterface.showPCStats();
 				kGAMECLASS.userInterface.showPlayerParty([kGAMECLASS.pc], true);
 				kGAMECLASS.output2("Game loaded from 'TiTs_" + slotNumber + "'!");
@@ -1448,6 +1450,8 @@
 			CombatManager.TerminateCombat();
 			userInterface().hideNPCStats();
 			userInterface().leftBarDefaults();
+			userInterface().resetPCStats();
+			userInterface().resetNPCStats();
 			
 			//Purge out the event buffer so people can't buy something, load, and then get it.
 			kGAMECLASS.eventQueue = new Array();

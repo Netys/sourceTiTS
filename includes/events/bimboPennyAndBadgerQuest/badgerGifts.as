@@ -261,7 +261,7 @@ public function drBadgerJobOffer():void
 		output("\n\n<i>“Now then pet, I have a job for you.”</i> Her hand sweeps down to scratch under your chin, melting as she holds your face up to look at her. <i>“Doesn’t that sounds nice? A nice little job to prove how good and useful you can be?”</i>");
 		output("\n\nIt does sound nice. Everything sounds nice, but being useful and good like that sounds <i>especially</i> nice. Almost as nice as fucking. Maybe if you’re good enough you’ll get to be fucked! You lick your lips happily at the thought, savoring the wetness that is already starting to drip down over your chin.");
 		//IF PC HAS LOST THEIR BADGER FORM = 
-		if(pcBimboedByBadger())
+		if(!pcHasBadgerForm())
 		{
 		 	output("\n\n<i>“But first,”</i> the doctor adds tauntingly, <i>“we’ve got to take care of the unlicensed modifications you’ve made, don’t we? If you’re going out on a big important mission for me, we’ve got to have you looking the part...”</i>");
 		 	output("\n\nWith no more warning than that you feel the sharp sting of a needle being pressed into your skin, and then a warm, tingling sensation spreading out inside your flesh. The change that follows comes quickly, especially given how you lean into it, knowing how much it means to the doctor. In moments you’re staring up at her lovingly along your badger snout once again, shivering as she strokes your black and white fur, and with your cock stiffening in anticipation over your dripping wet slit. <b>You are back to being the same badger form as you were after first meeting Dr Badger!</b>");
@@ -411,7 +411,7 @@ public function warnPennyAboutDoctorBadgersNefariousSchemes():void
 		//IF PC DOES NOT HAVE BADGER FORM 
 		if(!pcHasBadgerForm())
 		{
-			output("As you walk over to talk to Penny, the thing Dr Badger gave you vibrates in your pocket. You slip your hand inside to check on it, only to feel a sharp little sting. There was like, some sort of needle or something hidden in it that jabbed you? Suddenly, you feel your whole body tremble. You stop, doubling over as your form reshapes rapidly, sliding back easily into the same form the doctor gave you. In seconds it’s done, and <b>once again you’re a perfect bubbly, big-chested and big dicked badger bimbo</b>. Wow, you think, it must be <i>super</i> important to Dr Badger that you look the part when you talk to Penny about this. Oh well! Fortunately she was distracted by sucking the delicious cock you gave her and didn’t notice your sudden change.");
+			output("As you walk over to talk to Penny, the thing Dr Badger gave you vibrates in your pocket. You slip your hand inside to check on it, only to feel a sharp little sting. There was like, some sort of needle or something hidden in it that jabbed you? Suddenly, you feel your whole body tremble. You stop, doubling over as your form reshapes rapidly, sliding back easily into the same form the doctor gave you. In seconds it’s done, and <b>once again you’re a perfect bubbly, big-chested and big dicked badger bimbo</b>. Wow, you think, it must be <i>super</i> important to Dr Badger that you look the part when you talk to Penny about this. Oh well! Fortunately she was distracted by sucking the delicious cock you gave her and didn’t notice your sudden change.\n\n");
 			resetDrBadgerBimboTF();
 		}
 		output("<i>“Hey there!”</i> you say perkily, trotting over towards Penny and perching casually on the edge of her desk. <i>“What’s up?”</i>");
@@ -429,7 +429,7 @@ public function warnPennyAboutDoctorBadgersNefariousSchemes():void
 		output("\n\nYou’re not sure if it’s thinking back to what happened, or even just saying her name, but <i>something</i> about all of that makes you cum, and when you do, you cum like a firehose. Even though Penny’s cock is larger than yours, your output puts her to shame - but that makes sense, right? Her stuff is a happy accident, something you helped shape to make wonderful, but you, and how you are now? You were <i>made</i> for this, made to be a perfect slutty bimbo fucktoy, able to cum again and again and again on command and be productive enough to make sure everyone can have fun. You bite your lip desperately, letting out a cute, high-pitched shriek as your hips buck forwards again and again, and with each thrust a <i>lot</i> of cum spurts out, and most of it lands somewhere on Penny’s body. Her eyes are glazed over, her tail wagging furiously behind her as she spreads herself wide, the better to catch as much of what you’re putting out as possible. Her tongue moves crazily too, zipping around as fast as it can so she can taste as much of your yummy cum as she can fit into her mouth. All of that makes you even <i>more</i> turned on, so you cum even <i>more</i>, which makes Penny enjoy it even more, so you cum more, and so... yeah.");
 		output("\n\nThis goes on for a while.");
 		output("\n\nEventually you slow down. It’s not that you can’t keep fucking, but you feel like you’ve done what you’re supposed to do here, given that Penny’s pretty much completely coated in sticky white cum now. Oh, but you forgot the zapping again! You wait for a minute or so, only stroking your cock slowly to keep yourself nice and hard (in case Penny decides she needs another coat after all), and eventually she manages to clear enough of herself off that her tongue isn’t 100% busy anymore and she can be bothered talking again.");
-		output("\n\n<i>“Dr Badger was it?”</i> she says eventually. <i>“I like her work.”</i>}");
+		output("\n\n<i>“Dr Badger was it?”</i> she says eventually. <i>“I like her work.”</i>");
 		output("\n\n<i>“Thanks!”</i> you giggle happily. <i>“I think she was worried that you like, wouldn’t or something? So she made this gun-thing that would only work on you, because people could report her to you and then there’d... be like, police and they’d... be bad?”</i> You kinda trail off, half because you can’t quite remember what Doctor Badger had said exactly, and half because you’re distracted how horny you are again. You <i>still</i> haven’t sucked Penny’s cock yet! That doesn’t seem right.");
 		output("\n\nShe starts talking again before you can lean in though, so with a huff you decide you should probably leave it for now. <i>“I remember a bulletin going out about her a while ago, actually. Let me just pull it up...”</i>");
 		output("\n\nShe turns back to her computer, tapping away at it and looking some things up. Oh good, this is much better, now you’re just sitting here waiting while she’s like, reading about something or junk. She’s saying some of it out loud too; something about ‘mad scientist’ and ‘surprisingly powerful’ and ‘reporting’ and ‘plan’ and ‘bimbos’ - that last one gets your attention. Maybe Penny’s saying something about if you should zap her or not. You shake your head to focus your eyes again, looking down to see Penny looking up at you expectantly.");
@@ -719,7 +719,8 @@ public function surpriseZapPennyWithBimboRay():void
 		//IF PC DOES NOT HAVE BADGER FORM
 		if(!pcHasBadgerForm())
 		{
-			output("As you walk over to talk to Penny, the thing Dr Badger gave you vibrates in your pocket. You slip your hand inside to check on it, only to feel a sharp little sting. There was like, some sort of needle or something hidden in it that jabbed you? Suddenly, you feel your whole body tremble. You stop, doubling over as your form reshapes rapidly, sliding back easily into the same form the doctor gave you. In seconds it’s done, and once again <b>you’re a perfect bubbly, big-chested and big dicked badger bimbo.</b> Wow, you think, it must be <i>super</i> important to Dr Badger that you look the part when you talk to Penny about this. Oh well! Fortunately she was distracted by something on her screen and didn’t notice your sudden change. ");
+			output("As you walk over to talk to Penny, the thing Dr Badger gave you vibrates in your pocket. You slip your hand inside to check on it, only to feel a sharp little sting. There was like, some sort of needle or something hidden in it that jabbed you? Suddenly, you feel your whole body tremble. You stop, doubling over as your form reshapes rapidly, sliding back easily into the same form the doctor gave you. In seconds it’s done, and once again <b>you’re a perfect bubbly, big-chested and big dicked badger bimbo.</b> Wow, you think, it must be <i>super</i> important to Dr Badger that you look the part when you talk to Penny about this. Oh well! Fortunately she was distracted by something on her screen and didn’t notice your sudden change.\n\n");
+			resetDrBadgerBimboTF();
 		}
 		output("<i>“Hey there!”</i> you say perkily, trotting over towards Penny and perching casually on the edge of her desk. <i>“What’s up?”</i>");
 		output("\n\nPenny looks up at you in confusion. <i>“I was going to ask you the same question [pc.name],”</i> she says slowly. <i>“I know the planet rush is opening up wild new aliens to encounter and... inherit things from, but if it wasn’t for the genetic ID scanning system installed over the door I don’t think I would have recognized you. You seem...”</i> There’s a short pause while Penny looks you up and down");
@@ -796,7 +797,11 @@ public function surpriseZapPennyWithBimboRay():void
 	else
 	{
 		//IF PC DOES NOT HAVE BADGER FORM
-		if(pcHasBadgerForm()) output("As you walk over to talk to Penny, the thing Dr Badger gave you vibrates in your pocket. You slip your hand inside to check on it, only to feel a sharp little sting. There was like, some sort of needle or something hidden in it that jabbed you? Suddenly, you feel your whole body tremble. You stop, doubling over as your form reshapes rapidly, sliding back easily into the same form the doctor gave you. In seconds it’s done, and once again you’re a perfect bubbly, big-chested and big dicked badger bimbo. Wow, you think, it must be <i>super</i> important to Dr Badger that you look the part when you talk to Penny about this. Oh well! Fortunately she was distracted and didn’t notice your sudden change.\n\n");
+		if(!pcHasBadgerForm())
+		{
+			output("As you walk over to talk to Penny, the thing Dr Badger gave you vibrates in your pocket. You slip your hand inside to check on it, only to feel a sharp little sting. There was like, some sort of needle or something hidden in it that jabbed you? Suddenly, you feel your whole body tremble. You stop, doubling over as your form reshapes rapidly, sliding back easily into the same form the doctor gave you. In seconds it’s done, and once again you’re a perfect bubbly, big-chested and big dicked badger bimbo. Wow, you think, it must be <i>super</i> important to Dr Badger that you look the part when you talk to Penny about this. Oh well! Fortunately she was distracted and didn’t notice your sudden change.\n\n");
+			resetDrBadgerBimboTF();
+		}
 		output("<i>“Hey there!”</i> you say perkily, trotting over towards Penny and perching casually on the edge of her desk. <i>“What’s up?”</i>");
 		output("\n\nPenny does a double-take between you and the computer, and then gives a sigh of relief. <i>“Thank goodness it’s you [pc.name],”</i> she says, <i>“I was worried this was going to be some sort of official police business that would get in the way of me getting some quality cocksucking in. So, uh, what’s with the new form by the way?”</i> She gives you a quick look up and down before continuing. <i>“Don’t get me wrong, it’s a good look for you - but if it wasn’t for the genetic sensor built into the door I’m not sure I would have recognized you.”</i>");
 		output("\n\n<i>“Oh!”</i> you answer happily, <i>“let me show you!”</i> Then, without any further thought, you pull out the gun-thing Doctor Badger gave you, point it at Penny and pull the trigger.");
@@ -1166,8 +1171,8 @@ public function bimboZapDrBadger():void
 	}
 	processTime(11);
 	clearMenu();
-	if(pc.isBimbo() || pc.isBro()) addButton(0,"Watch Change",watchBadgerChange,undefined,"Watch Her Change","Stand back and enjoy your victory by watching Dr Badger become a slutty bimbo");
-	else addDisabledButton(0,"Watch Change","Watch Her Change","How could you resist joining in on the fun.");
+	if(pc.isBimbo() || pc.isBro()) addButton(0,"Watch Change",watchBadgerChange,undefined,"Watch Her Change","How could you resist joining in on the fun?");
+	else addButton(0,"Watch Change",watchBadgerChange,undefined,"Watch Her Change","Stand back and enjoy your victory by watching Dr Badger become a slutty bimbo.");
 	if(pc.hasCock())
 	{
 		addButton(1,"Get Blowjob",getABlowjobFromBimboBunsBadger,undefined,"Get Blowjob","Make her suck your cock.");
@@ -1530,7 +1535,7 @@ public function sexWithBimboBadger():void
 	if(pc.hasCock()) addButton(0,"Get Blowjob",getABlowJobFromBimboBadgerRepeat,undefined,"Get Blowjob","Make her get on her knees and suck you off like a good little bimbo.");
 	else addDisabledButton(0,"Get Blowjob","Get Blowjob","You need a dick to get a blowjob.");
 	if(pc.hasVagina()) addButton(1,"Get Licked",getEatenOutByBimboBadgerRepeat,undefined,"Get Licked","Have a nice, long session with her muzzle buried in your pussy");
-	else addDisabledButton(0,"Get Licked","Get Licked","You need a vagina to get licked out.");
+	else addDisabledButton(1,"Get Licked","Get Licked","You need a vagina to get licked out.");
 	if(pc.hasCock() && pc.cockThatFits(chars["DRBADGER"].analCapacity()) >= 0) addButton(2,"FuckHerAss",fuckBimboBadgersAssRepeated,undefined,"Fuck Her Ass","Fuck this bimbo hard from behind.");
 	else addDisabledButton(2,"FuckHerAss","Fuck Her Ass","You need a penis to fuck her ass.");
 

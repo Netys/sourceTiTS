@@ -354,7 +354,7 @@ package classes.GameData
 				if (target.statusEffectv2("Aphro") == 0)
 				{
 					if (target is PlayerCharacter) output("\n\n<b>The aphrodisiac in your bloodstream has faded!</b>");
-					else output("\n<b>The aphrodisiac in " + target.capitalA + possessive(target.uniqueName) + " bloodstream has faded!</b>");
+					else output("\n\n<b>The aphrodisiac in " + target.capitalA + possessive(target.uniqueName) + " bloodstream has faded!</b>");
 					target.removeStatusEffect("Aphro");
 				}
 				else
@@ -377,7 +377,7 @@ package classes.GameData
 				else
 				{
 					if (target is PlayerCharacter) output("\n\n<b>The cloud of aphrodisiac continues to excite your body!</b>");
-					else output("<b>The cloud of aphrodisiac continues to linger around " + target.a + target.uniqueName + "!</b>");
+					else output("\n\n<b>The cloud of aphrodisiac continues to linger around " + target.a + target.uniqueName + "!</b>");
 					applyDamage(new TypeCollection( { drug: target.statusEffectv1("Aphro Gas") } ), null, target);
 				}
 			}
@@ -917,7 +917,7 @@ package classes.GameData
 			
 			// tease
 			if (pc.hasStatusEffect("Myr Venom Withdrawal")) addDisabledButton(5, "Tease", "Tease", "Without the venom, teasing just seems... fruitless.");
-			else addButton(5, "Tease", selectSimpleAttack, generateTeaseMenu, "Tease Menu", "Opens up your menu of available lust targetting attacks. It is recommended that the ‘Sense’ option be used beforehand.");
+			else addButton(5, "Tease", selectSimpleAttack, generateTeaseMenu, "Tease Menu", "Opens up your menu of available lust-targeting attacks. It is recommended that the ‘Sense’ option be used beforehand.");
 			
 			// sense
 			addButton(6, "Sense", selectSimpleAttack, generateSenseMenu, "Sense", "Attempts to get a feel for a foe's likes and dislikes. Absolutely critical for someone who plans on seducing " + pc.mf("his", "her") + " way out of a fight.");
@@ -975,7 +975,7 @@ package classes.GameData
 			output("You decide you'd rather fantasize than fight back at this point. Why bother when your enem");
 			if(enemiesAlive() > 1) output("ies are");
 			else output("y is");
-			output(" so alluring?\n");
+			output(" so alluring?");
 			pc.lust(20+rand(20));
 			processCombat();	
 		}
@@ -989,28 +989,28 @@ package classes.GameData
 				//Get back up
 				if(!pc.hasStatusEffect("Raskvel Pile"))
 				{
-					output("Quickly you heave yourself back on your [pc.feet], dusting yourself down with a scowl.\n");
+					output("Quickly you heave yourself back on your [pc.feet], dusting yourself down with a scowl.");
 					pc.removeStatusEffect("Tripped");
 					pc.removeStatusEffect("Raskvel Pile");
 				}
 				//Get back up under pile on:
 				if(pc.physique() + pc.statusEffectv1("Raskvel Pile") >= 30)
 				{
-					output("You tense yourself up and with a sudden upward heave send the raskvel flying off you. You scramble back on your [pc.feet], feeling intense relief from escaping that suffocating helplessness.\n");
+					output("You tense yourself up and with a sudden upward heave send the raskvel flying off you. You scramble back on your [pc.feet], feeling intense relief from escaping that suffocating helplessness.");
 					pc.removeStatusEffect("Tripped");
 					pc.removeStatusEffect("Raskvel Pile");
 				}
 				//Fail to get back up under pile on:
 				else
 				{
-					output("You try and elbow your way back up and duly collapse straight back into the dirt again. These little bastards are heavy!\n");
+					output("You try and elbow your way back up and duly collapse straight back into the dirt again. These little bastards are heavy!");
 					pc.addStatusValue("Raskvel Pile",1,10);
 				}
 			}
 			//GENERIC
 			else
 			{
-				output("You climb up onto your [pc.feet].\n");
+				output("You climb up onto your [pc.feet].");
 				pc.removeStatusEffect("Tripped");
 			}
 			processCombat();
@@ -1039,16 +1039,16 @@ package classes.GameData
 			output("! ")
 			//Autofail conditions first!
 			if(pc.isImmobilized()) {
-				output("You cannot run while you are immobilized!\n");
+				output("You cannot run while you are immobilized!");
 				processCombat();
 			}
 			else if (isFleeDisabled()) {
-				output("<b>You cannot escape from this fight!</b>\n");
+				output("<b>You cannot escape from this fight!</b>");
 				processCombat();
 			}
 			else if (kGAMECLASS.debug)
 			{
-				output("You escape on wings of debug!\n");
+				output("You escape on wings of debug!");
 				CombatManager.abortCombat();
 			}
 			else 
@@ -1123,10 +1123,9 @@ package classes.GameData
 					CombatManager.abortCombat();
 				}
 				else {
-					output(" It doesn't work!\n");
+					output("It doesn’t work!");
 					processCombat();
 				}
-
 			}
 		}
 		
@@ -1157,7 +1156,6 @@ package classes.GameData
 			{
 				pc.removeStatusEffect("Tripped");
 			}
-			output("\n");
 			processCombat();
 		}
 		
@@ -1529,7 +1527,7 @@ package classes.GameData
 			if (target is Celise)
 			{
 				clearOutput();
-				output("You put a hand on your hips and lewdly expose your groin, wiggling to and fro in front of the captivated goo-girl.\n");
+				output("You put a hand on your hips and lewdly expose your groin, wiggling to and fro in front of the captivated goo-girl.");
 				processCombat();
 				return;
 			}
@@ -2474,9 +2472,9 @@ package classes.GameData
 				if (damage > 25 + attacker.level * 2) damage = 25 + attacker.level * 2;
 				
 				if(target.lust() + damage > target.lustMax()) damage = target.lustMax() - target.lust();
-			damage = Math.ceil(damage);
+				damage = Math.ceil(damage);
 			
-				output("\n");
+				output("\n\n");
 				if(teaseType == "squirt") 
 				{
 					if(target.isPlural) output(target.capitalA + target.uniqueName  + " are splattered with your [pc.milk], unable to get it off. All of a sudden, their faces begin to flush, and they look quite aroused.");
@@ -2597,8 +2595,8 @@ package classes.GameData
 				return;
 			}
 			
-			output("You try to get a feel for " + possessive(target.a + target.uniqueName) + " likes and dislikes!\n");
-			if(target.isLustImmune) output("You don't think sexuality can win this fight!\n");
+			output("You try to get a feel for " + possessive(target.a + target.uniqueName) + " likes and dislikes!");
+			if(target.isLustImmune) output("\nYou don't think sexuality can win this fight!");
 			var buffer:String = "";
 			var PCBonus:Number = pc.intelligence()/2 + pc.libido()/20;
 			if(pc.hasPerk("Fuck Sense")) PCBonus = pc.libido();
@@ -2606,6 +2604,7 @@ package classes.GameData
 				buffer = GLOBAL.SEXPREF_DESCRIPTORS[i];
 				//If has a preference set, talk about it!
 				if(target.sexualPreferences.getPref(i) != 0) {
+					output("\n");
 					//If succeeds at sense check!
 					if(PCBonus + rand(20) + 1 >= target.level * 3 * (150-target.libido())/100) 
 					{
@@ -2635,10 +2634,9 @@ package classes.GameData
 					{
 						output(buffer + ": You aren't sure.")
 					}
-					output("\n");
 				}
 			}
-			if(target is HandSoBot) output("\nWhilst your teases have some effect on synthetics designed for sex, you sense there is no point whatsoever trying it on with what amounts to a bipedal forklift truck.\n");
+			if(target is HandSoBot) output("\n\nWhilst your teases have some effect on synthetics designed for sex, you sense there is no point whatsoever trying it on with what amounts to a bipedal forklift truck.");
 		}
 		
 		private function checkForLoss():Boolean
@@ -2675,13 +2673,13 @@ package classes.GameData
 						{
 							if (pc.HP() <= 0) 
 							{
-								if(CombatManager.multipleEnemies()) output("\n\n<b>Your enemies have knocked you off your " + pc.feet() + "!</b>\n\n");
-								else output("\n\n<b>" + t_enemy.capitalA + t_enemy.short + " has knocked you off your " + pc.feet() + "!</b>\n\n");
+								if(CombatManager.multipleEnemies()) output("<b>Your enemies have knocked you off your " + pc.feet() + "!</b>\n\n");
+								else output("<b>" + t_enemy.capitalA + t_enemy.short + " has knocked you off your " + pc.feet() + "!</b>\n\n");
 							}
 							else
 							{
-								if (CombatManager.multipleEnemies()) output("\n\n<b>Your enemies have turned you on too much to keep fighting. You give in....</b>\n\n");
-								else output("\n\n<b>" + t_enemy.capitalA + t_enemy.short + " has turned you on too much to keep fighting. You give in....</b>\n\n");
+								if (CombatManager.multipleEnemies()) output("<b>Your enemies have turned you on too much to keep fighting. You give in....</b>\n\n");
+								else output("<b>" + t_enemy.capitalA + t_enemy.short + " has turned you on too much to keep fighting. You give in....</b>\n\n");
 							}
 						}
 						
@@ -2797,7 +2795,7 @@ package classes.GameData
 			kGAMECLASS.userInterface.mainMenuButton.Glow();
 			output("\n\nAdditionally, remember that you should have at least one class ability to use as well as tease attacks. Several melee weapons are also available in Esbeth can be purchased for a reasonable amount of money - if you'd like a little extra punch.)");
 			clearMenu();
-			addButton(0,"Next", kGAMECLASS.mainGameMenu);
+			addButton(0,"Next", postCombatReturnToMenu);
 		}
 		
 		private function helpReallyBadPCsOut():void
@@ -2807,7 +2805,7 @@ package classes.GameData
 			output("(Are you having difficulty winning fights? If so, select yes for a minor statistical boost to your combat prowess.)");
 			clearMenu();
 			addButton(0,"Boost Me",boostMeCaptain);
-			addButton(1,"No", kGAMECLASS.mainGameMenu);
+			addButton(1,"No", postCombatReturnToMenu);
 		}
 		
 		private function boostMeCaptain():void
@@ -2819,7 +2817,7 @@ package classes.GameData
 			pc.willpower(1);
 			pc.HP(pc.HPMax());
 			pc.energy(pc.energyMax());
-			kGAMECLASS.mainGameMenu();
+			postCombatReturnToMenu();
 		}
 		
 		private function helpDumbPCsOut():void
@@ -2828,7 +2826,7 @@ package classes.GameData
 			kGAMECLASS.showName("T.I.T.S.\nHELP")
 			output("(That foe was unsuitable for a character of your level. Consider taking the northern path out of Esbeth until after you have reached level two or three.)");
 			clearMenu();
-			addButton(0,"Next",kGAMECLASS.mainGameMenu);
+			addButton(0,"Next",postCombatReturnToMenu);
 		}
 		
 		private var _initForRound:int = -1;
@@ -2939,8 +2937,6 @@ package classes.GameData
 				prepHostileForCombat(_hostiles[i]);
 				makeCharacterUnique(_hostiles[i], HOSTILE_GROUP);
 			}
-			
-			showCombatUI();
 		}
 		public function addHostileCreature(newC:Creature):void
 		{
@@ -3059,8 +3055,8 @@ package classes.GameData
 		{
 			validateContainer();
 			showCombatDescriptions();
-			showCombatUI();
 			showCombatMenu();
+			showCombatUI(true);
 		}
 		
 		private function validateContainer():void
@@ -3069,10 +3065,16 @@ package classes.GameData
 			if (_lossFunction == null) throw new Error("No loss function has been specified.");
 		}
 		
-		public function showCombatUI():void
+		public function showCombatUI(setAsInit:Boolean = false):void
 		{
-			userInterface().showPlayerParty(_friendlies);
-			userInterface().showHostileParty(_hostiles);
+			if (setAsInit)
+			{
+				userInterface().resetNPCStats();
+				if (_friendlies.length > 1) userInterface().resetPCStats();
+			}
+			
+			userInterface().showPlayerParty(_friendlies, false);
+			userInterface().showHostileParty(_hostiles, false);
 		}
 		
 		private function showCombatDescriptions():void
@@ -3107,8 +3109,7 @@ package classes.GameData
 			if (target is Celise)
 			{
 				kGAMECLASS.setEnemy(target);
-				output("\n");
-				output(target.long);
+				output("\n\n" + target.long);
 				showMonsterArousalFlavor(target);
 				kGAMECLASS.setEnemy(null);
 				
@@ -3130,16 +3131,17 @@ package classes.GameData
 			{				
 				if (encounterText == null)
 				{
-					if (_hostiles.length == 1 && _friendlies.length == 1)
+					if (_hostiles.length == 1 && _friendlies.length == 1 && target.long.length > 0)
 					{
 						kGAMECLASS.setEnemy(target);
-						output("\n");
-						output(target.long);
+						output("\n\n" + target.long);
 						kGAMECLASS.setEnemy(null);
 					}
 					else
 					{
-					output("\n\n<b>" + StringUtil.toTitleCase(target.uniqueName) + ":</b>\n" + target.long);
+						output("\n\n<b>" + StringUtil.toTitleCase(target.uniqueName) + ":</b>");
+						if (target.long.length > 0) output("\n" + target.long);
+						else if(target.lust() < 50 || target.isLustImmune == true) output("\n<i>Nothing in particular to take note of.</i>");
 					}
 				}
 				
@@ -3170,13 +3172,13 @@ package classes.GameData
 				
 			if (target.HP() <= 0)
 			{
-				output("\n\n<b>" + target.capitalA + target.uniqueName + " is down and out for the count!</b>\n\n");
+				output("\n\n<b>" + target.capitalA + target.uniqueName + " is down and out for the count!</b>");
 			}
 			else if (target.lust() >= target.lustMax())
 			{
-				output("\n\n<b>" + target.capitalA + target.uniqueName + ((target.isPlural == true) ? " are" : " is") + " too turned on to fight.</b>\n\n");
+				output("\n\n<b>" + target.capitalA + target.uniqueName + ((target.isPlural == true) ? " are" : " is") + " too turned on to fight.</b>");
 			}
-			else
+			else if (target.long.length > 0)
 			{
 				/*
 				var pHealth:Number = target.HP() / target.HPMax();
@@ -3273,7 +3275,8 @@ package classes.GameData
 			{
 				// TODO: might be an idea to make this more resilient
 				var varm:Varmint = _hostiles[0];
-				varm.removeStatusEffect("Lassoed");
+				if (varm.statusEffectv1("Lassoed") == 1) { /* Hogtied! */ }
+				else varm.removeStatusEffect("Lassoed");
 			}
 		}
 		

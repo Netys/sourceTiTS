@@ -4102,8 +4102,8 @@ package classes {
 				if (beardLength > 0.001 && beardLength <= 0.125) return RandomInCollection("stubble", "five o’clock shadow", "beard");
 				if (rand(4) == 0)
 				{
-					if (beardLength < 1) adjectives = RandomInCollection("trim", "short");
-					else adjectives = [num2Text(Math.round(beardLength)) + "-inch long"];
+					if (beardLength < 1) adjectives.push("trim", "short");
+					else adjectives.push(num2Text(Math.round(beardLength)) + "-inch long");
 					if (beardLength >= 6) adjectives.push("lengthy", "long");
 				}
 				if (adjectives.length > 0 && rand(2) == 0) description += RandomInCollection(adjectives) + " ";
@@ -8315,7 +8315,7 @@ package classes {
 		public function ausarScore(): int {
 			var counter: int = 0;
 			if (earType == GLOBAL.TYPE_CANINE) counter++;
-			if (tailType == GLOBAL.TYPE_CANINE && hasTailFlag(GLOBAL.FLAG_LONG) && hasTailFlag(GLOBAL.FLAG_FLUFFY) && hasTailFlag(GLOBAL.FLAG_FURRED) && tailCount > 0) counter++;
+			if (hasTail(GLOBAL.TYPE_CANINE) && hasTailFlag(GLOBAL.FLAG_LONG) && hasTailFlag(GLOBAL.FLAG_FLUFFY) && hasTailFlag(GLOBAL.FLAG_FURRED)) counter++;
 			if (armType == GLOBAL.TYPE_CANINE) counter++;
 			if (legType == GLOBAL.TYPE_CANINE && legCount == 2 && hasLegFlag(GLOBAL.FLAG_PLANTIGRADE)) counter++;
 			if (counter > 0 && faceType == GLOBAL.TYPE_HUMAN) counter++;
@@ -8341,7 +8341,7 @@ package classes {
 			if (legType == GLOBAL.TYPE_LIZAN && legCount == 6) counter += 2;
 			if (armType == GLOBAL.TYPE_LEITHAN && hasArmFlag(GLOBAL.FLAG_CHITINOUS)) counter++;
 			if (tongueType == GLOBAL.TYPE_LEITHAN) counter++;
-			if (tailType == GLOBAL.TYPE_LIZAN && tailCount > 0) counter++;
+			if (hasTail(GLOBAL.TYPE_LIZAN)) counter++;
 			if (counter > 0 && skinType == GLOBAL.SKIN_TYPE_SCALES && scaleColor == "black") counter++;
 			if (counter > 3 && eyeType == GLOBAL.TYPE_LEITHAN && faceType == GLOBAL.TYPE_HUMAN) counter += 2;
 			if (eyeType != GLOBAL.TYPE_LEITHAN) counter--;
@@ -8351,7 +8351,7 @@ package classes {
 		{
 			var counter:int = 0;
 			if (earType == GLOBAL.TYPE_KUITAN) counter++;
-			if (tailType == GLOBAL.TYPE_KUITAN && hasTailFlag(GLOBAL.FLAG_LONG) && tailCount > 0) counter++;
+			if (hasTail(GLOBAL.TYPE_KUITAN) && hasTailFlag(GLOBAL.FLAG_LONG)) counter++;
 			if (faceType == GLOBAL.TYPE_KUITAN) counter++;
 			if (armType == GLOBAL.TYPE_KUITAN) counter++;
 			if (legType == GLOBAL.TYPE_KUITAN) counter++;
@@ -8394,7 +8394,7 @@ package classes {
 			var counter:int = 0;
 			if (earType == GLOBAL.TYPE_BOVINE) counter++;
 			if (hasHorns(GLOBAL.TYPE_BOVINE)) counter++;
-			if (tailType == GLOBAL.TYPE_BOVINE && hasTailFlag(GLOBAL.FLAG_LONG) && hasTailFlag(GLOBAL.FLAG_FLUFFY) && tailCount > 0) counter++;
+			if (hasTail(GLOBAL.TYPE_BOVINE) && hasTailFlag(GLOBAL.FLAG_LONG) && hasTailFlag(GLOBAL.FLAG_FLUFFY)) counter++;
 			if (legType == GLOBAL.TYPE_BOVINE) counter++;
 			//if (tongueType == GLOBAL.TYPE_BOVINE && hasTongueFlag(GLOBAL.FLAG_LONG)) counter++;
 			if (faceType == GLOBAL.TYPE_BOVINE) counter += 2;
@@ -8404,7 +8404,7 @@ package classes {
 		public function badgerScore():int
 		{
 			var counter:int = 0;
-			if (tailType == GLOBAL.TYPE_BADGER && tailCount > 0) counter++;
+			if (hasTail(GLOBAL.TYPE_BADGER)) counter++;
 			if (armType == GLOBAL.TYPE_BADGER) counter++;
 			if (faceType == GLOBAL.TYPE_BADGER) counter++;
 			if (counter > 0 && skinType == GLOBAL.SKIN_TYPE_FUR) counter++;
@@ -8416,7 +8416,7 @@ package classes {
 			if (hasHorns(GLOBAL.TYPE_DEMONIC)) counter++;
 			if (earType == GLOBAL.TYPE_DEMONIC) counter++;
 			if (armType == GLOBAL.TYPE_DEMONIC) counter++;
-			if (tailType == GLOBAL.TYPE_DEMONIC) counter++;
+			if (hasTail(GLOBAL.TYPE_DEMONIC)) counter++;
 			if (wingType == GLOBAL.TYPE_DEMONIC || wingType == GLOBAL.TYPE_SMALLDEMONIC) counter++;
 			if (counter > 1 && (legType == GLOBAL.TYPE_DEMONIC || legType == GLOBAL.TYPE_SUCCUBUS || legType == GLOBAL.TYPE_BOVINE)) counter++;
 			if (counter > 2 && eyeType == GLOBAL.TYPE_DEMONIC && faceType == GLOBAL.TYPE_HUMAN) counter++;
@@ -8426,9 +8426,9 @@ package classes {
 		public function frogScore(): int
 		{
 			var counter: int = 0;
-			if (skinType == GLOBAL.SKIN_TYPE_SKIN && hasSkinFlag(GLOBAL.FLAG_STICKY)) counter++;
+			if (skinType == GLOBAL.SKIN_TYPE_SKIN && hasSkinFlag(GLOBAL.FLAG_LUBRICATED)) counter++;
 			if (legType == GLOBAL.TYPE_FROG) counter++;
-			if (tailType == GLOBAL.TYPE_FROG) counter++;
+			if (hasTail(GLOBAL.TYPE_FROG)) counter++;
 			if (faceType == GLOBAL.TYPE_FROG) counter++;
 			if (faceType == GLOBAL.TYPE_FROG || faceType == GLOBAL.TYPE_HUMAN)
 			{
@@ -8463,7 +8463,7 @@ package classes {
 		{
 			var counter:int = 0;
 			if (earType == GLOBAL.TYPE_EQUINE) counter++;
-			if (tailType == GLOBAL.TYPE_EQUINE && hasTailFlag(GLOBAL.FLAG_LONG)) counter++;
+			if (hasTail(GLOBAL.TYPE_EQUINE) && hasTailFlag(GLOBAL.FLAG_LONG)) counter++;
 			if (faceType == GLOBAL.TYPE_EQUINE) counter++;
 			if (armType == GLOBAL.TYPE_EQUINE) counter++;
 			if (legType == GLOBAL.TYPE_EQUINE) counter++;
@@ -8527,7 +8527,7 @@ package classes {
 		{
 			var score:int = 0;
 			if (skinType == GLOBAL.SKIN_TYPE_SCALES && InCollection(scaleColor, "green", "purple", "red", "yellow", "brown", "tan", "olive green")) score++;
-			if (tailType == GLOBAL.TYPE_OVIR) score++;
+			if (hasTail(GLOBAL.TYPE_OVIR)) score++;
 			if (eyeType == GLOBAL.TYPE_SNAKE && InCollection(eyeColor, "green", "blue", "yellow", "red", "gray")) score++;
 			if (tongueType == GLOBAL.TYPE_OVIR) score++;
 			if (legType == GLOBAL.TYPE_OVIR) score++;
@@ -8541,7 +8541,7 @@ package classes {
 		{
 			var counter:int = 0;
 			if (earType == GLOBAL.TYPE_PANDA) counter++;
-			if (tailType == GLOBAL.TYPE_PANDA) counter++;
+			if (hasTail(GLOBAL.TYPE_PANDA)) counter++;
 			if (faceType == GLOBAL.TYPE_PANDA) counter++;
 			if (armType == GLOBAL.TYPE_PANDA) counter++;
 			if (legType == GLOBAL.TYPE_PANDA) counter++;
@@ -8554,7 +8554,7 @@ package classes {
 		{
 			var counter:int = 0;
 			if (earType == GLOBAL.TYPE_RASKVEL) counter++;
-			if (tailType == GLOBAL.TYPE_RASKVEL && hasTailFlag(GLOBAL.FLAG_SCALED) && tailCount > 0) counter++;
+			if (hasTail(GLOBAL.TYPE_RASKVEL) && hasTailFlag(GLOBAL.FLAG_SCALED)) counter++;
 			if (legType == GLOBAL.TYPE_RASKVEL) counter++;
 			if (counter > 0 && skinType == GLOBAL.SKIN_TYPE_SCALES) counter++;
 			if (counter > 1 && hasCock(GLOBAL.TYPE_RASKVEL)) counter++;
@@ -8567,7 +8567,7 @@ package classes {
 		{
 			var counter:int = 0;
 			if (earType == GLOBAL.TYPE_VANAE) counter++;
-			if (tailType == GLOBAL.TYPE_VANAE && hasTailFlag(GLOBAL.FLAG_LONG) && tailCount > 0) counter++;
+			if (hasTail(GLOBAL.TYPE_VANAE) && hasTailFlag(GLOBAL.FLAG_LONG)) counter++;
 			if (hasVaginaType(GLOBAL.TYPE_VANAE)) counter++;
 			if (totalVaginas(GLOBAL.TYPE_VANAE) > totalVaginas()) counter++;
 			if (milkType == GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK) counter++;
@@ -8582,7 +8582,7 @@ package classes {
 			if (legType == GLOBAL.TYPE_BEE && legCount == 2) counter++;
 			if (antennae == 2 && antennaeType == GLOBAL.TYPE_BEE) counter++;
 			if (wingType == GLOBAL.TYPE_SMALLBEE || wingType == GLOBAL.TYPE_BEE) counter++;
-			if (tailType == GLOBAL.TYPE_BEE && tailCount > 0) counter++;
+			if (hasTail(GLOBAL.TYPE_BEE)) counter++;
 			if (counter > 0 && faceType == GLOBAL.TYPE_HUMAN)
 			{
 				counter++;
@@ -12712,7 +12712,7 @@ package classes {
 				}
 				else
 				{
-					output("<b>" + short + " has succumbed to " + mf("his", "her") + " and lost " + mf("his", "her"));
+					output("<b>" + short + " has succumbed to " + mf("his", "her") + " desires and lost " + mf("his", "her"));
 					if (hasVagina()) output(" masculine");
 					output(" virginity.</b>");
 				}

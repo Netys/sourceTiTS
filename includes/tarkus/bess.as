@@ -1345,7 +1345,7 @@ public function bessFollowerMenu():void
 		}
 	}
 
-	if (flags["BESS_EVENT_23"] != undefined)
+	if (flags["BESS_EVENT_22"] != undefined)
 	{
 		if (flags["CREWMEMBER_SLEEP_WITH"] == "BESS")
 		{
