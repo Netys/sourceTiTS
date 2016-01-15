@@ -36,8 +36,7 @@ public function doExplore():void
 		addButton(5, "Plains", explorePlains, null, "Explore plains", "Visit the plains. \n\nRecommended level: 10\n\nTimes explored: " + flags["COC.EXPLORED_PLAINS"]);
 	
 	if (flags["COC.EXPLORED_SWAMP"] != undefined) 
-		addDisabledButton(6, "Swamp", "Swamp", "NOT IMPLEMENTED.");
-		//addButton(6, "Swamp", exploreSwamp, null, "Explore swamp", "Visit the wet swamplands. \n\nRecommended level: 12\n\nTimes explored: " + flags["COC.EXPLORED_SWAMP"]);
+		addButton(6, "Swamp", exploreSwamp, null, "Explore swamp", "Visit the wet swamplands. \n\nRecommended level: 12\n\nTimes explored: " + flags["COC.EXPLORED_SWAMP"]);
 	
 	if (flags["COC.EXPLORED_DEEPWOODS"] != undefined) 
 		addButton(7, "Deepwoods", exploreDeepwoods, null, "Explore deepwoods", "Visit the dark, bioluminescent deepwoods. \n\nRecommended level: 5\n\nTimes explored: " + flags["COC.EXPLORED_DEEPWOODS"]);
@@ -45,15 +44,13 @@ public function doExplore():void
 	if (flags["COC.EXPLORED_HIGH_MOUNTAIN"] != undefined) 
 		addButton(8, "High Mountain", exploreHighMountain, null, "Explore high mountains", "Visit the high mountains. \n\nRecommended level: 10\n\nTimes explored: " + flags["COC.EXPLORED_HIGH_MOUNTAIN"]);
 
+	// revamp content...
 	//if (flags[kFLAGS.BOG_EXPLORED] > 0) addButton(9, "Bog", kGAMECLASS.bog.exploreBog, null, null, null, "Visit the dark bog. \n\nRecommended level: 14" + (debug ? "\n\nTimes explored: " + flags[kFLAGS.BOG_EXPLORED] : ""));
 	//if (flags[kFLAGS.DISCOVERED_GLACIAL_RIFT] > 0) addButton(10, "Glacial Rift", kGAMECLASS.glacialRift.exploreGlacialRift, null, null, null, "Visit the chilly glacial rift. \n\nRecommended level: 16" + (debug ? "\n\nTimes explored: " + flags[kFLAGS.DISCOVERED_GLACIAL_RIFT] : ""));
 	//if (flags[kFLAGS.DISCOVERED_VOLCANO_CRAG] > 0) addButton(11, "Volcanic Crag", kGAMECLASS.volcanicCrag.exploreVolcanicCrag, null, null, null, "Visit the infernal volcanic crag. \n\nRecommended level: 20" + (debug ? "\n\nTimes explored: " + flags[kFLAGS.DISCOVERED_VOLCANO_CRAG] : ""));
 
 	addButton(14, "Back", playerMenu);
 }
-
-// placeholders
-public function exploreSwamp() { };
 
 //Try to find a new location - called from doExplore once the first location is found
 public function tryDiscover():void
