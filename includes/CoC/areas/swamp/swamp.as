@@ -46,16 +46,16 @@ public function exploreSwamp():void {
 	choice.push(fSpiderMorphGreeting);
 	chance.push(1);
 	
-	choice.push(greetMaleSpiderMorph);
-	chance.push(1);
+	//choice.push(greetMaleSpiderMorph);
+	//chance.push(1);
 	
-	choice.push(driderEncounter);
-	chance.push(1);
+	//choice.push(driderEncounter);
+	//chance.push(1);
 	
-	if (flags["COC.ROGAR_DISABLED"] == 0 && flags["COC.ROGAR_PHASE"] < 3) {
-		choice.push(encounterRogarSwamp);
-		chance.push(4);
-	}
+	//if (flags["COC.ROGAR_DISABLED"] == 0 && flags["COC.ROGAR_PHASE"] < 3) {
+		//choice.push(encounterRogarSwamp);
+		//chance.push(4);
+	//}
 	
 	WeightedRandom(choice, chance, true)();
 }

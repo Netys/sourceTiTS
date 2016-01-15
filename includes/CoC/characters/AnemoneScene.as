@@ -1315,8 +1315,7 @@ private function getAnemoneItem():void
 		//if (choice == 0) itype = consumables.BROBREW;
 		if (choice == 1) itype = new CoCBimboLiqueur();
 		else
-			itype = RandomInCollection(/*consumables.TSTOOTH, consumables.S_GOSSR,consumables.B_GOSSR,*/new CoCReptilum());
-		itype = new CoCLustDraft(); // PLACEHOLDER!!!
+			itype = RandomInCollection(/*consumables.TSTOOTH*/new CoCSweetGossamer(), new CoCBlackGossamer(), new CoCReptilum());
 	}
 	output(itype.longName + ".");
 	if (itype is CoCMinotaurAxe) output("  Holy... how did she drag this thing home!?");

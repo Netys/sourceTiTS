@@ -7,6 +7,8 @@ import classes.Engine.Utility.*;
 // giacomoEncounter, lumiEncounter
 public function doExplore():void
 {
+	kGAMECLASS.userInterface.setLocation("", "EXPLORATION", "PLANET: MARETH");
+	
 	if (flags["COC.EXPLORED"] == undefined || flags["COC.EXPLORED"] == 1) {
 		tryDiscover();
 		return;

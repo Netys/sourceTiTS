@@ -28,7 +28,7 @@ package classes.GameData
 	 */
 	public class CombatAttacks 
 	{
-		public static function GetAttacksFor(target:Creature):Array
+		public static function GetAttacksFor(target:Creature):/*SingleCombatAttack*/Array
 		{
 			var atks:Array = [];
 			

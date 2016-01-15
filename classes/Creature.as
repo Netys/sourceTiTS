@@ -7972,6 +7972,7 @@ package classes {
 			if (kangaScore() >= 4) race = "kangaroo-morph";
 			if (bunnyScore() >= 4) race = "bunny-" + mf("boy", "girl");
 			if (harpyScore() >= 4) race = mf("avian", "harpy");
+			if (spiderScore() >= 4) race = "spider-" + mf("boy", "girl");
 			if (ovirScore() >= 3 && race == "human") race = "half-ovir";
 			if (ausarScore() >= 2 && race == "human") race = "half-ausar"; // Fucking Ausar forever overriding other shit. EXTERMINATUS.
 			if (kaithritScore() >= 3 && race == "human") race = "half-kaithrit";
@@ -8298,6 +8299,18 @@ package classes {
 			if (harpy >= 2 && (earType == GLOBAL.TYPE_HUMAN || earType == GLOBAL.TYPE_SYLVAN))
 				harpy++;
 			return harpy;
+		}
+		public function spiderScore():Number
+		{
+			var score:Number = 0;
+			if (eyeType == GLOBAL.TYPE_ARACHNID) score += 2;
+			if (faceType == GLOBAL.TYPE_ARACHNID) score++;
+			if (earType == GLOBAL.TYPE_SYLVAN) score++;
+			if (armType == GLOBAL.TYPE_ARACHNID && hasArmFlag(GLOBAL.FLAG_CHITINOUS)) score++;
+			if (legType == GLOBAL.TYPE_ARACHNID && hasLegFlag(GLOBAL.FLAG_CHITINOUS) && hasLegFlag(GLOBAL.FLAG_PLANTIGRADE)) score += 2;
+			if (hasTail(GLOBAL.TYPE_ARACHNID)) score += 2;
+			if (skinType != GLOBAL.SKIN_TYPE_SKIN && score > 0) score--;
+			return score;
 		}
 		public function humanScore(): int {
 			var counter: int = 0;

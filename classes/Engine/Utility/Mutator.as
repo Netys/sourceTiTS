@@ -78,7 +78,7 @@ package classes.Engine.Utility
 		 * @param	display
 		 * @return is something changed
 		 */
-		public static function changeHair(target:Creature, newType:int, newColors:/*int*/Array = null, display:Boolean = true):Boolean {
+		public static function changeHair(target:Creature, newType:int, newColors:/*String*/Array = null, display:Boolean = true):Boolean {
 			buffer = "";
 			var changes:Number = 0;
 			
@@ -984,12 +984,12 @@ package classes.Engine.Utility
 					buffer += " They are merging, splitting and reshaping, until you are left with " + num2Text(target.legCount) + ".";
 				}
 				
-				if (target.legCount > 2 && target.genitalSpot != 2 && target.genitalSpotUnlocked(2)) {
+				if (target.legCount > 2 && newType != GLOBAL.TYPE_DRIDER && target.genitalSpot != 2 && target.genitalSpotUnlocked(2)) {
 					buffer += " <b>Your genitals are now residing between your hind legs!</b>";
 					target.genitalSpot = 2;
 				}
 				
-				if (target.legCount <= 2 && target.genitalSpot != 0 && target.genitalSpotUnlocked(0)) {
+				if ((target.legCount <= 2 || newType == GLOBAL.TYPE_DRIDER) && target.genitalSpot != 0 && target.genitalSpotUnlocked(0)) {
 					buffer += " <b>Your genitals are now residing under your waist!</b>";
 					target.genitalSpot = 0;
 				}
@@ -1153,7 +1153,7 @@ package classes.Engine.Utility
 		 * @param	display
 		 * @return is something changed
 		 */
-		public static function changeSkin(target:Creature, newType:int, newColors:/*int*/Array = null, newFlags:/*int*/Array = null, keepFlags:/*int*/Array = null, removeFlags:/*int*/Array = null, display:Boolean = true):Boolean {
+		public static function changeSkin(target:Creature, newType:int, newColors:/*String*/Array = null, newFlags:/*int*/Array = null, keepFlags:/*int*/Array = null, removeFlags:/*int*/Array = null, display:Boolean = true):Boolean {
 			buffer = "";
 			var changes:Number = 0;
 			
