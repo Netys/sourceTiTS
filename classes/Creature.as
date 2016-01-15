@@ -3140,6 +3140,7 @@ package classes {
 			}
 			//Venom brings minimum up to 35.
 			if(bonus < 35 && hasStatusEffect("Red Myr Venom")) bonus = 35;
+			if(bonus < 35 && hasStatusEffect("Luststick")) bonus = 35;
 			return (0 + bonus);
 		}
 		public function physiqueMax(): Number {

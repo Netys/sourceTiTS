@@ -71,7 +71,7 @@ public function exploreHighMountain():void {
 	//Harpy odds!
 	if (pc.hasItem(new CoCOvipositionElixir()) || IncrementFlag("COC.TIMES_MET_CHICKEN_HARPY", false) <= 0) {
 		choice.push(chickenHarpy);
-		chance.push(pc.hasItem(new CoCOvipositionElixir(), 2) ? 3 : 6);
+		chance.push(pc.hasItem(new CoCOvipositionElixir(), 2) ? 2 : 6);
 	}
 	
 	// Basilisk!
@@ -83,26 +83,13 @@ public function exploreHighMountain():void {
 	chance.push(1);
 	
 	// Sophie
-	//choice.push(meetSophie);
-	//chance.push(1);
+	choice.push(meetSophie);
+	chance.push(2);
 	
 	// Izumi
 	choice.push(izumiScenesEncounter);
-	chance.push(1);
+	chance.push(3);
 	
 	
 	WeightedRandom(choice, chance, true)();
 }
-
-////Sophie
-//if (chooser == 2) {
-	//if (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00282] > 0 || flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00283] > 0 || kGAMECLASS.sophieFollowerScene.sophieFollower()) {
-		//output("A harpy wings out of the sky and attacks!", true);
-		//startCombat(new Harpy());
-		//spriteSelect(26);
-	//}
-	//else {
-		//if (flags[kFLAGS.MET_SOPHIE_COUNTER] == 0) kGAMECLASS.sophieScene.meetSophie();
-		//else kGAMECLASS.sophieScene.meetSophieRepeat();
-	//}
-//}

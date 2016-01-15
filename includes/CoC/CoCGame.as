@@ -76,6 +76,7 @@ include "places/desertCave/DesertCave.as";
 include "characters/AnemoneScene.as";
 include "characters/JojoScene.as";
 include "characters/Rathazul.as";
+include "characters/Sophie.as";
 include "characters/Hel.as";
 
 public function initCoCJunk():void {
