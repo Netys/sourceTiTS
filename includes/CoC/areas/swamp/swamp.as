@@ -46,8 +46,8 @@ public function exploreSwamp():void {
 	choice.push(fSpiderMorphGreeting);
 	chance.push(1);
 	
-	//choice.push(greetMaleSpiderMorph);
-	//chance.push(1);
+	choice.push(greetMaleSpiderMorph);
+	chance.push(1);
 	
 	//choice.push(driderEncounter);
 	//chance.push(1);

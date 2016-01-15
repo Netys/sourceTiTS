@@ -45,7 +45,7 @@ public function fightFSpiderMorph():void {
 	CombatManager.setHostileCharacters(new CoCSpiderMorphFemale());
 	CombatManager.victoryScene(defeatASpiderBitch);
 	CombatManager.lossScene(loseToFemaleSpiderMorph);
-	CombatManager.displayLocation("FEM SPIDER");
+	CombatManager.displayLocation("F.SPIDER");
 	CombatManager.beginCombat();
 }
 

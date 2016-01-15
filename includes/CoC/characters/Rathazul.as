@@ -543,14 +543,14 @@ public function rathazulArmorMenu():void {
 	} else 
 		addDisabledButton(1, "BeeArmor", "Bee Armor", "You need 5 chitin plates to make this armor.");
 	
-	if(pc.hasItemByName("T.SSilk")/* && flags[kFLAGS.RATHAZUL_SILK_ARMOR_COUNTDOWN] + flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00275] == 0*/) {
-		addButton(2, "SpiderSilk");//, craftSilkArmor);
-	} else 
+	//if(pc.hasItem(new CoCToughSpiderSilk())/* && flags[kFLAGS.RATHAZUL_SILK_ARMOR_COUNTDOWN] + flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00275] == 0*/) {
+		//addButton(2, "SpiderSilk", craftSilkArmor);
+	//} else 
 		addDisabledButton(2, "SpiderSilk", "Spider Silk", "You need 5 bundles of top-quality spider silk for this.");
 		
-	if(pc.hasItemByName("D.Scale")) {
-		addButton(3, "Dragonscale");// , craftDragonscaleArmor);
-	} else 
+	//if(pc.hasItem(new CoCDragonScale())) {
+		//addButton(3, "Dragonscale", craftDragonscaleArmor);
+	//} else 
 		addDisabledButton(3, "Dragonscale", "Dragonscale", "You need 5 dragon scales for this.");
 		
 	//if (pc.hasKeyItem("Tentacled Bark Plates") >= 0) {

@@ -2,13 +2,9 @@ package classes.Characters.CoC
 {
 	import classes.Creature;
 	import classes.Engine.Combat.applyDamage;
-	import classes.Engine.Combat.calculateDamage;
 	import classes.Engine.Combat.combatMiss;
-	import classes.Engine.Combat.damageRand;
 	import classes.Engine.Combat.DamageTypes.DamageFlag;
-	import classes.Engine.Combat.DamageTypes.DamageResult;
 	import classes.Engine.Combat.DamageTypes.TypeCollection;
-	import classes.Engine.Combat.outputDamage;
 	import classes.Engine.Combat.rangedCombatMiss;
 	import classes.Engine.Interfaces.*;
 	import classes.Engine.Utility.*;
@@ -49,7 +45,7 @@ package classes.Characters.CoC
 			}
 			
 			if (kGAMECLASS.pc.hasStatusEffect("Web") && kGAMECLASS.pc.energy() >= 5 && (kGAMECLASS.pc.hasPerk("Enlightened Nine-tails") || kGAMECLASS.pc.hasPerk("Corrupted Nine-tails") || kGAMECLASS.flags["COC.SPELL_WHITEFIRE"] == 1 && !kGAMECLASS.pc.hasStatusEffect("Silence"))) {
-				addButton(10, "BurnWebs", CleansingFlame, null, "Burn webs", "Get rid of that webs by <b>all</b> means!");
+				addButton(10, "Burn Webs", CleansingFlame, null, "Burn webs", "Get rid of that webs by <b>all</b> means!");
 			}
 		}
 		
@@ -76,7 +72,7 @@ package classes.Characters.CoC
 			applyDamage(new TypeCollection( { burning : damage }, DamageFlag.BYPASS_SHIELD ), kGAMECLASS.pc, kGAMECLASS.pc, "minimal");
 			WebCleanup();
 			
-			if(kGAMECLASS.pc.WQ() > 90 || kGAMECLASS.pc.personality() > 90 || kGAMECLASS.pc.cor() > 90) {
+			if(kGAMECLASS.pc.WQ() > 90 || kGAMECLASS.pc.personality > 90 || kGAMECLASS.pc.cor() > 90) {
 				output("\n\n" + capitalA + short + " is watching at your maniacal glee in downright terror!  ");
 				createStatusEffect("Stunned", 1, 0, 0, 0, true, "Stun", "Cannot act for a turn.", true, 0);
 			}

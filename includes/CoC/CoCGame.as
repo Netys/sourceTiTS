@@ -61,6 +61,7 @@ include "areas/plains/BunnyGirl.as";
 include "areas/swamp/swamp.as";
 include "areas/swamp/SwampLoot.as";
 include "areas/swamp/FemaleSpiderMorphScene.as";
+include "areas/swamp/MaleSpiderMorphScene.as";
 include "areas/boat/boat.as";
 include "areas/boat/MaraeScene.as";
 include "areas/boat/SharkGirlScene.as";
