@@ -1778,6 +1778,69 @@ package classes.Engine.Utility
 			return true;
 		}
 		
+		public static function guessCockType(target:Creature):int {
+			var cType:int = GLOBAL.TYPE_HUMAN;
+			var race:String = target.race();
+			
+			// copypaste from race detection for now
+			if (target.horseScore() >= 3) cType = GLOBAL.TYPE_EQUINE; // Horse-morphs
+			if (target.foxScore() >= 4) cType = GLOBAL.TYPE_VULPINE;
+			if (target.kitsuneScore() >= 5 && target.foxScore() < 4) cType = RandomInCollection(GLOBAL.TYPE_HUMAN, GLOBAL.TYPE_VULPINE);
+			if (target.lizardScore() >= 4) cType = GLOBAL.TYPE_SNAKE;
+			if (target.kangaScore() >= 4) cType = GLOBAL.TYPE_KANGAROO;
+			//if (target.bunnyScore() >= 4) race = "bunny-" + mf("boy", "girl");
+			if (target.harpyScore() >= 4) cType = GLOBAL.TYPE_AVIAN;
+			//if (target.spiderScore() >= 4) race = "spider-" + mf("boy", "girl");
+			//if (target.ovirScore() >= 3 && cType == 0) cType = GLOBAL.TYPE_EQUINE; // screws shit
+			if (target.ausarScore() >= 2 && cType == 0) cType = GLOBAL.TYPE_CANINE; // Fucking Ausar forever overriding other shit. EXTERMINATUS.
+			if (target.kaithritScore() >= 3 && cType == 0) cType = GLOBAL.TYPE_FELINE;
+			if (target.leithanScore() >= 3 && cType == 0) cType = GLOBAL.TYPE_SNAKE;
+			if (target.nukiScore() >= 2 && cType == 0) cType = GLOBAL.TYPE_KUITAN;
+			if (target.raskvelScore() >= 2) cType = GLOBAL.TYPE_SNAKE;
+			if (target.bovineScore() >= 3) cType = GLOBAL.TYPE_EQUINE; // Cow-morphs
+			if (target.raskvelScore() >= 4) cType = GLOBAL.TYPE_SNAKE;
+			//if (target.pandaScore() >= 4) race = "panda-morph";
+			if (target.ausarScore() >= 4) cType = GLOBAL.TYPE_CANINE;
+			if (target.dogScore() >= 4) cType = GLOBAL.TYPE_CANINE;
+			if (target.demonScore() >= 5) cType = GLOBAL.TYPE_DEMONIC;
+			if (target.gabilaniScore() >= 5) cType = GLOBAL.TYPE_GABILANI;
+			//if (target.frogScore() >= 5) race = "kerokoras";
+			if (target.kaithritScore() >= 6) cType = GLOBAL.TYPE_FELINE;
+			if (target.catScore() >= 5) cType = GLOBAL.TYPE_FELINE;
+			if (target.leithanScore() >= 6) cType = GLOBAL.TYPE_SNAKE;
+			if (target.nukiScore() >= 6) cType = GLOBAL.TYPE_KUITAN;
+			//if (target.vanaeScore() >= 6) race = "vanae-morph";
+			if (target.raskvelScore() >= 6) cType = GLOBAL.TYPE_SNAKE;
+			if (target.zilScore() >= 6) cType = GLOBAL.TYPE_BEE;
+			//if (target.badgerScore() >= 4) race = "badger";
+			if (target.ovirScore() >= 5) cType = GLOBAL.TYPE_EQUINE;
+			//if (target.myrScore() >= 4) race = "myr";
+			//if (race == "myr" && target.goldMyrScore() >= 8) race = "gold myr";
+			//if (race == "myr" && target.redMyrScore() >= 8) race = "red myr";
+			//if (target.orangeMyrScore() >= 9) race = "orange myr";
+			// Human-morphs
+			//if (race == "human" && target.cowScore() >= 4) cType = GLOBAL.TYPE_EQUINE; // wtf
+			// Centaur-morphs
+			if (target.horseScore() >= 3 && target.isCentaur()) cType = GLOBAL.TYPE_EQUINE;
+			//else if (target.bovineScore() >= 3 && target.isTaur()) cType = GLOBAL.TYPE_EQUINE;
+			//else if (race == "human" && target.isCentaur()) cType = GLOBAL.TYPE_EQUINE;
+			//else if (target.isTaur()) race = taurRace(race); // Other taurs
+			// Naga-morphs
+			//if (target.naleenScore() >= 5 && target.isNaga()) cType = GLOBAL.TYPE_SNAKE;
+			//else 
+			if (target.isNaga()) cType = GLOBAL.TYPE_SNAKE;
+			// Slime-morphs
+			//if (target.gooScore() >= 6) race = "goo-morph";
+			//if (target.gooScore() >= 8) race = "galotian";
+			// MLP-morphs
+			if (target.legType == GLOBAL.TYPE_MLP) cType = GLOBAL.TYPE_EQUINE;
+			// Amalgamations
+			//if (race == "human" && humanScore() < 4) race = "alien hybrid";
+			
+			return cType;
+		}
+		
+		
 		/**
 		 * Legacy tool. Use example:
 		 * Mutator.lengthChange(pc, pc.increaseCock(5,0), pc.cocks.length);

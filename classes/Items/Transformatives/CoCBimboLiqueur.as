@@ -164,7 +164,7 @@ package classes.Items.Transformatives
 				if (target.balls > 0) {
 					output("\n\nThere's a light pinch against your [pc.sack] that makes you gasp in surprise, followed by an exquisite tightness that makes your [pc.vagina] drool.  Looking down, <b>you see your balls slowly receding into your body, leaving nothing behind but your puffy mons.</b>");
 					target.balls = 0;
-					target.ballSizeRaw = 3;
+					target.ballSizeRaw = 3 * Math.PI;
 					if(target.cumMultiplierRaw < 2) target.cumMultiplierRaw = 2;
 				}
 				if (target.hasCock()) {
@@ -255,4 +255,3 @@ package classes.Items.Transformatives
 		}
 	}
 }
-

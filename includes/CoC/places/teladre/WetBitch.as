@@ -107,17 +107,17 @@ public function barTelAdre():void {
 		else  addButton(counter++, "Niamh", approachNiamh);
 	}
 	//ROGAR #1
-	//if(flags[kFLAGS.ROGAR_PHASE] == 3 && flags[kFLAGS.ROGAR_DISABLED] == 0 && flags[kFLAGS.ROGAR_FUCKED_TODAY] == 0) {
-		//button = anotherButton(button,"HoodedFig",kGAMECLASS.swamp.rogar.rogarThirdPhase);
-		////Wet Bitch screen text when Ro'gar phase = 3:
-		//output("\n\nYou notice a cloaked figure at the bar, though you're quite unable to discern anything else as its back is turned to you.", false);
-	//}
+	if (flags["COC.ROGAR_PHASE"] == 3 && flags["COC.ROGAR_DISABLED"] != 1 && flags["COC.ROGAR_FUCKED_TODAY"] != days) {
+		addButton(counter++, "HoodedFig", rogarThirdPhase);
+		//Wet Bitch screen text when Ro'gar phase = 3:
+		output("\n\nYou notice a cloaked figure at the bar, though you're quite unable to discern anything else as its back is turned to you.");
+	}
 	//ROGAR #2
-	//else if(flags[kFLAGS.ROGAR_PHASE] >= 4 && flags[kFLAGS.ROGAR_DISABLED] == 0 && flags[kFLAGS.ROGAR_FUCKED_TODAY] == 0) {
-		//button = anotherButton(button,"Rogar",kGAMECLASS.swamp.rogar.rogarPhaseFour);
-		////Wet Bitch bar text when Ro'gar phase = 4:
-		//output("\n\nRo'gar is here with his back turned to the door, wearing his usual obscuring cloak.", false);
-	//}
+	else if(flags["COC.ROGAR_PHASE"] >= 4 && flags["COC.ROGAR_DISABLED"] != 1 && flags["COC.ROGAR_FUCKED_TODAY"] != days) {
+		addButton(counter++, "Rogar", rogarPhaseFour);
+		//Wet Bitch bar text when Ro'gar phase = 4:
+		output("\n\nRo'gar is here with his back turned to the door, wearing his usual obscuring cloak.");
+	}
 
 	//switch (scylla.action) { //Scylla - requires dungeon shut down
 		//case Scylla.SCYLLA_ACTION_FIRST_TALK:

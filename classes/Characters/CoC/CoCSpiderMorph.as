@@ -39,7 +39,7 @@ package classes.Characters.CoC
 		
 		public function additionalCombatMenuEntries():void
 		{
-			if (kGAMECLASS.pc.hasStatusEffect("Disarmed")) {
+			if (kGAMECLASS.pc.hasStatusEffect("Disarmed")) { // TODO: use fists?
 				addDisabledButton(0, "Attack", "Attack", "You are disarmed!");
 				addDisabledButton(1, "Shoot", "Shoot", "You are disarmed!");
 			}
@@ -51,6 +51,7 @@ package classes.Characters.CoC
 		
 		public function CleansingFlame():void {
 			clearOutput();
+			kGAMECLASS.pc.energy( -5);
 			output("In desperate attempt to get rid of your restrains, you are brought to setting them ablaze!  ");
 			var damage:Number = 0;
 			if (kGAMECLASS.pc.hasPerk("Enlightened Nine-tails")) {
