@@ -62,6 +62,7 @@ include "areas/swamp/swamp.as";
 include "areas/swamp/SwampLoot.as";
 include "areas/swamp/FemaleSpiderMorphScene.as";
 include "areas/swamp/MaleSpiderMorphScene.as";
+include "areas/swamp/CorruptedDriderScene.as";
 include "areas/boat/boat.as";
 include "areas/boat/MaraeScene.as";
 include "areas/boat/SharkGirlScene.as";

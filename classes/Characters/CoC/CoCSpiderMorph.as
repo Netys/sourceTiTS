@@ -54,11 +54,11 @@ package classes.Characters.CoC
 			output("In desperate attempt to get rid of your restrains, you are brought to setting them ablaze!  ");
 			var damage:Number = 0;
 			if (kGAMECLASS.pc.hasPerk("Enlightened Nine-tails")) {
-				output("Holding out your palm, you conjure an ethereal blue flame that dances across your fingertips.  You squeeze it in your hand, and it envelops your own body, burning webs and showering dazzling azure sparks everywhere. Good news - your own fox fire can't burn you. Bad news - burning webs can...  ");
+				output("Holding out your palm, you conjure an ethereal blue flame that dances across your fingertips.  You squeeze it in your [pc.hand], and it envelops your own body, burning webs and showering dazzling azure sparks everywhere. Good news - your own fox fire can't burn you. Bad news - burning webs can...  ");
 				damage = 0;
 			}
 			else if (kGAMECLASS.pc.hasPerk("Corrupted Nine-tails")) {
-				output("Holding out your palm, you conjure corrupted purple flame that dances across your fingertips.  You squeeze it in your hand, and it envelops your own body, burning webs and showering dazzling lavender sparks everywhere. Good news - your own fox fire can't burn you. Bad news - burning webs can...  ");
+				output("Holding out your palm, you conjure corrupted purple flame that dances across your fingertips.  You squeeze it in your [pc.hand], and it envelops your own body, burning webs and showering dazzling lavender sparks everywhere. Good news - your own fox fire can't burn you. Bad news - burning webs can...  ");
 				damage = 0;
 			}
 			else if (kGAMECLASS.flags["COC.SPELL_WHITEFIRE"] == 1) {
