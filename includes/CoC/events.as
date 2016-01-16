@@ -16,7 +16,7 @@ public function EventsAdopterHellNotify():void {
 			}
 			pc.slowStatGain("i", -1);
 			pc.lust(15);
-			output("</b>");
+			eventBuffer += "</b>";
 		}
 		if (pc.longestCockLength() < 8) { //(Dick rebiggening) 
 			eventBuffer += "\n\n<b>As time passes, your cock engorges, flooding with blood and growing until it's at 8 inches long.  You really have no control over your dick.</b>";

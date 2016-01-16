@@ -1307,12 +1307,12 @@ private function getAnemoneItem():void
 	else if (kidAXP() < 100) {
 		//Mino Blood/Large Axe/Comfortable Clothes/Lust Draft/Lust Dagger/Bro Brew(same odds as player drop)
 		itype = RandomInCollection(new CoCMinotaurBlood(), new CoCMinotaurAxe(), /* armors.C_CLOTH,*/ new CoCLustDagger(), new CoCLustDraft());
-		//if (rand(100) == 0) itype = consumables.BROBREW;
+		if (rand(100) == 0) itype = new CoCBroBrew();
 	}
 	else {
 		//T.Shark Tooth/Pink Gossamer/Black Gossamer/Reptilum
 		var choice:Number = rand(100);
-		//if (choice == 0) itype = consumables.BROBREW;
+		if (choice == 0) itype = new CoCBroBrew();
 		if (choice == 1) itype = new CoCBimboLiqueur();
 		else
 			itype = RandomInCollection(/*consumables.TSTOOTH*/new CoCSweetGossamer(), new CoCBlackGossamer(), new CoCReptilum());

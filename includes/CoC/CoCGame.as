@@ -86,6 +86,7 @@ include "characters/JojoScene.as";
 include "characters/Rathazul.as";
 include "characters/Sophie.as";
 include "characters/Hel.as";
+include "characters/KihaScene.as";
 
 public function initCoCJunk():void {
 	if (flags["COC.CORRUPTION"] == undefined) flags["COC.CORRUPTION"] = int(pc.personality / 2.1) + 10;

@@ -27,8 +27,8 @@ package classes.Characters.CoC
 			this.a = "the ";
 			this.capitalA = "The ";
 			this.long = "A kitsune stands in front of you, about five and a half feet tall.";
-			this.customDodge = "";
-			this.customBlock = "";
+			this.customDodge = "To your surprise, you stumble awkwardly as the attack passes straight through her - a mirage!  You curse as you hear a giggle behind you, turning to face her once again.";
+			this.customBlock = "To your surprise, you stumble awkwardly as the attack passes straight through her - a mirage!  You curse as you hear a giggle behind you, turning to face her once again.";
 			
 			this.meleeWeapon.attack = 5;
 			this.meleeWeapon.longName = "fist";
