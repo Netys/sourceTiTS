@@ -1,8 +1,12 @@
 import classes.Characters.CoC.CoCTrader;
 import classes.Creature;
 import classes.GLOBAL;
+import classes.Items.Apparel.CoCDragonScaleRobes;
+import classes.Items.Apparel.CoCSpiderSilkRobes;
 import classes.Items.Armor.CoCBeeArmor;
+import classes.Items.Armor.CoCDragonScaleArmor;
 import classes.Items.Armor.CoCGelArmor;
+import classes.Items.Armor.CoCSpiderSilkArmor;
 import classes.Items.Miscellaneous.*;
 import classes.Items.Transformatives.*;
 import classes.Items.Transformatives.CoCDyes.*;
@@ -13,46 +17,28 @@ import classes.Engine.Utility.*;
 
 public function followerCampMenuBlurbRathazul(showInteractButton:Boolean):void {
 	if (flags["COC.RATHAZUL_IN_CAMP"] == 1) {
-		outputText("Tucked into a shaded corner of the rocks is a bevy of alchemical devices and equipment.  ");
+		output("Tucked into a shaded corner of the rocks is a bevy of alchemical devices and equipment.  ");
 		//if (!(hours > 4 && hours < 23)) outputText("The alchemist is absent from his usual work location. He must be sleeping right now.");
 		//else 
-		if (flags["COC.RATHAZUL_SILK_ARMOR_COUNTDOWN"] > 1)
-			outputText("Tucked into a shaded corner of the rocks is a bevy of alchemical devices and equipment.  The alchemist Rathazul looks to be hard at work on the silken equipment you've commissioned him to craft.\n\n");
-		else if(flags["COC.RATHAZUL_SILK_ARMOR_COUNTDOWN"] == 1) outputText("  Some kind of spider-silk-based equipment is hanging from a nearby rack.  <b>He's finished with the task you gave him!</b>");
-		else outputText("The alchemist Rathazul looks to be hard at work with his chemicals, working on who knows what.");
-		outputText("\n\n", false);
+		if (flags["COC.RATHAZUL_ARMOR_COUNTDOWN"] + 24 * 60 >= timeAsStamp && flags["COC.RATHAZUL_ARMOR_TYPE"] > 0)
+			output("Tucked into a shaded corner of the rocks is a bevy of alchemical devices and equipment.  The alchemist Rathazul looks to be hard at work on the silken equipment you've commissioned him to craft.\n\n");
+		else if(flags["COC.RATHAZUL_ARMOR_COUNTDOWN"] + 24 * 60 < timeAsStamp && flags["COC.RATHAZUL_ARMOR_TYPE"] > 0) output("  Some kind of spider-silk-based equipment is hanging from a nearby rack.  <b>He's finished with the task you gave him!</b>");
+		else output("The alchemist Rathazul looks to be hard at work with his chemicals, working on who knows what.");
+		output("\n\n");
 		//else  
 		if(showInteractButton) addButton(3, "Rathazul", campRathazul, true, "Rathazul", "Visit with Rathazul to see what alchemical supplies and services he has available at the moment.");
 	}
-	//else
-	//{
-		//if (flags[kFLAGS.RATHAZUL_SILK_ARMOR_COUNTDOWN] == 1)
-		//{
-			//outputText("There is a note on your ");
+	else
+	{
+		if (flags["COC.RATHAZUL_ARMOR_COUNTDOWN"] + 24 * 60 < timeAsStamp && flags["COC.RATHAZUL_ARMOR_TYPE"] > 0)
+		{
+			output("There is a note on your ");
 			//if (flags[kFLAGS.CAMP_BUILT_CABIN] > 0) outputText("bed inside your cabin.");
-			//else outputText("bedroll");
-			//outputText(". It reads: \"<i>Come see me at the lake. I've finished your spider-silk ");
-			//switch(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00275]) {
-				//case 1: 
-					//outputText("armor");
-					//break;
-				//case 2: 
-					//outputText("robes");
-					//break;
-				//case 3: 
-					//outputText("bra");
-					//break;
-				//case 4: 
-					//outputText("panties");
-					//break;
-				//case 5: 
-					//outputText("loincloth");
-					//break;
-				//default: outputText("robes");
-			//}
-			//outputText(". -Rathazul</i>\".\n\n");
-		//}
-	//}
+			//else 
+			output("bedroll");
+			output(". It reads: \"<i>Come see me at the lake. I've finished your spider-silk gear. -Rathazul</i>\".\n\n");
+		}
+	}
 }
 
 private var followerCampMenuBlurbRathazulHook: * = followerCampMenuBlurbRathazulGrapple();
@@ -140,10 +126,10 @@ public function campRathazul(first:Boolean = true):void {
 		//marblePurification.visitRathazulToPurifyMarbleAfterLaBovaStopsWorkin();
 		//return;
 	//}
-	//if(flags[kFLAGS.RATHAZUL_SILK_ARMOR_COUNTDOWN] == 1 && flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00275] > 0) {
-		//collectRathazulArmor();
-		//return;
-	//}
+	if(flags["COC.RATHAZUL_ARMOR_COUNTDOWN"] + 24 * 60 < timeAsStamp && flags["COC.RATHAZUL_ARMOR_TYPE"] > 0) {
+		collectRathazulArmor();
+		return;
+	}
 	//Special rathazul/follower scenes scenes.
 	//if(rand(6) == 0 && flags[kFLAGS.RATHAZUL_CAMP_INTERACTION_COUNTDOWN] == 0) {
 		//flags[kFLAGS.RATHAZUL_CAMP_INTERACTION_COUNTDOWN] = 3;
@@ -197,10 +183,10 @@ private function rathazulWorkOffer():Boolean {
 	var debimbo:Boolean = false;
 	var reducto:Boolean = false;
 	clearMenu();
-	//if(flags[kFLAGS.RATHAZUL_SILK_ARMOR_COUNTDOWN] == 1 && flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00275] > 0) {
-		//collectRathazulArmor();
-		//return true;
-	//}
+	if(flags["COC.RATHAZUL_ARMOR_COUNTDOWN"] + 24 * 60 < timeAsStamp && flags["COC.RATHAZUL_ARMOR_TYPE"] > 0) {
+		collectRathazulArmor();
+		return true;
+	}
 	//if (flags[kFLAGS.MINERVA_PURIFICATION_RATHAZUL_TALKED] == 1 && flags[kFLAGS.MINERVA_PURIFICATION_PROGRESS] < 10) {
 		//purificationByRathazulBegin();
 		//return true;
@@ -236,14 +222,14 @@ private function rathazulWorkOffer():Boolean {
 		}
 	}
 	//SPOIDAH
-	if (pc.hasItemByName("T.SSilk")/* && flags[kFLAGS.RATHAZUL_SILK_ARMOR_COUNTDOWN] + flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00275] == 0*/) {
+	if (pc.hasItem(new CoCToughSpiderSilk()) && !(flags["COC.RATHAZUL_ARMOR_COUNTDOWN"] + flags["COC.RATHAZUL_ARMOR_TYPE"] > 0)) {
 		showArmorMenu = true;
 		spoken = true;
 		totalOffers++;
-		output("\"<i>Oooh, is that some webbing from a giant spider or spider-morph?  Most excellent!  With a little bit of alchemical treatment, it is possible I could loosen the fibers enough to weave them into something truly magnificent - armor, or even a marvelous robe,</i>\" offers Rathazul.\n\n", false);
+		output("\"<i>Oooh, is that some webbing from a giant spider or spider-morph?  Most excellent!  With a little bit of alchemical treatment, it is possible I could loosen the fibers enough to weave them into something truly magnificent - armor, or even a marvelous robe,</i>\" offers Rathazul.\n\n");
 	}
 	//Dragonscale
-	if (pc.hasItemByName("D.Scale")) {
+	if (pc.hasItem(new CoCDragonScale())) {
 		showArmorMenu = true;
 		totalOffers++;
 		output("\"<i>Oooh, is that dragon scale? If you happen to have five of these, I can work them into armor,</i>\" Rathazul says.\n\n");
@@ -543,14 +529,14 @@ public function rathazulArmorMenu():void {
 	} else 
 		addDisabledButton(1, "BeeArmor", "Bee Armor", "You need 5 chitin plates to make this armor.");
 	
-	//if(pc.hasItem(new CoCToughSpiderSilk())/* && flags[kFLAGS.RATHAZUL_SILK_ARMOR_COUNTDOWN] + flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00275] == 0*/) {
-		//addButton(2, "SpiderSilk", craftSilkArmor);
-	//} else 
+	if(pc.hasItem(new CoCToughSpiderSilk(), 5) && !(flags["COC.RATHAZUL_ARMOR_COUNTDOWN"] + flags["COC.RATHAZUL_ARMOR_TYPE"] > 0)) {
+		addButton(2, "SpiderSilk", craftSilkArmor);
+	} else 
 		addDisabledButton(2, "SpiderSilk", "Spider Silk", "You need 5 bundles of top-quality spider silk for this.");
 		
-	//if(pc.hasItem(new CoCDragonScale())) {
-		//addButton(3, "Dragonscale", craftDragonscaleArmor);
-	//} else 
+	if(pc.hasItem(new CoCDragonScale(), 5)) {
+		addButton(3, "Dragonscale", craftDragonscaleArmor);
+	} else 
 		addDisabledButton(3, "Dragonscale", "Dragonscale", "You need 5 dragon scales for this.");
 		
 	//if (pc.hasKeyItem("Tentacled Bark Plates") >= 0) {
@@ -562,111 +548,117 @@ public function rathazulArmorMenu():void {
 	addButton(14, "Back", campRathazul, false);
 }
 
-//private function craftSilkArmor():void {
-	////spriteSelect(49);
-	//clearOutput();
-	//clearMenu();
-	//output("You hand the bundled webbing to Rathazul carefully, lest you damage the elderly mouse.  He gives you a bemused smile and snatches the stuff from your grasp while he mutters, \"<i>I'm not falling apart you know.</i>\"\n\n", false);
-	////(Not enough webs: 
-	//if(!pc.hasItemByName("T.SSilk", 5)) {
-		//output("The rat shakes his head and hands it back to you.  \"<i>This isn't enough for me to make anything with.  I'll need at least five bundles of this stuff total, so you'll need to find more,</i>\" he explains.\n\n", false);
-		////(optional spider bonus: 
-		//if(pc.hasTail(GLOBAL.TYPE_ARACHNID)) {
-			//output("You show him your spider-like abdomen in response, offering to produce more webbing for him.  Rathazul chuckles dryly, a sound that reminds you of hot wind rushing through a dead valley.  \"<i>Dear child, this would never do.  Silk this tough can only be produced by a true-born spider.  No matter how you change yourself, you'll always be a human at heart.</i>\"\n\n", false);
-			//output("The old rat shakes his head and adds, \"<i>Well, now that I think about it, the venom of a red widow might be able to transform you until you are a spider to the core, but I have absolutely no idea what that would do to you.  If you ever try such a dangerous, reckless idea, let me know.  I want to have my notebooks handy, for SCIENCE!</i>\"\n\n", false);
-		//}
-		//if (pc.hasItemByName("T.SSilk", 2)) {
+private function craftSilkArmor():void {
+	//spriteSelect(49);
+	clearOutput();
+	clearMenu();
+	output("You hand the bundled webbing to Rathazul carefully, lest you damage the elderly mouse.  He gives you a bemused smile and snatches the stuff from your grasp while he mutters, \"<i>I'm not falling apart you know.</i>\"\n\n", false);
+	//(Not enough webs: 
+	if(!pc.hasItem(new CoCToughSpiderSilk(), 5)) {
+		output("The rat shakes his head and hands it back to you.  \"<i>This isn't enough for me to make anything with.  I'll need at least five bundles of this stuff total, so you'll need to find more,</i>\" he explains.\n\n", false);
+		//(optional spider bonus: 
+		if(pc.hasTail(GLOBAL.TYPE_ARACHNID)) {
+			output("You show him your spider-like abdomen in response, offering to produce more webbing for him.  Rathazul chuckles dryly, a sound that reminds you of hot wind rushing through a dead valley.  \"<i>Dear child, this would never do.  Silk this tough can only be produced by a true-born spider.  No matter how you change yourself, you'll always be a human at heart.</i>\"\n\n", false);
+			output("The old rat shakes his head and adds, \"<i>Well, now that I think about it, the venom of a red widow might be able to transform you until you are a spider to the core, but I have absolutely no idea what that would do to you.  If you ever try such a dangerous, reckless idea, let me know.  I want to have my notebooks handy, for SCIENCE!</i>\"\n\n", false);
+		}
+		//if (pc.hasItem(new CoCToughSpiderSilk(), 2)) {
 			//output("\"<i>But this should be enough for undergarments if you want,</i>\" Rathazul adds.");
 			//doYesNo(commissionSilkArmorForReal,declineSilkArmorCommish);
 			//return;
 		//}
-		//doNext(campRathazul, false);
-		//return;
-	//}
-	//output("The rat limps over to his equipment, spider-silk in hand.  With efficient, practiced motions, he runs a few tests.  As he finishes, he sighs and explains, \"<i>This will be harder than I thought.  The webbing is highly resistant to most of my alchemic reagents.  To even begin to work with such material I will need a number of rare, expensive elements.  I would need 500 gems to even start such a project.</i>\"\n\n", false);
-	//output("You can't help but sigh when he names such a sizable figure.  Do you give him the 500 gems and spider-silk in order for him to create you a garment?", false);
-	//if(pc.credits < 5000) {
-		//output("  <b>Wait... you don't even have 500 gems.  Damn.</b>", false);
-		//doNext(campRathazul, false);
-		//return;
-	//}
-	////[Yes] [No]
-	//doYesNo(commissionSilkArmorForReal,declineSilkArmorCommish);
-//}
-//private function commissionSilkArmorForReal():void {
-	////spriteSelect(49);
-	//clearOutput();
-	//clearMenu();
-	//output("You sort 500 gems into a pouch and toss them to Rathazul, along with the rest of the webbing.  The wizened alchemist snaps the items out of the air with lightning-fast movements and goes to work immediately.  He bustles about with enormous energy, invigorated by the challenging task before him.  It seems Rathazul has completely forgotten about you, but as you turn to leave, he calls out, \"<i>What did you want me to make?  A mage's robe or some nigh-impenetrable armor?  Or undergarments if you want.</i>\"\n\n", false);
-	//if (pc.hasItem(useables.T_SSILK, 5)) {
-		//addItemButton(0, "Armor", chooseArmorOrRobes, 1)
-		//addButton(0, "Armor", chooseArmorOrRobes, 1, null, null, armors.SSARMOR.description);
-		//addButton(1, "Robes", chooseArmorOrRobes, 2, null, null, armors.SS_ROBE.description);
-	//}
+		doNext(campRathazul, false);
+		return;
+	}
+	output("The rat limps over to his equipment, spider-silk in hand.  With efficient, practiced motions, he runs a few tests.  As he finishes, he sighs and explains, \"<i>This will be harder than I thought.  The webbing is highly resistant to most of my alchemic reagents.  To even begin to work with such material I will need a number of rare, expensive elements.  I would need 500 gems to even start such a project.</i>\"\n\n", false);
+	output("You can't help but sigh when he names such a sizable figure.  Do you give him the 500 gems and spider-silk in order for him to create you a garment?", false);
+	if(pc.credits < 5000) {
+		output("  <b>Wait... you don't even have 500 gems.  Damn.</b>", false);
+		doNext(campRathazul, false);
+		return;
+	}
+	//[Yes] [No]
+	clearMenu();
+	addButton(0, "Yes", commissionSilkArmorForReal);
+	addButton(1, "No", declineSilkArmorCommish);
+}
+
+private function commissionSilkArmorForReal():void {
+	//spriteSelect(49);
+	clearOutput();
+	clearMenu();
+	output("You sort 500 gems into a pouch and toss them to Rathazul, along with the rest of the webbing.  The wizened alchemist snaps the items out of the air with lightning-fast movements and goes to work immediately.  He bustles about with enormous energy, invigorated by the challenging task before him.  It seems Rathazul has completely forgotten about you, but as you turn to leave, he calls out, \"<i>What did you want me to make?  A mage's robe or some nigh-impenetrable armor?  Or undergarments if you want.</i>\"\n\n");
+	
+	if (pc.hasItem(new CoCToughSpiderSilk(), 5)) {
+		addOverrideItemButton(0, new CoCSpiderSilkArmor(), "Armor", chooseArmorOrRobes, 1);
+		addOverrideItemButton(1, new CoCSpiderSilkRobes(), "Robes", chooseArmorOrRobes, 2);
+	}
 	//addButton(2, "Bra", chooseArmorOrRobes, 3, null, null, undergarments.SS_BRA.description);
 	//addButton(3, "Panties", chooseArmorOrRobes, 4, null, null, undergarments.SSPANTY.description);
 	//addButton(4, "Loincloth", chooseArmorOrRobes, 5, null, null, undergarments.SS_LOIN.description);
-	//addButton(14, "Back", declineSilkArmorCommish);
-//}
-//
-//private function declineSilkArmorCommish():void {
-	////spriteSelect(49);
-	//clearOutput();
-	//output("You take the silk back from Rathazul and let him know that you can't spend 500 gems on a project like that right now.  He sighs, giving you a crestfallen look and a slight nod of his hooded muzzle.", false);
-	//doNext(returnToRathazulMenu);
-//}
+	addButton(14, "Back", declineSilkArmorCommish);
+}
 
-//public function chooseArmorOrRobes(robeType:int):void {
-	////spriteSelect(49);
-	//if (robeType == 1 || robeType == 2) { //Armor or robes
-		//pc.destroyItem(useables.T_SSILK, 5);
-	//}
-	//else { //Undergarments
-		//pc.destroyItem(useables.T_SSILK, 2);
-	//}
-	//pc.gems -= 500;
-	//statScreenRefresh();
-	//output("Rathazul grunts in response and goes back to work.  ", true);
-	//if (pc.findStatusAffect(StatusAffects.CampRathazul) >= 0)
-	//{
-		//output("You turn back to the center of your camp", false);
-	//}
-	//else
-	//{
-		//output("You head back to your camp", false);
-	//}
-	//output(", wondering if the old rodent will actually deliver the wondrous item that he's promised you.", false);
-	//flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00275] = robeType;
-	//flags[kFLAGS.RATHAZUL_SILK_ARMOR_COUNTDOWN] = 24;
-	//trace("274: " + flags[kFLAGS.RATHAZUL_SILK_ARMOR_COUNTDOWN]);
-	//doNext(returnToCampUseOneHour);
-//}
-//private function collectRathazulArmor():void {
-	////spriteSelect(49);
-	//clearOutput();
-	//
-	//output("Rathazul beams and ejaculates, \"<i>Good news everyone!  Your ", false);
-	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00275] == 1) output("armor", false);
-	//else if (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00275] == 2) output("robe", false);
-	//else output("undergarment", false);
-	//output(" is finished!</i>\"\n\n", false);
-	//
-	//var itype:ItemType;
-	//switch(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00275]) {
-		//case 1: //Armor
+private function declineSilkArmorCommish():void {
+	//spriteSelect(49);
+	clearOutput();
+	output("You take the silk back from Rathazul and let him know that you can't spend 500 gems on a project like that right now.  He sighs, giving you a crestfallen look and a slight nod of his hooded muzzle.");
+	clearMenu();
+	addButton(0, "Next", campRathazul, false);
+}
+
+public function chooseArmorOrRobes(robeType:int):void {
+	clearOutput();
+	//spriteSelect(49);
+	if (robeType == 1 || robeType == 2) { //Armor or robes
+		pc.destroyItem(new CoCToughSpiderSilk(), 5);
+	}
+	else { //Undergarments
+		pc.destroyItem(new CoCToughSpiderSilk(), 2);
+	}
+	pc.credits -= 5000;
+	output("Rathazul grunts in response and goes back to work.  ");
+	if (flags["COC.RATHAZUL_IN_CAMP"] == 1)
+	{
+		output("You turn back to the center of your camp");
+	}
+	else
+	{
+		output("You head back to your camp");
+	}
+	output(", wondering if the old rodent will actually deliver the wondrous item that he's promised you.");
+	flags["COC.RATHAZUL_ARMOR_TYPE"] = robeType;
+	flags["COC.RATHAZUL_ARMOR_COUNTDOWN"] = timeAsStamp;
+	trace("274: " + flags["COC.RATHAZUL_ARMOR_COUNTDOWN"]);
+	clearMenu();
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+}
+
+private function collectRathazulArmor():void {
+	//spriteSelect(49);
+	clearOutput();
+	
+	output("Rathazul beams and ejaculates, \"<i>Good news everyone!  Your ");
+	if(flags["COC.RATHAZUL_ARMOR_TYPE"] == 1) output("armor");
+	else if (flags["COC.RATHAZUL_ARMOR_TYPE"] == 2) output("robe");
+	else output("undergarment");
+	output(" is finished!</i>\"\n\n");
+	
+	var itype:ItemSlotClass;
+	switch(flags["COC.RATHAZUL_ARMOR_TYPE"]) {
+		case 1: //Armor
 			//output(images.showImage("rathazul-craft-silkarmor"));
-			//output("A glittering white suit of armor sits atop a crude armor rack, reflecting the light that plays across its surface beautifully.  You definitely didn't expect anything like this!  It looks nearly identical to a set of light platemail, though instead of having a cold metal surface, the armor feels slightly spongy, with just a little bit of give in it.\n\n", false);
-			//
-			//output("While you marvel at the strange equipment, Rathazul explains, \"<i>When you said you wanted armor, I realized I could skip a few of the alchemical processes used to soften material.  The savings let me acquire a cheap metal set of armor to use as a base, and I molded half the armor around each piece, then removed it and created the outer, defensive layers with the rest of the webbing.  Unfortunately, I didn't have enough silk for a solid codpiece, but I did manage to make a you thin loincloth from the leftover scraps  - for modesty.</i>\"\n\n", false);
-			//itype = armors.SSARMOR;
-			//break;
-		//case 2: //Robes
+			output("A glittering white suit of armor sits atop a crude armor rack, reflecting the light that plays across its surface beautifully.  You definitely didn't expect anything like this!  It looks nearly identical to a set of light platemail, though instead of having a cold metal surface, the armor feels slightly spongy, with just a little bit of give in it.\n\n");
+			
+			output("While you marvel at the strange equipment, Rathazul explains, \"<i>When you said you wanted armor, I realized I could skip a few of the alchemical processes used to soften material.  The savings let me acquire a cheap metal set of armor to use as a base, and I molded half the armor around each piece, then removed it and created the outer, defensive layers with the rest of the webbing.  Unfortunately, I didn't have enough silk for a solid codpiece, but I did manage to make a you thin loincloth from the leftover scraps  - for modesty.</i>\"\n\n");
+			itype = new CoCSpiderSilkArmor();
+			break;
+		case 2: //Robes
 			//output(images.showImage("rathazul-craft-silkrobes"));
-			//output("Hanging from a small rack is a long, flowing robe.  It glitters brightly in the light, the pearl-white threads seeming to shimmer and shine with every ripple the breeze blows through the soft fabric.  You run your fingers over the silken garment, feeling the soft material give at your touch.  There's a hood with a golden border embroidered around the edge.  For now, it hangs limply down the back, but it would be easy to pull up in order to shield the wearer's eyes from harsh sunlight or rainy drizzle.  The sleeves match the cowl, circled with intricate threads laid out in arcane patterns.\n\n", false);
-			//
-			//output("Rathazul gingerly takes down the garment and hands it to you.  \"<i>Don't let the softness of the material fool you.  This robe is tougher than many armors, and the spider-silk's properties may even help you in your spell-casting as well.</i>\"\n\n", false);
-			//itype = armors.SS_ROBE;
-			//break;
+			output("Hanging from a small rack is a long, flowing robe.  It glitters brightly in the light, the pearl-white threads seeming to shimmer and shine with every ripple the breeze blows through the soft fabric.  You run your fingers over the silken garment, feeling the soft material give at your touch.  There's a hood with a golden border embroidered around the edge.  For now, it hangs limply down the back, but it would be easy to pull up in order to shield the wearer's eyes from harsh sunlight or rainy drizzle.  The sleeves match the cowl, circled with intricate threads laid out in arcane patterns.\n\n");
+			
+			output("Rathazul gingerly takes down the garment and hands it to you.  \"<i>Don't let the softness of the material fool you.  This robe is tougher than many armors, and the spider-silk's properties may even help you in your spell-casting as well.</i>\"\n\n");
+			itype = new CoCSpiderSilkRobes();
+			break;
 		//case 3: //Bra
 			//output(images.showImage("rathazul-craft-silkbra"));
 			//output("On a table is a pair of white bra.  It glitters brightly in the light, the pearl-white threads seeming to shimmer and shine with every ripple the breeze blows through the soft fabric.  You run your fingers over the silken garment, feeling the soft material give at your touch.  \n\n", false);
@@ -688,16 +680,20 @@ public function rathazulArmorMenu():void {
 			//output("Rathazul gingerly takes the garment and hands it to you.  \"<i>Don't let the softness of the material fool you.  This loincloth is very durable and should be comfortable as well.</i>\"\n\n", false);
 			//itype = undergarments.SS_LOIN;
 			//break;
-		//default:
-			//output("Something bugged! Please report this bug to Kitteh6660.");
-			//itype = armors.SS_ROBE;
-	//}
-	////Reset counters
-	//pc.addStatusValue(StatusAffects.MetRathazul,2,1);
-	//flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00275] = 0;
-	//flags[kFLAGS.RATHAZUL_SILK_ARMOR_COUNTDOWN] = 0;
-	//inventory.takeItem(itype, returnToRathazulMenu);
-//}
+		default:
+			output("Something bugged!");
+			itype = new CoCSpiderSilkRobes();
+	}
+	//Reset counters
+	IncrementFlag("COC.RATHAZUL_BOUGHT");
+	flags["COC.RATHAZUL_ARMOR_TYPE"] = 0;
+	flags["COC.RATHAZUL_ARMOR_COUNTDOWN"] = 0;
+
+	itemScreen = campRathazul;
+	lootScreen = campRathazul;
+	useItemFunction = campRathazul;
+	itemCollect([itype]);
+}
 
 private function craftOozeArmor():void {
 	//spriteSelect(49);
@@ -734,11 +730,12 @@ private function craftCarapace():void {
 	else
 	{
 		output(".  You notice there are no pants.  As you turn to ask him where the pants are, you see him scratching his head and hastily rustling in drawers.  He mutters under his breath, \"<i>I'm sorry, I'm sorry, I got so focused on working on the pauldrons that I forgot to make any leg coverings!  Here, this should look good with it, and it won't restrict your movements.</i>\"  He hands you a silken loincloth");
-		if (pc.mf("m", "f") == "f") output(" with stockings and garters.");
+		if (pc.mf("m", "f") == "f") output(" with stockings and garters");
+		output(".");
 	}
 	output("  He still manages to look somewhat pleased with himself in spite of the blunder, even bragging a little bit, ");
 	output("\"<i>Let me show you the different lengths of string I used.</i>\"\n\n");
-	if((pc.longestCockLength() >= 16 && !pc.hasFullSheaths() && pc.hasStatusEffect("Genital Slit") || pc.balls > 0 && pc.ballSize() > 12)) output("The silken material does little to hide the bulge of your groin, if anything it looks a little lewd.  Rathazul mumbles and looks away, shaking his head.\n\n");
+	if((pc.longestCockLength() >= 16 && !pc.hasFullSheaths() || pc.balls > 0 && pc.ballSize() > 20) && !pc.hasStatusEffect("Genital Slit")) output("The silken material does little to hide the bulge of your groin, if anything it looks a little lewd.  Rathazul mumbles and looks away, shaking his head.\n\n");
 	if(pc.biggestTitSize() >= 8) output("Your [pc.fullChest] barely fit into the breastplate, leaving you displaying a large amount of jiggling cleavage.\n\n");
 	
 	pc.destroyItem(new CoCBlackChitin(), 5);
@@ -752,71 +749,75 @@ private function craftCarapace():void {
 	itemCollect([new CoCBeeArmor()]);
 }
 
-//private function craftDragonscaleArmor():void {
-	////spriteSelect(49);
-	//clearOutput();
-	//output("The rat looks at the sheets of dragon scales you're carrying and says, \"<i>I could work these into armor. Or if you want, undergarments. I have the necessary supplies.</i>\"");
-	//menu();
-	//if (pc.hasItem(useables.D_SCALE, 5)) {
-		//addButton(0, "Armor", craftDragonscaleArmorForReal, 0, null, null, armors.DSCLARM.description);
-		//addButton(1, "Robe", craftDragonscaleArmorForReal, 1, null, null, armors.DSCLROB.description);
-	//}
+private function craftDragonscaleArmor():void {
+	//spriteSelect(49);
+	clearOutput();
+	output("The rat looks at the sheets of dragon scales you're carrying and says, \"<i>I could work these into armor. Or if you want, undergarments. I have the necessary supplies.</i>\"");
+	clearMenu();
+	if (pc.hasItem(new CoCDragonScale(), 5)) {
+		addOverrideItemButton(0, new CoCDragonScaleArmor(), "Armor", craftDragonscaleArmorForReal, 1);
+		addOverrideItemButton(1, new CoCDragonScaleRobes(), "Robes", craftDragonscaleArmorForReal, 2);
+	}
 	//else output("\n\nYou realize you're still a bit short on dragonscales for the armor but you can have undergarments made instead.");
-	//addButton(2, "Bra", craftDragonscaleArmorForReal, 2, null, null, undergarments.DS_BRA.description);
-	//addButton(3, "Thong", craftDragonscaleArmorForReal, 3, null, null, undergarments.DSTHONG.description);
-	//addButton(4, "Loincloth", craftDragonscaleArmorForReal, 4, null, null, undergarments.DS_LOIN.description);
-	//addButton(14, "Nevermind", rathazulArmorMenu);
-//}
-//private function craftDragonscaleArmorForReal(type:int = 0):void {
-	////spriteSelect(49);
-	//if (type == 0 || type == 1) { //Armor or robes
-		//pc.destroyItem(useables.D_SCALE, 5);
-	//}
-	//else { //Undergarments
-		//pc.destroyItem(useables.D_SCALE, 2);
-	//}
-	//clearOutput();
-	//var itype:ItemType;
-	//switch(type) {
-		//case 0: //Armor
+	//addButton(2, "Bra", craftDragonscaleArmorForReal, 3, null, null, undergarments.DS_BRA.description);
+	//addButton(3, "Thong", craftDragonscaleArmorForReal, 4, null, null, undergarments.DSTHONG.description);
+	//addButton(4, "Loincloth", craftDragonscaleArmorForReal, 5, null, null, undergarments.DS_LOIN.description);
+	addButton(14, "Nevermind", rathazulArmorMenu);
+}
+private function craftDragonscaleArmorForReal(type:int = 0):void {
+	//spriteSelect(49);
+	if (type == 1 || type == 2) { //Armor or robes
+		pc.destroyItem(new CoCDragonScale(), 5);
+	}
+	else { //Undergarments
+		pc.destroyItem(new CoCDragonScale(), 2);
+	}
+	clearOutput();
+	var itype:ItemSlotClass;
+	switch(type) {
+		case 1: //Armor
 			//output(images.showImage("rathazul-craft-dragonscalearmor"));
-			//output("The rat takes the scales and works on his bench for an hour while you wait.  Once he has finished, Ratzhul is beaming with pride, \"<i>I think you'll be pleased. Go ahead and take a look.</i>\"\n\nHe hands you the armor.  ");
-			//output("The armor is red and the breastplate has nicely decorated pauldrons to give an imposing looks. You touch the armor and feel the scaly texture. \"<i>It's quite flexible and should offer very good protection,</i>\" Rathazul says.");
-			//itype = armors.DSCLARM;
-			//break;
-		//case 1: //Robes
+			output("The rat takes the scales and works on his bench for an hour while you wait.  Once he has finished, Ratzhul is beaming with pride, \"<i>I think you'll be pleased. Go ahead and take a look.</i>\"\n\nHe hands you the armor.  ");
+			output("The armor is red and the breastplate has nicely decorated pauldrons to give an imposing looks. You touch the armor and feel the scaly texture. \"<i>It's quite flexible and should offer very good protection,</i>\" Rathazul says.");
+			itype = new CoCDragonScaleArmor();
+			break;
+		case 2: //Robes
 			//output(images.showImage("rathazul-craft-dragonscalerobes"));
-			//output("The rat takes the scales and works on his bench for an hour while you wait.  Once he has finished, Ratzhul is beaming with pride, \"<i>I think you'll be pleased. Go ahead and take a look.</i>\"\n\nHe hands you the robes.  ");
-			//output("The robe is red and appears to be textured with scales.  You touch the robes and feel the scaly texture. \"<i>It's quite flexible and should offer very good protection,</i>\" Rathazul says.");
-			//itype = armors.DSCLROB;
-			//break;
-		//case 2: //Bra
+			output("The rat takes the scales and works on his bench for an hour while you wait.  Once he has finished, Ratzhul is beaming with pride, \"<i>I think you'll be pleased. Go ahead and take a look.</i>\"\n\nHe hands you the robes.  ");
+			output("The robe is red and appears to be textured with scales.  You touch the robes and feel the scaly texture. \"<i>It's quite flexible and should offer very good protection,</i>\" Rathazul says.");
+			itype = new CoCDragonScaleRobes();
+			break;
+		//case 3: //Bra
 			//output(images.showImage("rathazul-craft-dragonscalebra"));
 			//output("The rat takes the scales and works on his bench for an hour while you wait.  Once he has finished, Ratzhul is beaming with pride, \"<i>I think you'll be pleased. Go ahead and take a look.</i>\"\n\nHe hands you the bra.  ");
 			//output("It's nicely textured with dragon scales. \"<i>I've used leather straps to maintain the flexibility. It should be comfortable and protective,</i>\" Rathazul says.", false);
 			//itype = undergarments.DS_BRA;
 			//break;
-		//case 3: //Thong
+		//case 4: //Thong
 			//output(images.showImage("rathazul-craft-dragonscalethong"));
 			//output("The rat takes the scales and works on his bench for an hour while you wait.  Once he has finished, Ratzhul is beaming with pride, \"<i>I think you'll be pleased. Go ahead and take a look.</i>\"\n\nHe hands you the thong.  ");
 			//output("It's nicely textured with dragon scales. \"<i>I've used leather straps to maintain the flexibility. It should be comfortable and protective,</i>\" Rathazul says.", false);
 			//itype = undergarments.DSTHONG;
 			//break;
-		//case 4: //Loincloth
+		//case 5: //Loincloth
 			//output(images.showImage("rathazul-craft-dragonscaleloincloth"));
 			//output("The rat takes the scales and works on his bench for an hour while you wait.  Once he has finished, Ratzhul is beaming with pride, \"<i>I think you'll be pleased. Go ahead and take a look.</i>\"\n\nHe hands you the loincloth.  ");
 			//output("It's nicely textured with dragon scales. \"<i>I've used leather straps to maintain the flexibility. It should be comfortable and protective,</i>\" Rathazul says.", false);
 			//itype = undergarments.DS_LOIN;
 			//break;
-		//default:
-			//output("Something bugged! Please report this bug to Kitteh6660.");
-			//itype = armors.DSCLARM;
-			//break;
-	//}
-	//pc.addStatusValue(StatusAffects.MetRathazul, 2, 1);
-	//inventory.takeItem(itype, returnToRathazulMenu);
-//}
-//
+		default:
+			output("Something bugged!");
+			itype = new CoCDragonScaleRobes();
+			break;
+	}
+	IncrementFlag("COC.RATHAZUL_BOUGHT");
+	processTime(50 + rand(20));
+	itemScreen = campRathazul;
+	lootScreen = campRathazul;
+	useItemFunction = campRathazul;
+	itemCollect([itype]);
+}
+
 //private function craftMaraeArmor(divine:Boolean = false):void {
 	//clearOutput();
 	//if (!divine) {

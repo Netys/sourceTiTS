@@ -109,7 +109,7 @@ public function placesKnown():Boolean { //Returns true as soon as any known plac
 
 public function placesCount():int {
 	var places:int = dungeonsKnown();
-	//if (flags[kFLAGS.BAZAAR_ENTERED] > 0) places++;
+	if (flags["COC.BAZAAR_ENTERED"] == 1) places++;
 	if (flags["COC.BOAT_DISCOVERED"] == 1) places++;
 	//if (flags[kFLAGS.FOUND_CATHEDRAL] > 0) places++;
 	if (flags["COC.WHITNEY_MET"] >= 3) places++; 
@@ -139,7 +139,7 @@ public function showPlacesMenu():Boolean {
 	output("Which place would you like to visit?");
 	//Build menu
 	
-	//if (flags[kFLAGS.BAZAAR_ENTERED] > 0) addButton(0, "Bazaar", kGAMECLASS.bazaar.enterTheBazaar, null, null, null, "Visit the Bizarre Bazaar where the demons and corrupted beings hang out.");
+	if (flags["COC.BAZAAR_ENTERED"] == 1) addButton(0, "Bazaar", enterTheBazaar, null, "Bazaar", "Visit the Bizarre Bazaar where the demons and corrupted beings hang out.");
 	if (flags["COC.BOAT_DISCOVERED"] == 1) addButton(1, "Boat", boatExplore, null, "Boat", "Get on the boat and explore the lake. \n\nRecommended level: 4\n\nTimes explored: " + flags["COC.EXPLORED_BOAT"]);
 	//if (flags[kFLAGS.FOUND_CATHEDRAL] > 0) 
 	//{

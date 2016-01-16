@@ -32,7 +32,7 @@ private function approachBazaarGuard():void {
 	output("You step from concealment and walk up to the strange man, calling out in greeting.  He folds his arms across his chest and looks you up and down, peering at you with intense, black eyes.  They aren't solid onyx, but his irises are just as dark as the seemingly bottomless depths of his pupils.  His appraising gaze watches you, unblinking as second after second ticks by.  Just when you start to wonder if he speaks your language, he interrupts you by saying, \"<i>");
 	if(pc.cor() < 33) output("Leave at once.  You are not yet ready for the wonders of the Bazaar.");
 	else output("Welcome to the Bizarre Bazaar.  Enter, but be mindful of your actions within.");
-	output("</i>\"", false);
+	output("</i>\"");
 	//if(cor() < 33 - cor()ruptionTolerance()) simpleChoices("FIGHT!",initiateFightGuard, "", null, "", null, "", null, "Leave",returnToCampUseOneHour);
 	//else simpleChoices("Enter",enterTheBazaar, "", null, "", null, "", null, "Leave",returnToCampUseOneHour);
 	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
@@ -48,6 +48,7 @@ public function enterTheBazaar():void {
 		//}
 	//}
 	//enterTheBazaarAndMenu();
+	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
 ////Pure? You'll have to fight!
