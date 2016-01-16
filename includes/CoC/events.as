@@ -1,3 +1,4 @@
+import classes.GameData.Pregnancy.PregnancyManager;
 import classes.GLOBAL;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
@@ -102,6 +103,15 @@ public function EventsAdopterHellNotify():void {
 			eventBuffer += "\n\n<b>As time passes, a pressure in your loins intensifies to near painful levels.  The skin beneath [pc.eachCock] grows loose and floppy, and then two testicles roll down to fill your scrotum.</b>";
 			pc.balls = 2;
 			pc.ballSizeRaw = 3 * Math.PI;
+		}
+	}
+	
+	if (pc.hasPerk("Oviposition") && pc.hasVagina() && (days % 30 == 0 || pc.fertility() >= 2 && days % (30 / int(pc.fertility())) == 0) && !pc.isPregnant(0)) {
+		if (PregnancyManager.findHandler("CoCOviElixEggs").tryKnockUp(pc, pc, 0)) {
+			eventBuffer += "\n\n<b>Somehow you know that eggs have begun to form inside you.  You wonder how long it will be before they start to show?</b>";
+			pc.createStatusEffect("MagicColorfulEggs", rand(5), 0, 0, 0);
+			if (pc.hasPerk("Harpy Womb") && pc.legType == GLOBAL.TYPE_AVIAN && pc.hasTail(GLOBAL.TYPE_AVIAN)) pc.setStatusValue("MagicColorfulEggs", 2, 1);
+			pc.addPerkValue("Oviposition", 1, 1); //Count times eggpregged this way in perk.
 		}
 	}
 }

@@ -3,6 +3,8 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
+include "Benoit.as";
+
 //[Find Travelling Bazaar]
 public function findBazaar():void {
 	clearOutput();
@@ -24,17 +26,18 @@ public function findBazaar():void {
 	addButton(1, "No", function ():* { processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
-
-
 //[FUCK YES I WILL PUT IT IN YOUR BIZARRE ANUS]
 private function approachBazaarGuard():void {
 	clearOutput();
 	output("You step from concealment and walk up to the strange man, calling out in greeting.  He folds his arms across his chest and looks you up and down, peering at you with intense, black eyes.  They aren't solid onyx, but his irises are just as dark as the seemingly bottomless depths of his pupils.  His appraising gaze watches you, unblinking as second after second ticks by.  Just when you start to wonder if he speaks your language, he interrupts you by saying, \"<i>");
-	if(pc.cor() < 33) output("Leave at once.  You are not yet ready for the wonders of the Bazaar.");
-	else output("Welcome to the Bizarre Bazaar.  Enter, but be mindful of your actions within.");
+	//if(pc.cor() < 33) output("Leave at once.  You are not yet ready for the wonders of the Bazaar.");
+	//else 
+	output("Welcome to the Bizarre Bazaar.  Enter, but be mindful of your actions within.");
 	output("</i>\"");
 	//if(cor() < 33 - cor()ruptionTolerance()) simpleChoices("FIGHT!",initiateFightGuard, "", null, "", null, "", null, "Leave",returnToCampUseOneHour);
-	//else simpleChoices("Enter",enterTheBazaar, "", null, "", null, "", null, "Leave",returnToCampUseOneHour);
+	//else 
+	clearMenu();
+	addButton(0, "Enter", enterTheBazaar);
 	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
@@ -47,8 +50,7 @@ public function enterTheBazaar():void {
 			//return;
 		//}
 	//}
-	//enterTheBazaarAndMenu();
-	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+	enterTheBazaarAndMenu();
 }
 
 ////Pure? You'll have to fight!
@@ -62,29 +64,29 @@ public function enterTheBazaar():void {
 	//output("With the gatekeeper defeated, you walk right past the unconscious guard and enter...", false);
 	//cleanupAfterCombat(enterTheBazaarAndMenu);
 //}
-//
-////[Enter]
-//public function enterTheBazaarAndMenu(demons:Boolean = true):void {
-	////Make sure flags to allow entrance is set.
-	//flags["COC.BAZAAR_ENTERED"] = 1;
-	//clearOutput();
+
+//[Enter]
+public function enterTheBazaarAndMenu(demons:Boolean = true):void {
+	//Make sure flags to allow entrance is set.
+	flags["COC.BAZAAR_ENTERED"] = 1;
+	clearOutput();
 	//spriteSelect(-1);
 	//output(images.showImage("location-bazaar"));
-	//output("You breeze past the crimson guard and enter the interior of the Bizarre Bazaar.  The ground is hard-packed, trampled as if walked over by hundreds of hooves, paws, and feet.  A massive bonfire rages in the center of the clearing, crackling and popping as it consumes its fuel gluttonously.  Surrounding the blazing behemoth are tiny, wheeled food-carts with vendors hawking everything from sausage to something called a 'marshmallow'.  Huge wagons ring the clearing, many set up to display exotic wares or services.  You can see everything from dancing centaurs to demons browsing the wares, but it seems an uneasy truce of sorts reigns here.  Then again, maybe the demons have just not had the chance to openly attack this place yet.", false);
-	//output("\n\nOne of the wagons proudly proclaims itself to be \"Greta's Garments,\" though both 'G's are emphasized with cute, stylized devil horns, and the 'S' is shaped in the form of a spaded, demonic tail.  Obviously it must some kind of clothing shop.");
+	output("You breeze past the crimson guard and enter the interior of the Bizarre Bazaar.  The ground is hard-packed, trampled as if walked over by hundreds of hooves, paws, and feet.  A massive bonfire rages in the center of the clearing, crackling and popping as it consumes its fuel gluttonously.  Surrounding the blazing behemoth are tiny, wheeled food-carts with vendors hawking everything from sausage to something called a 'marshmallow'.  Huge wagons ring the clearing, many set up to display exotic wares or services.  You can see everything from dancing centaurs to demons browsing the wares, but it seems an uneasy truce of sorts reigns here.  Then again, maybe the demons have just not had the chance to openly attack this place yet.", false);
+	output("\n\nOne of the wagons proudly proclaims itself to be \"Greta's Garments,\" though both 'G's are emphasized with cute, stylized devil horns, and the 'S' is shaped in the form of a spaded, demonic tail.  Obviously it must some kind of clothing shop.");
 	//roxanne.RoxanneAppearance();
-	//benoit.setBenoitShop();
+	setBenoitShop();
 	//fapArena.fapAppearance();
 	//blackCock.blackCockDescription();
-	////Set menu. The top row is always available.
-	//menu();
-	//addButton(0, "Shops", shopMenu);
+	//Set menu. The top row is always available.
+	clearMenu();
+	addButton(0, "Shops", shopMenu);
 	//addButton(1, (flags[kFLAGS.FAP_ARENA_RULES_EXPLAINED] > 0 ? "Fap Arena" : "Tent"), fapArena.fapArenaGOOOO);
 	//addButton(2, "Food Tent", blackCock.enterTheBlackCock, null, null, null, "The incredible smell seems to come from that tent.", "The Black Cock");
 	//addButton(4, "Back Alley", investigateBackAlley, null, null, null, "That back alley looks suspicious. Do you dare investigate?");
-	////Cinnabar
+	//Cinnabar
 	//if (model.time.hours >= 15 && model.time.hours <= 20) addButton(5, (flags[kFLAGS.CINNABAR_NUMBER_ENCOUNTERS] > 0 ? "Cinnabar" : "Rat"), cinnabar.cinnabarAppearance(false));
-	////Griping Demons
+	//Griping Demons
 	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] == 0 && rand(4) == 0 && demons) {
 		//overHearDemonsAboutSyrena();
 		//return;
@@ -94,28 +96,28 @@ public function enterTheBazaar():void {
 		//output("\n\n<b>The familiar sounds of the two griping demons can be heard nearby.  Do you listen in again?</b>", false);
 		//addButton(6, "GripingDemons", overHearDemonsAboutSyrena, null, null, null, "Overhear the conversation of the two griping demons.", "Griping Demons");
 	//}
-	////Lilium
+	//Lilium
 	//if (lilium.LiliumText(false) != null) {
 		//addButton(7, (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00267] > 0 ? "Lilium" : "Demon"), lilium.LiliumText(false));
 	//}
-	////Roxanne
+	//Roxanne
 	//addButton(8, (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00221] > 0 ? "Roxanne" : "Lizans"), (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00221] > 0 ? roxanne.RoxanneChooseApproachOrRepeat : roxanne.Roxanne1stApproach));
-	////Bimbo Niamh
-	//if (flags[kFLAGS.NIAMH_STATUS] > 0 && flags[kFLAGS.NIAMH_MOVED_OUT_COUNTER] == -1) {
-		//if (flags[kFLAGS.NIAMH_STATUS] == 2) output("\n\nThe sounds of voices raised in song and girlish laughter makes it obvious where Niamh is holding a perpetual party.");
-		//addButton(9, "Niamh", getGame().telAdre.niamh.bazaarNiamh);
-	//}
-	//addButton(14,"Leave",returnToCampUseOneHour);
-//}
-//
-//private function shopMenu():void {
-	//menu();
-	//benoit.setBenoitShop(true);
+	//Bimbo Niamh
+	if (flags["COC.NIAMH_STATUS"] > 0 && flags["COC.NIAMH_MOVED_OUT_COUNTER"] == -1) {
+		if (flags["COC.NIAMH_STATUS"] == 2) output("\n\nThe sounds of voices raised in song and girlish laughter makes it obvious where Niamh is holding a perpetual party.");
+		addButton(9, "Niamh", bazaarNiamh);
+	}
+	addButton(14,"Leave",returnToCampUseOneHour);
+}
+
+private function shopMenu():void {
+	clearMenu();
+	setBenoitShop(true);
 	//addButton(1, "G. Garments", gretasGarments);
 	//addButton(2, "S. Squeeze", theSlipperySqueeze);
-	//addButton(4, "Back", enterTheBazaarAndMenu);
-//}
-//
+	addButton(4, "Back", enterTheBazaarAndMenu);
+}
+
 ////Semen Bukkake and Massage Parlor
 ////-Femboi Bunny owner - Joey
 ////-Catboi (10%) assistants.  Some equipped with tentacles.

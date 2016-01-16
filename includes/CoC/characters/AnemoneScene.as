@@ -11,6 +11,8 @@ import classes.ItemSlotClass;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
+import flash.utils.getDefinitionByName;
+import flash.utils.getQualifiedClassName;
 
 //Encountered via Boat (unless a new Under-Lake area is
 //unlocked)
@@ -1075,6 +1077,7 @@ private function fuckingAssholelessAnemoneeeez():void
 	//genericVictory()
 //}
 
+// TODO: remove all references to surroundings, make correct handling of outside camp case
 public function CoCAnemonePregnancyPregnancyBirthing(pregSlot:int):void
 {
 	clearOutput();
@@ -1087,11 +1090,11 @@ public function CoCAnemonePregnancyPregnancyBirthing(pregSlot:int):void
 	
 	output("Hurriedly you strip off your gear and sit down with your back against a rock.  Focusing yourself, you attempt to prepare for labor; you try to remember your recent partners and worry about what kind of monstrous infant you might have to force out of your [pc.vagina " + pregSlot + "].  The first contraction comes and you push as hard as you can, to be rewarded with the feeling of something sliding out between your labia.  You attempt a few more pushes but nothing further seems forthcoming; curious, you look down at your crotch only to discover a blue stalk sticking proudly out of your vagina!\n\n");
 	
-	if(flags["COC.ANEMONE_KID"] > 0) {
+	if(flags["COC.ANEMONE_KID"] > 0 && currentLocation == "COC_CAMP") {
 		output("As you take in the sight, small nodules around the tip begin to form and lengthen, until the little anemone is capped by a mop of wriggling blue-green tentacles.  Horrified, you grasp it at the base and give it a sharp pull.  The pain makes you lock up and nearly takes away your consciousness as its sticky surface releases its grip on your labia and [pc.clit]!   It writhes and slips out of your pain-wracked hands, leaving them tingling.  As you lie there, stunned, it begins to inch back toward your [pc.vagina " + pregSlot + "].  Footfalls sound next to you, and a blue hand picks up the squirming, cilliated creature.  Kid A gives you a shy smile, then turns to her barrel.  A quick splash and a filled waterskin later, she heads toward the stream, toting your grub-like offspring.");
 		pc.cuntChange(0, 20, true, true, false);
 	}
-	else if(pc.hasCock(GLOBAL.TYPE_ANEMONE) && pc.cor() < 25 && flags["COC.ANEMONE_KID"] == undefined && false) { // DISABLED: persistent character breaks comportability.
+	else if(pc.hasCock(GLOBAL.TYPE_ANEMONE) && pc.cor() < 25 && flags["COC.ANEMONE_KID"] == undefined && currentLocation == "COC_CAMP") {
 		output("As you take in the sight, small nodules around the tip begin to form and lengthen, until the little anemone is capped by a mop of wriggling blue-green tentacles.  Horrified, you grasp it at the base and give it a sharp pull.  The ensuing pain in your labia and [pc.clit] makes you lock up and nearly takes away your consciousness, and with [pc.cocks] in the way, you can't get any leverage on the pull at all!  The anemone detaches weakly, but writhes and slips out of your pain-wracked grip, leaving your hands tingling.  As you lie there, stunned, it begins to inch back toward your [pc.vagina " + pregSlot + "].  Searching about weakly with the feelers, it touches along your thigh and searches out the entrance of your pussy.  When the tentacled crown brushes past your lips a venomous heat stirs your crotch and fills you with energy; shocked into sense, you look at the absurd creature.  You raise your arm to slap at it, but something stays your hand.  As if sensing your hesitation, it stands upright and holds itself at attention for inspection.  It would be easy to knock it away... and yet, the unprepossessing little thing looks so proud that you can't quite bring yourself to do so.");
 		output("\n\nYou scoop the diminutive anemone up and look around for somewhere wet to put it.  The stream is too far, the lake doubly so; you'd never make it to either, as sick as you feel from yanking viciously on your clitoris.  Driven to last resorts, you lurch over to the water barrel in your camp and, wrenching the lid off, drop the blue stalk unceremoniously inside.  Exhausted by the shock and pain of the ordeal, you slump down beside the barrel and slip into a doze...");
 		pc.cuntChange(0, 20, true, true, false);
@@ -1245,8 +1248,8 @@ public function approachAnemoneBarrel():void
 	}
 	
 	//[(if Kid A has been given a weapon)
-	if (chars["COC.KID_A"].hasMeleeWeapon()) {
-		output("She has " + chars["COC.KID_A"].getWeaponName() + " sitting next to it.  ");
+	if (flags["COC.ANEMONE_WEAPON_ID"] != undefined) {
+		output("She has " + getKidAWeaponName() + " sitting next to it.  ");
 		//output("Kid A pokes her head out and smiles at you.  What do you need from her?");
 		addButton(1, "Take Weapon", takeOutOfAnemone);
 	} else addButton(1, "Give Weapon", giveAnemoneWeapon);
@@ -1263,7 +1266,7 @@ public function approachAnemoneBarrel():void
 
 	//Tutor, N.Watch, and Evict require the anemone to be present
 	if (!(flags["COC.KID_SITTER"] > 1)) {
-		if (chars["COC.KID_A"].hasMeleeWeapon() && pc.energy() >= 10) addButton(3, "Tutor", tutorAnemoneKid);
+		if (flags["COC.ANEMONE_WEAPON_ID"] != undefined && pc.energy() >= 10) addButton(3, "Tutor", tutorAnemoneKid);
 		else if (pc.energy() < 10) output("\n\nYou're too tired to tutor Kid A.");
 		addButton(4, "Watch", anemoneWatchToggle);
 		addButton(10, "Evict", evictANemone);
@@ -1334,7 +1337,7 @@ private function giveAnemoneWeapon():void {
 	//spriteSelect(71);
 	output("What do you want to give her?");
 	function giveableToAnemone(item:ItemSlotClass):Boolean {
-		return item.type == GLOBAL.MELEE_WEAPON;
+		return !item.hasRandomProperties && item.type == GLOBAL.MELEE_WEAPON;
 	}
 	clearMenu();
 	var foundItem:Boolean = false;
@@ -1354,7 +1357,7 @@ private function placeInAnemone(arg:ItemSlotClass):void {
 	output("You leave the item by her barrel.");
 	//spriteSelect(71);
 	//(set Kidweapon to item name, remove from inventory)
-	chars["COC.KID_A"].meleeWeapon = arg.makeCopy();
+	flags["COC.ANEMONE_WEAPON_ID"] = getQualifiedClassName(arg);
 	pc.destroyItem(arg);
 	doNext(approachAnemoneBarrel);
 }
@@ -1364,15 +1367,15 @@ private function takeOutOfAnemone():void
 {
 	clearOutput();
 	//spriteSelect(71);
-	output("You take the " + chars["COC.KID_A"].getWeaponName() + " back.  ");
+	output("You take the " + getKidAWeaponName() + " back.  ");
 	if (flags["COC.ANEMONE_WATCH"] > 0) {
 		output("Your anemone daughter will not be able to guard you at night without a weapon.  If you want her to guard, you'll need to give her a new weapon and tell her to watch at night again.  ");
 		flags["COC.ANEMONE_WATCH"] = 0;
 	}
 
 	//(add weapon to inventory, then revert Kidweapon to empty)
-	var foundLootItems:Array = [chars["COC.KID_A"].meleeWeapon];
-	chars["COC.KID_A"].meleeWeapon = new EmptySlot();
+	var foundLootItems:Array = [(new (getKidAWeaponClass())())];
+	flags["COC.ANEMONE_WEAPON_ID"] = undefined;
 
 	itemScreen = approachAnemoneBarrel;
 	lootScreen = approachAnemoneBarrel;
@@ -1392,7 +1395,7 @@ private function anemoneWatchToggle():void
 		flags["COC.ANEMONE_WATCH"] = 0;
 	}
 	else {
-		if (!chars["COC.KID_A"].hasMeleeWeapon()) {
+		if (flags["COC.ANEMONE_WEAPON_ID"] == undefined) {
 			output("You're not really going to set this featherweight against the night barehanded, are you?!  Her hair hasn't even grown out!  You'd better hand her some kind of weapon.");
 		}
 		else {
@@ -1416,9 +1419,9 @@ private function tutorAnemoneKid():void
 	output("The anemone obediently climbs out of her barrel, ");
 	//[(KidXP < 33)]
 	if (kidAXP() < 33) {
-		output("holding " + chars["COC.KID_A"].getWeaponName() + " protectively across her chest.");
+		output("holding " + getKidAWeaponName() + " protectively across her chest.");
 	}
-	else output("taking up an attentive stance with " + chars["COC.KID_A"].getWeaponName() + " in her hands.");
+	else output("taking up an attentive stance with " + getKidAWeaponName() + " in her hands.");
 
 	output("  You spend some time instructing Kid A in the finer points of the equipment you've provided her with, and then finish up with a practice duel.");
 
@@ -1898,7 +1901,7 @@ public function kidABabysitsCows():void
 
 	output("\n\n\"<i>...no idea why you're so shy and immature,</i>\" the cow-girl continues, no less insistent for her quieter tone.  \"<i>You're almost two feet taller than any of these kids, so why don't you stop acting like one and behave like an adult?  There's work to be done around here and not enough hands to do it!</i>\"");
 
-	output("\n\nMarble takes a horse-stance, awaiting an answer; the anemone considers unhappily for several minutes, then climbs out of the barrel.  Satisfied, Marble turns and herds her children off.  Kid A initially plods along in her wake, but after a moment's consideration, returns to the barrel and grabs her " + chars["COC.KID_A"].getWeaponName() + " before reluctantly joining the others in the open pasture.");
+	output("\n\nMarble takes a horse-stance, awaiting an answer; the anemone considers unhappily for several minutes, then climbs out of the barrel.  Satisfied, Marble turns and herds her children off.  Kid A initially plods along in her wake, but after a moment's consideration, returns to the barrel and grabs her " + getKidAWeaponName() + " before reluctantly joining the others in the open pasture.");
 
 	output("\n\n\"<i>Alright,</i>\" Marble says, as the anemone draws up to her from the rear.  The larger woman turns to face the blue girl.  \"<i>You're going to watch these kids while I sit here and patch some holes in their... why did you bring that to babysit?!</i>\"");
 
@@ -1948,7 +1951,7 @@ public function kidAWatchesSharks():void
 	}
 	//(else KidXP < 75)
 	else if (kidAXP() < 75) {
-		output("\n\nThe sharks look up from their play, baring teeth at the anemone.  She steels herself, then holds her " + chars["COC.KID_A"].getWeaponName() + " menacingly in front of her as best she can while she steps into the stream and fills her waterskins.  Occasionally one of the shark-girls will feint at the anemone, who accordingly turns the weapon toward the aggressor until she retreats.  Once the skins are filled, Kid A hangs them over her shoulders and backs away, still facing the sharks with her weapon out.");
+		output("\n\nThe sharks look up from their play, baring teeth at the anemone.  She steels herself, then holds her " + getKidAWeaponName() + " menacingly in front of her as best she can while she steps into the stream and fills her waterskins.  Occasionally one of the shark-girls will feint at the anemone, who accordingly turns the weapon toward the aggressor until she retreats.  Once the skins are filled, Kid A hangs them over her shoulders and backs away, still facing the sharks with her weapon out.");
 	}
 	//(else)
 	else output("\n\nThe anemone doesn't hesitate, but bursts into the middle of the shark-girls like a bomb, shrieking and making huge splashes, scattering them in multiple directions.  She quickly scoops up both skins' worth of water and then runs, giggling giddily with the shark-girls dogging her heels until she's halfway back to camp.");
@@ -1962,7 +1965,7 @@ public function kidAWatchesSharks():void
 public function goblinNightAnemone():void
 {
 	output("\n<b>That night...</b>");
-	output("\nA noisy clump of gabbling green in the distance awakens you and attracts your attention.  As it draws closer to your camp, you can make out tufts of shockingly-colored hair atop it, and then distinct shapes.  The blot on the landscape resolves into a glob of goblins, clearly intent on reaching your camp's perimeter.  Your anemone notices as well, and, attempting to fulfill the terms of her lease, picks up her " + chars["COC.KID_A"].getWeaponName() + " and moves to intercept them.  You follow at a good distance and tuck yourself behind some cover, already suspecting the identities of the invaders.");
+	output("\nA noisy clump of gabbling green in the distance awakens you and attracts your attention.  As it draws closer to your camp, you can make out tufts of shockingly-colored hair atop it, and then distinct shapes.  The blot on the landscape resolves into a glob of goblins, clearly intent on reaching your camp's perimeter.  Your anemone notices as well, and, attempting to fulfill the terms of her lease, picks up her " + getKidAWeaponName() + " and moves to intercept them.  You follow at a good distance and tuck yourself behind some cover, already suspecting the identities of the invaders.");
 
 	output("\n\nThe goblins slow up and then stop as the anemone plants herself in their way.  The two sides size one another up for a minute, and then the glob parts to reveal its largest member.");
 
@@ -1973,7 +1976,7 @@ public function goblinNightAnemone():void
 
 	output("\n\nThe goblin looks a little surprised.  \"<i>What do you mean, getting in our way?  I'll warn you once; step aside and let us search that camp for baby batter, or I will make you regret it.</i>\"  She considers the anemone irately, then gestures to her entourage and adds, \"<i>I'd have these cunts ride your sad little willy silly to punish you for being such a slag, but we can't get goblins out of you people - only more blue bitches.</i>\"");
 
-	output("\n\nThough you can't see Kid A's expression from behind, she's probably steeling her face into as stern a mask as she's capable of, judging by the way she assumes an aggressive stance - albeit one that's still trying to protect her body as much as possible with " + chars["COC.KID_A"].getWeaponName() + ".  As the anemone takes a step forward, the goblins all take a step back, except for the leader.  The two are now staring at each other; one looking up, the other down.");
+	output("\n\nThough you can't see Kid A's expression from behind, she's probably steeling her face into as stern a mask as she's capable of, judging by the way she assumes an aggressive stance - albeit one that's still trying to protect her body as much as possible with " + getKidAWeaponName() + ".  As the anemone takes a step forward, the goblins all take a step back, except for the leader.  The two are now staring at each other; one looking up, the other down.");
 
 	output("\n\n\"<i>Well, we got a blue badass here,</i>\" the goblin says, raising her hands in a gesture of mock wariness.  Before anyone can react, she reaches behind her back and grabs a phial fastened there, throwing it overhand at the anemone with a grunt.  It crashes into Kid A's shoulder and shatters, dousing one gill and the side of her chest in green liquid.  The blue girl glances down at it as the goblin laughs in triumph.");
 
@@ -1984,6 +1987,15 @@ public function goblinNightAnemone():void
 	output("\n\n\"<i>Don't think this is over, you blue freak!</i>\" she shouts, turning away.  \"<i>We'll be back!  Let's go, you greedy bitches.</i>\"  With much grumbling, the glob forms up around her and begins to move off.  Kid A watches them go for a while, then turns back to you, her face the picture of confusion.  You smile gratefully and head back to bed.\n");
 }
 
+public function getKidAWeaponName():String {
+	if (flags["COC.ANEMONE_WEAPON_ID"] == undefined) return "tentacles";
+	
+	return ((new (getKidAWeaponClass())()) as ItemSlotClass).longName;
+}
+
+public function getKidAWeaponClass():Class {
+	return getDefinitionByName(flags["COC.ANEMONE_WEAPON_ID"]) as Class;
+}
 
 /*
  TF item - shriveled tentacle

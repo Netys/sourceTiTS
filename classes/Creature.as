@@ -7973,6 +7973,7 @@ package classes {
 			if (bunnyScore() >= 4) race = "bunny-" + mf("boy", "girl");
 			if (harpyScore() >= 4) race = mf("avian", "harpy");
 			if (spiderScore() >= 4) race = "spider-" + mf("boy", "girl");
+			if (dragonScore() >= 4) race = faceType == GLOBAL.TYPE_DRACONIC ? "dragon-morph" : mf("dragon-man", "dragon-girl");
 			if (ovirScore() >= 3 && race == "human") race = "half-ovir";
 			if (ausarScore() >= 2 && race == "human") race = "half-ausar"; // Fucking Ausar forever overriding other shit. EXTERMINATUS.
 			if (kaithritScore() >= 3 && race == "human") race = "half-kaithrit";
@@ -8311,6 +8312,32 @@ package classes {
 			if (hasTail(GLOBAL.TYPE_ARACHNID)) score += 2;
 			if (skinType != GLOBAL.SKIN_TYPE_SKIN && score > 0) score--;
 			return score;
+		}
+		//Determine Dragon Rating
+		public function dragonScore():Number
+		{
+			var dragonCounter:Number = 0;
+			if (faceType == GLOBAL.TYPE_DRACONIC)
+				dragonCounter++;
+			if (earType == GLOBAL.TYPE_DRACONIC)
+				dragonCounter++;
+			if (hasTail(GLOBAL.TYPE_DRACONIC))
+				dragonCounter++;
+			if (tongueType == GLOBAL.TYPE_DRACONIC)
+				dragonCounter++;
+			if (cockTotal(GLOBAL.TYPE_DRACONIC) > 0)
+				dragonCounter++;
+			if (hasWings(GLOBAL.TYPE_DRACONIC) || hasWings(GLOBAL.TYPE_SMALLDRACONIC))
+				dragonCounter++;
+			if (legType == GLOBAL.TYPE_DRACONIC)
+				dragonCounter++;
+			if (hasHorns(GLOBAL.TYPE_DRACONIC))
+				dragonCounter++;
+			if (skinType == GLOBAL.SKIN_TYPE_SCALES && dragonCounter > 0)
+				dragonCounter++;
+			if (hasPerk("Dragonfire"))
+				dragonCounter++;
+			return dragonCounter;
 		}
 		public function humanScore(): int {
 			var counter: int = 0;
