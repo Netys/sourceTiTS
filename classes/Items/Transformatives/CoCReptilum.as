@@ -239,12 +239,12 @@ package classes.Items.Transformatives
 				changes++;
 			}
 			//-VAGs
-			//if (pc.hasVagina() && !pc.hasPerk("Oviposition") && changes < changeLimit && rand(5) == 0 && pc.lizardScore() > 3) {
-				//output("\n\nDeep inside yourself there is a change.  It makes you feel a little woozy, but passes quickly.  Beyond that, you aren't sure exactly what just happened, but you are sure it originated from your womb.\n", false);
-				//output("(<b>Perk Gained: Oviposition</b>)", false);
-				//pc.createPerk(PerkLib.Oviposition, 0, 0, 0, 0);
-				//changes++;
-			//}
+			if (pc.hasVagina() && !pc.hasPerk("Oviposition") && changes < changeLimit && rand(5) == 0 && pc.lizardScore() > 3) {
+				output("\n\nDeep inside yourself there is a change.  It makes you feel a little woozy, but passes quickly.  Beyond that, you aren't sure exactly what just happened, but you are sure it originated from your womb.\n", false);
+				output("(<b>Perk Gained: Oviposition</b>)", false);
+				pc.createPerk("Oviposition", 0, 0, 0, 0, "Causes you to regularly lay eggs when not otherwise pregnant.");
+				changes++;
+			}
 
 			//Physical changes:
 			//-Existing horns become draconic, max of 4, max length of 1'

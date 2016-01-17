@@ -71,6 +71,8 @@ package classes.GameData.Pregnancy.Handlers
 		
 		public static function CoCAnemonePregnancyOnSuccessfulImpregnantion(father:Creature, mother:Creature, pregSlot:int, thisPtr:BasePregnancyHandler):void
 		{
+			if (pregSlot == -1) pregSlot = mother.findEmptyPregnancySlot(Creature.PREGSLOT_VAG);
+			
 			BasePregnancyHandler.defaultOnSuccessfulImpregnation(father, mother, pregSlot, thisPtr);
 			
 			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;

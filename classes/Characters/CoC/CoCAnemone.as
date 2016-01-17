@@ -130,6 +130,13 @@ package classes.Characters.CoC
 			this.createCock(7);
 			this.shiftCock(0, GLOBAL.TYPE_ANEMONE);
 			
+			this.cumMultiplierRaw = 2;
+			this.cumQualityRaw = 1;
+			this.ballSizeRaw = 10;
+			this.ballFullness = 200;
+			//How many "normal" orgams worth of jizz your balls can hold.
+			this.ballEfficiency = 4;
+			
 			this.createVagina();
 			this.girlCumType = GLOBAL.FLUID_TYPE_GIRLCUM;
 			this.vaginas[0].type = GLOBAL.TYPE_ANEMONE;

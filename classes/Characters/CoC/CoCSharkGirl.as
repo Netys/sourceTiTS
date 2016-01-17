@@ -32,10 +32,11 @@ package classes.Characters.CoC
 			this.customDodge = "";
 			this.customBlock = "";
 			
-			this.meleeWeapon.attack = 3;
+			this.meleeWeapon.attack = 0;
 			this.meleeWeapon.longName = "shark teeth";
 			this.meleeWeapon.attackVerb = "bite";
-			this.meleeWeapon.attackNoun = "tiny punch";
+			this.meleeWeapon.attackNoun = "bite";
+			this.meleeWeapon.baseDamage.kinetic.damageValue = 3;
 			this.meleeWeapon.hasRandomProperties = true;
 			
 			this.armor.longName = "tough skin";

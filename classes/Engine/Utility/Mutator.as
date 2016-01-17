@@ -1753,8 +1753,8 @@ package classes.Engine.Utility
 				if(out) {
 					output("\n\nYour mind clouds as your [pc.vagina] moistens.  Despite already being in heat, the desire to copulate constantly grows even larger.");
 				}
-				pc.setStatusValue("Heat", 1, pc.statusEffectv1("Heat") + 5 * intensity); // fertility bonus
-				pc.setStatusValue("Heat", 2, pc.statusEffectv2("Heat") + 5 * intensity); // libido bonus
+				pc.setStatusValue("Heat", 1, pc.statusEffectv1("Heat") + 100 * intensity); // fertility bonus
+				pc.setStatusValue("Heat", 2, pc.statusEffectv2("Heat") + 10 * intensity); // libido bonus
 				if(forced) pc.setStatusValue("Heat", 3, 1); // forced means it would not end if pregnant
 				if(forced) pc.setStatusValue("Heat", 4, 1); // mpreg means it would not end if vagina lost
 				pc.addStatusMinutes("Heat", 48 * 60 * intensity);
@@ -1764,7 +1764,7 @@ package classes.Engine.Utility
 				if(out) {
 					output("\n\nYour mind clouds as your [pc.vagina] moistens.  Your hands begin stroking your body from top to bottom, your sensitive skin burning with desire.  Fantasies about bending over and presenting your needy pussy to a male overwhelm you as <b>you realize you have gone into heat!</b>");
 				}
-				pc.createStatusEffect("Heat", 10 * intensity, 15 * intensity, forced ? 1 : 0, mpreg ? 1 : 0, false, "LustUp", "You are aching to be on recieving end of a good fuck due to your animal heat!", false, 48 * 60 * intensity);
+				pc.createStatusEffect("Heat", 100 * intensity, 10 * intensity, forced ? 1 : 0, mpreg ? 1 : 0, false, "LustUp", "You are aching to be on recieving end of a good fuck due to your animal heat!", false, 48 * 60 * intensity);
 			}
 			return true;
 		}
@@ -1790,7 +1790,7 @@ package classes.Engine.Utility
 				}
 				
 				pc.setStatusValue("Rut", 1, pc.statusEffectv1("Rut") + 100 * intensity); // virility bonus
-				pc.setStatusValue("Rut", 2, pc.statusEffectv2("Rut") + 5 * intensity); // libido bonus
+				pc.setStatusValue("Rut", 2, pc.statusEffectv2("Rut") + 10 * intensity); // libido bonus
 				pc.addStatusMinutes("Rut", 48 * 60 * intensity);
 			}
 			else {
@@ -1800,7 +1800,7 @@ package classes.Engine.Utility
 				
 				//v1 - bonus cum production
 				//v2 - bonus libido
-				pc.createStatusEffect("Rut", 10 * intensity, 15 * intensity, 0, 0, false, "LustUp", "You desperately want to fuck someone due to your animal rut!", false, 48 * 60 * intensity);
+				pc.createStatusEffect("Rut", 100 * intensity, 10 * intensity, 0, 0, false, "LustUp", "You desperately want to fuck someone due to your animal rut!", false, 48 * 60 * intensity);
 			}
 			
 			return true;

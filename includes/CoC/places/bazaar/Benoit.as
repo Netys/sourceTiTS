@@ -335,7 +335,9 @@ public function benoitsBuyMenu():void {
 	buyItem();
 	
 	//if (pc.keyItemv1("Backpack") < 5) addButton(5, "Backpack", buyBackpack, null, null, null, "This backpack will allow you to carry more items.");
-	if (Flag("COC.BENOIT_PISTOL_BOUGHT") != 1) addButton(10, "Flintlock", buyFlintlock);
+	if (Flag("COC.BENOIT_PISTOL_BOUGHT") != 1) {
+		addOverrideItemButton(10, new CoCFlintlockPistol(), "Flintlock", buyFlintlock);
+	}
 	//if (flags[kFLAGS.BENOIT_CLOCK_BOUGHT] <= 0 && flags[kFLAGS.CAMP_CABIN_FURNITURE_NIGHTSTAND] > 0) addButton(7, "Alarm Clock", buyAlarmClock, null, null, null, "This mechanical clock looks like it was originally constructed by the Goblins before the corruption spreaded throughout Mareth.");
 	//addButton(14, "Back", benoitIntro);
 }
