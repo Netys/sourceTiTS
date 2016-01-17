@@ -24,12 +24,12 @@ package classes.Items.Transformatives
 			//Used on inventory buttons
 			this.shortName = "BimboLq";
 			//Regular name
-			this.longName = "Bimbo Liqueur";
+			this.longName = "bottle of 'Bimbo Liqueur'";
 			
 			TooltipManager.addFullName(this.shortName, StringUtil.toTitleCase(this.longName));
 			
 			//Longass shit, not sure what used for yet.
-			this.description = "a potent bottle of 'Bimbo Liqueur'";
+			this.description = "a bottle of 'Bimbo Liqueur'";
 			//Displayed on tooltips during mouseovers
 			this.tooltip = "This small bottle of liqueur is labelled 'Bimbo Liqueur'.  There's a HUGE warning label about the effects being strong and usually permanent, so you should handle this with care.";
 			

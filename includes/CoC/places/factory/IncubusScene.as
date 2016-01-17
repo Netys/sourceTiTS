@@ -109,7 +109,6 @@ public function DemonFactoryDoLossIncubus():void {
 		if(flags["COC.FACTORY_SHUTDOWN"] <= 0) addButton(0, "Next", DemonFactoryBadEndGeneric);
 		else {
 			CombatManager.genericLoss();
-			addButton(0, "Next", mainGameMenu);
 		}
 		return;
 	}
@@ -165,7 +164,6 @@ public function DemonFactoryDoLossIncubus():void {
 			if(flags["COC.FACTORY_SHUTDOWN"] <= 0) addButton(0, "Next", DemonFactoryBadEndGeneric);
 			else {
 				CombatManager.genericLoss();
-				addButton(0, "Next", mainGameMenu);
 			}
 			return;
 		}
@@ -201,7 +199,6 @@ public function DemonFactoryDoLossIncubus():void {
 			if(flags["COC.FACTORY_SHUTDOWN"] <= 0) addButton(0, "Next", DemonFactoryBadEndGeneric);
 			else {
 				CombatManager.genericLoss();
-				addButton(0, "Next", mainGameMenu);
 			}
 		}
 	}
@@ -225,7 +222,8 @@ public function DemonFactoryDoRideIncubusAnally():void {
 	//pc.slimeFeed();
 	//dynStats("cor", 2);
 	pc.cor(2);
-	addButton(0, "Next", DemonFactoryDoLeaveIncubus);
+	processTime(15);
+	CombatManager.genericVictory();
 }
 
 public function DemonFactoryDoRapeIncubus():void {
@@ -293,7 +291,8 @@ public function DemonFactoryDoRapeIncubus():void {
 	output("\n\n");
 	pc.orgasm();
 	
-	addButton(0, "Next", DemonFactoryDoLeaveIncubus);
+	processTime(15);
+	CombatManager.genericVictory();
 }
 
 public function DemonFactoryDoOralIncubus():void {
@@ -314,10 +313,9 @@ public function DemonFactoryDoOralIncubus():void {
 	
 	output("You push the exhausted demon down and idly collect the cum from your face with your fingers, slowly licking each clean.  Feeling rather sensual and sated, you decide to resume exploring the factory.\n\nAfter redressing you turn about, and see the demon is gone, leaving only a small pool of cum in his wake.\n\n");
 	
-	CombatManager.genericVictory();
 	pc.lust(10);
 	processTime(15);
-	addButton(0, "Next", mainGameMenu);
+	CombatManager.genericVictory();
 }
 
 public function DemonFactoryDoLeaveIncubus():void {

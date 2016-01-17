@@ -169,14 +169,13 @@ public function defeatAnemone():void
 		
 		//if (pc.canOviposit()) addButton(2, "Lay Egg", anemoneGetsLayedByBeePositor);
 		//else 
-		addDisabledButton(4, "Lay Egg", "Lay Egg", "Not implemented.");
+		//addDisabledButton(4, "Lay Egg", "Lay Egg", "Not implemented.");
 		
 		addButton(14, "Leave", CombatManager.genericVictory);
 	}
 	else {
-		processTime(60);
+		processTime(10 + rand(10));
 		CombatManager.genericVictory();
-		mainGameMenu();
 	}
 }
 
@@ -223,7 +222,7 @@ private function victoryButtholeRape():void
 	output(" giggle from the blue girl.  Standing up, you gather your gear and blow her a kiss before you leave.  She darkens in color, her camouflage reflex causing her to 'blush' in discomfort at this display of affection.\n\n", false);
 	//(pass 1 hour, reduce lust to min)
 	pc.orgasm();
-	processTime(60);
+	processTime(25 + rand(10));
 	CombatManager.genericVictory();
 }
 
@@ -283,7 +282,7 @@ private function rapeAnemoneWithDick():void
 		output("After the last of your cum has been squeezed out, you pull your [pc.cock] out and rinse it off in the lakewater.  You gather your gear while the anemone holds her belly and smiles placidly, staring into the sky.\n\n", false);
 		//(pass 1 hour, reset lust to min or min+10 if big or greater skeet)
 		pc.orgasm();
-		processTime(60);
+		processTime(25 + rand(10));
 		CombatManager.genericVictory();
 	}
 	//Too-big male: -requires cockarea > 36

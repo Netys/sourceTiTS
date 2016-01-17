@@ -244,9 +244,9 @@ public function zealotDefeated():void
 	clearMenu();
 	
 	//Defeated by health
-	if (enemy.HP() <= 1) output("The zealot collapses from his wounds, too hurt to continue controlling his powers.");
+	if (enemy.HP() <= 1) output("The zealot collapses from his wounds, too hurt to continue controlling his powers.\n\n");
 	//Defeated by lust
-	else output("The zealot quivers for a moment before collapsing, his desires becoming too great for even him to control.");
+	else output("The zealot quivers for a moment before collapsing, his desires becoming too great for even him to control.\n\n");
 	
 	addDisabledButton(0, "Sex", "Sex", "This scene requires you to have genitals and sufficient arousal.");
 	addButton(14, "Leave", function():*{ processTime(15 + rand(5)); CombatManager.genericVictory(); } );

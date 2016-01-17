@@ -26,12 +26,12 @@ package classes.Items.Transformatives
 			this.shortName = "PurHony";
 			
 			//Regular name
-			this.longName = "crystal vial filled with glittering honey";
+			this.longName = "crystal vial of glittering honey";
 			
 			TooltipManager.addFullName(this.shortName, StringUtil.toTitleCase(this.longName));
 			
 			//Longass shit, not sure what used for yet.
-			this.description = "a crystal vial filled with glittering honey";
+			this.description = "a crystal vial of glittering honey";
 			
 			//Displayed on tooltips during mouseovers
 			this.tooltip = "This fine crystal vial is filled with a thick amber liquid that glitters in the light.  You can smell a sweet scent, even though it is tightly corked.";

@@ -206,7 +206,7 @@ package classes.Items.Transformatives
 				output("  A bit of pre dribbles from your [pc.cocksLight], pushed out by the change.");
 				changes++;
 			}
-			if (changes < changeLimit && pc.balls > 0 && pc.ballSizeRaw > 4 && rand(3) == 0) {
+			if (changes < changeLimit && pc.balls > 0 && pc.ballSizeRaw > 3 * Math.PI && rand(3) == 0) {
 				output("\n\nYour [pc.sack] gets lighter and lighter, the skin pulling tight around your shrinking balls until you can't help but check yourself.");
 				if (pc.ballSizeRaw > 10) pc.ballSizeRaw -= 5;
 				if (pc.ballSizeRaw > 20) pc.ballSizeRaw -= 4;
@@ -214,7 +214,7 @@ package classes.Items.Transformatives
 				if (pc.ballSizeRaw > 40) pc.ballSizeRaw -= 4;
 				if (pc.ballSizeRaw > 50) pc.ballSizeRaw -= 8;
 				if (pc.ballSizeRaw > 60) pc.ballSizeRaw -= 8;
-				if (pc.ballSizeRaw <= 10) pc.ballSizeRaw--;
+				if (pc.ballSizeRaw > 2 * Math.PI) pc.ballSizeRaw--;
 				changes++;
 				output("  You now have a [pc.balls].");
 			}
@@ -296,6 +296,7 @@ package classes.Items.Transformatives
 					
 				changes++;
 			}
+			if ((enhanced || pc.earType == GLOBAL.TYPE_VULPINE) && changes < changeLimit && rand(5) == 0 && Mutator.changeArms(pc, GLOBAL.TYPE_VULPINE, [GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS])) changes++;
 			//[Grow Fox Legs]
 			//THIRD
 			if ((enhanced || pc.earType == GLOBAL.TYPE_VULPINE) && pc.legType != GLOBAL.TYPE_VULPINE && changes < changeLimit && rand(5) == 0) {

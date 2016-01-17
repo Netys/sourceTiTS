@@ -1,4 +1,5 @@
 import classes.Characters.CoC.CoCCorruptedDrider;
+import classes.Creature;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
 import classes.Items.Miscellaneous.CoCToughSpiderSilk;
@@ -12,9 +13,10 @@ public function driderEncounter():void
 	//spriteSelect(77);
 	clearOutput();
 	//Load monster stats so we can display things like eye/hide color!	
+	var drider:Creature = new CoCCorruptedDrider();
 	CombatManager.newGroundCombat();
 	CombatManager.setFriendlyCharacters(pc);
-	CombatManager.setHostileCharacters(new CoCCorruptedDrider());
+	CombatManager.setHostileCharacters(drider);
 	CombatManager.victoryScene(defeatDriderIntro);
 	CombatManager.lossScene(loseToDrider);
 	CombatManager.displayLocation("DRIDER");
@@ -23,7 +25,7 @@ public function driderEncounter():void
 	IncrementFlag("COC.DRIDER_MET");
 	if (flags["COC.DRIDER_MET"] == 1) {
 		output("While you explore the swamp, the sun's light withers and fades.  You look up through the mossy trees, but the sky is totally blocked from sight.  It's nearly as purple as twilight here, but you press on, brushing aside old spider-webs as you go.  Faintly, you can hear the sound of skittering legs moving around you, but with the way the damp air muffles everything, it's impossible to tell from which direction.\n\n");
-		output("You catch a blur of movement to the side, but by the time you turn for a better look, it's gone.  How odd.  Turning your eyes back to your path, you're shocked to see the form of a massive spider-woman in front of you.  She isn't just some humanoid spider-morph - she's a full-fledged drider, with a giant spider's body from the waist down and eight spindly legs supporting her.  Her eyes practically glow bright " + enemy.skinTone + " while her venom-soaked lips twist into a cruel, confident smile.\n\n");
+		output("You catch a blur of movement to the side, but by the time you turn for a better look, it's gone.  How odd.  Turning your eyes back to your path, you're shocked to see the form of a massive spider-woman in front of you.  She isn't just some humanoid spider-morph - she's a full-fledged drider, with a giant spider's body from the waist down and eight spindly legs supporting her.  Her eyes practically glow bright " + drider.skinTone + " while her venom-soaked lips twist into a cruel, confident smile.\n\n");
 
 		output("\"<i>My, what lovely prey I seem to have found tonight,</i>\" croons the drider.\n\n");
 

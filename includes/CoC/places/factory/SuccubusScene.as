@@ -340,10 +340,8 @@ public function DemonFactoryDoScissorSuccubus():void {
 	pc.orgasm();
 	pc.cor(1);
 	
-	CombatManager.genericVictory();
 	processTime(20);
-	clearMenu();
-	addButton(0, "Next", mainGameMenu);
+	CombatManager.genericVictory();
 }
 public function DemonFactoryDoForcefeedSuccubus():void {
 	clearOutput();
@@ -390,10 +388,8 @@ public function DemonFactoryDoForcefeedSuccubus():void {
 	output("\n\nYou turn away with a bemused sigh.  When you glance back, she has vanished!\n\n");
 	pc.orgasm();
 	
-	CombatManager.genericVictory();
 	processTime(40);
-	clearMenu();
-	addButton(0, "Next", mainGameMenu);
+	CombatManager.genericVictory();
 }
 
 public function DemonFactoryDildoSuccubus():void {
@@ -411,10 +407,8 @@ public function DemonFactoryDildoSuccubus():void {
 	output("and put it away.  When you glance back towards the Succubus, she's gone, leaving you alone and horny...\n\n");
 	pc.lust((20 + (pc.libido() / 5) + (pc.cor() / 10)));
 	
-	CombatManager.genericVictory();
 	processTime(20);
-	clearMenu();
-	addButton(0, "Next", mainGameMenu);
+	CombatManager.genericVictory();
 }
 
 public function DemonFactoryDoLossSuccubus():void {
@@ -479,9 +473,8 @@ public function DemonFactoryDoLossSuccubus():void {
 	}
 }
 public function DemonFactoryDoLeaveSuccubus():void {
-	CombatManager.genericVictory();
 	processTime(5);
-	mainGameMenu();
+	CombatManager.genericVictory();
 }
 
 public function DemonFactoryDoBadEndSuccubusPart1():void {

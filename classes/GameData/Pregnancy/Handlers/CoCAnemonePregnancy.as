@@ -50,13 +50,13 @@ package classes.GameData.Pregnancy.Handlers
 			this.addStageProgression(120 * 60, function(pregSlot:int):void {
 				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 3, true);
 				kGAMECLASS.pc.lust(10 + kGAMECLASS.pc.libido() / 20);
-				kGAMECLASS.eventBuffer += "Your larger, squirming belly makes your pregnancy obvious for those around you and keeps you aroused from the constant tingling in your womb.";
+				kGAMECLASS.eventBuffer += "\n\nYour larger, squirming belly makes your pregnancy obvious for those around you and keeps you aroused from the constant tingling in your womb.";
 			}, true);
 			
 			this.addStageProgression(72 * 60, function(pregSlot:int):void {
 				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 3, true);
 				kGAMECLASS.pc.lust(10 + kGAMECLASS.pc.libido() / 20);
-				kGAMECLASS.eventBuffer += "Your belly is noticeably distended, and constantly shifts and wriggles.  What manner of beast are you bringing into the world?";
+				kGAMECLASS.eventBuffer += "\n\nYour belly is noticeably distended, and constantly shifts and wriggles.  What manner of beast are you bringing into the world?";
 			}, true);
 			
 			this.addStageProgression(48 * 60, function(pregSlot:int):void {

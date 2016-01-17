@@ -162,7 +162,7 @@ package classes.Items.Transformatives
 			//[Increase Vaginal Capacity] - requires vagina, of course
 			if (pc.hasVagina() && ((mystic && rand(2) == 0) || (!mystic && rand(3) == 0)) && pc.vaginas[0].bonusCapacity < 200 && changes < changeLimit) {
 				output("\n\nA gurgling sound issues from your abdomen, and you double over as a trembling ripple passes through your womb.  The flesh of your stomach roils as your internal organs begin to shift, and when the sensation finally passes, you are instinctively aware that your [pc.vagina] is a bit deeper than it was before.");
-				pc.vaginas[0].bonusCapacity += 5 + rand(10);
+				pc.vaginas[0].bonusCapacity += (3+rand(3)) * 10;
 				changes++;
 			}
 			//[Vag of Holding] - rare effect, only if PC has high vaginal looseness
@@ -216,7 +216,9 @@ package classes.Items.Transformatives
 					
 				pc.tailType = GLOBAL.TYPE_VULPINE;
 				pc.tailCount = 1;
-				pc.tailFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_FLUFFY];
+				pc.addTailFlag(GLOBAL.FLAG_LONG);
+				pc.addTailFlag(GLOBAL.FLAG_FURRED);
+				pc.addTailFlag(GLOBAL.FLAG_FLUFFY);
 				changes++;
 			}
 			if (!mystic && pc.earType == GLOBAL.TYPE_VULPINE && pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount == 8 && rand(3) == 0) {

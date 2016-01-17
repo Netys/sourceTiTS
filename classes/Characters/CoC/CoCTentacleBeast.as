@@ -25,8 +25,8 @@ package classes.Characters.CoC
 			
 			this.short = "tentacle beast";
 			this.originalRace = "abomination";
-			this.a = "it ";
-			this.capitalA = "It ";
+			this.a = "the ";
+			this.capitalA = "The ";
 			this.tallness = 24 + rand(36);
 			this.scaleColor = "green";
 			this.long = "You see the massive, shambling form of the tentacle beast before you.  Appearing as a large shrub, it shifts its bulbous mass and reveals a collection of thorny tendrils and cephalopodic limbs.";
