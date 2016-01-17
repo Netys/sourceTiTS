@@ -49,7 +49,7 @@ private function startSatyrCombat():void {
 	CombatManager.displayLocation("SATYR");
 
 	clearMenu();
-	addButton(0, "Next", CombatManager.beginCombat);
+	CombatManager.beginCombat();
 }
 
 //[=Yes=]

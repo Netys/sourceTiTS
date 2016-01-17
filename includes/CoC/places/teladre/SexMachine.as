@@ -5,6 +5,7 @@ import classes.Engine.Utility.*;
 
 public function exploreShowers():void {
 	clearOutput();
+	showName("\nSHOWERS");
 	/*if(flags[kFLAGS.LIFETIME_GYM_MEMBER] == 0) {
 		output("You toss ten gems to centaur and head towards the back.\n\n");
 		pc.gems -= 10;
@@ -29,26 +30,30 @@ public function exploreShowers():void {
 //[If you decide to leave.]
 private function leaveShowers():void {
 	clearOutput();
+	showName("\nSHOWERS");
 	output("You shake your head.  You've had enough of a workout for the day, and you remember you're in a land where curiosity almost certainly kills (well, more thoroughly rapes) the cat.  You leave the room and continue to search for the showers, eventually finding them and heading back to camp.");
+	pc.shower();
 	clearMenu();
 	processTime(10);
-	addButton(0, "Next", mainGameMenu);
+	addButton(0, "Next", telAdreMenu);
 }
 
 private function disableMachineForGood():void {
 	clearOutput();
+	showName("\nSHOWERS");
 	output("No way you are going to use the machine in your life!  You shake your head.  You've had enough of a workout for the day, and you remember you're in a land where curiosity almost certainly kills (well, more thoroughly rapes) the cat.  You leave the room and continue to search for the showers, eventually finding them and heading back to camp.");
 	output("\n\n<b>You will not encounter the sex machine again but you can still take a shower.</b>");
 	pc.shower();
 	flags["COC.DISABLED_SEX_MACHINE"] = 1;
 	clearMenu();
 	processTime(10);
-	addButton(0, "Next", mainGameMenu);
+	addButton(0, "Next", telAdreMenu);
 }
 
 
 private function useTheSexMachine():void {
 	clearOutput();
+	showName("SEX\nMACHINE");
 	flags["COC.SEX_MACHINE_KNOWN"] = 2;
 	//[If you decide to mess with the machine: Male]
 	if(pc.hasCock() && ! pc.hasVagina()) {
@@ -259,5 +264,5 @@ private function useTheSexMachine():void {
 	pc.shower();
 	processTime(20 + rand(10));
 	clearMenu();
-	addButton(0, "Next", mainGameMenu);
+	addButton(0, "Next", telAdreMenu);
 }

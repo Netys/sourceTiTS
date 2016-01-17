@@ -97,7 +97,7 @@ public function CoCimpVictory():void {
 	
 	if (pc.lust() >= 33) {
 		output("  Sadly you realize your own needs have not been met.");
-		output("  Of course you could always rape the poor thing...");
+		output("  Of course you could always rape the poor thing...\n\n");
 		var maleRape:Function = null;
 		if (pc.hasCock()) {
 			if (pc.cockThatFits(enemy.analCapacity()) == -1) {

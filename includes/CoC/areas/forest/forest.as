@@ -169,9 +169,10 @@ public function forestRootTrip():void {
 
 public function forestWastedTime():void {
 	clearOutput();
-	if (cor() < 80) {
+	if (pc.cor() < 80) {
 		output("You enjoy a peaceful walk in the woods, it gives you time to think.");
 		//dynStats("tou", .5, "int", 1);
+		pc.slowStatGain("i", 1);
 	}
 	else {
 		output("As you wander in the forest, you keep ");
@@ -180,7 +181,7 @@ public function forestWastedTime():void {
 		else if (pc.hasVagina()) output("idly toying with your [vagina] as you daydream about getting fucked by all kinds of monstrous cocks, from minotaurs' thick, smelly dongs to demons' towering, bumpy pleasure-rods.");
 		else if (!pc.hasGenitals()) output("daydreaming about sex-demons with huge sexual attributes, and how you could please them.");
 		//dynStats("tou", .5, "lib", .25, "lus", pc.lib / 5);
-		pc.libido(0.25);
+		pc.slowStatGain("l", 0.25);
 		pc.lust(pc.libido() / 5);
 	}
 	doNext(returnToCampUseOneHour);

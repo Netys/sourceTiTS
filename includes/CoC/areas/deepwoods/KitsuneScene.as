@@ -2414,7 +2414,10 @@ public function kitsuneShrine():void
 	//[Read Books] [Meditate] [Steal Statue] - [Leave]
 	clearMenu();
 	addButton(0, "Read Books", readKitsuneBooks);
-	if (flags["COC.TOOK_KITSUNE_STATUE"] == 0) addButton(1, "Meditate", meditateLikeAKitsuneEhQuestionMark);
+	if (flags["COC.TOOK_KITSUNE_STATUE"] == 0) {
+		if (pc.isBimbo() || pc.isBro()) addDisabledButton(1, "Meditate", "Meditate", "Boooring!"); // no enlightment for you, mindless slut!
+		else addButton(1, "Meditate", meditateLikeAKitsuneEhQuestionMark);
+	}
 	if (pc.hasItem(new CoCKitsuneStatue()) || flags["COC.TOOK_KITSUNE_STATUE"] == 0) addButton(2, "Statue", stealAKitsuneStatue);
 	addButton(14, "Leave", returnToCampUseOneHour);
 }

@@ -248,21 +248,21 @@ package classes.Items.Transformatives
 
 			//Physical changes:
 			//-Existing horns become draconic, max of 4, max length of 1'
-			if ((pc.hornType != GLOBAL.TYPE_DRACONIC || pc.horns < 4 || pc.hornLength < 12) && changes < changeLimit && rand(5) == 0) {
+			if ((pc.hornType != GLOBAL.TYPE_LIZAN || pc.horns < 4 || pc.hornLength < 12) && changes < changeLimit && rand(5) == 0) {
 				//No dragon horns yet.
-				if (!pc.hasHorns(GLOBAL.TYPE_DRACONIC)) {
+				if (!pc.hasHorns(GLOBAL.TYPE_LIZAN)) {
 					//Already have horns
 					if (pc.hasHorns()) {
 						// horns
 						if (pc.horns * pc.hornLength >= 36) {
 							output("\n\nYour [pc.horns] condense, twisting around each other and merging into different, pointed protrusions.  By the time they finish you have four draconic-looking horns, each about twelve inches long.");
-							pc.hornType = GLOBAL.TYPE_DRACONIC;
+							pc.hornType = GLOBAL.TYPE_LIZAN;
 							pc.hornLength = 12;
 							pc.horns = 4;
 						}
 						else {
 							output("\n\nYou feel your [pc.horns] changing and warping, and reach back to touch them.  They have a slight curve and a gradual taper.  They must look something like the horns the dragons in your village's legends always had.");
-							pc.hornType = GLOBAL.TYPE_DRACONIC;
+							pc.hornType = GLOBAL.TYPE_LIZAN;
 							pc.horns = 2;
 							if (pc.horns > 12) {
 								output("  The change seems to have shrunken the horns, they're about a foot long now.");
@@ -277,7 +277,7 @@ package classes.Items.Transformatives
 						output("\n\nWith painful pressure, the skin on the sides of your forehead splits around two tiny nub-like horns.  They're angled back in such a way as to resemble those you saw on the dragons in your village's legends.  A few inches of horn sprout from your head before stopping.  <b>You have about four inches of dragon-like horn.</b>");
 						pc.horns = 2;
 						pc.hornLength = 4;
-						pc.hornType = GLOBAL.TYPE_DRACONIC;
+						pc.hornType = GLOBAL.TYPE_LIZAN;
 
 						changes++;
 					}

@@ -20,11 +20,13 @@ include "BakeryScene.as";
 public function discoverTelAdre():void {
 	clearOutput();
 	clearMenu();
-	if(flags["COC.TEL_ADRE_KNOWN"] == undefined) {
+	if (flags["COC.TEL_ADRE_KNOWN"] == undefined) {
+		showName("DESERT\nCITY");
 		output("The merciless desert sands grind uncomfortably under your " + pc.feet() + " as you walk the dunes, searching the trackless sands to uncover their mysteries.  All of a sudden, you can see the outline of a small city in the distance, ringed in sandstone walls.  Strangely it wasn't there a few moments before.  It's probably just a mirage brought on by the heat.  Then again, you don't have any specific direction you're heading, what could it hurt to go that way?");
 		output("\n\nDo you investigate the city in the distance?");
 	}
 	else {
+		showName("\nTEL'ADRE");
 		output("While out prowling the desert dunes you manage to spy the desert city of Tel'Adre again.  You could hike over to it again, but some part of you fears being rejected for being 'impure' once again.  Do you try?");
 	}
 	addButton(0, "Yes", encounterTelAdre);
@@ -35,7 +37,8 @@ public function discoverTelAdre():void {
 private function encounterTelAdre():void {
 	clearOutput();
 	clearMenu();
-	if(flags["COC.TEL_ADRE_KNOWN"] == undefined) {
+	if (flags["COC.TEL_ADRE_KNOWN"] == undefined) {
+		showName("DESERT\nCITY");
 		output("You slog through the shifting sands for a long time, not really seeming to get that close.  Just when you're about to give up, you crest a large dune and come upon the walls of the city you saw before.  It's definitely NOT a mirage.  There are sandstone walls at least fifty feet tall ringing the entire settlement, and the only entrance you can see is a huge gate with thick wooden doors.  The entrance appears to be guarded by a female gray fox who's more busy sipping on something from a bottle than watching the desert.\n\n");
 		output("As if detecting your thoughts, she drops the bottle and pulls out a halberd much longer than she is tall.\n\n");
 		output("\"<i>Hold it!</i>\" barks the fox, her dark gray fur bristling in suspicion at your sudden appearance, \"<i>What's your business in the city of Tel'Adre?</i>\"\n\n");
@@ -47,6 +50,7 @@ private function encounterTelAdre():void {
 		telAdreCrystal();
 	}
 	else {
+		showName("\nTEL'ADRE");
 		output("Once again you find the gray fox, Urta, guarding the gates.  She nods at you and whistles for her companion, Edryn once again.  The centauress advances cautiously, and you submit herself to her inspection as she once again produces her magical amulet.  ");
 		telAdreCrystal();
 	}
@@ -55,6 +59,7 @@ private function encounterTelAdre():void {
 //Alignment crystal goooooo
 private function telAdreCrystal():void {
 	flags["COC.TEL_ADRE_KNOWN"] = 0;
+	showName("\nTEL'ADRE");
 	//-70+ corruption, or possessed by exgartuan
 	if (/*pc.findStatusAffect(StatusAffects.Exgartuan) >= 0 || */pc.cor() >= 70 + corruptionTolerance()) {
 		output("The crystal pendant begins to vibrate in the air, swirling around and glowing dangerously black.  Edryn snatches her hand back and says, \"<i>I'm sorry, but you're too far gone to step foot into our city.  If by some miracle you can shake the corruption within you, return to us.</i>\"\n\n");
@@ -86,6 +91,7 @@ private function telAdreCrystal():void {
 private function telAdreTour():void {
 	flags["COC.TEL_ADRE_KNOWN"] = 1;
 	clearOutput();
+	showName("\nTEL'ADRE");
 	//kGAMECLASS.urta.urtaSprite();
 	output("Urta leads you into the streets of Tel'Adre, giving you a brief run-down of her and her city, \"<i>You see, about two decades back, the demons were chewing their way through every settlement and civilization in Mareth.  The covenant, a group of powerful magic-users, realized direct confrontation was doomed to fail.  They hid us in the desert with their magic, and the demons can't corrupt what they can't find.  So we're safe, for now.</i>\"\n\n");
 	output("The two of you find yourselves in the center of a busy intersection.  Urta explains that this is the main square of the city, and that, although the city is large, a goodly portion of it remains empty.  Much of the population left to assist other settlements in resisting the demons and was lost.  She brushes a lock of stray hair from her eye and guides you down the road, making sure to point out her favorite pub - \"The Wet Bitch\".  You ");
@@ -166,6 +172,7 @@ public function telAdreMenu():void {
 }
 
 public function telAdreMenuShow():void { //Just displays the normal Tel'Adre menu options, no special events, no description. Useful if a special event has already played
+	showName("\nTEL'ADRE");
 	var homes:Boolean = false;
 	//if (flags["COC.RAPHEAL_COUNTDOWN_TIMER"] == -2 && kGAMECLASS.raphael.RaphaelLikes())
 		//homes = true;
@@ -191,6 +198,7 @@ public function telAdreMenuShow():void { //Just displays the normal Tel'Adre men
 
 private function armorShops():void {
 	clearOutput();
+	showName("\nTEL'ADRE");
 	clearMenu();
 	output("The shopping district of Tel’adre happens to be contained in a large dead end street, with a large set of doors at the entrance to protect it from thieves at night, you’d assume from a higher elevation it would look like a giant square courtyard. Due to the cities shopping area being condensed into one spot, most if not every visible wall has been converted into a store front, in the center of the area are some small stands, guess not everyone can afford a real store.");
 	output("\n\nRight off the bat you see the ‘Piercing Studio’, its piercing covered centaur sign is a real eye catcher. You can also spot some kind of wolf-man banging away on an anvil in a blacksmith's stand. As well as other shops lining the walls, perhaps those shops will be interesting as well.");
@@ -213,6 +221,7 @@ private function armorShops():void {
 
 public function TelAdreHouses():void {
 	clearOutput();
+	showName("\nTEL'ADRE");
 	clearMenu();
 	output("Whose home will you visit?");
 	//var orphanage:Function = null;

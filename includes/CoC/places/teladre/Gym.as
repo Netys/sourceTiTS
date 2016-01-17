@@ -4,8 +4,10 @@ import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
 include "SexMachine.as";
+include "Brooke.as";
 
 public function TelAdreGymDesc():void {
+	showName("\nGYM");
 	//PREGGO ALERT!
 	//if (flags[kFLAGS.PC_IS_A_GOOD_COTTON_DAD] + flags[kFLAGS.PC_IS_A_DEADBEAT_COTTON_DAD] == 0 && cotton.pregnancy.isPregnant) {
 		//cotton.cottonPregnantAlert();
@@ -50,9 +52,6 @@ private function TelAdreGymMenu():void {
 	
 	if (pc.energy() >= 50 && !pc.hasStatusEffect("Sore")) addButton(but++, "Run", TelAdreGymJog, undefined, "Run", "Run around the track to burn some fat.");
 	else addDisabledButton(but++, "Run", "Run", "You're too tired for that workout.");
-
-	if (flags["COC.LIFETIME_GYM_MEMBER"] != 1 && pc.credits >= 5000)
-		addButton(but++, "Life Member", buyGymLifeTimeMembership);
 		
 	//var cotton2:Function =null;
 	//var cottonB:String = "Horsegirl";
@@ -90,6 +89,11 @@ private function TelAdreGymMenu():void {
 			//lottieB,lottie2,
 			//"Loppe",loppe2,
 			//"Leave",telAdreMenu);
+
+	if (flags["COC.LIFETIME_GYM_MEMBER"] != 1 && pc.credits >= 5000)
+		addButton(but++, "Life Member", buyGymLifeTimeMembership);
+	else
+		addDisabledButton(but++, "Life Member", "Life Member", "You can't afford it!")
 	
 	addButton(14, "Leave", telAdreMenu);
 }
@@ -150,7 +154,7 @@ private function TelAdreGymLift():void {
 	//if(pc.tou < 40) dynStats("tou", .3);
 	//Body changes here
 	//Muscleness boost!
-	pc.modTone(3, false);
+	Mutator.modTone(pc, 100, 3, true);
 	TelAdreGymAfterTraining();
 }
 
@@ -227,7 +231,7 @@ public function TelAdreGymJog():void {
 	
 	pc.slowStatGain("r",1);
 	processTime(30);
-	pc.modThickness(-3,false);
+	Mutator.modThickness(pc, 20, 3, true);
 	soreDebuff(2);
 	sweatyDebuff(2);
 	TelAdreGymAfterTraining();
@@ -239,13 +243,17 @@ public function TelAdreGymAfterTraining():void {
 	
 	addButton(0, "Leave", telAdreMenu);
 	
-	if (IncrementFlag("COC.SEX_MACHINE_KNOWN", false) == 0)
-		addButton(1, "Showers", exploreShowers);
-	//else if (IncrementFlag("COC.BROOKE_MET", false) == 0)
-		//addButton(1, "Showers", meetBrookeFirstTime);
-	//else
-		//addButton(1, "Showers", repeatChooseShower);
+	if (Flag("COC.BROOKE_MET") == 0)
+		addButton(1, "Showers", meetBrookeFirstTime);
+	else
+		addButton(1, "Showers", repeatChooseShower);
 	
-	if (flags["COC.SEX_MACHINE_KNOWN"] == 2 && flags["COC.DISABLED_SEX_MACHINE"] != 1)
-		addButton(2, "\"Showers\"", useTheSexMachine);
+	if (flags["COC.DISABLED_SEX_MACHINE"] != 1) {
+		if (Flag("COC.SEX_MACHINE_KNOWN") == 0)
+			addButton(1, "Showers", exploreShowers); // uses 1st slot and overrides Brooke for first time
+		else if (Flag("COC.SEX_MACHINE_KNOWN") == 1)
+			addButton(2, "Machine?", exploreShowers); // repeated encounters have own slot
+		else if (Flag("COC.SEX_MACHINE_KNOWN") == 2)
+			addButton(2, "\"Showers\"", useTheSexMachine);
+	}
 }

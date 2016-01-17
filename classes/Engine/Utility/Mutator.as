@@ -1433,6 +1433,38 @@ package classes.Engine.Utility
 		}
 		
 		/**
+		 * Wrapper for Creature.modTone with some auto-ajust. Supports common Mutator buffer for suppressed output.
+		 * 
+		 * @param	pc target creature
+		 * @param	towards target tone
+		 * @param	power desired amount to change, should be positive
+		 * @param	display show results of Creature.modTone in output
+		 * @return if something actually changed
+		 */
+		public static function modTone(pc:Creature, towards:Number, power:Number = 1, display:Boolean = true):Boolean {
+			buffer = "";
+			var changes:Number = 0;
+			
+			var current:Number = pc.tone;
+			towards = Math.min(towards, pc.toneMax());
+			towards = Math.max(towards, pc.toneMin());
+			
+			if (current == towards) return changes > 0;
+			power = Math.abs(power); // failsafe
+			power = Math.min(power, Math.abs(current - towards));
+			if (current > towards) power *= -1;
+			if (!pc.toneUnlocked(current + power)) {
+				buffer += "\n\n" + pc.toneLockedMessage();
+			} else {
+				buffer += pc.modTone(power);
+				if(pc.tone != current) changes++;
+			}
+			
+			if (display) output(buffer);
+			return changes > 0;
+		}
+		
+		/**
 		 * Removes amount of cocks, smaller first. All, if amount == -1.
 		 */
 		public static function killCocks(pc:Creature, amount:Number):Boolean
@@ -1726,7 +1758,6 @@ package classes.Engine.Utility
 				if(forced) pc.setStatusValue("Heat", 3, 1); // forced means it would not end if pregnant
 				if(forced) pc.setStatusValue("Heat", 4, 1); // mpreg means it would not end if vagina lost
 				pc.addStatusMinutes("Heat", 48 * 60 * intensity);
-				pc.libido(5 * intensity);
 			}
 			//Go into heat.  Heats v1 is bonus fertility, v2 is bonus libido, v3 is forced (would not end by any means), v4 is mpreg (would apply to males and not gone with vagina)
 			else {
@@ -1734,7 +1765,6 @@ package classes.Engine.Utility
 					output("\n\nYour mind clouds as your [pc.vagina] moistens.  Your hands begin stroking your body from top to bottom, your sensitive skin burning with desire.  Fantasies about bending over and presenting your needy pussy to a male overwhelm you as <b>you realize you have gone into heat!</b>");
 				}
 				pc.createStatusEffect("Heat", 10 * intensity, 15 * intensity, forced ? 1 : 0, mpreg ? 1 : 0, false, "LustUp", "You are aching to be on recieving end of a good fuck due to your animal heat!", false, 48 * 60 * intensity);
-				pc.libido(15 * intensity);
 			}
 			return true;
 		}
@@ -1762,7 +1792,6 @@ package classes.Engine.Utility
 				pc.setStatusValue("Rut", 1, pc.statusEffectv1("Rut") + 100 * intensity); // virility bonus
 				pc.setStatusValue("Rut", 2, pc.statusEffectv2("Rut") + 5 * intensity); // libido bonus
 				pc.addStatusMinutes("Rut", 48 * 60 * intensity);
-				pc.libido(5 * intensity);
 			}
 			else {
 				if(out) {
@@ -1772,7 +1801,6 @@ package classes.Engine.Utility
 				//v1 - bonus cum production
 				//v2 - bonus libido
 				pc.createStatusEffect("Rut", 10 * intensity, 15 * intensity, 0, 0, false, "LustUp", "You desperately want to fuck someone due to your animal rut!", false, 48 * 60 * intensity);
-				pc.libido(15 * intensity);
 			}
 			
 			return true;

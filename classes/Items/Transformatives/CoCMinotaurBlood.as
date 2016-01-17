@@ -123,7 +123,7 @@ package classes.Items.Transformatives
 			//}
 			//SEXUAL
 			//Boosts ball size MORE than equinum :D:D:D:D:D:D:
-			if (changes < changeLimit && rand(2) == 0 && (pc.ballSize() <= 5 || pc.balls == 0) && pc.cockTotal(GLOBAL.TYPE_EQUINE) > 0) {
+			if (changes < changeLimit && rand(2) == 0 && (pc.ballSize() <= 5 * Math.PI || pc.balls == 0) && pc.cockTotal(GLOBAL.TYPE_EQUINE) > 0) {
 				//Chance of ball growth if not 3" yet
 				if (pc.balls == 0) {
 					pc.balls = 2;

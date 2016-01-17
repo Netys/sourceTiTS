@@ -361,7 +361,7 @@ public function updateBenoitInventory():void {
 	flags["COC.BENOIT_1"] = getQualifiedClassName(item);
 	
 	//Slot 2 Any one of the following: Succubus Milk, Whisker Fruit, Wet Cloth, Golden Seed, LaBova, Snake Oil, Pink Gossamer, Black Gossamer
-	item = RandomInCollection(CoCSucMilk, CoCWhiskerFruit, CoCGoldenSeed, CoCLaBova, CoCSnakeOil, CoCSweetGossamer, CoCBlackGossamer); // TODO: Wet Cloth
+	item = RandomInCollection(CoCSucMilk, CoCWhiskerFruit, CoCGoldenSeed, CoCLaBova, CoCSnakeOil, CoCSweetGossamer, CoCBlackGossamer, CoCDrakeHeart); // TODO: Wet Cloth
 	
 	if (rand(100) < 4) {
 		//There is a 4% chance the following items will appear in Slot 2: Bimbo Liqueur, Large Pink Egg, Large Blue Egg, Bro Brew, T. Shark Tooth.

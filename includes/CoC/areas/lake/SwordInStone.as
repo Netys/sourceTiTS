@@ -46,6 +46,7 @@ private function tryToTakeSwordInStone():void
 		output("but the sword remains stubbornly lodged in its arboreal home.  Frustrated, you give up and resolve to try later.");
 		
 		processTime(10);
+		clearMenu();
 		addButton(0, "Next", mainGameMenu);
 	}
 	//If not corrupted...
