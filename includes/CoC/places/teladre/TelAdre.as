@@ -111,10 +111,10 @@ public function telAdreMenu():void {
 		//kGAMECLASS.crazyVDayShenanigansByVenithil();
 		//return;
 	//}
-	//if(!kGAMECLASS.urtaQuest.urtaBusy() && flags[kFLAGS.PC_SEEN_URTA_BADASS_FIGHT] == 0 && rand(15) == 0 && model.time.hours > 15) {
-		//urtaIsABadass();
-		//return;
-	//}
+	if(/*!kGAMECLASS.urtaQuest.urtaBusy() &&*/ Flag("COC.PC_SEEN_URTA_BADASS_FIGHT") == 0 && rand(15) == 0 && hours > 15 && hours < 20) {
+		urtaIsABadass();
+		return;
+	}
 	//if (!kGAMECLASS.urtaQuest.urtaBusy() && kGAMECLASS.urta.pregnancy.event > 5 && rand(30) == 0) {
 		//kGAMECLASS.urtaPregs.urtaIsAPregnantCopScene();
 	   //return;
@@ -246,8 +246,9 @@ public function TelAdreHouses():void {
 private function urtaIsABadass():void {
 	flags["COC.PC_SEEN_URTA_BADASS_FIGHT"] = 1;
 	clearOutput();
+	output("There's a commotion in the streets of Tel'Adre.  A dense crowd of onlookers has formed around the center of the street, massed together so tightly that you're unable to see much, aside from the backs the other onlookers' heads.  The sound of blows impacting on flesh can be heard over the crowd's murmuring, alerting you of the fight at the gathering's core.");
+	processTime(1);
 	clearMenu();
-	output("There's a commotion in the streets of Tel'Adre.  A dense crowd of onlookers has formed around the center of the street, massed together so tightly that you're unable to see much, aside from the backs the other onlookers' heads.  The sound of blows impacting on flesh can be heard over the crowd's murmuring, alerting you of the fight at the gathering's core.", false);
 	addButton(0, "Investigate", watchUrtaBeABadass);
 	addButton(1, "Who cares?", telAdreMenu);
 }
@@ -272,5 +273,7 @@ private function watchUrtaBeABadass():void {
 	output("She barks, \"<i>Get this one outside the walls before he wakes.  I won't have this corrupted filth in our city, and make sure you get the wards updated.  If he manages to find his way back, you sorry excuses for guards will be going out with him.</i>\"\n\n");
 	output("A few dog-morphs in similar armor to Urta approach and lash ropes around the wolf's legs.  They hand a line to a centaur, and together the party begins dragging the unconscious body away.  With the action over, the crowd begins dispersing.  More than a few males nod to Urta respectfully.  She keeps her expression neutral and excuses herself to resume her rounds, wiping her hands off on her armor-studded skirt as she leaves.");
 	
-	doNext(telAdreMenu);
+	processTime(10);
+	clearMenu();
+	addButton(0, "Next", telAdreMenu);
 }

@@ -7,6 +7,7 @@ import classes.Engine.Utility.*;
 
 //[First time approach]
 public function bakeryuuuuuu():void {
+	showName("TEL'ADRE\nBAKERY");
 	//if(isEaster() && pc.hasCock() && (flags[kFLAGS.LAST_EASTER_YEAR] < date.fullYear || rand(20) == 0)) {
 		//flags[kFLAGS.LAST_EASTER_YEAR] = date.fullYear;
 		//easterBakeSale();

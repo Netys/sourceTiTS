@@ -145,7 +145,7 @@ private function TelAdreGymLift():void {
 	else if(pc.PQ() < 90) output("You grab the heaviest weights they have and launch into an exercise routine that leaves you panting from exertion.  Setting the weights aside, you flex and marvel at yourself – you could probably arm wrestle a minotaur or two and come out victorious!");
 	//(else)
 	else output("This place barely has anything left to challenge you, but you take the heaviest weights you can get your mitts on and get to it.  By the time an hour has passed, you've worked up a good sweat, but without heavier weights you probably won't get any stronger.");
-	processTime(30);
+	processTime(60);
 	//Stat changes HERE!
 	//if (pc.str < 90) dynStats("str", .5);
 	pc.slowStatGain("p", 1);
@@ -230,7 +230,7 @@ public function TelAdreGymJog():void {
 	}
 	
 	pc.slowStatGain("r",1);
-	processTime(30);
+	processTime(60);
 	Mutator.modThickness(pc, 20, 3, true);
 	soreDebuff(2);
 	sweatyDebuff(2);
