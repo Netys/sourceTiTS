@@ -427,6 +427,7 @@ internal function fuckHelsAss():void {
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
 	//helFollower.helAffection(5);
+	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
 	else addButton(0, "Next", postHelFuckBuddyFollowup);
@@ -450,13 +451,14 @@ internal function helBlowsYou():void {
 	else output("sprays");
 	output(" of jism.  When you pull out of her, she swallows down all you've given her and sighs, contented.\n\n");
 
-	output("Exhausted, you collapse onto her soft tits.  Smiling at you, she strokes your cheeks as you drift off into a peaceful sleep.");
+	output("Exhausted, you collapse onto her soft tits.  Smiling at you, she strokes your cheeks as you drift off into a peaceful sleep.\n\n");
 	//(reduce lust, increment Helgate flag by 1)
 	pc.orgasm();
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
 	//helFollower.helAffection(5);
+	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
 	else addButton(0, "Next", postHelFuckBuddyFollowup);
@@ -486,13 +488,14 @@ internal function dpHel():void {
 
 	output("That just makes your own orgasm all the better.  You buck your hips into her a few last times before you roar and explode within her, pumping your cum deep inside her vag and ass, filling her with your seed until your cocks have deflated inside and jism is spilling out around your shafts.  Slowly, she releases your head from her bosom, though you're loathe to leave their lusty depths.  Instead, you push her onto her back and nuzzle against her chest, suddenly exhausted.\n\n");
 
-	output("\"<i>Hot damn,</i>\" the salamander finally says, grinning from ear to ear as she begins to stroke your cheeks.  \"<i>Oh, damn, two cocks are the fucking BEST.</i>\"  She laughs to herself as you nestle your cheek on her soft breasts, slowly drifting off to a pleasant, peaceful sleep.");
+	output("\"<i>Hot damn,</i>\" the salamander finally says, grinning from ear to ear as she begins to stroke your cheeks.  \"<i>Oh, damn, two cocks are the fucking BEST.</i>\"  She laughs to herself as you nestle your cheek on her soft breasts, slowly drifting off to a pleasant, peaceful sleep.\n\n");
 	//(reduce lust, increment Helgate flag by 1)
 	pc.orgasm();
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
 	//helFollower.helAffection(5);
+	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
 	else addButton(0, "Next", postHelFuckBuddyFollowup);
@@ -523,6 +526,7 @@ internal function getLickedByHel():void {
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
 	//helFollower.helAffection(5);
+	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
 	else addButton(0, "Next", postHelFuckBuddyFollowup);
@@ -553,6 +557,7 @@ internal function helTailWanksYourDickBecauseSheLovesYouDesuDesuHoraHora():void 
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
 	//helFollower.helAffection(5);
+	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
 	else addButton(0, "Next", postHelFuckBuddyFollowup);
@@ -585,13 +590,14 @@ internal function helTailPegging(loss:Boolean = false):void {
 	}
 	output(", writhing in pleasure as her tail slowly withdraws from your [pc.asshole].\n\n");
 
-	output("Seeing you collapsed in a writhing mess of your own pleasure must evoke some tenderness in the berserker.  A moment later she lifts you up off the ground and nestles your head between her pillowy breasts, stroking your cheek and smiling lovingly at you. Contented, you drift off into a deep, peaceful sleep.");
+	output("Seeing you collapsed in a writhing mess of your own pleasure must evoke some tenderness in the berserker.  A moment later she lifts you up off the ground and nestles your head between her pillowy breasts, stroking your cheek and smiling lovingly at you. Contented, you drift off into a deep, peaceful sleep.\n\n");
 	//(reduce lust, increment Helgate flag by 1)
 	pc.orgasm();
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
 	//helFollower.helAffection(5);
+	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) {
 		if (loss) CombatManager.genericLoss();
@@ -631,13 +637,14 @@ private function nagaCoilsUpHel():void {
 
 	output("Exhausted by the ");
 	if(flags["COC.HEL_FUCKBUDDY"] == 0) output("battle and ");
-	output("massive orgasm, you collapse onto your back and release your salamander lover from your grasp.  She crawls up to you and nuzzles into your [pc.chest], wrapping her own tail around you in return.  Soon, you drift off into a calm, peaceful sleep.");
+	output("massive orgasm, you collapse onto your back and release your salamander lover from your grasp.  She crawls up to you and nuzzles into your [pc.chest], wrapping her own tail around you in return.  Soon, you drift off into a calm, peaceful sleep.\n\n");
 	//(reduce lust, increment Helgate flag by 1)
 	pc.orgasm();
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
 	//helFollower.helAffection(5);
+	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
 	else addButton(0, "Next", postHelFuckBuddyFollowup);
@@ -663,13 +670,14 @@ private function nagaCoilsUpAnalNaga():void {
 
 	output("You ram yourself down on her hot tail, pull out till her tip is all that's left, and ram down again, over and over until your ass burns with pleasure and her inner fire, and your lover screams with coming orgasm.  With one last mighty roar, you impale yourself hard upon her tail, taking it inside you until little more than her base remains outside.  You add your voice to hers as a mind-breaking orgasm washes over you like a tidal wave, making you buck and squirm on her tail, forcing yours so deep inside your lover that she can't help but wail in pleasure and pain.\n\n");
 
-	output("When you come to your senses, you're lying on your back, panting and gasping for breath.  Slowly, you salamander lover drags herself to her feet, only to collapse on top of you a second later.  Seemingly content, she nuzzles into your [pc.chest] and strokes your cheek.  No less than exhausted yourself, you soon drift off into a peaceful sleep.");
+	output("When you come to your senses, you're lying on your back, panting and gasping for breath.  Slowly, you salamander lover drags herself to her feet, only to collapse on top of you a second later.  Seemingly content, she nuzzles into your [pc.chest] and strokes your cheek.  No less than exhausted yourself, you soon drift off into a peaceful sleep.\n\n");
 	//(reduce lust, increment Helgate flag by 1)
 	pc.orgasm();
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
 	//helFollower.helAffection(5);
+	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
 	else addButton(0, "Next", postHelFuckBuddyFollowup);
@@ -720,6 +728,7 @@ private function mountHel():void {
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
 	//helFollower.helAffection(5);
+	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
 	else addButton(0, "Next", postHelFuckBuddyFollowup);
@@ -772,6 +781,7 @@ private function helVaginaTaur69():void {
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
 	//helFollower.helAffection(5);
+	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
 	else addButton(0, "Next", postHelFuckBuddyFollowup);
@@ -823,13 +833,14 @@ private function helPossessionShitPoopCock():void {
 
 	output("\"<i>Fuck you,</i>\" the latter says, laughing.  A big dollop of cum drops from her chin to her tits, splattering right above her hard nipple.  \"<i>Still, that was... one hell of a way to have a three-way.</i>\"\n\n");
 
-	output("You laugh, and let out a long, contented yawn.  At the salamander's invitation, you find a secluded clearing in the grass not far away, and snuggle up to nap off the post-sex fatigue.");
+	output("You laugh, and let out a long, contented yawn.  At the salamander's invitation, you find a secluded clearing in the grass not far away, and snuggle up to nap off the post-sex fatigue.\n\n");
 	//(reduce lust, increment Helgate flag by 1)
 	pc.orgasm();
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
 	//helFollower.helAffection(5);
+	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
 	else addButton(0, "Next", postHelFuckBuddyFollowup);
@@ -861,13 +872,14 @@ private function rapingHelsAssMeansYourCorruptCauseAnalIsEvil():void {
 	if(y >= 0) output(" and vag");
 	output(", filling her with your seed until you're drained dry and deflating inside her.\n\n");
 
-	output("You yank yourself out of her in one quick pull; she collapses onto her side without you to support her, and shudders when another wave of her protracted orgasm hits her as she absently fingers herself.  The sight turns you on a bit, but you decide to leave her there and head back to camp, though you're sure to snatch her coinpurse before you go.");
+	output("You yank yourself out of her in one quick pull; she collapses onto her side without you to support her, and shudders when another wave of her protracted orgasm hits her as she absently fingers herself.  The sight turns you on a bit, but you decide to leave her there and head back to camp, though you're sure to snatch her coinpurse before you go.\n\n");
 	//(reduce lust, decrement Helgate flag by 1 to a minimum of 0)
 	pc.orgasm();
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	flags["COC.HEL_AFFECTION"]--;
 	//Bump down follower tracking affection too
 	//helFollower.helAffection(-15);
+	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
 	else addButton(0, "Next", postHelFuckBuddyFollowup);
@@ -891,13 +903,14 @@ private function receiveCorruptRimjobsFromHel():void {
 
 	output("Eventually, you can take no more, and feel your climax coming on.  The salamander, possibly sensing this by the way you wring her tongue, gives your [pc.ass] a hard slap and rams in as far as she can go!  You rocket over the edge, screaming and shuddering so hard that you collapse onto the dirt, writhing in pleasure as her tongue slowly withdraws from your [pc.asshole].\n\n");
 
-	output("Wide-eyed and panting, you struggle to your feet and, sure to grab a few gems from her supine form, stagger back to camp to recover from your fucking.");
+	output("Wide-eyed and panting, you struggle to your feet and, sure to grab a few gems from her supine form, stagger back to camp to recover from your fucking.\n\n");
 	//(reduce lust, decrement Helgate flag by 1 to a minimum of 0)
 	pc.orgasm();
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	flags["COC.HEL_AFFECTION"]--;
 	//Bump up follower tracking affection too
 	//helFollower.helAffection(-15);
+	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
 	else addButton(0, "Next", postHelFuckBuddyFollowup);

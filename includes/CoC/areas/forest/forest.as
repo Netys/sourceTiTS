@@ -15,6 +15,7 @@ public function exploreForest():void
 	//Increment forest exploration counter.
 	flags["COC.EXPLORED_FOREST"]++;
 	
+	processTime(20 + rand(20)); // take your time looking for trouble!
 	
 	//Helia monogamy fucks
 	//if (flags[kFLAGS.PC_PROMISED_HEL_MONOGAMY_FUCKS] == 1 && flags[kFLAGS.HEL_RAPED_TODAY] == 0 && rand(10) == 0 && pc.gender > 0 && !kGAMECLASS.helScene.followerHel()) {

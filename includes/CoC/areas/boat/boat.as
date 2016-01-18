@@ -11,22 +11,26 @@ public function boatExplore():void
 {
 	flags["COC.EXPLORED_BOAT"]++;
 	
+	processTime(20 + rand(20)); // take your time looking for trouble!
+	
 	//Helia monogamy fucks
 	//if (flags[kFLAGS.PC_PROMISED_HEL_MONOGAMY_FUCKS] == 1 && flags[kFLAGS.HEL_RAPED_TODAY] == 0 && rand(10) == 0 && pc.gender > 0 && !kGAMECLASS.helScene.followerHel()) {
 		//kGAMECLASS.helScene.helSexualAmbush();
 		//return;
 	//}
 	
-	output("You reach the dock without any incident and board the small rowboat.  The water is calm and placid, perfect for rowing.  ");
-	if (flags["COC.FACTORY_SHUTDOWN"] == 2) {
-		output("The water appears somewhat muddy and has a faint pungent odor.  ");
-		if (pc.IQ() > 40) output("You realize what it smells like – sex.  ");
-	}
 	//3% chance of finding lost daughters
 	//if (rand(100) <= 3 && flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00412] > 0 && kGAMECLASS.izmaScene.izmaFollower()) {
 		//kGAMECLASS.izmaScene.findLostIzmaKids();
 		//return;
 	//}
+	
+	// TODO: wrap this in function to make it actually work
+	output("You reach the dock without any incident and board the small rowboat.  The water is calm and placid, perfect for rowing.  ");
+	if (flags["COC.FACTORY_SHUTDOWN"] == 2) {
+		output("The water appears somewhat muddy and has a faint pungent odor.  ");
+		if (pc.IQ() > 40) output("You realize what it smells like – sex.  ");
+	}
 	output("You set out, wondering if you'll find any strange islands or creatures in the lake.\n\n", false);
 	
 	////BUILD LIST OF CHOICES
@@ -36,7 +40,7 @@ public function boatExplore():void
 	//20% chance if not done with marae of meeting her.
 	if (flags["COC.MARAE_QUEST_COMPLETE"] == undefined && flags["COC.MET_MARAE_CORRUPTED"] == undefined) {
 		choice.push(encounterMarae);
-		chance.push(10);
+		chance.push(flags["COC.FACTORY_SHUTDOWN"] == 1 ? 1 : 10);
 	}
 	if (flags["COC.FACTORY_SHUTDOWN"] == 1 && flags["COC.MARAE_QUEST_COMPLETE"] >= 1 && flags["COC.MINERVA_PURIFICATION_MARAE_TALKED"] == 1) {
 		choice.push(talkToMaraeAboutMinervaPurification);

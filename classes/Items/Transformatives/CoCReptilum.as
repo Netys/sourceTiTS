@@ -248,15 +248,15 @@ package classes.Items.Transformatives
 
 			//Physical changes:
 			//-Existing horns become draconic, max of 4, max length of 1'
-			if ((pc.hornType != GLOBAL.TYPE_LIZAN || pc.horns < 4 || pc.hornLength < 12) && changes < changeLimit && rand(5) == 0) {
+			if ((pc.hornType != GLOBAL.TYPE_DRACONIC || pc.horns < 4 || pc.hornLength < 12) && changes < changeLimit && rand(5) == 0) {
 				//No dragon horns yet.
-				if (!pc.hasHorns(GLOBAL.TYPE_LIZAN)) {
+				if (!pc.hasHorns(GLOBAL.TYPE_DRACONIC) && !pc.hasHorns(GLOBAL.TYPE_LIZAN)) {
 					//Already have horns
 					if (pc.hasHorns()) {
 						// horns
 						if (pc.horns * pc.hornLength >= 36) {
 							output("\n\nYour [pc.horns] condense, twisting around each other and merging into different, pointed protrusions.  By the time they finish you have four draconic-looking horns, each about twelve inches long.");
-							pc.hornType = GLOBAL.TYPE_LIZAN;
+							pc.hornType = GLOBAL.TYPE_DRACONIC;
 							pc.hornLength = 12;
 							pc.horns = 4;
 						}
@@ -300,10 +300,12 @@ package classes.Items.Transformatives
 						changes++;
 					}
 					//maxxed out, new row
-					else if(pc.horns < 4) {
+					else if(pc.horns < 4 || pc.hornType != GLOBAL.TYPE_DRACONIC) {
 						//--Next horn growth adds second row and brings length up to 12\"
 						output("\n\nA second row of horns erupts under the first, and though they are narrower, they grow nearly as long as your first row before they stop.  A sense of finality settles over you.  <b>You have as many horns as a lizan can grow.</b>");
+						pc.hornType = GLOBAL.TYPE_DRACONIC;
 						pc.horns = 4;
+						pc.hornLength = 12;
 						changes++;
 					}
 				}

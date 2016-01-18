@@ -1,7 +1,7 @@
 package classes.Engine.Utility 
 {
 	/**
-	 * If flag is undefined, initialize it as 0. Possibly updates value if new value is defined (as set or add depending on third arg, set by default). Returns value after initializing, but before changing.
+	 * If flag is undefined, initialize it as 0. Possibly updates value if new value is defined (as set or add depending on third arg, set by default). Returns OLD value, or 0 if old is undefined.
 	 * @author Etis
 	 */
 	import classes.kGAMECLASS;

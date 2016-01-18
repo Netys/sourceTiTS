@@ -252,7 +252,7 @@ public function zealotDefeated():void
 	addButton(14, "Leave", function():*{ processTime(15 + rand(5)); CombatManager.genericVictory(); } );
 	
 	if (pc.lust() >= 33 && pc.hasGenitals()) {
-		output("\n\nDo you want to take advantage of his vulnerable state to sate your lusts?");
+		output("\n\nDo you want to take advantage of his vulnerable state to sate your lusts?\n\n");
 		addButton(0, "Sex", zealotWinRape);
 	}
 }

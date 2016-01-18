@@ -11,7 +11,7 @@ public function exploreDeepwoods():void {
 	//Increment deepwoods exploration counter.
 	flags["COC.EXPLORED_DEEPWOODS"]++;
 	
-	processTime(20 + rand(20));
+	processTime(20 + rand(20)); // take your time looking for trouble!
 	
 	////BUILD LIST OF CHOICES
 	var choice:Array = [];

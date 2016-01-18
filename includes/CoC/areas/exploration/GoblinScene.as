@@ -248,11 +248,17 @@ public function gobboRapeIntro():void
 		output("The goblin groans and drops onto her back.  Her legs spread wide, displaying amazing flexibility as one hand dives into her cunt and the other begins twisting her pierced nipples, one at a time.  The display manages to stir your loins.\n\n");
 		pc.lust(20);
 	}
-	//If cant rape or breastfeed
-	if (pc.lust() < 33 || !pc.hasGenitals()) {
-		processTime(15);
-		clearMenu();
-		CombatManager.genericVictory();
+	
+	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); CombatManager.genericVictory(); } );
+	
+	addDisabledButton(0, "Dick Fuck", "Dick Fuck", "This scene requires you to have fitting cock.");
+	addDisabledButton(1, "DickTooBig", "Dick Too Big", "This scene requires you to have too big cock.");
+	addDisabledButton(2, "CorruptDick", "Corrupt Dick", "This scene requires you to have too big cock and high corruption.");
+	addDisabledButton(3, "Dick In Ass", "Dick In Ass", "This scene requires you to have fitting cock and high corruption.");
+	addDisabledButton(4, "Jog Fuck", "Jog Fuck", "This scene requires you to have fitting cock.");
+	addDisabledButton(7, "Pussies", "Pussies", "This scene requires you to have vagina.");
+	
+	if (pc.lust() < 33) {
 		return;
 	}
 	
@@ -260,42 +266,27 @@ public function gobboRapeIntro():void
 		//eggs = laySomeDriderEggsInGobboTwat;
 	//}
 	//cunt stuff
-	if (pc.hasVagina()) {
+	if (pc.hasVagina())
 		addButton(7, "Pussies", gobboGetsRapedFem);
-	} else {
-		addDisabledButton(7, "Pussies", "Pussies", "You have no vagina.");
-	}
 	
 	//Dick stuff:
 	//Corrupt too big scene
-	if (pc.hasCock() && pc.cockThatFits(enemy.vaginalCapacity()) == -1 && cor() > 80) {// && kGAMECLASS.monk > 2)
+	if (pc.hasCock() && pc.cockThatFits(enemy.vaginalCapacity()) == -1 && cor() > 80) // && kGAMECLASS.monk > 2)
 		addButton(2, "CorruptDick", rapeAGoblinCorruptTooBig);
-	} else {
-		addDisabledButton(2, "CorruptDick", "Corrupt Dick", "You need too big cock and high corruption.");
-	}
+	
 	//Regular too big scene
-	if (pc.hasCock() && pc.cockThatFits(enemy.vaginalCapacity()) == -1) {
+	if (pc.hasCock() && pc.cockThatFits(enemy.vaginalCapacity()) == -1)
 		addButton(1, "DickTooBig", manRapesGoblinTooBig);
-	} else {
-		addDisabledButton(1, "DickTooBig", "Dick Too Big", "You have no fitting cock.");
-	}
+		
 	//It fits!
 	if (pc.hasCock() && pc.cockThatFits(enemy.vaginalCapacity()) >= 0) {
 		addButton(0, "Dick Fuck", gatsGoblinBoners);
 		addButton(4, "Jog Fuck", gobboGetsRapedMaleFits);
-	} else {
-		addDisabledButton(0, "Dick Fuck", "Dick Fuck", "You have no fitting cock.");
-		addDisabledButton(4, "Jog Fuck", "Jog Fuck", "You have no fitting cock.");
 	}
 	
 	//Buttsex toggle
-	if (pc.cockThatFits(enemy.analCapacity()) >= 0 && cor() > 70) {
+	if (pc.cockThatFits(enemy.analCapacity()) >= 0 && cor() > 70)
 		addButton(3, "Dick In Ass", gobboButtSecks);
-	} else {
-		addDisabledButton(3, "Dick In Ass", "Dick In Ass", "You need fitting cock and high corruption.");
-	}
-	
-	addButton(14, "Leave", function():* { processTime(10 + rand(5)); CombatManager.genericVictory(); } );
 	
 	//Spidercondom
 	//if (pc.tailType == TAIL_TYPE_SPIDER_ADBOMEN && pc.cockThatFits(enemy.vaginalCapacity()) >= 0)

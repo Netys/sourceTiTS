@@ -89,11 +89,14 @@ public function CoCimpVictory():void {
 		//addButton(3, "Breastfeed", areImpsLactoseIntolerant);
 	//}
 	//else 
-	if (pc.lust() < 33 || !pc.hasGenitals() && !pc.hasFuckableNipples()) {
-		CombatManager.genericVictory();
-		return;
-	}
+	//if (pc.lust() < 33 || !pc.hasGenitals() && !pc.hasFuckableNipples()) {
+		//CombatManager.genericVictory();
+		//return;
+	//}
 	
+	addDisabledButton(0, "Male Rape", "Male Rape", "This scene requires you to have fitting cock and sufficient arousal");
+	addDisabledButton(1, "Female Rape", "Female Rape", "This scene requires you to have vagina and sufficient arousal");
+	addDisabledButton(2, "NippleFuck", "NippleFuck", "This scene requires you to have fuckable nipples and sufficient arousal");
 	
 	if (pc.lust() >= 33) {
 		output("  Sadly you realize your own needs have not been met.");
@@ -119,7 +122,7 @@ public function CoCimpVictory():void {
 	//addButton(6, "Kill Him", killImp);
 	//if (pc.canOvipositBee()) addButton(8, "Oviposit", putBeeEggsInAnImpYouMonster);
 	
-	addButton(14, "Leave", CombatManager.genericVictory);
+	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); CombatManager.genericVictory(); } );
 }
 
 private function rapeImpWithDick(condomed:Boolean = false):void {

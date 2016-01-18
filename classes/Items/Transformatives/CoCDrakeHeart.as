@@ -155,6 +155,7 @@ package classes.Items.Transformatives
 						output("\n\nA second row of horns erupts under the first, and though they are narrower, they grow nearly as long as your first row before they stop.  A sense of finality settles over you.  <b>You have as many horns as a dragon can grow.</b>");
 						pc.hornType = GLOBAL.TYPE_DRACONIC;
 						pc.horns = 4;
+						pc.hornLength = 12;
 						changes++;
 					}
 				}

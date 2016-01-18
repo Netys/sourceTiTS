@@ -13,6 +13,8 @@ import classes.Engine.Utility.*;
 public function explorePlains():void { 
 	IncrementFlag("COC.EXPLORED_PLAINS");
 	
+	processTime(20 + rand(20)); // take your time looking for trouble!
+	
 	var choice:Array = [];
 	var chance:Array = [];
 	

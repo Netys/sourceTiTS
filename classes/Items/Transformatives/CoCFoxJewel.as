@@ -202,7 +202,7 @@ package classes.Items.Transformatives
 				{
 					pc.clearTailFlags();
 					pc.tailGenitalColor = "red";
-					pc.tailGenitalArg = GLOBAL.TYPE_CANINE;
+					pc.tailGenitalArg = GLOBAL.TYPE_VULPINE;
 					pc.tailGenital = GLOBAL.TAIL_GENITAL_COCK;
 					pc.addTailFlag(GLOBAL.FLAG_TAILCOCK); // that's a hell load of flags...
 					pc.addTailFlag(GLOBAL.FLAG_KNOTTED);

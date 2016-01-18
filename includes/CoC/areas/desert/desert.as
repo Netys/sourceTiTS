@@ -12,8 +12,9 @@ import classes.Engine.Utility.*;
 // Phylla
 public function exploreDesert():void
 {
-	processTime(10 + rand(10));
 	flags["COC.EXPLORED_DESERT"]++;
+	
+	processTime(20 + rand(20)); // take your time looking for trouble!
 	
 	////BUILD LIST OF CHOICES
 	var choice:Array = [];

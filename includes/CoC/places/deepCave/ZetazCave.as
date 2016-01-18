@@ -56,7 +56,7 @@ public function ZetazCaveEntrace():Boolean {
 		}
 		else if(flags["COC.ZETAZ_LAIR_DEMON_VENDOR_PRESENT"] > 0) {
 			output("\n\nThe incubus known as Sean has set up a small stall around the cave entrance, and is busy tending to his shelves and wares.  He's dressed in an incredibly modest, three-piece suit, and nods to you as you approach, \"<i>Let me know if you want to buy anything.  I haven't done much with the cave, so feel free to poke around if you missed anything on your first pass.  I barely use the first room.</i>\"");
-			addButton(0, "Shop", ZetazCaveIncubusShop);
+			addButton(0, "Sean", ZetazCaveIncubusShop);
 		}
 	}
 	

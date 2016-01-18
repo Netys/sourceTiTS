@@ -792,7 +792,7 @@ private function anemoneQuoteUnquoteAnal():void
 	if (dick) output("dick");
 	else output("clit");
 	output(" first with surprise, then with relish.  As you slide past her lips, your ");
-	if (dick) output("[pc.cockHead " + (x + 1) + "]");
+	if (dick) output("[pc.cockHead " + x + "]");
 	else output("tip");
 	output(" is embraced by the rippling walls of her throat, already trying to milk you for spunk");
 	if (!dick) output(" that won't come");

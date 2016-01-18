@@ -189,7 +189,7 @@ package classes.Characters.CoC
 			}
 			else {
 				if(CombatAttacks.SingleMeleeAttackImpl(this, target)) {
-					output("It feels like you just got hit with a wooden club! ");
+					output("  It feels like you just got hit with a wooden club! ");
 				}
 				else output("You successfully block it.");
 			}
@@ -225,10 +225,16 @@ package classes.Characters.CoC
 		}
 			
 		private function bottleChug(target:Creature):void {
-			output("He whips a bottle of wine seemingly from nowhere and begins chugging it down, then lets out a bellowing belch towards you.  The smell is so horrible you cover your nose in disgust, yet you feel hot as you inhale some of the fetid scent.  ");
+			output("He whips a bottle of wine seemingly from nowhere and begins chugging it down, then lets out a bellowing belch towards you.  ");
+			lust(5);
+			
+			if (target.hasArmor() && target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)) {
+				return;
+			}
+			
+			output("  The smell is so horrible you cover your nose in disgust, yet you feel hot as you inhale some of the fetid scent.  ");			
 			//(damage PC lust very slightly and raise the satyr's lust.)
 			applyDamage(new TypeCollection( { tease : target.libido() / 5 } ), this, target);
-			lust(5);
 		}
 		
 		//5:(Only executed at high lust) 
@@ -239,6 +245,11 @@ package classes.Characters.CoC
 			}
 			else if(combatMiss(this, target)) {
 				output("As he charges you, you grab him by the horns and spin around, sending him away.");
+			}
+			else if (target.hasArmor() && target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)) {
+				output("You fall with a <b>THUD</b> and the Satyr doesn't even bother to undress you before he begins rubbing his massive cock on your body until he comes, soiling your [pc.armor] with slimy, hot cum.  ");
+				lust( -50);
+				applyDamage(new TypeCollection( { tease : target.libido() / 5 } ), this, target);
 			}
 			else {
 				output("You fall with a <b>THUD</b> and the Satyr doesn't even bother to undress you before he begins rubbing his massive cock on your body until he comes, soiling your [pc.gear] and " + target.skinFurScales() + " with slimy, hot cum.  As it rubs into your body, you shiver with unwanted arousal.");

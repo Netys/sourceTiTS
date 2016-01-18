@@ -193,6 +193,7 @@ package classes.Items.Transformatives
 							pc.cocks[0].knotMultiplier = 1.4;
 							output("You feel something slippery wiggling inside the new sheath, and another red point peeks out.  In spite of yourself, you start getting turned on by the change, and the new dick slowly slides free, eventually stopping once the thick knot pops free.  The pair of dog-dicks hang there, leaking pre-cum and arousing you far beyond normal.", false);
 							pc.createCock(pc.cocks[0].cLength());
+							pc.shiftCock(1, GLOBAL.TYPE_CANINE)
 							pc.cocks[1].knotMultiplier = 1.4;
 						}
 						//2 dicks+ - convert first 2 to doggie-dom

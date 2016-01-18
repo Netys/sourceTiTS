@@ -71,8 +71,8 @@ include "areas/boat/MaraeScene.as";
 include "areas/boat/SharkGirlScene.as";
 include "areas/boat/FetishZealotScene.as";
 
-// PLACES
-include "places/Farm.as";
+// PLACES, note: sub-uncludes are usually inside places
+include "places/farm/Farm.as";
 include "places/bazaar/bazaar.as";
 include "places/teladre/TelAdre.as";
 include "places/factory/factory.as";

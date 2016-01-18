@@ -15,7 +15,8 @@ public function exploreLake():void
 {
 	//Increment exploration count
 	flags["COC.EXPLORED_LAKE"]++;
-	processTime(20 + rand(20));
+	
+	processTime(20 + rand(20)); // take your time looking for trouble!
 	
 	//if (kGAMECLASS.poniesYN()) return;
 

@@ -6,6 +6,7 @@ package classes.Items.Miscellaneous
     import classes.Creature;
     import classes.kGAMECLASS;
     import classes.GameData.TooltipManager;
+	import classes.PregnancyData;
     import classes.StringUtil;
     import classes.Util.RandomInCollection;
     import classes.Util.InCollection;
@@ -75,8 +76,8 @@ package classes.Items.Miscellaneous
 			
 			output("You pop the cork and gulp down the thick greenish fluid.  The taste is unusual and unlike anything you've tasted before.");
 			var hasPreg:Boolean = false;
-			for (var i:int = 0; i < pc.vaginas.length; i++) 
-				if (pc.pregnancyData[i].pregnancyType != "")
+			for (var i:int = 0; i < pc.pregnancyData.length; i++) 
+				if (pc.pregnancyData[i] != null && pc.pregnancyData[i].pregnancyType != "")
 				{
 					hasPreg = true;
 					if (pc.pregnancyData[i].pregnancyType == "CoCOviElixEggs") {
@@ -87,18 +88,19 @@ package classes.Items.Miscellaneous
 							pc.setStatusValue("MagicColorfulEggs", 2, 1);
 							large = true;
 							pc.bellyRatingMod -= pc.pregnancyData[i].pregnancyBellyRatingContribution;
-							pc.pregnancyData[i].pregnancyQuantity *= 1 / 3;
-							pc.pregnancyData[i].pregnancyBellyRatingContribution = pc.pregnancyData[i].pregnancyQuantity * 4;
+							pc.pregnancyData[i].pregnancyQuantity *= 0.66;
+							pc.pregnancyData[i].pregnancyBellyRatingContribution *= 1.33;
 							pc.bellyRatingMod += pc.pregnancyData[i].pregnancyBellyRatingContribution;
 							output("\n\nYour pregnant belly suddenly feels heavier and more bloated than before.  You wonder what the elixir just did.");
 						}
 						
 						//Chance of quantity increase!
-						if (pc.pregnancyData[i].pregnancyQuantity < (large ? 50 : 25) && rand(2) == 0) {
+						else if (pc.pregnancyData[i].pregnancyQuantity < (large ? 50 : 25)) {
 							output("\n\nA rumble radiates from your uterus as it shifts uncomfortably and your belly gets a bit larger.");
+							var oldQty:Number = pc.pregnancyData[i].pregnancyQuantity;
 							pc.bellyRatingMod -= pc.pregnancyData[i].pregnancyBellyRatingContribution;
-							pc.pregnancyData[i].pregnancyQuantity += rand(large ? 2 : 4) + 1;
-							pc.pregnancyData[i].pregnancyBellyRatingContribution = pc.pregnancyData[i].pregnancyQuantity * (large ? 2 : 4);
+							pc.pregnancyData[i].pregnancyQuantity += rand(large ? 3 : 5) + 1;
+							pc.pregnancyData[i].pregnancyBellyRatingContribution *= pc.pregnancyData[i].pregnancyQuantity / oldQty;
 							pc.bellyRatingMod += pc.pregnancyData[i].pregnancyBellyRatingContribution;
 						}
 					} else if(pc.pregnancyData[i].pregnancyIncubationMulti < 10) {

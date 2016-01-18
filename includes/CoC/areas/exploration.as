@@ -65,6 +65,8 @@ public function tryDiscover():void
 		//return;
 	//}
 	
+	processTime(20 + rand(20)); // take your time looking for trouble!
+	
 	if (cocGeneralAreasExplore()) return;
 	
 	flags["COC.EXPLORED"]++;

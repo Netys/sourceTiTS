@@ -30,6 +30,24 @@ package classes.GameData.Pregnancy.Handlers
 			_pregnancyQuantityMaximum = 7;
 			_pregnancyChildType = GLOBAL.CHILD_TYPE_EGGS;
 			
+			var large:Boolean = kGAMECLASS.pc.statusEffectv2("MagicColorfulEggs") == 1;
+			
+			this.addStageProgression(10 * 60, function(pregSlot:int):void {
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, large ? 2 : 1, true);
+			}, true);
+			
+			this.addStageProgression(20 * 60, function(pregSlot:int):void {
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, large ? 2 : 1, true);
+			}, true);
+			
+			this.addStageProgression(30 * 60, function(pregSlot:int):void {
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, large ? 2 : 1, true);
+			}, true);
+			
+			this.addStageProgression(40 * 60, function(pregSlot:int):void {
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, large ? 2 : 1, true);
+			}, true);
+			
 			onTryImpregnate = oviOnTry;
 			onSuccessfulImpregnation = oviOnSuccessfulImpregnantion;
 			onDurationEnd = oviOnDurationEnd;
@@ -161,6 +179,16 @@ package classes.GameData.Pregnancy.Handlers
 					break;
 			}
 			return egg;
+		}
+		
+		override public function pregBellyFragment(target:Creature, slot:int):String
+		{
+			var pData:PregnancyData = target.pregnancyData[slot];
+			var retString:String = "";
+			
+			retString += "You are carrying unfertilized eggs.";
+			
+			return retString;
 		}
 	}
 }

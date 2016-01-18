@@ -9,7 +9,7 @@ import classes.Engine.Utility.*;
 public function exploreSwamp():void {
 	IncrementFlag("COC.EXPLORED_SWAMP");
 	
-	processTime(20 + rand(10)); // take your time looking for trouble!
+	processTime(20 + rand(20)); // take your time looking for trouble!
 	
 	var choice:Array = [];
 	var chance:Array = [];

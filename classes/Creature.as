@@ -1641,6 +1641,10 @@ package classes {
 				case "cockTail":
 					buffer = tailCockDescript();
 					break;
+				case "tailCockHead":
+				case "cockTailHead":
+					buffer = tailCockHead();
+					break;
 				case "cockOrStrapon":
 					buffer = cockOrStrapon();
 					break;
@@ -2168,9 +2172,9 @@ package classes {
 			if (amt >= amount) return true;
 			return false;
 		}
-		public function destroyItemByName(arg:String,amount:int = 1):void
+		public function destroyItemByName(arg:String,amount:int = 1):int
 		{
-			if(inventory.length == 0) return;
+			if(inventory.length == 0) return 0;
 			var foundAmount:int = 0;
 			for(var x:int = 0; x < inventory.length; x++)
 			{
@@ -2186,11 +2190,11 @@ package classes {
 					}
 				}
 			}
-			return;
+			return foundAmount;
 		}
-		public function destroyItem(arg:ItemSlotClass,amount:int = 1):void
+		public function destroyItem(arg:ItemSlotClass,amount:int = 1):int
 		{
-			if(inventory.length == 0) return;
+			if(inventory.length == 0) return 0;
 			var foundAmount:int = 0;
 			for(var x:int = 0; x < inventory.length; x++)
 			{
@@ -2200,13 +2204,14 @@ package classes {
 					//If we still need to eat some, eat em up!
 					while(amount > 0 && inventory[x].quantity > 0) 
 					{
+						foundAmount++;
 						inventory[x].quantity--;
 						amount--;
 						if(inventory[x].quantity <= 0) inventory.splice(x,1);
 					}
 				}
 			}
-			return;
+			return foundAmount;
 		}
 		public function getWeaponName(fromStat:Boolean = false):String
 		{
@@ -2532,6 +2537,13 @@ package classes {
 			}
 			return desc;
 		}
+		/**
+		 * Checks if all naughty bits are exposed. Allows exposing gear. Basically isCrotchExposed + isChestExposed.
+		 */
+		public function isExposed(): Boolean {
+			if(hasStatusEffect("Temporary Nudity Cheat")) return true;
+			return isCrotchExposed() && isChestExposed();
+		}
 		public function isNude(): Boolean {
 			if(hasStatusEffect("Temporary Nudity Cheat")) return true;
 			//return (armor.shortName == "" && lowerUndergarment.shortName == "" && upperUndergarment.shortName == "");
@@ -2616,12 +2628,21 @@ package classes {
 		//STATS!
 		//Personalities!
 		public function isNice(): Boolean {
+			if (hasPerk("Enlightened Nine-tails")) return false;
+			if (hasPerk("Corrupted Nine-tails")) return false;
+			
 			return (personality <= 33);
 		}
 		public function isMischievous(): Boolean {
+			if (hasPerk("Enlightened Nine-tails")) return true;
+			if (hasPerk("Corrupted Nine-tails")) return false;
+			
 			return (personality <= 66 && personality > 33);
 		}
 		public function isAss(): Boolean {
+			if (hasPerk("Enlightened Nine-tails")) return false;
+			if (hasPerk("Corrupted Nine-tails")) return true;
+			
 			return (personality > 66);
 		}
 		//Placeholders for when i rework the personality system soon-ish."
@@ -3116,8 +3137,8 @@ package classes {
 			bonus += perkv1("Inhuman Desire");
 			//trace("Max lust: " + (bonus + 100));
 			if(hasPerk("Venom Slut") && hasStatusEffect("Red Myr Venom")) bonus += 35;
-			if (hasPerk("Bimbo Body") || hasPerk("Bro Body") || hasPerk("Futa Form")) bonus += 50; // should be 20 and 25% resistance
-			if (hasPerk("Omnibus' Gift")) bonus += 30; // should be 15 and 15% resistance
+			if (hasPerk("Bimbo Body") || hasPerk("Bro Body") || hasPerk("Futa Form")) bonus += 20;
+			if (hasPerk("Omnibus' Gift")) bonus += 15;
 			return (100 + bonus);
 		}
 		public function lustMin(): Number {
@@ -3185,7 +3206,10 @@ package classes {
 			else if (stat == "aim" || stat == "a") statCurrent = aim();
 			else if (stat == "intelligence" || stat == "i") statCurrent = intelligence();
 			else if (stat == "willpower" || stat == "w") statCurrent = willpower();
-			else if (stat == "libido" || stat == "l") statCurrent = libido();
+			else if (stat == "libido" || stat == "l") {
+				if (hasPerk("Purity Blessing") && arg > 0) arg *= 0.75;
+				statCurrent = libido();
+			}
 			else {
 				kGAMECLASS.output("ERROR: slowStatGain called with stat argument of " + stat + ". This isn't a real stat!");
 				return 0;
@@ -13305,6 +13329,8 @@ package classes {
 				kGAMECLASS.flags["COC.CORRUPTION"] = arg;
 			else if (arg != 0) 
 			{
+				if (arg > 0 && hasPerk("Purity Blessing")) arg *= 0.75;
+			
 				kGAMECLASS.flags["COC.CORRUPTION"] += arg;
 				if (kGAMECLASS.flags["COC.CORRUPTION"] > 100)
 					kGAMECLASS.flags["COC.CORRUPTION"] = 100;

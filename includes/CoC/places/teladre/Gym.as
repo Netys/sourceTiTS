@@ -231,7 +231,7 @@ public function TelAdreGymJog():void {
 	
 	pc.slowStatGain("r",1);
 	processTime(60);
-	Mutator.modThickness(pc, 20, 3, true);
+	if(pc.thickness > 20) Mutator.modThickness(pc, 20, 3, true);
 	soreDebuff(2);
 	sweatyDebuff(2);
 	TelAdreGymAfterTraining();

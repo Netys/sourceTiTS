@@ -9,6 +9,14 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
+include "KeltScene.as";
+include "KellyScene.as";
+
+// PLACEHOLDER
+public function whitneyCorrupt():Boolean {
+	return false;
+}
+
 // TODO:
 // centaur toys (also scenes)
 public function whitneySprite():void
@@ -20,7 +28,6 @@ public function whitneySprite():void
 public function farmExploreEncounter():void {
 	clearMenu();
 	clearOutput();
-	output("Whitney marches up to you as soon as you approach the farm, a stoic expression plastered across her face.");
 	//if (flags[kFLAGS.FARM_CORRUPTION_STARTED] > 0)
 	//{
 		//farmCorruption.rootScene();
@@ -29,18 +36,18 @@ public function farmExploreEncounter():void {
 	//
 	//if (farmCorruption.takeoverPrompt() == true) return;
 	
-	if (flags["COC.FARM_DISABLED"] == 1)
-	{
-		output("Whitney marches up to you as soon as you approach the farm, a stoic expression plastered across her face.");
-		output("\n\n\"<i>What the fuck do you think you're doing here [pc.name]? After what you did to Marble you still think you're welcome here? Leave. <b>Now</b>.</i>\"");
-		doNext(returnToCampUseOneHour);
-		return;
-	}
-	if (flags["COC.FARM_DISABLED"] == 1)
+	//if (flags["COC.FARM_DISABLED"] == 1)
+	//{
+		//output("Whitney marches up to you as soon as you approach the farm, a stoic expression plastered across her face.");
+		//output("\n\n\"<i>What the fuck do you think you're doing here [pc.name]? After what you did to Marble you still think you're welcome here? Leave. <b>Now</b>.</i>\"");
+		//addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
+		//return;
+	//}
+	if (flags["COC.FARM_DISABLED"] > 0 && flags["COC.KELT_KILLED"] == 1)
 	{
 		output("Whitney marches up to you as soon as you approach the farm, a stoic expression plastered across her face.");
 		output("\n\n\"<i>What the fuck do you think you're doing here [pc.name]? After what you did to Kelt you still think you're welcome here? Leave. <b>Now</b>.</i>\"");
-		doNext(returnToCampUseOneHour);
+		addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 		return;
 	}	
 	
@@ -70,7 +77,7 @@ public function farmExploreEncounter():void {
 			output("As soon as you approach the farm, Whitney comes storming up to meet you.  \"<i>What the fuck have you done?!</i>\"");
 			output("\n\nYou hold your hands up, knowing full-well what the angry bitch is on about. She angrily says \"<i>You've fucking killed Kelt the centaur! He may be rude and I don't like him but still, what you've done is wrong. You're not welcome on my farm anymore! Leave. <b>Now.</b></i>\"");
 			flags["COC.FARM_DISABLED"] = 2;
-			doNext(returnToCampUseOneHour);
+			addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 			return;
 		}
 		if(flags["COC.KELT_BREAK_LEVEL"] >= 4 && flags["COC.WHITNEY_FLIPPED_OUT_OVER_KELLY"] == undefined) {
@@ -85,12 +92,11 @@ public function farmExploreEncounter():void {
 		else if(flags["COC.WHITNEY_FLIPPED_OUT_OVER_KELLY"] == 1) output("You aren't welcome on the farm proper, but you can see Kelly cantering about the fields, looking for you.");
 		else output("Whitney's farm is remarkably large for such a humble operation.  What do you want to do?");
 
-		addButton(14, "Leave", returnToCampUseOneHour);		
+		addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 		
-		if(flags["COC.KELT"] >= undefined && flags["COC.KELT_OFF"] == undefined && flags["COC.KELT_KILLED"] == undefined) {
-			//if(flags["COC.KELT_BREAK_LEVEL"] >= 4) addButton(1,"Kelly", kelly.breakingKeltOptions);
-			//else 
-			//addButton(1,"Kelt", kelly.breakingKeltOptions);
+		if(Flag("COC.KELT_MET") > 0 && Flag("COC.KELT_OFF") == 0 && Flag("COC.KELT_KILLED") == 0) {
+			if(flags["COC.KELT_BREAK_LEVEL"] >= 4) addButton(1,"Kelly", breakingKeltOptions);
+			else addButton(1,"Kelt", breakingKeltOptions);
 		}
 		
 		if (flags["WHITNEY_FLIPPED_OUT_OVER_KELLY"] == 1) return;
@@ -129,14 +135,14 @@ private function whitneyMilkerHookup(breast:Boolean = true):void {
 		flags["COC.COCK_MILKER_INSTALLED"] = 1;
 		pc.removeKeyItem("Cock Milker");
 	}
-	doNext(returnToCampUseOneHour);
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 }
 //[NO]
 private function whitneyMilkerRefusal():void {
 	whitneySprite()
 	clearOutput();
 	output("Whitney shrugs and the two of you resume your conversation.  But like all good things, it has to come to an end.  The two of you go your separate ways.");
-	doNext(returnToCampUseOneHour);
+	addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 }
 //TALK
 private function talkWhitney():void {
@@ -161,7 +167,7 @@ private function talkWhitney():void {
 
 		output("\n\n“<i>Those two are hard workers, in their own different ways. Doubt I’d be able to keep the farm going without them.</i>” She sighs. “<i>When you are out in the sticks like this, you have to make allowances for the people you find yourself lumped together with. Be understanding, and look for the good in everyone. If you set boundaries and stand firm by 'em you can get by with most anyone.</i>” She looks you in the eye. “<i>You should be careful how much time you spend around just anyone, though. Some folks don’t have your best interests at heart. Some others think they do, and they’re even more dangerous. Know what I mean?</i>” Not particularly, but you get the distinct impression you’re being warned about something. Feeling slightly unsettled, you politely take your leave. Whitney nods once and returns to her book, the picture of placidity.");
 		
-		doNext(returnToCampUseOneHour);
+		addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 		return;
 	}
 	
@@ -178,7 +184,7 @@ private function talkWhitney():void {
 		
 		output("\n\n“<i> I had my reasons. I grew up in the country, </i>” she goes on after a short pause, “<i>and never held much with city life. Particularly not hot, dusty, close ‘n stinky city life. Course farm life is stinky too,</i>” she acknowledges as she heaves up the milk pail and starts to walk it towards a barn. You offer to help, but she shakes her head. “<i> But least here it’s stink you’ve created yourself. I moved out here eight years ago, and never regretted it. As for Urta... well, she was finding better friends at the bottom of bottles by then. </i>” She disappears into the barn with the milk, and you decide to leave it at that.");
 		
-		doNext(returnToCampUseOneHour);
+		addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 		return;
 	}
 
@@ -226,7 +232,7 @@ private function talkWhitney():void {
 			output("\n\nYou notice a number of smaller bottles filled with a creamy fluid on the table, arranged in a cargo container. It takes you a moment to realize what it is. “<i>Why d’you think I pay you for it?</i> ” says Whitney with a laugh, catching your expression. “<i>I kin use some of it for my herd, but it’s just as easy to sell it to goblins ‘n harpies. Much better to buy it from me than to waste energy catching and beating it out of a satyr. 'Sides, how'd ya think I kept my hair so luxurious? Goblin hairdressers are top notch.</i>”");
 		}
 		
-		doNext(returnToCampUseOneHour);
+		addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 		return;
 	}
 	
@@ -245,7 +251,7 @@ private function talkWhitney():void {
 		
 		output("\n\nShe stops for such a long while that you wonder whether she’s finished. “<i>Could- could you recognise any of those prisoners? The ones from your town. You said some of em stayed even when you freed em. What did you think about that? I often wonder- is it better never to know what happened to somebody, or find em and discover nothing but a twisted shell of what you remember: a soulless monster who even likes what’s been done to em?</i>” She stops and you think you see tears glittering in eyes still gazing at the lake. You wait a little longer but evidently that’s all you’re getting. You put a hand on her shoulder and then quietly walk away.");
 		
-		doNext(returnToCampUseOneHour);
+		addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 		return;
 	}
 
@@ -264,7 +270,7 @@ private function talkWhitney():void {
 
 		output("\n\nYou say goodbye with a hug and leave with a funny feeling in your gut.");
 		
-		doNext(returnToCampUseOneHour);
+		addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 		return;
 	}
 	
@@ -309,7 +315,7 @@ private function talkWhitney():void {
 			}
 			else {
 				output("You don't have enough money for the milker.  You apologize and head back to camp, maybe you can get one later.");
-				doNext(returnToCampUseOneHour);
+				addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 			}
 			return;
 		}
@@ -332,12 +338,9 @@ private function talkWhitney():void {
 	else output("how poorly the farm has been going since the lake became tainted.  She has to work three times as hard to keep her livestock and crops from succumbing to the taint, and the demons and monsters of the forest are many times more bold");
 	output(".  It feels good to get a chance to talk with another sane individual, but before long Whitney has to return to work, and you should check back on your camp.");
 	//+3 int if less than 15, +2 int if less 20, +1 int if less than 30, +.5 int if less than 40.
-	if (pc.IQ() < 15) pc.slowStatGain("intelligence", 0.5);
-	if (pc.IQ() < 20) pc.slowStatGain("intelligence", 0.5);	
-	if (pc.IQ() < 30) pc.slowStatGain("intelligence", 0.25);	
-	if (pc.IQ() < 40) pc.slowStatGain("intelligence", 0.25);	
+	if (pc.IQ() < 40) pc.slowStatGain("intelligence", 1.5);	
 	pc.lust( -5);
-	doNext(returnToCampUseOneHour);
+	addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 	//+3 int if less than 15, +2 int if less 20, +1 int if less than 30, +.5 int if less than 40.
 }
 
@@ -346,18 +349,15 @@ private function breastMilkerPurchase():void {
 	output("Whitney takes the gems and leaves with the promise of having your gear set up within the hour.  She calls back over her shoulder with a cryptic warning, \"<i>Watch how much time you spend getting milked like an animal, lest you wind up like one.</i>\"");
 	flags["COC.BREAST_MILKER_INSTALLED"] = 1;
 	pc.credits -= 2500;
-	doNext(returnToCampUseOneHour);
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 }
 
 private function breastMilkerNoPurchase():void {
 	clearOutput();
 	output("Whitney shrugs and the two of you chat about other things, just passing the time and enjoying a relatively normal chat.");
 	//+3 int if less than 15, +2 int if less 20, +1 int if less than 30, +.5 int if less than 40.
-	if (pc.IQ() < 15) pc.slowStatGain("intelligence", 0.5);
-	if (pc.IQ() < 20) pc.slowStatGain("intelligence", 0.5);	
-	if (pc.IQ() < 30) pc.slowStatGain("intelligence", 0.25);	
-	if (pc.IQ() < 40) pc.slowStatGain("intelligence", 0.25);	
-	doNext(returnToCampUseOneHour);
+	if (pc.IQ() < 40) pc.slowStatGain("intelligence", 1.5);	
+	addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 }
 
 public function workFarm():void {
@@ -433,8 +433,8 @@ public function workFarm():void {
 		//dynStats("lus", pc.cowScore() + pc.minoScore());
 		output("\n\nAn hour later you can stand it no more and exit the milking barn. Gulping down the fresher air and dragging the tools back to their shed, you admit to yourself that Whitney is a much harder worker and has a stronger constitution than you thought. You promise yourself you'll come back and help her out some more -- as soon as your nose recovers.");
 		//always +1 str till 50, then 50% chance.
-		pc.slowStatGain("physique", pc.PQ() <= 50 ? 1 : 0.5);
-		doNext(returnToCampUseOneHour);
+		pc.slowStatGain("physique", 1);
+		addButton(0, "Next", function():*{ processTime(60 + rand(10)); mainGameMenu(); });
 		return;
 	}
 	whitneySprite()
@@ -503,6 +503,7 @@ public function workFarm():void {
 //}
 
 public function exploreFarm():void {
+	clearOutput();
 	var marbling:Number = 0;
 	var explore:Number = 0;
 	
@@ -529,11 +530,10 @@ public function exploreFarm():void {
 		//return;
 	//}
 	////Meet kelt 1st time
-	//if(rand(2) == 0 && pc.findStatusAffect(StatusAffects.Kelt) < 0 && pc.findStatusAffect(StatusAffects.KeltOff) < 0) {
-		//doNext(returnToCampUseOneHour);
-		//keltScene.keltEncounter();
-		//return;		
-	//}
+	if(rand(2) == 0 && Flag("COC.KELT_MET") == 0 && Flag("COC.KELT_OFF") == 0) {
+		keltEncounter();
+		return;		
+	}
 	////In withdrawl odds are higher.
 	//if(pc.findStatusAffect(StatusAffects.NoMoreMarble) < 0 && pc.findStatusAffect(StatusAffects.MarbleWithdrawl) >= 0) {
 		//if(pc.statusAffectv3(StatusAffects.Marble) == 1) marbleScene.addictedEncounterHappy();
@@ -570,14 +570,16 @@ public function exploreFarm():void {
 			output("Whitney falls behind, unable to cope with your speed as you tear around the farm.");
 		}
 		output("\n\nAfterwards, the both of you lie back against a tree, panting heavily and exchanging pleasantries.  Once you've both had a chance to rest, she bids you farewell and returns to her labors, leaving you to journey home to camp.");
-		doNext(returnToCampUseOneHour);
+		clearMenu();
+		addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 		return;
 	}
 	//Other stuff
 	if(explore == 1) {
 		output("After wandering around for a while, you find yourself atop a slight rise looking out over the farm and the distant lake. Despite the corruption you know is slowly consuming this land, being here now makes you feel so at peace you wish it could go on forever.");
-		pc.cor( -rand(3));;
-		doNext(returnToCampUseOneHour);
+		pc.cor( -rand(2) + 1);
+		clearMenu();
+		addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 		return;
 	}
 	//Cows
@@ -606,13 +608,15 @@ public function exploreFarm():void {
 			pc.lust(3);
 		}
 		output("Shaking your head, you clear your thoughts and turn away from the pasture. Cows don't have your problems.");
-		doNext(returnToCampUseOneHour);
+		clearMenu();
+		addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 		return;
 	}
 	//[NOTHING]
 	else {
 		output("You wander around, unable to find anything entertaining on this patch of rural bliss.");
-		doNext(returnToCampUseOneHour);
+		clearMenu();
+		addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 	}
 }
 
@@ -676,7 +680,7 @@ public function getMilked():void {
 		output("You manage to grab the suction cups in spite of your constrictive bindings and pull them to your [pc.nipples].  They latch on immediately, ");
 		if(pc.nippleLength() <= 1.5) output("pulling each of your nipples entirely into the suction-tubes.  ");
 		else output("struggling to fit around each of your nipples as they slide into the suction-tubes.  ");
-		output("There is a mechanical lurching noise as the suction builds rapidly.  Your nipple swells out to " + int(pc.nippleLength()*1.5*10)/10 + " inches of length, turning purplish from the strain.   You can feel something welling up inside your " + pc.allBreastsDescript() + ", building as it moves towards your [pc.nipples].\n\n");
+		output("There is a mechanical lurching noise as the suction builds rapidly.  Your nipple swells out to " + int(pc.nippleLength() * 1.5 * 10) / 10 + " inches of length, turning purplish from the strain.   You can feel something welling up inside your " + pc.allBreastsDescript() + ", building as it moves towards your [pc.nipples].\n\n");
 	}
 	//Apply repeat alternate
 	else if(application == 1) {
@@ -712,7 +716,7 @@ public function getMilked():void {
 		}
 		//Lightish2
 		else if(milksplosion == 1) {
-			output("A tiny spurt of milk erupts from each of your [pc.nipples] before the hungry machinery devours it, sucking it down the clear tubes that lead back to the Whitney's machinery.  You unconsciously moan from the pleasure, feeling more than a little turned on by the pulsing suckling feeling the devices provide.  You spray your milk out in tiny streams, emptying your " + pc.allBreastsDescript() + " off their motherly fluids. An hour later your harness loosens, easing you to the floor as the milking-cups drop off your painfully sensitive [pc.nipples].\n\n", false);
+			output("A tiny spurt of milk erupts from each of your [pc.nipples] before the hungry machinery devours it, sucking it down the clear tubes that lead back to the Whitney's machinery.  You unconsciously moan from the pleasure, feeling more than a little turned on by the pulsing suckling feeling the devices provide.  You spray your milk out in tiny streams, emptying your " + pc.allBreastsDescript() + " off their motherly fluids. An hour later your harness loosens, easing you to the floor as the milking-cups drop off your painfully sensitive [pc.nipples].\n\n");
 		}
 		//Lightish3
 		else if(milksplosion == 2) {
@@ -748,25 +752,25 @@ public function getMilked():void {
 	else if(pc.lactationQ() < 750) {
 		pc.lust(40);
 		if(milksplosion == 0) {
-			output("An eruption of milk floods the suction-tubes with a vortex of cream.  The machinery chugs loudly, struggling to keep up with the waves of fluid as your nipples continue to fountain into the receptacles.  You squeal in delight as your nipples get red and sensitive, but never slow in their production.  Writhing in the harness, you become more and more aroused by this milk-draining device until you feel as if you can bear it no longer.  When you get out, you'll NEED to get off.  After an hour of sexual torture, the suction cuts off and the harness releases.  The nipple-suckers drop off and spill your milk over the floor as droplets continue to leak from your over-productive chest.\n\n", false);
+			output("An eruption of milk floods the suction-tubes with a vortex of cream.  The machinery chugs loudly, struggling to keep up with the waves of fluid as your nipples continue to fountain into the receptacles.  You squeal in delight as your nipples get red and sensitive, but never slow in their production.  Writhing in the harness, you become more and more aroused by this milk-draining device until you feel as if you can bear it no longer.  When you get out, you'll NEED to get off.  After an hour of sexual torture, the suction cuts off and the harness releases.  The nipple-suckers drop off and spill your milk over the floor as droplets continue to leak from your over-productive chest.\n\n");
 			
 		}
 		//High Output2
 		if(milksplosion == 1) {
-			output("Your " + pc.nippleDescript(0) + " swell up like tiny balloons for a moment before they unleash a torrent of your milk.  The nipple-cylinders instantly flood to capacity, and the milking machinery chugs loudly as it tries to suck it all down the tubes, barely keeping up with you.  You pant and writhe in the harness, each pulse of milk sending a growing sensation of your warmth to your groin that makes you ", false);
+			output("Your " + pc.nippleDescript(0) + " swell up like tiny balloons for a moment before they unleash a torrent of your milk.  The nipple-cylinders instantly flood to capacity, and the milking machinery chugs loudly as it tries to suck it all down the tubes, barely keeping up with you.  You pant and writhe in the harness, each pulse of milk sending a growing sensation of your warmth to your groin that makes you ");
 			if(pc.totalCocks() == 0) {
-				if(pc.hasVagina()) output("wet", false);
-				else output("horny", false);
+				if(pc.hasVagina()) output("wet");
+				else output("horny");
 			}
 			else {
-				if(pc.hasVagina()) output("wet and ", false);
-				output("hard", false);
+				if(pc.hasVagina()) output("wet and ");
+				output("hard");
 			}
-			output(" with excitement.  The milking drags on for an hour, but your output only slows slightly, forcing the machinery to work at maximum capacity the entire time.  At last it ends, and the harnesses lower you to the ground.  The milk cups pop off, leaving your leaky tits to make a puddle on the floor.\n\n", false);
+			output(" with excitement.  The milking drags on for an hour, but your output only slows slightly, forcing the machinery to work at maximum capacity the entire time.  At last it ends, and the harnesses lower you to the ground.  The milk cups pop off, leaving your leaky tits to make a puddle on the floor.\n\n");
 		}
 		//High Output3
 		if(milksplosion == 2) {
-			output("Milk floods the milker's cups as your breasts respond to the mechanized suckling.   The machinery groans as it kicks into high gear, working hard to keep up with your prodigious production rate.  Your nipples tingle with happy little bursts of pleasure as they continue to pour out ever greater quantities of milk.  Arousal wells up, flushing your body with a reddish tint that's difficult to hide.  You wriggle in the harness, sweating profusely and trying to grind against something, anything, whatever it takes to get off.  The milking drags on for an hour, but your breasts keep pouring out milk the entire time.  When it ends, you're lowered to the floor and released.  The milk-tubes pop off, leaving you lying in a milk-puddle as your leaky teats continue to drip.\n\n", false);
+			output("Milk floods the milker's cups as your breasts respond to the mechanized suckling.   The machinery groans as it kicks into high gear, working hard to keep up with your prodigious production rate.  Your nipples tingle with happy little bursts of pleasure as they continue to pour out ever greater quantities of milk.  Arousal wells up, flushing your body with a reddish tint that's difficult to hide.  You wriggle in the harness, sweating profusely and trying to grind against something, anything, whatever it takes to get off.  The milking drags on for an hour, but your breasts keep pouring out milk the entire time.  When it ends, you're lowered to the floor and released.  The milk-tubes pop off, leaving you lying in a milk-puddle as your leaky teats continue to drip.\n\n");
 		}
 	}
 	//CRAZY OUTPUT1 (+60 lust)
@@ -774,15 +778,15 @@ public function getMilked():void {
 		pc.lust(60);
 		milksplosion = rand(2);
 		if(milksplosion == 0) {
-			output("Your [pc.nipples] twitch and pulse for but a moment, then unleash a torrent of milk, totally filling the tubes.  The machinery lurches, struggling to keep up as you flood the tubes.   An alarm starts blaring as milk begins leaking out around the edges – Whitney's machinery just can't keep up!  You can hear footsteps in the barn, and a pair of soft hands hold the cups against your chest.   The machinery is shut down, but another pair of hands begins massaging your " + pc.allBreastsDescript() + ", pumping wave after wave of milk through the tubes, unaided by the machinery.  You practically ", false);
-			if(pc.hasVagina()) output("cream yourself", false);
-			else if(pc.cockTotal()) output("jizz yourself", false);
-			else output("orgasm", false);
-			output(" from the attentions of your mysterious helper as the milking continues, so hot and horny that you try and wriggle in your harness to press against them.   After an hour of non-stop squeezing and spurting, your milking is over, and the hands release you.  The cups fall to the ground, and the harness lowers you to the ground.  By the time you can crane your head around, your helper has left.\n\n", false);
+			output("Your [pc.nipples] twitch and pulse for but a moment, then unleash a torrent of milk, totally filling the tubes.  The machinery lurches, struggling to keep up as you flood the tubes.   An alarm starts blaring as milk begins leaking out around the edges – Whitney's machinery just can't keep up!  You can hear footsteps in the barn, and a pair of soft hands hold the cups against your chest.   The machinery is shut down, but another pair of hands begins massaging your " + pc.allBreastsDescript() + ", pumping wave after wave of milk through the tubes, unaided by the machinery.  You practically ");
+			if(pc.hasVagina()) output("cream yourself");
+			else if(pc.cockTotal()) output("jizz yourself");
+			else output("orgasm");
+			output(" from the attentions of your mysterious helper as the milking continues, so hot and horny that you try and wriggle in your harness to press against them.   After an hour of non-stop squeezing and spurting, your milking is over, and the hands release you.  The cups fall to the ground, and the harness lowers you to the ground.  By the time you can crane your head around, your helper has left.\n\n");
 		}
 		//CRAZY OUTPUT2
 		else {
-			output("Your body lets down its milk, flooding the tubes with creamy goodness.  Milk immediately begins leaking from the edges as the machine fails to keep up with the quantity of cream being released.   Alarms blare and soft footfalls fill the barn as help arrives.  You hear the clangs of metal on metal, and then the suction intensifies, nearly doubling, milking you HARD and draining you of your vast reservoir of milk.  Your nipples ache with the strange pleasure of it, leaving you grunting and bucking against your restraints, desperate for release, but you just can't get the stimulation you need.  For an hour you're teased like that, pumped of your milk until the machinery shuts off and the harness lowers you to the ground, leaving you in a puddle of your own creation when the nipple-cups pop off.\n\n", false);
+			output("Your body lets down its milk, flooding the tubes with creamy goodness.  Milk immediately begins leaking from the edges as the machine fails to keep up with the quantity of cream being released.   Alarms blare and soft footfalls fill the barn as help arrives.  You hear the clangs of metal on metal, and then the suction intensifies, nearly doubling, milking you HARD and draining you of your vast reservoir of milk.  Your nipples ache with the strange pleasure of it, leaving you grunting and bucking against your restraints, desperate for release, but you just can't get the stimulation you need.  For an hour you're teased like that, pumped of your milk until the machinery shuts off and the harness lowers you to the ground, leaving you in a puddle of your own creation when the nipple-cups pop off.\n\n");
 		}
 	}
 	//Aftermaths
@@ -796,14 +800,14 @@ public function getMilked():void {
 		flags["COC.WHITNEY_GEMS_PAID_THIS_WEEK"] = 0;
 		cap = 9999;
 	}
-	liters = int(pc.lactationQ()* (rand(10) + 90) / 100)/1000;
+	liters = int(pc.lactationQ() * (rand(10) + 90) / 100) / 1000;
 	if(liters < 0) liters = 1337;
 	//Pay 4 gem for every half-liter. 
 	payout = int(liters*2*4);
 	output("The machinery displays " + liters + " liters of milk", false);
 	//If already at cap
 	if(flags["COC.WHITNEY_GEMS_PAID_THIS_WEEK"] >= cap) {
-		output(" and displays a warning that <b>you're producing more than Whitney can pay for</b>", false);
+		output(" and displays a warning that <b>you're producing more than Whitney can pay for</b>");
 		payout = 0;
 	}
 	if(payout > 0) {
@@ -811,15 +815,15 @@ public function getMilked():void {
 		if(payout + flags["COC.WHITNEY_GEMS_PAID_THIS_WEEK"] > cap) payout = cap - flags["COC.WHITNEY_GEMS_PAID_THIS_WEEK"];
 		//Keep track of how much is paid
 		flags["COC.WHITNEY_GEMS_PAID_THIS_WEEK"] += payout;
-		output(" and automatically dispenses " + num2Text(payout) + " gem" + (payout == 1 ? "" : "s") + ".  Whitney really went all out with this setup!", false);
+		output(" and automatically dispenses " + num2Text(payout) + " gem" + (payout == 1 ? "" : "s") + ".  Whitney really went all out with this setup!");
 		//Display a warning that you've capped out.
-		if(flags["COC.WHITNEY_GEMS_PAID_THIS_WEEK"] >= cap) output("  <b>The machinery warns you that Whitney can't afford any more this week!</b>", false);
+		if(flags["COC.WHITNEY_GEMS_PAID_THIS_WEEK"] >= cap) output("  <b>The machinery warns you that Whitney can't afford any more this week!</b>");
 		pc.credits += payout * 10;
 	}
 	else output(".", false);
 	//High production = stupid cow.
 	if(liters > 2) {
-		output("\n\nYou feel woozy and lightheaded from the intense milking, and have difficulty focusing on anything but the residue of fluids coating your " + pc.allBreastsDescript() + ".", false);
+		output("\n\nYou feel woozy and lightheaded from the intense milking, and have difficulty focusing on anything but the residue of fluids coating your " + pc.allBreastsDescript() + ".");
 		//Being a cow makes you less dumb
 		//Somehow
 		//if(pc.findStatusAffect(StatusAffects.Feeder) >= 0) {
@@ -831,28 +835,28 @@ public function getMilked():void {
 		//not a cow, bimbotize me!
 		//else 
 		//{
-			pc.intelligence( Math.max(-liters/5, -2))
-			if (liters > 20) pc.intelligence( -1);
-			if (liters > 30) pc.intelligence( -1);			
+			pc.intelligence( Math.max( -liters / 5, -2))
+			if (liters > 20) pc.slowStatGain("intelligence", -1);
+			if (liters > 30) pc.slowStatGain("intelligence", -1)( -1);			
 		//}
 		if(pc.IQ() < 10) {
 			doNext(cowBadEnd1);
 			return;
 		}
-		else if(pc.IQ() < 15) output("  You stretch and let out a contented moo, long and loud.  How silly!", false);
-		else if(pc.IQ() < 25) output("  You quietly moo, then giggle to yourself at how strange you're acting.", false);
+		else if(pc.IQ() < 15) output("  You stretch and let out a contented moo, long and loud.  How silly!");
+		else if(pc.IQ() < 25) output("  You quietly moo, then giggle to yourself at how strange you're acting.");
 	}
 
 	output("\n\n", false);
 	//Not very horny yet
 	if(pc.lust() < 75) {
-		output("Feeling sore and VERY hungry, you make yourself decent and stagger back towards camp, ignoring the knowing smile Whitney gives you when you pass by her.", false);
+		output("Feeling sore and VERY hungry, you make yourself decent and stagger back towards camp, ignoring the knowing smile Whitney gives you when you pass by her.");
 	}
 	//Horny
 	else {
 		output("Overwhelmed with your desire, you don't even bother to cover up and make yourself decent, you just run out of the barn, " + pc.allBreastsDescript() + " jiggling and wet, heading straight for camp.");
 		//if (farmCorruption.whitneyCorruption() < 90) 
-			output(" It isn't until you get back that you remember the disapproving look Whitney gave you, but if anything, it only makes you hornier.", false);
+			output(" It isn't until you get back that you remember the disapproving look Whitney gave you, but if anything, it only makes you hornier.");
 		pc.lust(pc.lustMax(), true);
 	}
 	//Boost lactation by a tiny bit and prevent lactation reduction
@@ -863,7 +867,7 @@ public function getMilked():void {
 	//if(pc.statusAffectv1(StatusAffects.LactationEndurance) < 1.5) pc.addStatusValue(StatusAffects.LactationEndurance,1,.05);
 	//pc.addStatusValue(StatusAffects.LactationEndurance,1,.05);
 	//pc.createStatusAffect(StatusAffects.Milked,8,0,0,0);
-	doNext(returnToCampUseOneHour);
+	addButton(0, "Next", function():*{ processTime(40 + rand(10)); mainGameMenu(); });
 }
 
 public function cockPumping():void {

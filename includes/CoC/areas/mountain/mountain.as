@@ -13,7 +13,7 @@ public function exploreMountain():void {
 	flags["COC.EXPLORED_MOUNTAIN"]++;
 	var chooser:Number = rand(4);
 	
-	processTime(20 + rand(20));
+	processTime(20 + rand(20)); // take your time looking for trouble!
 	
 	////BUILD LIST OF CHOICES
 	var choice:Array = [];

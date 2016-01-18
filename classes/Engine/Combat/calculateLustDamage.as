@@ -49,6 +49,11 @@ package classes.Engine.Combat
 		//New status: "Red Myr Venom" replaces this.
 		//if (target.hasStatusEffect("Myr Venom")) damMulti += 0.25;
 		if (target.hasPerk("Easy")) damMulti += 0.2;
+		
+		if (target.hasPerk("Omnibus' Gift")) damMulti *= 0.85;
+		if (target.hasPerk("Bimbo Body") || target.hasStatusEffect("Bimbo Champagne") || target.hasPerk("Bro Body") || target.hasPerk("Futa Form")) damMulti *= 0.75;
+		if (target.hasPerk("Purity Blessing")) damMulti *= 0.85; // originally 0.75 but it is kinda op for perk without side effect
+		
 		if (damMulti != 1) lustDamage.multiply(damMulti);
 		
 		// Apply resistances
