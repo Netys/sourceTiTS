@@ -7,7 +7,6 @@ import classes.Engine.Utility.*;
 include "WetBitch.as";
 include "Library.as";
 include "Gym.as";
-include "Niamh.as";
 
 include "Armor.as";
 include "Jewels.as";

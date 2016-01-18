@@ -3,6 +3,9 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
+include "Niamh.as";
+include "AuntNancy.as";
+
 private function enterBarTelAdre():void {
 	//if(isThanksgiving() && flags[kFLAGS.PIG_SLUT_DISABLED] == 0) kGAMECLASS.pigSlutRoastingGreet();
 	//else 
@@ -20,7 +23,7 @@ public function barTelAdre():void {
 	//}
 	//output(images.showImage("location-teladre-thewetbitch"));
 	output("The interior of The Wet Bitch is far different than the mental picture its name implied.  It looks like a normal tavern, complete with a large central hearth, numerous tables and chairs, and a polished dark wood bar.  The patrons all seem to be dressed and interacting like normal people, that is if normal people were mostly centaurs and dog-morphs of various sub-species.  The atmosphere is warm and friendly, and ");
-	if (pc.humanScore() <= 3) output("despite your altered appearance, ");
+	if (pc.race() != "human") output("despite your altered appearance, ");
 	output("you hardly get any odd stares.  There are a number of rooms towards the back, as well as a stairway leading up to an upper level.");
 	
 	//scylla.scyllaBarSelectAction(); //Done before anything else so that other NPCs can check scylla.action to see what she's doing
@@ -86,26 +89,25 @@ public function barTelAdre():void {
 	//trace("HEL FOLLOWER LEVEL: " + flags[kFLAGS.HEL_FOLLOWER_LEVEL] + " HEL FUCKBUDDY: " + flags[kFLAGS.HEL_FUCKBUDDY] + " HARPY QUEEN DEFEATED: " + flags[kFLAGS.HEL_HARPY_QUEEN_DEFEATED]);
 	//trace("REDUCED ENCOUNTER RATE (DISPLINED): " + flags[kFLAGS.HEL_REDUCED_ENCOUNTER_RATE]);
 	//HELIA
-//	if(pc.gender > 0 && model.time.hours >= 14 && rand(2) == 0 && model.time.hours < 20 && (flags[kFLAGS.HEL_FUCKBUDDY] != 0 || kGAMECLASS.helFollower.followerHel()) && !(flags[kFLAGS.HEL_FOLLOWER_LEVEL] == 1 && flags[kFLAGS.HEL_HARPY_QUEEN_DEFEATED]== 0)) {
-	//if (edryn.edrynHeliaThreesomePossible()) {
+	//if(player.gender > 0 && model.time.hours >= 14 && rand(2) == 0 && model.time.hours < 20 && flags[kFLAGS.HEL_FUCKBUDDY] == 1 && (!kGAMECLASS.helFollower.followerHel() || flags[kFLAGS.HEL_HARPY_QUEEN_DEFEATED] == 1)) {
 		//edryn.helAppearance();
-		//button = anotherButton(button,"Helia",edryn.approachHelAtZeBitch);
+		//hel = edryn.approachHelAtZeBitch;
 	//}
 	//NANCY
-	//if (auntNancy.auntNancy(false)) {
-		//auntNancy.auntNancy(true);
-		//if (flags["COC.UNKNOWN_FLAG_NUMBER_00263"] > 0) addButton(counter++, "Nancy", auntNancy.interactWithAuntNancy);
-		//else button = anotherButton(button,"Barkeep",auntNancy.interactWithAuntNancy);
-	//}
-	//else 
-	output("\n\nIt doesn't look like there's a bartender working at the moment.");
+	if (auntNancy(false)) {
+		auntNancy(true);
+		if (Flag("COC.AUNT_NANCY_MET") > 0) addButton(counter++, "Nancy", interactWithAuntNancy);
+		else addButton(counter++, "Barkeep", interactWithAuntNancy);
+	}
+	else output("\n\nIt doesn't look like there's a bartender working at the moment.");
 
 	//NIAMH
 	if (hours >= 8 && hours <= 16 && IncrementFlag("COC.NIAMH_STATUS", false) == 0) {
 		telAdreNiamh();
-		if (IncrementFlag("COC.MET_NIAMH", false) == 0) addButton(counter++, "Beer Cat", approachNiamh);
+		if (Flag("COC.MET_NIAMH") == 0) addButton(counter++, "Beer Cat", approachNiamh);
 		else  addButton(counter++, "Niamh", approachNiamh);
 	}
+	
 	//ROGAR #1
 	if (flags["COC.ROGAR_PHASE"] == 3 && flags["COC.ROGAR_DISABLED"] != 1 && flags["COC.ROGAR_FUCKED_TODAY"] != days) {
 		addButton(counter++, "HoodedFig", rogarThirdPhase);
