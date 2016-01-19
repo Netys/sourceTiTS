@@ -72,7 +72,7 @@ public function exploreForest():void
 	//Essy is rare
 	if (pc.hasGenitals() && (flags["COC.ESSY_IN_DUNGEON"] == undefined || flags["COC.ESSY_IN_DUNGEON"] == 0)) {
 		choice.push(essrayleMeetingI);
-		chance.push(50);
+		chance.push(25);
 	}
 
 	

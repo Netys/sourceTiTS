@@ -47,8 +47,8 @@ public function sandWitchMotherFriendlyMenu():void {
 		//addButton(5, "Get LaBova", getLaBova, null, null, null, consumables.LABOVA_.description);
 		//addButton(6, "Get Lactaid", getLactaidFromWitches, null, null, null, consumables.LACTAID.description);
 	//}
-	//if((flags[kFLAGS.ESSY_MET_IN_DUNGEON] > 0 && flags[kFLAGS.TOLD_MOTHER_TO_RELEASE_ESSY] == 0) || (flags[kFLAGS.MET_MILK_SLAVE] > 0 && flags[kFLAGS.MILK_NAME] is Number))
-		//addButton(7,"Free Slaves",slavesDiscussion, null, null, null, "Request the Sand Mother to release a slave.");
+	if((flags["COC.ESSY_MET_IN_DUNGEON"] > 0 && flags["COC.TOLD_MOTHER_TO_RELEASE_ESSY"] != 1) /*|| (flags["COC.MET_MILK_SLAVE"] > 0 && flags["COC.MILK_NAME"] == undefined)*/)
+		addButton(7, "Free Slaves", slavesDiscussion, null, "Free Slaves", "Request the Sand Mother to release a slave.");
 	if (pc.lust() >= 33) addButton(8, "Sex", sexWithFriendlySandMother, null, "Sex", "Have some sexy time with the Sand Mother.");
 	
 	addButton(14, "Leave", function():*{
@@ -58,11 +58,14 @@ public function sandWitchMotherFriendlyMenu():void {
 	});
 }
 
-//public function slavesDiscussion():void {
-	//menu();
-	//if(flags[kFLAGS.ESSY_MET_IN_DUNGEON] > 0 && flags[kFLAGS.TOLD_MOTHER_TO_RELEASE_ESSY] == 0) addButton(0,"Essrayle",kGAMECLASS.forest.essrayle.askMotherToReleaseEssy, null, null, null, "Request the Sand Mother to release Essrayle.");
+public function slavesDiscussion():void {
+	clearMenu();
+	if (flags["COC.ESSY_MET_IN_DUNGEON"] > 0 && flags["COC.TOLD_MOTHER_TO_RELEASE_ESSY"] != 1) 
+		addButton(0, "Essrayle", askMotherToReleaseEssy, null, "Essrayle", "Request the Sand Mother to release Essrayle.");
 	//if(flags[kFLAGS.MET_MILK_SLAVE] > 0 && flags[kFLAGS.MILK_NAME] is Number) addButton(1,"Milk-Slave",freeSlaves, null, null, null, "Request the Sand Mother to release the milk slave you've found in the bathroom.");
-//}
+	addButton(14, "Back", sandWitchMotherFriendlyMenu);
+}
+
 //Getting a Milk Slut, Purity Style
 //{Having beat the Sammiches, and made Momma Witch your friend, add a button labeled [Free Slaves] to Momma's menu. Needs to have met Milk Slut.}
 //private function freeSlaves():void {

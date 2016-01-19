@@ -7143,7 +7143,10 @@ package classes {
 			if (refractoryRate >= 15 && quantity < 251) quantity = 251;
 			if (refractoryRate >= 20 && quantity < 1000) quantity = 1000;
 			//You can't cum more than you can possibly have!
-			if(quantity > maxCum()) quantity = maxCum();
+			if (quantity > maxCum()) quantity = maxCum();
+			// unless you are using MAGIC
+			if (hasPerk("Magical Virility")) quantity += perkv1("Magical Virility");
+			
 			//Overloaded nuki' nuts will fully drain
 			if(hasPerk("'Nuki Nuts") && balls > 1 && perkv1("'Nuki Nuts") > 0 && quantity < currentCum()) quantity = currentCum();
 			//BIOMASS ADDED LAST!
@@ -12423,6 +12426,7 @@ package classes {
 		public function cumQuality():Number
 		{
 			var bonus:Number = 0;
+			if (hasPerk("Magical Virility")) bonus += perkv2("Magical Virility");
 			if (hasPerk("Virile")) bonus += perkv1("Virile");
 			if (hasStatusEffect("Rut")) bonus += statusEffectv1("Rut") / 100;
 			return (cumQualityRaw + cumQualityMod + bonus);
@@ -12464,6 +12468,7 @@ package classes {
 			
 			var bonus:Number = 0;
 			if (hasStatusEffect("Heat")) bonus += statusEffectv1("Heat") / 100;
+			if (hasPerk("Magical Fertility")) bonus += perkv1("Magical Fertility");
 			
 			return fertilityRaw + fertilityMod + bonus;
 		}
@@ -12473,8 +12478,9 @@ package classes {
 		public function pregnancyIncubationBonusMother():Number
 		{
 			var bonus:Number = 0;
-			if(hasPerk("Incubator")) bonus += perkv1("Incubator");
-			if(hasPerk("Breed Hungry")) bonus += 1;
+			if (hasPerk("Incubator")) bonus += perkv1("Incubator");
+			if (hasPerk("Magical Fertility")) bonus += perkv2("Magical Fertility");
+			if (hasPerk("Breed Hungry")) bonus += 1;
 			return pregnancyIncubationBonusMotherRaw + pregnancyIncubationBonusMotherMod + bonus;
 		}
 		

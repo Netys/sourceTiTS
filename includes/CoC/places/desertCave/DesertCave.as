@@ -135,16 +135,15 @@ public function DesertCaveWestHall2():Boolean {
 	
 	if(flags["COC.ESSRAYLE_ESCAPED_DUNGEON"] == undefined && flags["COC.MET_ESSY"] != undefined) {
 		flags["COC.ESSY_MET_IN_DUNGEON"] = 1;
-		if(flags["COC.TOLD_MOTHER_TO_RELEASE_ESSY"] != undefined) {
+		if(flags["COC.TOLD_MOTHER_TO_RELEASE_ESSY"] == 1) {
 			output("\n\n<b>Your attention is immediately drawn to Essrayle...</b>");
-			//clearMenu();
-			//addButton(0,"Next",kGAMECLASS.forest.essrayle.essyWitchVictory);
-			//flags["COC.ESSRAYLE_ESCAPED_DUNGEON"] = 1;
-			//return true;
+			clearMenu();
+			addButton(0, "Next", essyWitchVictory);
+			flags["COC.ESSRAYLE_ESCAPED_DUNGEON"] = 1;
+			return true;
 		}
 		output("\n\nQuite an unusual sight awaits you in this chamber.  Sitting in an oversized pot is what looks to be the overly busty, plant girl you encountered earlier, Essrayle.  She's changed quite a bit since you last saw her, however.  While her inhumanly smooth, elfin face seems to be unchanged, the rest of her verdant body seems to have been warped into a hyper-sexual parody of a fertility idol, with features that echo the nomadic sand witch tribe.");
-		addDisabledButton(0, "Essrayle", "Essrayle", "Approach Essrayle the plant-girl. NOT IMPLEMENTED.");
-		//addButton(0, "Essrayle", kGAMECLASS.forest.essrayle.approachTrappedEssy, null, null, null, "Approach Essrayle the plant-girl.");
+		addButton(0, "Essrayle", approachTrappedEssy, null, "Essrayle", "Approach Essrayle the plant-girl.");
 	}
 	return false;
 }

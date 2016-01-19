@@ -1,4 +1,5 @@
 import classes.Characters.CoC.CoCCumWitch;
+import classes.Characters.CoC.CoCSandWitch;
 import classes.Engine.Combat.DamageTypes.TypeCollection;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
@@ -54,7 +55,7 @@ public function turnIntoASammitch(volunteered:Boolean = false):void {
 		output("\n\nYour captor flashes you a smile and giggles, \"<i>See?  I told you they wouldn't mind.  Now, ");
 	}
 	else {
-		chars["COC.CUM_WITCH"].prepForCombat();	
+		setEnemy(new CoCSandWitch());
 		output("The Cum Sorceress smiles and giggles, \"<i>So you want to become a Sand Witch?  Good, we need more.  Now, ");
 	}
 	if(!pc.isPregnant()) output("let's go ahead and get your first daughter inside you, shall we?");
@@ -152,7 +153,7 @@ public function cumWitchCumPumpBadEnd(volunteered:Boolean = false):void {
 		output(".");
 	}
 	else {
-		chars["COC.CUM_WITCH"].prepForCombat();	
+		setEnemy(new CoCSandWitch());
 		output("You tell the Cum Witch that you're going to volunteer in expanding the numbers.  She smiles at you.");
 	}
 	output("\n\n\"<i>Let me help you with that,</i>\" the robed beauty whispers as she deftly removes your [pc.gear], leaving you bare and exposed, naked to her casual caresses and lecherous looks.  \"Such a lovely " + (!pc.hasVagina() ? "male" : "hermaphroditic") + " specimen");
@@ -168,13 +169,13 @@ public function cumWitchCumPumpBadEnd(volunteered:Boolean = false):void {
 	else output("groan and touch yourself, trying to show her just how 'in the mood' you are.");
 	output("  She affectionately ruffles your " + pc.hairDescript() + " and tuts, \"<i>Now, now, it's cute that you think you still have some agency here, but you really ought to just lay back and let me take worry about it!</i>\"");
 	
-	output("\n\nThe cum witch rolls up her sleeves and gesticulates rhythmically.  Trails of phosphorescent fire trail from her nails with each motion, and you're being lifted, raised up into the air on streams of phantasmal force.  You hover like that for a moment, then with a brush of luminous energy, you slide sideways onto a bench, the magic disappointing to rest you gently upon the firm wooden surface.  Exposed as it is, [eachCock] rises powerfully, as if displaying itself for inspection.  Given the circumstances, it very well may be.");
+	output("\n\nThe cum witch rolls up her sleeves and gesticulates rhythmically.  Trails of phosphorescent fire trail from her nails with each motion, and you're being lifted, raised up into the air on streams of phantasmal force.  You hover like that for a moment, then with a brush of luminous energy, you slide sideways onto a bench, the magic disappointing to rest you gently upon the firm wooden surface.  Exposed as it is, [pc.eachCock] rises powerfully, as if displaying itself for inspection.  Given the circumstances, it very well may be.");
 	
-	output("\n\nSnapping her fingers, the black-skinned spellcaster snares glowing bands of force around your chest, wrists, biceps, and [feet], effectively restraining you as efficiently as any torture rack.  You struggle briefly, though you cannot say whether to free or touch yourself.  Does it really matter?  Either way, you're bound, nude, helpless, and aroused.  Gentle touches rub the " + pc.skinFurScales() + " of your [chest] as she reassuringly coos, \"<i>Relax, my mighty friend.  You undoubtedly fought hard to get here, but now, all you need to do is relax.</i>\"");
+	output("\n\nSnapping her fingers, the black-skinned spellcaster snares glowing bands of force around your chest, wrists, biceps, and [pc.feet], effectively restraining you as efficiently as any torture rack.  You struggle briefly, though you cannot say whether to free or touch yourself.  Does it really matter?  Either way, you're bound, nude, helpless, and aroused.  Gentle touches rub the " + pc.skinFurScales() + " of your [pc.chest] as she reassuringly coos, \"<i>Relax, my mighty friend.  You undoubtedly fought hard to get here, but now, all you need to do is relax.</i>\"");
 	
-	output("\n\nSoft touches trace across your belly button and around your loins, skirting the sensitive, hard flesh in the middle to trace towards your [pc.legs].  \"<i>Feel how soothing my touches are?  How absolutely relaxing it is to be massaged in such a way?  Your muscles just... go slack, the tension draining out your [pc.feet] to leave you with nothing but comfort.</i>\"  You want to resist, but after fighting your way here and losing, it just feels too damned good.  Heedless of your desires, your [legs] relax and let the tension go.  You sigh in unexpected happiness as she continues.");
+	output("\n\nSoft touches trace across your belly button and around your loins, skirting the sensitive, hard flesh in the middle to trace towards your [pc.legs].  \"<i>Feel how soothing my touches are?  How absolutely relaxing it is to be massaged in such a way?  Your muscles just... go slack, the tension draining out your [pc.feet] to leave you with nothing but comfort.</i>\"  You want to resist, but after fighting your way here and losing, it just feels too damned good.  Heedless of your desires, your [pc.legs] relax and let the tension go.  You sigh in unexpected happiness as she continues.");
 	
-	output("\n\nNext, the witch rubs her way back up to your [hips].  She suggests, \"<i>I'm going to work my way up your body, and with every part I rub, you're going to let out more and more of your pent up tension.</i>\"  True to her words, your body is beginning to feel like putty from the waist down - a limp facsimile of its former self.  The softness has even infected your [pc.cocksLight], robbing some of the former stiffness.  You sigh and inadvertently let your guard down.  You've already lost, and if this woman wants to give you a massage before she has her way with you, why not enjoy it?");
+	output("\n\nNext, the witch rubs her way back up to your [pc.hips].  She suggests, \"<i>I'm going to work my way up your body, and with every part I rub, you're going to let out more and more of your pent up tension.</i>\"  True to her words, your body is beginning to feel like putty from the waist down - a limp facsimile of its former self.  The softness has even infected your [pc.cocksLight], robbing some of the former stiffness.  You sigh and inadvertently let your guard down.  You've already lost, and if this woman wants to give you a massage before she has her way with you, why not enjoy it?");
 	
 	output("\n\n\"<i>As a matter of fact, you're getting so relaxed now that you don't even need my touches for that wonderful, soft sensation to climb higher.  You can feel skilled fingers working the tension out of every single part of you, relaxing you to the core,</i>\" instructs your captor, removing her hands from your body.  The words ring true, and your arms gradually deaden, going as limp as the rest of you.  That wonderful relaxation moves into your core, and you exhale happily.");
 	
@@ -215,7 +216,7 @@ public function beACumPumpPartII():void {
 	//dynStats("lus=", pc.maxLust(), "resisted", false);
 	pc.lust(pc.lustMax(), true);
 	
-	output("\n\nAt that, a few nagging worries surge up to the forefront of your lust-addled thoughts.  You were hypnotized!  Worse than that, you can barely remember anything, let alone how you got here.  In addition, though less pressing, she's done something to you that'll make you only father females.  You don't remember much, but you know that's not quite right.  You jump up and nearly fall over your own [feet] in your hurry to get away from this woman - alluring and arousing as she is.  Pressing your back flat against the wall, you begin breathing faster and faster as you wrack your consciousness for an explanation.");
+	output("\n\nAt that, a few nagging worries surge up to the forefront of your lust-addled thoughts.  You were hypnotized!  Worse than that, you can barely remember anything, let alone how you got here.  In addition, though less pressing, she's done something to you that'll make you only father females.  You don't remember much, but you know that's not quite right.  You jump up and nearly fall over your own [pc.feet] in your hurry to get away from this woman - alluring and arousing as she is.  Pressing your back flat against the wall, you begin breathing faster and faster as you wrack your consciousness for an explanation.");
 	
 	output("\n\nThe dark-skinned woman (who seems INCREDIBLY familiar) calmly approaches you as she apologizes, \"Oh dear, this must be terribly jarring for you.  Come, sit down.  I promise not to bite.</i>\"");
 	
@@ -225,7 +226,7 @@ public function beACumPumpPartII():void {
 	
 	output("\n\n\"<i>You just completed the cum witch initiation, which appears to have traumatized you greatly.  A decade ago, you were born to assist me in my duty, and today, the culmination of your potential has been fulfilled,</i>\" she explains with hooded mysterious eyes.  You frown at that - you could have sworn you were born somewhere else, with friends of both genders... somewhere happy.");
 	
-	output("\n\n\"<i>Naughty pump,</i>\" the witch states when she sees you screwing up your brow in thought.  Immediately, you cry out and cum, hard.  Your eyes roll back from pleasure, and [eachCock] erupts, spewing jism all over your [legs] even in its limp state.  You cum and cum, puddling all over the floor and draining your prodigious balls of every ounce and then some. The bliss blasts through your brain, carrying the thoughts and questions away with them, pumping them straight out onto the floor to wash down the drain.  Only once your questions have been obliterated by bliss are you allowed to stop and sink into a drooling, receptive state.");
+	output("\n\n\"<i>Naughty pump,</i>\" the witch states when she sees you screwing up your brow in thought.  Immediately, you cry out and cum, hard.  Your eyes roll back from pleasure, and [pc.eachCock] erupts, spewing jism all over your [pc.legs] even in its limp state.  You cum and cum, puddling all over the floor and draining your prodigious balls of every ounce and then some. The bliss blasts through your brain, carrying the thoughts and questions away with them, pumping them straight out onto the floor to wash down the drain.  Only once your questions have been obliterated by bliss are you allowed to stop and sink into a drooling, receptive state.");
 	
 	output("\n\nWhen you come to, you smile, and sigh, happy your mistress deigned to let you cum.  You must have done something really good to earn such a spontaneous orgasm!  Now, what were you doi- oh yeah, she was reminding you why you let her fix your balls!  Smiling, you let her know you're all calmed down and ready to continue.");
 	
@@ -245,7 +246,7 @@ public function beACumPumpPartII():void {
 	if(pc.cockTotal() > 1) output("s");
 	output(", \"<i>I did not think you would get this far.  Your will is truly mighty, [name], but the task I gave you is something I've never been able to do.  Ten is as far as I ever got.  I would not have you damage yourself just yet.</i>  She pulls open the curtain and bellows, \"<i>Next!</i>\"");
 	
-	output("\n\nAnother woman, an olive-skinned beauty with breasts so pendulous they seem to weigh her body down, enters, glancing at you hesitantly.  The hermaphrodite smiles and nods, gesturing for her to approach you.  [EachCock] looks like a sperm volcano at this point, shrouded in bubbling flows of alabaster spunk that never seem to end.  Your balls are bloated and visibly churn, stuffed more than full of spunk even as they produce more.  The huge-titted milk-witch frowns, but reluctantly straddles you, sinking down upon your spermy scepter with ease.");
+	output("\n\nAnother woman, an olive-skinned beauty with breasts so pendulous they seem to weigh her body down, enters, glancing at you hesitantly.  The hermaphrodite smiles and nods, gesturing for her to approach you.  [pc.EachCock] looks like a sperm volcano at this point, shrouded in bubbling flows of alabaster spunk that never seem to end.  Your balls are bloated and visibly churn, stuffed more than full of spunk even as they produce more.  The huge-titted milk-witch frowns, but reluctantly straddles you, sinking down upon your spermy scepter with ease.");
 	if(pc.smallestCockArea() >= 100) output("  The penetration is eased somewhat by your shrinking dick.  You glance at the sand witch in awe, noting her glowing hands.  She gives you a knowing wink and turns, her spell complete, leaving you to enjoy yourself.");
 	
 	output("\n\nThe huge tits on the new witch crush into your face, smearing you with squirting milk as she begins to ride your geysering erection.  ");
@@ -341,7 +342,7 @@ public function repeatLoseToCumWitchForDudes():void {
 		
 		output("\n\n\"<i>How about this?  I can just slide back and forth on you while your eyes track my tits, entranced by nipples until you're creaming your little tummy with your spent seed.</i>\" she suggests, interrupted by her own coo of pleasure when your [pc.cock " + x + "] lurches underneath her and floods with excitement.  \"<i>Oh, you liked that huh?  Does the Champion have a titty little hypno-fetish?</i>\"  Her breasts continue to sway slowly, and her hips join in with the same slow rhythm.  Each of her hands is glowing now, lighting up with purplish-white intensite as she shakes her breasts and butt for your pleasure.  Confidently, she explains, \"<i>I'm quite skilled at mental manipulation, but surely you know that already.  My nipples ARE quite erotic.  You can't even look away any more, but surely you don't mind?</i>\"");
 		
-		output("\n\nSqueezing her cheeks around your spasming erection, the Cum Witch releases your [pc.cock " + x + "] so that she can support herself as she leans forward, bringing her bouncing, hypnotic breasts closer to your face.  You open your eyes wider to try and take in more of their erotic expanse.  Your [pc.cock " + x + "] is getting hotter and wetter, and the sorceress's own erection has risen to complete and full hardness, the ebony tool bouncing lewdly on your [chest] as she grinds her sopping-wet cunt across you.");
+		output("\n\nSqueezing her cheeks around your spasming erection, the Cum Witch releases your [pc.cock " + x + "] so that she can support herself as she leans forward, bringing her bouncing, hypnotic breasts closer to your face.  You open your eyes wider to try and take in more of their erotic expanse.  Your [pc.cock " + x + "] is getting hotter and wetter, and the sorceress's own erection has risen to complete and full hardness, the ebony tool bouncing lewdly on your [pc.chest] as she grinds her sopping-wet cunt across you.");
 		
 		output("\n\nHer voice purrs, \"<i>Just focus on my nipples and let me worry about making you feel good.  My pussy has your cock entranced and obedient, sure to cum before long, and you can just relax and enjoy the swaying, heavenly shape of chest, can't you?</i>\"");
 		
@@ -405,7 +406,7 @@ public function tooBigCumWitchLossFacial():void {
 	
 	output("\n\nLooking on in awe, you watch your gigantic urethra slowly dilate, opening wide to reveal the onrushing torrent of sticky, white goo, mere moments before it launches straight into your face, hair, and mouth.");
 	if(pc.biggestCockLength() >= pc.tallness/1.6) output("  The Cum Witch smiles as she holds it, bending it to make sure the overlong shaft deposits its thick load on your " + pc.face() + " where it belongs.");
-	output("  Your captor is still humping it even as you cum, moaning as the bulges of copious cream press on her smaller boner.  Her visage is alight with ecstasy, and her heavy nipples are dragging on your [chest] as she begins to grunt, her motions going jerky in her ecstasy.");
+	output("  Your captor is still humping it even as you cum, moaning as the bulges of copious cream press on her smaller boner.  Her visage is alight with ecstasy, and her heavy nipples are dragging on your [pc.chest] as she begins to grunt, her motions going jerky in her ecstasy.");
 	
 	output("\n\nOozing jism splatters into you with increasing frequency as your supercharged reproductive system asserts itself, thick globs dripping from your chin even as the Cum Witch peaks, adding her own virile sprays into the semen-shower.  Your " + pc.hairDescript() + " mats down as it's soaked with the alabaster sperm, so much so that it dangles in sticky ringlets from your ears.  It feels so good that you start to moan, but that's immediately silenced by a cheek-bulging seed-eruption.  You're not sure whether it's yours or hers, but all you can do is swallow it down and try to breathe through the salty mask as it's piled on thicker and thicker.  There's so much that it's forming a hot, wet puddle behind you and dripping down your [pc.chest], making the buzzing stones squish and splash it about as they help to bring you off.");
 	
@@ -432,7 +433,7 @@ public function tooBigCumWitchLossNoFacial():void {
 	if(pc.balls > 0) output(", just like your own");
 	output(", and she smiles cruelly as her feet press harder on you, suddenly tingling with supernatural forces.  Almost painful heat floods through your middle as she frots you harder and harder, inadvertently tit-fucking your immense erection all the way to orgasm.");
 	
-	output("\n\nYour first squirt is a nice, long thick spray that immediately soaks into the sand.  The second is much smaller, only a small, slimy trail.  Exploding atop you, the Cum Witch's boner hoses out a globule of cum so big that it breaks apart under its own weight and drops down both sides of your boner on its path to the sands.  Your dick is completely soaked in her jism at this point, and though less noticeable, her girl-cum is dripping down your [sheath] and [hips], marking you with her sweet, feminine scent while her salty goo drenches your bigger boner.  Her sprays get more voluminous as yours dwindle, until you're cumming out pathetic, tiny white droplets so small that it takes a few of them to get big enough to drip down to the ground.");
+	output("\n\nYour first squirt is a nice, long thick spray that immediately soaks into the sand.  The second is much smaller, only a small, slimy trail.  Exploding atop you, the Cum Witch's boner hoses out a globule of cum so big that it breaks apart under its own weight and drops down both sides of your boner on its path to the sands.  Your dick is completely soaked in her jism at this point, and though less noticeable, her girl-cum is dripping down your [pc.sheath] and [pc.hips], marking you with her sweet, feminine scent while her salty goo drenches your bigger boner.  Her sprays get more voluminous as yours dwindle, until you're cumming out pathetic, tiny white droplets so small that it takes a few of them to get big enough to drip down to the ground.");
 	
 	output("\n\nExhaustion takes you as you finish, causing you to fall into a fitful slumber while the Cum Witch finishes pumping what looks like a lake out of her wang.  Just how much of your potency did she steal?");
 	
@@ -593,7 +594,7 @@ public function menFuckUpSomeCumWitch():void {
 	else output("rock-hard");
 	output(" and pulsing with growing readiness.  The cum witch looks up at you with disdain, but the rigidity of her shaft and sloppy wetness of her flushed quim leave no doubt as to her state.   Her body blushes honestly as you reposition her, spreading her legs nice and wide.  You have to lift her hefty sack to expose the thick, wet lips of her pussy.  Jumping in response, her fat cock oozes a trickle of precum onto her dusky belly, oiling her dusky skin into a sensual shine.");
 	
-	output("\n\n\"<i>You think THAT compares to m-my wondrous... perfect penis?  I've knocked up more women than youUUU-</i>\" she taunts until you cut her off with a well-placed thrust.  Your [pc.oneCock] vanishes ");
+	output("\n\n\"<i>You think THAT compares to m-my wondrous... perfect penis?  I've knocked up more women than youUUU-</i>\" she taunts until you cut her off with a well-placed thrust.  [pc.OneCock] vanishes ");
 	if(pc.cockThatFits(enemy.vaginalCapacity()) < 0) output("most of");
 	else output("all of the way");
 	output(" inside her, sheathed deep in her under-used twat.  Her tight passage fits around your [pc.cock " + x + "] like a custom-made glove, a slippery warm embrace that threatens to rob you of your very reason.  The witch begins pumping her ebony cock along with the motions of your hips, throwing her head back in wordless pleasure that only a true hermaphrodite can experience.");
@@ -939,11 +940,13 @@ public function cumWitchBlessed(virility:Boolean = true):void {
 	output("<b>");
 	if(virility) {
 		output("\n\n(Perk Unlocked: Magical Virility - 200 mLs more cum per orgasm and enhanced virility.)");
-		pc.createPerk("Magical Virility", 0, 0, 0, 0, "200 mLs more cum per orgasm and enhanced virility.");
+		// quantity, quality
+		pc.createPerk("Magical Virility", 200, 0.1, 0, 0, "200 mLs more cum per orgasm and enhanced virility.");
 	}
 	else {
 		output("\n\n(Perk Unlocked: Magical Fertility - 10% higher chance of pregnancy and increased pregnancy speed.)");
-		pc.createPerk("Magical Fertility", 0, 0, 0, 0, "10% higher chance of pregnancy and increased pregnancy speed.");
+		// fertility, incubation
+		pc.createPerk("Magical Fertility", 0.1, 0.25, 0, 0, "10% higher chance of pregnancy and increased pregnancy speed.");
 	}
 	flags["COC.BEEN_BLESSED_BY_CUM_WITCH"] = 1;
 	pc.orgasm();

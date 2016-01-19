@@ -24,11 +24,11 @@ public function EventsAdopterHellNotify():void {
 			pc.cocks[pc.longestCockIndex()].cLength(8, true);
 			if (pc.cocks[pc.longestCockIndex()].cThicknessRatio() < 1) pc.cocks[pc.longestCockIndex()].cThicknessRatio(1, true);
 		}
-		if (pc.balls == 0) { //(Balls regrowth)
-			eventBuffer += "\n\n<b>As time passes, a pressure in your loins intensifies to near painful levels.  The skin beneath [pc.eachCock] grows loose and floppy, and then two testicles roll down to fill your scrotum.</b>";
-			pc.balls = 2;
-			pc.ballSizeRaw = 3 * Math.PI;
-		}
+		//if (pc.balls == 0) { //(Balls regrowth)
+			//eventBuffer += "\n\n<b>As time passes, a pressure in your loins intensifies to near painful levels.  The skin beneath [pc.eachCock] grows loose and floppy, and then two testicles roll down to fill your scrotum.</b>";
+			//pc.balls = 2;
+			//pc.ballSizeRaw = 3 * Math.PI;
+		//}
 		if (pc.breastRows[0].breastRatingRaw < 5) { //Tits!
 			pc.breastRows[0].breastRatingRaw = 5;
 			if (pc.isBimbo())
