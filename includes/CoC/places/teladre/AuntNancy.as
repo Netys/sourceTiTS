@@ -81,7 +81,8 @@ private function strongStuff():void {
 	//dynStats("tou", 1, "int", -1, "lus", 15);
 	pc.credits -= 50;
 	pc.lust(15);
-	pc.imbibeAlcohol(40);
+	pc.imbibeAlcohol(50);
+	processTime(20);
 	
 	output("You ask for a strong drink anyway, and Aunt Nancy nods.  Easily, she picks up a glass with one hand, reaches out with another two, and fills it with something greenish.\n\n");
 
@@ -102,7 +103,6 @@ private function strongStuff():void {
 		Flag("COC.AUNT_NANCY_AFFECTION", 5, true);
 	}
 	
-	processTime(20);
 	clearMenu();
 	addButton(0, "Next", barTelAdre);
 }

@@ -8,7 +8,7 @@ import classes.Engine.Utility.*;
 include "FungalPodScene.as"
 include "ImpHordeScene.as"
 include "SeanScene.as"
-//include "ValaScene.as"
+include "ValaScene.as"
 include "ZetazScene.as"
 
 // TODO: Vala
@@ -116,9 +116,9 @@ public function ZetazCaveTortureRoom():Boolean {
 			output("You step around her and are startled to see that while the fey girl is whip-thin, her breasts are disproportionately huge. They'd be at least a DD-cup on a normal human, but for her height and body type, they're practically as large as her head. They jiggle at her slow, uneven breathing, tiny drops of milk bubbling at her nipples with every heartbeat. If she weren't chained to the ceiling, you suspect she wouldn't even be able to stand under her own power. Her eyes are open, but she's staring blankly ahead, unaware of the world around her, pupils constricted to pinpricks amid the ocean of her dulled pink irises. Like this, she's no threat to anybody. You suppose you could let her go, though it's unclear if she's self-aware enough to even move. Alternately, you could blow off a little steam.\n\n");
 			//[Free] [Use] [Leave]
 			
-			addDisabledButton(0, "Free", "Free", "Not implemented.");
+			addDisabledButton(0, "Free", "Free", "You have no use for this slut now, you have no genitals!");
 			if (pc.hasGenitals()) {
-				//addButton(0, "Free", vala.freeValazLooseCoochie)
+				addButton(0, "Free", freeValazLooseCoochie)
 			}
 			//if (pc.lust >= 33 && shouldraFollower.followerShouldra()) {
 				//addButton(1, "ShouldraVala", shouldraFollower.shouldraMeetsCorruptVala);
@@ -128,9 +128,7 @@ public function ZetazCaveTortureRoom():Boolean {
 		else {
 			output("In the far corner, there is a small woman, her back to you, hanging limply by manacles that keep her suspended in a half-kneel. Rich purple hair hangs in long, clumped strands that sparkle occasionally with a pink glitter. Above her, there is a tarnished bronze nameplate that you think reads 'Vala,' but it's impossible to tell for sure under all the imp graffiti. She does not seem to be conscious.\n\n");
 			//Option to investigate her
-			//leftValaAlone()
-			addDisabledButton(0, "Faerie", "Faerie", "Not implemented.");
-			//addButton(0, "Faerie", vala.leftValaAlone);
+			addButton(0, "Faerie", leftValaAlone);
 		}
 	}
 	//Not here

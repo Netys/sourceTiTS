@@ -181,7 +181,7 @@ public function barTelAdre():void {
 		//}
 	//}
 	//VALA
-	//if(vala.purifiedFaerieBitchBar()) button = anotherButton(button,"Vala",vala.chooseValaInBar);
+	if(purifiedFaerieBitchBar()) addButton(counter++, "Vala", chooseValaInBar);
 
 	addButton(14, "Leave", telAdreMenu);
 }
