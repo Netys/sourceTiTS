@@ -102,14 +102,16 @@ private function rathazulMoveToCamp():void {
 	clearOutput();
 	output("Rathazul smiles happily back at you and begins packing up his equipment.  He mutters over his shoulder, \"<i>It will take me a while to get my equipment moved over, but you head on back and I'll see you within the hour.  Oh my, yes.</i>\"\n\nHe has the look of someone experiencing hope for the first time in a long time.");
 	flags["COC.RATHAZUL_IN_CAMP"] = 1;
-	doNext(returnToCampUseOneHour);
+	clearMenu();
+	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
 private function rathazulMoveDecline():void {
 	clearOutput();
 	flags["COC.RATHAZUL_IN_CAMP"] = -1;
 	output("Rathazul wheezes out a sigh, and nods.\n\n\"<i>Perhaps I'll still be of some use out here after all,</i>\" he mutters as he packs up his camp and prepares to head to another spot along the lake.");
-	doNext(returnToCampUseOneHour);
+	clearMenu();
+	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
 public function campRathazul(first:Boolean = true):void {
@@ -151,7 +153,6 @@ public function campRathazul(first:Boolean = true):void {
 			//return;
 		//}
 	//}
-	var offered:Boolean;
 	//Rat is definitely not sexy!
 	if(first) {
 		if (pc.lust() > 50) pc.lust( -1);
@@ -163,17 +164,10 @@ public function campRathazul(first:Boolean = true):void {
 	//output(images.showImage("rathazul-camp"));
 	output("Rathazul looks up from his equipment and gives you an uncertain smile.\n\n\"<i>Oh, don't mind me,</i>\" he says, \"<i>I'm just running some tests here.  Was there something you needed, [pc.name]?</i>\"\n\n");
 	//pc.createStatusAffect(StatusAffects.metRathazul,0,0,0,0);
-	offered = rathazulWorkOffer();
-	if (!offered) {
-		output("He sighs dejectedly, \"<i>I don't think there is.  Why don't you leave me be for a time, and I will see if I can find something to aid you.</i>\"");
-		//if (pc.findStatusAffect(StatusAffects.CampRathazul) >= 0)
-			doNext(campFollowersMenu);
-		//else doNext(playerMenu);
-	}
-
+	rathazulWorkOffer();
 }
 
-private function rathazulWorkOffer():Boolean {
+private function rathazulWorkOffer():void {
 	//spriteSelect(49);
 	var totalOffers:int = 0;
 	var spoken:Boolean = false;
@@ -185,7 +179,7 @@ private function rathazulWorkOffer():Boolean {
 	clearMenu();
 	if(flags["COC.RATHAZUL_ARMOR_COUNTDOWN"] + 24 * 60 < timeAsStamp && flags["COC.RATHAZUL_ARMOR_TYPE"] > 0) {
 		collectRathazulArmor();
-		return true;
+		return;
 	}
 	//if (flags[kFLAGS.MINERVA_PURIFICATION_RATHAZUL_TALKED] == 1 && flags[kFLAGS.MINERVA_PURIFICATION_PROGRESS] < 10) {
 		//purificationByRathazulBegin();
@@ -318,40 +312,32 @@ private function rathazulWorkOffer():Boolean {
 		//}
 	}
 	
-	if (totalOffers == 0 && spoken) {
-		return true;
-	}
-	
 	if(totalOffers > 0) {
 		output("Will you take him up on an offer or leave?", false);
-		//In camp has no time passage if left.
-		if (showArmorMenu) addButton(0, "Armor", rathazulArmorMenu, null, "Armor", "Ask Rathazul to make an armour for you.");
-		addButton(1, "Shop", rathShop, null, "Shop", "See what he can offer.");
-		//if (dyes) {
-			//addButton(1, "Buy Dye", buyDyes, null, "Buy Dye", "Ask him to make a dye for you. \n\nCost: 50 Gems.");
-			//addButton(2, "Buy Oil", buyOils, null, "Buy Oil", "Ask him to make a skin oil for you. \n\nCost: 50 Gems.");
-			//addButton(3, "Buy Lotion", buyLotions, null, "Buy Lotion", "Ask him to make a body lotion for you. \n\nCost: 50 Gems.");
-		//}
-		addButton(2, "Alchemy", rathPurify, null, "Alchemy", "Ask him to purify any tainted potions or make something from your ingridients. \n\nCost: 20 Gems.");
-		
-		if (debimbo > 0) addButton(5, "Debimbo", makeADeBimboDraft, null, "Debimbo", "Ask Rathazul to make a debimbofying potion for you. \n\nCost: 250 Gems \nNeeds 5 Scholar Teas.");
-		//if (pc.hasItem(consumables.BEEHONY)) addButton(6, consumables.PURHONY.shortName, rathazulMakesPureHoney, null, null, null, "Ask him to distill a vial of bee honey into a pure honey. \n\nCost: 25 Gems \nNeeds 1 vial of Bee Honey");
-		//if (flags["COC.RATHAZUL_BOUGHT"] >= 5) addButton(7, "ProLactaid", rathazulMakesMilkPotion, null, null, null, "Ask him to brew a special lactation potion. \n\nCost: 250 Gems \nNeeds 5 Lactaids and 2 Purified LaBovas.");
-		//if (flags["COC.RATHAZUL_BOUGHT"] >= 5) addButton(8, "Taurinum", rathazulMakesTaurPotion, null, "Taurinum", "Ask him to brew a special potion that could aid in becoming a centaur. \n\nCost: 100 Gems \nNeeds 2 Equinum and 1 Minotaur Blood.");
-		//if (reducto) addButton(9, "Reducto", buyReducto, null);
-		
-		//if (lethiciteDefense != null) addButton(10, "Lethicite", lethiciteDefense, null, null, null, "Ask him if he can make use of that lethicite you've obtained from Marae.");
-		//if (pc.hasItem(consumables.PURHONY, 1) && pc.hasItem(consumables.C__MINT, 1) && pc.hasItem(consumables.PURPEAC, 1) && pc.hasKeyItem("Rathazul's Purity Potion") < 0 &&(flags[kFLAGS.MINERVA_PURIFICATION_RATHAZUL_TALKED] == 2 && flags[kFLAGS.MINERVA_PURIFICATION_PROGRESS] < 10)) {
-			//addButton(11, "Pure Potion", rathazulMakesPurifyPotion, null, null, null, "Ask him to brew a purification potion for Minerva.");
-		//}
-
-		if(flags["COC.RATHAZUL_IN_CAMP"] > 0)
-			addButton(14, "Leave", campFollowersMenu);
-		else
-			addButton(14, "Leave", returnToCampUseOneHour);
-		return true;
 	}
-	return false;
+	
+	//In camp has no time passage if left.
+	if (showArmorMenu) addButton(0, "Armor", rathazulArmorMenu, null, "Armor", "Ask Rathazul to make an armour for you.");
+	addButton(1, "Shop", rathShop, null, "Shop", "See what he can offer.");
+	//if (dyes) {
+		//addButton(1, "Buy Dye", buyDyes, null, "Buy Dye", "Ask him to make a dye for you. \n\nCost: 50 Gems.");
+		//addButton(2, "Buy Oil", buyOils, null, "Buy Oil", "Ask him to make a skin oil for you. \n\nCost: 50 Gems.");
+		//addButton(3, "Buy Lotion", buyLotions, null, "Buy Lotion", "Ask him to make a body lotion for you. \n\nCost: 50 Gems.");
+	//}
+	addButton(2, "Alchemy", rathPurify, null, "Alchemy", "Ask him to purify any tainted potions or make something from your ingridients. \n\nCost: 20 Gems.");
+	
+	if (debimbo > 0) addButton(5, "Debimbo", makeADeBimboDraft, null, "Debimbo", "Ask Rathazul to make a debimbofying potion for you. \n\nCost: 250 Gems \nNeeds 5 Scholar Teas.");
+	//if (flags["COC.RATHAZUL_BOUGHT"] >= 5) addButton(7, "ProLactaid", rathazulMakesMilkPotion, null, null, null, "Ask him to brew a special lactation potion. \n\nCost: 250 Gems \nNeeds 5 Lactaids and 2 Purified LaBovas.");
+	
+	//if (lethiciteDefense != null) addButton(10, "Lethicite", lethiciteDefense, null, null, null, "Ask him if he can make use of that lethicite you've obtained from Marae.");
+	//if (pc.hasItem(consumables.PURHONY, 1) && pc.hasItem(consumables.C__MINT, 1) && pc.hasItem(consumables.PURPEAC, 1) && pc.hasKeyItem("Rathazul's Purity Potion") < 0 &&(flags[kFLAGS.MINERVA_PURIFICATION_RATHAZUL_TALKED] == 2 && flags[kFLAGS.MINERVA_PURIFICATION_PROGRESS] < 10)) {
+		//addButton(11, "Pure Potion", rathazulMakesPurifyPotion, null, null, null, "Ask him to brew a purification potion for Minerva.");
+	//}
+
+	if(flags["COC.RATHAZUL_IN_CAMP"] > 0)
+		addButton(14, "Leave", campFollowersMenu);
+	else
+		addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
 private function rathShop():void {
@@ -408,6 +394,7 @@ public function rathPurify():void {
 	add({ "S. Delight" : 1, "gems" : 20 }, new CoCSucDelightPure());
 	add({ "LaBova" : 1, "gems" : 20 }, new CoCLaBovaPure());
 	add({ "MinoCum" : 1, "gems" : 20 }, new CoCMinotaurCumPure());
+	add({ "BeeHony" : 1, "gems" : 25 }, new CoCBeeHoneyPure());
 	
 	if (flags["COC.RATHAZUL_DAYS_KNOWN"] >= 5)
 		add({ "MinoBlo" : 1, "Equinum" : 2, "gems" : 100 }, new CoCTaurinum());
@@ -447,7 +434,8 @@ public function purificationByRathazulBegin():void {
 
 	output("\n\nWith that in mind, you walk away from him; gathering the items that could cure Minerva is your responsibility.");
 	flags["COC.MINERVA_PURIFICATION_RATHAZUL_TALKED"] = 2;
-	doNext(returnToCampUseOneHour);
+	clearMenu();
+	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
 private function rathazulMakesPurifyPotion():void {

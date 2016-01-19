@@ -224,7 +224,7 @@ package classes.GameData
 			ShieldHack.RequiresPerk = "Shield Hack";
 			ShieldHack.TooltipTitle = "Shield Hack";
 			ShieldHack.TooltipBody = "An attack that deals a high amount of electric-typed damage to a target's shields. Damage is increased by intelligence.";
-			ShieldHack.ExtendedAvailabilityCheck = function(target:Creature):Boolean {
+			ShieldHack.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
 				return target.shields() > 0;
 			};
 			ShieldHack.Implementor = ShieldHackImpl;
@@ -237,7 +237,7 @@ package classes.GameData
 			WeaponHack.RequiresPerk = "Weapon Hack";
 			WeaponHack.TooltipTitle = "Weapon Hack";
 			WeaponHack.TooltipBody = "Attempt to neutralize a foe's <b>energy weapon</b> using your intelligence. Smarter foes will resist your attempts.";
-			WeaponHack.ExtendedAvailabilityCheck = function(target:Creature):Boolean {
+			WeaponHack.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
 				return !target.hasStatusEffect("Disarm Immune") && !target.hasStatusEffect("Disarmed") && (target.meleeWeapon.baseDamage.hasFlag(DamageFlag.ENERGY_WEAPON) || target.rangedWeapon.baseDamage.hasFlag(DamageFlag.ENERGY_WEAPON));
 			};
 			WeaponHack.Implementor = WeaponHackImpl;
