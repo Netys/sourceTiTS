@@ -330,7 +330,12 @@ public function drinkContestScore(arg:Creature):Number
 	//Tolerance: 0-100, based on drinkitude...
 	score += arg.tolerance();
 	score += arg.WQ();
-	score += arg.tallness * arg.thickness/50;
+	
+	var mass:Number = arg.tallness * (arg.thickness * 0.75 + 25) / 50;
+	if (arg.isTaur()) mass *= (arg.legCount / 2) + .25;
+	if (arg.isDrider()) mass *= 1.75;
+	if (arg.isNaga() || arg.isGoo()) mass *= 1.33;
+	score += mass;
 	score += rand(100);
 
 	//Bein' drunk hurts!

@@ -7,7 +7,9 @@ include "Benoit.as";
 include "Cinnabar.as";
 include "FapArena.as";
 include "Greta.as";
+include "GripingDemons.as";
 include "Lilium.as";
+include "Roxanne.as";
 include "SlipperySqueeze.as";
 
 public function showBazaar():void
@@ -63,7 +65,7 @@ public function enterTheBazaar():void {
 		//}
 	//}
 	processTime(10 + rand(10));
-	enterTheBazaarAndMenu();
+	enterTheBazaarAndMenu(true);
 }
 
 ////Pure? You'll have to fight!
@@ -79,7 +81,7 @@ public function enterTheBazaar():void {
 //}
 
 //[Enter]
-public function enterTheBazaarAndMenu(demons:Boolean = true):void {
+public function enterTheBazaarAndMenu(demons:Boolean = false):void {
 	//Make sure flags to allow entrance is set.
 	flags["COC.BAZAAR_ENTERED"] = 1;
 	clearOutput();
@@ -88,9 +90,9 @@ public function enterTheBazaarAndMenu(demons:Boolean = true):void {
 	//output(images.showImage("location-bazaar"));
 	output("You breeze past the crimson guard and enter the interior of the Bizarre Bazaar.  The ground is hard-packed, trampled as if walked over by hundreds of hooves, paws, and feet.  A massive bonfire rages in the center of the clearing, crackling and popping as it consumes its fuel gluttonously.  Surrounding the blazing behemoth are tiny, wheeled food-carts with vendors hawking everything from sausage to something called a 'marshmallow'.  Huge wagons ring the clearing, many set up to display exotic wares or services.  You can see everything from dancing centaurs to demons browsing the wares, but it seems an uneasy truce of sorts reigns here.  Then again, maybe the demons have just not had the chance to openly attack this place yet.");
 	output("\n\nOne of the wagons proudly proclaims itself to be \"Greta's Garments,\" though both 'G's are emphasized with cute, stylized devil horns, and the 'S' is shaped in the form of a spaded, demonic tail.  Obviously it must some kind of clothing shop.");
-	//roxanne.RoxanneAppearance();
+	RoxanneAppearance();
 	setBenoitShop();
-	//fapArena.fapAppearance();
+	fapAppearance();
 	//blackCock.blackCockDescription();
 	//Set menu. The top row is always available.
 	clearMenu();
@@ -100,20 +102,22 @@ public function enterTheBazaarAndMenu(demons:Boolean = true):void {
 	//addButton(4, "Back Alley", investigateBackAlley, null, null, null, "That back alley looks suspicious. Do you dare investigate?");
 	//Cinnabar
 	if (cinnabarAppearance(true) != null) addButton(5, (Flag("COC.CINNABAR_MET") > 0 ? "Cinnabar" : "Rat"), cinnabarGreeting);
+	
 	//Griping Demons
-	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] == 0 && rand(4) == 0 && demons) {
-		//overHearDemonsAboutSyrena();
-		//return;
-	//}
-	//if((flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] == 1 || flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] == 2) && demons && rand(10) == 0) {
-		////[Repeat Variant]
-		//output("\n\n<b>The familiar sounds of the two griping demons can be heard nearby.  Do you listen in again?</b>", false);
-		//addButton(6, "GripingDemons", overHearDemonsAboutSyrena, null, null, null, "Overhear the conversation of the two griping demons.", "Griping Demons");
-	//}
+	if(Flag("COC.GRIPING_DEMONS_STATUS") == 0 && rand(4) == 0 && demons) {
+		overHearDemonsAboutSyrena();
+		return;
+	}
+	if((Flag("COC.GRIPING_DEMONS_STATUS") == 1 || Flag("COC.GRIPING_DEMONS_STATUS") == 2) && demons && rand(10) == 0) {
+		//[Repeat Variant]
+		outputText("\n\n<b>The familiar sounds of the two griping demons can be heard nearby.  Do you listen in again?</b>");
+		addButton(6, "GripingDemons", overHearDemonsAboutSyrena, null, "Griping Demons", "Overhear the conversation of the two griping demons.");
+	}
+	
 	//Lilium
 	if (LiliumText(true) != null) addButton(7, (Flag("COC.UNKNOWN_FLAG_NUMBER_00267") > 0 ? "Lilium" : "Demon"), approachLilium);
 	//Roxanne
-	//addButton(8, (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00221] > 0 ? "Roxanne" : "Lizans"), (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00221] > 0 ? roxanne.RoxanneChooseApproachOrRepeat : roxanne.Roxanne1stApproach));
+	addButton(8, (Flag("COC.ROXANNE_MET") > 0 ? "Roxanne" : "Lizans"), (Flag("COC.ROXANNE_MET") > 0 ? RoxanneChooseApproachOrRepeat : Roxanne1stApproach));
 	//Bimbo Niamh
 	if (flags["COC.NIAMH_STATUS"] > 0 && flags["COC.NIAMH_MOVED_OUT_COUNTER"] == -1) {
 		if (flags["COC.NIAMH_STATUS"] == 2) output("\n\nThe sounds of voices raised in song and girlish laughter makes it obvious where Niamh is holding a perpetual party.");
@@ -131,42 +135,6 @@ private function shopMenu():void {
 	addButton(14, "Back", enterTheBazaarAndMenu);
 }
 
-//private function overHearDemonsAboutSyrena():void {
-	//clearOutput();
-	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] == 0) {
-		//output("A whisper of conversation catches your ear while you're wandering the bazaar, and overcome by curiosity, you veer towards it.\n\n", false);
-		//output("As you're closing in on the voices, the dialogue grows clear enough to understand.\n\n", false);
-		//output("\"<i>-old him if he doesn't finish this week's experiments, she's going to drop him into a submission tank instead of the champion!</i>\" exclaims the first voice, sounding quite feminine.\n\n", false);
-		//output("A baritone response rings out, \"<i>You're shitting me!  Syrena's off her fucking rocker if she thinks Lethice will let her turn another of our researchers into a gibbering slut.  We've got enough of those.</i>\"\n\n", false);
-		//output("\"<i>Well, what do you expect?  She's more shark than demon... I'm amazed she gets anything done at all, with as much time as she spends fucking me.  Don't get me wrong, that double-thick dick makes my cunny fuckin' drool, ya know?  But, at the same time, if I could just get some more information on her research, I could have her job.  Then she'd be serving MY desires... yum,</i>\" trails off the sultry, seductive tone.\n\n", false);
-		//output("The male laughs and says, \"<i>You belong underneath a fat dick, bitch.  Look at you, you've got strings of lube trailing on the ground behind you.  You're too busy slutting it up to accomplish anything.  I'm thinking I had better head back to the lab, though.  I don't want to wind up looking like one of the escaped factory rejects - gotta keep this perfect bod, ya know?</i>\"\n\n", false);
-		//output("You get a good look at the two when the crowd parts, and wow, that incubus is right.  He's a curly-haired, chiseled Adonis of a man, with a bulge as over-the-top of the rest of him straining at his fashionable pants.  The demon fiddles with his collar, popping it up, and he turns to leave.  The other commiserating devil is a busty succubus in a lab coat... nothing else.  She's even wetter than her companion's words would indicate, painting a thick trail of slippery girl-slime in her wake as she moves.  The succubus' nipples are like two hard bullets, soaking two glorious wet patches into her coat as she argues back.\n\n", false);
-		//output("\"<i>S-shut up.  That cunt tested some of her prototype compounds on me, remember?  That stuff turned my pussy into an insatiable furnace.  If I can get some free time... I'll... I'll... oh screw it, let's go rent a room and fuck a few times before we go back.  I'll want to be thinking clearly when I face her.  Syrena won't get to gloat about me jumping on her fat... juicy... mmm... cock... this time!</i>\"  The succubus takes the incubus' hand and drags him away in a hurry.\n\n", false);
-		//output("Well, that explains a lot.  The demons seem to have an active research department, though the one called Syrena does not seem to please her underlings very much.  Then again, you doubt any demonic servants are pleased with their bosses.  You can't wait to put a stop to their labors, but for now, there's nothing to do but use the bazaar or go home.\n\n", false);
-	//}
-	////[Listen in repeat]
-	//else if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] == 1) {
-		//output("Just as before, you spot the collar-popping incubus and his lab coat-clad lover complaining about their boss.\n\n", false);
-		//output("\"<i>-still sore!  I can't believe she did that to me!</i>\" groans the male.\n\n", false);
-		//output("Smiling cruelly, the slick-pussied succubus says, \"<i>You deserved it.  Honestly, you turned in cum-stained reports to your boss, and you're surprised that she took your ass for a ride as punishment?  If you ask me, you planned all this.  Who do you think had to clean up the huge mess you left on the floor?</i>\"\n\n", false);
-		//output("For once, the incubus seems speechless.  He mutters, \"<i>Well, I didn't plan it.  I-I was just having fun with one of the new slaves - for inspiration - while I finished up the paperwork.</i>\"  He looks over and punches the leering female's arm.  \"<i>Besides, I thought you liked cleaning up my cum?  I've never seen you complain before.</i>\"\n\n", false);
-		//output("The succubus laughs and slaps his ass as she answers, \"<i>Don't worry, you taste great... just not as good as the boss.  I dunno what concoction she made that did it, but her spunk is heavenly.  I could just... mmm... swallow that delicious cream all day long.  Do ya think she's part minotaur?</i>\"\n\n", false);
-		//output("\"<i>Babe, you're sliming everywhere again.  Why don't we go blow off some steam?</i>\"  The two horny demons run off and disappear.\n\n", false);
-	//}
-	////[Listen in Repeat 2]  
-	//else if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] >= 2) {
-		//output("This time, the two chatty demons are seated near the fire, and the reason for their altered location seems clear.  The succubus' belly is gravid to an unusual degree, utterly packed with some kind of corrupted offspring.  She's rubbing both her hands over the stretched skin-dome and moaning in discomfort, the packed womb squirming beneath her touches.\n\n", false);
-		//output("Meanwhile, the male incubus is knocking back a beer, grumbling, \"<i>Could you take it down a notch?  It isn't like this is the first time you've had to lug around a load of imps - don't be so melodramatic.</i>\"\n\n", false);
-		//output("His pregnant companion growls and tugs at her undersized labcoat, failing to conceal the blueberry-colored bulge of her belly from him as she retorts, \"<i>You didn't have to get all these fucked into you, now did you?  Hell, she even shot me up with fertility-plus first!  It feels like there's two dozen of the little bastards packed in there!  I figure in another day or two I won't even be able to walk.</i>\"\n\n", false);
-		//output("\"<i>So does that mean you won't mind if I stop by whilst you're laid up?  I mean you can't get any more pregnant with imps, and it might pass the time,</i>\" suggests the well-muscled male.\n\n", false);
-		//output("Smirking, the demoness retorts, \"<i>Sure, but next time you fuck up, I'm loaning Syrena some of my girly stuff to make you suffer just like this.</i>\"  Her hands both point at the imp-engorged skin of her midsection for emphasis.\n\n", false);
-		//output("The incubus rises and taunts, \"<i>If I fucked up as often as you did, I'd be feeding the furnace in a factory somewhere or fed to the hellhounds.  Come on, let's get you home before I have to roll you back.</i>\"\n\n", false);
-		//output("Unwilling to allow herself to be helped, the succubus staggers up and begins waddling away.  The incubus keeps his distance, wearing a predatory grin.\n\n", false);
-	//}
-	////enterTheBazaarAndMenu(false);
-	//doNext(enterTheBazaar);
-	//flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292]++;
-//}
 ////Visit the Bizarre Bazaar at night.
 //public function nightBazaarButtfuck():void {
 	//clearOutput();

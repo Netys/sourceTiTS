@@ -13,14 +13,12 @@ public function showFapArena():void
 	else userInterface.showName("FAP\nARENA");
 }
 
-public function fapAppearance(display:Boolean = true):void {
-	if(display) {
-		//[Paragraph: Bazaar description, 1st time]
-		if(Flag("COC.FAP_ARENA_RULES_EXPLAINED") == 0) output("\n\nThere is a gigantic tent standing in the clearing, with a large crowd gathering around it.   Perhaps you could investigate and see what is going on inside.");
-		//Option labeled "Tent» is available.
-		//[Paragraph: Bazaar description: after 1st time]
-		else output("\n\nA large crowd is gathering around the large tent, probably going for another 'session'.   Perhaps you could join them?");
-	}
+public function fapAppearance():void {
+	//[Paragraph: Bazaar description, 1st time]
+	if(Flag("COC.FAP_ARENA_RULES_EXPLAINED") == 0) output("\n\nThere is a gigantic tent standing in the clearing, with a large crowd gathering around it.   Perhaps you could investigate and see what is going on inside.");
+	//Option labeled "Tent» is available.
+	//[Paragraph: Bazaar description: after 1st time]
+	else output("\n\nA large crowd is gathering around the large tent, probably going for another 'session'.   Perhaps you could join them?");
 }
 
 //Option labeled "Arena» is available.

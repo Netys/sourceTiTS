@@ -154,22 +154,22 @@ public function clearBenoitPreggers():void
 	}
 }
 
-public function setBenoitShop(setButtonOnly:Boolean = false):void {
+public function setBenoitShop(setButton:Boolean = false):void {
 	if (hours >= 9 && hours <= 17) {
 		if ((Flag("COC.FEMOIT_NEXTDAY_EVENT_DONE") == 1 && days >= Flag("COC.FEMOIT_NEXTDAY_EVENT")) || Flag("COC.FEMOIT_NEXTDAY_EVENT_DONE") != 1)
 		{
 			if (Flag("COC.TIMES_IN_BENOITS") == 0) 
 			{
-				if (!setButtonOnly) output("\n\nYou notice a large market stall wedged between two wagons, swaddled in carpets and overflowing with all manner of objects.  On top of its looming fabric canopy is a wooden sign with the words \"<b>Geckos Garbidg</b>\" crudely scrawled upon them.  You wonder what that's all about.");
+				if (!setButton) output("\n\nYou notice a large market stall wedged between two wagons, swaddled in carpets and overflowing with all manner of objects.  On top of its looming fabric canopy is a wooden sign with the words \"<b>Geckos Garbidg</b>\" crudely scrawled upon them.  You wonder what that's all about.");
 				else addButton(0, "Market Stall", benoitIntro);
 			}
 			else 
 			{
-				if (!setButtonOnly) output("\n\n" + benoitMF("Benoit","Benoite") + " the basilisk's stall looks open for business.  You could go see what's on offer.");
+				if (!setButton) output("\n\n" + benoitMF("Benoit", "Benoite") + " the basilisk's stall looks open for business.  You could go see what's on offer.");
 				else addButton(0, benoitMF("Benoit","Benoite"), benoitIntro);
 			}
 		}
-	} else if (setButtonOnly) {
+	} else if (setButton) {
 		addDisabledButton(0, Flag("COC.TIMES_IN_BENOITS") == 0 ? "Market Stall" : benoitMF("Benoit","Benoite"), Flag("COC.TIMES_IN_BENOITS") == 0 ? "Market Stall" : benoitMF("Benoit","Benoite"), "This shop is open from 9 to 17.");
 	}
 }
