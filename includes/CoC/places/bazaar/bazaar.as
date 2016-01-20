@@ -4,6 +4,7 @@ import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
 include "Benoit.as";
+include "Lilium.as";
 
 //[Find Travelling Bazaar]
 public function findBazaar():void {
@@ -97,9 +98,9 @@ public function enterTheBazaarAndMenu(demons:Boolean = true):void {
 		//addButton(6, "GripingDemons", overHearDemonsAboutSyrena, null, null, null, "Overhear the conversation of the two griping demons.", "Griping Demons");
 	//}
 	//Lilium
-	//if (lilium.LiliumText(false) != null) {
-		//addButton(7, (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00267] > 0 ? "Lilium" : "Demon"), lilium.LiliumText(false));
-	//}
+	if (LiliumText(false) != null) {
+		addButton(7, (Flag("COC.UNKNOWN_FLAG_NUMBER_00267") > 0 ? "Lilium" : "Demon"), LiliumText(false));
+	}
 	//Roxanne
 	//addButton(8, (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00221] > 0 ? "Roxanne" : "Lizans"), (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00221] > 0 ? roxanne.RoxanneChooseApproachOrRepeat : roxanne.Roxanne1stApproach));
 	//Bimbo Niamh
@@ -107,7 +108,7 @@ public function enterTheBazaarAndMenu(demons:Boolean = true):void {
 		if (flags["COC.NIAMH_STATUS"] == 2) output("\n\nThe sounds of voices raised in song and girlish laughter makes it obvious where Niamh is holding a perpetual party.");
 		addButton(9, "Niamh", bazaarNiamh);
 	}
-	addButton(14,"Leave",returnToCampUseOneHour);
+	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
 private function shopMenu():void {

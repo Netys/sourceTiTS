@@ -103,7 +103,7 @@ private function rathazulMoveToCamp():void {
 	output("Rathazul smiles happily back at you and begins packing up his equipment.  He mutters over his shoulder, \"<i>It will take me a while to get my equipment moved over, but you head on back and I'll see you within the hour.  Oh my, yes.</i>\"\n\nHe has the look of someone experiencing hope for the first time in a long time.");
 	flags["COC.RATHAZUL_IN_CAMP"] = 1;
 	clearMenu();
-	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
 private function rathazulMoveDecline():void {
@@ -111,7 +111,7 @@ private function rathazulMoveDecline():void {
 	flags["COC.RATHAZUL_IN_CAMP"] = -1;
 	output("Rathazul wheezes out a sigh, and nods.\n\n\"<i>Perhaps I'll still be of some use out here after all,</i>\" he mutters as he packs up his camp and prepares to head to another spot along the lake.");
 	clearMenu();
-	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
 public function campRathazul(first:Boolean = true):void {
@@ -183,7 +183,7 @@ private function rathazulWorkOffer():void {
 	}
 	//if (flags[kFLAGS.MINERVA_PURIFICATION_RATHAZUL_TALKED] == 1 && flags[kFLAGS.MINERVA_PURIFICATION_PROGRESS] < 10) {
 		//purificationByRathazulBegin();
-		//return true;
+		//return;
 	//}
 	if(pc.hasItemByName("BlackEg") || pc.hasItemByName("L.BlkEg")) {
 		flags["COC.PC_KNOWS_ABOUT_BLACK_EGGS"] = 1;
@@ -287,11 +287,11 @@ private function rathazulWorkOffer():void {
 		//lethiciteDefense = growLethiciteDefense;
 	//}
 	if(flags["COC.RATHAZUL_IN_CAMP"] > 0) {
-		if(IncrementFlag("COC.RATHAZUL_DEBIMBO_OFFERED", false) == 0 && (pc.isBimbo(true) || pc.isBro(true)) /*(sophieBimbo.bimboSophie())*/) {
+		if(Flag("COC.RATHAZUL_DEBIMBO_OFFERED") == 0 && (pc.isBimbo(true) || pc.isBro(true)) /*(sophieBimbo.bimboSophie())*/) {
 			rathazulDebimboOffer();
-			return true;
+			return;
 		}
-		else if(IncrementFlag("COC.RATHAZUL_DEBIMBO_OFFERED", false) > 0) {
+		else if(Flag("COC.RATHAZUL_DEBIMBO_OFFERED") > 0) {
 			output("You recall that Rathazul is willing to make something to cure bimbo effects for 250 gems and five Scholar's Teas.");
 			if(pc.hasItem(new CoCScholarsTea(), 5) && pc.credits >= 2500) {
 				totalOffers++;
@@ -313,7 +313,7 @@ private function rathazulWorkOffer():void {
 	}
 	
 	if(totalOffers > 0) {
-		output("Will you take him up on an offer or leave?", false);
+		output("Will you take him up on an offer or leave?");
 	}
 	
 	//In camp has no time passage if left.
@@ -435,7 +435,7 @@ public function purificationByRathazulBegin():void {
 	output("\n\nWith that in mind, you walk away from him; gathering the items that could cure Minerva is your responsibility.");
 	flags["COC.MINERVA_PURIFICATION_RATHAZUL_TALKED"] = 2;
 	clearMenu();
-	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
 private function rathazulMakesPurifyPotion():void {

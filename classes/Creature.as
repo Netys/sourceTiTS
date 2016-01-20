@@ -7993,14 +7993,14 @@ package classes {
 			var race:String = "human";
 			//Determine race type
 			if (horseScore() >= 3) race = equineRace(); // Horse-morphs
-			if (foxScore() >= 4) race = faceType == GLOBAL.TYPE_VULPINE ? "fox-morph" : mf("fox-man", "fox-girl");
-			if (kitsuneScore() >= 5 && (race.indexOf("fox") == -1 || tailCount > 1)) race = "kitsune";
 			if (lizardScore() >= 4) race = "lizan";
 			if (kangaScore() >= 4) race = "kangaroo-morph";
 			if (bunnyScore() >= 4) race = "bunny-" + mf("boy", "girl");
 			if (harpyScore() >= 4) race = mf("avian", "harpy");
 			if (spiderScore() >= 4) race = "spider-" + mf("boy", "girl");
-			if (dragonScore() >= 4) race = faceType == GLOBAL.TYPE_DRACONIC ? "dragon-morph" : mf("dragon-man", "dragon-girl");
+			if (dragonScore() >= 5) race = faceType == GLOBAL.TYPE_DRACONIC ? "dragon-morph" : mf("dragon-man", "dragon-girl");
+			if (foxScore() >= 4) race = faceType == GLOBAL.TYPE_VULPINE ? "fox-morph" : mf("fox-man", "fox-girl");
+			if (kitsuneScore() >= 5 && (race.indexOf("fox") == -1 || tailCount > 1)) race = "kitsune";
 			if (ovirScore() >= 3 && race == "human") race = "half-ovir";
 			if (ausarScore() >= 2 && race == "human") race = "half-ausar"; // Fucking Ausar forever overriding other shit. EXTERMINATUS.
 			if (kaithritScore() >= 3 && race == "human") race = "half-kaithrit";
