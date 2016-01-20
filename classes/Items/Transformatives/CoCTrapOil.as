@@ -217,10 +217,10 @@ package classes.Items.Transformatives
 				if (rand(4) == 0 && changes < changeLimit) {
 					if (pc.femininity < 70 && pc.femininity >= 60) {
 						output("\n\nYou laugh as you feel your features once again soften, before stopping abruptly.  Your laugh sounded more like a girly giggle than anything else.  Feeling slightly more sober, you touch the soft flesh of your face prospectively.  The trap oil has changed you profoundly, making your innate maleness... difficult to discern, to say the least.  You suspect you could make yourself look even more like a girl now if you wanted to.");
-						//if (pc.findPerk(PerkLib.Androgyny) < 0) {
-							//pc.createPerk(PerkLib.Androgyny, 0, 0, 0, 0);
-							//output("\n\n(<b>Perk Gained: Androgyny</b>)");
-						//}
+						if (!pc.hasPerk("Androgyny")) {
+							pc.createPerk("Androgyny", 0, 0, 0, 0, "No gender limits on facial masculinity or femininity.");
+							output("\n\n(<b>Perk Gained: Androgyny</b>)");
+						}
 						pc.femininity += 10;
 						if (pc.femininity > 70) pc.femininity = 70;
 						changes++;
@@ -248,10 +248,10 @@ package classes.Items.Transformatives
 						pc.femininity = 30;
 						//Masculinity Increase Final (max masculinity allowed increased by +10):
 						output("\n\nYou laugh as you feel your features once again soften, before stopping abruptly.  Your laugh sounded more like a boyish crow than anything else.  Feeling slightly more sober, you touch the defined lines of your face prospectively.  The trap oil has changed you profoundly, making your innate femaleness... difficult to discern, to say the least.  You suspect you could make yourself look even more like a boy now if you wanted to.");
-						//if (pc.findPerk(PerkLib.Androgyny) < 0) {
-							//pc.createPerk(PerkLib.Androgyny, 0, 0, 0, 0);
-							//output("\n\n(<b>Perk Gained: Androgyny</b>)");
-						//}
+						if (!pc.hasPerk("Androgyny")) {
+							pc.createPerk("Androgyny", 0, 0, 0, 0, "No gender limits on facial masculinity or femininity.");
+							output("\n\n(<b>Perk Gained: Androgyny</b>)");
+						}
 					}
 					else {
 						output("\n\nYour face becomes more set and defined as your features turn more masculine.");

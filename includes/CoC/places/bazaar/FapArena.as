@@ -26,6 +26,7 @@ public function fapAppearance(display:Boolean = true):void {
 //Option labeled "Arena» is available.
 public function fapArenaGOOOO():void {
 	clearOutput();
+	showFapArena();
 	//(set X = longest cock)
 	var x:Number = pc.longestCockIndex();
 	//[1st time]
@@ -49,6 +50,7 @@ public function fapArenaGOOOO():void {
 	//[if dick size >= 8 inches: 1st time] 
 	else if(Flag("COC.FAP_ARENA_RULES_EXPLAINED") == 0) {
 		Flag("COC.FAP_ARENA_RULES_EXPLAINED", 1);
+		showFapArena();
 		output("\"<i>You must be new here.  Go to the backroom on the left, undress yourself and wait with the others in the main room; the session will start soon.</i>\"\n\n");
 		output("Meekly following the others into the backroom, you start removing your [pc.gear].  You watch other people, fully clothed when they step in, completely naked when they go out.  The sensation of something out of place continues to bother you with all these people casually speaking and laughing with their raging erections showing, and then you finally get it: everyone in here has a dick. Even the feminine-looking ones with ample breasts and a generous ass are actually herms, as their huge boners attest.\n\n");
 		
@@ -101,6 +103,7 @@ private function fapArenaPageII():void {
 	//Increment 'times fap-arena'ed
 	IncrementFlag("COC.FAP_ARENA_SESSIONS");
 	clearOutput();
+	showFapArena();
 	var x:Number = pc.longestCockIndex();
 	
 	output("\"<i>READY!</i>\"\n\n");
@@ -158,6 +161,7 @@ private function fapArenaPageII():void {
 
 private function fapResults(place:Number = 3):void {
 	clearOutput();
+	showFapArena();
 	var x:Number = pc.longestCockIndex();
 	var num:Number = rand(50) + 5;
 	var tent:Boolean = false;
@@ -404,7 +408,7 @@ private function fapResults(place:Number = 3):void {
 	//end of global condition about the PC's position in the buttfuck train, display the following
 	//[if you won]
 	if(place <= 1) {
-		output("You quickly stand back up and start dressing yourself.  Before you go, the cute little referee hands you a small box, her coy smile and nude body somehow awakening [pc.eachCock] again. Ye Gods, it never ends.  \"<i>Here's a little something for being the winner of this session.  Hope you enjoy your prize.  Come and play again!</i>\"");
+		output("You quickly stand back up and start dressing yourself.  Before you go, the cute little referee hands you a small box, her coy smile and nude body somehow awakening [pc.eachCock] again. Ye Gods, it never ends.  \"<i>Here's a little something for being the winner of this session.  Hope you enjoy your prize.  Come and play again!</i>\"\n\n");
 		//You find [random item from the list: gro+, succubi's dream, large blue egg].
 		
 		IncrementFlag("COC.FAP_ARENA_VICTORIES");

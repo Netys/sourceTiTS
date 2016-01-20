@@ -82,7 +82,7 @@ private function payForLilium():void {
 		
 		processTime(4);
 		clearMenu();
-		addButton(0, "Next", enterTheBazaar);
+		addButton(0, "Next", enterTheBazaarAndMenu);
 		return;
 	}
 	//First time - Pay: 
@@ -125,7 +125,7 @@ private function leaveLilium():void {
 	else output("\"<i>Just passing through, and I thought I'd see how you were doing,</i>\" you reply, and leave Lilium alone at her post.");
 	processTime(1);
 	clearMenu();
-	addButton(0, "Next", enterTheBazaar);
+	addButton(0, "Next", enterTheBazaarAndMenu);
 }
 
 //#########BUTTFUCK + TONGUEJOB SCENE######### REQUIRES PENIS AND LONG DEMONIC TONGUE
@@ -169,7 +169,7 @@ private function buttFuckTongueJeorb():void {
 	pc.cor(1);
 	processTime(18);
 	clearMenu();
-	addButton(0, "Next", enterTheBazaar);
+	addButton(0, "Next", enterTheBazaarAndMenu);
 }
 
 //#########DICK RIDE SCENE######### REQUIRES VAGINA
@@ -229,7 +229,7 @@ private function liliumDickRidah():void {
 	pc.loadInCunt(new CoCImp());
 	processTime(25);
 	clearMenu();
-	addButton(0, "Next", enterTheBazaar);
+	addButton(0, "Next", enterTheBazaarAndMenu);
 }
 
 //#########NIPPLE FUCK SCENE######### REQUIRES PENIS
@@ -289,5 +289,5 @@ private function liliumNippleFuck():void {
 	pc.orgasm();
 	processTime(25);
 	clearMenu();
-	addButton(0, "Next", enterTheBazaar);
+	addButton(0, "Next", enterTheBazaarAndMenu);
 }

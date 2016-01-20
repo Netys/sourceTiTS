@@ -55,7 +55,7 @@ private function cinnabarGreeting():void {
 			if (pc.credits >= 250) addButton(0, "Buy1Hour", cinnabarNonHugeDickings);
 			else addDisabledButton(0, "Buy1Hour", "Pay", "You can't afford this.");
 			
-			addButton(14, "Leave", enterTheBazaar);
+			addButton(14, "Leave", enterTheBazaarAndMenu);
 		}
 		//(Small Cock)
 		else if(pc.biggestCockVolume(false) < 100) {
@@ -66,7 +66,7 @@ private function cinnabarGreeting():void {
 			if (pc.credits >= 250) addButton(0, "Buy1Hour", cinnabarNonHugeDickings);
 			else addDisabledButton(0, "Buy1Hour", "Pay", "You can't afford this.");
 			
-			addButton(14, "Leave", enterTheBazaar);
+			addButton(14, "Leave", enterTheBazaarAndMenu);
 		}
 		//(Big enough Cock) 
 		else {
@@ -82,7 +82,7 @@ private function cinnabarGreeting():void {
 			if (pc.cockTotal() > 2 && pc.biggestCockVolume2(false) >= 75) addButton(1, "Multi-Fuck", cinnabarMultiCockPortalFuckFest);			
 			else addDisabledButton(1, "Multi-Fuck", "Multi-Fuck", "This scene requires you to have at least 3 cocks, with at least 2 of them large enough.");
 			
-			addButton(14, "Leave", enterTheBazaar);
+			addButton(14, "Leave", enterTheBazaarAndMenu);
 		}
 	}
 	//Not first time
@@ -96,7 +96,7 @@ private function cinnabarGreeting():void {
 			if (pc.credits >= 250) addButton(0, "Buy1Hour", cinnabarNonHugeDickings);
 			else addDisabledButton(0, "Buy1Hour", "Pay", "You can't afford this.");
 			
-			addButton(14, "Leave", enterTheBazaar);
+			addButton(14, "Leave", enterTheBazaarAndMenu);
 		}
 		//(Small Cock)
 		else if(pc.biggestCockVolume(false) < 100) {
@@ -107,7 +107,7 @@ private function cinnabarGreeting():void {
 			if (pc.credits >= 250) addButton(0, "Buy1Hour", cinnabarNonHugeDickings);
 			else addDisabledButton(0, "Buy1Hour", "Pay", "You can't afford this.");
 			
-			addButton(14, "Leave", enterTheBazaar);
+			addButton(14, "Leave", enterTheBazaarAndMenu);
 		}
 		//(Big enough Cock) 
 		else {
@@ -123,7 +123,7 @@ private function cinnabarGreeting():void {
 			if(pc.cockTotal() > 2 && pc.biggestCockVolume2(false) >= 75) addButton(1, "Multi-Fuck", cinnabarMultiCockPortalFuckFest);
 			else addDisabledButton(1, "Multi-Fuck", "Multi-Fuck", "This scene requires you to have at least 3 cocks, with at least 2 of them large enough.");
 			
-			addButton(14, "Leave", enterTheBazaar);
+			addButton(14, "Leave", enterTheBazaarAndMenu);
 		}
 	}
 }
@@ -235,7 +235,7 @@ private function cinnabarNonHugeDickings():void {
 	//dynStats("sen", -2);
 	processTime(40 + rand(20));
 	clearMenu();
-	addButton(0, "Next", enterTheBazaar);
+	addButton(0, "Next", enterTheBazaarAndMenu);
 }
 	
 //[FUCK] – tracks if last fuck was huger + corrupteded version
@@ -368,7 +368,7 @@ private function fuckCinnabarHugerAndCorruptedEr():void {
 	pc.HP(pc.HPMax() * -0.25);
 	processTime(35);
 	clearMenu();
-	addButton(0, "Next", enterTheBazaar);
+	addButton(0, "Next", enterTheBazaarAndMenu);
 }
 
 //(HUGER)
@@ -420,7 +420,7 @@ private function cinnabarHuger():void {
 	//dynStats("sen", -4);
 	processTime(35);
 	clearMenu();
-	addButton(0, "Next", enterTheBazaar);
+	addButton(0, "Next", enterTheBazaarAndMenu);
 }
 
 //(HUGE)
@@ -471,7 +471,7 @@ private function cinnabarHuge():void {
 	//dynStats("sen", -3);
 	processTime(25);
 	clearMenu();
-	addButton(0, "Next", enterTheBazaar);
+	addButton(0, "Next", enterTheBazaarAndMenu);
 }
 
 //[Multi Cock Portals] – Requires 2 75+ cock area members and at least 3 total.
@@ -571,5 +571,5 @@ private function cinnabarMultiCockPortalFuckFest():void {
 	//dynStats("sen", -6);
 	processTime(40 + rand(10));
 	clearMenu();
-	addButton(0, "Next", enterTheBazaar);
+	addButton(0, "Next", enterTheBazaarAndMenu);
 }
