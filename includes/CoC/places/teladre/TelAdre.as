@@ -4,17 +4,17 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "WetBitch.as";
-include "Library.as";
 include "Gym.as";
+include "Library.as";
+include "WetBitch.as";
 
 include "Armor.as";
+include "BakeryScene.as";
 include "Jewels.as";
 include "Pawn.as";
 include "Piercing.as";
 include "Tailor.as";
 include "Weapon.as";
-include "BakeryScene.as";
 
 public function discoverTelAdre():void {
 	clearOutput();
@@ -156,10 +156,10 @@ public function telAdreMenu():void {
 		//kGAMECLASS.urtaPregs.urtaSpecialDeliveries();
 		//return;
 	//}
-	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00242] == -1) {
-		//maddie.runAwayMaddieFollowup();
-		//return;
-	//}
+	if(flags["COC.BAKERY_MADDIE_STATE"] == -1) {
+		runAwayMaddieFollowup();
+		return;
+	}
 	//spriteSelect(-1);
 	//output(images.showImage("location-teladre"));
 	output("Tel'Adre is a massive city, though most of its inhabitants tend to hang around the front few city blocks.  It seems the fall of Mareth did not leave the city of Tel'Adre totally unscathed.  A massive tower rises up in the center of the city, shimmering oddly.  From what you overhear in the streets, the covenant's magic-users slave away in that tower, working to keep the city veiled from outside dangers.  There does not seem to be a way to get into the unused portions of the city, but you'll keep your eyes open.\n\n");

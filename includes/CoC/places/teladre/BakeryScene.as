@@ -1,38 +1,49 @@
 import classes.Characters.CoC.CoCTrader;
 import classes.GLOBAL;
+import classes.Items.Miscellaneous.CoCChocolateCupcake;
 import classes.Items.Transformatives.CoCFoxBerry;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
+include "Maddie.as";
+include "Frosty.as";
+
+public function showTelAdreBakery():void {
+	userInterface.showName("TEL'ADRE\nBAKERY");
+}
+
 //[First time approach]
 public function bakeryuuuuuu():void {
-	showName("TEL'ADRE\nBAKERY");
-	//if(isEaster() && pc.hasCock() && (flags[kFLAGS.LAST_EASTER_YEAR] < date.fullYear || rand(20) == 0)) {
-		//flags[kFLAGS.LAST_EASTER_YEAR] = date.fullYear;
-		//easterBakeSale();
-		//return;
-	//}
-	//if(rand(10) <= 1 && kGAMECLASS.shouldraFollower.followerShouldra() && pc.gender > 0 && flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00242] == 4) {
+	showTelAdreBakery();
+	
+	//if(rand(10) <= 1 && kGAMECLASS.shouldraFollower.followerShouldra() && pc.gender > 0 && flags["COC.BAKERY_MADDIE_STATE"] == 4) {
 		//kGAMECLASS.shouldraFollower.shouldraBakeryIntro();
 		//return;
 	//}
-	//flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00243]++;
-	//flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00243] = Math.round(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00243]);
+	
+	IncrementFlag("COC.TIMES_VISITED_BAKERY");
 	////Chef meetings
-	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00242] == 0 && flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00243] % 8 == 0) {
-		//telAdre.maddie.procMaddieOneIntro();
-		//return;
-	//}
+	if(flags["COC.BAKERY_MADDIE_STATE"] == undefined && flags["COC.TIMES_VISITED_BAKERY"] % 8 == 0) {
+		procMaddieOneIntro();
+		return;
+	}
 	////Maddie Epilogue trigger!
-	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00242] == 3) {
-		//telAdre.maddie.bakeryEpilogue();
-		//return;
-	//}
+	if(flags["COC.BAKERY_MADDIE_STATE"] == 3) {
+		bakeryEpilogue();
+		return;
+	}
+	
+	if(isEaster() && flags["COC.TIMES_VISITED_BAKERY"] > 10 && pc.hasCock() && (Flag("COC.LAST_EASTER_YEAR") < new Date().fullYear || rand(20) == 0)) {
+		Flag("COC.LAST_EASTER_YEAR", new Date().fullYear);
+		easterBakeSale();
+		return;
+	}
+	
 	clearOutput();
 	clearMenu();
 	//First time
-	if(IncrementFlag("COC.TIMES_VISITED_BAKERY") == 1) {
+	if(flags["COC.TIMES_VISITED_BAKERY"] == 1) {
 		output("You approach the bakery, but it appears to be sunk below the street level.  The entrance isn't even a set of doors – it's a double-wide ramp that takes you below ground level.  The passage leads directly into the bakery's interior, allowing unobstructed traffic to flow in and out from the cozy, underground building. The smell of yeasty bread, sweet treats, and fluffy snacks seems to even permeate the bricks of this place.  If it were shut down, you have no doubt it would smell delicious for weeks if not months.  You get in line and look at the menu while you wait.\n\n");
 	}
 	//[Repeat approach]
@@ -47,99 +58,214 @@ public function bakeryuuuuuu():void {
 		output("You step into the bakery's domed interior and inhale, treated to a symphony of pleasant smells and the cozy warmth that radiates from the baking ovens.  There are plenty of tables and chairs around for one to eat at, and you find yourself stepping into line while you glance at the menu.\n\n");
 	}
 	output("What do you do?");
-	addButton(0, "Check Menu", checkBakeryMenu);
-	addDisabledButton(1, "Talk", "Talk", "Not implemented");
-	//addButton(1,"Talk",talkBakeryMenu);
-	addButton(14,"Leave", telAdreMenu);
+	addButton(0, "Ingredients", checkBakeryIngredientsMenu);
+	addButton(1, "Pastry", checkBakeryMenu);
+	addButton(2, "Talk", talkBakeryMenu);
+	addButton(14, "Leave", telAdreMenu);
 }
 
-private function checkBakeryMenu():void {
+private function checkBakeryIngredientsMenu():void {
 	//spriteSelect(37);
 	shopkeep = new CoCTrader();
 	shopkeep.short = "Baker";
-	shopkeep.keeperBuy = "You get in line and look at the menu while you wait.\n\n";
 	shopkeep.inventory = [new CoCFoxBerry()];
+	
+	shopkeep.keeperBuy = "You get in line and look at the menu while you wait.\n\n";
+	
 	shopkeepBackFunctor = bakeryuuuuuu;
 	buyItem();
 }
 
-//private function checkBakeryMenu():void {
-	//clearOutput();
-	////var used for minotaur cum eclair in the menu
-	//var minoCum:Function = null;
-	//var gcupcake:Function = null;
-	////Turn on cum eclairs if PC is an addict!
-	//if(pc.findPerk(PerkLib.MinotaurCumAddict) >= 0 && flags[kFLAGS.MINOTAUR_CUM_ECLAIR_UNLOCKED] == 0) {
-		//flags[kFLAGS.MINOTAUR_CUM_ECLAIR_UNLOCKED]++;
-		//output("While you're in line, a shaking centauress glances at you and whispers, \"<i>You need some too, don't ya hun?</i>\"  You look on in confusion, not really sure what she's insinuating.  Her eyes widen and she asks, \"<i>Aren't you addicted?</i>\" You nod, dumbly, and she smiles knowingly.  \"<i>There's a minotaur that works here with a bit of a fetish... just order a special eclair and he'll fix you right up.  Just keep it on the hush hush and hope there's some left after I get my dozen.</i>\"  The centaur licks her lips and prances around impatiently.\n\n", false);
-	//}
+private function checkBakeryMenu():void {
+	clearOutput();
+	clearMenu();
+	var btn:int = 0;
+	
 	////(display menu)
 	////Generic baked goods
-	//output("Rich Chocolate Brownies - 3 gems.\n", false);
-	//output("Fig Cookies - 4 gems.\n", false);
-	//output("Berry Cupcakes - 3 gems.\n", false);
-	//output("Doughnuts - 5 gems.\n", false);
-	//output("Pound Cake - 4 gems.\n", false);
-	//addButton(0, "Brownies", nomnomnom, "brownies", 3);
-	//addButton(1, "Cookies", nomnomnom, "cookies", 4);
-	//addButton(2, "Cupcakes", nomnomnom, "cupcakes", 3);
-	//addButton(3, "Doughnuts", nomnomnom, "doughnuts", 5);
-	//addButton(4, "Pound Cake", nomnomnom, "pound cake", 4);
-	////Food for modes that have hunger enabled
-	//if (flags[kFLAGS.HUNGER_ENABLED] > 0) {
-		//output("Hard Biscuits - 5 gems (packed).\n");
-		//output("Trail Mix - 20 gems (packed).\n");
-		//addButton(5, "Hard Biscuits", buyHardBiscuits, null, null, null, consumables.H_BISCU.description);
-		//addButton(6, "Trail Mix", buyTrailMix, null, null, null, consumables.TRAILMX.description);
+	output("You get in line and look at the menu while you wait.\n\n");
+	output("Rich Chocolate Brownies - 3 gems.\n");
+	output("Fig Cookies - 4 gems.\n");
+	output("Berry Cupcakes - 3 gems.\n");
+	output("Doughnuts - 5 gems.\n");
+	output("Pound Cake - 4 gems.\n");
+	
+	if (pc.credits >= 30) addButton(btn++, "Brownies", nomnomnom, ["brownies", 30], "Brownies", "Those brownies would significantly increase your thickness and hips size.");
+	else addDisabledButton(btn++, "Brownies", "Brownies", "You can't afford this.");
+	
+	if (pc.credits >= 40) addButton(btn++, "Cookies", nomnomnom, ["cookies", 40], "Cookies", "Those cookies would notably increase your thickness and slightly decrease your muscle tone. Hips size increase is also possible.");
+	else addDisabledButton(btn++, "Cookies", "Cookies", "You can't afford this.");
+	
+	if (pc.credits >= 30) addButton(btn++, "Cupcakes", nomnomnom, ["cupcakes", 30], "Cupcakes", "Those cupcakes would significantly decrease your muscle tone and increase butt size.");
+	else addDisabledButton(btn++, "Cupcakes", "Cupcakes", "You can't afford this.");
+	
+	if (pc.credits >= 50) addButton(btn++, "Doughnuts", nomnomnom, ["doughnuts", 50], "Doughnuts", "Those doughnuts would slightly increase your thickness and notably decrease your muscle tone. Butt and hips size increase is also possible.");
+	else addDisabledButton(btn++, "Doughnuts", "Doughnuts", "You can't afford this.");
+	
+	if (pc.credits >= 40) addButton(btn++, "Pound Cake", nomnomnom, ["pound cake", 40], "Pound Cake", "This pound cake would notably increase your thickness and decrease your muscle tone. Considerable butt and hips size increase is also possible.");
+	else addDisabledButton(btn++, "Pound Cake", "Pound Cake", "You can't afford this.");
+	
+	//Giant Cupcake
+	if(flags["COC.UNKNOWN_FLAG_NUMBER_00242"] >= 4) {
+		output("Giant Chocolate Cupcake - 500 gems.\n");
+		if (pc.credits >= 5000) addButton(btn++, "GiantCupcake", buySlutCake, null, "Giant Cupcake", "Only true glutton can eat something so large!");
+		else addDisabledButton(btn++, "GiantCupcake", "Giant Cupcake", "You can't afford this.");
+	}
+	
+	//Special Eclair
+	if (pc.hasPerk("Minotaur Cum Addict")) {
+		output("\'Special\' Eclair - 10 gems.\n");
+		if (pc.credits >= 100) addButton(btn++, "SpecialEclair", nomnomnom, ["eclair", 100], "Special Eclairs", "Those eclairs have very special filling.");
+		else addDisabledButton(btn++, "SpecialEclair", "\'Special\' Eclair", "You can't afford this.");
+	}
+	
+	output("\nWhat will you order?\n\n");
+	
+	//Turn on cum eclairs if PC is an addict!
+	if (pc.hasPerk("Minotaur Cum Addict")) {
+		if(flags["COC.MINOTAUR_CUM_ECLAIR_UNLOCKED"] != 1) {
+			flags["COC.MINOTAUR_CUM_ECLAIR_UNLOCKED"] = 1;
+			output("While you're in line, a shaking centauress glances at you and whispers, \"<i>You need some too, don't ya hun?</i>\"  You look on in confusion, not really sure what she's insinuating.  Her eyes widen and she asks, \"<i>Aren't you addicted?</i>\" You nod, dumbly, and she smiles knowingly.  \"<i>There's a minotaur that works here with a bit of a fetish... just order a special eclair and he'll fix you right up.  Just keep it on the hush hush and hope there's some left after I get my dozen.</i>\"  The centaur licks her lips and prances around impatiently.\n\n");
+		}
+	}
+	
+	addButton(14, "Back", bakeryuuuuuu);
+}
+
+private function talkBakeryMenu():void {
+	//choices("Brownies",createCallBackFunction2(nomnomnom, "brownies", 3),"Cookies",2831,"Cupcakes",2833,"Doughnuts",createCallBackFunction2(nomnomnom, "doughnuts", 5),"Pound Cake",createCallBackFunction2(nomnomnom, "pound cake", 4),"Fox Berry",buyFoxBerry,"SpecialEclair",minoCum,"GiantCupcake",gcupcake,rubiT,rubiB,"Leave",telAdreMenu);
+	clearOutput();
+	output("Who will you talk to?\n");
+	
+	var btn:int = 0;
+	clearMenu();
+	//addButton(0,"Baker",talkToBaker);
+	
+	// rubiIntros returns 0 if you've driven rubi away
+	// I'm actually not sure how this was *supposed* to work, since it would just call eventParser with a event of 0 
+	// I guess it just wouldn't do anything?
+	// FWIW, the flag that has to be set to get rubiIntros to return zero is set in a function that has the comment:
+	//(Will no longer encounter Rubi at the bakery.)
+	//if (rubiIntros() != null) addButton(btn++, (flags["COC.RUBI_INTRODUCED"] == undefined ? "Waitress" : "Rubi"), rubiIntros());
+
+	//if(kGAMECLASS.nieveHoliday()) {
+		//if(flags[kFLAGS.KAMI_ENCOUNTER] > 0) {
+			//output("\nYou could 'burn off some steam' with Kami during her lunch break, since you already know how that'll end up!\n");
+			//addButton(2,"Kami",kGAMECLASS.approachKamiTheChristmasRoo);
+		//}
+		//else {
+			//output("\nYou could summon the curvaceous kangaroo waitress you ran into earlier - perhaps you can win her over.\n");
+			//addButton(2,"Kangaroo",kGAMECLASS.approachKamiTheChristmasRoo);
+		//}
 	//}
-	////Hummus available once a week
-	//if (model.time.days % 7 == 0) {
-		//output("Hummus - 100 gems (Weekly special only!).\n");
-		//addButton(7, "Hummus", buyHummus, null, null, null, consumables.HUMMUS_.description);
-	//}
-	////Special Eclair
-	//if(flags[kFLAGS.MINOTAUR_CUM_ECLAIR_UNLOCKED] > 0) {
-		//output("\'Special\' Eclair - 10 gems.\n");
-		//addButton(8, "SpecialEclair", nomnomnom, "eclair", 10);
-	//}
-	////Giant Cupcake
-	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00242] >= 4) {
-		//output("Giant Chocolate Cupcake - 500 gems.\n", false);
-		//addButton(9, "GiantCupcake", buySlutCake);
-	//}
-	//output("\n");
-	//displayIngredients();
-	//output("\nWhat will you order?");
-	////Ingredients and leave
-	//addButton(10, "Ingredients", ingredientsMenu);
-	//addButton(14, "Leave", bakeryuuuuuu);
-//}
-//
-//private function displayIngredients():void {
-	//output("Also try our special ingredients in your own baking!\n");
-	//output("Fox Berry - 5 gems.\n");
-	//output("Ringtail Fig - 5 gems.\n");
-	//output("Mouse Cocoa - 10 gems.\n");
-	//output("Ferret Fruit - 20 gems.\n");
-//}
-//
-//public function ingredientsMenu():void {
-	//clearOutput();
-	//displayIngredients()
-	//menu();
-	//addButton(0,"Fox Berry",buyFoxBerry);
-	//addButton(1,"Ringtail Fig",buyFig);
-	//addButton(2,"Mouse Cocoa",buyCocoa);
-	//addButton(3,"Ferret Fruit",buyFerretFruit);
-	//addButton(14,"Back",checkBakeryMenu);
-//}
-//
+	
+	output("\nYou see a bubblegum-pink girl at the bakery, walking around and eagerly trying to hand out fliers to people. Her “uniform” is more like a yellow bikini with frills circling the waist of the bottom half. If this didn’t make her stand out from the crowd then her hair certainly would; it’s a big, poofy, curly, dark pink mess that reaches down to her ass with a huge cupcake hat sitting on top.\n");
+	
+	if (flags["COC.MET_FROSTY"] != undefined) addButton(btn++, "Frosty", approachFrosty);
+	else addButton(btn++, "Pink Girl", approachFrosty);
+	
+	addButton(14, "Leave", bakeryuuuuuu);
+}
+
+/*[doughnuts] – some thickness, lots of – tone. (+hips and butt!)
+[cookies] – thickness and a little – tone (+hips)
+[brownies] – lots of thickness (chance of +butt)
+[cupcakes] – lots of – tone (chance of +hips)
+[pound cake] – even split of + thickness and – tone.  (+butt)
+[mino cum eclair] – helps your cravings and – tone!, LUST!*/
+public function nomnomnom(arg:*):void {
+	clearOutput();
+	
+	var name:String = arg[0];
+	var price:Number = arg[1];
+	pc.credits -= price;
+	
+	//statScreenRefresh();
+	if(name == "eclair") {
+		output("You hand over 10 gems and ask for the 'special eclair'.  The centaur working the counter smirks ");
+		if(pc.tallness <= 52) output("down ");
+		else if(pc.tallness >= 84) output("up ");
+		output("at you gives pulls a cream-filled pastry from a box concealed behind the counter.  It's warm... so very warm, and you try to steady your hands as you walk off to towards a table, sniffing in deep lungfuls of its 'special' scent.  The first bite is heaven, sating a craving you didn't even know you had.  You can't stop yourself from moaning with delight as you drain every drop and finish off the sweet doughnut shell.  The minotaur goo is all over your fingers, but you don't mind licking them all clean.  With the lust now you now feel burning inside you, you even try to make a show of it.  Though you make a few ");
+		if(pc.isFeminine()) output("males fill their pants");
+		else if(pc.isMasculine()) output("females squirm");
+		else output("other patrons squirm and fill out their pants");
+		output(", none of them tries to make a move.  Pity.");
+		pc.lust(20 + pc.libido() / 10);
+		//pc.minoCumAddiction(10);
+	}
+	else {
+		output("You hand over " + num2Text(price / 10) + " gems and get your " + name + ".  A moment later you're at a table, licking the sugary residue from your fingertips and wondering just how they make the food so damned good.");
+		if(name == "doughnuts") {
+			output(pc.modTone(-2, false));
+			output(pc.modThickness(1, false));
+			if(rand(3) == 0 && pc.buttRating() < 15) {
+				output("\n\nWhen you stand back up your [pc.ass] jiggles a little bit more than you'd expect.");
+				pc.buttRating(1);
+			}
+			if(rand(3) == 0 && pc.hipRating() < 15) {
+				output("\n\nAfter finishing, you find your gait has changed.  Did your hips widen?");
+				pc.hipRating(1);
+			}
+		}
+		else if(name == "cookies") {
+			output(pc.modTone(-1, false), false);
+			output(pc.modThickness(2, false), false);
+			if(rand(3) == 0 && pc.hipRating() < 20) {
+				output("\n\nAfter finishing, you find your gait has changed.  Did your hips widen?");
+				pc.hipRating(1);
+			}
+		}
+		else if(name == "brownies") {
+			output(pc.modThickness(4, false), false);
+			if(rand(2) == 0 && pc.hipRating() < 30) {
+				output("\n\nAfter finishing, you find your gait has changed.  Your [pc.hips] definitely got wider.");
+				pc.hipRating(2);
+			}
+		}
+		else if(name == "cupcakes") {
+			output(pc.modTone(-4, false), false);
+			if(rand(2) == 0 && pc.buttRating() < 30) {
+				output("\n\nWhen you stand back up your [pc.ass] jiggles with a good bit of extra weight.");
+				pc.buttRating(2);
+			}
+		}
+		else if(name == "pound cake") {
+			output(pc.modTone(-2, false), false);
+			output(pc.modThickness(2, false), false);
+			if(rand(3) == 0 && pc.buttRating() < 25) {
+				output("\n\nWhen you stand back up your [pc.ass] jiggles a little bit more than you'd expect.");
+				pc.buttRating(1);
+			}
+			if(rand(3) == 0 && pc.hipRating() < 25) {
+				output("\n\nAfter finishing, you find your gait has changed.  Did your [pc.hips] widen?");
+				pc.hipRating(1);
+			}
+		}
+	}
+	
+	processTime(10);
+	clearMenu();
+	addButton(0, "Next", bakeryuuuuuu);
+}
+
+public function buySlutCake():void {
+	clearOutput();
+	output("The minotaur chef emerges from the backroom bearing a box that contains your cupcake.  It's too big to scarf down immediately.\n\n");
+	pc.credits -= 5000;
+	
+	itemScreen = bakeryuuuuuu;
+	lootScreen = bakeryuuuuuu;
+	useItemFunction = bakeryuuuuuu;
+	itemCollect([new CoCChocolateCupcake()]);
+	
+}
+
 ////[Bakery - Talk - Baker]
 //private function talkToBaker():void {
 	//clearOutput();
 	//output("The minotaur snorts as you approach him, but waves you into the kitchen.  \"<i>What?</i>\" he asks, patiently watching you.  \"<i>Want to hear about baking?");
 	////(Maddie 1 completed)
-	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00242] >= 4) output("  Or you want special order?");
+	//if(flags["COC.BAKERY_MADDIE_STATE"] >= 4) output("  Or you want special order?");
 	//output("</i>\"");
 	//output("\n\nDespite his unrefined appearance and poor language ability, he seems eager to talk about his job.");
 //
@@ -249,306 +375,73 @@ private function checkBakeryMenu():void {
 	//addButton(0,"Yes",buyCocoa);
 	//addButton(1,"No",talkToBaker);
 //}
-//
-//private function buyCocoa():void {
-	//clearOutput();
-	//if(pc.gems < 10) {
-		//output("You can't afford one of those!");
-		//menu();
-		//addButton(0,"Next",ingredientsMenu);
-		//return;
-	//}
-	//output("You pay ten gems for some cocoa.  ");
-	//pc.gems -= 10;
-	//statScreenRefresh();
-	//inventory.takeItem(consumables.MOUSECO, ingredientsMenu);
-//}
-//
-//private function buyFerretFruit():void {
-	//clearOutput();
-	//if(pc.gems < 20)
-	//{
-		//output("You can't afford one of those!");
-		//menu();
-		//addButton(0,"Next",ingredientsMenu);
-		//return;
-	//}
-	//output("You pay twenty gems for a single ferret fruit.  ");
-	//pc.gems -= 20;
-	//statScreenRefresh();
-	//inventory.takeItem(consumables.FRRTFRT, ingredientsMenu);
-//}
-//
-//private function buyFig():void {
-	//clearOutput();
-	//if(pc.gems < 5) {
-		//output("You can't afford one of those!");
-		//menu();
-		//addButton(0,"Next",ingredientsMenu);
-		//return;
-	//}
-	//output("You pay five gems for a fig.  ");
-	//pc.gems -= 5;
-	//statScreenRefresh();
-	//inventory.takeItem(consumables.RINGFIG, ingredientsMenu);
-//}
-//
-//
-//private function talkBakeryMenu():void {
-	////choices("Brownies",createCallBackFunction2(nomnomnom, "brownies", 3),"Cookies",2831,"Cupcakes",2833,"Doughnuts",createCallBackFunction2(nomnomnom, "doughnuts", 5),"Pound Cake",createCallBackFunction2(nomnomnom, "pound cake", 4),"Fox Berry",buyFoxBerry,"SpecialEclair",minoCum,"GiantCupcake",gcupcake,rubiT,rubiB,"Leave",telAdreMenu);
-	//clearOutput();
-	//output("Who will you talk to?\n");
-	//var rubiT:String = "Waitress";
-	//if(flags[kFLAGS.RUBI_INTRODUCED] > 0) rubiT = "Rubi";
-	//menu();
-	//addButton(0,"Baker",talkToBaker);
-	//
-	//// rubiIntros returns 0 if you've driven rubi away
-	//// I'm actually not sure how this was *supposed* to work, since it would just call eventParser with a event of 0 
-	//// I guess it just wouldn't do anything?
-	//// FWIW, the flag that has to be set to get rubiIntros to return zero is set in a function that has the comment:
-	////(Will no longer encounter Rubi at the bakery.)
-	//var rubiB:Function = telAdre.rubi.rubiIntros();
-	//if (rubiB != null) addButton(1, rubiT, rubiB);
-//
-	//if(kGAMECLASS.nieveHoliday()) {
-		//if(flags[kFLAGS.KAMI_ENCOUNTER] > 0) {
-			//output("\nYou could 'burn off some steam' with Kami during her lunch break, since you already know how that'll end up!\n");
-			//addButton(2,"Kami",kGAMECLASS.approachKamiTheChristmasRoo);
-		//}
-		//else {
-			//output("\nYou could summon the curvaceous kangaroo waitress you ran into earlier - perhaps you can win her over.\n");
-			//addButton(2,"Kangaroo",kGAMECLASS.approachKamiTheChristmasRoo);
-		//}
-	//}
-	//output("\nYou see a bubblegum-pink girl at the bakery, walking around and eagerly trying to hand out fliers to people. Her “uniform” is more like a yellow bikini with frills circling the waist of the bottom half. If this didn’t make her stand out from the crowd then her hair certainly would; it’s a big, poofy, curly, dark pink mess that reaches down to her ass with a huge cupcake hat sitting on top.\n");
-	//if(flags[kFLAGS.MET_FROSTY] != 0) addButton(3,"Frosty",kGAMECLASS.telAdre.frosty.approachFrosty);
-	//else addButton(3,"PinkGirl",kGAMECLASS.telAdre.frosty.approachFrosty);
-	//addButton(14,"Leave",bakeryuuuuuu);
-//}
-//
-//public function nomnomnom(name:String,price:Number):void {
-	//flags[kFLAGS.TEMP_STORAGE_PASTRY_NAME] = name;
-	//flags[kFLAGS.TEMP_STORAGE_PASTRY_PRICE] = price;
-	//clearOutput();
-	//if(pc.gems < flags[kFLAGS.TEMP_STORAGE_PASTRY_PRICE]) {
-		//output("You don't have enough gems to order that!", false);
-		////doNext(bakeryuuuuuu);
-		//menu();
-		//addButton(0,"Next",checkBakeryMenu);
-		//return;
-	//}
-	//pc.gems -= flags[kFLAGS.TEMP_STORAGE_PASTRY_PRICE];
-	//statScreenRefresh();
-	//if(flags[kFLAGS.TEMP_STORAGE_PASTRY_NAME] == "eclair") {
-		//output("You hand over 10 gems and ask for the 'special eclair'.  The centaur working the counter smirks ", false);
-		//if(pc.tallness <= 52) output("down ", false);
-		//else if(pc.tallness >= 84) output("up ", false);
-		//output("at you gives pulls a cream-filled pastry from a box concealed behind the counter.  It's warm... so very warm, and you try to steady your hands as you walk off to towards a table, sniffing in deep lungfuls of its 'special' scent.  The first bite is heaven, sating a craving you didn't even know you had.  You can't stop yourself from moaning with delight as you drain every drop and finish off the sweet doughnut shell.  The minotaur goo is all over your fingers, but you don't mind licking them all clean.  With the lust now you now feel burning inside you, you even try to make a show of it.  Though you make a few ", false);
-		//if(pc.femininity >= 75) output("males fill their pants", false);
-		//else if(pc.femininity <= 25) output("females squirm", false);
-		//else output("other patrons squirm and fill out their pants", false);
-		//output(", none of them tries to make a move.  Pity.", false);
-		//dynStats("lus", (20+pc.lib/10));
-		//pc.minoCumAddiction(10);
-		//pc.refillHunger(20);
-	//}
-	//else {
-		//output("You hand over " + num2Text(flags[kFLAGS.TEMP_STORAGE_PASTRY_PRICE]) + " gems and get your " + flags[kFLAGS.TEMP_STORAGE_PASTRY_NAME] + ".  A moment later you're at a table, licking the sugary residue from your fingertips and wondering just how they make the food so damned good.", false);
-		//if(flags[kFLAGS.TEMP_STORAGE_PASTRY_NAME] == "doughnuts") {
-			//output(pc.modTone(0,2), false);
-			//output(pc.modThickness(100,1), false);
-			//if(rand(3) == 0 && pc.buttRating < 15 && (pc.hunger > 25 || flags[kFLAGS.HUNGER_ENABLED] <= 0)) {
-				//output("\n\nWhen you stand back up your [pc.ass] jiggles a little bit more than you'd expect.", false);
-				//pc.buttRating++;
-			//}
-			//if(rand(3) == 0 && pc.hipRating < 15 && (pc.hunger > 25 || flags[kFLAGS.HUNGER_ENABLED] <= 0)) {
-				//output("\n\nAfter finishing, you find your gait has changed.  Did your hips widen?", false);
-				//pc.hipRating++;
-			//}
-			//pc.refillHunger(25);
-		//}
-		//else if(flags[kFLAGS.TEMP_STORAGE_PASTRY_NAME] == "cookies") {
-			//output(pc.modTone(0,1), false);
-			//output(pc.modThickness(100,2), false);
-			//if(rand(3) == 0 && pc.hipRating < 20 && (pc.hunger > 25 || flags[kFLAGS.HUNGER_ENABLED] <= 0)) {
-				//output("\n\nAfter finishing, you find your gait has changed.  Did your hips widen?", false);
-				//pc.hipRating++;
-			//}
-			//pc.refillHunger(20);
-		//}
-		//else if(flags[kFLAGS.TEMP_STORAGE_PASTRY_NAME] == "brownies") {
-			//output(pc.modThickness(100,4), false);
-			//if(rand(2) == 0 && pc.hipRating < 30 && (pc.hunger > 25 || flags[kFLAGS.HUNGER_ENABLED] <= 0)) {
-				//output("\n\nAfter finishing, you find your gait has changed.  Your [pc.hips] definitely got wider.", false);
-				//pc.hipRating += 2;
-			//}
-			//pc.refillHunger(20);
-		//}
-		//else if(flags[kFLAGS.TEMP_STORAGE_PASTRY_NAME] == "cupcakes") {
-			//output(pc.modTone(0,4), false);
-			//if(rand(2) == 0 && pc.buttRating < 30 && (pc.hunger > 25 || flags[kFLAGS.HUNGER_ENABLED] <= 0)) {
-				//output("\n\nWhen you stand back up your [pc.ass] jiggles with a good bit of extra weight.", false);
-				//pc.buttRating += 2;
-			//}
-			//pc.refillHunger(20);
-		//}
-		//else if(flags[kFLAGS.TEMP_STORAGE_PASTRY_NAME] == "pound cake") {
-			//output(pc.modTone(0,2), false);
-			//output(pc.modThickness(100,2), false);
-			//if(rand(3) == 0 && pc.buttRating < 25 && (pc.hunger > 25 || flags[kFLAGS.HUNGER_ENABLED] <= 0)) {
-				//output("\n\nWhen you stand back up your [pc.ass] jiggles a little bit more than you'd expect.", false);
-				//pc.buttRating++;
-			//}
-			//if(rand(3) == 0 && pc.hipRating < 25 && (pc.hunger > 25 || flags[kFLAGS.HUNGER_ENABLED] <= 0)) {
-				//output("\n\nAfter finishing, you find your gait has changed.  Did your [pc.hips] widen?", false);
-				//pc.hipRating++;
-			//}
-			//pc.refillHunger(50);
-		//}
-	//}
-	////doNext(bakeryuuuuuu);
-	//menu();
-	//addButton(0,"Next",checkBakeryMenu);
-//}
-///*[doughnuts] – some thickness, lots of – tone. (+hips and butt!)
-//[cookies] – thickness and a little – tone (+hips)
-//[brownies] – lots of thickness (chance of +butt)
-//[cupcakes] – lots of – tone (chance of +hips)
-//[pound cake] – even split of + thickness and – tone.  (+butt)
-//[mino cum eclair] – helps your cravings and – tone!, LUST!*/
-//
-//public function buySlutCake():void {
-	//clearOutput();
-	//if(pc.gems < 500) {
-		//output("You don't have enough gems for one of those!", false);
-		////doNext(bakeryuuuuuu);
-		//menu();
-		//addButton(0,"Next",checkBakeryMenu);
-		//return;
-	//}
-	//output("The minotaur chef emerges from the backroom bearing a box that contains your cupcake.  It's too big to scarf down immediately.\n\n", false);
-	//pc.gems -= 500;
-	//statScreenRefresh();
-	//inventory.takeItem(consumables.CCUPCAK, bakeryuuuuuu);
-//}
-//
-//private function buyFoxBerry():void {
-	//clearOutput();
-	//if(pc.gems < 5) {
-		//output("You can't afford one of those!");
-		//menu();
-		//addButton(0,"Next",ingredientsMenu);
-		//return;
-	//}
-	//output("You pay five gems for a fox berry.  ");
-	//pc.gems -= 5;
-	//statScreenRefresh();
-	//inventory.takeItem(consumables.FOXBERY, ingredientsMenu);
-//}
-//
-//private function buyHardBiscuits():void {
-	//clearOutput();
-	//if(pc.gems < 5) {
-		//output("You can't afford one of those!");
-		//doNext(checkBakeryMenu);
-		//return;
-	//}
-	//output("You pay five gems for a pack of hard biscuits.  ");
-	//pc.gems -= 5;
-	//statScreenRefresh();
-	//inventory.takeItem(consumables.H_BISCU, checkBakeryMenu);
-//}
-//
-//private function buyTrailMix():void {
-	//clearOutput();
-	//if (pc.gems < 20) {
-		//output("You can't afford one of those!");
-		//doNext(checkBakeryMenu);
-		//return;
-	//}
-	//output("You pay twenty gems for a pack of trail mix.  ");
-	//pc.gems -= 20;
-	//statScreenRefresh();
-	//inventory.takeItem(consumables.TRAILMX, checkBakeryMenu);
-//}
-//
-//private function buyHummus():void {
-	//clearOutput();
-	//if (pc.gems < 100) {
-		//output("You can't afford one of those!");
-		//doNext(checkBakeryMenu);
-		//return;
-	//}
-	//output("You pay twenty gems for a pack of hummus.  ");
-	//pc.gems -= 100;
-	//statScreenRefresh();
-	//inventory.takeItem(consumables.HUMMUS_, checkBakeryMenu);
-//}
-//
-//private function easterBakeSale():void {
-	//clearOutput();
-	//output("You make your way to the bakery only to find that it's so full you can barely squeeze inside.  ");
-	//if(telAdre.rubi.rubiAffection() >= 40) output("An extremely busy Rubi can only manage a wave in your direction before going back to attending customers.  ");
-	//output("Seeing all of the holiday bustle hits you with a pang of homesickness, remembering times from Ingnam.  Shaking these feelings off, you make your way to the front of the queue determined to see what the fuss is about.  The normally absent minotaurus chef greets you, adding fuel to your notion that they are understaffed.");
-	//output("\n\n\"<i>Hello.  You come here often?  We busy.  Will try to do good.</i>\"");
-	////[Check Menu] [Offer Help]
-	//menu();
-	//addButton(3,"Check Menu",checkBakeryMenu);
-	//addButton(0,"Offer Help",easterBakeSaleHelp);
-	//addButton(4,"Leave",telAdre.telAdreMenu);
-//}
-//
-//private function easterBakeSaleHelp():void {
-	//clearOutput();
-	////[Offer Help]
-	//output("Determined to see if there is anything you can help with, you offer your assistance to the chef.  He responds to you in his usual briskness, \"<i>You help.  Go in back.  Make pastries.</i>\"  You ask if he'd rather you help with the chocolate eggs that are flying out of his door, but he declines and almost laughs at you.  \"<i>No.  I make eggs.  No one else.</i>\"");
-	//output("\n\nYou head into the back and take a seat while you wait for the chef to come give you directions.  After what seems like an age in the sweltering heat given off by the ovens, the chef finds a moment to pop in to direct you.  Pointing out the equipment you'll need, he lays out some ingredients you recognise.  However, to your horror he doesn't leave out any milk!  Upon questioning this he laughs and points to you, \"<i>You make milk.  Other milk not so good.</i>\"");
-	//output("\n\nExasperated but decided on helping out, ideas race through your mind as to how you can get enough milk for the pastries.  Seeing the panic on your face, the minotaur once again laughs.  Among the ingredients he put out for you is a small jar of a blue fluid that seems to be constantly boiling.  He picks this up and hands it to you, evidently expecting you to know what it is because afterwards he turns around and goes back to the front.");
-	//output("\n\nStill unsure exactly what to do, you sit where you are in disbelief at your situation before your curiosity gets the better of you, deciding you must examine these eggs for yourself.  Walking over to one of the few that are left in the back, you pick it up to find it is innately warm.  It takes all your composure not to drop it at this, but you press onwards.  Not only does it feel warm, it seems to be taking the heat out of your hands.  A lewd thought passes in your mind, imagining a chocolate person coming out of the egg, tendrils dripping off of them like sticky aftersex.  Surprised at your own audacity, you put the egg down again wondering where the thought came from.  Remembering why you are back here, your dilemma returns to the forefront of your mind with pressing urgency.  You walk over and pick up the jar of blue liquid; it is far more viscous than you imagined.  Taking everything into consideration, you're helping out here.  There would be no reason for the minotaur to give you something with hostile intent, so you decide to trust your gut and to drink the strange elixir.  Not wanting to down the whole thing, you quickly find a measuring cup to use for your drink and pour yourself some.  Bottoms up...");
-	//output("\n\nA euphoric wave passes through you, emanating from the drink slowly filling your stomach.  The drink fills you with, if nothing else, the newfound fury of a madman for solving your problem.  Lurching forward, you are certain that if nothing else, the solution to your impasse must be contained within.  ");
-	////(If the player has tits)
-	//if(pc.biggestTitSize() >= 1) output("Your [pc.fullChest] bounce at the vigor of your movement.  ");
-	//output("Going over the egg like an elaborate puzzle with its secrets only limited by your ability to unlock them, you are delighted to feel a stir of movement from within.  The heat is leaving not only your hands, but the entire room now, bringing the bristling heat down until you're sure it's cooler in here than outside with the swarm of customers.");
-	//output("\n\nThe egg you've been holding in your hands begins to almost shake; you set it down to avoid the risk of you dropping it.  It turns out you put it down just in time, as a chocolate eruption sprays out of the egg towards the ceiling with more force than a geyser.  Climbing from the remains of the egg, a voluptuously bodied chocolate herm emerges, intents obvious from the equipment already erect and slavering.  You can't help but size her up, noting her full DD cup breasts and a dick you judge to be about 14 inches.  Her sensual gait as she makes her way over to you is nothing short of evil in the way it brings heat to your crotch, ");
-	////(if the pc is male)
-	//if(pc.gender == 1) output("[pc.eachCock] jumps to full hardness.");
-	////(if the pc is female)
-	//else if(pc.hasVagina()) output("your nipples stiffening noticeably, while your [pc.vagina] prepares for what's to come.");
-	////(if the pc is a herm)
-	//else output("[eachCock jumping to full hardness, your nipples and [pc.vagina] not far behind in getting ready for your encounter.");
-	//output("\n\nThe euphoria from your earlier drink fades, replaced by a more animalistic need.");
-	//menu();
-	//addButton(0,"Next",malesHelpOutWithEaster);
-//}
-//
-////[Male]
-//private function malesHelpOutWithEaster():void {
-	//clearOutput();
-	//output("A idea crosses your mind; why not have the molten girl help you with your problem?  As if reading your mind, the girl continues her way to you, making her way with her eyes locked on your [cock biggest].  She is upon you now, flaccid streams drooling off her hand as she makes to grab your cock.  A heated pressure envelopes your shaft");
-	//if(pc.balls > 0) output(", sticky drops of chocolate trailing down your [balls]");
-	//output(", each movement a not unpleasant sensation as the warmth infuses you.  The center of the pressure loosens, and your chocolate partner takes it upon herself to pin you to the floor, her warmness surrounding you.  Almost immediately you feel a similar pressure to the previous upon your groin, pulsating now as if stroking your cock in earnest.  You work out that she has enveloped your rod in what you assume is a vagina.  As if to confirm your suspicions, your captor lets out a small moan, increasing the fervor with which she rings out your dong.");
-	//output("\n\nUnable now to contain your own lust, you start idly pumping into her velvety depths, the extreme warmth of which does nothing to discourage you.  Delighted by your newfound vigor, the mass riding you lets a sound out halfway between a squeal and a moan, increasing the vehemence of her own ministrations.  You pull your hand free from its prison only to thrust it higher up, gripping the highly malleable breast of the buxom girl.  Increasing the intensity of your pelvic endeavor, you elicit another moan from the bodacious vixen's lips, only adding fuel to your frenzied motions.  Jamming into her depths, intense heat assaults your body.  As if setting a spark to kindling, a torrid wave sweeps through you before you realize you are towards your limit.");
-	//output("\n\nDecided on making your mate peak before you, your attention turns to bringing pleasure from your awkward thrusts into her depths.  Finding your current position lacking the dominance you need for your vision, you struggle out from beneath the heated woman, leaving her confused with her ass in the air.  Satisfied with your new arrangement, you take up position behind her and push your hand into her pussy, testing its plasticity.  Wasting no more time, you line up your [cock biggest] with the woman's opening and administer your entire length in a quick thrust.  The woman openly moans from your treatment of her depths.  Still remembering your goal, you bring your hand down and find a harder globule of chocolate that must be her clitoris.  While passively administering jabs into her pussy, you concentrate your fingers on her love button, rubbing with both tenderness and vigor.  Moaning openly now, the girl lets out a keening wail that puts you dangerously close to the edge yourself.  With a final burst of energy you aren't sure you can afford, you begin plunging into her silky breach with near desperation.");
-	//
-	//output("\n\nYour chocolate counterpart is now screaming with a passion unmatched by even yourself, while you ram as fast as your [pc.legs] will allow.  The girl's other equipment is also reaching its limit, convulsing as if about to burst.  The shriek the woman emits is nothing short of ear-shattering as she cums, chocolate raining down on you.  ");
-	////[SILLYMODE]
-	//if(silly()) output("You regret not bringing your umbrella for this Chocolate Rain, so that you could be like those that stay dry rather than those who feel the pain.  ");
-	//output("Her rod is only seconds behind, emitting a stream of what appears to be white chocolate at least three feet into the air, sputtering three or four strands before calming down.  The girl collapses in a heap, bringing your conjoined genitals down as well.  You are not quite done, your own rod deep into her folds, quickly bringing yourself to your own orgasm.");
-	////(small cum vol)
-	//if(pc.cumQ() < 250) output("\n\nYour cock spits out a few streams into her expanse, thick cords of aftersex connecting you and your partner even as you pull away.");
-	////(med cum vol)
-	//else if(pc.cumQ() < 500) output("\n\nYour cock shoots out several significant streams of seed, filling your partner's deepness while a small amount dribbles out.");
-	////(large cum vol)
-	//else if(pc.cumQ() < 1000) output("Your cock spews out a significant amount of seed, filling your partners deepness quickly while a small volume shoots out with some force.  You are happy to see that she seems to have gained a little weight from your baby-batter.");
-	////(very large cum vol)
-	//else if(pc.cumQ() < 5000) output("Your cock spews into your partner's deepness, filling it almost instantly while a significant volume splatters out.  You are happy to see she seems to have gained a little weight from your baby-batter.");
-	//else output("Your cock opens like a river, streaming into your partner with such force that her belly distends.  A spew begins to erupt from her vagina, empting the significant amount she could not take on to the floor.  You are happy to see she has gained some weight from your baby-batter.");
-	//output("  It's about all you can do to get to the floor before passing out.  So much for helping.  In the back of your mind you picture the minotaur with a smug grin as your consciousness fades.");
-	//output("\n\n<b>Later...</b>");
-	//output("\nYou stumble back to camp, still somewhat out of it from your experience.");
-	//pc.orgasm();
-	//dynStats("lib", 1);
-	//pc.cumMultiplier += 2;
-	//doNext(returnToCampUseOneHour);
-//}
+
+private function easterBakeSale():void {
+	clearOutput();
+	output("You make your way to the bakery only to find that it's so full you can barely squeeze inside.  ");
+	//if(rubiAffection() >= 40) output("An extremely busy Rubi can only manage a wave in your direction before going back to attending customers.  ");
+	output("Seeing all of the holiday bustle hits you with a pang of homesickness, remembering times from Ingnam.  Shaking these feelings off, you make your way to the front of the queue determined to see what the fuss is about.  The normally absent minotaurus chef greets you, adding fuel to your notion that they are understaffed.");
+	output("\n\n\"<i>Hello.  You come here often?  We busy.  Will try to do good.</i>\"");
+	//[Check Menu] [Offer Help]
+	clearMenu();
+	addButton(3, "Check Menu", checkBakeryMenu);
+	addButton(0, "Offer Help", easterBakeSaleHelp);
+	addButton(4, "Leave", telAdreMenu);
+}
+
+private function easterBakeSaleHelp():void {
+	clearOutput();
+	//[Offer Help]
+	output("Determined to see if there is anything you can help with, you offer your assistance to the chef.  He responds to you in his usual briskness, \"<i>You help.  Go in back.  Make pastries.</i>\"  You ask if he'd rather you help with the chocolate eggs that are flying out of his door, but he declines and almost laughs at you.  \"<i>No.  I make eggs.  No one else.</i>\"");
+	output("\n\nYou head into the back and take a seat while you wait for the chef to come give you directions.  After what seems like an age in the sweltering heat given off by the ovens, the chef finds a moment to pop in to direct you.  Pointing out the equipment you'll need, he lays out some ingredients you recognise.  However, to your horror he doesn't leave out any milk!  Upon questioning this he laughs and points to you, \"<i>You make milk.  Other milk not so good.</i>\"");
+	output("\n\nExasperated but decided on helping out, ideas race through your mind as to how you can get enough milk for the pastries.  Seeing the panic on your face, the minotaur once again laughs.  Among the ingredients he put out for you is a small jar of a blue fluid that seems to be constantly boiling.  He picks this up and hands it to you, evidently expecting you to know what it is because afterwards he turns around and goes back to the front.");
+	output("\n\nStill unsure exactly what to do, you sit where you are in disbelief at your situation before your curiosity gets the better of you, deciding you must examine these eggs for yourself.  Walking over to one of the few that are left in the back, you pick it up to find it is innately warm.  It takes all your composure not to drop it at this, but you press onwards.  Not only does it feel warm, it seems to be taking the heat out of your hands.  A lewd thought passes in your mind, imagining a chocolate person coming out of the egg, tendrils dripping off of them like sticky aftersex.  Surprised at your own audacity, you put the egg down again wondering where the thought came from.  Remembering why you are back here, your dilemma returns to the forefront of your mind with pressing urgency.  You walk over and pick up the jar of blue liquid; it is far more viscous than you imagined.  Taking everything into consideration, you're helping out here.  There would be no reason for the minotaur to give you something with hostile intent, so you decide to trust your gut and to drink the strange elixir.  Not wanting to down the whole thing, you quickly find a measuring cup to use for your drink and pour yourself some.  Bottoms up...");
+	output("\n\nA euphoric wave passes through you, emanating from the drink slowly filling your stomach.  The drink fills you with, if nothing else, the newfound fury of a madman for solving your problem.  Lurching forward, you are certain that if nothing else, the solution to your impasse must be contained within.  ");
+	//(If the player has tits)
+	if(pc.biggestTitSize() >= 1) output("Your [pc.fullChest] bounce at the vigor of your movement.  ");
+	output("Going over the egg like an elaborate puzzle with its secrets only limited by your ability to unlock them, you are delighted to feel a stir of movement from within.  The heat is leaving not only your hands, but the entire room now, bringing the bristling heat down until you're sure it's cooler in here than outside with the swarm of customers.");
+	output("\n\nThe egg you've been holding in your hands begins to almost shake; you set it down to avoid the risk of you dropping it.  It turns out you put it down just in time, as a chocolate eruption sprays out of the egg towards the ceiling with more force than a geyser.  Climbing from the remains of the egg, a voluptuously bodied chocolate herm emerges, intents obvious from the equipment already erect and slavering.  You can't help but size her up, noting her full DD cup breasts and a dick you judge to be about 14 inches.  Her sensual gait as she makes her way over to you is nothing short of evil in the way it brings heat to your crotch, ");
+	//(if the pc is male)
+	if(pc.hasCock() && !pc.hasVagina()) output("[pc.eachCock] jumps to full hardness.");
+	//(if the pc is female)
+	else if(pc.hasVagina()) output("your nipples stiffening noticeably, while your [pc.vagina] prepares for what's to come.");
+	//(if the pc is a herm)
+	else output("[eachCock jumping to full hardness, your nipples and [pc.vagina] not far behind in getting ready for your encounter.");
+	output("\n\nThe euphoria from your earlier drink fades, replaced by a more animalistic need.");
+	processTime(15 + rand(5));
+	clearMenu();
+	addButton(0,"Next",malesHelpOutWithEaster);
+}
+
+//[Male]
+private function malesHelpOutWithEaster():void {
+	clearOutput();
+	output("A idea crosses your mind; why not have the molten girl help you with your problem?  As if reading your mind, the girl continues her way to you, making her way with her eyes locked on your [cock biggest].  She is upon you now, flaccid streams drooling off her hand as she makes to grab your cock.  A heated pressure envelopes your shaft");
+	if(pc.balls > 0) output(", sticky drops of chocolate trailing down your [pc.balls]");
+	output(", each movement a not unpleasant sensation as the warmth infuses you.  The center of the pressure loosens, and your chocolate partner takes it upon herself to pin you to the floor, her warmness surrounding you.  Almost immediately you feel a similar pressure to the previous upon your groin, pulsating now as if stroking your cock in earnest.  You work out that she has enveloped your rod in what you assume is a vagina.  As if to confirm your suspicions, your captor lets out a small moan, increasing the fervor with which she rings out your dong.");
+	output("\n\nUnable now to contain your own lust, you start idly pumping into her velvety depths, the extreme warmth of which does nothing to discourage you.  Delighted by your newfound vigor, the mass riding you lets a sound out halfway between a squeal and a moan, increasing the vehemence of her own ministrations.  You pull your hand free from its prison only to thrust it higher up, gripping the highly malleable breast of the buxom girl.  Increasing the intensity of your pelvic endeavor, you elicit another moan from the bodacious vixen's lips, only adding fuel to your frenzied motions.  Jamming into her depths, intense heat assaults your body.  As if setting a spark to kindling, a torrid wave sweeps through you before you realize you are towards your limit.");
+	output("\n\nDecided on making your mate peak before you, your attention turns to bringing pleasure from your awkward thrusts into her depths.  Finding your current position lacking the dominance you need for your vision, you struggle out from beneath the heated woman, leaving her confused with her ass in the air.  Satisfied with your new arrangement, you take up position behind her and push your hand into her pussy, testing its plasticity.  Wasting no more time, you line up your [cock biggest] with the woman's opening and administer your entire length in a quick thrust.  The woman openly moans from your treatment of her depths.  Still remembering your goal, you bring your hand down and find a harder globule of chocolate that must be her clitoris.  While passively administering jabs into her pussy, you concentrate your fingers on her love button, rubbing with both tenderness and vigor.  Moaning openly now, the girl lets out a keening wail that puts you dangerously close to the edge yourself.  With a final burst of energy you aren't sure you can afford, you begin plunging into her silky breach with near desperation.");
+	
+	output("\n\nYour chocolate counterpart is now screaming with a passion unmatched by even yourself, while you ram as fast as your [pc.legs] will allow.  The girl's other equipment is also reaching its limit, convulsing as if about to burst.  The shriek the woman emits is nothing short of ear-shattering as she cums, chocolate raining down on you.  ");
+	//[SILLYMODE]
+	if(silly) output("You regret not bringing your umbrella for this Chocolate Rain, so that you could be like those that stay dry rather than those who feel the pain.  ");
+	output("Her rod is only seconds behind, emitting a stream of what appears to be white chocolate at least three feet into the air, sputtering three or four strands before calming down.  The girl collapses in a heap, bringing your conjoined genitals down as well.  You are not quite done, your own rod deep into her folds, quickly bringing yourself to your own orgasm.");
+	//(small cum vol)
+	if(pc.cumQ() < 250) output("\n\nYour cock spits out a few streams into her expanse, thick cords of aftersex connecting you and your partner even as you pull away.");
+	//(med cum vol)
+	else if(pc.cumQ() < 500) output("\n\nYour cock shoots out several significant streams of seed, filling your partner's deepness while a small amount dribbles out.");
+	//(large cum vol)
+	else if(pc.cumQ() < 1000) output("Your cock spews out a significant amount of seed, filling your partners deepness quickly while a small volume shoots out with some force.  You are happy to see that she seems to have gained a little weight from your baby-batter.");
+	//(very large cum vol)
+	else if(pc.cumQ() < 5000) output("Your cock spews into your partner's deepness, filling it almost instantly while a significant volume splatters out.  You are happy to see she seems to have gained a little weight from your baby-batter.");
+	else output("Your cock opens like a river, streaming into your partner with such force that her belly distends.  A spew begins to erupt from her vagina, empting the significant amount she could not take on to the floor.  You are happy to see she has gained some weight from your baby-batter.");
+	output("  It's about all you can do to get to the floor before passing out.  So much for helping.  In the back of your mind you picture the minotaur with a smug grin as your consciousness fades.");
+	output("\n\n<b>Later...</b>");
+	output("\nYou stumble back to camp, still somewhat out of it from your experience.");
+	pc.orgasm();
+	pc.slowStatGain("l", 1);
+	pc.cumMultiplierRaw += 0.02;
+	processTime(25 + rand(10));
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
+}
