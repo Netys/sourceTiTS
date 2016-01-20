@@ -13327,7 +13327,10 @@ package classes {
 			
 			return description;
 		}
-
+		
+		/**
+		 * Mareth corruption stat.
+		 */
 		public function cor(arg:Number = 0, apply:Boolean = false): Number 
 		{
 			if (kGAMECLASS.flags["COC.CORRUPTION"] == undefined) kGAMECLASS.flags["COC.CORRUPTION"] = 0;
@@ -13344,6 +13347,15 @@ package classes {
 					kGAMECLASS.flags["COC.CORRUPTION"] =0;
 			}
 			return kGAMECLASS.flags["COC.CORRUPTION"];
+		}
+		
+		/**
+		 * Returns readiness for something especially lewd, like same stat from FoE. Derivative stat based on libido, corruption and some perks. Because "pure" == "shy" concept is not 100% right.
+		 */
+		public function slut():Number
+		{
+			if (isBimbo() || isBro()) return 100;
+			return Math.max(libido(), cor(), exhibitionism() / 2); // Should corruption work outside of Mareth? Not that this function would be used outside of Mareth...
 		}
 		
 		public function isDefeated():Boolean

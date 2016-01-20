@@ -20,19 +20,20 @@ public function showLilium():void
 {
 	//spriteSelect(93);
 	//userInterface.showBust("LILIUM");
-	userInterface.showName("\nLILIUM");
+	if(Flag("COC.UNKNOWN_FLAG_NUMBER_00267") == 0) userInterface.showName("\nDEMON");
+	else userInterface.showName("\nLILIUM");
 }
 
 //#########AREA TEXT#########
 public function LiliumText(display:Boolean = false):Function {
+	if(hours < 17 && hours > 5) return null;
 	if(display) {
 		//Before paying:
 		if(Flag("COC.UNKNOWN_FLAG_NUMBER_00267") == 0) output("\n\nYou can see a pale, scantily clad demon woman leaning casually against the wall of a building.");
 		//After paying:
 		else output("\n\nYou can see Lilium standing in her usual spot.");
 	}
-	if(hours >= 17 || hours < 5) return approachLilium;
-	return null;
+	return approachLilium;
 }
 
 private function approachLilium():void {
@@ -47,7 +48,7 @@ private function approachLilium():void {
 
 		output("Of <i>course</i> that would be why she's standing there dressed like that.\n\n");
 
-		output("\"<i>20 gems and I'm all yours,</i>\" she continues, sweeping her arms out wide for emphasis.\n\n");
+		output("\"<i>25 gems and I'm all yours,</i>\" she continues, sweeping her arms out wide for emphasis.\n\n");
 	}
 	//#########REPEAT INTRODUCTION#########
 	else {
@@ -59,7 +60,7 @@ private function approachLilium():void {
 	processTime(2);
 	clearMenu();
 	
-	if (pc.credits >= 200) addButton(0, "Pay", payForLilium);
+	if (pc.credits >= 250) addButton(0, "Pay", payForLilium);
 	else addDisabledButton(0, "Pay", "Pay", "You can't afford this.");
 	
 	addButton(14, "Leave", leaveLilium);
@@ -99,7 +100,8 @@ private function payForLilium():void {
 		output("You toss the gems to the hooker and while she counts them, you wonder just what you want her to do this time.");
 	}	
 	IncrementFlag("COC.UNKNOWN_FLAG_NUMBER_00267");
-	pc.credits -= 200;
+	showLilium();
+	pc.credits -= 250;
 	//statScreenRefresh();
 	//Sex Menu here
 	
@@ -150,7 +152,7 @@ private function buttFuckTongueJeorb():void {
 		//(If player has a lot of milk)
 		if(pc.isLactating()) output("  The stream of milk that leaves your breasts each time you press your body against Lilium's adds further lubrication between you.");
 	}
-	output("\n\n", false);
+	output("\n\n");
 	
 	output("The pace of Lilium's breathing quickens and soon she begins to shudder as her cock throbs within your tongue's grasp.  Jets of the satanic streetwalker's cum shoot out against the tip of the sock and she lets out a moan of contentment.  Her internal muscles clench down on your shaft as she ejaculates, causing a wave of goose bumps to cover your body which signals your own impending orgasm.  Your knees buckle and tongue loses its grip on her sock; the wet fabric flies off her cock with her next spurt, hitting the ground with a tiny 'plap'.  The tingling across your body focuses itself in on the base of your [pc.cock " + x + "], and you grab the root of Lilium's demonic tail for more leverage, pulling her roughly against you as you grunt loudly, the proof of your pleasure exploding into her bubble butt.  This final thrust forces an extra gout of cum from her cock, which then leaks down its tongue prison, giving you a last taste of her fluids.\n\n");
 

@@ -4,6 +4,7 @@ import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
 include "Benoit.as";
+include "Cinnabar.as";
 include "Lilium.as";
 
 //[Find Travelling Bazaar]
@@ -86,7 +87,7 @@ public function enterTheBazaarAndMenu(demons:Boolean = true):void {
 	//addButton(2, "Food Tent", blackCock.enterTheBlackCock, null, null, null, "The incredible smell seems to come from that tent.", "The Black Cock");
 	//addButton(4, "Back Alley", investigateBackAlley, null, null, null, "That back alley looks suspicious. Do you dare investigate?");
 	//Cinnabar
-	//if (model.time.hours >= 15 && model.time.hours <= 20) addButton(5, (flags[kFLAGS.CINNABAR_NUMBER_ENCOUNTERS] > 0 ? "Cinnabar" : "Rat"), cinnabar.cinnabarAppearance(false));
+	if (cinnabarAppearance(true) != null) addButton(5, (Flag("COC.CINNABAR_MET") > 0 ? "Cinnabar" : "Rat"), cinnabarGreeting);
 	//Griping Demons
 	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00292] == 0 && rand(4) == 0 && demons) {
 		//overHearDemonsAboutSyrena();
@@ -98,9 +99,7 @@ public function enterTheBazaarAndMenu(demons:Boolean = true):void {
 		//addButton(6, "GripingDemons", overHearDemonsAboutSyrena, null, null, null, "Overhear the conversation of the two griping demons.", "Griping Demons");
 	//}
 	//Lilium
-	if (LiliumText(false) != null) {
-		addButton(7, (Flag("COC.UNKNOWN_FLAG_NUMBER_00267") > 0 ? "Lilium" : "Demon"), LiliumText(false));
-	}
+	if (LiliumText(true) != null) addButton(7, (Flag("COC.UNKNOWN_FLAG_NUMBER_00267") > 0 ? "Lilium" : "Demon"), approachLilium);
 	//Roxanne
 	//addButton(8, (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00221] > 0 ? "Roxanne" : "Lizans"), (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00221] > 0 ? roxanne.RoxanneChooseApproachOrRepeat : roxanne.Roxanne1stApproach));
 	//Bimbo Niamh
