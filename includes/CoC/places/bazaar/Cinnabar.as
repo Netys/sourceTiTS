@@ -1,4 +1,3 @@
-import classes.Characters.CoC.CoCImp;
 import classes.GLOBAL;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;

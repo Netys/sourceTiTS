@@ -13355,7 +13355,7 @@ package classes {
 		public function slut():Number
 		{
 			if (isBimbo() || isBro()) return 100;
-			return Math.max(libido(), cor(), exhibitionism() / 2); // Should corruption work outside of Mareth? Not that this function would be used outside of Mareth...
+			return Math.max(libido(), cor(), exhibitionism() / 4); // Should corruption work outside of Mareth? Not that this function would be used outside of Mareth...
 		}
 		
 		public function isDefeated():Boolean
