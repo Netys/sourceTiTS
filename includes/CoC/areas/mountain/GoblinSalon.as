@@ -258,7 +258,7 @@ private function gloryholeImp():void {
 		pc.lust(15);
 		pc.cor(0.5);
 	}
-	else if(slut() < 66) {
+	else if(pc.slut() < 66) {
 		output("You open wide, bobbing up and down in an effort to match the strange dick that wobbles in front of you.  In the end you wrap both hands around its bumpy base, steadying it as you engulf the throbbing demon dick, taking as much as you can into your mouth.  You squeeze and caress it, licking the ridge of nodules that surround the crown as sticky spoo begins to erupt from it.  The little guy didn't have much endurance, but he must have been pretty backed up, as he's flooding your mouth and throat with his seed.  You struggle to swallow enough to keep up, but when he finishes, you're panting and covered in white.\n\n");
 		pc.lust(35);
 		pc.cor(1);

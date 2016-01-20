@@ -3136,7 +3136,7 @@ package classes {
 			var bonus:int = 0;
 			bonus += perkv1("Inhuman Desire");
 			//trace("Max lust: " + (bonus + 100));
-			if(hasPerk("Venom Slut") && hasStatusEffect("Red Myr Venom")) bonus += 35;
+			if (hasPerk("Venom Slut") && hasStatusEffect("Red Myr Venom")) bonus += 35;
 			if (hasPerk("Bimbo Body") || hasPerk("Bro Body") || hasPerk("Futa Form")) bonus += 20;
 			if (hasPerk("Omnibus' Gift")) bonus += 15;
 			return (100 + bonus);
@@ -3159,10 +3159,13 @@ package classes {
 			{
 				if (bonus < statusEffectv2("Lane Detoxing Weakness")) bonus = statusEffectv2("Lane Detoxing Weakness");
 			}
+			if (hasStatusEffect("Pierced: Icestone")) bonus -= statusEffectv1("Pierced: Icestone");
+			if (hasStatusEffect("Pierced: Crimstone")) bonus += statusEffectv1("Pierced: Crimstone");
+			if (hasStatusEffect("Pent Up")) bonus += statusEffectv1("Pent Up");
 			//Venom brings minimum up to 35.
-			if(bonus < 35 && hasStatusEffect("Red Myr Venom")) bonus = 35;
-			if(bonus < 35 && hasStatusEffect("Luststick")) bonus = 35;
-			return (0 + bonus);
+			if (bonus < 35 && hasStatusEffect("Red Myr Venom")) bonus = 35;
+			if (bonus < 35 && hasStatusEffect("Luststick")) bonus = 35;
+			return Math.max((0 + bonus), 0);
 		}
 		public function physiqueMax(): Number {
 			var bonuses:int = 0;
@@ -13339,6 +13342,8 @@ package classes {
 			else if (arg != 0) 
 			{
 				if (arg > 0 && hasPerk("Purity Blessing")) arg *= 0.75;
+				if (arg > 0 && hasSock("alabaster")) arg *= 0.9;
+				if (arg < 0 && hasSock("alabaster")) arg *= 1.1;
 			
 				kGAMECLASS.flags["COC.CORRUPTION"] += arg;
 				if (kGAMECLASS.flags["COC.CORRUPTION"] > 100)
