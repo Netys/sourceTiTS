@@ -107,8 +107,8 @@ public function farmExploreEncounter():void {
 		}
 		
 		if(flags["COC.COCK_MILKER_INSTALLED"] != undefined) {
-			if (!pc.hasCock()) addDisabledButton(2, "Milk Cock", "Milk Cock", "You must have cock to milk it.");
-			else addButton(2,"Milk Cock",cockPumping);
+			if (!pc.hasCock()) addDisabledButton(3, "Milk Cock", "Milk Cock", "You must have cock to milk it.");
+			else addButton(3,"Milk Cock",cockPumping);
 		}
 		
 		//if(pc.findStatusAffect(StatusAffects.MarbleRapeAttempted) < 0 && pc.findStatusAffect(StatusAffects.NoMoreMarble) < 0 && pc.findStatusAffect(StatusAffects.Marble) >= 0 && flags[kFLAGS.MARBLE_WARNING] == 0) {
@@ -116,9 +116,9 @@ public function farmExploreEncounter():void {
 			//addButton(3,"Marble", meetMarble);
 		//}
 		
-		addButton(0,"Explore",exploreFarm);
-		addButton(6,"Talk",talkWhitney);
-		addButton(7,"Work",workFarm);
+		addButton(0, "Explore", exploreFarm);
+		addButton(6, "Talk", talkWhitney);
+		addButton(7, "Work", workFarm);
 	}		
 }
 
@@ -129,12 +129,13 @@ private function whitneyMilkerHookup(breast:Boolean = true):void {
 	output("Whitney takes the gear back to her farm after promising to have it working within the hour.  She did leave you with a cryptic warning to \"<i>leave the milkings to the beasts, lest you become one</i>.</i>\"\n\nYou shrug and head back to check up on camp.");
 	if(breast) {
 		flags["COC.BREAST_MILKER_INSTALLED"] = 1;
-		pc.removeKeyItem("Breast Milker");	
+		pc.removeKeyItem("Breast Milker");
 	}
 	else {
 		flags["COC.COCK_MILKER_INSTALLED"] = 1;
 		pc.removeKeyItem("Cock Milker");
 	}
+	clearMenu();
 	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 }
 //[NO]
@@ -142,6 +143,7 @@ private function whitneyMilkerRefusal():void {
 	whitneySprite()
 	clearOutput();
 	output("Whitney shrugs and the two of you resume your conversation.  But like all good things, it has to come to an end.  The two of you go your separate ways.");
+	clearMenu();
 	addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 }
 //TALK
@@ -326,8 +328,8 @@ private function talkWhitney():void {
 		output("You nod and tell her how you got it and explain that even though it should be fully functional, it'll need to connect to some other machinery to work, and it's way more than any one person could handle.\n\n");
 		output("\"<i>Well of course, it needs hooked into a pump system, collection reservoir, and a power source.  It just happens I've got all that equipment set up for my cows in the barn, and I reckon it'd be easier to plug into than a girl sniffing minotaur musk.</i>\" Whitney explains, \"<i>If you like I could get it all set up for ya, hell, if you manage to gather large enough quantities with it, I might be able to find a way to inseminate my cattle with it and pay ya for it.  Don't you worry none, I know ways to make this kind of thing work.</i>\"\n\n");
 		output("Do you give the cock milker to Whitney for her to hook up?");
-		addButton(0, "Yes", whitneyMilkerHookup);
-		addButton(1, "No", whitneyMilkerRefusal, false);
+		addButton(0, "Yes", whitneyMilkerHookup, false);
+		addButton(1, "No", whitneyMilkerRefusal);
 		return;
 	}
 	//[GENERIC TALK]
@@ -349,6 +351,7 @@ private function breastMilkerPurchase():void {
 	output("Whitney takes the gems and leaves with the promise of having your gear set up within the hour.  She calls back over her shoulder with a cryptic warning, \"<i>Watch how much time you spend getting milked like an animal, lest you wind up like one.</i>\"");
 	flags["COC.BREAST_MILKER_INSTALLED"] = 1;
 	pc.credits -= 2500;
+	clearMenu();
 	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 }
 
@@ -357,6 +360,7 @@ private function breastMilkerNoPurchase():void {
 	output("Whitney shrugs and the two of you chat about other things, just passing the time and enjoying a relatively normal chat.");
 	//+3 int if less than 15, +2 int if less 20, +1 int if less than 30, +.5 int if less than 40.
 	if (pc.IQ() < 40) pc.slowStatGain("intelligence", 1.5);	
+	clearMenu();
 	addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 }
 
@@ -789,6 +793,13 @@ public function getMilked():void {
 			output("Your body lets down its milk, flooding the tubes with creamy goodness.  Milk immediately begins leaking from the edges as the machine fails to keep up with the quantity of cream being released.   Alarms blare and soft footfalls fill the barn as help arrives.  You hear the clangs of metal on metal, and then the suction intensifies, nearly doubling, milking you HARD and draining you of your vast reservoir of milk.  Your nipples ache with the strange pleasure of it, leaving you grunting and bucking against your restraints, desperate for release, but you just can't get the stimulation you need.  For an hour you're teased like that, pumped of your milk until the machinery shuts off and the harness lowers you to the ground, leaving you in a puddle of your own creation when the nipple-cups pop off.\n\n");
 		}
 	}
+	
+	//weekly limit reset
+	if (flags["COC.WHITNEY_GEMS_PAID_LAST_WEEK"] != int(days / 7) && days % 7 == 0) {
+		flags["COC.WHITNEY_GEMS_PAID_LAST_WEEK"] = int(days / 7);
+		flags["COC.WHITNEY_GEMS_PAID_THIS_WEEK"] = 0;
+	}
+	
 	//Aftermaths
 	//Set temp to liter amount produced.
 	var liters:Number = 0;
@@ -860,6 +871,7 @@ public function getMilked():void {
 		pc.lust(pc.lustMax(), true);
 	}
 	//Boost lactation by a tiny bit and prevent lactation reduction
+	pc.milked(pc.milkQ());
 	pc.boostLactation(.05);
 	//Reset 'feeder' status
 	//pc.changeStatusValue(StatusAffects.Feeder,2,0);
@@ -867,6 +879,7 @@ public function getMilked():void {
 	//if(pc.statusAffectv1(StatusAffects.LactationEndurance) < 1.5) pc.addStatusValue(StatusAffects.LactationEndurance,1,.05);
 	//pc.addStatusValue(StatusAffects.LactationEndurance,1,.05);
 	//pc.createStatusAffect(StatusAffects.Milked,8,0,0,0);
+	clearMenu();
 	addButton(0, "Next", function():*{ processTime(40 + rand(10)); mainGameMenu(); });
 }
 
@@ -978,7 +991,7 @@ public function cockPumping():void {
 		else output("You're kept on the edge of orgasm for the better part of an hour.   Rhythmic contractions squeeze through the flesh-tubes wrapped around your manhoods, keeping them painfully hard and dribbling, always backing off before you can truly cum.  You thrash in your harness wildly, insane with need and nearly frothing at the mouth.  The licking tongues never stop, licking between every wave of mechanized suction that pulls on your many malenesses.   You babble incoherently, pleasure-drunk, not even noticing a green light on the far side of the wall turning on.  One thing you do notice is that the cock-tubes aren't slowing down their ministrations.  You're finally allowed to cum!\n\n", false);
 	}
 	//BAD END!?
-	if(pc.cumQ() >= 50 && pc.energy() <= 0 && flags["COC.USED_MILKER_TODAY"] > 0) {
+	if(pc.cumQ() >= 50 && pc.energy() <= 0 && flags["COC.USED_MILKER_TODAY"] == days) {
 		//(small/medium helperless skeet)
 		if(cumQ < 1000) {
 			output("The orgasm rolls over you, shutting down your thoughts as your body spasms in its straps, boiling out ", false);
@@ -1025,7 +1038,7 @@ public function cockPumping():void {
 		doNext(milkerBadEnd1);
 		return;
 	}
-	flags["COC.USED_MILKER_TODAY"]++;
+	flags["COC.USED_MILKER_TODAY"] = days;
 	//flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00333]++;
 	//ORGAZMO
 	if(cumQ < 10) {
@@ -1083,6 +1096,13 @@ public function cockPumping():void {
 	else output("thick ", false);
 	output("trail of your cum along the floor where the hose dragged itself back into the wall, though the machinery has closed back up and is now chugging noisily, clearly doing something.  A loud 'ding' chimes and a panel displays ", false);
 
+	
+	//weekly limit reset
+	if (flags["COC.WHITNEY_GEMS_PAID_LAST_WEEK"] != int(days / 7) && days % 7 == 0) {
+		flags["COC.WHITNEY_GEMS_PAID_LAST_WEEK"] = int(days / 7);
+		flags["COC.WHITNEY_GEMS_PAID_THIS_WEEK"] = 0;
+	}
+	
 	//Set temp to liter amount produced.
 	var payout:Number = 0;
 	var cap:Number = 500;
@@ -1146,7 +1166,8 @@ public function cockPumping():void {
 	//}
 	output(" on your way, whistling happily and feeling like taking a nap.", false);
 	pc.orgasm();
-	doNext(returnToCampUseOneHour);
+	clearMenu();
+	addButton(0, "Next", function():*{ processTime(20 + rand(10)); mainGameMenu(); });
 }
 
 private function cowBadEnd1():void {

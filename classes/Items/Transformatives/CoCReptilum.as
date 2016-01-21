@@ -227,7 +227,6 @@ package classes.Items.Transformatives
 				}
 				pc.milkFullness = 0;
 				pc.milkMultiplier = 0;
-				pc.milkRate = 1;
 				changes++;
 			}
 			//-Nipples reduction to 1 per tit.
