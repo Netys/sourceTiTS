@@ -355,10 +355,10 @@ public function talkToBrookeAboutGymFolks():void {
 	output("\n\nThat centaur lady who owns the place is an all right sort, I guess.  Never really paid much attention to her.  I pay for my lifetime membership and she leaves me be.  Got a nice rack on her, but truth be told, I'm not the biggest fan of centaurs.  I know how racist that sounds and everything, and I even hate myself for admitting it, but...  I don't know; I think it has to do with my pa being a horse-morph.  It just looks unsettling to me.");
 
 	//[if {met Cotton}]
-	if(Flag("COC.COTTON_MET_FUCKED") > 0) output("\n\nSpeaking of: Cotton, that horse-morph gal?  Cute as a button, sexy as a... well, as a big-titted ten-outta-ten.  Not really into that flowery yoga stuff, though, that's just not my style, and she's not into lifting the heavy stuff, so we don't really cross paths much.  I'd jump her bones if I didn't know that her horsecock of hers would split me in half.");
+	if(flags["COC.COTTON_MET_FUCKED"] > 0) output("\n\nSpeaking of: Cotton, that horse-morph gal?  Cute as a button, sexy as a... well, as a big-titted ten-outta-ten.  Not really into that flowery yoga stuff, though, that's just not my style, and she's not into lifting the heavy stuff, so we don't really cross paths much.  I'd jump her bones if I didn't know that her horsecock of hers would split me in half.");
 
 	//[if {met Heckel}]
-	if(Flag("COC.MET_HECKEL") > 0) output("\n\nHeckel's way too competitive and dominant.  I just wanna lift some weights, and she takes that as a personal challenge or something, and tries to outlift me.  Well, us Shepherds aren't too taken with being submissive, so I gotta outlift her right back.  Occasionally, we make it into competitions: whoever wins is the dom for the day, and whoever loses is the sub.  In the end, really, we both win – she's a damn good fuck either way – but it's more the principle of the thing.  We go more-or-less even, although she'd probably tell you otherwise.");
+	if(flags["COC.MET_HECKEL"] > 0) output("\n\nHeckel's way too competitive and dominant.  I just wanna lift some weights, and she takes that as a personal challenge or something, and tries to outlift me.  Well, us Shepherds aren't too taken with being submissive, so I gotta outlift her right back.  Occasionally, we make it into competitions: whoever wins is the dom for the day, and whoever loses is the sub.  In the end, really, we both win – she's a damn good fuck either way – but it's more the principle of the thing.  We go more-or-less even, although she'd probably tell you otherwise.");
 
 	//[if {had Heckel/Brooke threeway between one and three times}
 	if(Flag("COC.BROOKE_AND_HELIA_3SOME") > 0 && Flag("COC.BROOKE_AND_HELIA_3SOME") < 4) output("\n\nHeckel's still just as competitive as always.  I walk into the gym and do my warmups, and there's the bitch, challenging me to something right off the bat.  Lately our 'games' have been going on a bit longer, and the 'aftermath' has been getting a lot more energetic and intense.  Don't tell her I said this, but that stuff we say, about one of us just wanting to fuck the other?  Usually that's just dirty, dominant talk, and I can't really speak for her, but, sometimes...");
@@ -1423,10 +1423,10 @@ public function brookeVHeckelBrookeWins2():void {
 		output("\n\nHeckel does her part, trailing her hands down to Brooke's sides and gripping onto her hamstrings, pulling the dog into her with every thrust forward.  But it's no mistake that Brooke is the top between the two of them: she stnds tall over the weak-legged hyena, covering as much of Heckel's body as she can with her own, pumping her hips powerfully into the herm's own.  Every one of Brooke's humps are met with one of your own, and all too quickly the two of you are battering the poor hyena around with your genitals; the locker room echoing a cacophony of wet thrusts, hard fleshy slaps, and perverse moans and sexual grunts.");
 
 		output("\n\nYou, for one, don't take the chance to fuck Heckel properly for granted.");
-		if (Flag("COC.TIMES_FUCKED_HECKEL_BLOWJOB") > 0 || Flag("COC.TIMES_FUCKED_HECKEL_ANAL") > 0)
+		if (flags["COC.TIMES_FUCKED_HECKEL_BLOWJOB"] > 0 || flags["COC.TIMES_FUCKED_HECKEL_ANAL"] > 0)
 		{
-			var bj:Boolean = Flag("COC.TIMES_FUCKED_HECKEL_BLOWJOB") > 0;
-			var anal:Boolean = Flag("COC.TIMES_FUCKED_HECKEL_ANAL") > 0;
+			var bj:Boolean = flags["COC.TIMES_FUCKED_HECKEL_BLOWJOB"] > 0;
+			var anal:Boolean = flags["COC.TIMES_FUCKED_HECKEL_ANAL"] > 0;
 			
 			if (bj && anal)	output("  Every time you met Heckel, you either went down on her, or had to take her dick up your ass – now, with the rare opportunity to return the favor, y"); 
 			else if (bj && !anal) output("  Every time you met Heckel, you went down on her - now, with the rare opportunity to return the favour, y");

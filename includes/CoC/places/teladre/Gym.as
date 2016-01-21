@@ -4,6 +4,7 @@ import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
 include "Brooke.as";
+include "Heckel.as";
 include "Ifris.as";
 include "Jasun.as";
 include "Loppe.as";
@@ -44,7 +45,7 @@ public function TelAdreGymDesc():void {
 	if(flags["COC.LOPPE_MET"] == 1 && flags["COC.LOPPE_DISABLED"] != 1) {
 		output("\n\nYou spot Loppe the laquine wandering around, towel slung over her shoulder.  When she sees you, she smiles and waves to you and you wave back.");
 	}
-	//if(hours > 9 && hours < 14) heckel.heckelAppearance();
+	if(hours > 9 && hours <= 15) heckelAppearance();
 	TelAdreGymMenu();
 }
 
@@ -69,16 +70,12 @@ private function TelAdreGymMenu():void {
 	
 	if (lottieAppearance(false) != null) addButton(but++, flags["COC.LOTTIE_MET"] == undefined ? "Pig-Lady" : "Lottie", lottieAppearance(false));
 	
+	if (hours > 9 && hours <= 15) addButton(but++, flags["COC.MET_HECKEL"] == 1 ? "Heckel" : "Hyena", greetHeckel);
+	
 	addButton(but++, "ChangeRoom", changingRoom);
 	
 	//var cotton2:Function =null;
 	//var cottonB:String = "Horsegirl";
-	//var hyena:Function =null;
-	//var hyenaB:String = "Hyena";
-	//if(model.time.hours > 9 && model.time.hours <= 15) {
-		//hyena = heckel.greetHeckel;
-		//if(flags[kFLAGS.MET_HECKEL] > 0)
-			//hyenaB = "Heckel";
 	//if(flags[kFLAGS.PC_IS_A_DEADBEAT_COTTON_DAD] == 0) {
 		//if(cotton.cottonsIntro())
 			//cotton2 = cotton.cottonGreeting;
