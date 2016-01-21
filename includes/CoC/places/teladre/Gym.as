@@ -4,6 +4,7 @@ import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
 include "Brooke.as";
+include "Ifris.as";
 include "Loppe.as";
 include "Lottie.as";
 include "SexMachine.as";
@@ -63,23 +64,18 @@ private function TelAdreGymMenu():void {
 	if (flags["COC.LOPPE_MET"] == 1 && flags["COC.LOPPE_DISABLED"] != 1)
 		addButton(but++, "Loppe", loppeGenericMeetings);
 	
+	if(ifrisIntro()) addButton(but++, flags["COC.MET_IFRIS"] == undefined ? "Girl" : "Ifris", approachIfris);
+	
 	if (lottieAppearance(false) != null) addButton(but++, flags["COC.LOTTIE_MET"] == undefined ? "Pig-Lady" : "Lottie", lottieAppearance(false));
 	
 	//var cotton2:Function =null;
 	//var cottonB:String = "Horsegirl";
 	//var hyena:Function =null;
 	//var hyenaB:String = "Hyena";
-	//var ifris2:Function =null;
-	//var ifrisB:String = "Girl";
-	//if(ifris.ifrisIntro())
-		//ifris2 = ifris.approachIfris;
-	//if(flags[kFLAGS.MET_IFRIS] > 0)
-		//ifrisB = "Ifris";
 	//if(model.time.hours > 9 && model.time.hours <= 15) {
 		//hyena = heckel.greetHeckel;
 		//if(flags[kFLAGS.MET_HECKEL] > 0)
 			//hyenaB = "Heckel";
-	
 	//if(flags[kFLAGS.PC_IS_A_DEADBEAT_COTTON_DAD] == 0) {
 		//if(cotton.cottonsIntro())
 			//cotton2 = cotton.cottonGreeting;
@@ -90,7 +86,6 @@ private function TelAdreGymMenu():void {
 	//choices("ChangeRoom",jasun.changingRoom,
 			//cottonB,cotton2,
 			//hyenaB,hyena,
-			//ifrisB,ifris2,
 			//"Leave",telAdreMenu);
 	
 	addButton(14, "Leave", telAdreMenu);
