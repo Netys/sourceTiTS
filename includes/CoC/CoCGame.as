@@ -211,22 +211,3 @@ public function getKnownFireBreath():String {
 	if (pc.hasPerk("Dragonfire")) return "dragonfire";
 	return null;
 }
-
-public function HeatTimePassedNotify():void {
-	if (pc.hasStatusEffect("Heat") && pc.statusEffectv3("Heat") == 0) {
-		if (pc.isPregnant()) {
-			eventBuffer += "\n\n<b>Your heat is suddenly gone.</b>";
-			pc.removeStatusEffect("Heat");
-		}
-		if (!pc.hasVagina() && pc.statusEffectv4("Heat") == 0) {
-			eventBuffer += "\n\n<b>Your heat is gone with your vagina.</b>";
-			pc.removeStatusEffect("Heat");
-		}
-	}
-	if (pc.hasStatusEffect("Rut") && !pc.hasCock()) {
-		eventBuffer += "\n\n<b>Your rut is gone with your male genitals.</b>";
-		pc.removeStatusEffect("Rut");
-	}
-}
-private var HeatTimePassedNotifyHook: * = HeatTimePassedNotifyGrapple();
-private function HeatTimePassedNotifyGrapple():* { timeChangeListeners.push(HeatTimePassedNotify); }

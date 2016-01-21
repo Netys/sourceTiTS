@@ -5,6 +5,9 @@ import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
 public function EventsAdopterHellNotify():void {
+	////////////////////////////////////////////////////
+	////    BRO BREW AND BIMBO LIQUOR PROCESSORS    ////
+	////////////////////////////////////////////////////
 	if (pc.hasPerk("Futa Form")) { //Futa checks
 		if (!pc.hasCock()) { //(Dick regrowth)
 			pc.createCock(10);
@@ -13,7 +16,7 @@ public function EventsAdopterHellNotify():void {
 			if (pc.balls == 0) {
 				eventBuffer += "  A pair of heavy balls drop into place below it, churning to produce cum.";
 				pc.balls = 2;
-				pc.ballSizeRaw = 3 * Math.PI;
+				pc.ballSizeRaw = int(3 * Math.PI);
 			}
 			pc.slowStatGain("i", -1);
 			pc.lust(15);
@@ -102,10 +105,13 @@ public function EventsAdopterHellNotify():void {
 		if (pc.balls == 0) { //(Balls regrowth)
 			eventBuffer += "\n\n<b>As time passes, a pressure in your loins intensifies to near painful levels.  The skin beneath [pc.eachCock] grows loose and floppy, and then two testicles roll down to fill your scrotum.</b>";
 			pc.balls = 2;
-			pc.ballSizeRaw = 3 * Math.PI;
+			pc.ballSizeRaw = int(3 * Math.PI);
 		}
 	}
 	
+	//////////////////////////////////////////
+	////    OVIPOSITION PERK PROCESSOR    ////
+	//////////////////////////////////////////
 	if (pc.hasPerk("Oviposition") && pc.hasVagina() && (days % 30 == 0 || pc.fertility() >= 2 && days % (30 / int(pc.fertility())) == 0) && !pc.isPregnant(0)) {
 		if (PregnancyManager.findHandler("CoCOviElixEggs").tryKnockUp(pc, pc, 0)) {
 			eventBuffer += "\n\n<b>Somehow you know that eggs have begun to form inside you.  You wonder how long it will be before they start to show?</b>";
@@ -113,6 +119,24 @@ public function EventsAdopterHellNotify():void {
 			if (pc.hasPerk("Harpy Womb") && pc.legType == GLOBAL.TYPE_AVIAN && pc.hasTail(GLOBAL.TYPE_AVIAN)) pc.setStatusValue("MagicColorfulEggs", 2, 1);
 			pc.addPerkValue("Oviposition", 1, 1); //Count times eggpregged this way in perk.
 		}
+	}
+	
+	///////////////////////////////////////
+	////    HEAT AND RUT PROCESSORS    ////
+	///////////////////////////////////////
+	if (pc.hasStatusEffect("Heat") && pc.statusEffectv3("Heat") == 0) {
+		if (pc.isPregnant()) {
+			eventBuffer += "\n\n<b>Your heat is suddenly gone.</b>";
+			pc.removeStatusEffect("Heat");
+		}
+		if (!pc.hasVagina() && pc.statusEffectv4("Heat") == 0) {
+			eventBuffer += "\n\n<b>Your heat is gone with your vagina.</b>";
+			pc.removeStatusEffect("Heat");
+		}
+	}
+	if (pc.hasStatusEffect("Rut") && !pc.hasCock()) {
+		eventBuffer += "\n\n<b>Your rut is gone with your cock.</b>";
+		pc.removeStatusEffect("Rut");
 	}
 }
 private var EventsAdopterHellNotifyHook: * = EventsAdopterHellNotifyGrapple();

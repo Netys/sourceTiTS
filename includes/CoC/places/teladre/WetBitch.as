@@ -3,8 +3,9 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "Niamh.as";
 include "AuntNancy.as";
+include "Edryn.as";
+include "Niamh.as";
 
 private function enterBarTelAdre():void {
 	//if(isThanksgiving() && flags[kFLAGS.PIG_SLUT_DISABLED] == 0) kGAMECLASS.pigSlutRoastingGreet();
@@ -41,39 +42,39 @@ public function barTelAdre():void {
 		//button = anotherButton(button, "Dominika", dominika.fellatrixBarApproach);
 	//}
 	//EDRYN!
-	//if (edryn.pregnancy.type != PregnancyStore.PREGNANCY_TAOTH) { //Edryn is unavailable while pregnant with Taoth
-		//if (edryn.edrynBar()) {
-			//if (edryn.pregnancy.isPregnant) {
-				//if (flags[kFLAGS.EDRYN_PREGNANT_AND_NOT_TOLD_PC_YET] == 0) {
-					//flags[kFLAGS.EDRYN_PREGNANT_AND_NOT_TOLD_PC_YET] = 1;
-					//if (flags[kFLAGS.EDRYN_NUMBER_OF_KIDS] == 0) { //Edryn panic appearance! (First time mom)
-						//output("\n\nEdryn smiles when she sees you and beckons you towards her.  Fear and some kind of frantic need are painted across her face, imploring you to come immediately.  Whatever the problem is, it doesn't look like it can wait.", false);
-						//doNext(edryn.findOutEdrynIsPregnant);
-						//return;
-					//}
-					//else { //Edryn re-preggers appearance!
-						//output("\n\nEdryn smiles at you and yells, \"<i>Guess what " + pc.short + "?  I'm pregnant again!</i>\"  There are some hoots and catcalls but things quickly die down.  You wonder if her scent will be as potent as before?", false);				
-					//}
+	
+	if (edrynBar()) {// && edryn.pregnancy.type != PregnancyStore.PREGNANCY_TAOTH) { //Edryn is unavailable while pregnant with Taoth
+		//if (edryn.pregnancy.isPregnant) {
+			//if (flags[kFLAGS.EDRYN_PREGNANT_AND_NOT_TOLD_PC_YET] == 0) {
+				//flags[kFLAGS.EDRYN_PREGNANT_AND_NOT_TOLD_PC_YET] = 1;
+				//if (flags[kFLAGS.EDRYN_NUMBER_OF_KIDS] == 0) { //Edryn panic appearance! (First time mom)
+					//output("\n\nEdryn smiles when she sees you and beckons you towards her.  Fear and some kind of frantic need are painted across her face, imploring you to come immediately.  Whatever the problem is, it doesn't look like it can wait.", false);
+					//doNext(edryn.findOutEdrynIsPregnant);
+					//return;
 				//}
-				//else { //Mid-pregnancy appearance
-					//output("\n\nEdryn is seated at her usual table, and chowing down with wild abandon.  A stack of plates is piled up next to her.  Clearly she has been doing her best to feed her unborn child.  She notices you and waves, blushing heavily.", false);
+				//else { //Edryn re-preggers appearance!
+					//output("\n\nEdryn smiles at you and yells, \"<i>Guess what " + pc.short + "?  I'm pregnant again!</i>\"  There are some hoots and catcalls but things quickly die down.  You wonder if her scent will be as potent as before?", false);				
 				//}
 			//}
-			////Edryn just had a kid and hasn't talked about it!
-			//else if (flags[kFLAGS.EDRYN_NEEDS_TO_TALK_ABOUT_KID] == 1) {
-				//output("\n\nEdryn the centaur isn't pregnant anymore!  She waves excitedly at you, beckoning you over to see her.  It looks like she's already given birth to your child!", false);
+			//else { //Mid-pregnancy appearance
+				//output("\n\nEdryn is seated at her usual table, and chowing down with wild abandon.  A stack of plates is piled up next to her.  Clearly she has been doing her best to feed her unborn child.  She notices you and waves, blushing heavily.", false);
 			//}
-			////Appearance changes if has had kids
-			//else if(flags[kFLAGS.EDRYN_NUMBER_OF_KIDS] > 0) {
-				//output("\n\nEdryn is seated at her usual place, picking at a plate of greens and sipping a mug of the local mead.  She looks bored until she sees you.  Her expression brightens immediately, and Edryn fiddles with her hair and changes her posture slightly.  You aren't sure if she means to, but her cleavage is prominently displayed in an enticing manner.", false);
-			//}
-			//else if(pc.statusAffectv1(StatusAffects.Edryn) < 3) {
-				//output("\n\nEdryn, the centauress you met at the gate, is here, sitting down at her table alone and sipping on a glass of wine.  You suppose you could go talk to her a bit.", false);
-			//}
-			//else output("\n\nEdryn the centauress is here, sipping wine at a table by herself.  She looks up and spots you, her eyes lighting up with happiness.  She gives you a wink and asks if you'll join her.", false);
-			//button = anotherButton(button,"Edryn",edryn.edrynBarTalk);
 		//}
-	//}
+		//Edryn just had a kid and hasn't talked about it!
+		//else 
+		if (flags["COC.EDRYN_NEEDS_TO_TALK_ABOUT_KID"] == 1) {
+			output("\n\nEdryn the centaur isn't pregnant anymore!  She waves excitedly at you, beckoning you over to see her.  It looks like she's already given birth to your child!");
+		}
+		//Appearance changes if has had kids
+		else if(flags["COC.EDRYN_NUMBER_OF_KIDS"] > 0) {
+			output("\n\nEdryn is seated at her usual place, picking at a plate of greens and sipping a mug of the local mead.  She looks bored until she sees you.  Her expression brightens immediately, and Edryn fiddles with her hair and changes her posture slightly.  You aren't sure if she means to, but her cleavage is prominently displayed in an enticing manner.");
+		}
+		else if(Flag("COC.EDRYN_AFFECTION") < 3) {
+			output("\n\nEdryn, the centauress you met at the gate, is here, sitting down at her table alone and sipping on a glass of wine.  You suppose you could go talk to her a bit.");
+		}
+		else output("\n\nEdryn the centauress is here, sipping wine at a table by herself.  She looks up and spots you, her eyes lighting up with happiness.  She gives you a wink and asks if you'll join her.");
+		addButton(counter++, "Edryn", edrynBarTalk);
+	}
 	//if (flags[kFLAGS.KATHERINE_LOCATION] == Katherine.KLOC_BAR) {
 		//if (flags[kFLAGS.KATHERINE_UNLOCKED] == 4) { 
 			//katherine.barFirstEncounter();

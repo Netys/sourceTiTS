@@ -382,8 +382,8 @@ private function cottonChat():void {
 	if(flags["COC.TIMES_FUCKED_URTA"] > 0)
 		chats[chats.length] = 1;
 	//Edryn chance
-	//if(pc.findStatusAffect(StatusAffects.Edryn) >= 0)
-		//chats[chats.length] = 2;
+	if(flags["COC.EDRYN_BAR_TALK"] != undefined)
+		chats[chats.length] = 2;
 	//(Scylla chat)
 	if(flags["COC.NUMBER_OF_TIMES_MET_SCYLLA"] > 0)
 		chats[chats.length] = 2;
