@@ -119,7 +119,7 @@ package classes.Items.Transformatives
 			clearOutput();
 			
 			kGAMECLASS.output("You smear the foul-smelling paste onto your [pc.sack].  It feels cool at first but rapidly warms to an uncomfortable level of heat.\n\n");
-			kGAMECLASS.pc.ballSizeRaw -= rand(4) + 2;
+			kGAMECLASS.pc.ballSizeRaw = formatFloat(kGAMECLASS.pc.ballSizeRaw * 2 / 3, 1);
 			if (kGAMECLASS.pc.ballSizeRaw < 0.75) kGAMECLASS.pc.ballSizeRaw = 0.75;
 			kGAMECLASS.output("You feel your scrotum shift, shrinking down along with your [pc.balls].  Within a few seconds the paste has been totally absorbed and the shrinking stops.");
 			
@@ -132,13 +132,17 @@ package classes.Items.Transformatives
 		
 		private function reductoBreasts():void {
 			clearOutput();
-			kGAMECLASS.output("You smear the foul-smelling ointment all over your [pc.chest], covering them entirely as the paste begins to get absorbed into your [pc.ckin].\n");
-			Mutator.shrinkTits(kGAMECLASS.pc);
-			if (rand(2) == 0 && biggestTitSizeRaw() >= 1) {
-				output("\nThe effects of the paste continue to manifest themselves, and your body begins to change again...");
-				Mutator.shrinkTits(kGAMECLASS.pc);
+			kGAMECLASS.output("You smear the foul-smelling ointment all over your [pc.chest], covering them entirely as the paste begins to get absorbed into your [pc.skin].\n");
+			if (biggestTitSizeRaw() >= 1) {
+				output("\nThe effects of the paste continue to manifest themselves, and your body begins to change...");
+				var power:int = Math.ceil(biggestTitSizeRaw() / Math.max(3, kGAMECLASS.pc.breastRows.length + 1));
+				trace("Largest size:  " + biggestTitSizeRaw())
+				trace("Reducto power: " + power)
+				power = Math.max(power, 1);
+				while (power-- > 0 && Mutator.shrinkTits(kGAMECLASS.pc, false)) {}
+				output(Mutator.buffer);
 			}
-			kGAMECLASS.output("\nThe last of it wicks away into your skin, completing the changes.");
+			kGAMECLASS.output("\n\nThe last of it wicks away into your skin, completing the changes.");
 			
 			kGAMECLASS.pc.lust( -5);
 			consume();

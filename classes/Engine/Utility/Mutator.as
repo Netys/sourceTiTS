@@ -1677,6 +1677,7 @@ package classes.Engine.Utility
 		 */
 		public static function shrinkTits(pc:Creature, display:Boolean = true):Boolean
 		{
+			buffer = "";
 			var changed:Boolean = false;
 			if(pc.breastRows.length == 1) {
 				if(pc.breastRows[0].breastRatingRaw > 0) {
@@ -1685,22 +1686,20 @@ package classes.Engine.Utility
 					temp = 1;
 					pc.breastRows[0].breastRatingRaw--;
 					//Shrink again 50% chance
-					if(pc.breastRows[0].breastRatingRaw >= 1) {
-						temp++;
-						pc.breastRows[0].breastRatingRaw--;
-					}
+					//if(pc.breastRows[0].breastRatingRaw >= 1) {
+						//temp++;
+						//pc.breastRows[0].breastRatingRaw--;
+					//}
 					if(pc.breastRows[0].breastRatingRaw < 0) pc.breastRows[0].breastRatingRaw = 0;
 					//Talk about shrinkage
-					if(display) {
-						if (temp == 1) output("\n\nYou feel a weight lifted from you, and realize your breasts have shrunk!  With a quick measure, you determine they're now " + pc.breastCup(0) + "s.");
-						if (temp == 2) output("\n\nYou feel significantly lighter.  Looking down, you realize your breasts are much smaller!  With a quick measure, you determine they're now " + pc.breastCup(0) + "s.");
-					}
+					if (temp == 1) buffer += "\n\nYou feel a weight lifted from you, and realize your breasts have shrunk!  With a quick measure, you determine they're now " + pc.breastCup(0) + "s.";
+					if (temp == 2) buffer += "\n\nYou feel significantly lighter.  Looking down, you realize your breasts are much smaller!  With a quick measure, you determine they're now " + pc.breastCup(0) + "s.";
 					changed = true;
 				}
 			}
 			else if(pc.breastRows.length > 1) {
 				//multiple
-				output("\n", false);
+				 buffer += "\n";
 				//temp2 = amount changed
 				//temp3 = counter
 				var temp2:Number = 0;
@@ -1711,20 +1710,19 @@ package classes.Engine.Utility
 						pc.breastRows[temp3].breastRatingRaw--;
 						if(pc.breastRows[temp3].breastRatingRaw < 0) pc.breastRows[temp3].breastRatingRaw = 0;
 						temp2++;
-						output("\n", false);
-						if(temp3 < pc.breastRows.length - 1) output("...and y", false);
-						else output("Y", false);
-						output("our " + pc.breastDescript(temp3) + " shrink, dropping to " + pc.breastCup(temp3) + "s.", false);
+						buffer += "\n";
+						if(temp3 < pc.breastRows.length - 1) buffer += "...and y";
+						else buffer += "Y";
+						buffer += "our " + pc.breastDescript(temp3) + " shrink, dropping to " + pc.breastCup(temp3) + "s.";
 					}
 					if(pc.breastRows[temp3].breastRatingRaw < 0) pc.breastRows[temp3].breastRatingRaw = 0;
 				}
-				if(display) {
-					if (temp2 == 2) output("\nYou feel so much lighter after the change.");
-					if (temp2 == 3) output("\nWithout the extra weight you feel particularly limber.");
-					if (temp2 >= 4) output("\nIt feels as if the weight of the world has been lifted from your shoulders, or in this case, your chest.");
-				}
+				if (temp2 == 2) buffer += "\nYou feel so much lighter after the change.";
+				if (temp2 == 3) buffer += "\nWithout the extra weight you feel particularly limber.";
+				if (temp2 >= 4) buffer += "\nIt feels as if the weight of the world has been lifted from your shoulders, or in this case, your chest.";
 				changed = true;
 			}
+			if (display) output(buffer);
 			return changed;
 		}
 
