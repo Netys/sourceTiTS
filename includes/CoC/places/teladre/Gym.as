@@ -4,6 +4,7 @@ import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
 include "Brooke.as";
+include "Cotton.as";
 include "Heckel.as";
 include "Ifris.as";
 include "Jasun.as";
@@ -22,8 +23,8 @@ public function TelAdreGymDesc():void {
 	clearOutput();
 	clearMenu();
 	output("Even though Ingnam, your hometown, was a large, prosperous village, you never saw a gym before coming to Tel'Adre.  The structure itself has numerous architectural differences from the surrounding buildings: short, waist-high walls, an arched ceiling supported by simple columns, and a sand-covered floor.  Perhaps the only 'normal' rooms inside are the changing stands and bathrooms, which ");
-	if(pc.exhibitionism() > 66 || pc.cor() > 80) output("unfortunately ");
-	else if(pc.exhibitionism() < 33 && pc.cor() < 35) output("thankfully ");
+	if(pc.exhibitionism() > 66 || pc.slut() > 80) output("unfortunately ");
+	else if(pc.exhibitionism() < 33 && pc.slut() < 35) output("thankfully ");
 	output("have full sized walls to protect their users' privacy.  A breeze blows by, revealing that the open-air design provides great ventilation.  You note a wall of weights of different sizes and shapes, perfect for building muscle and bulking up.  There are also jogging tracks and even a full-sized, grass-covered track out back for centaurs to run on.  Though some of the equipment seems a bit esoteric in nature, you're sure you can make use of most of this stuff.\n\n");
 
 	output("Though the gym sees heavy use by the city guard and various citizens, it's not too busy at present.");
@@ -52,36 +53,40 @@ public function TelAdreGymDesc():void {
 private function TelAdreGymMenu():void {
 	var but:int = 0;
 	
+	// physique training
 	if (pc.energy() >= 50 && !pc.hasStatusEffect("Sore")) addButton(but++, "LiftWeights", TelAdreGymLift, undefined, "Lift Weights", "A hard workout that'll help you build muscle <b>and</b> strength.");
 	else addDisabledButton(but++, "LiftWeights", "Lift Weights", "You're too tired for that workout.");
 	
+	// reflexes training
 	if (pc.energy() >= 50 && !pc.hasStatusEffect("Sore")) addButton(but++, "Run", TelAdreGymJog, undefined, "Run", "Run around the track to burn some fat.");
 	else addDisabledButton(but++, "Run", "Run", "You're too tired for that workout.");
-
+	
+	// Jasun
+	// actually would be nice to have pool implemented for aim training...
+	addButton(but++, "ChangeRoom", changingRoom);
+	
+	// Permanent membership
 	if (flags["COC.LIFETIME_GYM_MEMBER"] != 1 && pc.credits >= 5000)
 		addButton(but++, "Life Member", buyGymLifeTimeMembership);
 	else
 		addDisabledButton(but++, "Life Member", "Life Member", "You can't afford it!")
 	
+	// Loppe
 	if (flags["COC.LOPPE_MET"] == 1 && flags["COC.LOPPE_DISABLED"] != 1)
 		addButton(but++, "Loppe", loppeGenericMeetings);
 	
+	// Ifris
 	if(ifrisIntro()) addButton(but++, flags["COC.MET_IFRIS"] == undefined ? "Girl" : "Ifris", approachIfris);
 	
+	// Lottie
 	if (lottieAppearance(false) != null) addButton(but++, flags["COC.LOTTIE_MET"] == undefined ? "Pig-Lady" : "Lottie", lottieAppearance(false));
 	
+	// Heckel
 	if (hours > 9 && hours <= 15) addButton(but++, flags["COC.MET_HECKEL"] == 1 ? "Heckel" : "Hyena", greetHeckel);
 	
-	addButton(but++, "ChangeRoom", changingRoom);
-	
-	//var cotton2:Function =null;
-	//var cottonB:String = "Horsegirl";
-	//if(flags[kFLAGS.PC_IS_A_DEADBEAT_COTTON_DAD] == 0) {
-		//if(cotton.cottonsIntro())
-			//cotton2 = cotton.cottonGreeting;
-	//}
-	//if(flags[kFLAGS.COTTON_MET_FUCKED] > 0)
-		//cottonB = "Cotton";
+	// Cotton
+	if (flags["COC.PC_IS_A_DEADBEAT_COTTON_DAD"] == undefined && cottonsIntro())
+		addButton(but++, flags["COC.COTTON_MET_FUCKED"] > 0 ? "Cotton" : "Horsegirl", cottonGreeting);
 	
 	addButton(14, "Leave", telAdreMenu);
 }

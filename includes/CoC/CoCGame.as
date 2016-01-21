@@ -172,7 +172,7 @@ public function WeightedRandom(options:Array, weights:Array, inverted:Boolean = 
 
 // done something awful
 public function isBeyondMoralHorizon():Boolean {
-	return pc.cor() >= 100; //kGAMECLASS.monk >= 5 || pc.findStatusAffect(StatusAffects.Exgartuan) >= 0 || kGAMECLASS.amilyScene.amilyCorrupt() || flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00283] > 0 || flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00282] > 0 || flags[kFLAGS.NIAMH_STATUS] > 0
+	return flags["COC.NIAMH_STATUS"] > 0; //kGAMECLASS.monk >= 5 || pc.findStatusAffect(StatusAffects.Exgartuan) >= 0 || kGAMECLASS.amilyScene.amilyCorrupt() || flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00283] > 0 || flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00282] > 0 || 
 }
 
 public function get timeAsStamp():uint {
