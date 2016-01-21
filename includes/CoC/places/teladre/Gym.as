@@ -5,6 +5,7 @@ import classes.Engine.Utility.*;
 
 include "Brooke.as";
 include "Ifris.as";
+include "Jasun.as";
 include "Loppe.as";
 include "Lottie.as";
 include "SexMachine.as";
@@ -68,6 +69,8 @@ private function TelAdreGymMenu():void {
 	
 	if (lottieAppearance(false) != null) addButton(but++, flags["COC.LOTTIE_MET"] == undefined ? "Pig-Lady" : "Lottie", lottieAppearance(false));
 	
+	addButton(but++, "ChangeRoom", changingRoom);
+	
 	//var cotton2:Function =null;
 	//var cottonB:String = "Horsegirl";
 	//var hyena:Function =null;
@@ -82,11 +85,6 @@ private function TelAdreGymMenu():void {
 	//}
 	//if(flags[kFLAGS.COTTON_MET_FUCKED] > 0)
 		//cottonB = "Cotton";
-
-	//choices("ChangeRoom",jasun.changingRoom,
-			//cottonB,cotton2,
-			//hyenaB,hyena,
-			//"Leave",telAdreMenu);
 	
 	addButton(14, "Leave", telAdreMenu);
 }
