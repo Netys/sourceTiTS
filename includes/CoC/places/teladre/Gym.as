@@ -5,6 +5,7 @@ import classes.Engine.Utility.*;
 
 include "Brooke.as";
 include "Loppe.as";
+include "Lottie.as";
 include "SexMachine.as";
 
 public function TelAdreGymDesc():void {
@@ -37,7 +38,7 @@ public function TelAdreGymDesc():void {
 		addButton(0, "Next", telAdreMenu);
 		return;
 	}
-	//lottie.lottieAppearance();
+	lottieAppearance();
 	if(flags["COC.LOPPE_MET"] == 1 && flags["COC.LOPPE_DISABLED"] != 1) {
 		output("\n\nYou spot Loppe the laquine wandering around, towel slung over her shoulder.  When she sees you, she smiles and waves to you and you wave back.");
 	}
@@ -62,16 +63,14 @@ private function TelAdreGymMenu():void {
 	if (flags["COC.LOPPE_MET"] == 1 && flags["COC.LOPPE_DISABLED"] != 1)
 		addButton(but++, "Loppe", loppeGenericMeetings);
 	
+	if (lottieAppearance(false) != null) addButton(but++, flags["COC.LOTTIE_MET"] == undefined ? "Pig-Lady" : "Lottie", lottieAppearance(false));
+	
 	//var cotton2:Function =null;
 	//var cottonB:String = "Horsegirl";
 	//var hyena:Function =null;
 	//var hyenaB:String = "Hyena";
 	//var ifris2:Function =null;
 	//var ifrisB:String = "Girl";
-	//var lottie2:Function = lottie.lottieAppearance(false);
-	//var lottieB:String = "Pig-Lady";
-	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00281] > 0)
-		//lottieB = "Lottie";
 	//if(ifris.ifrisIntro())
 		//ifris2 = ifris.approachIfris;
 	//if(flags[kFLAGS.MET_IFRIS] > 0)
@@ -92,7 +91,6 @@ private function TelAdreGymMenu():void {
 			//cottonB,cotton2,
 			//hyenaB,hyena,
 			//ifrisB,ifris2,
-			//lottieB,lottie2,
 			//"Leave",telAdreMenu);
 	
 	addButton(14, "Leave", telAdreMenu);
