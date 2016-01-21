@@ -343,23 +343,26 @@ package classes.Items.Transformatives
 				//flags[kFLAGS.TIMES_TRANSFORMED]++;
 			}
 			//foot changes - requires furless
-			if (player.skinType == GLOBAL.SKIN_TYPE_SKIN && rand(4) == 0 && player.legCount > 1) //{
-				if (player.legType != GLOBAL.TYPE_DEMONIC) {
+			if (player.skinType == GLOBAL.SKIN_TYPE_SKIN && rand(4) == 0 && player.legCount > 1) {
+				if (player.legType != GLOBAL.TYPE_DEMONIC && player.isMasculine()) {
 					kGAMECLASS.output("\n\n");
 					kGAMECLASS.output("Every muscle and sinew below your hip tingles and you begin to stagger. Seconds after you sit down, pain explodes in your [pc.feet]. Something hard breaks through your sole from the inside out as your toes splinter and curve cruelly. The pain slowly diminishes and your eyes look along a human leg that splinters at the foot into a claw with sharp black nails. When you relax, your feet grip the ground easily. <b>Your feet are now formed into demonic claws.</b>");
 					player.legType = GLOBAL.TYPE_DEMONIC;
+					player.legFlags = [GLOBAL.FLAG_PLANTIGRADE];
 					player.legCount = 2;
 					player.genitalSpot = 0;
 				}
 				//Females/futa get high heels
-				//else if (player.lowerBody != LOWER_BODY_TYPE_DEMONIC_HIGH_HEELS) {
-					//outputText("\n\n", false);
-					//outputText("Every muscle and sinew below your hip tingles and you begin to stagger. Seconds after you sit down, pain explodes in your " + player.feet() + ". Something hard breaks through your sole from the inside out. The pain slowly diminishes and your eyes look along a human leg to a thin and sharp horn protruding from the heel. When you relax, your feet are pointing down and their old posture is only possible with an enormous effort. <b>Your feet are now formed into demonic high-heels.</b> Tentatively you stand up and try to take a few steps. To your surprise you feel as if you were born with this and stride vigorously forward, hips swaying.", false);
-					//player.lowerBody = LOWER_BODY_TYPE_DEMONIC_HIGH_HEELS;
-					//player.legCount = 2;
-				//}
+				else if (player.legType != GLOBAL.TYPE_SUCCUBUS && player.isFeminine()) {
+					kGAMECLASS.output("\n\n");
+					kGAMECLASS.output("Every muscle and sinew below your hip tingles and you begin to stagger. Seconds after you sit down, pain explodes in your " + player.feet() + ". Something hard breaks through your sole from the inside out. The pain slowly diminishes and your eyes look along a human leg to a thin and sharp horn protruding from the heel. When you relax, your feet are pointing down and their old posture is only possible with an enormous effort. <b>Your feet are now formed into demonic high-heels.</b> Tentatively you stand up and try to take a few steps. To your surprise you feel as if you were born with this and stride vigorously forward, hips swaying.");
+					player.legType = GLOBAL.TYPE_SUCCUBUS;
+					player.legFlags = [GLOBAL.FLAG_PLANTIGRADE, GLOBAL.FLAG_HEELS];
+					player.legCount = 2;
+					player.genitalSpot = 0;
+				}
 				//flags[kFLAGS.TIMES_TRANSFORMED]++;
-			//}
+			}
 			//Grow demon wings
 			if (player.wingType != GLOBAL.TYPE_DEMONIC && rand(8) == 0 && player.cor() >= 50) {
 				//grow smalls to large

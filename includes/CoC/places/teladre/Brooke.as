@@ -372,7 +372,7 @@ public function talkToBrookeAboutGymFolks():void {
 	//[if {met Jasun}
 	if(Flag("COC.UNKNOWN_FLAG_NUMBER_00179") > 0) output("\n\nYou know Jasun, the shark guy?  Hard as a rock, in every place, if you know what I mean.  Huge narcissist, if you ask me, which puts me off.  Big difference between admiring yourself and others admiring you.  I'm not a big fan of zero-percent-body-fat types, either – being fit and healthy and solid is great and a big turn-on, but being all muscle and all business is no fun, you know?  Kind of tough cuddling with a rock.  Besides, not a big fan of the taste of fish anyway.");
 	//[if {met Loppe}]
-	if(Flag("COC.LOPPE_MET") > 0) {
+	if(flags["COC.LOPPE_MET"] == 1) {
 		output("\n\nI've seen that bunny-girl show up a whole lot lately.  She's a pretty nice gal, all in all – lives and looks after her mom and wants to take up the family business, or something.  Whatever; she's got a smoking hot body and a face cute enough to give me cavities.  She fucks like a truck and cums like a geyser, too, which is always fun.");
 	}
 	//[if {met Lottie}]

@@ -17,10 +17,10 @@ public function barTelAdre():void {
 	// I guess this is good a place as any to catch-all the sprite, because I don't think theres ever a case you get a sprite from just entering the bar?
 	var button:int = 0;
 	clearOutput();
-	//if(flags[kFLAGS.LOPPE_DISABLED] == 0 && flags[kFLAGS.LOPPE_MET] == 0 && rand(10) == 0) {
-		//loppeFirstMeeting();
-		//return;
-	//}
+	if(flags["COC.LOPPE_DISABLED"] != 1 && flags["COC.LOPPE_MET"] != 1 && rand(10) == 0) {
+		loppeFirstMeeting();
+		return;
+	}
 	//output(images.showImage("location-teladre-thewetbitch"));
 	output("The interior of The Wet Bitch is far different than the mental picture its name implied.  It looks like a normal tavern, complete with a large central hearth, numerous tables and chairs, and a polished dark wood bar.  The patrons all seem to be dressed and interacting like normal people, that is if normal people were mostly centaurs and dog-morphs of various sub-species.  The atmosphere is warm and friendly, and ");
 	if (pc.race() != "human") output("despite your altered appearance, ");

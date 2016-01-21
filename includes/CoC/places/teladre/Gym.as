@@ -3,8 +3,9 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "SexMachine.as";
 include "Brooke.as";
+include "Loppe.as";
+include "SexMachine.as";
 
 public function TelAdreGymDesc():void {
 	showName("\nGYM");
@@ -37,9 +38,9 @@ public function TelAdreGymDesc():void {
 		return;
 	}
 	//lottie.lottieAppearance();
-	//if(flags[kFLAGS.LOPPE_MET] > 0 && flags[kFLAGS.LOPPE_DISABLED] == 0) {
-		//output("\n\nYou spot Loppe the laquine wandering around, towel slung over her shoulder.  When she sees you, she smiles and waves to you and you wave back.");
-	//}
+	if(flags["COC.LOPPE_MET"] == 1 && flags["COC.LOPPE_DISABLED"] != 1) {
+		output("\n\nYou spot Loppe the laquine wandering around, towel slung over her shoulder.  When she sees you, she smiles and waves to you and you wave back.");
+	}
 	//if(hours > 9 && hours < 14) heckel.heckelAppearance();
 	TelAdreGymMenu();
 }
@@ -52,7 +53,15 @@ private function TelAdreGymMenu():void {
 	
 	if (pc.energy() >= 50 && !pc.hasStatusEffect("Sore")) addButton(but++, "Run", TelAdreGymJog, undefined, "Run", "Run around the track to burn some fat.");
 	else addDisabledButton(but++, "Run", "Run", "You're too tired for that workout.");
-		
+
+	if (flags["COC.LIFETIME_GYM_MEMBER"] != 1 && pc.credits >= 5000)
+		addButton(but++, "Life Member", buyGymLifeTimeMembership);
+	else
+		addDisabledButton(but++, "Life Member", "Life Member", "You can't afford it!")
+	
+	if (flags["COC.LOPPE_MET"] == 1 && flags["COC.LOPPE_DISABLED"] != 1)
+		addButton(but++, "Loppe", loppeGenericMeetings);
+	
 	//var cotton2:Function =null;
 	//var cottonB:String = "Horsegirl";
 	//var hyena:Function =null;
@@ -61,7 +70,6 @@ private function TelAdreGymMenu():void {
 	//var ifrisB:String = "Girl";
 	//var lottie2:Function = lottie.lottieAppearance(false);
 	//var lottieB:String = "Pig-Lady";
-	//var loppe2:Function =null;
 	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00281] > 0)
 		//lottieB = "Lottie";
 	//if(ifris.ifrisIntro())
@@ -79,21 +87,13 @@ private function TelAdreGymMenu():void {
 	//}
 	//if(flags[kFLAGS.COTTON_MET_FUCKED] > 0)
 		//cottonB = "Cotton";
-	//if(flags[kFLAGS.LOPPE_MET] > 0 && flags[kFLAGS.LOPPE_DISABLED] == 0)
-		//loppe2 = loppe.loppeGenericMeetings;
 
 	//choices("ChangeRoom",jasun.changingRoom,
 			//cottonB,cotton2,
 			//hyenaB,hyena,
 			//ifrisB,ifris2,
 			//lottieB,lottie2,
-			//"Loppe",loppe2,
 			//"Leave",telAdreMenu);
-
-	if (flags["COC.LIFETIME_GYM_MEMBER"] != 1 && pc.credits >= 5000)
-		addButton(but++, "Life Member", buyGymLifeTimeMembership);
-	else
-		addDisabledButton(but++, "Life Member", "Life Member", "You can't afford it!")
 	
 	addButton(14, "Leave", telAdreMenu);
 }

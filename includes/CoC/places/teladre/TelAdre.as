@@ -14,6 +14,7 @@ include "Jewels.as";
 include "Pawn.as";
 include "Piercing.as";
 include "Tailor.as";
+include "UmasShop.as";
 include "Weapon.as";
 
 public function discoverTelAdre():void {
@@ -207,10 +208,9 @@ private function armorShops():void {
 	addButton(2, "Tailor", tailorShoppe);
 	addButton(3, "Weapons", TelAdreWeaponShop);
 	addButton(4, "Jewelry", jewelShopEntry);
-	addDisabledButton(5, "Clinic", "Clinic", "Not implemented");
-	//addButton(5, "Clinic", "Clinic", "Location is not known.");
-	//if (flags["COC.LOPPE_PC_MET_UMA"] == 1)
-		//addButton(5, "Clinic", umasShopEnterClinic);
+	//addDisabledButton(5, "Clinic");
+	if (flags["COC.LOPPE_PC_MET_UMA"] == 1)
+		addButton(5, "Clinic", umasShopEnterClinic);
 	//if (flags[kFLAGS.CAMP_CABIN_PROGRESS] >= 4)
 	//{
 		//addButton(6, "Carpenter", carpentryShopEntry);

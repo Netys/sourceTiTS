@@ -3117,6 +3117,8 @@ package classes {
 			if (hasStatusEffect("Myr Venom Withdrawal")) currLib /= 2;
 			if (hasStatusEffect("Heat")) currLib += statusEffectv2("Heat");
 			if (hasStatusEffect("Rut")) currLib += statusEffectv2("Rut");
+			if (hasStatusEffect("Uma's Massage") && statusEffectv1("Uma's Massage") == 0) currLib *= statusEffectv2("Uma's Massage");
+			if (hasStatusEffect("Uma's Massage") && statusEffectv1("Uma's Massage") == 1) currLib *= statusEffectv2("Uma's Massage");
 			
 			if (currLib > libidoMax())
 			{
@@ -7764,6 +7766,8 @@ package classes {
 			
 			//1/2 facial
 			var weighting: Number = femininity;
+			if (hasStatusEffect("Uma's Massage") && statusEffectv1("Uma's Massage") == 3) femininity += statusEffectv2("Uma's Massage");
+			
 			//Tits count up to their rating for femininity
 			if (biggestTitSize() >= 1) {
 				//trace("boobs confirmed");
