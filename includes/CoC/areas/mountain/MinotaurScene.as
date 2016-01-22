@@ -330,7 +330,7 @@ public function minoVictoryRapeChoices():void {
 	clearOutput();
 	clearMenu();
 	
-	if (enemy.LQ() > 99) 
+	if (enemy.lustQ() > 99) 
 		output("You smile in satisfaction as the [enemy.name] drops down on all fours and begins masturbating feverishly.\n\n");
 	else
 		output("You smile in satisfaction as the [enemy.name] collapses, unable to continue fighting.\n\n");
@@ -1272,7 +1272,7 @@ private function minotaurBlowjob():void {
 	output(", you guide its mouth closer to your member as if on autopilot.  \"<i>Let's see just how good you are at milking,</i>\" you blurt; the minotaur moos in defiance but is soon silenced when the head of your [pc.cockNoun " + x + "] presses into its bovine mouth.\n\n");
 
 	output("You grimace at the awkward feeling of the beast's snout against you, but soon regain confidence in your choice as the monster begins to take your prick into his mouth.  His eyes grow wide as his lips wrap around you, with ");
-	if(enemy.LQ() > 99) output("his own burning lusts");
+	if(enemy.lustQ() > 99) output("his own burning lusts");
 	//else if(pc.findPerk(PerkLib.ArousingAura) >= 0) output("the power of your corruption");
 	else output("the [pc.cumFlavor] taste of your pre-cum");
 	output(" leaving him hungry for more.\n\n");
@@ -1397,7 +1397,7 @@ private function getMinoHawtDawged():void {
 	
 	minotaurSprite();
 		
-	if (pc.LQ() >= 99) {
+	if (pc.lustQ() >= 99) {
 		output("You collapse to your knees, hands racing to your crotch and your ");
 		//(If Male or Herm: 
 		if(pc.hasCock()) output("[cock biggest], which you frantically try to stroke and rub through your [pc.armor], its throbbing arousal clearly evident.");

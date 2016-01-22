@@ -33,6 +33,8 @@ package classes {
 	import classes.Util.InCollection;
 	import classes.Engine.Combat.DamageTypes.DamageFlag;
 	import classes.Engine.Utility.plural;
+	import classes.Engine.Combat.DamageTypes.DamageType;
+	import classes.Engine.Utility.weightedRand;
 
 
 	/**
@@ -276,6 +278,14 @@ package classes {
 		{
 			var r:TypeCollection = baseShieldResistances.makeCopy();			
 			if (!(shield is EmptySlot)) r.combineResistances(shield.resistances);
+			if (hasPerk("Enhanced Dampeners"))
+			{
+				for (var i:uint = 0; i < DamageType.NUMTYPES; i++)
+				{
+					var type:DamageType = r.getType(i);
+					if (type.resistanceValue < 0) type.resistanceValue /= 2;
+				}
+			}
 			return r;
 		}
 		
@@ -1641,6 +1651,10 @@ package classes {
 				case "cockTail":
 					buffer = tailCockDescript();
 					break;
+				case "tailCocks":
+				case "cockTails":
+					buffer = tailCocksDescript();
+					break;
 				case "tailCockHead":
 				case "cockTailHead":
 					buffer = tailCockHead();
@@ -1989,6 +2003,7 @@ package classes {
 					buffer = toes();
 					break;
 				case "belly":
+				case "stomach":
 					buffer = bellyDescript();
 					break;
 				case "bellySize":
@@ -2213,6 +2228,27 @@ package classes {
 			}
 			return foundAmount;
 		}
+		public function destroyItemByType(type:Class, amount:int = 1):void
+		{
+			if (inventory.length == 0) return;
+			
+			for (var i:int = 0; i < inventory.length; i++)
+			{
+				if (amount == 0) break;
+				
+				if (inventory[i] is type)
+				{
+					inventory[i].quantity -= amount;
+					if (inventory[i].quantity <= 0)
+					{
+						if (inventory[i].quantity < 0) amount = Math.abs(inventory[i].quantity);
+						inventory.splice(i, 1);
+						i--;
+					}
+				}
+			}
+		}
+		
 		public function getWeaponName(fromStat:Boolean = false):String
 		{
 			if(!fromStat)
@@ -2228,6 +2264,7 @@ package classes {
 			if((meleeWeapon is Rock) || (rangedWeapon is Rock)) return "rock";
 			return "fist";
 		}
+		
 		public function weaponActionReady(present:Boolean = false, weapon:String = "", full:Boolean = true):String
 		{
 			var desc:String = "";
@@ -2556,11 +2593,13 @@ package classes {
 		}
 		//Used to see if wing-wang-doodles and hatchet-wounds are accessible. Should probably replace most isCrotchGarbed() calls.
 		public function isCrotchExposed(): Boolean {
+			if(!isCrotchGarbed()) return true;
 			return ((armor is EmptySlot || armor.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL)) && (lowerUndergarment is EmptySlot || lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL)));
 		}
 		//Badonkadonk check
 		public function isAssExposed():Boolean
 		{
+			if(!isCrotchGarbed()) return true;
 			return ((armor is EmptySlot || armor.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL)) && (lowerUndergarment is EmptySlot || lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL)));
 		}
 		public function isGroinCovered(): Boolean {
@@ -2574,6 +2613,7 @@ package classes {
 		//Used to see if boobs are hanging out instead of isChestGarbed/Covered.
 		public function isChestExposed(): Boolean
 		{
+			if(!isChestCovered()) return true;
 			return ((armor is EmptySlot || armor.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL)) && (upperUndergarment is EmptySlot || upperUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL)));
 		}
 		public function isChestGarbed(): Boolean {
@@ -2853,7 +2893,7 @@ package classes {
 			energyRaw = energyMax();
 		}
 		/** % of max lust. Can be useful for determining self-control level. */
-		public function LQ():Number
+		public function lustQ():Number
 		{
 			return Math.round(lust()/lustMax()*100);
 		}
@@ -3013,6 +3053,11 @@ package classes {
 		public function AQ():Number
 		{
 			return Math.round(aim() / aimMax() * 100);
+		}
+		
+		public function LQ():Number
+		{
+			return Math.round(libido() / libidoMax() * 100);
 		}
 		
 		public function intelligence(arg:Number = 0, apply:Boolean = false):Number 
@@ -3892,11 +3937,14 @@ package classes {
 			switch (tongueType)
 			{
 				case GLOBAL.TYPE_HUMAN:
-					if(isHuman() || isHalfHuman())
+					if(faceType != GLOBAL.TYPE_HUMAN)
 					{
-						if(rand(5) == 0) types.push("human", "terran");
+						if(isHuman() || isHalfHuman())
+						{
+							if(rand(5) == 0) types.push("human", "terran");
+						}
+						else types.push("humanoid");
 					}
-					else types.push("humanoid");
 					break;
 				case GLOBAL.TYPE_NAGA:
 					types.push("forked", "reptilian", "flitting", "snake-like");
@@ -3921,11 +3969,11 @@ package classes {
 					break;
 				case GLOBAL.TYPE_CANINE:
 					types.push("dog-like", "canine", "large", "floppy");
-					if (race().indexOf("ausar") != -1) types.push("ausar");
+					if(race().indexOf("ausar") != -1) types.push("ausar");
 					break;
 				case GLOBAL.TYPE_FELINE:
 					types.push("cat-like", "feline", "cute");
-					if (race().indexOf("kaithrit") != -1) types.push("kaithrit");
+					if(race().indexOf("kaithrit") != -1) types.push("kaithrit");
 					break;
 				case GLOBAL.TYPE_BOVINE:
 					types.push("cow-like", "taurine", "wide-set", "broad", "bovine");
@@ -4787,6 +4835,7 @@ package classes {
 			if (hasArmFlag(GLOBAL.FLAG_CHITINOUS)) adjective.push("chitinous", "armored");
 			if (hasArmFlag(GLOBAL.FLAG_FEATHERED)) adjective.push("feathered", "feathery");
 			if (hasArmFlag(GLOBAL.FLAG_GOOEY)) adjective.push("slimy", "slick", "gooey");
+			if (hasArmFlag(GLOBAL.FLAG_SPIKED)) adjective.push("spiked", "spiky", "prickly");
 			
 			// Build
 			if ((forceAdjective || rand(2) == 0) && adjective.length > 0) output += RandomInCollection(adjective);
@@ -4811,9 +4860,9 @@ package classes {
 			// Adjectives: 50%
 			if(rand(2) == 0)
 			{
-				if (InCollection(armType, GLOBAL.TYPE_CANINE, GLOBAL.TYPE_FELINE, GLOBAL.TYPE_BADGER, GLOBAL.TYPE_PANDA, GLOBAL.TYPE_LEITHAN, GLOBAL.TYPE_DEMONIC)) adjective.push("clawed");
+				if (hasClawedHands()) adjective.push("clawed");
+				if (hasPaddedHands()) adjective.push("padded");
 				if (InCollection(armType, GLOBAL.TYPE_FELINE, GLOBAL.TYPE_BADGER, GLOBAL.TYPE_EQUINE, GLOBAL.TYPE_PANDA)) adjective.push("bestial");
-				if (InCollection(armType, GLOBAL.TYPE_KUITAN, GLOBAL.TYPE_PANDA)) adjective.push("padded");
 				if (hasArmFlag(GLOBAL.FLAG_GOOEY)) adjective.push("slimy", "slick", "gooey");
 				else if (InCollection(armType, GLOBAL.TYPE_ARACHNID, GLOBAL.TYPE_DRIDER, GLOBAL.TYPE_BEE, GLOBAL.TYPE_LEITHAN)) adjective.push("chitinous");
 			}
@@ -4833,8 +4882,8 @@ package classes {
 			// Adjectives: 50%
 			if(rand(2) == 0)
 			{
-				if (InCollection(armType, GLOBAL.TYPE_CANINE, GLOBAL.TYPE_FELINE, GLOBAL.TYPE_BADGER, GLOBAL.TYPE_PANDA, GLOBAL.TYPE_LEITHAN, GLOBAL.TYPE_DEMONIC)) adjective.push("clawed");
-				if (InCollection(armType, GLOBAL.TYPE_KUITAN, GLOBAL.TYPE_PANDA)) adjective.push("padded");
+				if (hasClawedHands()) adjective.push("clawed");
+				if (hasPaddedHands()) adjective.push("padded");
 				if (InCollection(armType, GLOBAL.TYPE_EQUINE)) adjective.push("hoof-tipped");
 				if (hasArmFlag(GLOBAL.FLAG_GOOEY)) adjective.push("slimy", "slick", "gooey");
 				else if (InCollection(armType, GLOBAL.TYPE_ARACHNID, GLOBAL.TYPE_DRIDER, GLOBAL.TYPE_BEE, GLOBAL.TYPE_LEITHAN)) adjective.push("chitinous");
@@ -4845,6 +4894,12 @@ package classes {
 			if (output != "") output += " ";
 			output += "finger";
 			return output;
+		}
+		public function hasClawedHands(): Boolean {
+			return InCollection(armType, GLOBAL.TYPE_CANINE, GLOBAL.TYPE_FELINE, GLOBAL.TYPE_BADGER, GLOBAL.TYPE_PANDA, GLOBAL.TYPE_LEITHAN, GLOBAL.TYPE_DEMONIC);
+		}
+		public function hasPaddedHands(): Boolean {
+			return InCollection(armType, GLOBAL.TYPE_KUITAN, GLOBAL.TYPE_PANDA);
 		}
 		public function lowerBody():String {
 			var output: String = "";
@@ -6076,6 +6131,16 @@ package classes {
 			}
 			return false;
 		}
+		public function totalKnots():Number
+		{
+			if (cocks.length <= 0) return 0;
+			var total:int = 0;
+			for(var x:int = 0; x < totalCocks(); x++)
+			{
+				if(hasKnot(x)) total++;
+			}
+			return total;
+		}
 		public function knotThickness(arg:int = 0):Number
 		{
 			if(arg < 0 || arg >= cockTotal()) return 0;
@@ -6610,6 +6675,23 @@ package classes {
 				if (vaginas[index].looseness() < vaginas[counter].looseness()) index = counter;
 			}
 			return vaginas[counter].looseness();
+		}
+		public function tightestVaginalLooseness():Number
+		{
+			if (vaginas.length == 0) return -1;
+			
+			var vIdx:int = -1;
+			
+			for (var i:int = 0; i < vaginas.length; i++)
+			{
+				if (vIdx == -1) vIdx = 0;
+				else
+				{
+					if (vaginas[i].looseness() < vaginas[vIdx].looseness()) vIdx = i;
+				}
+			}
+			
+			return vaginas[vIdx].looseness();
 		}
 		public function wettestVaginalWetness(): Number {
 			var counter: Number = vaginas.length;
@@ -7860,6 +7942,7 @@ package classes {
 		}
 		public function createVaginaUnlocked(numVag:int = 1):Boolean
 		{
+			if ((vaginas.length + numVag) > 3) return false;
 			return true;
 		}
 		public function createVaginaLockedMessage():String
@@ -8431,6 +8514,7 @@ package classes {
 			if (armType == GLOBAL.TYPE_KUITAN) counter++;
 			if (legType == GLOBAL.TYPE_KUITAN) counter++;
 			if (hasCock(GLOBAL.TYPE_KUITAN)) counter++;
+			if (counter > 1 && hasCock() && balls >= 2) counter++;
 			return counter;
 		}
 		public function gooScore():int
@@ -8485,6 +8569,16 @@ package classes {
 			if (counter > 0 && skinType == GLOBAL.SKIN_TYPE_FUR) counter++;
 			return counter;
 		}
+		public function canineScore(): int {
+			var counter: int = 0;
+			if (earType == GLOBAL.TYPE_CANINE) counter++;
+			if (hasTail(GLOBAL.TYPE_CANINE) && hasTailFlag(GLOBAL.FLAG_FURRED)) counter++;
+			if (armType == GLOBAL.TYPE_CANINE && hasArmFlag(GLOBAL.FLAG_FURRED)) counter++;
+			if (legType == GLOBAL.TYPE_CANINE && hasLegFlag(GLOBAL.FLAG_DIGITIGRADE)) counter++;
+			if (faceType == GLOBAL.TYPE_CANINE) counter++;
+			if (counter > 1 && cockTotal(GLOBAL.TYPE_CANINE) == cockTotal() && totalKnots() == cockTotal()) counter++;
+			return counter;
+		}
 		public function demonScore(): int
 		{
 			var counter: int = 0;
@@ -8496,6 +8590,17 @@ package classes {
 			if (counter > 1 && (legType == GLOBAL.TYPE_DEMONIC || legType == GLOBAL.TYPE_SUCCUBUS || legType == GLOBAL.TYPE_BOVINE)) counter++;
 			if (counter > 2 && eyeType == GLOBAL.TYPE_DEMONIC && faceType == GLOBAL.TYPE_HUMAN) counter++;
 			if (counter > 3 && hasCock(GLOBAL.TYPE_DEMONIC)) counter++;
+			return counter;
+		}
+		public function felineScore(): int {
+			var counter: int = 0;
+			if (earType == GLOBAL.TYPE_FELINE) counter++;
+			if (hasTail(GLOBAL.TYPE_FELINE)) counter++;
+			if (faceType == GLOBAL.TYPE_FELINE || faceType == GLOBAL.TYPE_NALEEN_FACE) counter++;
+			if (armType == GLOBAL.TYPE_FELINE && hasArmFlag(GLOBAL.FLAG_FURRED)) counter++;
+			if (legType == GLOBAL.TYPE_FELINE && hasLegFlag(GLOBAL.FLAG_DIGITIGRADE)) counter++;
+			if (eyeType == GLOBAL.TYPE_FELINE && faceType == GLOBAL.TYPE_FELINE) counter++;
+			if (counter > 1 && cockTotal(GLOBAL.TYPE_FELINE) == cockTotal()) counter++;
 			return counter;
 		}
 		public function frogScore(): int
@@ -8512,6 +8617,7 @@ package classes {
 				if (tongueType == GLOBAL.TYPE_FROG) counter++;
 			}
 			if (hasFur() || hasFeathers()) counter--;
+			if (!hasFlatNipples() && !hasInvertedNipples()) counter--;
 			return counter;
 		}
 		public function gabilaniScore():int
@@ -8589,13 +8695,20 @@ package classes {
 		{
 			var counter: int = 0;
 			if (isNaga()) counter += 2;
-			if (faceType == GLOBAL.TYPE_NALEEN_FACE) counter++;
-			if (eyeType == GLOBAL.TYPE_NAGA && faceType == GLOBAL.TYPE_NALEEN_FACE) counter++;
-			if (hasGenitals() && hasStatusEffect("Genital Slit")) counter++;
+			if (faceType == GLOBAL.TYPE_NALEEN_FACE)
+			{
+				counter++;
+				if (eyeType == GLOBAL.TYPE_NAGA) counter++;
+				if (earType == GLOBAL.TYPE_FELINE) counter++;
+			}
+			if (hasGenitals() && hasStatusEffect("Genital Slit"))
+			{
+				counter++;
+				if (hasCock(GLOBAL.TYPE_NAGA)) counter++;
+				if (hasVaginaType(GLOBAL.TYPE_NAGA)) counter++;
+			}
 			if (counter > 0 && skinType == GLOBAL.SKIN_TYPE_FUR) counter++;
 			if (counter > 0 && armType == GLOBAL.TYPE_FELINE && hasArmFlag(GLOBAL.FLAG_FURRED)) counter++;
-			if (counter > 0 && hasCock(GLOBAL.TYPE_NAGA)) counter++;
-			if (counter > 0 && hasVaginaType(GLOBAL.TYPE_NAGA)) counter++;
 			return counter;
 		}
 		public function ovirScore():int
@@ -10141,7 +10254,7 @@ package classes {
 		public function tailVaginasDescript(forceAdjectives: Boolean = false, adjectives: Boolean = true): String {
 			if(tailCount > 1) return plural(tailVaginaDescript(forceAdjectives,adjectives));
 			else if(tailCount == 1) return tailVaginaDescript(forceAdjectives,adjectives);
-			else return "ERROR: TAIL DESCRIPT CALLED WITH NO TAILS PRESENT.";
+			return "ERROR: TAIL DESCRIPT CALLED WITH NO TAILS PRESENT.";
 		}
 		public function tailVaginaDescript(forceAdjectives: Boolean = false, adjectives: Boolean = true): String {
 			//Vars
@@ -10538,6 +10651,15 @@ package classes {
 				{
 					//Don't match? NOT MATCHED. GTFO.
 					if(vaginas[x].type != vaginas[x-1].type) return false;
+					//Flag check
+					if(vaginas[x].vagooFlags.length == vaginas[x-1].vagooFlags.length)
+					{
+						for(var i:int = 0; i < vaginas[x].vagooFlags.length; i++)
+						{
+							if(!vaginas[x-1].hasFlag(vaginas[x].vagooFlags[i])) return false;
+						}
+					}
+					else return false;
 				}
 			}
 			return true;
@@ -11635,6 +11757,7 @@ package classes {
 				collection = ["creamy","creamy","creamy","creamy","creamy","delicious","delicious","delicious","sweet","creamy"];
 			} else if (arg == GLOBAL.FLUID_TYPE_CUM) {
 				collection = ["salty","salty","salty","salty","salty","salty","salty","potent","potent","potent"];
+				if(isBimbo()) collection.push("yummy","yummy","yummy","delicious","delicious","tasty");
 			} else if (InCollection(arg, GLOBAL.FLUID_TYPE_HONEY, GLOBAL.FLUID_TYPE_NECTAR)) {
 				collection = ["sweet","sweet","sweet","sweet","sweet","syrupy","syrupy","syrupy","sugary","sugary"];
 			} else if (arg == GLOBAL.FLUID_TYPE_OIL) {
@@ -11645,7 +11768,7 @@ package classes {
 				collection = ["tangy","tangy","tangy","tangy","tangy","tangy","tangy","flavorful","flavorful","flavorful"];
 			} else if (arg == GLOBAL.FLUID_TYPE_CUMSAP) {
 				collection = ["salty-sweet","salty-sweet","salty-sweet","salty-sweet","salty-sweet","syrupy","syrupy","syrupy","salty","salty"];
-			} else if (arg == GLOBAL.FLUID_TYPE_CHOCOLATE_MILK) {
+			} else if (InCollection(arg, GLOBAL.FLUID_TYPE_CHOCOLATE_MILK, GLOBAL.FLUID_TYPE_CHOCOLATE_CUM)) {
 				collection = ["creamy","creamy","creamy","delicious","delicious","sweet","chocolatey","cocoa-flavored","rich"];
 			} else if (arg == GLOBAL.FLUID_TYPE_STRAWBERRY_MILK) {
 				collection = ["creamy","creamy","creamy","delicious","delicious","sweet","strawberry-flavored","fruity","rich"];
@@ -11698,7 +11821,9 @@ package classes {
 			} else if (InCollection(arg, GLOBAL.FLUID_TYPE_GABILANI_CUM, GLOBAL.FLUID_TYPE_GABILANI_GIRLCUM)) {
 				collection = ["oily","coating"];
 			} else if (arg == GLOBAL.FLUID_TYPE_SPECIAL_GOO) {
-				collection = ["slick","slimy","viscous","slippery"];
+				collection = ["slick","viscous","slippery"]; /* "slimy", */
+			} else if (arg == GLOBAL.FLUID_TYPE_CHOCOLATE_CUM) {
+				collection = ["thick","sticky"];
 			}
 			
 			else collection = ["fluid"];
@@ -11721,7 +11846,7 @@ package classes {
 				collection = ["transluscent","transluscent","transluscent","transluscent","transluscent","clear","clear","clear","semi-transparent","semi-transparent"];
 			} else if (arg == GLOBAL.FLUID_TYPE_CUMSAP) {
 				collection = ["off-white","off-white","off-white","off-white","off-white","pearl-marbled amber","pearl-marbled amber","pearl-marbled amber","ivory-amber","ivory-amber"];
-			} else if (arg == GLOBAL.FLUID_TYPE_CHOCOLATE_MILK) {
+			} else if (InCollection(arg, GLOBAL.FLUID_TYPE_CHOCOLATE_MILK, GLOBAL.FLUID_TYPE_CHOCOLATE_CUM)) {
 				collection = ["chocolate","chocolate","chocolate","chocolate","chocolate","creamy brown, chocolate","creamy brown, chocolate","creamy brown, chocolate","dark, chocolate","dark, chocolate"];
 			} else if (arg == GLOBAL.FLUID_TYPE_STRAWBERRY_MILK) {
 				collection = ["pink","pink","pink","pink","pink","creamy pink","creamy pink","creamy pink","light, pink","light, pink"];
@@ -11754,7 +11879,7 @@ package classes {
 			if (InCollection(arg, GLOBAL.FLUID_TYPE_LEITHAN_MILK, GLOBAL.FLUID_TYPE_CUMSAP, GLOBAL.FLUID_TYPE_MILK, GLOBAL.FLUID_TYPE_CUM, GLOBAL.FLUID_TYPE_VANILLA, GLOBAL.FLUID_TYPE_MILKSAP)) return "white";
 			else if (InCollection(arg, GLOBAL.FLUID_TYPE_HONEY, GLOBAL.FLUID_TYPE_NECTAR)) return "yellow";
 			else if (InCollection(arg, GLOBAL.FLUID_TYPE_OIL, GLOBAL.FLUID_TYPE_GIRLCUM)) return "transparent";
-			else if (arg == GLOBAL.FLUID_TYPE_CHOCOLATE_MILK) return "brown";
+			else if (InCollection(arg, GLOBAL.FLUID_TYPE_CHOCOLATE_MILK, GLOBAL.FLUID_TYPE_CHOCOLATE_CUM)) return "brown";
 			else if (InCollection(arg, GLOBAL.FLUID_TYPE_STRAWBERRY_MILK, GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK)) return "pink";
 			else if (arg == GLOBAL.FLUID_TYPE_SYDIAN_CUM) return "silver";
 			else if (arg == GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK) return "purple";
@@ -11775,8 +11900,9 @@ package classes {
 			//CUM & MILK TYPES
 			if (arg == GLOBAL.FLUID_TYPE_MILK) {
 				collection = ["milk","cream"];
-			} else if (InCollection(arg, GLOBAL.FLUID_TYPE_CUM, GLOBAL.FLUID_TYPE_SYDIAN_CUM, GLOBAL.FLUID_TYPE_NYREA_CUM, GLOBAL.FLUID_TYPE_GABILANI_CUM)) {
+			} else if (InCollection(arg, GLOBAL.FLUID_TYPE_CUM, GLOBAL.FLUID_TYPE_SYDIAN_CUM, GLOBAL.FLUID_TYPE_NYREA_CUM, GLOBAL.FLUID_TYPE_GABILANI_CUM, GLOBAL.FLUID_TYPE_CHOCOLATE_CUM)) {
 				collection = ["cum"];
+				if(isBimbo() || isBro()) collection.push("cum","spunk","spunk","jism","jizz");
 			} else if (arg == GLOBAL.FLUID_TYPE_HONEY) {
 				collection = ["honey"];
 			} else if (arg == GLOBAL.FLUID_TYPE_OIL) {
@@ -11795,8 +11921,7 @@ package classes {
 				collection = ["nectar"];
 			} else if (arg == GLOBAL.FLUID_TYPE_LEITHAN_MILK) {
 				collection = ["milk"];
-			}
-			else if (arg == GLOBAL.FLUID_TYPE_SPECIAL_GOO) {
+			} else if (arg == GLOBAL.FLUID_TYPE_SPECIAL_GOO) {
 				collection = ["slime","goo"];
 			}
 			
@@ -11976,6 +12101,11 @@ package classes {
 		public function randomSimpleCockNoun():String
 		{
 			return RandomInCollection("cock","cock","cock","cock","dick","dick","phallus","phallus","prick","tool","member","shaft","dong");
+		}
+		public function tailCocksDescript(): String {
+			if (tailCount > 1) return plural(tailCockDescript());
+			else if (tailCount == 1) return tailCockDescript();
+			return "ERROR: TAIL DESCRIPT CALLED WITH NO TAILS PRESENT.";
 		}
 		public function tailCockDescript(): String {
 			var descript: String = "";
@@ -13138,6 +13268,7 @@ package classes {
 			var descript: String = "";
 			var randt: Number = rand(10);
 			var descripted: Number = 0;
+			var types: Array = [];
 	
 			if(hasStatusEffect("Horn Bumps"))
 			{
@@ -13202,8 +13333,7 @@ package classes {
 						descripted++;
 					}
 					//foot
-					else if (hornLength == 12)
-					{
+					else if (hornLength == 12) {
 						descript += "foot-long";
 						descripted++;
 					}
@@ -13227,34 +13357,38 @@ package classes {
 				}
 				//Descriptive descriptions - 50% chance of being called
 				if (rand(3) == 0 && descripted < 2) {
-					if (hornType == GLOBAL.TYPE_DRACONIC) {
-						if (descripted > 0) descript += ", ";
-						descript += "draconic";
-						descripted++;
+					switch (hornType)
+					{
+						case GLOBAL.TYPE_DRACONIC:
+							types.push("draconic");
+							break;
+						case GLOBAL.TYPE_DEMONIC:
+							types.push("demonic", "sinister");
+							break;
+						case GLOBAL.TYPE_BOVINE:
+							types.push("bovine");
+							break;
+						case GLOBAL.TYPE_LIZAN:
+							types.push("reptilian");
+							break;
+						case GLOBAL.TYPE_DEER:
+							types.push("deer-like");
+							break;
+						case GLOBAL.TYPE_GOAT:
+							types.push("ram");
+							break;
+						case GLOBAL.TYPE_RHINO:
+							types.push("rhino");
+							if(horns > 2) types.push("dinosaur", "saurian");
+							break;
+						case GLOBAL.TYPE_NARWHAL:
+							types.push("narwhal", "unicorn-like");
+							break;
 					}
-					if (hornType == GLOBAL.TYPE_DEMONIC) {
+					if(types.length > 0)
+					{
 						if (descripted > 0) descript += ", ";
-						descript += "demonic";
-						descripted++;
-					}
-					if (hornType == GLOBAL.TYPE_BOVINE) {
-						if (descripted > 0) descript += ", ";
-						descript += "bovine";
-						descripted++;
-					}
-					if (hornType == GLOBAL.TYPE_LIZAN) {
-						if (descripted > 0) descript += ", ";
-						descript += "reptilian";
-						descripted++;
-					}
-					if (hornType == GLOBAL.TYPE_DEER) {
-						if (descripted > 0) descript += ", ";
-						descript += "deer-like";
-						descripted++;
-					}
-					if (hornType == GLOBAL.TYPE_GOAT) {
-						if (descripted > 0) descript += ", ";
-						descript += "ram";
+						descript += RandomInCollection(types);
 						descripted++;
 					}
 				}
@@ -13262,7 +13396,7 @@ package classes {
 				if (descripted > 0) descript += " ";
 				descript += hornNoun();
 			}
-	
+			
 			return descript;
 		}
 		public function hornsNoun():String 
@@ -13404,20 +13538,32 @@ package classes {
 				// If it hasn't been defeated already this turn
 				if (otherTeam[i].HP() > 0 && otherTeam[i].lust() < otherTeam[i].lustMax())
 				{
-					// list as a potential
-					posTargets.push(otherTeam[i]);
+					var posTarget:Object = { v: otherTeam[i], w: 10 };
+					posTargets.push(posTarget);
 					
 					// Example "forced" effect selection
 					if (otherTeam[i].hasStatusEffect("Focus Fire"))
 					{
 						selTarget = otherTeam[i];
 					}
+					
+					// Smugglers are slightly less likely to be targeted
+					if (otherTeam[i].characterClass == GLOBAL.CLASS_SMUGGLER)
+					{
+						posTarget.w -= 1;
+					}
+					// Mercs slightly more
+					else if (otherTeam[i].characterClass == GLOBAL.CLASS_MERCENARY)
+					{
+						posTarget.w += 1;
+					}
+					
 				}
 			}
 			
 			if (posTargets.length == 0) selTarget = null;
-			else if (posTargets.length == 1) selTarget = posTargets[0];
-			else selTarget = posTargets[rand(posTargets.length)];
+			else if (posTargets.length == 1) selTarget = posTargets[0].v;
+			else selTarget = weightedRand(posTargets);
 			
 			notifyTargetSelection(this, selTarget, this);
 			
@@ -13441,9 +13587,14 @@ package classes {
 			return attack.EnergyCost;
 		}
 		
+		public function untypedDroneDamage():Number
+		{
+			return 1 + level + rand(2 + level / 2);
+		}
+		
 		public function droneDamage():TypeCollection
 		{
-			var d:Number = 1 + level + rand(2 + level / 2);
+			var d:Number = untypedDroneDamage();
 			if (accessory is TamWolfDamaged)
 			{
 				d -= -1;

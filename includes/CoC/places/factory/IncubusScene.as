@@ -86,7 +86,7 @@ public function DemonFactoryDoLossIncubus():void {
 	processTime(1);
 	
 	//Nipplefuck city
-	if(pc.hasFuckableNipples() && pc.LQ() > 99) {
+	if(pc.hasFuckableNipples() && pc.lustQ() > 99) {
 		output("Molten arousal pumps through your veins, burning away your reason with an unquenchable desire to mate.  You drop your top, exposing your [pc.fullChest] to your foe in a submissive display. Lowering your eyes, you hope you can tempt him to plug your [pc.nipple] with his demonic prick.  You roughly squeeze each sensitive tit, trailing your fingers down the sensitive breast-flesh towards your rapidly dampening fuck-holes.\n\n");
 		
 		output("Your eyes relax as pure sensation overwhelms your already over-excited body.  Your fingers find your nipple-holes, locking around them while tugging and squeezing, stretching them tight with pleasure and pain.  You cast a seductive glance to the incubus' groin, noting that he's been taken in by your wanton display.  He takes a step, his cock rippling and twisting as it shifts and changes before your eyes. It divides it half, splitting into two full-sized pricks.");
@@ -114,7 +114,7 @@ public function DemonFactoryDoLossIncubus():void {
 	}
 	//Tentacle gangbang
 	else {
-		if(pc.LQ() > 99) output("Molten arousal pumps through your veins, burning away your reason with an unquenchable desire to mate. You drop your top, exposing your [pc.fullChest] to your foe in a submissive display, ");
+		if(pc.lustQ() > 99) output("Molten arousal pumps through your veins, burning away your reason with an unquenchable desire to mate. You drop your top, exposing your [pc.fullChest] to your foe in a submissive display, ");
 		else output("You lower your top, exposing your nubile form to your foe in a submissive display, ");
 		
 		output("lowering your eyes and fixating on his now-rigid demonic member.  Right before your eyes, it begins splitting and dividing into thinner prehensile penises that squirm about in the air, each one reminding you of a snake on the prowl.  ");
@@ -335,7 +335,7 @@ public function DemonFactoryIncubusDefeated():void
 	clearOutput();
 	clearMenu();
 	
-	if(enemy.LQ() > 99) output("You smile in satisfaction as the [enemy.name] collapses, masturbating happily.");
+	if(enemy.lustQ() > 99) output("You smile in satisfaction as the [enemy.name] collapses, masturbating happily.");
 	else output("You smile in satisfaction as the [enemy.name] collapses, unable to continue fighting.");
 	pc.lust(1);
 	

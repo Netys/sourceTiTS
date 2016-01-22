@@ -188,7 +188,7 @@ package classes.Characters.CoC
 			//If afflicted by blind or whispered and over 50% lust,
 			//burns lust and clears statuses before continuing with 
 			//turn.
-			if(LQ() > 50 && (hasStatusEffect("Fear") || hasStatusEffect("Blind"))) {
+			if(lustQ() > 50 && (hasStatusEffect("Fear") || hasStatusEffect("Blind"))) {
 				removeStatusEffect("Fear");
 				removeStatusEffect("Blind");
 				lust(-10);
@@ -222,7 +222,7 @@ package classes.Characters.CoC
 			//STANDARD COMBAT STATUS AFFECTS END HERE
 			//-If over 50 lust and below 50% hp
 			//--burns 20 lust to restore 20% hp. 
-			if(LQ() > 50 && HP() < maxHP() / 2) {
+			if(lustQ() > 50 && HP() < maxHP() / 2) {
 				output("The imp lord shudders from his wounds and the pulsing member that's risen from under his tattered loincloth.  He strokes it and murmurs under his breath for a few moments.  You're so busy watching the spectacle of his masturbation that you nearly miss the sight of his bruises and wounds closing!  Zetaz releases his swollen member, and it deflates slightly.  He's used some kind of black magic to convert some of his lust into health!  ");
 				HP(maxHP() / 4);
 				lust( -20);
@@ -270,22 +270,22 @@ package classes.Characters.CoC
 
 		public function gigaZetazArouse(target:Creature):void {
 			output("You see Zetaz make familiar arcane gestures at you, but his motions seem a lot more over the top than you'd expect from an imp.\n");
-			if (target.LQ() < 30) output("Your nethers pulse with pleasant warmth that brings to mind pleasant sexual memories.  ");
-			if (target.LQ() >= 30 && target.LQ() < 60) output("Blood rushes to your groin in a rush as your body is hit by a tidal-wave of arousal.  ");
-			if (target.LQ() >= 60) output("Your mouth begins to drool as you close your eyes and imagine yourself sucking off Zetaz, then riding him, letting him sate his desires in your inviting flesh.  The unnatural visions send pulses of lust through you so strongly that your body shivers.  ");
+			if (target.lustQ() < 30) output("Your nethers pulse with pleasant warmth that brings to mind pleasant sexual memories.  ");
+			if (target.lustQ() >= 30 && target.lustQ() < 60) output("Blood rushes to your groin in a rush as your body is hit by a tidal-wave of arousal.  ");
+			if (target.lustQ() >= 60) output("Your mouth begins to drool as you close your eyes and imagine yourself sucking off Zetaz, then riding him, letting him sate his desires in your inviting flesh.  The unnatural visions send pulses of lust through you so strongly that your body shivers.  ");
 			applyDamage(new TypeCollection( { psionic : rand(target.libido() / 10) + target.cor() / 10 + 15 } ), this, target);
 			output("\n\n");
 			
 			if(target.hasCock()) {
-				if (target.LQ() >= 60 && target.cocks.length > 0) output("You feel [pc.multiCocks] dribble pre-cum, bouncing with each beat of your heart and aching to be touched.  ");
-				if (target.LQ() >= 30 && target.LQ() < 60 && target.cocks.length == 1) output("Your [pc.multiCocks] hardens and twitches, distracting you further.  ");
+				if (target.lustQ() >= 60 && target.cocks.length > 0) output("You feel [pc.multiCocks] dribble pre-cum, bouncing with each beat of your heart and aching to be touched.  ");
+				if (target.lustQ() >= 30 && target.lustQ() < 60 && target.cocks.length == 1) output("Your [pc.multiCocks] hardens and twitches, distracting you further.  ");
 			}
 			if(target.hasVagina()) {
-				if (target.LQ() >= 60 && target.wetness() == 1 && target.vaginas.length == 1) output("Your [pc.vagina] dampens perceptibly, feeling very empty.  ");
-				if (target.LQ() >= 60 && target.wetness() == 2 && target.vaginas.length > 0) output("Your crotch becomes sticky with girl-lust, making it clear to Zetaz just how welcome your body finds the spell.  ");
-				if (target.LQ() >= 60 && target.wetness() == 3 && target.vaginas.length == 1) output("Your [pc.vagina] becomes sloppy and wet, dribbling with desire to be mounted and fucked.  ");
-				if (target.LQ() >= 60 && target.wetness() == 4 && target.vaginas.length > 0) output("Thick runners of girl-lube stream down the insides of your thighs as your crotch gives into the demonic magics.  You wonder what Zetaz's cock would feel like inside you?  ");
-				if (target.LQ() >= 60 && target.wetness() == 5 && target.vaginas.length == 1) output("Your [pc.vagina] instantly soaks your groin with the heady proof of your need.  You wonder just how slippery you could Zetaz's dick when it's rammed inside you?  ");
+				if (target.lustQ() >= 60 && target.wetness() == 1 && target.vaginas.length == 1) output("Your [pc.vagina] dampens perceptibly, feeling very empty.  ");
+				if (target.lustQ() >= 60 && target.wetness() == 2 && target.vaginas.length > 0) output("Your crotch becomes sticky with girl-lust, making it clear to Zetaz just how welcome your body finds the spell.  ");
+				if (target.lustQ() >= 60 && target.wetness() == 3 && target.vaginas.length == 1) output("Your [pc.vagina] becomes sloppy and wet, dribbling with desire to be mounted and fucked.  ");
+				if (target.lustQ() >= 60 && target.wetness() == 4 && target.vaginas.length > 0) output("Thick runners of girl-lube stream down the insides of your thighs as your crotch gives into the demonic magics.  You wonder what Zetaz's cock would feel like inside you?  ");
+				if (target.lustQ() >= 60 && target.wetness() == 5 && target.vaginas.length == 1) output("Your [pc.vagina] instantly soaks your groin with the heady proof of your need.  You wonder just how slippery you could Zetaz's dick when it's rammed inside you?  ");
 			}
 		}
 

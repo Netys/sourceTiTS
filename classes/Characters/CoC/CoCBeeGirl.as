@@ -225,7 +225,7 @@ package classes.Characters.CoC
 				else if (target.hasVagina()) output("planting your aching sex over her face while you lick her sweet honeypot. ");
 			applyDamage(new TypeCollection( { drug : 25 } ), this, target);
 				
-				if (target.LQ() > 60) {
+				if (target.lustQ() > 60) {
 					output(" You shake your head and struggle to stay focused,");
 					if (target.hasCock()) output(" but it's difficult with the sensitive bulge in your groin.");
 					else if (target.hasVagina()) output(" but can't ignore the soaking wetness in your groin.");

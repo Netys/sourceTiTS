@@ -87,9 +87,9 @@ public function winKitsuneImpFight():void
 	kitsuneSprite();
 	output("\"<i>Oh, thank you, thank you!  I don't know </i>what<i> would have happened if you hadn't come along.</i>\"\n\n" + ((pc.cor() < 50) ? "As the imp falls at your feet, you [pc.relaxWeapon] and turn to the grateful woman.  Beating down an imp is really nothing special, but you were glad to be of assistance, and tell her as much with a friendly smile." : "You scoff haughtily, [pc.relaxingWeapon] and turning to the woman.  Beating down an imp was hardly worth your time, you tell her, crossing your arms in irritation.") + "\n\n");
 	output("\"<i>My hero!</i>\"  she swoons, beaming.  \"<i>Oh, if there's </i>anything<i> I can do to repay you, please, tell me!</i>\"\n\n");
-	output("You find yourself gazing deep into her eyes, a dim haze entering your mind as you are drawn deeper and deeper into the glistening green pools.  The corners of her lips curl into a broad smile as she starts to step toward you, and for a moment you swear you can see a subtle change in her.  You rub your eyes, certain they are playing tricks on you, slowly following the gentle sway of her six tails as she strolls up to you." + ( ((pc.LQ() > pc.WQ()) || (pc.WQ() < 40)) ? "  Nope, nothing wrong here...\n\n\"<i>Mm...  my hero...</i>\" she croons again, reaching up to caress your cheek." : "\n\nWait.") + "\n\n");
+	output("You find yourself gazing deep into her eyes, a dim haze entering your mind as you are drawn deeper and deeper into the glistening green pools.  The corners of her lips curl into a broad smile as she starts to step toward you, and for a moment you swear you can see a subtle change in her.  You rub your eyes, certain they are playing tricks on you, slowly following the gentle sway of her six tails as she strolls up to you." + ( ((pc.lustQ() > pc.WQ()) || (pc.WQ() < 40)) ? "  Nope, nothing wrong here...\n\n\"<i>Mm...  my hero...</i>\" she croons again, reaching up to caress your cheek." : "\n\nWait.") + "\n\n");
 	//PC saw through glamour
-	if ((pc.LQ() <= pc.WQ()) && (pc.WQ() >= 40)) {
+	if ((pc.lustQ() <= pc.WQ()) && (pc.WQ() >= 40)) {
 		output("You push her away, almost cracking your head open as you stumble over a stump.  Now that you have broken free of her sorcery, you can see her for what she is.  A pair of large triangular fox ears poke up from her ");
 		if (enemy.hairColor == "blonde") output("back-length, flaxen");
 		else if (enemy.hairColor == "black") output("ass-length, raven");
@@ -173,7 +173,7 @@ private function followTheWillOWisp(firstTime:Boolean = false):void
 		applyDamage(new TypeCollection( { psionic: 15 } ), pc, pc, "minimal");
 		output("\n\n");
 	}
-	if ((pc.LQ() > 99 || pc.WQ() < 20) && !firstTime) {
+	if ((pc.lustQ() > 99 || pc.WQ() < 20) && !firstTime) {
 		mansionKitsune([false, false]);
 	}
 	//Else:
@@ -227,7 +227,7 @@ private function talkAfterResistingKitsunellusion():void
 	//MERGE
 	output("You twist away, trying to shake off the tingling sensations that are crawling across your body, impairing your ability to think rationally.\n\n");
 	output("\"<i>Oh, you're no fun,</i>\" she says, smirking a bit as you pull away.  \"<i>Won't you come and play?  I promise that you won't be disappointed... my sisters and I will see to that.</i>\"\n\n");
-	output("Self-preservation battles with curiosity " + ((pc.LQ() > 50) ? "and lust " : "" ) + "as you consider her offer, " + ((pc.libido() < 50) ? "weighing your chances against the possible dangers." : "eying the voluptuous curves that fill out her robes."));
+	output("Self-preservation battles with curiosity " + ((pc.lustQ() > 50) ? "and lust " : "" ) + "as you consider her offer, " + ((pc.libido() < 50) ? "weighing your chances against the possible dangers." : "eying the voluptuous curves that fill out her robes."));
 
 	//[Follow { mansion(willing = true) }] [Leave]
 	clearMenu();
@@ -639,7 +639,7 @@ private function tentacleKitsuneWingWangs():void
 	clearOutput();
 	kitsuneSprite();
 	output("\"<i>Oh my!  It looks like we're in for a real treat tonight, sisters...</i>\" the blonde says as she runs her hands along your impressive prehensile endowments.\n\n");
-	output("\"<i>Mmm...  tentacles...  my favorite flavor,</i>\" the black-haired one chimes in, rubbing her pudgy belly and licking her lips hungrily.  Slipping into the water next to you, each of them takes one of your hulking tentacles into her hands, grinning eagerly.  Working together, they weave their tails through your brace of writhing appendages, cinching tight around the base of each one as their fingers slide along the flexible shafts.  Trails of blue fire dance across each writhing tentacle, sending you into a shivering, shuddering frenzy, and the three sisters cast each other knowing grins.  Your liquor-addled mind is too foggy by now to resist their advances, " + ((pc.libido() < 50 && pc.LQ() < 50) ? "slurred protests falling on deaf ears." : "though who would want to?") + "\n\n");
+	output("\"<i>Mmm...  tentacles...  my favorite flavor,</i>\" the black-haired one chimes in, rubbing her pudgy belly and licking her lips hungrily.  Slipping into the water next to you, each of them takes one of your hulking tentacles into her hands, grinning eagerly.  Working together, they weave their tails through your brace of writhing appendages, cinching tight around the base of each one as their fingers slide along the flexible shafts.  Trails of blue fire dance across each writhing tentacle, sending you into a shivering, shuddering frenzy, and the three sisters cast each other knowing grins.  Your liquor-addled mind is too foggy by now to resist their advances, " + ((pc.libido() < 50 && pc.lustQ() < 50) ? "slurred protests falling on deaf ears." : "though who would want to?") + "\n\n");
 	output("\"<i>Oh, I do so enjoy our work,</i>\" the blonde remarks, running her hand up to the tip of your cock and squeezing the bulbous head experimentally.  She flashes a satisfied smirk at the way your firm flesh yields under her touch, nodding softly.  The tip of one of her tails trails along the underside, tickling you sensually as more coils of fur stroke and knead along the obscene organ.\n\n");
 	output("\"<i>We just looooove tentacles,</i>\" the black-haired girl explains to you, giggling like a schoolgirl as one of your obscene tendrils starts moving on its own, sliding down between her legs and threading its way between her expansive ass cheeks.  \"<i>When we see tentacles this thick, long, and...</i>\" she pauses to wrap her lips around the end of your cock, sliding her tongue along the tip, \"<i>... mmm... juicy.... it's just impossible to contain our excitement.</i>\"\n\n");
 	output("As if to illustrate this point, she hungrily swallows almost a foot of your wriggling tentacle, a trail of spittle hanging out lazily from one corner of her mouth as she swallows carefully along your length.  Your writhing shafts are assaulted on all sides by all manner of touches and caresses; fingers, tongues, tails and breasts all working in glorious harmony to tease and pleasure you.  One tendril instinctively coils around one of the blonde's breasts, squeezing it tightly while the tip pokes and prods the soft flesh, teasing her pert pink nipples.  Moaning in response, she slides her fingers along the base, cool blue flames crackling to life across her fingertips and sending chills through your body.  Each of your thick tentacles swells up incredibly, the kitsune's magic sending jolts of pleasure across the surface.  As the pale flames dance across your groin, you feel an odd tension building up, and in a shower of viscous cum, your loins erupt into a monstrous, wriggling mass of at least a dozen undulating tentacles!\n\n");
@@ -818,9 +818,9 @@ public function loseToKitsunes():void
 	//Futa rape - chance increases as redhead's lust increases
 	if (enemy.hairColor == "red") {
 		scene.push(getRapedByRedHeadFutaKitsune);
-		if (enemy.LQ() > 50) scene.push(getRapedByRedHeadFutaKitsune);
-		if (enemy.LQ() > 70) scene.push(getRapedByRedHeadFutaKitsune);
-		if (enemy.LQ() > 85) scene.push(getRapedByRedHeadFutaKitsune);
+		if (enemy.lustQ() > 50) scene.push(getRapedByRedHeadFutaKitsune);
+		if (enemy.lustQ() > 70) scene.push(getRapedByRedHeadFutaKitsune);
+		if (enemy.lustQ() > 85) scene.push(getRapedByRedHeadFutaKitsune);
 	}
 	scene[rand(scene.length)]();
 }

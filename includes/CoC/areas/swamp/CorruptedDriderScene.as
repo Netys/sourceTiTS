@@ -127,7 +127,7 @@ private function winDriderPCDickInSpiderCunt():void
 	//situation when she kisses you with potent, envenomed lips.  Get 
 	//moderately hypno'ed into cumming into her over and over again?
 	output("Eager to plumb the depths of this greedy spider's snatch, you practically tear your way out of your [pc.gear] in your hurry to get naked.  Through it all ");
-	if (enemy.LQ() > 99) {
+	if (enemy.lustQ() > 99) {
 		output("she looks ");
 		if (pc.tallness > 72) output("up ");
 		output("at you with her " + enemy.eyeColor + " eyes opened wide and her tongue hanging from her mouth, panting lewdly.  Carapace-clad digits sink into her dripping honey-pot over and over while she watches, deep in her own lusty haze.  She retracts her engorged demon-cock so as to have better access to that feminine hole.");
@@ -731,7 +731,7 @@ private function loseVSDriderAndGetFuckedANDAnalImpreggegity():void
 	//spriteSelect(77);
 	//Poor males.  All the buttsexes. (yo this is an actual paragraph of the game text right)
 	clearOutput();
-	if (pc.LQ() > 99) output("Unable to resist the desire coursing through your body, you strip off your [pc.gear] and start stroking [pc.eachCock], displaying it in the hope that it will draw the drider's attention, while at the same time just trying to get yourself off and attain release.");
+	if (pc.lustQ() > 99) output("Unable to resist the desire coursing through your body, you strip off your [pc.gear] and start stroking [pc.eachCock], displaying it in the hope that it will draw the drider's attention, while at the same time just trying to get yourself off and attain release.");
 	else {
 		output("You slump down, too beat up to mount an effective defense, let alone stay up on your " + pc.feet() + ".  The drider skitters over to you and effortlessly peels you out of your [pc.gear], exposing your ");
 		if (pc.lust() < 50) output("soft");
@@ -946,7 +946,7 @@ private function driderTiedUpPartTwo(useItem:Boolean):void
 		output("Smirking to yourself, you advance on the collapsed girl, [cock " + y + "] straining against your clothing in anticipation of what's to come.");
 	}
 	output("\n\nDarting forwards suddenly, you seize her wrists, pulling her arms above her head");
-	if (enemy.LQ() > 99) output(" and away from her quivering snatch");
+	if (enemy.lustQ() > 99) output(" and away from her quivering snatch");
 	output(", her struggles useless against your steely grip.  The defeated drider's eyes darken as she looks up at you, but before she can protest you roughly flip her onto her back, splashing both of you with dank water as she flails about in the shallow muck around your feet.  Spindly legs flail feebly as you grasp both of her wrists in one hand, sliding the other down her arm until it grazes softly across her first row of breasts.  You gently squeeze the supple flesh, fingers rolling a pert nipple as it slides between them and eliciting a surprised, pleasure-laden gasp from the spider-taur.  Your member twitches as you play with her, reminding you that you've still got to deal with the woman before you can have any real fun.  Reluctantly you remove your hand from her chest, catching what sounded like a soft sigh from the drider's mouth as you start to circle around her.");
 
 	output("\n\nMoving behind her back, you lift up her human half until you can firmly pin her arms together behind her back.  She writhes as you ");

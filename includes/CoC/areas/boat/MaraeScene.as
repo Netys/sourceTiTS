@@ -413,7 +413,7 @@ private function MaraeIIStageII():void {
 		output("Marae coos with pleasure and allows a nectar-slicked tentacle to slip free of her flower.   Her sweet, corrupted smell filters through the air, like pollen carried on a spring breeze.  The goddess' fingers trace the outline of her budding clit, and you watch, enraptured, as it swells up and turns purple.  A clear ridge forms underneath the tip, delineating the under-side of a newly grown cock-tip.  Marae bats her eyelashes and strokes the newly-formed growth as it fills out, surpassing the length of any mortal man.  The crown is a shiny, almost slick purple color, fading to green the further down the stalk-like shaft it goes.   She climbs to her feet, fingernails tracing the outline of the newly-formed urethral bulge on her shaft as she glides closer to you.\n\n", false);
 
 		output("Paralyzed by ", false);
-		if(pc.LQ() > 80) output("lust", false);
+		if(pc.lustQ() > 80) output("lust", false);
 		else if(pc.cor() > 50) output("indecision", false);
 		else output("worry", false);
 		output(", you don't manage a single backwards step before the warm bulge is rubbing ", false);
@@ -447,7 +447,7 @@ private function MaraeIIStageII():void {
 		output("Marae coos with pleasure and allows a nectar-slicked tentacle to slip free of her flower.   Her sweet, corrupted smell filters through the air, like pollen carried on a spring breeze.  You watch, awestruck while the curvy goddess approaches you, cradling a squirming tree-tentacle in each of her hands.  The one in her right twitches and spurts, dribbling seed over her hand in a surprisingly weak display that seems to invigorate the lusty, tainted deity.\n\n", false);
 
 		output("You watch, standing stock-still and paralyzed with ", false);
-		if(pc.LQ() > 80) output("lust", false);
+		if(pc.lustQ() > 80) output("lust", false);
 		else if(pc.cor() > 50) output("indecision", false);
 		else output("worry", false);
 		output(".  Marae's advance seems like an inexorable march to your eyes, and before you have a chance to react, she's crushed against you in a full-body hug.  Her tongue digs into your mouth, rooting out your tongue and melting your resistance in an overwhelming, lust-powered assault.  You vision swims for a moment when she releases you and pulls back.  It's hard to focus with the busty, nude image of fertility beckoning you.  It makes " + pc.cocksDescriptLight() + " strain to reach her, but she dances back with a knowing smile and says, \"<i>Not yet my eager little subject.  Let me undress you, THEN you can worship me.</i>\"\n\n", false);

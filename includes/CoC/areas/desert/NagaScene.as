@@ -371,7 +371,7 @@ private function nagaVictoryFemale():void {
    			//(Loss by HPs)
 			//NO RAEP IF LOSS BY HPs, FUCK CENTAURS! SRSLY! GROW NORMAL LEGS!
    			//(Loss by Lust)
-			if(enemy.LQ() > 99) {
+			if(enemy.lustQ() > 99) {
 				output("As your prey falls to the ground, her body too filled with sexual desire to fight, you step over her, your tall frame towering over her own quivering body. She instantly grabs your shoulders, lust burning in her eyes. You wrap your arms around her, drawing her back against your chest and lifting her off the ground. She is facing away from you, but you can tell by the way she's responding that she is ready for whatever you're going to do to her. You begin by shifting one of your arms to hold her around her stomach, while your other hand begins working on her small but tender breasts. You begin to nibble at her ear, occasionally kissing her neck. The naga responds by wrapping her tail around your lower body, gently rubbing her sensitive underbelly against your " + pc.skin() + ".", false);
 				//(If PC is Herm i.e. Has a cock(s))
 				if(pc.isHerm()) output("  As her tail gently squeezes your body, it draws your own [pc.cocksLight] up against your body, her soft underbelly stimulating the sensitive skin.", false);
@@ -514,7 +514,7 @@ internal function nagaFUCKSJOOOOOO():void {
 	//too)
 	else if(pc.hasCock && !pc.hasVagina() || (pc.isHerm() && rand(2) == 0)) {
 		//(If defeated by lust)
-		if(pc.LQ() > 99) output("You fall to your knees, your body shaking with desire.\n\n", false);
+		if(pc.lustQ() > 99) output("You fall to your knees, your body shaking with desire.\n\n", false);
 		//(If defeated by KO)
 		else output("You fall to your knees, your battered body unable to hold itself up any longer.\n\n", false);
 		output("You hear the hiss of the naga's laughter as she slithers over to your prone form. Her long tail twists around you and tightens suddenly, pinning your arms to your sides", false);
@@ -525,7 +525,7 @@ internal function nagaFUCKSJOOOOOO():void {
 		}
 		output(". You struggle weakly against her grip, but ", false);
 		//(if defeated by lust)
-		if(pc.LQ() > 99) output("all your resistance seems to do is make your [pc.cocks] harder.", false);
+		if(pc.lustQ() > 99) output("all your resistance seems to do is make your [pc.cocks] harder.", false);
 		//if defeated by KO)
 		else output("you are too weak to do anything to stop her squeezing.", false);
 		output("  She leans towards you, gripping your shoulders as she brings her face to your ear. You can feel her serpentine tongue flicking over your ear as she hisses coldly into it.\n\n", false);
@@ -589,7 +589,7 @@ internal function nagaFUCKSJOOOOOO():void {
 	//b) female //http://nekomimichan.org/mg/src/12844585127.jpg
 	else if(pc.hasVagina()) {
 		//(If defeated by lust) 
-		if(pc.LQ() > 99) 
+		if(pc.lustQ() > 99) 
 		{
 			output("You fall to your knees, your body shaking with desire.\n\n", false);
 		}
@@ -608,7 +608,7 @@ internal function nagaFUCKSJOOOOOO():void {
 		else output("and while you know you probably won't like it, your " + pc.vaginaDescript(0) + " says otherwise.  ", false);
 		output("Now astride the base of her tail and facing towards her, your eyes are drawn to the place on her scaly pelvis where a vagina should be. With one hand the naga begins gently caressing her nether regions, which begin to swell in her excitement into the outlines of a recognizable reptilian vulva. Her expectations are perfectly clear ", false);
 		//(If defeated by lust) 
-		if(pc.LQ() > 99) 
+		if(pc.lustQ() > 99) 
 		{
 			output("and you can feel the need to have sex with her burn inside you. You quickly strip yourself of your [pc.gear] and throw yourself on her awaiting pussy.", false);
 		} 
@@ -696,7 +696,7 @@ internal function nagaFUCKSJOOOOOO():void {
 	//d) genderless
 	else {
 		//(If player loses because of lust) 
-		if(pc.LQ() > 99) 
+		if(pc.lustQ() > 99) 
 			output("You fall to your knees, your body shaking with desire.\n\n", false);
 		//(If player loses from HP loss)
 		else output("You fall to your knees, your battered body unable to hold itself up any longer.\n\n", false);

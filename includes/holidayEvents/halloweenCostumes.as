@@ -16,8 +16,7 @@ public function showHoliday(arg:String = "normal"):void
 public function halloweenShipMove():void
 {
 	currentLocation = "SHIP INTERIOR";
-	var map:* = mapper.generateMap(currentLocation);
-	this.userInterface.setMapData(map);
+	generateMapForLocation(currentLocation);
 	showName("SHIP\nINTERIOR");
 }
 
@@ -45,6 +44,14 @@ public function hollidayOweenAlert():void
 	flags["HOLIDAY_OWEEN_ACTIVATED"] = GetGameTimestamp();
 	clearMenu();
 	addButton(0,"Next",mainGameMenu);
+}
+
+public function flyToPoeA():void
+{
+	author("Adjatha");
+	output("Electing to have a little fun, you set a course for Poe A and before long, the planet looms before you on the display. It’s not particularly large, for a civilized world, but the traffic for landing vehicles is a little ridiculous. Thousands of craft are coming in every minute, with no sign of the influx slowing down. They’re from all over the galaxy too, even models you’ve never heard of before. Taking your place in the landing queue, you look around at some of the other visitors, eyes watering with envy as you spot a few ships that probably cost as much as this whole planet. Apparently the stories of stars slumming it up during the festival weren’t exaggerated!");
+	
+	processTime(5);
 }
 
 //Planetfall
@@ -1013,7 +1020,7 @@ public function horseBodyGoooo():void
 		else output("s vibrate and quickly detach themselves");
 		output(" from your naked form, fearfully scurrying out the door... Holiday silently blinks at you for an awkward moment. Well, that’s one way to spook a parasite, you suppose.");
 	}
-	output("\n\n<i>“You gonna get in or what?”</i> the demonic nurse barks. She drums her heels on the crate. <i>“Take too long, and you’ll miss all the fun!~”</i>");
+	output("\n\n<i>“You gonna get in or what?”</i> the demonic nurse barks. She drums her heels on the crate. <i>“Take too long, and you’ll miss all the fun!”</i>");
 	output("\n\nShe’s right, of course. Every minute you sit in here looking at the suit instead of wearing it is another minute of partying you’ll miss out on. You shimmy down onto the floor and begin to wriggle in. It’d be easier if the thing was propped upright, but lying on its flank like it is means struggling to wiggle yourself into it horizontally on a floor that hasn’t been hit by a cleaning bot in ages. You get your [pc.feet] in without too much issue, shying away from the wet, warm feeling of the interior.");
 	output("\n\nThe fibrous, rubbery insides cling to you at first, but the further you push in, the roomier it becomes. It’s quite easy to enter, actually. You slip in your [pc.thighs] and find that it actually feels quite nice against you, almost like having your [pc.legOrLegs] coated in massage oil. The fur-ringed entrance slides higher up your body");
 	if(pc.hasGenitals()) output(", cupping your genitalia tightly, and");

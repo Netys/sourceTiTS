@@ -200,12 +200,12 @@ internal function kihaVictoryIntroduction():void {
 	output("Kiha sways back and forth for a moment, then drops her axe with numb hands.  As soon as she does, the hot glow of the weapon's cutting edge fades to silver, and the weapon lands with a heavy 'thunk' ");
 	if(silly) output("(like Urta's cock!) ");
 	output("in the dirt.  The dragoness drops to her knees and slumps back against a tree, her limbs trembling ");
-	if(enemy.LQ() > 99) output("with lust");
+	if(enemy.lustQ() > 99) output("with lust");
 	else output("weakly");
 	output(" as she tries to rise.\n\n");
 	
 	//(Lust) 
-	if(enemy.LQ() > 99) output("\"<i>You... can't make me like it!,</i>\" she shouts, struggling with all her might to keep her hands away from her genitals.  Somehow, she seems to be managing.");
+	if(enemy.lustQ() > 99) output("\"<i>You... can't make me like it!,</i>\" she shouts, struggling with all her might to keep her hands away from her genitals.  Somehow, she seems to be managing.");
 	//(HP) 
 	else output("\"<i>You... you... haven't... beaten me,</i>\" she mutters, even though it's quite clear that you have.");
 	
@@ -239,7 +239,7 @@ internal function kihaLossIntro():void {
 	clearOutput();	
 	//spriteSelect(72);
 	//(Lust)
-	if(pc.LQ() > 99) output("You give up on fighting, too horny to keep fighting.  Kiha strikes the ground with her axe and snorts out a puff of smoke.  \"<i>What a shameless slut!  You're lusting after me even in the heat of battle, like a common imp!  You aren't worthy to lick between my foot-claws!</i>\"\n\n");
+	if(pc.lustQ() > 99) output("You give up on fighting, too horny to keep fighting.  Kiha strikes the ground with her axe and snorts out a puff of smoke.  \"<i>What a shameless slut!  You're lusting after me even in the heat of battle, like a common imp!  You aren't worthy to lick between my foot-claws!</i>\"\n\n");
 	//(HP)
 	else output("You collapse, too wounded to keep fighting.  Kiha strikes the ground with her axe and snorts out a puff of smoke.  \"<i>What a wimp!  I've barely started fighting and you're already beaten!</i>\"\n\n");
 	
@@ -275,7 +275,7 @@ private function kihaMilkTitHumiliation():void {
 	clearOutput();
 	//output(images.showImage("kiha-loss-milking"));
 	//spriteSelect(72);
-	if(pc.LQ() > 99) output("You slide to the ground, too turned on to fight and openly touching yourself.");
+	if(pc.lustQ() > 99) output("You slide to the ground, too turned on to fight and openly touching yourself.");
 	else output("You slide to the ground, too defeated to continue to fight.");
 	output("  Kiha snorts, expelling a tiny burst of flame and smoke from a nostril as she towers over your prone body.\n\n");
 	
@@ -408,7 +408,7 @@ private function tsundereMasturbationChristmasCarol():void {
 	//output(images.showImage("kiha-mutualmasturbation"));
 	//spriteSelect(72);
 	output("You walk towards the draconic woman, removing your [pc.gear] as you observe her firm, ");
-	if(enemy.LQ() > 99) output("wanton");
+	if(enemy.lustQ() > 99) output("wanton");
 	else output("but dispirited");
 	output(" figure slumping against the weathered bark behind her.  She eyes you carefully, trying to comprehend the situation before catching note of your ");
 	if(pc.hasGenitals()) output("aroused genitals");
@@ -464,7 +464,7 @@ private function kihaVictoryPomfTail():void {
 	//output(images.showImage("kiha-taildildo"));
 	//spriteSelect(72);
 	output("You approach the ");
-	if(enemy.LQ() > 99) output("lusty ");
+	if(enemy.lustQ() > 99) output("lusty ");
 	else output("wounded ");
 	output("dragoness full of wicked ideas.  For her part, she looks up at you with a defiant gaze, as if it would somehow dissuade you from the sexual thoughts now guiding your body.  You circle to the side and reach down, grabbing her wriggling tail with both hands.  Kiha tries to pull it out of your hands, but in her weakened state, all it does is weakly flop like a caught fish.  Laughing, you smack her in the face with her own scaly hind-bits before you drop it.  You know just how you'll put that rudder to use, but first you've got to shuck your [pc.gear].\n\n");
 	
@@ -519,12 +519,12 @@ private function victoryDickKiha():void {
 	clearOutput();
 	//output(images.showImage("kiha-vagfuck"));
 	output("You walk up and push the dragoness off the tree and onto her side to get a better look at her sopping vagina and tight rump.  Initially she doesn't react, though when she realizes what you're about to do, she cries, \"<i>How very much like my old masters you are.  As soon as you've won a fight, you think of nothing but sex.  ");
-	if(enemy.LQ() > 99) output("Just because you've aroused my body doesn't mean I'll enjoy this!");
+	if(enemy.lustQ() > 99) output("Just because you've aroused my body doesn't mean I'll enjoy this!");
 	else output("Don't think I'll enjoy this!");
 	output("</i>\"\n\n");
 	
 	output("Kiha certainly has a mouth on her, but then again, you aren't interested in that particular orifice at the moment.  You lift her leg, but she curls her tail up to obscure her pussy from your view");
-	if(enemy.LQ() > 99) output(", rubbing it back and forth against her folds without thinking about it");
+	if(enemy.lustQ() > 99) output(", rubbing it back and forth against her folds without thinking about it");
 	output(".  Annoyed, you twist the rebellious appendage out of your way but struggle to hold it back.  The dragon isn't making it easy for you for in the slightest.  Still, you get a nice long look at her soaked sex, and the sight ");
 	if(pc.lust() > 60) output("only makes [pc.eachCock] harder.");
 	else output("quickly makes [pc.eachCock] hard");
@@ -594,7 +594,7 @@ private function victoryDickKiha():void {
 		output("That perfect, dripping entrance beckons for your [pc.cock " + x + "], and without hesitation, you slide inside.  Kiha growls, \"<i>That's it?  How artless.</i>\"  In spite of her disappointed tone, her slippery passage squeezes down on your member with miraculous tightness, embracing your [pc.cock " + x + "] in its firm, velvet grip.  You sigh happily and enjoy the dragon-pussy's pressure for a few moments, tuning out Kiha's griping to focus on the heavenly feelings her body is giving you.\n\n");
 		
 		output("Eventually, you become accustomed to the feel of the reptilian tunnel's simmering juices, and eager for more stimulation, you begin to saw your [pc.cock " + x + "] in and out of sodden box.  The draconic woman beneath you lets out whimpers and moans of pleasure mixed with discontent, unable to resist you and unable to allow herself to enjoy it.  She squirms and wriggles beneath your forced affections, growing ");
-		if(enemy.LQ() > 99) output("more aroused despite her feigned indifference");
+		if(enemy.lustQ() > 99) output("more aroused despite her feigned indifference");
 		else output("very aroused in spite of her desire to fight you");
 		output(".  For your part, you pick up the pace, pushing yourself faster and faster towards an eventual climax.  Kiha places her scaled fingers on her chest to stop it from jiggling in response, but you push them away, wanting her breasts to bounce freely for your amusement.\n\n");
 		

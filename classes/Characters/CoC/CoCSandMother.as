@@ -244,7 +244,7 @@ package classes.Characters.CoC
 			//Begins focusing into her staff, which floats in front of her.  PC disrupt attack by attacking.  Attack hits at half strength if disrupted.
 			output("Releasing the scepter, the Sand Mother spreads her hands, each glowing with eldritch, white flames.  Her heels slowly float up off the ground as she closes her eyes in concentration.  You can sense the power and heat rolling off her in waves, and if you don't do something to disrupt her, you'll likely be burned to a crisp.");
 			if (target.IQ() > 40) output("  She's not even looking at you and seems steeled against lusty interruptions.  Perhaps you can hit her hard enough to shatter her concentration.");
-			this.createStatusEffect("Gigafire", this.HP(), this.LQ(), CombatManager.getRoundCount(), 0, false, "OffenseUp", "She is preparing something huge!", true);
+			this.createStatusEffect("Gigafire", this.HP(), this.lustQ(), CombatManager.getRoundCount(), 0, false, "OffenseUp", "She is preparing something huge!", true);
 			this.isLustImmune = true; // not looking and can not be teased
 			this.armor.evasion -= 100; // but also can't evade
 		}

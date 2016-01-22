@@ -130,8 +130,9 @@ public function watchOvirDancer():void
 			output(", which causes her to grin wider.");
 		}
 		else output(" You mime grabbing the kiss from the air, shoving it in your mouth, and chewing it up. The dancer blows a raspberry at your gauche display and keeps dancing.");
+		output("\n\n");
 	}
-	output("\n\nYou observe the dancer for a while. Her routine is athletic and provocative, but perhaps the most noticeable thing is just how much she seems to be <i>loving</i> it. The ovir smiles and makes eye contact with the mostly-male crowd joyously, feeding on their arousal. Even the vulgar requests please her. Whenever one of the drunks demands to see her boobs or pussy, she turns toward the sound of the voice and jiggles her body obediently, moves her hand to the clasp of her bra or her waistband, pretending that she might consider it just this once, and then pulls it back with an index finger waving as if to say: <i>“Naughty, naughty...”</i>");
+	output("You observe the dancer for a while. Her routine is athletic and provocative, but perhaps the most noticeable thing is just how much she seems to be <i>loving</i> it. The ovir smiles and makes eye contact with the mostly-male crowd joyously, feeding on their arousal. Even the vulgar requests please her. Whenever one of the drunks demands to see her boobs or pussy, she turns toward the sound of the voice and jiggles her body obediently, moves her hand to the clasp of her bra or her waistband, pretending that she might consider it just this once, and then pulls it back with an index finger waving as if to say: <i>“Naughty, naughty...”</i>");
 	output("\n\nYou remember what the bored desk-jockey said about her: that she isn’t actually indentured to the club. She must be the only woman in here who’s actually working an ordinary job, apart from the sexless mistress and possibly some of the waitresses. It starts to make sense - the ovir likely applied to dance here because she loves being wanted by men.");
 	//(for dumb only until end)
 	if(!knowBethsOvir()) output(" But you still get the feeling that you’re not quite clever enough to see the whole picture, somehow.\n\nThe girl is quite pretty, possibly even beautiful, and it’s very much a pleasure to watch her dance. All the same, there’s something off about her that you can’t put your finger on. You study her for a bit longer before you decide to leave, but between her proud, happy smiles and the enticing shake of her hips, you never figure out why you have such a strange hunch.");
@@ -626,6 +627,9 @@ public function brothelWhorePayment(baseAmount:Number = 0):Number
 	// PC has maxed tease points across the board: + 25% of base
 	if(flags["TIMES_BUTT_TEASED"] >= 100 && flags["TIMES_CHEST_TEASED"] >= 100 && flags["TIMES_CROTCH_TEASED"] >= 100 && flags["TIMES_HIPS_TEASED"] >= 100)
 		returnAmount += baseAmount * 0.25;
+	// Proficiency Bonus
+	if(flags["BETHS_TIMES_WHORED"] != undefined)
+		returnAmount += (flags["BETHS_TIMES_WHORED"] * 2);
 	
 	returnAmount = (returnAmount + baseAmount);
 	// If Licensed, - 0.2 of total off total
@@ -639,6 +643,14 @@ public function brothelWhorePayment(baseAmount:Number = 0):Number
 // Status effect, stat tracking, and unlock message
 public function brothelWhored(setMinutes:int = 360, service:String = "none"):void
 {
+	// Time adjustments for experienced whores.
+	if(flags["BETHS_TIMES_WHORED"] >= 10) setMinutes -= 60;
+	if(flags["BETHS_TIMES_WHORED"] >= 20) setMinutes -= 60;
+	if(flags["BETHS_TIMES_WHORED"] >= 30) setMinutes -= 60;
+	if(flags["BETHS_TIMES_WHORED"] >= 40) setMinutes -= 60;
+	if(flags["BETHS_TIMES_WHORED"] >= 50) setMinutes -= 60;
+	if(setMinutes < 15) setMinutes = 15;
+	
 	// 9999: Implementation for stats?
 	// Status Effect: Jaded
 	// v1: speed (reflexes?)
@@ -904,7 +916,7 @@ public function brothelTurnTrixWhoring(service:String = "none"):Number
 	{
 		output("You sashay through the room, letting your hand trail along muscular arms, bending the warm weight of your [pc.chest] into seated gamblers, offering your friendliest smile to anyone who looks at you, coming across at the faintest sign of interest.");
 		output("\n\nYou soon find takers. Many of the men here are actually just pleased to hear a friendly female voice in their ear; deep space miners or mercenaries coming back from one ugly incident or another. They tip you healthily just to sit with them and laugh at their stupid jokes. Others want a little more.");
-		output("\n\nYour warm hand slides its way past belts and buckles, it undoes zips, it clicks buttons which release armored compartments; you become pretty adept at the art of one-handed undressing. You grip hot dick after dick - mostly big and girthy; penis enhancers are widely available, after all - and gently, rhythmically bring them to full mast, knead and coil hot meat until the guy’s eyes are closed and leant back");
+		output("\n\nYour warm hand slides its way past belts and buckles, it undoes zips, it clicks buttons which release armored compartments; you become pretty adept at the art of one-handed undressing. You grip hot dick after dick - mostly big and girthy; penis enhancers are widely available, after all - and gently, rhythmically bring them to full mast, kneading and coiling hot meat until the guy’s eyes are closed and leant back");
 		if(pc.biggestTitSize() > 0) output(", letting the plush softness of your [pc.chest] press into their chests as you work");
 		output(". The hubbub casually goes on around you, or the coo and slurp of the other whores working the rest of the john’s party provides a fitting soundtrack, as you rub and jerk, coil and squeeze until his body tenses up, he groans and releases spumes of cum, riding his orgasm out with the loving help of your hand, and finally gazes at you in gratified bliss. Such a simple thing which brings such pleasure. Napkins are free, and you quickly learn to take a supply with you everywhere.");
 		
@@ -921,7 +933,7 @@ public function brothelTurnTrixWhoring(service:String = "none"):Number
 	{
 		output("You sashay through the room, letting your hand trail along muscular arms, bending the warm weight of your [pc.chest] into seated gamblers, offering your friendliest smile and most lascivious lick of the [pc.lips] to anyone who looks at you, coming across at the faintest sign of interest.");
 		output("\n\nYou soon find takers. Many of the men here are actually just pleased to hear a friendly female voice in their ear; deep space miners or mercenaries coming back from one ugly incident or another. They tip you healthily just to sit with them and laugh at their stupid jokes. Others want a little more.");
-		output("\n\nYour warm hand slides its way past belts and buckles, it undoes zips, it clicks buttons which release armored compartments; you become pretty adept at the art of one-handed undressing. You grip hot dick after dick - mostly big and girthy; penis enhancers are widely available, after all - and gently, rhythmically bring them to full mast, knead and coil hot meat until the guy’s eyes are closed and leant back");
+		output("\n\nYour warm hand slides its way past belts and buckles, it undoes zips, it clicks buttons which release armored compartments; you become pretty adept at the art of one-handed undressing. You grip hot dick after dick - mostly big and girthy; penis enhancers are widely available, after all - and gently, rhythmically bring them to full mast, kneading and coiling hot meat until the guy’s eyes are closed and leant back");
 		if(pc.biggestTitSize() > 0) output(", letting the plush softness of your [pc.chest] press into their chests as you work");
 		output(". You keep the movement of your hand slow and murmur in their ear that you will do more, if they’re willing to pay a little extra... the dick does all the thinking in these situations and more often than not, it’s exactly what they do. You give them a big, lusty smile, sink beneath the table and finish them off with a nice, deep suck.");
 		output("\n\nSome of the clients are more to the point; they pay you and point at their crotch, often without even breaking conversation with whoever they’re with. Their thighs tensing up around your gently bobbing head and their balls doing likewise against your chin, a groaning exhalation as they fountain hot cum down your throat and maybe a <i>“thanks doll”</i> after you’ve licked their bulging, oozing cock clean is the most you get from such guys.");
@@ -972,7 +984,7 @@ public function brothelTurnTrixWhoring(service:String = "none"):Number
 		output("\n\nA few punters are more than happy for you to clamber onto their laps, though. You grip their collars or their armor and sink your [pc.vagina " + x + "]");
 		if(rand(2) == 0) output(" slowly");
 		else output(" gradually");
-		output(" down on to their firmly erect dicks before grinding away, writhing your [pc.hips] on top of theirs, ");
+		output(" down onto their firmly erect dicks before grinding away, writhing your [pc.hips] on top of theirs, ");
 		if(pc.biggestTitSize() > 0) output("[pc.chest] bouncing, ");
 		output("letting them see on your [pc.face] how much whorish joy it brings you.");
 		
@@ -1378,6 +1390,12 @@ public function brothelTurnTrixWhoring(service:String = "none"):Number
 		output("\n\nEventually you head back up to the counter to meet the mistress....");
 		// + Lust
 		pc.lust(10);
+	}
+	
+	// Randomized bonus pay buffs
+	for(var i:int = 0; i < 5; i++)
+	{
+		if(rand(2) == 0) baseEarnings += rand(41);
 	}
 	
 	return baseEarnings;

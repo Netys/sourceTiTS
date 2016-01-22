@@ -289,7 +289,7 @@ public function meetSophieRepeat():void {
 			output("  Sophie releases her talons and you drop smartly onto the far side.  She pants, \"<i>It's breeding time.  " + pc.mf("Boy", "Girl") + ", fertilize me; NOW.</i>\"\n\n");
 			
 			//(low lust?)
-			if(pc.LQ() < 60 || rand(3) <= 1) {
+			if(pc.lustQ() < 60 || rand(3) <= 1) {
 				output("Her need amplifies the compulsion, making it difficult to resist.  It looks like if you turned her down now she'd probably try to force herself on you anyway.  Do you give in to her demand?");
 				//[Yes-Consentual sex] [No - fight]
 				clearMenu();
@@ -397,7 +397,7 @@ private function sophieLookingForDemons():void {
 	output("Sophie throws her head back and laughs. \"<i>Don't worry about any demons here.  Any time a demon is dumb enough to wander too close to our nests, we give him a 'foot-job' he won't forget.</i>\"  To illustrate, the busty harpy lifts her leg and proudly displays her razor-sharp talons.");
 	//Check her out if you're in the mood or dirty-minded
 	//Requires wang
-	if((pc.cor() > 60 || pc.LQ() > 60 || pc.libido() > 70) && pc.hasCock()) {
+	if((pc.cor() > 60 || pc.lustQ() > 60 || pc.libido() > 70) && pc.hasCock()) {
 		output("  In spite of the danger of the situation, your gaze drops between her legs to her completely exposed sex.  You nod in agreement with her, buying a few extra seconds to inspect her vagina.  Tinged pink, it's much larger than a human's; perhaps due to the size of the eggs she lays?\n\n");
 	}
 	//Otherwise leave.
@@ -532,7 +532,7 @@ private function cramANippleInIt():void {
 	//COMBAT
 	else {
 		//(Lust Win)
-		if(enemy.LQ() > 99) output("Sophie pants and pulls herself up to her knees.  She barely keeps her balance as she rams four of her fingers deep into her dripping pussy, fiddling at her clit with her thumb.  The harpy opens her mouth to beg for your milk with her glossy lips as you slowly undress.\n\n");
+		if(enemy.lustQ() > 99) output("Sophie pants and pulls herself up to her knees.  She barely keeps her balance as she rams four of her fingers deep into her dripping pussy, fiddling at her clit with her thumb.  The harpy opens her mouth to beg for your milk with her glossy lips as you slowly undress.\n\n");
 		//(HP Win)
 		else output("You pull the dazed and defeated harpy up to her knees.  She sways unsteadily as you undress and expose your [pc.fullChest] to the cool mountain air.   Sophie's eyes open wider as she struggles back to consciousness, and the hungry harpy happily opens her mouth into a wide 'O', begging for your milk.\n\n");
 	}

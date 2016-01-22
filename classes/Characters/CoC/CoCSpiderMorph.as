@@ -156,7 +156,7 @@ package classes.Characters.CoC
 				
 				applyDamage(new TypeCollection( { tease : 20, drug : 40 } ), this, target);
 				
-				if (target.LQ() > 99) output("\n\nYou wobble, utterly defeated and about to cave in to your lust.");
+				if (target.lustQ() > 99) output("\n\nYou wobble, utterly defeated and about to cave in to your lust.");
 				else output("\n\nYou struggle not to fall down and start masturbating on the spot.");
 			}
 			output("The spider-" + mf("boy", "girl") + " lunges forward with " + mf("his", "her") + " mouth open, " + mf("his", "her") + " two needle-like fangs closing rapidly.  ");

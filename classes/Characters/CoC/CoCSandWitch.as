@@ -195,7 +195,7 @@ package classes.Characters.CoC
 			if (target.hasStatusEffect("Vibrating Stone")) {
 				output("The orb inside you grows warm, almost hot, suffusing your body with heat and arousal.  ");
 				//game.dynStats("lus", 8 + int(player.sens) / 10);
-				applyDamage(new TypeCollection( { tease: 8 + target.LQ() / 10 } ), this, target);
+				applyDamage(new TypeCollection( { tease: 8 + target.lustQ() / 10 } ), this, target);
 			}
 			else if (target.hasArmor() && target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)) {
 				output("You feel the sands shift by your [pc.legs], and look down to see small stone slip out of the sands and slide over your armor in futile attempt to find a way in.  ");
@@ -207,7 +207,7 @@ package classes.Characters.CoC
 				
 				if (!target.hasStatusEffect("Vibrating Stone")) target.createStatusEffect("Vibrating Stone", 0, 0, 0, 0, false, "LustUp", "Vibrating stone is arousing you!", true);
 				//game.dynStats("lus", 4 + int(player.sens) / 10);
-				applyDamage(new TypeCollection( { tease: 4 + target.LQ() / 10 } ), this, target);
+				applyDamage(new TypeCollection( { tease: 4 + target.lustQ() / 10 } ), this, target);
 			}
 		}
 	}

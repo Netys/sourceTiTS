@@ -82,12 +82,12 @@ private function consensualSatyrFuck(loc:int = 0):void {
 
 	clearMenu();
 	//(if High Int)
-	if(pc.IQ() > 60 && pc.LQ() <= 99) {
+	if(pc.IQ() > 60 && pc.lustQ() <= 99) {
 		output("\n\nPerhaps you could trick him into knocking himself out with it?");
 		addButton(0, "Trick Him", trickZeSatyr);
 	}
 	//(if High Libido)
-	if(pc.libido() > 60 || pc.isBimbo() || pc.LQ() > 60) {
+	if(pc.libido() > 60 || pc.isBimbo() || pc.lustQ() > 60) {
 		output("\n\nThat cock of his looks yummy, though... there's no need for all this ruse, you're pretty sure you know how to handle a dick; maybe you should skip foreplay and let him fill you up...");
 		addButton(2, "Skip Foreplay", skipForeplay);
 	}
@@ -207,7 +207,7 @@ internal function loseToSatyr():void {
 	clearOutput();
 	//spriteSelect(98);
 	//[Lust loss
-	if(pc.LQ() > 99) output("You pant as you begin masturbating furiously, too horny to care about anything the grinning satyr before you has in mind.");
+	if(pc.lustQ() > 99) output("You pant as you begin masturbating furiously, too horny to care about anything the grinning satyr before you has in mind.");
 	else output("You try to steady yourself, clutching your body in pain as the satyr grins at you.");
 	output("\n\nThe horned demihuman wastes no time on foreplay or savoring his victory, instead tramping triumphantly forward and pushing you over onto your back.  He squats down and roughly yanks off your [pc.gear] until your crotch is bared.  Impatiently, he ");
 	if(pc.isNaga()) output("pins down your serpentine body");
@@ -272,7 +272,7 @@ internal function defeatASatyr():void {
 	clearOutput();
 	//spriteSelect(98);
 	//Lust Victory
-	if(enemy.LQ() > 99) output("The satyr collapses to its caprine knees, bleating in dismay as it paws frantically at its huge cock, oblivious to everything in its need to get off.  Already, pre-cum is fountaining from the goat-man's shaft, his jerking motions smearing the pungent sexual fluid across the crown.");
+	if(enemy.lustQ() > 99) output("The satyr collapses to its caprine knees, bleating in dismay as it paws frantically at its huge cock, oblivious to everything in its need to get off.  Already, pre-cum is fountaining from the goat-man's shaft, his jerking motions smearing the pungent sexual fluid across the crown.");
 	//HP Victory
 	else output("Beaten and dazed, the satyr collapses to its caprine knees, shaking his head in a futile attempt to recover himself from the brutal trouncing you've just given him.  The combination of the blows and his previous drunken state mean he's quite incapable of getting back, however.");
 	

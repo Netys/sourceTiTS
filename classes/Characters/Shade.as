@@ -19,7 +19,7 @@
 		//constructor
 		public function Shade()
 		{
-			this._latestVersion = 1;
+			this._latestVersion = 2;
 			this.version = this._latestVersion;
 			this._neverSerialize = false;
 			
@@ -44,6 +44,13 @@
 			this.rangedWeapon = new ArcCaster();
 
 			this.shield = new ReaperArmamentsMarkIIShield();
+			shield.resistances.burning.resistanceValue = 30.0;
+			shield.resistances.corrosive.resistanceValue = 30.0;
+			shield.resistances.electric.resistanceValue = 30.0;
+			shield.resistances.freezing.resistanceValue = 30.0;
+			shield.resistances.kinetic.resistanceValue = 30.0;
+			shield.resistances.poison.resistanceValue = 30.0;
+			shield.hasRandomProperties = true;
 			
 			this.accessory = new LightningDuster();
 			
@@ -53,7 +60,7 @@
 			this.intelligenceRaw = 15;
 			this.willpowerRaw = 25;
 			this.libidoRaw = 50;
-			this.HPMod = 125;
+			this.HPMod = 0;
 			this.shieldsRaw = this.shieldsMax();
 			this.energyRaw = 100;
 			this.lustRaw = 15;
@@ -195,6 +202,20 @@
 			this._isLoading = false;
 		}
 		
+		public function UpgradeVersion1(o:Object):void
+		{
+			var s:ReaperArmamentsMarkIIShield = new ReaperArmamentsMarkIIShield();
+			s.resistances.burning.resistanceValue = 30.0;
+			s.resistances.corrosive.resistanceValue = 30.0;
+			s.resistances.electric.resistanceValue = 30.0;
+			s.resistances.freezing.resistanceValue = 30.0;
+			s.resistances.kinetic.resistanceValue = 30.0;
+			s.resistances.poison.resistanceValue = 30.0;
+			s.hasRandomProperties = true;
+			
+			o.shield = s.getSaveObject();
+		}
+		
 		override public function get bustDisplay():String
 		{
 			return "SHADE";
@@ -255,7 +276,7 @@
 			}
 			
 			long += " a kaithrit bounty hunter with silver hair and deadly glint in her eyes. She’s clad in a long duster decorated with lightning patterns, plus an armored vest beneath it. Her clothes part in the back, revealing a wriggling reptilian tail tipped with a human-looking pussy that drools a steady stream behind her. At her side, the kaithrit’s packing a";
-			if(rangedWeapon is HoldOutPistol) long += "bog standard holdout pistol. It’s not much to look at, but given your apparent immunity to lightning, it’s serving her better than the Arc Caster she was carrying.";
+			if(rangedWeapon is HoldOutPistol) long += " bog standard holdout pistol. It’s not much to look at, but given your apparent immunity to lightning, it’s serving her better than the Arc Caster she was carrying.";
 			else long += "n Arc Caster, a powerful hand cannon that crackles with electricity.";
 		}
 		
@@ -352,7 +373,7 @@
 			}
 			
 			energy(-20);
-			output("Shade hurls a grenade from her belt into the center of the tavern. The grenade explodes in a flash of blinding light that renders ");
+			output("Shade hurls a grenade from her belt between you and Kara. The grenade explodes in a flash of blinding light that renders ");
 			if(bFriendly) output("Kara");
 			else output("you and Kara");
 			output(" blind. A moment later, the expended grenade begins to hiss out a stream of green gas that floats out towards ");

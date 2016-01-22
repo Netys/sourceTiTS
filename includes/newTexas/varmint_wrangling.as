@@ -545,7 +545,7 @@ public function varmintOnShipBonus(btnSlot:int = 0):String
 		if(pc.isBimbo())
 		{
 			bonusText += " SO CUTE!";
-			btnText = "<i>Who’s a good little cutie-wooty? You are! Oh, yes you are~!</i>";
+			btnText = "<i>Who’s a good little cutie-wooty? You are! Oh, yes you are!</i>";
 		}
 		else btnText = "Check up on the critter.";
 		
@@ -836,7 +836,7 @@ public function doVarmintPlayTime(response:String = "none"):void
 // 10% chance per day when landed on a planet with an untamed varmint.
 public function varmintDisappearChance():void
 {
-	if(currentLocation != "SHIP INTERIOR" || !varmintIsCrew() || pc.hasStatusEffect("Varmint Leashed") || pc.hasStatusEffect("Varmint Unleashed Cooldown")) return;
+	if(currentLocation != "SHIP INTERIOR" || !varmintIsCrew() || pc.hasStatusEffect("Varmint Buddy") || pc.hasStatusEffect("Varmint Leashed") || pc.hasStatusEffect("Varmint Unleashed Cooldown")) return;
 	
 	var runawayChance:int = (10 * 2 * 60);
 	if(varmintIsTame()) runawayChance *= 2;

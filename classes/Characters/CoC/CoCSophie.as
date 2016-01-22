@@ -238,10 +238,10 @@ package classes.Characters.CoC
 				kGAMECLASS.luststickApplication(2);
 				applyDamage(new TypeCollection( { drug : (12 + target.libido() / 10) } ), this, target);
 				
-				if(target.LQ() < 70) output("The drugged lip-gloss is starting to get to you!\n");
-				else if(target.LQ() < 80) output("Her curvy thighs look so inviting.  You barely stop yourself before you climb in between them!\n");
-				else if(target.LQ() < 90) output("A trickle of pre-cum leaks from [pc.eachCock].  Sophie coos, \"<i>Why don't you give in and let mommy Sophie drain out all that juicy cum?</i>\"\n");
-				else if(target.LQ() < 100) output("[pc.EachCock] twitches and bounces in time with your heartbeat, practically pulling you towards Sophie's gaping, pink-linked snatch.\n");
+				if(target.lustQ() < 70) output("The drugged lip-gloss is starting to get to you!\n");
+				else if(target.lustQ() < 80) output("Her curvy thighs look so inviting.  You barely stop yourself before you climb in between them!\n");
+				else if(target.lustQ() < 90) output("A trickle of pre-cum leaks from [pc.eachCock].  Sophie coos, \"<i>Why don't you give in and let mommy Sophie drain out all that juicy cum?</i>\"\n");
+				else if(target.lustQ() < 100) output("[pc.EachCock] twitches and bounces in time with your heartbeat, practically pulling you towards Sophie's gaping, pink-linked snatch.\n");
 				else output("So horny.  You need to copulate - no, fuck - right NOW.  Your hand touches [pc.oneCock] and you swoon, pumping your hips lewdly as you submit.\n");
 			}
 			else {
@@ -249,10 +249,10 @@ package classes.Characters.CoC
 				kGAMECLASS.luststickApplication(2);
 				applyDamage(new TypeCollection( { drug : (8 + target.libido() / 10) } ), this, target);
 				
-				if(target.LQ() < 70) output("The drugged lip-gloss is starting to get to you!\n");
-				else if(target.LQ() < 80) output("Her curvy thighs look so inviting.  You barely stop yourself before you climb in between them!\n");
-				else if(target.LQ() < 90) output("A trickle of pre-cum leaks from [pc.eachCock].  Sophie coos, \"<i>Why don't you give in and let mommy Sophie drain out all that juicy cum?</i>\"\n");
-				else if(target.LQ() < 100) output("[pc.EachCock] twitches and bounces in time with your heartbeat, practically pulling you towards Sophie's gaping, pink-linked snatch.\n");
+				if(target.lustQ() < 70) output("The drugged lip-gloss is starting to get to you!\n");
+				else if(target.lustQ() < 80) output("Her curvy thighs look so inviting.  You barely stop yourself before you climb in between them!\n");
+				else if(target.lustQ() < 90) output("A trickle of pre-cum leaks from [pc.eachCock].  Sophie coos, \"<i>Why don't you give in and let mommy Sophie drain out all that juicy cum?</i>\"\n");
+				else if(target.lustQ() < 100) output("[pc.EachCock] twitches and bounces in time with your heartbeat, practically pulling you towards Sophie's gaping, pink-linked snatch.\n");
 				else output("So horny.  You need to copulate - no, fuck - right NOW.  Your hand touches your [pc.oneCock] and you swoon, pumping your hips lewdly as you submit.\n");
 			}
 		}

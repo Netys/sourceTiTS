@@ -289,7 +289,7 @@ private function rapeAnemoneWithDick():void
 	else {
 		output("Rubbing yourself through your [pc.gear], you look over the anemone; your attention wanders down her torso to the blue slit between her legs", false);
 		//[(lust victory)
-		if (pc.LQ() >= 100) output(", which she's currently diddling with the hand she's not using to stroke her cock", false);
+		if (pc.lustQ() >= 100) output(", which she's currently diddling with the hand she's not using to stroke her cock", false);
 		output(".  Unfastening your garments, you stroke [pc.cock] to full hardness and approach her.  The anemone looks up at you, still somewhat befogged; then, as you stand ", false);
 		if (pc.tallness > 48) output("over", false);
 		else output("before", false);
@@ -343,7 +343,7 @@ private function rapeAnemoneWithPussy():void
 
 	output("The anemone looks vacantly up at you as you approach.  Reaching forward, you take her cock in your hand", false);
 	//[(lust victory)
-	if (enemy.LQ() > 99) output(" after brushing hers aside", false);
+	if (enemy.lustQ() > 99) output(" after brushing hers aside", false);
 	output(" and begin to fondle the crown, with its slippery tentacles.  As expected, her venom flows into your hand, imparting a sensation of heat that slides up your arm and diffuses into a gentle warmth.  After a few rubs, you lean down and carefully take her penis into your mouth.  It tastes of the lakewater and heats your mouth as it did your hand; ", false);
 	//[(HP victory)
 	if (enemy.HP() <= 1) output("you can feel it harden as ", false);
@@ -709,7 +709,7 @@ private function anemoneButtPlugginz():void
 	//victory sex choice for males with cock fit 48 or females with clit >7": "her anus"
 	//(change "If you do, which of your parts" to "If you do, which part" in pre-sex choice menu)
 	output("Imagining your climax already, you look over the anemone.  Your gaze lingers on her breasts; she sticks them out enticingly, trying to catch your interest");
-	if (enemy.LQ() > 99) output(" as she plays with herself");
+	if (enemy.lustQ() > 99) output(" as she plays with herself");
 	output(".  Nice, but not what you're looking for...  ");
 	if (!pc.isTaur()) {
 		output("Opening your [armor] a bit, you stroke ");
@@ -1410,7 +1410,7 @@ private function tutorAnemoneKid():void
 {
 	clearOutput();
 	//(if lust > 99, output)
-	if (pc.LQ() >= 99) {
+	if (pc.lustQ() >= 99) {
 		output("You're way too horny to focus on any sort of weapon instruction right now, and the anemone can see it in your expression as your gaze wanders over her body; she blushes a deep blue and shrinks into her barrel with a shy glance.");
 		returnToCamp();
 		return;
@@ -1638,11 +1638,11 @@ private function tutorAnemoneKid():void
 	}
 	
 	//Sex scenes, post dream
-	if (flags["COC.HAD_KID_A_DREAM"] > 0 && kidAXP() >= 40 && pc.LQ() >= 99) {
+	if (flags["COC.HAD_KID_A_DREAM"] > 0 && kidAXP() >= 40 && pc.lustQ() >= 99) {
 		if (kidASex()) return;
 		//nothing fits
 		//if KidXP >= 40 and lust > 99 after tutor and PC has only huge dicks of area >= 60 or hasn't got shit
-		else if (kidAXP() >= 40 && pc.LQ() > 99) {
+		else if (kidAXP() >= 40 && pc.lustQ() > 99) {
 			output("\n\nYou collapse onto your back, panting your arousal into the dry air.  Shyly at first but with increasing confidence as you fail to react, the girl slips a hand into your clothes and down to your crotch.  She stops, wide-eyed, as her fingers initially locate ");
 			if (pc.hasCock()) output("something too enormous");
 			else output("nothing useful");

@@ -149,7 +149,7 @@ internal function sandwitchRape():void {
 	//LUST DEFEAT
 	clearOutput();
 	clearMenu();
-	if(pc.LQ() > 99) {
+	if(pc.lustQ() > 99) {
 		//BAD END START
 		if(pc.biggestTitSize() >= 9 && pc.milkRate >= 30 && pc.cor() >= 25) {
 			output("Overwhelmed by the intense pleasure caused by the vibrating sphere inside your body, you fall to your knees.\n\nYou whimper pathetically, desperate to cum, as the Sand Witch steps nearer to you and gently strokes your face. She smiles cruelly and lets her hands drop down to your chest, then tears your top away, letting your huge breasts bounce free. The mysterious woman firmly rubs and kneads them, making you gasp and writhe, until she starts lightly flicking your painfully hard nipples. You edge closer and closer to orgasm, panting like a whore while the witch teases you with her hands and magic.\n\n", true);

@@ -878,7 +878,7 @@ private function fuckMinervasAsshole():void {
 	//dynStats("sen", -1);
 	processTime(20 + rand(10));
 	clearMenu();
-	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.LQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
+	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.lustQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
 	else addButton(0, "Next", mainGameMenu);
 }
 
@@ -984,7 +984,7 @@ private function minervaCowgirlSex():void {
 	//dynStats("sen", -1);
 	processTime(20 + rand(10));
 	clearMenu();
-	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.LQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
+	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.lustQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
 	else addButton(0, "Next", mainGameMenu);
 }
 
@@ -1075,7 +1075,7 @@ private function minervaLapSex():void {
 	//dynStats("sen", -1);
 	processTime(20 + rand(10));
 	clearMenu();
-	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.LQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
+	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.lustQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
 	else addButton(0, "Next", mainGameMenu);
 }
 
@@ -1157,7 +1157,7 @@ private function noBallsMinervaAndContinuation(clear:Boolean = true):void {
 	pc.lust(20);
 	processTime(20 + rand(10));
 	clearMenu();
-	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.LQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
+	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.lustQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
 	else addButton(0, "Next", mainGameMenu);
 }
 	
@@ -1236,7 +1236,7 @@ private function letMinervaSuckYouOff():void {
 
 	processTime(20 + rand(10));
 	clearMenu();
-	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.LQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
+	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.lustQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
 	else addButton(0, "Next", mainGameMenu);
 }
 
@@ -1307,7 +1307,7 @@ private function fuckMinervaWithHerHandsBehindHerBack():void {
 
 	processTime(20 + rand(10));
 	clearMenu();
-	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.LQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
+	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.lustQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
 	else addButton(0, "Next", mainGameMenu);
 }
 	
@@ -1390,7 +1390,7 @@ private function pcGetsEatenOutByMinerva():void {
 
 	processTime(20 + rand(10));
 	clearMenu();
-	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.LQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
+	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.lustQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
 	else addButton(0, "Next", mainGameMenu);
 }
 
@@ -1496,7 +1496,7 @@ private function getButtFuckedYouSlut():void {
 
 	processTime(20 + rand(10));
 	clearMenu();
-	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.LQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
+	if (CombatManager.inCombat) if (enemy.HP() < 1 || enemy.lustQ() > 99) { CombatManager.genericVictory(); } else { CombatManager.genericLoss(); }
 	else addButton(0, "Next", mainGameMenu);
 }
 

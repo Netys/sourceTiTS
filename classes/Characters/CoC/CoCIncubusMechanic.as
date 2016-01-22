@@ -204,12 +204,12 @@ package classes.Characters.CoC
 					applyDamage(new TypeCollection( { tease: 3, kinetic: 5 } ), this, target);
 					return;
 				}
-				else if (target.LQ() >= 80 || target.cor() >= 80) {
+				else if (target.lustQ() >= 80 || target.cor() >= 80) {
 					output("  Moaning with desire, you lick your lips as you slide your well-lubricated [pc.legs] free.  You gather a dollop of cum and lick it seductively, winking at the incubus and hoping to make him cave into his desire.");
 					target.cor(1);
 					applyDamage(new TypeCollection( { tease: 3, pheromone: 13, kinetic: 5 } ), this, target);
 				}
-				else if (target.LQ() >= 50 || target.cor() >= 50) {
+				else if (target.lustQ() >= 50 || target.cor() >= 50) {
 					output("  Blushing at the scent and feel of cum on your [pc.legs], you twist and pull free.  You find yourself wondering what this demon's dick would taste like.");
 					applyDamage(new TypeCollection( { tease: 3, pheromone: (8 + target.cor() / 20), kinetic: 5 } ), this, target);
 				}

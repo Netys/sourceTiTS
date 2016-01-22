@@ -70,7 +70,7 @@ public function defeatSpiderBoy():void
 	//spriteSelect(74);
 	output("The male spider-morph collapses onto his hands and knees, ");
 	
-	if (enemy.LQ() > 99) output("masturbating with furious abandon, working his ebon dick with such vigor that the spider's pre-cum-slicked dick-skin noisily slides itself back and forth over his fattened glans; it becomes apparent just how much foreskin he truly has at this point, as even with his frenzied rubbing his glans remains shrouded in the thick excess skin while his fist slaps lewdly against his groin.  Dribbles of pre-cum leak from between his fingers to spill on the ground.");
+	if (enemy.lustQ() > 99) output("masturbating with furious abandon, working his ebon dick with such vigor that the spider's pre-cum-slicked dick-skin noisily slides itself back and forth over his fattened glans; it becomes apparent just how much foreskin he truly has at this point, as even with his frenzied rubbing his glans remains shrouded in the thick excess skin while his fist slaps lewdly against his groin.  Dribbles of pre-cum leak from between his fingers to spill on the ground.");
 	else output("wobbling back and forth as he tries to stay up and fight.  There's no way he can oppose you, as beaten as he is now.\n\n");
 	
 	clearMenu();
@@ -113,7 +113,7 @@ private function victoryButtFuckSpider():void
 	//spriteSelect(74);
 	//*Summary:  Reaming some anus.
 	output("You approach and turn the spider-boy around, pushing the spider's bulbous abdomen aside to give yourself a better view of the his tight, heart-shaped ass.  ");
-	if (enemy.LQ() > 99) output("He's too distracted by his foreskin fondling to pay much attention to your anal-focused attentions.");
+	if (enemy.lustQ() > 99) output("He's too distracted by his foreskin fondling to pay much attention to your anal-focused attentions.");
 	else output("He's too busy trying to stay upright to fight off your anal-focused attentions.");
 	output("  With a wide smile on your face, you grab a handful of his pale butt-cheek and squeeze your fingers into the soft flesh.  It spreads his dainty derriere just wide enough for you to see the puckered star of his rectum.  [pc.EachCock] ");
 	if (pc.lust() < 70) output("hardens to full size");
@@ -126,7 +126,7 @@ private function victoryButtFuckSpider():void
 	output("</i>\"\n\n");
 
 	output("You grab his balls and caress them in one hand while you take off your equipment with the other.  The hapless victim starts to relax from the attentions, and pre-cum begins to leak from inside his foreskin ");
-	if (enemy.LQ() <= 99) output("after he starts touching himself.");
+	if (enemy.lustQ() <= 99) output("after he starts touching himself.");
 	else output("while he fondles and caresses the sensitive flesh.");
 	output("  Meanwhile, you grab [pc.oneCock] and line it up with the spider-boy's twitching rectum, rubbing the [pc.cockHead " + x + "] over the tight little hole while you wait for it to slowly loosen.  A fresh dollop of pre-cream bubbles out of his cum-frothing foreskin in response, letting you know that in spite of his protests, your reluctant lover's body loves the anal stimulation.\n\n");
 
@@ -173,13 +173,13 @@ private function victoryFrotTheSpoidah():void
 	clearOutput();
 	//spriteSelect(74);
 	output("You push the ");
-	if (enemy.LQ() > 99) output("masturbating");
+	if (enemy.lustQ() > 99) output("masturbating");
 	else output("injured");
 	output(" spider-morph over onto his back and laugh at his relatively tiny dick.  It's no wonder he jumped you wanting sex - the girls probably took one look at the unimpressive member and took off running.  You take off your [pc.gear] and let [pc.eachCock] flop free.  ");
 	if (pc.cockTotal() == 1) output("Dropping it squarely ");
 	else output("Dropping the largest ");
 	output("atop his miniature cock, you virtually bury it in a superior male's heavy penile flesh.  ");
-	if (enemy.LQ() > 99) output("He pants in surprise and pleasure, clearly enjoying the weighty shaft rubbing against his drooping dick-skin");
+	if (enemy.lustQ() > 99) output("He pants in surprise and pleasure, clearly enjoying the weighty shaft rubbing against his drooping dick-skin");
 	else output("He gasps in surprise and slowly growing pleasure, clearly enjoying the weighty shaft rubbing against his drooping dick-skin");
 	output(".  You sway your [pc.hips] to drag your [pc.cock] all over his body, and the defeated boy's pale white skin slowly colors pink with a full-body blush.\n\n");
 
@@ -283,7 +283,7 @@ private function spiderBoyLossMaleButtfuck():void
 	if (pc.HP() <= 1) output("and silently mouth, \"<i>Please, no.</i>\"");
 	else output("and give a little nod, too intoxicated by arousal to decline any form of sex.");
 	output("  His only response is to squeeze tight on your [pc.ass] and press forward until his pre-cum-soaked foreskin is glazing your rim in preparation for the coming penetration.  ");
-	if (pc.LQ() > 99) output("[pc.EachCock] bounces atop your belly, reacting strongly to the tingling sensation radiating from your [pc.asshole].");
+	if (pc.lustQ() > 99) output("[pc.EachCock] bounces atop your belly, reacting strongly to the tingling sensation radiating from your [pc.asshole].");
 	else {
 		output("[pc.EachCock] ");
 		if (pc.lust() < 50) output("slowly fills with blood");
@@ -349,7 +349,7 @@ private function loseToSpiderBoyVagFucked():void
 	if (pc.HP() <= 1) output("wounds overwhelm");
 	else output("lust overwhelms");
 	output(" you, your " + pc.legs() + " grow shaky, then give out entirely.  You flop down on your back");
-	if (pc.LQ() > 99) output(", caressing yourself with reckless abandon while praying the sexy spider-boy will come violate you with his thick-skinned prick.");
+	if (pc.lustQ() > 99) output(", caressing yourself with reckless abandon while praying the sexy spider-boy will come violate you with his thick-skinned prick.");
 	else output(", clearly too injured and fatigued by the battle to make more than a few token movements.");
 	output("  He pounces you, lightning fast, quick enough that you don't even react until he's on top of you.  Chitin-clad legs brush your [pc.hips], the hard knees sinking deep into the swampy loam.  Grinning happily, the spider-boy leans over you and sucks a [pc.nipple] ");
 	if (pc.hasFuckableNipples()) output("into his mouth before plunging his tongue into the tit-pussy's passage");

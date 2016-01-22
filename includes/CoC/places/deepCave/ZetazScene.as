@@ -101,7 +101,7 @@ public function ZetazCaveSexualInterrogation():void {
 public function ZetazCaveSexualTortureReleaseZetaz():void {
 	clearOutput();
 	output("In a moment of kindness", false);
-	if(pc.LQ() > 60 || pc.libido() > 60 || pc.cor() > 60) output(", or perhaps perversion,");
+	if(pc.lustQ() > 60 || pc.libido() > 60 || pc.cor() > 60) output(", or perhaps perversion,");
 	output(" you release the taut cord and allow it to unravel.  It whips off Zetaz's prick at once, tossed across the chamber by the pressure boiling forth from the imp's shaking hips.   Nodules flare from his prick's base to his tip in a wavelike motion, nearly doubling in size by the time the 'wave' reaches the ring around his crown.  Simultaneously, his urethra parts and unloads the imp's pent-up cargo with cannon-like force.  Sticky spoo rockets upwards, splatters against the ceiling, and hangs for a moment as the first 'jet' glazes the roof.  The eruption slowly peters out, letting the last of the rope fall over Zetaz's form.\n\n");
 	
 	output("You marvel at the force as you feel the next bulge moving up that demon-dick, squeezing past your gently caressing fingertips.  The next burst doesn't surface with the explosive force of its precursor, but what it lacks in speed, it makes up for in raw volume.  Zetaz's body arches and twitches with the effort of trying to push out three orgasms worth of backed-up demon jizz, and easily launches a missile-like globule onto his bed, where it splatters to great effect.  The third spout of white lacks the thrust and mass of it's predecessors, but easily puts out more love juice than most people's entire orgasm.  With a knowing smile on your face, you stroke out the remainder of his seed, keeping count of each rope as it's fired – four, five, six, seven, eight, nine, ten... eleven.\n\n");
@@ -160,7 +160,7 @@ public function ZetazCaveEndZetaz():void {
 public function ZetazCaveLoseToZetaz():void {
 	clearOutput();
 	output("\"<i>Well, isn't this familiar?</i>\" asks Zetaz as he watches your ");
-	if(pc.LQ() >= 99) output("masturbating");
+	if(pc.lustQ() >= 99) output("masturbating");
 	else output("prone");
 	output(" form with an amused expression, \"<i>The first champion in ages to retain " + pc.mf("his","her") + " free will for more than a few minutes, and " + pc.mf("he","she") + "'s brought to " + pc.mf("his","her") + " knees by the very imp " + pc.mf("he","she") + " escaped!  Once you've learned your proper place, you'll guarantee my safe return to my rightful station.  Perhaps I'll even get a promotion?  After all, you've defeated so many higher ranking demons already.</i>\"\n\n");
 	

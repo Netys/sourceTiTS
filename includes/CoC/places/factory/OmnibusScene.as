@@ -47,7 +47,7 @@ public function DemonFactoryOmnibusDefeated():void {
 	kGAMECLASS.userInterface.showName("VICTORY:\nOMNIBUS");
 	flags["COC.FACTORY_OMNIBUS_DEFEATED"] = 1;
 	clearOutput();
-	if(enemy.LQ() > 99) {
+	if(enemy.lustQ() > 99) {
 		output("The omnibus trembles where she stands, her proud demonic dick twitching and pulsating as her desires totally overwhelm her.  The tainted nodules covering the purplish hermaphrodite's member ripple and swell from the base towards the tip, culminating with an explosive eruption of sticky, white demon-seed.  She moans with shame and pleasure, pumping larger and larger volumes of cum onto her office's floor.  She drops to her knees, too exhausted and ashamed by her premature orgasm to continue fighting.\n\n");
 		
 		output("\"<i>Ooooh no.  You can't tell the other demons I got off so easily!  I'll never live it down,</i>\" she cries, \"<i>You've beaten me, please if you let me go and promise not to tell the other demons I'll use my magic to give you a gift!  My magic is powerful, I can do nearly ANYTHING with it when the subject desires the changes.</i>\"\n\n");

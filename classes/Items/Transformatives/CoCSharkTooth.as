@@ -80,7 +80,7 @@ package classes.Items.Transformatives
 				//output("\n\nIt takes a while, but you eventually realize your body has become less sensitive.", false);
 			//}
 			//Increase Libido 2-4 points (Up to 75 points) (100 for tigers)
-			if (((pc.LQ() < 100 && type == 1) || pc.LQ() < 75) && rand(3) == 0 && changes < changeLimit) {
+			if (((pc.lustQ() < 100 && type == 1) || pc.lustQ() < 75) && rand(3) == 0 && changes < changeLimit) {
 				pc.slowStatGain("l", 1 + rand(2));
 				changes++;
 				output("\n\nA blush of red works its way across your skin as your sex drive kicks up a notch.", false);

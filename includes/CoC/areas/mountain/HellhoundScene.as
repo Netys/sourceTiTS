@@ -42,7 +42,7 @@ public function hellhoundRapesPlayer():void
 	//if (doSFWloss()) return; //No rape in SFW mode.
 	//Lust or HP loss texts here
 	clearOutput();
-	if (pc.LQ() > 99) output("Overcome by sexual desire, you submit to the hungry hellhound.\n\n");
+	if (pc.lustQ() > 99) output("Overcome by sexual desire, you submit to the hungry hellhound.\n\n");
 	else output("Too weak to continue fighting, you fall to your knees.\n\n");
 	
 	output("The heads of the hellhound grin with desire as he rises onto his hind legs. As the hellhound stands before you, your eyes widen at the sight of its equipment: a pair of eight-inch long black rods, one above the other, with a sack containing a quad of flaming balls underneath. As the hound swaggers closer, you gulp at the thought of what those fiery balls are going to be pumping into you. You are helpless against the hellhound as he pushes you onto your ");

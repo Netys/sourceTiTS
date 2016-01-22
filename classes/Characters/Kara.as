@@ -19,7 +19,7 @@
 		//constructor
 		public function Kara()
 		{
-			this._latestVersion = 1;
+			this._latestVersion = 3;
 			this.version = this._latestVersion;
 			this._neverSerialize = false;
 			
@@ -50,6 +50,13 @@
 			this.rangedWeapon.hasRandomProperties = true;
 
 			this.shield = new ReaperArmamentsMarkIIShield();
+			shield.resistances.burning.resistanceValue = 30.0;
+			shield.resistances.corrosive.resistanceValue = 30.0;
+			shield.resistances.electric.resistanceValue = 30.0;
+			shield.resistances.freezing.resistanceValue = 30.0;
+			shield.resistances.kinetic.resistanceValue = 30.0;
+			shield.resistances.poison.resistanceValue = 30.0;
+			shield.hasRandomProperties = true;
 			
 			this.physiqueRaw = 31;
 			this.reflexesRaw = 21;
@@ -57,7 +64,7 @@
 			this.intelligenceRaw = 25;
 			this.willpowerRaw = 15;
 			this.libidoRaw = 70;
-			this.HPMod = 125;
+			this.HPMod = 0;
 			this.shieldsRaw = this.shieldsMax();
 			this.energyRaw = 100;
 			this.lustRaw = 15;
@@ -200,6 +207,25 @@
 			this._isLoading = false;
 		}
 		
+		public function UpgradeVersion1(o:Object):void
+		{
+			o.HPMod = 0;
+		}
+		
+		public function UpgradeVersion2(o:Object):void
+		{
+			var s:ReaperArmamentsMarkIIShield = new ReaperArmamentsMarkIIShield();
+			s.resistances.burning.resistanceValue = 30.0;
+			s.resistances.corrosive.resistanceValue = 30.0;
+			s.resistances.electric.resistanceValue = 30.0;
+			s.resistances.freezing.resistanceValue = 30.0;
+			s.resistances.kinetic.resistanceValue = 30.0;
+			s.resistances.poison.resistanceValue = 30.0;
+			s.hasRandomProperties = true;
+			
+			o.shield = s.getSaveObject();
+		}
+		
 		override public function get bustDisplay():String
 		{
 			return "KARA";
@@ -288,7 +314,7 @@
 		{
 			output("Kara holds down the trigger on her plasma pistol, just for a second, letting a charge build up before she lets the bolt of green go screaming towards ");
 			if(target is PlayerCharacter) output("you!");
-			else output(target.a + target.short + ".");
+			else output(target.a + target.uniqueName + ".");
 			if(rangedCombatMiss(this, target))
 			{
 				output(" Her shot blasts into a wall, sizzling harmlessly.");
@@ -313,9 +339,8 @@
 		private function forceEdge(target:Creature):void
 		{
 			output("Kara flicks on the blade of her hardlight sword and charges, hacking a deadly arc toward ");
-			if(target is PlayerCharacter) output("you");
-			else output("Shade");
-			output(".");
+			if(target is PlayerCharacter) output("you!");
+			else output(target.a + target.uniqueName + ".");
 			if(combatMiss(this, target))
 			{
 				if(!(target is PlayerCharacter)) output(" Her strike is parried!");
@@ -333,7 +358,7 @@
 		{
 			output("Kara fires a bolt of superheated plasma at ");
 			if(target is PlayerCharacter) output("you!");
-			else output("Shade!");
+			else output(target.a + target.uniqueName + ".");
 			if(rangedCombatMiss(this, target))
 			{
 				output(" Her shot goes wide, burning into the ground!");

@@ -42,7 +42,7 @@ public function encounterFaerie():void {
 		}
 
 		pc.lust(pc.libido() / 10 + 2);
-		if (pc.LQ() >= 90) {
+		if (pc.lustQ() >= 90) {
 			output("\n\nYou groan miserably with frustration. Desperate for stimulation, you sink to your knees and start jacking off, the faerie's visage still fresh in your mind. You catch a fleeting glimpse of yourself tightly gripping the faerie's legs in each of your fists, dragging her toward ");
 			output("your [pc.cock " + smallCock + "], ");
 			if (pc.cocks[smallCock].cLength() > 3) output("too large for her tiny frame... ");

@@ -196,7 +196,7 @@ package classes.Characters.CoC
 			
 			if (rand(5) == 0)
 				CoCAkbalSpecial(target);
-			else if (HP() < maxHP() * 0.8 && rand(2) == 0 && LQ() < 75)
+			else if (HP() < maxHP() * 0.8 && rand(2) == 0 && lustQ() < 75)
 				CoCAkbalHeal(target);
 			else if (target.lust() >= target.lustMax() * 0.33)
 			{

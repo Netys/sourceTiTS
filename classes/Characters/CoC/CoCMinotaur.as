@@ -222,7 +222,7 @@ package classes.Characters.CoC
 			else {
 				output("slapping into your face before you can react!  You wipe the slick snot-like stuff out of your eyes and nose, ");
 				
-				if(target.LQ() > 75) {
+				if(target.lustQ() > 75) {
 					output("swallowing it into your mouth without thinking.  ");
 					applyDamage(new TypeCollection( { pheromone: 5 + target.libido() / 20, drug : 5 + target.libido() / 20 } ), this, target);
 				}

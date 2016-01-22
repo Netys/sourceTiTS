@@ -46,6 +46,7 @@
 	import classes.Characters.*;
 
 	// Items
+	import classes.Items.Armor.*;
 	import classes.Items.Protection.*
 	import classes.Items.Guns.*
 	import classes.Items.Melee.*
@@ -104,6 +105,9 @@
 		include "../includes/roomFunctions.as";
 		include "../includes/StubbedFunctions.as";
 
+		// guess what
+		include "../includes/CoC/hook.as";
+
 		//Holiday shit
 		include "../includes/holidayEvents/halloweenCostumes.as";
 		include "../includes/event.puppyslutmas.as";
@@ -137,6 +141,7 @@
 		include "../includes/tavros/saendraXPack1.as";
 		include "../includes/tavros/sellesy.as";
 		include "../includes/tavros/sera.as";
+		include "../includes/tavros/seraXPack1.as";
 		include "../includes/tavros/shearBeauty.as";
 		include "../includes/tavros/shelly.as";
 		include "../includes/tavros/vahn.as";
@@ -244,10 +249,12 @@
 		include "../includes/myrellion/xanthe.as";
 		include "../includes/myrellion/xenogenbiotech.as";
 		
-		// guess what
-		include "../includes/CoC/hook.as";
-		
-		public var chars:Object;
+
+		// Karaquest 2- Karaharder.
+		include "../includes/events/karaquest2/content.as";
+		include "../includes/events/karaquest2/rooms.as";
+		include "../includes/events/karaquest2/roomFunctions.as";
+				public var chars:Object;
 		public var foes:/*Creature*/Array;
 		// This needs to ideally be moved somewhere else, I'm just stopping the GUI code from being used to store game-data models
 		public var days:int;
@@ -260,7 +267,7 @@
 			var value:uint = 0;
 			value += minutes;
 			value += hours * 60;
-			value += days * 24 * 60;
+			value += days * (24 * 60);
 			return value;
 		}
 
@@ -338,7 +345,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.30";
+			version = "0.6.31";
 
 			//temporary nonsense variables.
 			temp = 0;
@@ -379,15 +386,11 @@
 
 			flags = new Dictionary();
 
-			// Major class variable setup: ------------------------------------------------------------
 			initializeRooms();
 			initializeMyrellionRooms();
+			kquest2InitRooms();
 			
-			// dick about with mapper: ------------------------------------------------------------
 			mapper = new Mapper(this.rooms)
-
-			//Lazy man shortcuts! Need reset after reinitialization of data.
-			//pc = chars[0];
 
 			this.chars["PC"] = new PlayerCharacter();
 			_perkDB = new Perks();
@@ -486,6 +489,8 @@
 			
 			toggleWTF();
 			
+			if (!inCombat()) userInterface.showBust("none");
+			
 			if (evt.currentTarget is MainButton)
 			{
 				trace("Button " + (evt.currentTarget as MainButton).buttonName + " clicked");
@@ -498,16 +503,6 @@
 				trace("Button " + evt.currentTarget.caption.text + " clicked.");
 			}
 			
-			if (!inCombat()) 
-			{
-				this.userInterface.showBust("none");
-				if (pc != null && pc.short != "Uncreated" && pc.short != "uncreated" && pc.short != "")
-				{
-					updatePCStats();
-					updateDisplays();
-				}
-			}
-			
 			if (evt.currentTarget.arg == undefined)
 			{
 				if (evt.currentTarget.func != null) evt.currentTarget.func();
@@ -515,6 +510,15 @@
 			else
 			{
 				if (evt.currentTarget.func != null) evt.currentTarget.func(evt.currentTarget.arg);
+			}
+			
+			if (!inCombat()) 
+			{
+				if (pc != null && pc.short != "Uncreated" && pc.short != "uncreated" && pc.short != "")
+				{
+					updatePCStats();
+					updateDisplays();
+				}
 			}
 			
 			userInterface.updateTooltip((evt.currentTarget as DisplayObject));

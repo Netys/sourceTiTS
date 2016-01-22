@@ -292,7 +292,7 @@ package classes.Characters.CoC
 			//(3)
 			else {
 				output("Kelt snarls, \"<i>Why don't you just masturbate like the slut that you are until I come over there and punish you?</i>\"  ");
-				if(target.LQ() >= 80) output("Your hand moves towards your groin seemingly of its own volition.  ");
+				if(target.lustQ() >= 80) output("Your hand moves towards your groin seemingly of its own volition.  ");
 				else output("Your hands twitch towards your groin but you arrest them.  Still, the idea seems to buzz at the back of your brain, exciting you.  ");
 			}
 			applyDamage(new TypeCollection( { tease : target.libido() / 5 + rand(10) } ), this, target);

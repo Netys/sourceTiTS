@@ -139,7 +139,7 @@ private function fapArenaPageII():void {
 	else if(pc.cocks[x].cType == GLOBAL.TYPE_LIZAN) c = 3;
 	else if(pc.cocks[x].cType == GLOBAL.TYPE_EQUINE) c = 2;
 	//R the player's lust resistance (0<R<1)
-	var r:Number = pc.LQ() / 100;
+	var r:Number = pc.lustQ() / 100;
 	//The game does a roll between 0 and 100, call it N.
 	var n:Number = rand(100);
 	//We define the PC's stamina as ST = (N-S*R-4*D)/(D+1) + C

@@ -217,7 +217,7 @@ package classes.Characters.CoC
 				if(target.tallness < 72) output("down");
 				else output("over");
 				output(" to plant a sloppy, wet kiss upon your lips.  Her glossy lip-venom oozes everywhere, dribbling down your collective chins and sliding into your mouth.  You shudder, trying to resist, but your tongue betrays you.  It slides between her moist, puffy entrance, lapping at her venom and making love to her tongue.  ");
-				if (target.LQ() < 100) output("  Somehow, you work up the willpower to back away, but your body slowly begins to burn hotter and harder, afflicted with a slowly-building lust.  ");
+				if (target.lustQ() < 100) output("  Somehow, you work up the willpower to back away, but your body slowly begins to burn hotter and harder, afflicted with a slowly-building lust.  ");
 				//(HIT? + 10 lust)
 				applyDamage(new TypeCollection( { tease : 3, drug : 7 } ), this, target);
 				target.createStatusEffect("Drider Kiss", 0, 0, 0, 0, true, "", "", true);
@@ -230,7 +230,7 @@ package classes.Characters.CoC
 					if(target.hasCock()) output("  [pc.EachCock] spews a rope of pre-cum into your [pc.gear], desperate to get out and fuck.");
 					if(target.hasVagina()) output("  [pc.Femcum] dribbles down your [pc.legs] while your [pc.clit] gets so hard you think it'll explode.");
 					output("  This time, the drider is the one to break the kiss.  She asks, \"<i>Are you ready, my horny little morsel?</i>\"\n");
-					if(target.LQ() < 100) output("You shake your head 'no' and stand your ground!\n");
+					if(target.lustQ() < 100) output("You shake your head 'no' and stand your ground!\n");
 					
 					//(HIT? + 15 lust)
 					applyDamage(new TypeCollection( { tease : 5, drug : 10 } ), this, target);
@@ -244,7 +244,7 @@ package classes.Characters.CoC
 						else if(target.wetness() < 5 && target.cumQ() < 500) output("large");
 						else output("massive");
 						output(" wet stain that reeks of your sheer sexual ache has formed in your [pc.gear].  ");
-						if(target.LQ() < 100) output("Amazingly, you resist her and pull back, panting for breath.  ");
+						if(target.lustQ() < 100) output("Amazingly, you resist her and pull back, panting for breath.  ");
 					}
 					//(HIT? + 20 lust)
 					applyDamage(new TypeCollection( { tease : 7, drug : 13 } ), this, target);

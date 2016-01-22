@@ -294,9 +294,9 @@ package classes.Characters.CoC
 		//*Intelligence dependant attack with possibility of very high lust gain.
 		public function cumWitchCocknosisAttack(target:Creature):void {
 			output("Lifting her robes enticingly, the Cum Witch reveals her ");
-			if(this.LQ() < 50) output("half-hard");
-			else if(this.LQ() < 70) output("hard");
-			else if(this.LQ() < 85) output("throbbing");
+			if(this.lustQ() < 50) output("half-hard");
+			else if(this.lustQ() < 70) output("hard");
+			else if(this.lustQ() < 85) output("throbbing");
 			else output("hard, dripping");
 			output(" cock.  She gently begins to sway her hips, bouncing back and forth with near-mechanical precision, her softly bobbing cock catching your eyes with its metronome-like precision.  She softly begins to speak, enunciating each word to the time and tune of her movements.");
 			
@@ -309,7 +309,7 @@ package classes.Characters.CoC
 				output("The Witch smirks, though you're too focused on her cock to see, and she continues, \"<i>Good " + target.mf("boy","girl") + ".  Watch it sway.  You're so focused on my cock now that the world is just falling away around it, sinking into nothingness, leaving only that wonderful cock behind for you to watch.  And since it's filling your view, you can feel it filling your mind as well, can't you?</i>\"");
 				output("\n\nYou nod, your view rigidly attached to her equally rigid tool as you utterly and completely fixate on her penis, admiring its curves, its thickness, and the way it seems to pulsate happily for you whenever you look at it just right.  The Witch keeps talking, but it's her dick that's important.  You start to drool as your [pc.skin] flushes and your body heats.  Gods, her cock is gorgeous.  Reaching down, you begin to masturbate without thinking.  You don't know why, but it just feels like the right thing to do.  ");
 				applyDamage(new TypeCollection( { tease : 20 } ), this, target);
-				if(target.LQ() <= 99) output("\n\nYou bump against something, startling yourself out of the cocknosis before you can completely fall for it.  Still, you keep seeing her dick every time you close your eyes, and your body is very turned on from how you were touching yourself.");
+				if(target.lustQ() <= 99) output("\n\nYou bump against something, startling yourself out of the cocknosis before you can completely fall for it.  Still, you keep seeing her dick every time you close your eyes, and your body is very turned on from how you were touching yourself.");
 				else {
 					target.lust(target.lustMax() - 1);
 					output("\n\nYou play with yourself until you're on the very edge of orgasm.  At that moment, a loud *SNAP* startles you back to wakefulness, and as you look down at the cock bobbing just a few inches away, you realize it's hopeless.  You can't fight this.");

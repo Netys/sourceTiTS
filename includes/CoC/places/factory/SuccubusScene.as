@@ -249,7 +249,7 @@ public function DemonFactoryDoRapeSuccubus():void {
 	//MALE
 	if(pc.hasCock() && (!pc.hasVagina() || rand(2))) {
 		//(LUSTY) 
-		if(enemy.LQ() > 99) output("Panting hotly, the succubus staggers towards you, her eyes fixated on the bulge in your crotch.  Dark viscous liquid drips from her dusky folds as her hips undulate hypnotically.  Blue fingers smear the corrupted lubricants over the smooth outer folds of her sex as she lies back enticingly, giving up on anything but bedding you.  In moments your [pc.gear] are on the floor and you approach your prize.\n\n"); 
+		if(enemy.lustQ() > 99) output("Panting hotly, the succubus staggers towards you, her eyes fixated on the bulge in your crotch.  Dark viscous liquid drips from her dusky folds as her hips undulate hypnotically.  Blue fingers smear the corrupted lubricants over the smooth outer folds of her sex as she lies back enticingly, giving up on anything but bedding you.  In moments your [pc.gear] are on the floor and you approach your prize.\n\n"); 
 		//(HP) 
 		else output("The succubus collapses on the floor, groaning in pain.  Most of her clothes have been destroyed by the combat and her blue skin is marked with deep purple bruises and bloody lacerations.  You undress, straddling your conquest and gazing down on her helpless, curvaceous form.  She looks up at you and forces a smile, licking the blood from a cracked lip and beginning to masturbate for you.\n\n");
 		//START ZE RAEP CANNONZ
@@ -414,7 +414,7 @@ public function DemonFactoryDildoSuccubus():void {
 public function DemonFactoryDoLossSuccubus():void {
 	clearOutput();
 	if(pc.hasCock()) {
-		if(pc.LQ() > 99) output("Driven half mad with lust, you drop to your knees. Your fingers fly over your body as you pry off every last piece of your [pc.gear], displaying just how hard your alluring opponent has gotten you.  The succubus saunters over, every sinuous step radiating the inhuman sexuality that pours off her skin like heat from a bonfire.\n\n");
+		if(pc.lustQ() > 99) output("Driven half mad with lust, you drop to your knees. Your fingers fly over your body as you pry off every last piece of your [pc.gear], displaying just how hard your alluring opponent has gotten you.  The succubus saunters over, every sinuous step radiating the inhuman sexuality that pours off her skin like heat from a bonfire.\n\n");
 		else output("Exhausted, you collapse before the succubus.  She effortlessly slices away your [pc.gear], peeling your possessions away with practiced ease.  In moments you are stark naked and wholly exposed to your captor.  In spite of yourself, your body begins to respond to her sultry aura, displaying the hardness of your desire and shame immediately.\n\n");
 		output("\"<i>Awww, did I get you all <b>HOT</b> and bothered?</i>\" She croons, poising a stocking clad foot above you as her high-heels seem to fade away.  Warm silk begins to press against your groin as slender toes curl around the head of your throbbing maleness, your foe having her way with your desire-saturated form.  You mewl pitifully at the sensation, your hips twitching involuntarily against her demonic sole. The slippery surface of her foot squeezes as she expertly strokes you with her foot, delighting in her complete dominance over your easily controlled member.\n\n");  
 		//balls or pussy play
@@ -450,7 +450,7 @@ public function DemonFactoryDoLossSuccubus():void {
 		doNext(DemonFactoryBadEndGeneric);
 	}
 	else {
-		if(pc.LQ() > 99) {
+		if(pc.lustQ() > 99) {
 			output("Driven half mad with lust, you shake yourself free from the trappings of your [pc.gear], first revealing your [pc.fullChest], then [pc.hips] and finally your ");
 			if(pc.hasVagina()) output("[pc.vagina] as the last pieces fall away.\n\n");
 			else output("bare groin as the last pieces fall away.\n\n");
@@ -574,7 +574,7 @@ public function DemonFactorySuccubusDefeated():void
 	clearOutput();
 	clearMenu();
 	
-	if (enemy.LQ() > 99) output("You smile in satisfaction as the [enemy.name] gives up on fighting you and starts masturbating, begging for you to fuck her.");
+	if (enemy.lustQ() > 99) output("You smile in satisfaction as the [enemy.name] gives up on fighting you and starts masturbating, begging for you to fuck her.");
 	else output("You smile in satisfaction as the [enemy.name] collapses, unable to continue fighting.");
 	pc.lust(1);
 	flags["COC.FACTORY_SUCCUBUS_DEFEATED"] = 1;

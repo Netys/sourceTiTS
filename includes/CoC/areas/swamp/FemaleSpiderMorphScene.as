@@ -293,7 +293,7 @@ private function spiderMorphFemaleRidesACawk():void
 	else if (pc.HP() <= 1) output("You collapse into the soft moss,");
 	else output("You collapse into the soft moss and begin to masturbate,");
 	output(" sinking slightly into it while you watch the arachnid woman turn around and begin to shake her cute backside at you.  It sways entrancingly, the hefty weight of her large abdomen bobbing past with each shake to momentarily obstruct your view.  As you watch, a number of protuberances on the abdomen twist and writhe for a half-second before spraying out a huge quantity of sticky webbing.  It hits you like a hammer, knocking you completely flat and plastering your naked form to the dirt.");
-	if (pc.LQ() > 99) output("  One of the gossamer strands hits your arm hard enough to rip it away from your groin, and you're left pinned down, unable to touch yourself.");
+	if (pc.lustQ() > 99) output("  One of the gossamer strands hits your arm hard enough to rip it away from your groin, and you're left pinned down, unable to touch yourself.");
 	output("  Once it finishes, you find that your head, chest, and crotch were all left uncovered by the sticky strands.  She unleashes another burst of pearlescent webbing to coat the first, and you're left completely, utterly restrained.\n\n");
 
 	output("\"<i>Perfect, now that you're nice and comfortable, we can have sex!</i>\" decrees the ");
@@ -410,7 +410,7 @@ private function femaleSpiderMorphTooBigWebRape():void
 	//(COMBAT LOSS)
 	else {
 		output("You drop to the ground and ");
-		if (pc.LQ() > 99) output("stick your hands into your groin, fondling [pc.oneCock] with need");
+		if (pc.lustQ() > 99) output("stick your hands into your groin, fondling [pc.oneCock] with need");
 		else output("groan in obvious pain, unable to move");
 		output(".  The spider-girl advances, giggling girlishly at your state while she painstakingly removes every piece of armor, visibly gasping at the size of your [pc.cock " + x + "] as it flops out.\n\n");
 
@@ -486,7 +486,7 @@ public function defeatASpiderBitch():void
 	clearOutput();
 	//spriteSelect(73);
 	output("The spider-girl drops to her knees and wobbles unsteadily");
-	if (enemy.LQ() > 99) output(", thrusting two of her carapace-covered finger-tips deep into her sloppy box as she gives into her lust.  She actually has the temerity to demand, \"<i>Fuck me, fuck me now!</i>\"");
+	if (enemy.lustQ() > 99) output(", thrusting two of her carapace-covered finger-tips deep into her sloppy box as she gives into her lust.  She actually has the temerity to demand, \"<i>Fuck me, fuck me now!</i>\"");
 	else output(", too wounded to fight back or run away.");
 	
 	clearMenu();
@@ -512,11 +512,11 @@ private function fSpiderMorphRape():void
 	clearOutput();
 	//spriteSelect(73);
 	output("You laugh at her and push her down with your " + pc.legs() + ", enjoying the view of the pale maiden's unblemished skin and dark, fetishy-looking exoskeleton when she bounces in swamp loam.  Her legs scissor closed nervously, a weak effort to conceal her sex from you");
-	if (pc.LQ() > 99) output(", even as her fingers continue to work her slick lips relentlessly");
+	if (pc.lustQ() > 99) output(", even as her fingers continue to work her slick lips relentlessly");
 	output(".  You slap her hands away and pry her legs open, getting a nice, close look at her vagina.\n\n");
 
 	output("Her pussy is dark, like her nipples, though the lips of her sex are closer to a pure midnight-black than the dusky skin of those tiny nubs.  A sheen of feminine lube has built up over her vulva, making her outer labia and skin glisten noticeably in the muted sunlight that filters down to the swamp floor.  Around her vagina, the skin rapidly fades from dark chocolate back to the porcelain white of the rest of her body.  You prod and play with the moist slit, feeling the soft skin part around your fingers like a soft velvet glove.  She grows wetter in response, giving up plaintive little moans at your incursion");
-	if (enemy.LQ() > 99) output(" until she's panting and her tiny clit has emerged, hard as a rock");
+	if (enemy.lustQ() > 99) output(" until she's panting and her tiny clit has emerged, hard as a rock");
 	output(".\n\n");
 
 	output("The spider-kin's honeyed onyx-hued pussy is irresistible, and you remove your [pc.gear] to prepare for the coming sex.  While you're distracted, the defeated arachnid-morph begins to masturbate while watching you with wide, eager eyes.  You grab a nearby vine and yank the slut's hands away from her pussy.  She protests, but you smirk and inform her she won't get her mitts back until she gets you off.  The spider-girl nods mutely, though confusion crosses her face once you start circling her, coming up next to her chest.\n\n");
@@ -579,7 +579,7 @@ private function fSpiderMorphRapeDude():void
 	clearOutput();
 	//spriteSelect(73);
 	output("You push the spider-girl onto her back, getting a good long look at your conquest before you take off your [pc.gear].  At the sight of your [pc.cocksLight], she ");
-	if (enemy.LQ() <= 99) output("relaxes a bit.  The smell of an aroused female wafts up from her, reminding you that is probably what she wanted from the get-go.");
+	if (enemy.lustQ() <= 99) output("relaxes a bit.  The smell of an aroused female wafts up from her, reminding you that is probably what she wanted from the get-go.");
 	else output("salivates, both holes dripping liquid in anticipation of the coming sex.  The smell of sex fills the air, and you realize you're about to give her exactly what she wants.");
 	output("  It doesn't matter - you're going to fuck her pussy full of cum.\n\n");
 
@@ -651,10 +651,10 @@ private function evilSpiderGirlVictoryAnal():void
 	clearOutput();
 	//spriteSelect(73);
 	output("You peel off your [pc.gear] while you gaze disdainfully down at your prize.  ");
-	if (enemy.LQ() > 99) output("She's moaning plaintively and happily fingering herself, practically offering her juicy box to you.");
+	if (enemy.lustQ() > 99) output("She's moaning plaintively and happily fingering herself, practically offering her juicy box to you.");
 	else output("She's groaning painfully and struggling to move before falling back down, legs akimbo, inadvertantly displaying her pussy to you.");
 	output("  Sighing, you grab her narrow frame, admiring the lightness of her body as you heft her up and position her onto her hands and knees.  ");
-	if (enemy.LQ() > 99) output("She mewls with disappointment.  ");
+	if (enemy.lustQ() > 99) output("She mewls with disappointment.  ");
 	output("This is a much better position for her; ass-up, with her pussy and pucker fully exposed.\n\n");
 
 	output("The spider-morph looks back fearfully, but she flexes her back to raise up her abdomen and allow you easier access to her holes like the obedient slut she truly is.  You wrap your arms around the heavy, exoskeletal organ and step forward, leveraging your [pc.cock " + x + "] to slide it into her welcoming pussy.  The arachnid cunt sucks you in with a wet slurp, welcoming your cock to the oozing sheath with uncommon eagerness until the plush black pussy lips are compressing against your loins.  You have trouble not giving into the hot, moist pressure of the silken canal and rutting her like a beast then and there, but a tighter, better hole beckons for your now-lubricated fuck-stick's attention.\n\n");

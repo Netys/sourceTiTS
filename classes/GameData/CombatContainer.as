@@ -114,7 +114,7 @@ package classes.GameData
 		
 		public function displayFightLocation():void
 		{
-			var r:String = (roomString != null ? "FIGHT:\n" + roomString : null);
+			var r:String = (roomString != null ? "FIGHT:\n" + roomString : kGAMECLASS.userInterface.roomText);
 			var p:String = (planetString != null ? planetString : kGAMECLASS.userInterface.planetText);
 			var s:String = (systemString != null ? systemString : kGAMECLASS.userInterface.systemText);
 			
@@ -2409,12 +2409,12 @@ package classes.GameData
 			if (teaseType == "SQUIRT") bonus += 2;
 			
 			var sweatyBonus:int = 0;
-			if(pc.hasStatusEffect("Sweaty") && target.hasPerk("Likes_Sweaty")) 
+			if(attacker.hasStatusEffect("Sweaty") && target.hasPerk("Likes_Sweaty")) 
 			{
 				//-5 per level normally, so add twice that since we flippin it'
-				sweatyBonus = pc.statusEffectv1("Sweaty") * 10;
+				sweatyBonus = attacker.statusEffectv1("Sweaty") * 10;
 				//Furries dont benefit quite as much.
-				if(pc.hasFur()) sweatyBonus = pc.statusEffectv1("Sweaty") * 5;
+				if(attacker.hasFur()) sweatyBonus = attacker.statusEffectv1("Sweaty") * 5;
 			}
 			
 			if (target.isLustImmune || (target.willpower() / 2 + rand(20) + 1 > attacker.level * 2.5 * factor + 10 + teaseCount / 10 + attacker.sexiness() + bonus + sweatyBonus))
@@ -3057,6 +3057,7 @@ package classes.GameData
 			showCombatDescriptions();
 			showCombatMenu();
 			showCombatUI(true);
+			userInterface().levelUpOff();
 		}
 		
 		private function validateContainer():void
@@ -3613,6 +3614,7 @@ package classes.GameData
 		
 		private function postCombatReturnToMenu():void
 		{
+			userInterface().mainButtonsReset();
 			userInterface().hideNPCStats();
 			userInterface().leftBarDefaults();
 			kGAMECLASS.mainGameMenu();

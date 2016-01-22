@@ -43,7 +43,7 @@ public function turnIntoASammitch(volunteered:Boolean = false):void {
 	clearOutput();
 	if (!volunteered) {
 		output("Helplessly, you ");
-		if(pc.LQ() > 99) {
+		if(pc.lustQ() > 99) {
 			if(pc.hasVagina()) output("dig your hands into your loins, frigging your hungry cunt so hard your juices splatter the Witch's robe.");
 			else output("dig your finger into your [pc.asshole], frigging it like your life depended on it.");
 		}
@@ -69,12 +69,12 @@ public function turnIntoASammitch(volunteered:Boolean = false):void {
 	}
 	
 	output("\n\nThe dark-skinned futanari strokes");
-	if(enemy.LQ() < 65) output(" herself to full hardness, smiling when thick strings of cum begin to drizzle from her swollen cock-tip.");
-	else if(enemy.LQ() < 85) output(" herself until cum begins to drizzle from her swollen cock-tip.");
+	if(enemy.lustQ() < 65) output(" herself to full hardness, smiling when thick strings of cum begin to drizzle from her swollen cock-tip.");
+	else if(enemy.lustQ() < 85) output(" herself until cum begins to drizzle from her swollen cock-tip.");
 	else output(" herself, gathering up the constantly-dripping cum and smearing it all over her shaft.");
 	
 	output("\n\nHer tongue licks her lips in anticipation as she readies herself, though she stops a moment later when she sees you still have a bit of fight in your eyes");
-	if(pc.LQ() > 99) output(", even though your hand is knuckle-deep in your twat");
+	if(pc.lustQ() > 99) output(", even though your hand is knuckle-deep in your twat");
 	output(".");
 	
 	output("\n\nKneeling before your helpless form, the mysterious witch sighs and whispers, \"<i>Why can't you just accept it?  You belong with us.  We're going to fix this desert - and Mareth.  The demons can't stop us.  The monsters won't stop us.  They CAN'T.</i>\"  She gently brushes her hand through your hair, smearing you with her sex-juices unthinkingly as she prattles on, \"<i>Just relax, babe.  Here, maybe this will help.</i>\"  The Witch's hands are suddenly holding you by your ears and her lips are moving in nonsensical ways.  Whatever she's saying you can't hear it with how she's holding you.");
@@ -281,9 +281,9 @@ public function repeatLoseToCumWitchForDudes():void {
 		output("Collapsing under the weight of your injuries, you tumble back onto your [pc.butt], kicking up a cloud of sand as you fall fully prone.  Laughing at your predicament, the ebony futanari cooly advances, tossing her wide-brimmed hat aside as she goes.  \"<i>Oh you poor, poor Champion.  Did you ask the Sand Mother to let us out so that we could this?  Does the strong, mighty " + pc.mf("hero", "heroine") + " have a thing for submitting to my touches and fat cock?  Or perhaps, you want something else...</i>\"");
 	
 		output("\n\nCaressing you as she removes your [pc.gear], the witch shows remarkable tenderness for your injuries, knitting the worst with magic to ensure your well-being and kissing others as if it would somehow make them all better.  She stops at your groin to consider [pc.eachCock] for a moment, slithering her fingers around [pc.oneCock] and hefting its supple, ");
-		if(pc.LQ() < 40) output("flaccid");
-		else if(pc.LQ() < 60) output("semi-flaccid");
-		else if(pc.LQ() < 70) output("semi-hard");
+		if(pc.lustQ() < 40) output("flaccid");
+		else if(pc.lustQ() < 60) output("semi-flaccid");
+		else if(pc.lustQ() < 70) output("semi-hard");
 		else output("turgid");
 		output(" weight.  Pumping her hand with deft strokes and watching your expression intently, the curvy woman works you into a pleasant, erotic warmth, excitement coursing through your body with such fervor that your remaining wounds seem insignificant in comparison.");
 	}
@@ -590,7 +590,7 @@ public function menFuckUpSomeCumWitch():void {
 	var x:int = pc.cockThatFits(enemy.vaginalCapacity());
 	var y:int = pc.cockThatFits2(enemy.vaginalCapacity());
 	output("You shuck out of your [pc.gear] in eager anticipation, [pc.eachCock] aleady ");
-	if(pc.LQ() < 50) output("half-hard");
+	if(pc.lustQ() < 50) output("half-hard");
 	else output("rock-hard");
 	output(" and pulsing with growing readiness.  The cum witch looks up at you with disdain, but the rigidity of her shaft and sloppy wetness of her flushed quim leave no doubt as to her state.   Her body blushes honestly as you reposition her, spreading her legs nice and wide.  You have to lift her hefty sack to expose the thick, wet lips of her pussy.  Jumping in response, her fat cock oozes a trickle of precum onto her dusky belly, oiling her dusky skin into a sensual shine.");
 	

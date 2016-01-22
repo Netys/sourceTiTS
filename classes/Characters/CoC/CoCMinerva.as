@@ -397,7 +397,7 @@ package classes.Characters.CoC
 					var damageResult:DamageResult = calculateDamage(d, this, target);
 					
 					if (target.getLustResistances().psionic.resistanceValue >= 100 || target.isLustImmune) output("  You are immune to psionic attacks!  ");
-					else if (target.LQ() < 100) {
+					else if (target.lustQ() < 100) {
 						output("  Your mind clouds over as the song flows through your ears and fills your mind with sweet bliss.  ");
 					}
 					//No wait - insta loss:
