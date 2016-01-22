@@ -1,3 +1,4 @@
+import classes.CockClass;
 import classes.GameData.CommandContainers.FapCommandContainer;
 import classes.GLOBAL;
 import classes.Util.*;
@@ -682,6 +683,10 @@ public function tentacleGoesUpYerPooperNewsAtEleven():void {
 
 public function stickADildoInYourVagooSlut():void {
 	clearOutput();
+	
+	var dildo:CockClass = new CockClass();
+	dildo.cLengthRaw = 7;
+	
 	if (pc.vaginalVirgin && pc.vaginas[0].hymen) { //LOW CORRUPTION DEFLOWER
 		if (pc.slut() <= 50) {
 			output("You blush nervously as you grasp your phallic toy. The firm dildo bends slightly as you hold it in your hand. You feel perverse to consider doing this, and shakingly drop your [pc.gear].");
@@ -694,7 +699,7 @@ public function stickADildoInYourVagooSlut():void {
 			else output("The toy slides effortlessly thanks to your copious, almost inhuman lubrication.");
 
 			output("\n\nSwallowing, you lean back and position the dildo toward your [pc.vagina], the entrance twitching as it yearns for penetration. With an experimental push, you prod at the hole, jumping at the realization of how large the object really is. It's not nearly as thin, short, and bendable as a finger. You think about why you'd do such a thing. Your virginity too precious to risk a demon stealing away, or perhaps you're simply grown more perverted in this corrupt world. Whatever the case, you bite your [pc.lip] and press the toy into you. Your decision made, the pain of your splitting hymen shoots through you. You gasp, easing the pressure on the toy, letting it sink one more inch before letting go altogether.");
-			pc.cuntChange(0, 8, true, true, false);
+			pc.cuntChange(0, dildo.effectiveVolume(), true, true, false);
 			//Cunt change text go here!
 			output("\n\nBreathing heavily, you slowly pull the invasive, fake phallus from your stinging vagina. A light stain of blood now coats the first several inches of the dildo. Taking a deep breath, you push the toy back in, this time feeling less pain. The worst of the experience behind you, you gently pump in and out. Your once pure pussy is now accepting the intruder deeply. Your speed increases as you get used to it. Breathing heavier in between moans, you thrust your cherry-picker in towards unforeseen ecstasy. The tears in your eyes, accumulated from pain, well up even larger in pleasure. Using one hand to piston the imitation cock in your [pc.vagina] and the other to massage around your [pc.clit], the stimulation becomes almost unbearable. Even with the remnants of pain from your recent deflowering, you can't help but");
 			if (pc.legCount <= 2) output(" grind your [pc.hips] and slide slowly onto your back");
@@ -710,7 +715,7 @@ public function stickADildoInYourVagooSlut():void {
 			output("\n\nPrancing nude to a comfortable spot, you proceed to rest on your [pc.butt] and place the toy cock aside as you eagerly prepare your [pc.vagina]. You rub your lips gently as you relax your vaginal muscles. Not wishing to leave your mouth out of the fun, you grasp this dildo and begin to lick and suckle it. The passion of the act urging you on, you push a finger inside your [pc.vagina]. Its tight grip on your finger emphasizes the inexperience of the little hole - a problem you're soon to fix.");
 			output("\n\nWith your faux phallus slick with saliva, you remove the digit from your virgin depths. You press the tip against your entrance, savouring your last moments of virginity. Your poor hymen was only an obstacle for cock, and you're the only one truly worthy of taking your virginity. You push the lust-driving object inside. Pain shoots through you, forcing a gasp from you, but failing to halt your beloved cherry-picker's progress. When you finally reach the greatest depth you can, you release the dildo, breathing deeply as the pain passes.");
 			//CUNT CHANGE CALL
-			pc.cuntChange(0, 8, true, true, false);
+			pc.cuntChange(0, dildo.effectiveVolume(), true, true, false);
 			output("\n\nYet to be satisfied, you regain composure and start pumping into your freshly plucked flower. Your other hand rushes to massage and caress your sensitive [pc.chest]. The fantasies of all the monstrous cocks you'll have thrusted into you spur the rough piston motion, eager to train your [pc.vagina] for its fated task. You slide");
 			if (pc.legCount <= 2) output(" onto your back");
 			else output(" lower");
@@ -724,7 +729,7 @@ public function stickADildoInYourVagooSlut():void {
 		if (pc.isBiped()) output("\n\nSpreading your [pc.legs], y");
 		else output("\n\nY");
 		output("ou rub two fingers between your lips, while also suckling your healthy - sized faux cock to lubricate it. Your [pc.vagina] becomes slick with your [pc.femCum] in moments and you eagerly delve a [pc.finger] into the thirsty hole. The digit goes in slowly and deeply, pleasuring your inner walls with tender stimulation. Your muscles begin to relax, and you feel ready to move onto the main event. Removing the saliva - slicked toy from your mouth, you trade it with your [pc.finger]. The satisfying easing of the dildo into your nethers is matched by your [pc.girlCumFlavor] flavor pushing across your [pc.tongue]. Muffled moans escape your plugged maw as the beloved toy sinks deep into your [pc.vagina]. Using your free hand, you grope and caress your [pc.chest].");
-		pc.cuntChange(0, 8, true, true, false);
+		pc.cuntChange(0, dildo.effectiveVolume(), true, true, false);
 		output("\n\nThe erotic pumping of the phallic object picks up the pace as you gently build a rhythm with the beating of your heart and tensing of your vaginal walls. Your breathing heaves, and your moans become almost as desperate as they are lustful. Soon the pleasure is rising up into unstoppable tide of phallus-induced ecstasy, and you slide from against the rock to on your side, still fucking yourself with blissful joy. The constant thrusting of the toy begins to make you shake and lose rhythm, your body wanting only to fuck as hard and fast as possible.");
 		output("\n\nYour orgasm arrives with supreme relief as you force the dildo to your furthest depths. Juices spurt from your genitals, and you roll onto your back to rest. When your breathing regulates, you pull the thoroughly used toy from your [pc.vagina] and prepare to move on.");
 	}
@@ -739,11 +744,15 @@ public function stickADildoInYourVagooSlut():void {
 //Dildo in the butt because why not?
 public function CoCDildoButts():void {
 	clearOutput();
+	
+	var dildo:CockClass = new CockClass();
+	dildo.cLengthRaw = 7;
+	
 	output("A kinky idea crosses your mind, and you grab your dildo, get rid of your [pc.gear] and rest on your [pc.butt].");
 	output("\n\nYou adjust your position");
 	if(pc.isBiped()) output(" as you spread your [pc.legs]");
 	output(", giving you the most comfortable access to your [pc.asshole]. You sloppily lick an experimental [pc.finger] and carry it down to the eager entrance between your cheeks. ");
-	if (pc.analCapacity() <= 8)
+	if (pc.analCapacity() <= dildo.effectiveVolume())
 		output("Your tight hole offers resistance at first, but soon relaxes with a tender, lubricated fingering.");
 	else output("Your stretchy hole readily accepts your saliva-coated finger.");
 	output(" As you gently rub your insides, you use your free hand and reach up to pinch and rub your [pc.nipples]. As the motions become easier, you push a second finger inside as well. You soon find your sensitive anal entrance begging for something more appropriate, and you happily oblige.");
@@ -754,7 +763,7 @@ public function CoCDildoButts():void {
 	output(". Y");
 	if (pc.hasToes()) output("our [pc.toes] curl as y");
 	output("ou begin to pull in and out, pumping the dildo with smooth motions. Your [pc.tongue] hangs from your mouth, your breathing becomes heavy, and your moans lewdly express pure lust as you increase your tempo. Before too long, you feel your pucker becoming more sensitive and know an orgasm is quickly approaching.");
-	pc.buttChange(8, true, true, false);
+	pc.buttChange(dildo.effectiveVolume(), true, true, false);
 	if (pc.hasCock() && pc.hasVagina())
 		output("\n\nYou moan in ecstasy while your [pc.vagina] and [pc.cocks] erupt with sex juices. ");
 	else if (pc.hasCock())

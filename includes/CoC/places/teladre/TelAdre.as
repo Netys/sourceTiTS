@@ -4,14 +4,16 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
+// Main places
+include "BakeryScene.as";
 include "Gym.as";
 include "Library.as";
+include "Pawn.as";
 include "WetBitch.as";
 
+// Shops
 include "Armor.as";
-include "BakeryScene.as";
 include "Jewels.as";
-include "Pawn.as";
 include "Piercing.as";
 include "Tailor.as";
 include "UmasShop.as";

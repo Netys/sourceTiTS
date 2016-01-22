@@ -8,7 +8,7 @@ import classes.Engine.Utility.*;
 
 public function giacomoEncounter():void {
 	//spriteSelect(23);
-	userInterface.showName("GIACOMO");
+	userInterface.showName("\nGIACOMO");
 	clearOutput();
 	if (flags["COC.GIACOMO_MET"] == undefined) {
 		giacomoFirstEncounter();
@@ -39,6 +39,7 @@ public function giacomoEncounter():void {
 	//simpleChoices("Potions", giacomoPotionMenu, "Books", giacomoBookMenu, "Erotica", giacomoEroticaMenu, "Worm Cure", deworm, "Leave", returnToCampUseOneHour);
 	clearMenu();
 	addButton(0, "Shop", giacomoShop);
+	addButton(1, "Erotica", giacomoEroticaMenu);
 	addButton(14, "Leave", function():* { 
 		processTime(10 + rand(5));
 		mainGameMenu();
@@ -75,12 +76,13 @@ private function giacomoShop():void {
 		//"Yoga Guide", (flags[kFLAGS.COTTON_UNUSUAL_YOGA_BOOK_TRACKER] > 0 ? pitchYogaGuide : null), "Back", giacomoEncounter);
 //}
 
-//private function giacomoEroticaMenu():void {
-	////spriteSelect(23);
-	//clearOutput();
-	//output("Giacomo's grin is nothing short of creepy as he offers his wares to you.  What are you interested in?");
-	//menu();
-	//addButton(0, "Dildo", pitchDildo);
+private function giacomoEroticaMenu():void {
+	//spriteSelect(23);
+	clearOutput();
+	output("Giacomo's grin is nothing short of creepy as he offers his wares to you.  What are you interested in?");
+	clearMenu();
+	if (!pc.hasKeyItem("Dildo")) addButton(0, "Dildo", pitchDildo);
+	else addDisabledButton(0, "Dildo", "Dildo", "You already have one!");
 	//if (pc.hasVagina()) addButton(1, "Stim-Belt", pitchSelfStimulationBelt);
 	//if (pc.hasVagina()) addButton(2, "AN Stim-Belt", pitchAllNaturalSelfStimulationBelt);
 	//if (pc.hasCock()) addButton(3, "Onahole", pitchOnahole);
@@ -88,9 +90,8 @@ private function giacomoShop():void {
 	//if (pc.hasCock() && pc.hasVagina()) addButton(5, "Dual Belt", pitchDualStimulationBelt);
 	//if (pc.hasCock() && pc.hasVagina()) addButton(6, "AN Onahole", pitchAllNaturalOnahole);
 	//addButton(7, "Condom", pitchCondom);
-	//addButton(14, "Back", giacomoEncounter);
-//
-//}
+	addButton(14, "Back", giacomoEncounter);
+}
 
 //private function pitchCeruleanPotion():void {
 	////spriteSelect(23);
@@ -243,35 +244,28 @@ private function giacomoShop():void {
 	//}
 	//doNext(bookMenu);
 //}
-//
-//private function pitchDildo():void {
-	////spriteSelect(23);
-	//clearOutput();
-	//if (pc.hasKeyItem("Dildo") >= 0) {
-		//output("<b>You already own a Dildo!</b>");
-		//doNext(giacomoEroticaMenu);
-		//return;
-	//}
-	//output("Giacomo takes out a slender tube roughly over half a foot in length.  \"<i>Since you seek pleasure, this is as simple and effective as it gets.  This dildo is a healthy seven inches long and is suitable for most women and even adventurous men.  Pick a hole, stick it in and work it to your heart's content or your partner's pleasure.  The single-piece construction makes it solid, sturdy and straightforward.  For 20 gems, you can take matters into your own hands.  How about it?</i>\"");
-	////doYesNo(buyDildo, eroticaMenu);
-//}
-	//
-//private function buyDildo():void {
-	////spriteSelect(23);
-	//clearOutput();
-	//if (pc.gems < 20) {
-		//output("\n\nGiacomo sighs, indicating you need " + String(20 - pc.gems) + " more gems to purchase this item.");
-		//doNext(giacomoEroticaMenu);
-	//}
-	//else {
-		//output("After making the payment, Giacomo hands you the Dildo");
-		//doNext(giacomoEroticaMenu);
-		//pc.gems -= 20;
-		//pc.createKeyItem("Dildo", 0, 0, 0, 0);
-		//statScreenRefresh();
-	//}
-//}
-//
+
+private function pitchDildo():void {
+	//spriteSelect(23);
+	clearOutput();
+	output("Giacomo takes out a slender tube roughly over half a foot in length.  \"<i>Since you seek pleasure, this is as simple and effective as it gets.  This dildo is a healthy seven inches long and is suitable for most women and even adventurous men.  Pick a hole, stick it in and work it to your heart's content or your partner's pleasure.  The single-piece construction makes it solid, sturdy and straightforward.  For 20 gems, you can take matters into your own hands.  How about it?</i>\"");
+	clearMenu();
+	if (pc.credits >= 200) addButton(0, "Yes", buyDildo);
+	else addDisabledButton(0, "Yes", "Yes", "You can't afford it!");
+	addButton(1, "No", giacomoEroticaMenu);
+}
+	
+private function buyDildo():void {
+	//spriteSelect(23);
+	clearOutput();
+	output("After making the payment, Giacomo hands you the Dildo.");
+	pc.credits -= 200;
+	pc.createKeyItem("Dildo", 0, 0, 0, 0, "This dildo is a healthy seven inches long and is suitable for most women and even adventurous men.");
+	//statScreenRefresh();
+	clearMenu();
+	addButton(0, "Next", giacomoEncounter);
+}
+
 //private function pitchSelfStimulationBelt():void {
 	////spriteSelect(23);
 	//clearOutput();
