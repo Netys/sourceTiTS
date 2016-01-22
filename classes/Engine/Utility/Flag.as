@@ -7,7 +7,7 @@ package classes.Engine.Utility
 	import classes.kGAMECLASS;
 	public function Flag(flagName:String, newValue:Number = Number.NaN, add:Boolean = false):*
 	{
-		if (kGAMECLASS.flags[flagName] == undefined) kGAMECLASS.flags[flagName] = 0;
+		if (kGAMECLASS.flags[flagName] == undefined || isNaN(kGAMECLASS.flags[flagName])) kGAMECLASS.flags[flagName] = 0;
 		
 		var ret:* = kGAMECLASS.flags[flagName];
 		

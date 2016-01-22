@@ -2457,7 +2457,14 @@ private function readKitsuneBooks():void
 private function meditateLikeAKitsuneEhQuestionMark():void
 {
 	clearOutput();
-	if (pc.hasItem(new CoCFoxJewel()) && pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount < 9 && pc.tailCount <= pc.level && pc.tailCount + 1 <= pc.IQ() / 10 && pc.earType == GLOBAL.TYPE_VULPINE) {
+	if (pc.hasItem(new CoCFoxJewel())
+		&& pc.earType == GLOBAL.TYPE_VULPINE
+		&& pc.hasTail(GLOBAL.TYPE_VULPINE) 
+		&& pc.tailCount < 9 
+		&& pc.tailCount <= pc.level 
+		&& pc.tailCount + 1 <= pc.IQ() / 10
+		&& pc.WQ() >= 33)
+	{
 		//20% chance if PC has fox ears, 1 or more fox tails, carries a Fox Jewel, and meets level & INT requirements for the next tail:
 		output("You sit down carefully on a small mat in front of the shrine and clear your mind.  Closing your eyes, you meditate on the things you've learned in your journey thus far, and resolve to continue fighting against the forces of corruption that permeate the land.\n\n");
 
@@ -2632,6 +2639,16 @@ public function NineTailsTimePassedNotify():void {
 			pc.removePerk("Enlightened Nine-tails");
 			pc.removePerk("Corrupted Nine-tails");
 		}
+		//else if (pc.isBimbo() || pc.isBro() || pc.IQ() < 10 || pc.WQ() < 10) {
+			//pc.tailCount = Math.max(Math.min(8, pc.IQ() / 10), 1);
+			//
+			//eventBuffer += "\n\n<b>Your crumbling mind is not able to maintain enlightened state anymore!</b>";
+			//eventBuffer += "\n\nYou have lost ";
+			//eventBuffer += num2Text(9 - pc.tailCount);
+			//eventBuffer += " of your Kitsune tails, and your boundless energy is gone.";
+			//pc.removePerk("Enlightened Nine-tails");
+			//pc.removePerk("Corrupted Nine-tails");
+		//}
 		else pc.energy(1);
 	}
 }

@@ -2769,7 +2769,7 @@ package classes {
 				if(exhibitionismRaw < 0) exhibitionismRaw = 0;
 			}
 			trace("Final reported exhibition level: " + exhibitionismRaw);
-			return exhibitionismRaw;
+			return exhibitionismRaw; // return corruption value, if higher?
 		}
 		
 		public static const DEPENDANT_ANY:uint = 0;
@@ -6817,9 +6817,9 @@ package classes {
 			var fullnessDelta:Number = mLsGained / milkCapacity() * 100;
 			
 			//75% fullness notification
-			if(milkFullness < 75 && milkFullness + fullnessDelta >= 75) createStatusEffect("Pending Gain Milk Note: 75");
+			if(milkType != GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK && milkFullness < 75 && milkFullness + fullnessDelta >= 75) createStatusEffect("Pending Gain Milk Note: 75");
 			//100% notification!
-			if(milkFullness < 100 && milkFullness + fullnessDelta >= 100) createStatusEffect("Pending Gain Milk Note: 100");
+			if(milkType != GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK && milkFullness < 100 && milkFullness + fullnessDelta >= 100) createStatusEffect("Pending Gain Milk Note: 100");
 
 			//If we're going above 100.
 			if(fullnessDelta + milkFullness > 100)
@@ -8022,7 +8022,7 @@ package classes {
 			if (demonScore() >= 5) race = "demon-morph";
 			if (gabilaniScore() >= 5) race = "gabilani";
 			if (frogScore() >= 5) race = "kerokoras";
-			if (kaithritScore() >= 6) race = "kaithrit"
+			if (kaithritScore() >= 6) race = "kaithrit";
 			if (catScore() >= 5 && race != "kaithrit") race = faceType == GLOBAL.TYPE_FELINE ? "cat-morph" : mf("cat-man", "cat-girl");
 			if (leithanScore() >= 6) race = "leithan";
 			if (nukiScore() >= 6) race = "kui-tan";

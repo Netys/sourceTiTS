@@ -12,6 +12,7 @@ public function notifyTimeProcessListeners():void {
 }
 
 include "events.as";
+include "masturbation.as";
 
 // AREAS
 include "areas/boat/boat.as";

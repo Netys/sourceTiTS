@@ -316,7 +316,7 @@ private function centaurOnImpStart():void {
 	//[if previously gave birth to imps and Cor >50] A part of you wonders idly if this is one the offspring that you added to this world 
 	//[corruption is under 80] but the you quickly banish the thought. [corruption is over 80]  and the thought fills you with excitement. ))  
 	//<< Cor <50 >> 
-	if(cor() < 50) output("  You lick your lips slightly as you begin to approach the small figure.");
+	if(pc.cor() < 50) output("  You lick your lips slightly as you begin to approach the small figure.");
 	else output("You lick your lips obscenely as you approach the small figure.\n\n");
 	//[Even chance of any of the following happening if the pc has the correct equipment, distribute chances between what equipment is available]
 	var x:Number = pc.cockThatFits(enemy.analCapacity());
@@ -324,6 +324,7 @@ private function centaurOnImpStart():void {
 	else if(pc.hasVagina() && x < 0) centaurOnImpFemale();
 	else {
 		output("Do you focus on your maleness or girl-parts?");
+		clearMenu();
 		addButton(0, "Male", centaurOnImpMale);
 		addButton(1, "Female", centaurOnImpFemale);
 	}

@@ -153,10 +153,10 @@ private function talkWhitney():void {
 	clearOutput();
 	clearMenu();
 	//Centaur Hookups!
-	//if(pc.hasKeyItem("Fake Mare") < 0 && pc.isTaur()) {
-		//centaurToysHoooooo();
-		//return;
-	//}
+	if(!pc.hasKeyItem("Fake Mare") && pc.isTaur()) {
+		centaurToysHoooooo();
+		return;
+	}
 	
 	// Requires: PC has met both Marble and Kelt
 	if (flags["COC.MURBLE_FARM_TALK_LEVELS"] != undefined && flags["COC.KELT"] != undefined && flags["COC.WHITNEY_TALK_MURBLE_AND_KELT"] == undefined)
@@ -1312,7 +1312,7 @@ private function centaurToysHoooooo():void {
 	output("You find the dog-morph Whitney standing in the entrance to her barn, scratching her head with consternation.  You approach her and ask what's up.\n\n");
 
 	output("\"<i>Oh, hey there, [pc.name],</i>\" Whitney says, leaning heavily on her pitchfork.  \"<i>Not much, just trying to figure out... Hey, now!</i>\" she says, eying up your powerful taur frame.  ");
-	if(pc.cor() < 50) output("You shift awkwardly and ask her what's wrong.");
+	if(pc.slut() < 50) output("You shift awkwardly and ask her what's wrong.");
 	else output("You strut a bit, showing yourself off in a subtly lewd manner.  When you're finished, you ask the dog-girl if she likes what she saw.");
 	output("\n\n");
 
@@ -1325,7 +1325,9 @@ private function centaurToysHoooooo():void {
 	output("You tell her sure, and spend the next few minutes loading them onto the back of your taur-body.  Even if you don't end up using them yourself, you've got plenty of room in camp for them, unlike Whitney.  Loaded up with centaur-friendly sex toys, you make your way back to camp.\n\n");
 	
 	output("(<b>Key Items Gained: Fake Mare and Centaur Pole</b>)");
-	pc.createKeyItem("Fake Mare",0,0,0,0);
-	pc.createKeyItem("Centaur Pole",0,0,0,0);
-	doNext(returnToCampUseOneHour);
+	pc.createKeyItem("Fake Mare", 0, 0, 0, 0);
+	pc.createKeyItem("Centaur Pole", 0, 0, 0, 0);
+	processTime(40 + rand(10));
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }

@@ -181,14 +181,13 @@ package classes.Items.Transformatives
 			//**********************
 			//[Grow Fox Tail]
 			if (!pc.hasTail(GLOBAL.TYPE_VULPINE) && changes < changeLimit && ((mystic && rand(2) == 0) || (!mystic && rand(4) == 0))) {
-                var vine:Boolean = false;
-                if (pc.tailType == GLOBAL.TYPE_COCKVINE)
-                {
-                    pc.tailType = GLOBAL.TYPE_FELINE;
-                    pc.addTailFlag(GLOBAL.FLAG_TAILCOCK);
-                    pc.libidoRaw -= 3;
-                    vine = true;
-                }
+				var vine:Boolean = pc.hasParasiteTail();
+				if (pc.tailType == GLOBAL.TYPE_COCKVINE)
+				{
+					pc.tailType = GLOBAL.TYPE_VULPINE;
+					pc.addTailFlag(GLOBAL.FLAG_TAILCOCK);
+					pc.libidoRaw -= 3;
+				}
 				
 				//if PC has no tail
 				if (!pc.hasTail()) {
@@ -207,7 +206,6 @@ package classes.Items.Transformatives
 					pc.addTailFlag(GLOBAL.FLAG_TAILCOCK); // that's a hell load of flags...
 					pc.addTailFlag(GLOBAL.FLAG_KNOTTED);
 					pc.addTailFlag(GLOBAL.FLAG_TAPERED);
-					pc.addTailFlag(GLOBAL.FLAG_PREHENSILE);
 					pc.addTailFlag(GLOBAL.FLAG_SHEATHED);
 					kGAMECLASS.output(" The tip of your tail feels strange. After some probing you've found your tail genitalia still present, but totally unnoticeable under a furry sheath when not aroused");
 					if(vine) kGAMECLASS.output(" and much less prone to act by itself");
@@ -219,6 +217,7 @@ package classes.Items.Transformatives
 				pc.addTailFlag(GLOBAL.FLAG_LONG);
 				pc.addTailFlag(GLOBAL.FLAG_FURRED);
 				pc.addTailFlag(GLOBAL.FLAG_FLUFFY);
+				pc.addTailFlag(GLOBAL.FLAG_PREHENSILE); // unlike normal fox tails
 				changes++;
 			}
 			if (!mystic && pc.earType == GLOBAL.TYPE_VULPINE && pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount == 8 && rand(3) == 0) {
@@ -226,7 +225,7 @@ package classes.Items.Transformatives
 			}
 			//[Grow Addtl. Fox Tail]
 			//(rare effect, up to max of 8 tails, requires PC level and int*10 = number of tail to be added)
-			else if (pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount < 8 && pc.tailCount + 1 <= pc.level && pc.tailCount + 1 <= pc.IQ() / 10 && changes < changeLimit && ((mystic && rand(2) == 0) || (!mystic && rand(3) == 0))) {
+			else if (pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount < 8 && pc.tailCount + 1 <= pc.level && pc.tailCount + 1 <= pc.IQ() / 10 && pc.WQ() >= 33 && changes < changeLimit && ((mystic && rand(2) == 0) || (!mystic && rand(3) == 0))) {
 				//if PC has 1 fox tail
 				if (pc.tailCount == 1) {
 					output("\n\nA tingling pressure builds on your backside, and your bushy tail begins to glow with an eerie, ghostly light.  With a crackle of electrical energy, your tail splits into two!  <b>You now have a pair of fox-tails.</b>");
@@ -243,7 +242,13 @@ package classes.Items.Transformatives
 				changes++;
 			}
 			//[Grow 9th tail and gain Corrupted Nine-tails perk]
-			else if (mystic && rand(4) == 0 && changes < changeLimit && pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount == 8 && pc.tailCount <= pc.level && pc.earType == GLOBAL.TYPE_VULPINE && pc.IQ() >= 90) {
+			else if (mystic && rand(4) == 0 && changes < changeLimit
+					&& pc.earType == GLOBAL.TYPE_VULPINE 
+					&& pc.hasTail(GLOBAL.TYPE_VULPINE) 
+					&& pc.tailCount == 8 
+					&& pc.tailCount <= pc.level 
+					&& pc.IQ() >= 90
+					&& pc.WQ() >= 33) {
 				if (!pc.hasPerk("Enlightened Nine-tails") && !pc.hasPerk("Corrupted Nine-tails"))
 				{
 					output("Your bushy tails begin to glow with an eerie, ghostly light, and with a crackle of electrical energy, split into nine tails.  <b>You are now a nine-tails!  But something is wrong...  The cosmic power radiating from your body feels...  tainted somehow.  The corruption pouring off your body feels...  good.</b>");

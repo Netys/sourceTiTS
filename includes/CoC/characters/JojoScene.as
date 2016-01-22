@@ -753,8 +753,8 @@ public function apparantlyJojoDOESlift():void
 		}
 	}
 
-	flags["COC.TIMES_TRAINED_WITH_JOJO"]++;
-	trace(flags["COC.TIMES_TRAINED_WITH_JOJO"]);
+	Flag("COC.TIMES_TRAINED_WITH_JOJO", 1, true);
+	trace("Jojo training sessions: " + flags["COC.TIMES_TRAINED_WITH_JOJO"]);
 
 	// {If everything is cool}
 	if (!pc.hasPerk("Controlled Breath"))
@@ -767,11 +767,11 @@ public function apparantlyJojoDOESlift():void
 		
 		pc.energy( -60);
 
-		if (flags["COC.TIMES_TRAINED_WITH_JOJO"] == 5)
+		if (flags["COC.TIMES_TRAINED_WITH_JOJO"] >= 5)
 		{
 			trace("ADDING FIRST PERK");
 			output("“<i>Breathing is key.</i>”\n\n");
-			output("Jojo’s constantly repeated words resonate within you as you realize you’ve learned to control your breathing. It takes you less time to rest than normal and you feel as though you are bursting with energy because of it.  Your [fullChest]");
+			output("Jojo’s constantly repeated words resonate within you as you realize you’ve learned to control your breathing. It takes you less time to rest than normal and you feel as though you are bursting with energy because of it.  Your [pc.fullChest]");
 			if (pc.biggestTitSize() == 0) output(" rises and falls");
 			else output(" rise and fall");
 			output(" smoothly even in the heat of battle.  From now on you know you’ll recover more quickly.\n\n");
@@ -789,7 +789,7 @@ public function apparantlyJojoDOESlift():void
 		
 		pc.energy( -60);
 
-		if (flags["COC.TIMES_TRAINED_WITH_JOJO"] == 10)
+		if (flags["COC.TIMES_TRAINED_WITH_JOJO"] >= 10)
 		{
 			trace("ADDING SECOND PERK");
 			output("The repeated movements are slowly starting to sink in, your muscles becoming accustomed to Jojo’s training.\n\n");
@@ -809,7 +809,7 @@ public function apparantlyJojoDOESlift():void
 		
 		pc.energy( -60);
 
-		if (flags["COC.TIMES_TRAINED_WITH_JOJO"] >= 16 && pc.IQ() >= 70)
+		if (flags["COC.TIMES_TRAINED_WITH_JOJO"] >= 16 && pc.IQ() >= 70 && !pc.isBimbo() && !pc.isBro()) // no enlightment for you, mindless slut!
 		{
 			trace("ADDING THIRD PERK");
 			//{text shows after generic 16th technique training session}
@@ -850,24 +850,8 @@ public function apparantlyJojoDOESlift():void
 	if (pc.PQ() < 80) pc.slowStatGain("physique", 0.5);
 	if (pc.IQ() < 50) pc.slowStatGain("intelligence", 0.5);
 	if (pc.IQ() < 80) pc.slowStatGain("intelligence", 0.5);
-	clearMenu();
-	doNext(returnToCampUseOneHour);
-}
-
-public function meditate():void {
-	clearOutput();
-	processTime(100 + rand(40));
 	
-	output("You find a comfortable and secluded place to sit down on and meditate.  As always, meditation brings a sense of peace and calm to you, but it eats up two hours of the day.");
-	
-	pc.cor( -0.3);
-	pc.slowStatGain("l", -0.25);
-	pc.lust(pc.lustMin(), true);
-	
-	if (pc.hasPerk("Enlightened") && pc.cor() < 10) pc.HP(pc.maxHP() / 2);
-	pc.energy(pc.energyMax() / 4);
-	
-	updatePCStats();
+	processTime(45 + rand(30));
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 }

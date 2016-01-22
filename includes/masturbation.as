@@ -276,17 +276,7 @@ public function availableFaps(roundTwo:Boolean = false):Array
 		fap.func = cuffSelfRouter;
 		faps.push(fap);
 	}
-	if(pc.hasPerk("History: Religious") && pc.cor() <= 66 || pc.hasPerk("Enlightened") && pc.cor() < 10)
-	{
-		fap = new FapCommandContainer();
-		fap.text = "Meditate";
-		fap.ttHeader = "Meditate"
-		fap.ttBody = "You could meditate to cleanse your urges.";
-		fap.func = meditate;
-		fap.ignoreRandomSelection = true;
-		fap.ignorePublic = true;
-		faps.push(fap);
-	}
+	getCoCFapOptions(faps, roundTwo);
 	return faps;
 }
 
