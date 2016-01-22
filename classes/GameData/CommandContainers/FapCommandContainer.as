@@ -8,10 +8,12 @@ package classes.GameData.CommandContainers
 	public class FapCommandContainer extends CommandContainer
 	{
 		public var ignoreRandomSelection:Boolean;
+		public var ignorePublic:Boolean;
 		
 		public function FapCommandContainer() 
 		{
 			ignoreRandomSelection = false;
+			ignorePublic = false;
 		}
 		
 	}

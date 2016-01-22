@@ -2626,7 +2626,7 @@ public function validatePlayerKitsuneElderColor():void {
 }
 
 public function NineTailsTimePassedNotify():void {
-	if (minutes % 5 == 0 && (pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Corrupted Nine-tails"))) {
+	if (minutes % 4 == 0 && (pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Corrupted Nine-tails"))) {
 		if (!pc.hasTail(GLOBAL.TYPE_VULPINE) || pc.tailCount < 9) {
 			eventBuffer += "\n\n<b>You have lost your Kitsune tails, and your boundless energy is gone.</b>";
 			pc.removePerk("Enlightened Nine-tails");

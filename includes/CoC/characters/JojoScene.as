@@ -776,8 +776,8 @@ public function apparantlyJojoDOESlift():void
 			else output(" rise and fall");
 			output(" smoothly even in the heat of battle.  From now on you know you’ll recover more quickly.\n\n");
 
-			output("<b>(Perk Gained: Controlled Breath -</b> Increases rate of energy regeneration by 10%<b>)</b>");
-			pc.createPerk("Controlled Breath", 0, 0, 0, 0, "Increases rate of energy regeneration by 10%");
+			output("<b>(Perk Gained: Controlled Breath -</b> Increases rate of energy regeneration.<b>)</b>");
+			pc.createPerk("Controlled Breath", 0, 0, 0, 0, "Increases rate of energy regeneration.");
 		}
 	}
 	//{after the PC has gained the controlled breath perk}
@@ -816,8 +816,8 @@ public function apparantlyJojoDOESlift():void
 			output("As you finish training you decide to meditate alone; you close your eyes and begin to breathe.  Then the world around you begins to sing.\n\n");
 			output("The camp is alive with the sounds of voices on the wind, of the ominous sizzling of the great scar between worlds that is the portal that brought you here.  You feel open to the universe as if it were a lady in a dress sitting next to you, that you could easily reach out and touch.  You feel liberated and free despite the fact that you are not moving a muscle.  You are ready for anything but expecting nothing.  You are neither thinking nor dreaming, you simply are.\n\n");
 
-			output("<b>(Perk Gained: Enlightened -</b> White magic threshold reduced. Meditation restores health. Grants the ability to meditate alone.<b>)</b>");
-			pc.createPerk("Enlightened", 0, 0, 0, 0, "White magic threshold reduced. Meditation restores health. Grants the ability to meditate alone.");
+			output("<b>(Perk Gained: Enlightened -</b> Grants the ability to meditate alone. White magic threshold reduced.<b>)</b>");
+			pc.createPerk("Enlightened", 0, 0, 0, 0, "Grants the ability to meditate alone. White magic threshold reduced.");
 		}
 	}
 	//{after PC has gained the Enlightened Perk}
@@ -853,6 +853,32 @@ public function apparantlyJojoDOESlift():void
 	clearMenu();
 	doNext(returnToCampUseOneHour);
 }
+
+public function meditate():void {
+	clearOutput();
+	processTime(100 + rand(40));
+	
+	output("You find a comfortable and secluded place to sit down on and meditate.  As always, meditation brings a sense of peace and calm to you, but it eats up two hours of the day.");
+	
+	pc.cor( -0.3);
+	pc.slowStatGain("l", -0.25);
+	pc.lust(pc.lustMin(), true);
+	
+	if (pc.hasPerk("Enlightened") && pc.cor() < 10) pc.HP(pc.maxHP() / 2);
+	pc.energy(pc.energyMax() / 4);
+	
+	updatePCStats();
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
+}
+
+public function ControlledBreathTimePassedNotify():void {
+	if (minutes % 15 == 0 && pc.hasPerk("Controlled Breath")) {
+		pc.energy(1);
+	}
+}
+private var ControlledBreathTimePassedNotifyHook: * = ControlledBreathTimePassedNotifyGrapple();
+private function ControlledBreathTimePassedNotifyGrapple():* { timeChangeListeners.push(ControlledBreathTimePassedNotify); }
 
 //public function wormRemoval():void {
 	////jojoSprite();

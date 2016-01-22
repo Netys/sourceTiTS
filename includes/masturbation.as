@@ -276,6 +276,17 @@ public function availableFaps(roundTwo:Boolean = false):Array
 		fap.func = cuffSelfRouter;
 		faps.push(fap);
 	}
+	if(pc.hasPerk("History: Religious") && pc.cor() <= 66 || pc.hasPerk("Enlightened") && pc.cor() < 10)
+	{
+		fap = new FapCommandContainer();
+		fap.text = "Meditate";
+		fap.ttHeader = "Meditate"
+		fap.ttBody = "You could meditate to cleanse your urges.";
+		fap.func = meditate;
+		fap.ignoreRandomSelection = true;
+		fap.ignorePublic = true;
+		faps.push(fap);
+	}
 	return faps;
 }
 
@@ -312,6 +323,16 @@ public function selectRandomFap(faps:Array):void
 	});
 	
 	filtFaps[rand(filtFaps .length)].execute();
+}
+
+public function selectPublicSafeFapOptions(faps:/*FapCommandContainer*/Array):/*FapCommandContainer*/Array
+{
+	// Don't allow milk scenes to be selected randomly
+	var filtFaps:Array = faps.filter(function(item:*, index:int, array:Array):Boolean {
+		return (item as FapCommandContainer).ignorePublic;
+	});
+	
+	return filtFaps;
 }
 
 public function masturbateMenu(roundTwo:Boolean = false):void {
@@ -407,14 +428,20 @@ public function masturbateMenu(roundTwo:Boolean = false):void {
 		}
 		output("\n\n");
 	}
-	if(aborted)
-	{
-		clearMenu();
-		addButton(0,"Next",mainGameMenu);
-		return;
-	}
+	
 	// Get available faps
 	var faps:Array = availableFaps(roundTwo);
+	
+	if(aborted)
+	{
+		faps = selectPublicSafeFapOptions(faps); // As long as we can rest, we should be able to meditate. And we can rest anywhere.
+		if (faps.length == 0) {
+			clearMenu();
+			addButton(0,"Next",mainGameMenu);
+			return;
+		}
+	}
+	
 	var btnOffset:int = 0;
 	
 	// If we got back a null array from the listing functor, it should have created the button for us.
