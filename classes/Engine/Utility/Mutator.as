@@ -1827,12 +1827,12 @@ package classes.Engine.Utility
 			if (target.raskvelScore() >= 4) cType = GLOBAL.TYPE_SNAKE;
 			//if (target.pandaScore() >= 4) race = "panda-morph";
 			if (target.ausarScore() >= 4) cType = GLOBAL.TYPE_CANINE;
-			if (target.dogScore() >= 4) cType = GLOBAL.TYPE_CANINE;
+			if (target.canineScore() >= 4) cType = GLOBAL.TYPE_CANINE;
 			if (target.demonScore() >= 5) cType = GLOBAL.TYPE_DEMONIC;
 			if (target.gabilaniScore() >= 5) cType = GLOBAL.TYPE_GABILANI;
 			//if (target.frogScore() >= 5) race = "kerokoras";
 			if (target.kaithritScore() >= 6) cType = GLOBAL.TYPE_FELINE;
-			if (target.catScore() >= 5) cType = GLOBAL.TYPE_FELINE;
+			if (target.felineScore() >= 5) cType = GLOBAL.TYPE_FELINE;
 			if (target.leithanScore() >= 6) cType = GLOBAL.TYPE_SNAKE;
 			if (target.nukiScore() >= 6) cType = GLOBAL.TYPE_KUITAN;
 			//if (target.vanaeScore() >= 6) race = "vanae-morph";

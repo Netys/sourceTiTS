@@ -19,7 +19,7 @@ package classes.Items.Transformatives
             this._latestVersion = 1;
             
             this.quantity = 1;
-            this.stackSize = 5;
+            this.stackSize = 10;
             this.type = GLOBAL.PILL;
             //Used on inventory buttons
             this.shortName = "FoxJewl";

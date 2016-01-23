@@ -103,15 +103,15 @@ public function playerHuntScore():int
 	}
 	
 	// hunter bonus
-	if (pc.catScore() > 0)
+	if (pc.felineScore() > 0)
 	{
-		baseVal += (pc.catScore() * 10);
-		trace("+10 for each cat part (" + String(pc.catScore() * 10) + ")");
+		baseVal += (pc.felineScore() * 10);
+		trace("+10 for each cat part (" + String(pc.felineScore() * 10) + ")");
 	}
-	if (pc.dogScore() > 0)
+	if (pc.canineScore() > 0)
 	{
-		baseVal += (pc.dogScore() * 10);
-		trace("+10 for each dog part (" + String(pc.dogScore() * 10) + ")");
+		baseVal += (pc.canineScore() * 10);
+		trace("+10 for each dog part (" + String(pc.canineScore() * 10) + ")");
 	}
 	if (pc.hasLegFlag(GLOBAL.FLAG_PAWS))
 	{

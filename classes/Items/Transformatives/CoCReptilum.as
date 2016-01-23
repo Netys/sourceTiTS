@@ -336,7 +336,7 @@ package classes.Items.Transformatives
 
 				pc.genitalSpot = 0;
 				pc.legCount = 2;
-				pc.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_SCALED];
+				pc.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_SCALED, GLOBAL.FLAG_PAWS];
 				pc.legType = GLOBAL.TYPE_LIZAN;
 
 				changes++;

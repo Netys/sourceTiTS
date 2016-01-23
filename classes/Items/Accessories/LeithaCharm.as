@@ -321,6 +321,9 @@
 
 				target.legCount = 4;
 				target.genitalSpot = 2;
+				
+				// validate flags
+				target.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_SCALED, GLOBAL.FLAG_PAWS];
 			}
 			// Right legs but not 6-legged taur
 			else
@@ -335,6 +338,9 @@
 
 				target.legCount = 6;
 				target.genitalSpot = 2;
+				
+				// validate flags
+				target.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_SCALED, GLOBAL.FLAG_PAWS];
 			}
 
 			var buttInc:Boolean = false;

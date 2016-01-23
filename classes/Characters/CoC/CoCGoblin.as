@@ -144,7 +144,7 @@ package classes.Characters.CoC
 			this.vaginas[0].bonusCapacity = 40;
 			
 			this.breastRows[0].breastRatingRaw = 8; // E
-			this.nippleColor = "green";
+			this.nippleColor = "purple";
 			this.milkMultiplier = 0;
 			this.milkType = GLOBAL.FLUID_TYPE_MILK;
 			this.milkRate = 1;

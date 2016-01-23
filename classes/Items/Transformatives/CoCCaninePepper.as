@@ -96,7 +96,7 @@ package classes.Items.Transformatives
 				output("You eat the pepper, even the two orb-like growths that have grown out from the base.  It's delicious!", false);
 			}
 			//OVERDOSE Bad End!
-			if (type <= 0 && crit > 1 && pc.hasFur() && pc.dogScore() > 7 && rand(2) == 0 && kGAMECLASS.flags["COC.BAD_END_WARNING_DOG"] != undefined && !pc.hasPerk("Transformation Resistance")) {
+			if (type <= 0 && crit > 1 && pc.hasFur() && pc.canineScore() >= 6 && rand(2) == 0 && kGAMECLASS.flags["COC.BAD_END_WARNING_DOG"] != undefined && !pc.hasPerk("Transformation Resistance")) {
 				if (rand(2) == 0) {
 					output("\n\nAs you swallow the pepper, you note that the spicy hotness on your tongue seems to be spreading. Your entire body seems to tingle and burn, making you feel far warmer than normal, feverish even. Unable to stand it any longer you tear away your clothes, hoping to cool down a little. Sadly, this does nothing to aid you with your problem. On the bright side, the sudden feeling of vertigo you've developed is more than enough to take your mind off your temperature issues. You fall forward onto your hands and knees, well not really hands and knees to be honest. More like paws and knees. That can't be good, you think for a moment, before the sensation of your bones shifting into a quadrupedal configuration robs you of your concentration. After that, it is only a short time before your form is remade completely into that of a large dog, or perhaps a wolf. The distinction would mean little to you now, even if you were capable of comprehending it. ", false);
 					//if (pc.findPerk(PerkLib.MarblesMilk) >= 0) output("All you know is that there is a scent on the wind, it is time to hunt, and at the end of the day you need to come home for your milk.", false);
@@ -108,11 +108,11 @@ package classes.Items.Transformatives
 				return;
 			}
 			//WARNING, overdose VERY close!
-			if (type <= 0 && pc.hasFur() && pc.dogScore() > 6 && kGAMECLASS.flags["COC.BAD_END_WARNING_DOG"] != undefined && rand(3) == 0) {
+			if (type <= 0 && pc.hasFur() && pc.canineScore() >= 5 && kGAMECLASS.flags["COC.BAD_END_WARNING_DOG"] != undefined && rand(3) == 0) {
 				output("<b>\n\nEating the pepper, you realize how dog-like you've become, and you wonder what else the peppers could change...</b>", false);
 			}
 			//WARNING, overdose is close!
-			if (type <= 0 && pc.dogScore() > 6 && kGAMECLASS.flags["COC.BAD_END_WARNING_DOG"] == undefined) {
+			if (type <= 0 && pc.canineScore() >= 5 && kGAMECLASS.flags["COC.BAD_END_WARNING_DOG"] == undefined) {
 				kGAMECLASS.flags["COC.BAD_END_WARNING_DOG"] = 1;
 				output("<b>\n\nEating the pepper, you realize how dog-like you've become, and you wonder what else the peppers could change...</b>", false);
 			}
@@ -529,7 +529,7 @@ package classes.Items.Transformatives
 				}
 			}
 			
-			if (changes < changeLimit && pc.dogScore() >= 3 && rand(4) == 0) {
+			if (changes < changeLimit && pc.canineScore() >= 3 && rand(4) == 0) {
 				changes++;
 				output("\n\n", false);
 				output("Images and thoughts come unbidden to your mind, overwhelming your control as you rapidly lose yourself in them, daydreaming of... ", false);

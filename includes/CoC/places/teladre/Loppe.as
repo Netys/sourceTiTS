@@ -1183,12 +1183,12 @@ private function loppeRidesPCCockFinal():void {
 	//[(Exhibitionist)
 	if(pc.exhibitionism() >= 66) output("; it gives you something of a thrill, though nowhere near as much as taking them off for her in the first place did");
 	output(".  Finished, you depart.");
-	pc.orgasm();
 	//dynStats("tou", .5, "lib", .5, "sen", -4);
 	pc.slowStatGain("l", -0.5); // kinda lost here... originally, this is mostly benefical event, but with only libido it would be quite questionable, so let it decrease
 	IncrementFlag("COC.LOPPE_TIMES_SEXED");
 	//3 hours pass.
 	processTime(3 * 60 + rand(60));
+	pc.orgasm();
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 }
@@ -1278,12 +1278,12 @@ private function loppeWorshipsDicks():void {
 	output("\n\n<b>Two hours later...</b>");
 
 	output("\n\nA familiar feeling emanates from your crotch... a distinct sucking and bobbing feeling.  Your eyes open and you awaken with a gasp as you blast a fresh batch of cum into Loppe's eager mouth.  She withdraws with a slurp and smiles gleefully at you.  \"<i>Morning, sleepyhead!  Rest well?  Want me to wake you up some more?</i>\" she asks, licking her lips.  \"<i>I placed your stuff on the chair over there.  And don't worry, it's all cleaned too.  See you later on?  For more 'appreciation', of course...</i>\"");
-	pc.orgasm();
 	//dynStats("tou", .5, "lib", .5, "sen", -4);
 	pc.slowStatGain("l", -0.5); // kinda lost here... originally, this is mostly benefical event, but with only libido it would be quite questionable, so let it decrease
 	IncrementFlag("COC.LOPPE_TIMES_SEXED");
 	//3 hours pass.
 	processTime(3 * 60 + rand(60));
+	pc.orgasm();
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 }
@@ -1434,13 +1434,13 @@ private function getFuckedInYerTwatYaCunt():void {
 	output("  Your lover laughs, \"<i>Okay, you got me there... but, anyway, I have some chores to run for my mom, so I guess I'll see you later?</i>\"");
 
 	output("\n\nYou slide out from beneath the covers and start redressing yourself.  Once you're done, Loppe steals a quick peck on the lips before you head out.");
-	pc.orgasm();
 	pc.loadInCunt();
 	//dynStats("tou", .5, "lib", .5, "sen", -4);
 	pc.slowStatGain("l", -0.5); // kinda lost here... originally, this is mostly benefical event, but with only libido it would be quite questionable, so let it decrease
 	IncrementFlag("COC.LOPPE_TIMES_SEXED");
 	//3 hours pass.
 	processTime(3 * 60 + rand(60));
+	pc.orgasm();
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 }
@@ -1603,13 +1603,13 @@ private function getButtFuckedNonHoarseByLoppe():void {
 	output("\n\n<b>One bath later...</b>");
 
 	output("\n\nFeeling clean and refreshed, not to mention much lighter, you leave Loppe's bathroom with a thank-you.  The girl laughs nervously.  \"<i>Again, sorry about that, sugar.  Anyways, I'm in need of a bath of my own.</i>\"");
-	pc.orgasm();
 	pc.loadInAss();
 	//dynStats("tou", .5, "lib", .5, "sen", -4);
 	pc.slowStatGain("l", -0.5); // kinda lost here... originally, this is mostly benefical event, but with only libido it would be quite questionable, so let it decrease
 	IncrementFlag("COC.LOPPE_TIMES_SEXED");
 	//3 hours pass.
 	processTime(3 * 60 + rand(60));
+	pc.orgasm();
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 }
@@ -1753,13 +1753,13 @@ private function getAssFuckedByLoppeAsACentaur():void {
 	output("  Anyway, your clothes are back in my room; sorry to fuck and run, but I've got some errands to run before mom gets home - you'll have to see yourself out, okay?</i>\"");
 
 	output("\n\nYou nod and head to her room to fetch your [pc.gear].");
-	pc.orgasm();
 	pc.loadInAss();
 	//dynStats("tou", .5, "lib", .5, "sen", -4);
 	pc.slowStatGain("l", -0.5); // kinda lost here... originally, this is mostly benefical event, but with only libido it would be quite questionable, so let it decrease
 	IncrementFlag("COC.LOPPE_TIMES_SEXED");
 	//3 hours pass.
 	processTime(3 * 60 + rand(60));
+	pc.orgasm();
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 }

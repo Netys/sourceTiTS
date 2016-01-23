@@ -2724,7 +2724,7 @@ package classes {
 			if (hasStatusEffect("Bimbo Champagne") && !perm) return true;
 			if (hasPerk("Bimbo Brains")) return true;
 			if (hasPerk("Futa Faculties")) return true;
-			if (this is PlayerCharacter && flags["DR_BADGER_BIMBOED_PC"] != undefined) return true;
+			if (this is PlayerCharacter && kGAMECLASS.flags["DR_BADGER_BIMBOED_PC"] == 1) return true;
 			return hasPerk("Ditz Speech");
 		}
 		public function isBro(perm:Boolean=false):Boolean
@@ -8101,12 +8101,12 @@ package classes {
 			if (raskvelScore() >= 4) race = "raskvel-morph";
 			if (pandaScore() >= 4) race = "panda-morph";
 			if (ausarScore() >= 4) race = "ausar"
-			if (dogScore() >= 4 && race != "ausar") race = faceType == GLOBAL.TYPE_CANINE ? "dog-morph" : mf("dog-man", "dog-girl");
+			if (canineScore() >= 4 && race != "ausar") race = faceType == GLOBAL.TYPE_CANINE ? "dog-morph" : mf("dog-man", "dog-girl");
 			if (demonScore() >= 5) race = "demon-morph";
 			if (gabilaniScore() >= 5) race = "gabilani";
 			if (frogScore() >= 5) race = "kerokoras";
 			if (kaithritScore() >= 6) race = "kaithrit";
-			if (catScore() >= 5 && race != "kaithrit") race = faceType == GLOBAL.TYPE_FELINE ? "cat-morph" : mf("cat-man", "cat-girl");
+			if (felineScore() >= 5 && race != "kaithrit") race = faceType == GLOBAL.TYPE_FELINE ? "cat-morph" : mf("cat-man", "cat-girl");
 			if (leithanScore() >= 6) race = "leithan";
 			if (nukiScore() >= 6) race = "kui-tan";
 			if (vanaeScore() >= 6) race = "vanae-morph";
@@ -8201,59 +8201,6 @@ package classes {
 			if (race().indexOf("half-") != -1) return true;
 			if (race().indexOf("half ") != -1) return true;
 			return false;
-		}
-		public function dogScore():int {
-			var dogCounter:Number = 0;
-			if (faceType == GLOBAL.TYPE_CANINE)
-				dogCounter++;
-			if (earType == GLOBAL.TYPE_CANINE)
-				dogCounter++;
-			if (tailType == GLOBAL.TYPE_CANINE)
-				dogCounter++;
-			if (legType == GLOBAL.TYPE_CANINE)
-				dogCounter++;
-			if (armType == GLOBAL.TYPE_CANINE)
-				dogCounter++;
-			if (hasCock(GLOBAL.TYPE_CANINE) || hasVagina() && vaginas[0].type == GLOBAL.TYPE_CANINE)
-				dogCounter++;
-			if (breastRows.length > 1)
-				dogCounter++;
-			if (breastRows.length == 3)
-				dogCounter++;
-			if (breastRows.length > 3)
-				dogCounter--;
-			//Fur only counts if some canine features are present
-			if (hasFur() && dogCounter > 0)
-				dogCounter++;
-			return dogCounter;
-		}
-		public function catScore():Number
-		{
-			var catCounter:Number = 0;
-			if (faceType == GLOBAL.TYPE_FELINE)
-				catCounter++;
-			if (earType == GLOBAL.TYPE_FELINE)
-				catCounter++;
-			if (tailType == GLOBAL.TYPE_FELINE)
-				catCounter++;
-			if (legType == GLOBAL.TYPE_FELINE)
-				catCounter++;
-			if (armType == GLOBAL.TYPE_FELINE)
-				catCounter++;
-			if (eyeType == GLOBAL.TYPE_FELINE)
-				catCounter++;
-			if (hasCock(GLOBAL.TYPE_FELINE))
-				catCounter++;
-			if (breastRows.length > 1 && catCounter > 0)
-				catCounter++;
-			if (breastRows.length == 3 && catCounter > 0)
-				catCounter++;
-			if (breastRows.length > 3)
-				catCounter -= 2;
-			//Fur only counts if some canine features are present
-			if (hasFur() && catCounter > 0)
-				catCounter++;
-			return catCounter;
 		}
 		public function foxScore():Number
 		{

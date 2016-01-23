@@ -278,12 +278,6 @@ package classes.Items.Transformatives
 			//[Grow Fur]
 			//FOURTH
 			if ((enhanced || pc.legType == GLOBAL.TYPE_VULPINE) && pc.skinType != GLOBAL.SKIN_TYPE_FUR && changes < changeLimit && rand(4) == 0) {
-				//from scales
-				if (pc.skinType == GLOBAL.SKIN_TYPE_SCALES) output("\n\nYour skin shifts and every scale stands on end, sending you into a mild panic.  No matter how you tense, you can't seem to flatten them again.  The uncomfortable sensation continues for some minutes until, as one, every scale falls from your body and a fine coat of fur pushes out.  You briefly consider collecting them, but when you pick one up, it's already as dry and brittle as if it were hundreds of years old.  <b>Oh well; at least you won't need to sun yourself as much with your new fur.</b>");
-				//from skin
-				else output("\n\nYour [pc.skinFurScales] itches all over, the sudden intensity and uniformity making you too paranoid to scratch.  As you hold still through an agony of tiny tingles and pinches, fine, luxuriant fur sprouts from every bare inch of your skin!  <b>You'll have to get used to being furry...</b>");
-				pc.skinType = GLOBAL.SKIN_TYPE_FUR;
-				
 				if (pc.kitsuneScore() >= 4)
 					if(InCollection(pc.hairColor, kGAMECLASS.basicKitsuneFur, kGAMECLASS.elderKitsuneColors, kGAMECLASS.corruptKitsuneColors))
 						pc.furColor = pc.hairColor;
@@ -293,6 +287,12 @@ package classes.Items.Transformatives
 						else pc.furColor = RandomInCollection(kGAMECLASS.basicKitsuneFur);
 				else
 					pc.furColor = RandomInCollection("orange and white", "orange and white", "orange and white", "red and white", "black and white", "white", "tan", "brown");
+					
+				//from scales
+				if (pc.skinType == GLOBAL.SKIN_TYPE_SCALES) output("\n\nYour skin shifts and every scale stands on end, sending you into a mild panic.  No matter how you tense, you can't seem to flatten them again.  The uncomfortable sensation continues for some minutes until, as one, every scale falls from your body and a fine coat of fur pushes out.  You briefly consider collecting them, but when you pick one up, it's already as dry and brittle as if it were hundreds of years old.  <b>Oh well; at least you won't need to sun yourself as much with your new " + pc.furColor + " fur.</b>");
+				//from skin
+				else output("\n\nYour [pc.skinFurScales] itches all over, the sudden intensity and uniformity making you too paranoid to scratch.  As you hold still through an agony of tiny tingles and pinches, fine, luxuriant fur sprouts from every bare inch of your skin!  <b>You'll have to get used to being furry...</b>");
+				pc.skinType = GLOBAL.SKIN_TYPE_FUR;
 					
 				changes++;
 			}

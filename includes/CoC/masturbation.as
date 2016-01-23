@@ -7,7 +7,7 @@ import classes.Engine.Utility.*;
 
 public function getCoCFapOptions(faps:Array, roundTwo:Boolean):void {
 	var fap:FapCommandContainer;
-	if((pc.hasPerk("Flexibility") || pc.race() == "kaithrit" || pc.isNaga() || pc.catScore() > 3 && pc.race().indexOf("cat") != -1) && !pc.isTaur()) { // ugh... really want cat-taur variant of scene
+	if((pc.hasPerk("Flexibility") || pc.race() == "kaithrit" || pc.isNaga() || pc.felineScore() > 3 && pc.race().indexOf("cat") != -1) && !pc.isTaur()) { // ugh... really want cat-taur variant of scene
 		if(pc.hasCock() && pc.smallestCockLength() <= 12) // scene does little sense for longer ones
 		{
 			fap = new FapCommandContainer();
@@ -779,7 +779,7 @@ public function CoCDildoButts():void {
 	output("Your body shakes and rocks from the anal orgasm");
 	if (pc.legCount <= 2) output(" before slumping onto your back");
 	output(". Happily tightening around the toy with each beat of your hammering heart, you rest.");
-	output("\n\nSome time later, you gather your things and return to camp.");
+	output("\n\nSome time later, you gather your things and return to your business.");
 	processTime(20 + rand(10));
 	pc.orgasm();
 	//dynStats("sen", 0.5);

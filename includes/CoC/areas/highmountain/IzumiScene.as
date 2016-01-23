@@ -224,7 +224,7 @@ protected function enterIzumiFirstTime():void
 		output("“<i>Hm?</i>” the shadow grunts, then speaks.  “<i>Oh?  Now how did you find your way in here, I wonder?</i>”  The voice is deep, rich and undeniably female, but has a gravelly edge to it like a cross between magma and molten chocolate.  You hear the hiss of indrawn breath and a small light flares up briefly in the darkness, then the shadow speaks again.  “<i>Well, whatever. It’s been a while since I had company, ");
 
 		if (pc.bovineScore() > 3) output("plus it looks like you're thinking with the head on top of your neck, rather than the head between your legs, unlike the stupid brutes who usually wander around these parts.  ");
-		else if (pc.dogScore() > 3) output("plus it looks like you'd actually be able to resist chasing down a stick, if I threw one outta' the cave.  ");
+		else if (pc.canineScore() > 3) output("plus it looks like you'd actually be able to resist chasing down a stick, if I threw one outta' the cave.  ");
 		else if (pc.gabilaniScore() > 3) output("plus you don't seem to be as insufferable as the rest of those little green whores who trollop around these parts, hunting their next lay.  ");
 		else if (pc.demonScore() > 3) output("plus you're not forever going on about corruption this, enslavement that, demonic taint the other, unlike the insufferable clods who usually wander around these parts.  ");
 		else if (pc.harpyScore() > 3) output("plus you're not screeching incessantly, like the feathery sluts who usually flap their way around these parts.  They're lucky they </i>can<i> fly, 'cause I'd give them something to really squawk about if I could get my hands on them.  ");

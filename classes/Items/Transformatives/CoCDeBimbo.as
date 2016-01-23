@@ -67,8 +67,8 @@ package classes.Items.Transformatives
 				return false;
 			}
 			
-			var perks:/*String*/Array = ["Bimbo Brains", "Futa Faculties", "Bro Brains", "Brute Speech", "Ditz Speech", "Weak Mind", "Fuck Sense", "Sexy Thinking"];
-			var isRequired:Boolean = false;
+			var perks:/*String*/Array = ["Bimbo Brains", "Futa Faculties", "Bro Brains", "Brute Speech", "Ditz Speech", "Weak Mind", "Fuck Sense", "Sexy Thinking", "Easy"];
+			var isRequired:Boolean = kGAMECLASS.flags["DR_BADGER_BIMBOED_PC"] == 1;
 			
 			for each (var item:String in perks) 
 			{
@@ -113,6 +113,7 @@ package classes.Items.Transformatives
 				target.removePerk(item);
 			}
 			
+			if(kGAMECLASS.flags["DR_BADGER_BIMBOED_PC"] == 1) kGAMECLASS.flags["DR_BADGER_BIMBOED_PC"] = 0; // this is tricky one - you won't be bimbo anymore, bur Badger would still think you are one
 			
 			return false;
 		}

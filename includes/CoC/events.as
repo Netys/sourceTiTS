@@ -13,11 +13,11 @@ public function EventsAdopterHellNotify():void {
 			pc.createCock(10);
 			pc.shiftCock(0, Mutator.guessCockType(pc));
 			eventBuffer += "\n\n<b>As time passes, your loins grow itchy for a moment.  A split-second later, a column of flesh erupts from your crotch.  Your new [pc.cock] pulses happily.";
-			if (pc.balls == 0) {
-				eventBuffer += "  A pair of heavy balls drop into place below it, churning to produce cum.";
-				pc.balls = 2;
-				pc.ballSizeRaw = int(3 * Math.PI);
-			}
+			//if (pc.balls == 0) {
+				//eventBuffer += "  A pair of heavy balls drop into place below it, churning to produce cum.";
+				//pc.balls = 2;
+				//pc.ballSizeRaw = int(3 * Math.PI);
+			//}
 			pc.slowStatGain("i", -1);
 			pc.lust(15);
 			eventBuffer += "</b>";
@@ -32,8 +32,8 @@ public function EventsAdopterHellNotify():void {
 			//pc.balls = 2;
 			//pc.ballSizeRaw = 3 * Math.PI;
 		//}
-		if (pc.breastRows[0].breastRatingRaw < 5) { //Tits!
-			pc.breastRows[0].breastRatingRaw = 5;
+		if (pc.breastRows[0].breastRatingRaw < 4) { //Tits!
+			pc.breastRows[0].breastRatingRaw = 4;
 			if (pc.isBimbo())
 				eventBuffer += "\n\n<b>Your tits get nice and full again.  You'll have lots of fun now that your breasts are back to being big, swollen knockers!</b>";
 			else eventBuffer += "\n\n<b>Your " + pc.breastDescript(0) + " have regained their former bimbo-like size.  It looks like you'll be stuck with large, sensitive breasts forever, but at least it'll help you tease your enemies into submission!</b>";
