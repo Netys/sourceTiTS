@@ -6919,9 +6919,9 @@ package classes {
 			var fullnessDelta:Number = mLsGained / milkCapacity() * 100;
 			
 			//75% fullness notification
-			if(milkType != GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK && milkFullness < 75 && milkFullness + fullnessDelta >= 75) createStatusEffect("Pending Gain Milk Note: 75");
+			if(!InCollection(milkType, GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK, GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK) && milkFullness < 75 && milkFullness + fullnessDelta >= 75) createStatusEffect("Pending Gain Milk Note: 75");
 			//100% notification!
-			if(milkType != GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK && milkFullness < 100 && milkFullness + fullnessDelta >= 100) createStatusEffect("Pending Gain Milk Note: 100");
+			if(!InCollection(milkType, GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK, GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK) && milkFullness < 100 && milkFullness + fullnessDelta >= 100) createStatusEffect("Pending Gain Milk Note: 100");
 
 			//If we're going above 100.
 			if(fullnessDelta + milkFullness > 100)
