@@ -330,17 +330,18 @@ package classes.Items.Transformatives
 				//temp2 - saved looseness
 				//temp3 - counter
 				temp = 0;
-				temp2 = pc.vaginas[temp].loosenessRaw;
+				temp2 = pc.vaginas[temp].minLooseness;
 				temp3 = pc.vaginas.length;
 				while (temp3 > 0) {
 					temp3--;
-					if (temp2 > pc.vaginas[temp3].loosenessRaw) {
+					if (temp2 > pc.vaginas[temp3].minLooseness) {
 						temp = temp3;
-						temp2 = pc.vaginas[temp].loosenessRaw;
+						temp2 = pc.vaginas[temp].minLooseness;
 					}
 				}
-				if (pc.vaginas[temp].loosenessRaw <= 4 && changes < changeLimit && rand(2) == 0) {
-					pc.vaginas[temp].looseness(1);
+				if (pc.vaginas[temp].minLooseness <= 4 && changes < changeLimit && rand(2) == 0) {
+					pc.vaginas[temp].minLooseness++;
+					if (pc.vaginas[temp].looseness() < pc.vaginas[temp].minLooseness) pc.vaginas[temp].looseness(1);
 					if (pc.vaginas[temp].bonusCapacity < 500) pc.vaginas[temp].bonusCapacity += 10;
 					output("\n\nYou grip your gut in pain as you feel your organs shift slightly.  When the pressure passes, you realize your " + pc.vaginaDescript(temp) + " has grown larger, in depth AND size.");
 					changes++;

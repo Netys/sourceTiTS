@@ -97,13 +97,12 @@ public function lumiEnhance():void {
 	add(new CoCFoxJewel(), new CoCMysticJewel());
 	add(new CoCGoldenSeed(), new CoCMagicSeed());
 	add(new CoCKangaFruit(), new CoCKangaFruitEnchanced());
+	add(new CoCSucDelight(), new CoCSucDream());
 }
 	//var laBova:Function =null;
 	//if(pc.hasItem(consumables.LABOVA_))
 		//laBova = lumiEnhanceLaBova;
 	//var succuDelight:Function =null;
-	//if(pc.hasItem(consumables.SDELITE))
-		//succuDelight = lumiEnhanceSDelight;
 	//var oviElix:Function =null;
 	////if(pc.hasItem(consumables.OVIELIX))
 	////	oviElix = lumiEnhanceOviElix;

@@ -57,7 +57,7 @@ package classes.Items.Transformatives
 				return false;
 			}
 			
-			CoCSucDelight.useIt(false);
+			CoCSucDelight.useIt(target, false);
 			return false;
 		}
 	}

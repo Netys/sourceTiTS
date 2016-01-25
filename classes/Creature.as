@@ -13421,6 +13421,8 @@ package classes {
 		 */
 		public function cor(arg:Number = 0, apply:Boolean = false): Number 
 		{
+			if (!(this is PlayerCharacter)) return personality;
+			
 			if (kGAMECLASS.flags["COC.CORRUPTION"] == undefined) kGAMECLASS.flags["COC.CORRUPTION"] = 0;
 			if (apply) 
 				kGAMECLASS.flags["COC.CORRUPTION"] = arg;
