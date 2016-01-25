@@ -54,8 +54,8 @@ package classes.Items.Transformatives
         //METHOD ACTING!
         override public function useFunction(target:Creature, usingCreature:Creature = null):Boolean
         {
-			if (!(target is PlayerCharacter))
-			{
+			if (!(target is PlayerCharacter)) {
+				output(target.capitalA + target.short + " have no idea how to use " + longName + ".");
 				return false;
 			}
 			

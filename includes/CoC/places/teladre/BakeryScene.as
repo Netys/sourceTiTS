@@ -2,6 +2,7 @@ import classes.Characters.CoC.CoCTrader;
 import classes.GLOBAL;
 import classes.Items.Miscellaneous.CoCChocolateCupcake;
 import classes.Items.Transformatives.CoCFoxBerry;
+import classes.Items.Transformatives.CoCMouseCocoa;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -68,7 +69,9 @@ private function checkBakeryIngredientsMenu():void {
 	//spriteSelect(37);
 	shopkeep = new CoCTrader();
 	shopkeep.short = "Baker";
-	shopkeep.inventory = [new CoCFoxBerry()];
+	shopkeep.inventory = [new CoCFoxBerry(), new CoCMouseCocoa()];
+	//addButton(1,"Ringtail Fig",buyFig); // conflicts with Kui-Tan TF
+	//addButton(3,"Ferret Fruit",buyFerretFruit); // Not supported
 	
 	shopkeep.keeperBuy = "You get in line and look at the menu while you wait.\n\n";
 	
@@ -106,7 +109,7 @@ private function checkBakeryMenu():void {
 	else addDisabledButton(btn++, "Pound Cake", "Pound Cake", "You can't afford this.");
 	
 	//Giant Cupcake
-	if(flags["COC.UNKNOWN_FLAG_NUMBER_00242"] >= 4) {
+	if(flags["COC.BAKERY_MADDIE_STATE"] >= 4) {
 		output("Giant Chocolate Cupcake - 500 gems.\n");
 		if (pc.credits >= 5000) addButton(btn++, "GiantCupcake", buySlutCake, null, "Giant Cupcake", "Only true glutton can eat something so large!");
 		else addDisabledButton(btn++, "GiantCupcake", "Giant Cupcake", "You can't afford this.");

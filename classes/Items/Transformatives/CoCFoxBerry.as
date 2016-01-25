@@ -1,5 +1,6 @@
 package classes.Items.Transformatives
 {
+	import classes.Characters.PlayerCharacter;
 	import classes.CockClass;
 	import classes.Creature;
 	import classes.GameData.TooltipManager;
@@ -23,7 +24,7 @@ package classes.Items.Transformatives
             //Used on inventory buttons
             this.shortName = "FoxBerry";
             //Regular name
-            this.longName = "Fox Berry";
+            this.longName = "fox berry";
             
             TooltipManager.addFullName(this.shortName, StringUtil.toTitleCase(this.longName));
             
@@ -41,9 +42,14 @@ package classes.Items.Transformatives
         }
         
         //METHOD ACTING!
-        override public function useFunction(pc:Creature, usingCreature:Creature = null):Boolean
+        override public function useFunction(target:Creature, usingCreature:Creature = null):Boolean
         {
-			FoxBerry(false, pc);
+			if (!(target is PlayerCharacter)) {
+				output(target.capitalA + target.short + " have no idea how to use " + longName + ".");
+				return false;
+			}
+			
+			FoxBerry(false, target);
 			return false;
 		}
 		

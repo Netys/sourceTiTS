@@ -54,8 +54,8 @@ package classes.Items.Transformatives
         //METHOD ACTING!
         override public function useFunction(target:Creature, usingCreature:Creature = null):Boolean
         {
-			if (!(target is PlayerCharacter))
-			{
+			if (!(target is PlayerCharacter)) {
+				output(target.capitalA + target.short + " have no idea how to use " + longName + ".");
 				return false;
 			}
 			
@@ -100,7 +100,7 @@ package classes.Items.Transformatives
 			//Makes your balls biggah! (Or cummultiplier higher if futa!)
 			if (rand(2) == 0 && changes < changeLimit && target.balls > 0) {
 				//They grow slower as they get bigger...
-				target.ballSize(target.ballSize() > 10 ? 0.75 : 1.5);
+				target.ballSize(target.ballSize() > 10 ? Math.PI / 4 : Math.PI / 2);
 				//Texts
 				if (target.ballSize() <= 2) output("\n\nA flash of warmth passes through you and a sudden weight develops in your groin.  You pause to examine the changes and your roving fingers discover your [pc.balls] have grown larger than a human's.");
 				if (target.ballSize() > 2) output("\n\nA sudden onset of heat envelops your groin, focusing on your [pc.sack].  Walking becomes difficult as you discover your [pc.balls] have enlarged again.");
@@ -109,8 +109,9 @@ package classes.Items.Transformatives
 				changes++;
 			}
 			//Boost cum multiplier
-			if (changes < changeLimit && target.cumMultiplierRaw < 10 && rand(2) == 0 && target.hasCock()) {
-				target.cumMultiplierRaw += .2 * crit;
+			if (changes < changeLimit && rand(2) == 0 && target.hasCock()) {
+				if (target.cumMultiplierRaw < 10) target.cumMultiplierRaw += .1 * crit;
+				target.cumMultiplierRaw += .1 * crit;
 				//Flavor text
 				if (target.balls == 0) output("\n\nYou feel a churning inside your body as something inside you changes.");
 				if (target.balls > 0) output("\n\nYou feel a churning in your [pc.balls].  It quickly settles, leaving them feeling somewhat more dense.");
@@ -119,8 +120,9 @@ package classes.Items.Transformatives
 				changes++;
 			}
 			//Boost refactory
-			if (changes < changeLimit && target.refractoryRate < 10 && rand(2) == 0 && target.hasCock()) {
-				target.refractoryRate += .2 * crit;
+			if (changes < changeLimit && rand(2) == 0 && target.hasCock()) {
+				if (target.refractoryRate < 10) target.refractoryRate += .1 * crit;
+				target.refractoryRate += .1 * crit;
 				//Flavor text
 				if (target.balls == 0) output("\n\nThere's a heat rising in your gut, something warm and not altogether unpleasant. After a moment the heat passes and you feel... more productive, somehow.");
 				if (target.balls > 0) output("\n\nThere's a heat rising in your [pc.sack], something warm and not altogether unpleasant. After a moment the heat passes and you feel... more productive, somehow.");

@@ -38,7 +38,7 @@ package classes.Items.Apparel
 			this.shieldDefense = 0;
 			this.sexiness = 6;
 			this.critBonus = 0;
-			this.evasion = 4;
+			this.evasion = 3;
 			this.fortification = 0;
 			
 			this.resistances.addFlag(DamageFlag.NULLIFYING);
@@ -64,13 +64,20 @@ package classes.Items.Apparel
 		
 		override public function onEquip(targetCreature:Creature):void
 		{
-			output("\n\n");
-			if (targetCreature.isExposed())
+			if (targetCreature.isExposed()) {
 				if (isActive(targetCreature)) {
-					output("While not covering anything, this bands still somehow give you decent appearance.");
+					output("\n\nWhile not covering anything, this bands still somehow give you decent appearance.");
 				}
-				else output("With this bands your appearance is even more provoking than simple nudity.");
-			output("\n\n");
+				else output("\n\nWith this bands your appearance is even more provoking than simple nudity.");
+			}
+			if ((targetCreature.hasPerk("Enlightened Nine-tails") || targetCreature.hasPerk("Corrupted Nine-tails")) && this.defense == 0) {
+				output("\n\nYou feel your power resonating with your bands... You are now fully in tune with them! Enchantement now provides some protection from physical attacks as well and evasion bonus is increased.");
+				this.type = GLOBAL.ARMOR;
+				this.defense = 5;
+				this.evasion = 6;
+				this.resistances.psionic.resistanceValue = 20;
+				this.hasRandomProperties = true;
+			}
 		}
 	}
 }

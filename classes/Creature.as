@@ -733,6 +733,7 @@ package classes {
 		public var tailType: Number = 0;
 		public function tailTypeUnlocked(newTailType:Number):Boolean
 		{
+			if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9 && (hasPerk("Enlightened Nine-tails") || hasPerk("Corrupted Nine-tails"))) return false;
 			if (tailType == GLOBAL.TYPE_CUNTSNAKE) return false;
 			if (tailType == GLOBAL.TYPE_COCKVINE) return false;
 			return true;
@@ -740,6 +741,13 @@ package classes {
 		public function tailTypeLockedMessage():String
 		{
 			var msg:String = "";
+			if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9 && (hasPerk("Enlightened Nine-tails") || hasPerk("Corrupted Nine-tails"))) {
+				msg += "You are startled by sudden burst of dazzling ";
+				if (hasPerk("Enlightened Nine-tails")) msg += "azure";
+				else msg += "purple";
+				msg += " sparks from your [pc.tails], but nothing is changed.";
+				return msg;
+			}
 			if (tailType == GLOBAL.TYPE_CUNTSNAKE || tailType == GLOBAL.TYPE_COCKVINE)
 			{
 				msg = "The creature masquerading as a tail seems pretty spooked about something all of a sudden;";
@@ -754,10 +762,19 @@ package classes {
 		public var tailCount: Number = 0;
 		public function tailCountUnlocked(newTailCount:Number):Boolean
 		{
+			if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9 && (hasPerk("Enlightened Nine-tails") || hasPerk("Corrupted Nine-tails"))) return false;
 			return true;
 		}
 		public function tailCountLockedMessage():String
 		{
+			var msg:String = "";
+			if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9 && (hasPerk("Enlightened Nine-tails") || hasPerk("Corrupted Nine-tails"))) {
+				msg += "You are startled by sudden burst of dazzling ";
+				if (hasPerk("Enlightened Nine-tails")) msg += "azure";
+				else msg += "purple";
+				msg += " sparks from your [pc.tails], but nothing is changed.";
+				return msg;
+			}
 			return "Despite the heat at the base of your spine, nothing changes back there.";
 		}
 
