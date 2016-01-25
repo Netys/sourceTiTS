@@ -63,7 +63,6 @@ public function enterCocVrPod():void {
 }
 
 public function abortIAmNotBloodyChampion():void {
-	move("VR_POD_ROOM");
 	updatePCStats();
 	author("Etis");
 	clearOutput();
@@ -83,7 +82,7 @@ public function abortIAmNotBloodyChampion():void {
 	processTime(5);
 	
 	clearMenu();
-	addButton(0, "Next", mainGameMenu);
+	addButton(0, "Next", move, "VR_POD_ROOM");
 }
 
 public function EnterVRIAmYourBloodyChampionYouVapidCunt():void {

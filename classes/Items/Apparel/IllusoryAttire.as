@@ -10,6 +10,11 @@ package classes.Items.Apparel
 
 	public class IllusoryAttire extends ItemSlotClass
 	{
+		public static var descBasic:String = "A set of ornate bands designed to be worn on wrists, feet (or shins for plantigrade) and tails. Enchanted with Kitsune's glamour, distracting unfocused attention.";
+		public static var descDefault:String = "\n\nAs long as your body is animalistic enough, you won't be accused in public indecency while wearing them. As side effect they can partially protect you from psionic attacks, but nothing else. Illusion requires several specific body points for proper work: fur or scales, long tail, digitigrade paws or other sort of inhuman legs, C-cup or smaller breasts. Also, it only can hide your male parts if your have genital slit or all your cocks are sheathed and your balls are not too large.";
+		public static var descNineTails:String = " You won't be accused in public indecency while wearing them.\n\nSince they are worn by Kitsune, their potential is fully unleashed. Magic barrier is powerful enough to provide some protection from any threat, and any body type requirements are lifted.";
+		public static var descPsionic:String = " You won't be accused in public indecency while wearing them.\n\nSince they are worn by psionic, their potential is fully unleashed. Psionic barrier is powerful enough to provide some protection from any threat, and any body type requirements are lifted.";
+		
 		public function IllusoryAttire() 
 		{
 			this._latestVersion = 1;
@@ -26,7 +31,7 @@ package classes.Items.Apparel
 			
 			this.description = "an illusory attire";
 			
-			this.tooltip = "A set of ornate bands designed to be worn on wrists, feet (or shins for plantigrade) and tails. Enchanted with Kitsune's glamour, distracting unfocused attention. As long as your body is animalistic enough, you won't be accused in public indecency while wearing them. As side effect they can partially protect you from psionic attacks, but nothing else. Illusion requires several specific body points for proper work: fur or scales, long tail, digitigrade paws or other sort of inhuman legs, C-cup or smaller breasts. Also, it only can hide your male parts if your have genital slit or all your cocks are sheathed and your balls are not too large.";
+			this.tooltip = descBasic + descDefault;
 			
 			TooltipManager.addTooltip(this.shortName, this.tooltip);
 			
@@ -36,9 +41,9 @@ package classes.Items.Apparel
 			this.attack = 0;
 			this.defense = 0;
 			this.shieldDefense = 0;
-			this.sexiness = 6;
+			this.sexiness = 4;
 			this.critBonus = 0;
-			this.evasion = 3;
+			this.evasion = 2;
 			this.fortification = 0;
 			
 			this.resistances.addFlag(DamageFlag.NULLIFYING);
@@ -48,7 +53,9 @@ package classes.Items.Apparel
 			this.version = this._latestVersion;
 		}
 		
-		public function isActive(target:Creature):Boolean {
+		public static function isActive(target:Creature):Boolean {
+			if (target.hasPerk("Enlightened Nine-tails") || target.hasPerk("Corrupted Nine-tails") || target.isPsionic()) return true; // when owned by psionic or Nine-tails all limitations are lifted
+			
 			if (!target.hasFur() && !target.hasScales()) return false;
 			if (target.hasLegFlag(GLOBAL.FLAG_PLANTIGRADE)) return false;
 			if (!(target.hasTail() && target.hasTailFlag(GLOBAL.FLAG_LONG)) && !target.isNaga()) return false;
@@ -69,14 +76,6 @@ package classes.Items.Apparel
 					output("\n\nWhile not covering anything, this bands still somehow give you decent appearance.");
 				}
 				else output("\n\nWith this bands your appearance is even more provoking than simple nudity.");
-			}
-			if ((targetCreature.hasPerk("Enlightened Nine-tails") || targetCreature.hasPerk("Corrupted Nine-tails")) && this.defense == 0) {
-				output("\n\nYou feel your power resonating with your bands... You are now fully in tune with them! Enchantement now provides some protection from physical attacks as well and evasion bonus is increased.");
-				this.type = GLOBAL.ARMOR;
-				this.defense = 5;
-				this.evasion = 6;
-				this.resistances.psionic.resistanceValue = 20;
-				this.hasRandomProperties = true;
 			}
 		}
 	}

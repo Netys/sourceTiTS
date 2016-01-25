@@ -1,9 +1,11 @@
 import classes.Characters.CoC.CoCImp;
 import classes.Characters.CoC.CoCKitsune;
+import classes.Creature;
 import classes.Engine.Combat.applyDamage;
 import classes.Engine.Combat.DamageTypes.TypeCollection;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
+import classes.Items.Apparel.IllusoryAttire;
 import classes.Items.Drinks.CoCFuckDraft;
 import classes.Items.Miscellaneous.CoCKitsuneGift;
 import classes.Items.Miscellaneous.CoCKitsuneStatue;
@@ -2642,10 +2644,14 @@ public function validatePlayerKitsuneElderColor():void {
 	}
 }
 
+public function isNineTails(target:Creature):Boolean {
+	return target.hasTail(GLOBAL.TYPE_VULPINE) && target.tailCount >= 9 && (target.hasPerk("Enlightened Nine-tails") || target.hasPerk("Corrupted Nine-tails"));
+}
+
 public function NineTailsTimePassedNotify():void {
-	if (minutes % 4 == 0 && (pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Corrupted Nine-tails"))) {
+	if (minutes % 4 == 0 && isNineTails(pc)) {
 		if (!pc.hasTail(GLOBAL.TYPE_VULPINE) || pc.tailCount < 9) {
-			eventBuffer += "\n\n<b>You have lost your Kitsune tails, and your boundless energy is gone.</b>";
+			eventBuffer += "\n\n<b>Without your tails, the magic power they once granted withers and dies, vanishing completely.</b>";
 			pc.removePerk("Enlightened Nine-tails");
 			pc.removePerk("Corrupted Nine-tails");
 		}
@@ -2660,6 +2666,27 @@ public function NineTailsTimePassedNotify():void {
 			//pc.removePerk("Corrupted Nine-tails");
 		//}
 		else pc.energy(1);
+	}
+	
+	if (pc.armor is IllusoryAttire) {
+		if (pc.armor.hasRandomProperties && !isNineTails(pc) && !pc.isPsionic()) {
+			eventBuffer += "\n\nWithout your power flowing through your bands, they are little more than just decorations.";
+			pc.armor = new IllusoryAttire(); // reset stats
+		}
+		else if (isNineTails(pc) || pc.isPsionic()) {
+			if(!pc.armor.hasRandomProperties) { // first time message
+				eventBuffer += "\n\nYou feel your power resonating with your bands... You are fully in tune with them! Enchantement is now powerful enough to provide some real protection from attacks as well, and other effects are more powerful too.";
+				pc.armor.type = GLOBAL.ARMOR;
+				pc.armor.tooltip = IllusoryAttire.descBasic + (isNineTails(pc) ? IllusoryAttire.descNineTails : IllusoryAttire.descPsionic);
+				TooltipManager.addTooltip(pc.armor.shortName, pc.armor.tooltip);
+			}
+			pc.armor.defense = Math.ceil(pc.level / 4) + 2;
+			pc.armor.shieldDefense = pc.armor.defense;
+			pc.armor.evasion = Math.ceil(pc.level / 2) + 2;
+			pc.armor.sexiness = Math.ceil(pc.level / 2) + 2;
+			pc.armor.resistances.psionic.resistanceValue = 20;
+			pc.armor.hasRandomProperties = true;
+		}
 	}
 }
 private var NineTailsTimePassedNotifyHook: * = NineTailsTimePassedNotifyGrapple();
