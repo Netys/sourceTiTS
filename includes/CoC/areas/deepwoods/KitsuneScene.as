@@ -2577,13 +2577,13 @@ public function validatePlayerKitsuneElderColor():void {
 		if (!InCollection(pc.hairColor, elderKitsuneColors)) // wrong hair color
 			if (pc.skinType == GLOBAL.SKIN_TYPE_FUR && InCollection(pc.furColor, elderKitsuneColors)) { // right fur color
 				pc.hairColor = pc.furColor;
-				if(pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " hair</b> matching your fur, like true kitsune elder. You look really regal!");
+				if(pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " hair</b> matching your fur, like true kitsune elder.");
 			}
 			else if (pc.skinType == GLOBAL.SKIN_TYPE_FUR) { // wrong fur color
 				pc.hairColor = RandomInCollection(elderKitsuneColors);
 				pc.furColor = pc.hairColor;
-				if (pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " fur and hair</b>, like true kitsune elder. You look really regal!");
-				else output("\n\nNow <b>you have " + pc.furColor + " fur</b>, like true kitsune elder. You look really regal!");
+				if (pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " fur and hair</b>, like true kitsune elder.");
+				else output("\n\nNow <b>you have " + pc.furColor + " fur</b>, like true kitsune elder.");
 			}
 			else { // no fur
 				pc.hairColor = RandomInCollection(elderKitsuneColors);
@@ -2593,8 +2593,13 @@ public function validatePlayerKitsuneElderColor():void {
 		else // right hair color
 			if (pc.skinType == GLOBAL.SKIN_TYPE_FUR && !InCollection(pc.furColor, elderKitsuneColors)) { // wrong fur color
 				pc.furColor = pc.hairColor;
-				output("\n\nNow <b>you have " + pc.furColor + " fur</b> matching your hair, like true kitsune elder. You look really regal!");
+				output("\n\nNow <b>you have " + pc.furColor + " fur</b> matching your hair, like true kitsune elder.");
 			}
+		
+		if (pc.hasStatusEffect("Vanae Markings") && pc.skinAccent != "luminous azure") {
+			output("\n\nYour body markings are not " + pc.skinAccent + " anymore! <b>You now have luminous azure body markings!</b> .");
+			pc.skinAccent = "luminous azure";
+		}
 	}
 	else 
 	if (pc.hasPerk("Corrupted Nine-tails")) { // imma lazy, yep
@@ -2629,6 +2634,11 @@ public function validatePlayerKitsuneElderColor():void {
 				pc.furColor = pc.hairColor;
 				output("\n\nNow <b>you have " + pc.furColor + " fur</b> matching your hair.");
 			}
+		
+		if (pc.hasStatusEffect("Vanae Markings") && pc.skinAccent != "luminous purple") {
+			output("\n\nYour body markings are not " + pc.skinAccent + " anymore! <b>You now have luminous purple body markings!</b> .");
+			pc.skinAccent = "luminous purple";
+		}
 	}
 }
 

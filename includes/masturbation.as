@@ -6,7 +6,7 @@ import classes.Items.Toys.HoverHole;
 import classes.Items.Toys.NivasBionaHole;
 import classes.Items.Toys.TamaniBionaHole;
 
-public function availableFaps(roundTwo:Boolean = false):Array
+public function availableFaps(roundTwo:Boolean = false):/*FapCommandContainer*/Array
 {
 	var faps:Array = new Array();
 	var fap:FapCommandContainer;
@@ -363,13 +363,24 @@ public function masturbateMenu(roundTwo:Boolean = false):void {
 		clearOutput();
 		output("Out here? In public?\n\n...<b>it'll have to do</b>.");
 		clearMenu();
-		addButton(0,"Exhibitionism",moderateExhibitionOmniFap);
+		var btn:int = 0;
+		addButton(btn++,"Exhibitionism",moderateExhibitionOmniFap);
 		//Special new texas shit
 		if(pc.hasItem(new GravCuffs()) && rooms[currentLocation].planet == "PLANET: NEW TEXAS" && rooms[currentLocation].hasFlag(GLOBAL.PUBLIC))
 		{
-			addButton(1,"CuffSelf",cuffSelfRouter,undefined,"Cuff Yourself","You bet that if you cuffed yourself naked somewhere public, there'd be at least one randy bull to give you a reaming.");
+			addButton(btn++,"CuffSelf",cuffSelfRouter,undefined,"Cuff Yourself","You bet that if you cuffed yourself naked somewhere public, there'd be at least one randy bull to give you a reaming.");
 		}
-		addButton(14,"Back",mainGameMenu);
+		addButton(14, "Back", mainGameMenu);
+		
+	
+		// Get public available
+		var pub:/*FapCommandContainer*/Array = selectPublicSafeFapOptions(availableFaps(false)); // As long as we can rest, we should be able to meditate. And we can rest anywhere.
+		for each (var item:FapCommandContainer in pub) 
+		{
+			if (i == 14) i++;
+			addButton(btn++, item.text, item.execute, undefined, item.ttHeader, item.ttHeader);
+		}
+		
 		return;
 	}
 	//Pussy out, unless you're being force-fapped.

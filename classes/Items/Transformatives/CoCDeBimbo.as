@@ -113,7 +113,13 @@ package classes.Items.Transformatives
 				target.removePerk(item);
 			}
 			
-			if(kGAMECLASS.flags["DR_BADGER_BIMBOED_PC"] == 1) kGAMECLASS.flags["DR_BADGER_BIMBOED_PC"] = 0; // this is tricky one - you won't be bimbo anymore, bur Badger would still think you are one
+			if (target.hasPerk("Bimbo Body") || target.hasPerk("Bro Body") || target.hasPerk("Futa Form")) {
+				output("\n\n(Your body is still under persistent effects, but their powers are toned down a bit.</b>)");
+				if (target.hasPerk("Bimbo Body")) target.setPerkTooltip("Bimbo Body", "Gives the body of a bimbo.  Tits will never stay below a 'C' cup, libido is raised, lust resistance is raised, and upgrades tease.");
+				if (target.hasPerk("Futa Form")) target.setPerkTooltip("Futa Form", "Ensures that your body fits the Futa look (Tits C+, Dick 6\"+, & Pussy).  Also keeps your lusts burning bright and improves the tease skill.");
+			}
+			
+			if(kGAMECLASS.flags["DR_BADGER_BIMBOED_PC"] == 1) kGAMECLASS.flags["DR_BADGER_BIMBOED_PC"] = undefined;
 			
 			return false;
 		}

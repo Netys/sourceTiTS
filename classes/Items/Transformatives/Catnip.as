@@ -206,7 +206,7 @@ package classes.Items.Transformatives
             if (target.hipRating() > hipLimit && target.hipRatingUnlocked(target.hipRating() - 1)) changes++;
             
             if (target.elasticity < (target.hasPerk("Elasticity") ? 4 : 3)) changes++;
-            if    (target.ass.minLooseness > 1) changes++;
+            if (target.ass.minLooseness > 1) changes++;
             
             return changes > 0;
         }
@@ -218,31 +218,27 @@ package classes.Items.Transformatives
             // should get rid of facial hair also
             
             // decrease thicknes
-            if (target.thickness >= 30 && target.thicknessUnlocked(target.thickness - 10))
+            if (target.thickness >= 30 && Mutator.modThickness(target, 20, 10, false))
             {
                 kGAMECLASS.output("\n\nSomething is shifting inside you, and you suddenly feel you can move with less effort. <b>Looks like you lose some weight!</b> ");
-                target.thickness -= 10;
                 changes++;
                 
                 // increase definition as side effect
-                if (target.tone <= 65 && target.toneUnlocked(target.tone + 10))
+                if (target.tone <= 65 && Mutator.modTone(target, 70, 10, false))
                 {
-                    kGAMECLASS.output("Your muscles become a little more obvious as you lose some fat.");
-                    target.tone += 10;
+                    kGAMECLASS.output("Your muscles become a little more defined as you lose some fat.");
                 }
             }
             
-            if (target.femininity >= 70 && target.femininityUnlocked(target.femininity - 10))
+            if (target.femininity > 60 && Mutator.modFem(target, 60, 10, false))
             {
                 kGAMECLASS.output("\n\nYou feel slight changes in your facial structure. When they finish, <b>you feel less feminine</b>!");
-                target.femininity -= 10;
                 changes++;
             }
             
-            if (target.femininity <= 40 && target.femininityUnlocked(target.femininity + 10))
+            if (target.femininity < 60 && Mutator.modFem(target, 60, 10, false))
             {
                 kGAMECLASS.output("\n\nYou feel a slight change in your facial structure. When they finish, <b>you feel less masculine</b>!");
-                target.femininity += 10;
                 changes++;
             }
             
@@ -267,9 +263,9 @@ package classes.Items.Transformatives
             //elasticity+
             if (target.elasticity < (target.hasPerk("Elasticity") ? 4 : 3))
             {
-                kGAMECLASS.output("\n\nYou shudder violently as waves of pleasure suddenly shoot up in your [pc.vagOrAss]. You guide your fingers inside, finding that <b>you can fit a little bit more inside than ever before</b>. Strangely, you still feel the same degree of stretching, but it is much more pleasurable and much less painful now.");
+                kGAMECLASS.output("\n\nYou shudder violently as waves of pleasure suddenly shoot up in your [pc.vagOrAss]. You guide your fingers inside, finding that <b>you can stretch your insides more than ever before without discomfort</b>. But you are as tight as before.");
                 target.lust(10+rand(5));
-                target.elasticity += 1;
+                target.elasticity += 0.5;
                 changes++;
             }
             // ass looseness-
@@ -282,30 +278,20 @@ package classes.Items.Transformatives
                 changes++;
             }
             
-            // get a bit of reflexes... don't want this to be OP
-            /*
-            if(target.RQ() < 25 && changes < changeLimit && rand(3) == 0)
-            {
-                kGAMECLASS.output("\n\nEvery single one of your muscles begin to throb and pulse. You gasp out loud as the strange sensation wracks your entire body. What is going on--? When it finally subsides, you feel like you can move faster than before. <b>Your reflexes have increased!</b>");
-                target.slowStatGain("reflexes",2);
-                changes++;
-            }
-            */
-            
             // perks! not actually implemented...
-            if(9999 == 0 && target.tailType == GLOBAL.TYPE_FELINE && target.legType == GLOBAL.TYPE_FELINE && target.armType == GLOBAL.TYPE_FELINE && target.earType == GLOBAL.TYPE_FELINE && !target.hasPerk("Feline Flexibility"))
+            if(9999 == 0 && target.tailType == GLOBAL.TYPE_FELINE && target.legType == GLOBAL.TYPE_FELINE && target.armType == GLOBAL.TYPE_FELINE && target.earType == GLOBAL.TYPE_FELINE && !target.hasPerk("Flexibility"))
             {
                 kGAMECLASS.output("\n\nYou feel something odd in your joints. After some experimental stretching you've found yourself able to fold in absolutely unnatural ways - you can easily touch base of your tail with your nose, folding both forward and backward alike! You already have kinky ideas of putting this into some use.");
-                kGAMECLASS.output("\n\n(<b>Perk Gained: Feline Flexibility</b> - You can easily fold yourself in two.)");
-                target.createPerk("Feline Flexibility",0,0,0,0,"You can easily fold yourself in two.");
+                kGAMECLASS.output("\n\n(<b>Perk Gained: Flexibility</b> - You can bend and stretch more than most other creatures.)");
+                target.createPerk("Flexibility", 0, 0, 0, 0, "You can bend and stretch more than most other creatures.");
                 target.lust(20+rand(10));
                 changes++;
             }
-            if(9999 == 0 && target.tailType == GLOBAL.TYPE_FELINE && target.legType == GLOBAL.TYPE_FELINE && target.armType == GLOBAL.TYPE_FELINE && target.earType == GLOBAL.TYPE_FELINE && target.hasPerk("Feline Flexibility") && !target.hasPerk("Feline Reflexes"))
+            if(9999 == 0 && target.tailType == GLOBAL.TYPE_FELINE && target.legType == GLOBAL.TYPE_FELINE && target.armType == GLOBAL.TYPE_FELINE && target.earType == GLOBAL.TYPE_FELINE && target.hasPerk("Flexibility") && !target.hasPerk("Feline Reflexes"))
             {
                 kGAMECLASS.output("\n\nYou suddenly realize how unusually quick and precise your movements are.");
                 kGAMECLASS.output("\n\n(<b>Perk Gained: Feline Reflexes</b> - You have unnaturally quick reflexes.)");
-                target.createPerk("Feline Reflexes",0,0,0,0,"You have unnaturally quick reflexes.");
+                target.createPerk("Feline Reflexes", 0, 0, 0, 0, "You have unnaturally quick reflexes.");
                 changes++;
             }
             
@@ -932,7 +918,7 @@ package classes.Items.Transformatives
                 if (target.hasTongueFlag(GLOBAL.FLAG_TAPERED))
                     kGAMECLASS.output("It definitely changes towards a humanoid shape. ");
                 kGAMECLASS.output("You gave your palm an experimental lick and found your tongue texture quite rough. It is also more sensitive than before. You feel compulsion to try it... ");
-                if (target.hasPerk("Feline Flexibility")) kGAMECLASS.output("On yourself, maybe? ");
+                if (target.hasPerk("Flexibility")) kGAMECLASS.output("On yourself, maybe? ");
                 kGAMECLASS.output("<b>You've got a bristly feline tongue!</b>");
                 target.tongueType = GLOBAL.TYPE_FELINE;
                 var wasLong:Boolean = target.hasTongueFlag(GLOBAL.FLAG_LONG);

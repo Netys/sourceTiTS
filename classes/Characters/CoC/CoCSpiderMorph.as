@@ -73,7 +73,7 @@ package classes.Characters.CoC
 			applyDamage(new TypeCollection( { burning : damage }, DamageFlag.BYPASS_SHIELD ), kGAMECLASS.pc, kGAMECLASS.pc, "minimal");
 			WebCleanup();
 			
-			if(kGAMECLASS.pc.WQ() > 90 || kGAMECLASS.pc.personality > 90 || kGAMECLASS.pc.cor() > 90) {
+			if(kGAMECLASS.pc.WQ() > 90 || kGAMECLASS.pc.cor() > 90) {
 				output("\n\n" + capitalA + short + " is watching at your maniacal glee in downright terror!  ");
 				createStatusEffect("Stunned", 1, 0, 0, 0, true, "Stun", "Cannot act for a turn.", true, 0);
 			}

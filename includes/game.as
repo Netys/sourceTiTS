@@ -7,6 +7,7 @@ import classes.GameData.Pregnancy.Handlers.NyreaHuntressPregnancy;
 import classes.GameData.Pregnancy.PregnancyManager;
 import classes.GUI;
 import classes.Items.Accessories.LeithaCharm;
+import classes.Items.Apparel.IllusoryAttire;
 import classes.Items.Miscellaneous.EmptySlot;
 import classes.Items.Miscellaneous.HorsePill;
 import classes.Items.Transformatives.Clippex;
@@ -978,8 +979,9 @@ public function move(arg:String, goToMainMenu:Boolean = true):void {
 	if(rooms[arg].hasFlag(GLOBAL.NUDITY_ILLEGAL))
 	{
 		var nudistPrevention:Boolean = false;
-		if((!pc.isChestGarbed() || pc.isChestExposed()) && pc.biggestTitSize() > 1) nudistPrevention = true;
-		if(!pc.isCrotchGarbed() || pc.isCrotchExposed() || pc.isAssExposed()) nudistPrevention = true;
+		if ((!pc.isChestGarbed() || pc.isChestExposed()) && pc.biggestTitSize() > 1) nudistPrevention = true;
+		if (!pc.isCrotchGarbed() || pc.isCrotchExposed() || pc.isAssExposed()) nudistPrevention = true;
+		if (pc.armor is IllusoryAttire && (pc.armor as IllusoryAttire).isActive(pc)) nudistPrevention = false;
 		if(nudistPrevention)
 		{
 			clearOutput();

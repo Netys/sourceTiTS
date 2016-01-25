@@ -58,7 +58,7 @@ package classes.Characters.CoC
 			this.energyRaw = 100;
 			this.lustRaw = 20;			
 			
-			this.femininity = 75;
+			this.femininity = 25;
 			this.eyeType = GLOBAL.TYPE_ARACHNID;
 			this.eyeColor = "black";
 			this.tallness = 7 * 12 + 6;

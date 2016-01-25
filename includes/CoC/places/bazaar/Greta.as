@@ -112,23 +112,23 @@ private function browseDemSocksSon():void {
 	var btn:int = 0;
 	
 	// No effect?
-	output("\nWooler sock: 10 gems.");
+	output("\nWoolen sock: 10 gems.");
 	if (pc.credits >= 100) addButton(btn++, "Wool", woolCockSock);
 	else addDisabledButton(btn++, "Wool", "Wool", "You can't afford this.");
 	
 	// Less corruption gain and more corruption loss
-	output("\Alabaster sock: 25 gems.");
+	output("\nAlabaster sock: 25 gems.");
 	if (pc.hasSock("alabaster")) addDisabledButton(btn++, "Alabaster", "Alabaster", "You can't have more socks of this type.");
 	else if (pc.credits >= 250) addButton(btn++, "Alabaster", alabasterCockSock);
 	else addDisabledButton(btn++, "Alabaster", "Alabaster", "You can't afford this.");
 	
 	// +10 min lust for first, +5 for each more
-	output("\Cockring: 100 gems.");
+	output("\nCockring: 100 gems.");
 	if (pc.credits >= 1000) addButton(btn++, "Cockring", cockringCockSock);
 	else addDisabledButton(btn++, "Cockring", "Cockring", "You can't afford this.");
 	
 	// Regeneration
-	output("\Viridian sock: 1000 gems.");
+	output("\nViridian sock: 1000 gems.");
 	if (pc.hasSock("viridian")) addDisabledButton(btn++, "Viridian", "Viridian", "You can't have more socks of this type.");
 	else if (pc.credits >= 10000) addButton(btn++, "Viridian", viridianCockSock);
 	else addDisabledButton(btn++, "Viridian", "Viridian", "You can't afford this.");

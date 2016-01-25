@@ -89,7 +89,7 @@ package classes.Items.Transformatives
 			if (target.buttRatingRaw > 2) kGAMECLASS.addButton(2, "Butt", reductoButt);
 			if (target.hasClit() && target.clitLength > 0.25) kGAMECLASS.addButton(3, "Clit", reductoClit);
 			if (target.hasCock() && target.biggestCockLength() > 3) kGAMECLASS.addButton(4, "Cock", reductoCock);
-			if (target.hipRatingRaw > 2) kGAMECLASS.addButton(5, "Butt", reductoHips);
+			if (target.hipRatingRaw > 2) kGAMECLASS.addButton(5, "Hips", reductoHips);
 			if (target.hasNipples() && target.nippleLengthRatio > 1) kGAMECLASS.addButton(6, "Nipples", reductoNipples);
 			if (target.horns > 0 && target.hornLength > 0) kGAMECLASS.addButton(7, "Horns", shrinkHorns);
 			
@@ -227,12 +227,12 @@ package classes.Items.Transformatives
 			}
 			else if (kGAMECLASS.pc.hipRatingRaw >= 10) {
 				kGAMECLASS.pc.hipRatingRaw -= 3;
-				kGAMECLASS.output("You feel much lighter as your [hips] shift slightly, adjusting to their smaller size.");
+				kGAMECLASS.output("You feel much lighter as your [pc.hips] shift slightly, adjusting to their smaller size.");
 			}
 			else {
 				kGAMECLASS.pc.hipRatingRaw -= rand(3) + 1;
 				if (kGAMECLASS.pc.hipRatingRaw < 1) kGAMECLASS.pc.hipRatingRaw = 1;
-				kGAMECLASS.output("After a few seconds your [hips] have shrunk to a much smaller size!");
+				kGAMECLASS.output("After a few seconds your [pc.hips] have shrunk to a much smaller size!");
 			}
 			
 			kGAMECLASS.pc.libido( -2);
