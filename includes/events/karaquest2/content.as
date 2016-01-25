@@ -1882,6 +1882,8 @@ public function kq2ShadePCVictoryKaraNotHard():void
 	output("\n\n<i>“Ah, fuck,”</i> Shade groans, sitting back against the wall. <i>“I’m getting too old for this shit.”</i>");
 	
 	output("\n\n<i>“Stay down,”</i> Kara warns, racking the charger on her pistol. The huntress doesn’t challenge her threat, and Kara turns to you. <i>“C’mon, [pc.name], let’s go! We’re almost home free!”</i>\n\n");
+	
+	flags["KQ2_SHADE_UNCONSCIOUS"] = GetGameTimestamp();
 
 	CombatManager.genericVictory();
 }
@@ -2059,7 +2061,7 @@ public function kq2EncounterAmara():void
 	if (flags["KQ2_SHADE_ENCOUNTERED"] != undefined)
 	{
 		output(", past Shade’s");
-		if (flags["KQ2_SHADE_DEAD"] == 1) output(" smouldering corpse")
+		if (flags["KQ2_SHADE_DEAD"] != undefined) output(" smouldering corpse")
 		else if (flags["SEXED_SHADE"] != undefined) output(" aborted ambush"); // Fucked Shade- you don't fight her so
 		else output(" failed ambush");
 	}
@@ -2379,8 +2381,6 @@ public function kq2AmaraSpecialEnd():void
 	clearOutput();
 	kq2ShowAmara();
 
-	flags["KQ2_QUEST_FINISHED"] = 1;
-
 	output("The pirates are just too much for you. Their leader, Amara, fights like a tank, and packs more firepower than all her goons combined. Kara grunts beside you, collapsed on the deck and  clutching her belly. Blood runs out between her fingers, drooling in thick rivulets to splatter on the concrete.");
 	
 	output("\n\nThe pirate lord hefts her chaingun up onto her shoulder and strides toward you, a great big grin on her blue-painted lips. <i>“Well. Bragga’s gonna be </i>pissed<i> I kicked your shit in for her, kitten,”</i> she laughs, grabbing Kara by the collar and heaving her up off the ground.");
@@ -2424,9 +2424,8 @@ public function kq2AmaraSpecialEnd():void
 	flags["KQ2_KARA_SACRIFICE"] = 1;
 	flags["KQ2_QUEST_FINISHED"] = 2;
 	currentLocation = "SHIP INTERIOR";
-
-	clearMenu();
-	addButton(0, "Next", mainGameMenu);
+	
+	CombatManager.genericLoss();
 }
 
 public function kq2KaraSexytimes():void

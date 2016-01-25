@@ -229,8 +229,7 @@ public function mainGameMenu():void {
 	addButton(14, "Codex", showCodex);
 	// Show the minimap too!
 	userInterface.showMinimap();
-	var map:* = mapper.generateMap(currentLocation);
-	userInterface.setMapData(map);
+	generateMap();
 	userInterface.perkDisplayButton.Activate();
 }
 
@@ -398,10 +397,12 @@ public function showPerksList():void
 public function crewRecruited():Number
 {
 	var counter:Number = 0;
-	if(flags["RECRUITED_CELISE"] > 0) counter++;
-	if(reahaRecruited()) counter++;
+	if (flags["RECRUITED_CELISE"] > 0) counter++;
+	if (reahaRecruited()) counter++;
 	if (!annoNotRecruited()) counter++;
 	if (bessIsFollower()) counter++;
+	if (hasGooArmor()) counter++;
+	if (varmintIsTame()) counter++;
 	return counter;
 }
 
@@ -968,8 +969,7 @@ public function sneakBackYouNudist():void
 	output("You meticulously make your way back to the ship using every ounce of subtlety you possess. It takes way longer than you would have thought thanks to a couple of near-misses, but you make it safe and sound to the interior of your craft.");
 	processTime(180+rand(30));
 	currentLocation = "SHIP INTERIOR";
-	var map:* = mapper.generateMap(currentLocation);
-	userInterface.setMapData(map);
+	generateMap();
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 }
@@ -1006,8 +1006,7 @@ public function move(arg:String, goToMainMenu:Boolean = true):void {
 	StatTracking.track("movement/time travelled", moveMinutes);
 	processTime(moveMinutes);
 	currentLocation = arg;
-	var map:* = mapper.generateMap(currentLocation);
-	userInterface.setMapData(map);
+	generateMap();
 	
 	trace("Printing map for " + currentLocation);
 	//mapper.printMap(map);
@@ -1204,7 +1203,7 @@ public function variableRoomUpdateCheck():void
 		rooms["BURT'S BACK END"].addFlag(GLOBAL.NPC);
 	}
 	//Hungry Hungry Rahn
-	if(flags["SEEN_BIMBO_PENNY"] != undefined && hours < 8 && hours >= 17)
+	if(flags["SEEN_BIMBO_PENNY"] != undefined && (hours < 8 || hours >= 17))
 	{
 		rooms["CUSTOMS OFFICE"].removeFlag(GLOBAL.NPC);
 	}
@@ -2261,8 +2260,7 @@ public function bigBallBadEnd():void
 		}
 		pc.ballSizeRaw = 30;
 		currentLocation = "SHIP INTERIOR";
-		var map:* = mapper.generateMap(currentLocation);
-		userInterface.setMapData(map);
+		generateMap();
 		processTime(1382);
 		clearMenu();
 		addButton(0, "Next", mainGameMenu);

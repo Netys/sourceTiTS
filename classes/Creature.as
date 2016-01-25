@@ -389,7 +389,7 @@ package classes {
 		}
 		public function toneUnlocked(newTone:Number):Boolean
 		{
-			if(hasSkinFlag(GLOBAL.FLAG_SQUISHY) && newTone >= toneMax()) return false;
+			if(hasSkinFlag(GLOBAL.FLAG_SQUISHY) && newTone > tone && newTone >= toneMax()) return false;
 			return true;
 		}
 		public function toneLockedMessage():String
@@ -4853,6 +4853,7 @@ package classes {
 			if (hasArmFlag(GLOBAL.FLAG_FEATHERED)) adjective.push("feathered", "feathery");
 			if (hasArmFlag(GLOBAL.FLAG_GOOEY)) adjective.push("slimy", "slick", "gooey");
 			if (hasArmFlag(GLOBAL.FLAG_SPIKED)) adjective.push("spiked", "spiky", "prickly");
+			if (hasArmFlag(GLOBAL.FLAG_STICKY)) adjective.push("sticky");
 			
 			// Build
 			if ((forceAdjective || rand(2) == 0) && adjective.length > 0) output += RandomInCollection(adjective);
@@ -4879,6 +4880,7 @@ package classes {
 			{
 				if (hasClawedHands()) adjective.push("clawed");
 				if (hasPaddedHands()) adjective.push("padded");
+				if (armType == GLOBAL.TYPE_FROG) adjective.push("webbed", "sticky");
 				if (InCollection(armType, GLOBAL.TYPE_FELINE, GLOBAL.TYPE_BADGER, GLOBAL.TYPE_EQUINE, GLOBAL.TYPE_PANDA)) adjective.push("bestial");
 				if (hasArmFlag(GLOBAL.FLAG_GOOEY)) adjective.push("slimy", "slick", "gooey");
 				else if (InCollection(armType, GLOBAL.TYPE_ARACHNID, GLOBAL.TYPE_DRIDER, GLOBAL.TYPE_BEE, GLOBAL.TYPE_LEITHAN)) adjective.push("chitinous");
@@ -4901,6 +4903,7 @@ package classes {
 			{
 				if (hasClawedHands()) adjective.push("clawed");
 				if (hasPaddedHands()) adjective.push("padded");
+				if (armType == GLOBAL.TYPE_FROG) adjective.push("webbed", "sticky");
 				if (InCollection(armType, GLOBAL.TYPE_EQUINE)) adjective.push("hoof-tipped");
 				if (hasArmFlag(GLOBAL.FLAG_GOOEY)) adjective.push("slimy", "slick", "gooey");
 				else if (InCollection(armType, GLOBAL.TYPE_ARACHNID, GLOBAL.TYPE_DRIDER, GLOBAL.TYPE_BEE, GLOBAL.TYPE_LEITHAN)) adjective.push("chitinous");
@@ -6924,7 +6927,7 @@ package classes {
 			if(fullnessDelta + milkFullness > 100)
 			{
 				//Vanae milk just caps at 100.
-				if(milkType == GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK) milkFullness = 100;
+				if(InCollection(milkType, GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK, GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK)) milkFullness = 100;
 				else
 				{
 					//If we start below 100, do that normally first
@@ -8572,6 +8575,7 @@ package classes {
 			var counter: int = 0;
 			if (skinType == GLOBAL.SKIN_TYPE_SKIN && hasSkinFlag(GLOBAL.FLAG_LUBRICATED)) counter++;
 			if (legType == GLOBAL.TYPE_FROG) counter++;
+			if (armType == GLOBAL.TYPE_FROG) counter++;
 			if (hasTail(GLOBAL.TYPE_FROG)) counter++;
 			if (faceType == GLOBAL.TYPE_FROG) counter++;
 			if (faceType == GLOBAL.TYPE_FROG || faceType == GLOBAL.TYPE_HUMAN)

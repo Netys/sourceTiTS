@@ -123,15 +123,8 @@ public function victoryVsRaskvel():void
 			output(" If you had a pussy, you could ride her face. Sadly, you don't.");
 			addDisabledButton(2,"RideHerFace");
 		}
-		if(pc.hasItem(new GravCuffs()) && pc.lust() >= 33)
-		{
-			var fitsInside:Boolean = false;
-			if(enemy.hasVagina()) fitsInside = (pc.cockThatFits(enemy.vaginalCapacity(0)) >= 0);
-			else fitsInside = (pc.cockThatFits(enemy.analCapacity()) >= 0);
-			if(pc.hasCock() && fitsInside) addButton(3,"Cuff&Fuck",cuffNFuck,undefined,"Cuff & Fuck","Use your grav-cuffs to pin down [enemy.name] and have your way with [enemy.hisHer] [pc.vagOrAssNoun]! Requires Grav-cuffs and a penis.");
-			else if(pc.hasCock()) addDisabledButton(3,"Cuff&Fuck","Cuff & Fuck","You can cuff [enemy.himHer] down, but you wouldn't be able to fit inside.");
-			else addDisabledButton(3,"Cuff&Fuck","Cuff & Fuck","You need a penis to make use of your grav-cuffs this way.");
-		}
+		//Cuff&Fuck
+		cuffNFuckButton(3, enemy);
 	}
 	else
 	{
@@ -470,8 +463,9 @@ public function raskyNotInterestedInYerWeirdShit():void
 //Face-Sitting Footjobs
 public function raskvelGirlsSitsIfTheyFits(combat:Boolean = false):void
 {
-	userInterface.showBust("RASKVEL_FEMALE_NUDE");
-	userInterface.showName("LOST VS: F.\nRASKVEL");
+	showBust("RASKVEL_FEMALE_NUDE");
+	if(combat) showName("LOST VS: F.\nRASKVEL");
+	else showName("RASKVEL\nFEMALE");
 	//By Savin
 	author("Savin");
 	//{Combat Loss: Have a Dick}
@@ -546,8 +540,9 @@ public function getRaskVelTailPegged(combat:Boolean = false):void
 {
 	//By Savin
 	author("Savin");
-	userInterface.showBust("RASKVEL_FEMALE_NUDE");
-	userInterface.showName("LOST VS: F.\nRASKVEL");
+	showBust("RASKVEL_FEMALE_NUDE");
+	if(combat) showName("LOST VS: F.\nRASKVEL");
+	else showName("RASKVEL\nFEMALE");
 	//{Combat Loss: Don't Have a Dick}
 	if(combat)
 	{
@@ -619,8 +614,9 @@ public function getRaskVelTailPegged(combat:Boolean = false):void
 //Huge Dicks Get Dosed With Aphrodisiac While Being Forcefully Worshipped
 public function hugeDicksGetForceWorshippedByFemRaskvel(fromCombat:Boolean = false):void
 {
-	userInterface.showBust("RASKVEL_FEMALE_NUDE");
-	userInterface.showName("LOST VS: F.\nRASKVEL");
+	showBust("RASKVEL_FEMALE_NUDE");
+	if(fromCombat) showName("LOST VS: F.\nRASKVEL");
+	else showName("RASKVEL\nFEMALE");
 	//HP loss
 	if(pc.HP() < 1)
 	{
