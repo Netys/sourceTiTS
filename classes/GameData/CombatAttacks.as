@@ -257,9 +257,6 @@ package classes.GameData
 			ShieldHack.RequiresPerk = "Shield Hack";
 			ShieldHack.TooltipTitle = "Shield Hack";
 			ShieldHack.TooltipBody = "An attack that deals a high amount of electric-typed damage to a target's shields. Damage is increased by intelligence.";
-			ShieldHack.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
-				return target.shields() > 0;
-			};
 			ShieldHack.Implementor = ShieldHackImpl;
 			a.push(ShieldHack);
 			
@@ -270,9 +267,6 @@ package classes.GameData
 			WeaponHack.RequiresPerk = "Weapon Hack";
 			WeaponHack.TooltipTitle = "Weapon Hack";
 			WeaponHack.TooltipBody = "Attempt to neutralize a foe's <b>energy weapon</b> using your intelligence. Smarter foes will resist your attempts.";
-			WeaponHack.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
-				return !target.hasStatusEffect("Disarm Immune") && !target.hasStatusEffect("Disarmed") && (target.meleeWeapon.baseDamage.hasFlag(DamageFlag.ENERGY_WEAPON) || target.rangedWeapon.baseDamage.hasFlag(DamageFlag.ENERGY_WEAPON));
-			};
 			WeaponHack.Implementor = WeaponHackImpl;
 			a.push(WeaponHack);
 			
@@ -426,6 +420,175 @@ package classes.GameData
 			TripAttack = new SingleCombatAttack();
 			TripAttack.IsMeleeBased = true;
 			TripAttack.Implementor = TripAttackImpl;
+			
+			////////////////////////
+			////    MAGIC!!!    ////
+			////////////////////////
+			
+			// Charge Weapon
+			ChargeWeapon = new SingleCombatAttack();
+			ChargeWeapon.ButtonName = "Charge Weapon";
+			ChargeWeapon.EnergyCost = 10;
+			ChargeWeapon.DisabledIfEffectedBy = ["Silence"];
+			ChargeWeapon.TooltipTitle = "Charge Weapon";
+			ChargeWeapon.TooltipBody = "The Charge Weapon spell will infuse your weapon with electrical energy, causing it to do even more damage.  The effect lasts for the entire combat. Damage bonus is based on your intellegence.";
+			ChargeWeapon.Implementor = ChargeWeaponImpl;
+			ChargeWeapon.RequiresTarget = false;
+			ChargeWeapon.ExtendedAvailabilityCheck = function(target:Creature):Boolean {
+				return target.lust() < target.lustMax() * ((target.hasPerk("Enlightened") >= 0 && target.cor() < 10) ? 0.85 : 0.75) && !target.hasStatusEffect("Charge Weapon");
+			}
+			ChargeWeapon.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
+				return (target is PlayerCharacter && kGAMECLASS.flags["COC.SPELL_CHARGE"] == 1 || target.hasStatusEffect("Knows Charge Weapon"));
+			}
+			a.push(ChargeWeapon);
+			
+			// Blind - basically flash grenade
+			Blind = new SingleCombatAttack();
+			Blind.ButtonName = "Blind";
+			Blind.EnergyCost = 10;
+			Blind.DisabledIfEffectedBy = ["Silence"];
+			Blind.TooltipTitle = "Blind";
+			Blind.TooltipBody = "Blind is a fairly self-explanatory spell.  It will create a bright flash just in front of the victim's eyes, blinding them for a time.  However if they blink it will be wasted. Chance is based on your intellegence and target's reflexes.";
+			Blind.Implementor = BlindImpl;
+			Blind.RequiresTarget = false;
+			Blind.ExtendedAvailabilityCheck = function(target:Creature):Boolean {
+				return target.lust() < target.lustMax() * ((target.hasPerk("Enlightened") >= 0 && target.cor() < 10) ? 0.85 : 0.75);
+			}
+			Blind.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
+				return (target is PlayerCharacter && kGAMECLASS.flags["COC.SPELL_BLIND"] == 1 || target.hasStatusEffect("Knows Blind"));
+			}
+			a.push(Blind);
+			
+			// Whitefire
+			Whitefire = new SingleCombatAttack();
+			Whitefire.ButtonName = "Whitefire";
+			Whitefire.EnergyCost = 30;
+			Whitefire.DisabledIfEffectedBy = ["Silence"];
+			Whitefire.TooltipTitle = "Whitefire";
+			Whitefire.TooltipBody = "Whitefire is a potent fire based attack that will burn your foe with flickering white flames. Effect is based on your intellegence.";
+			Whitefire.Implementor = WhitefireImpl;
+			Whitefire.RequiresTarget = true;
+			Whitefire.ExtendedAvailabilityCheck = function(target:Creature):Boolean {
+				return target.lust() < target.lustMax() * ((target.hasPerk("Enlightened") >= 0 && target.cor() < 10) ? 0.85 : 0.75);
+			}
+			Whitefire.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
+				return (target is PlayerCharacter && kGAMECLASS.flags["COC.SPELL_WHITEFIRE"] == 1 || target.hasStatusEffect("Knows Whitefire")) && !target.hasPerk("Enlightened Nine-tails") && !target.hasPerk("Corrupted Nine-tails"); // replaced by Fox Fire for Nine-tails
+			}
+			a.push(Whitefire);
+			
+			// Arouse - basically any single target lust attack
+			Arouse = new SingleCombatAttack();
+			Arouse.ButtonName = "Arouse";
+			Arouse.EnergyCost = 15;
+			Arouse.DisabledIfEffectedBy = ["Silence"];
+			Arouse.TooltipTitle = "Arouse";
+			Arouse.TooltipBody = "The arouse spell draws on your own inner lust in order to enflame the enemy's passions. Power is based on your intellegence. Target's willpower affects it considerably.";
+			Arouse.Implementor = ArouseImpl;
+			Arouse.RequiresTarget = true;
+			Arouse.ExtendedAvailabilityCheck = function(target:Creature):Boolean {
+				return target.lust() >= 50;
+			}
+			Arouse.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
+				return (target is PlayerCharacter && kGAMECLASS.flags["COC.SPELL_AROUSE"] == 1 || target.hasStatusEffect("Knows Arouse"));
+			}
+			a.push(Arouse);
+			
+			// Heal
+			Heal = new SingleCombatAttack();
+			Heal.ButtonName = "Heal";
+			Heal.EnergyCost = 20;
+			Heal.DisabledIfEffectedBy = ["Silence"];
+			Heal.TooltipTitle = "Heal";
+			Heal.TooltipBody = "Heal will attempt to use black magic to close your wounds and restore your body, however like all black magic used on yourself, it has a chance of backfiring and greatly arousing you. Heal amount is based on your intellegence. Backfire chance is based on your current lust and willpower.";
+			Heal.Implementor = HealImpl;
+			Heal.RequiresTarget = false;
+			Heal.ExtendedAvailabilityCheck = function(target:Creature):Boolean {
+				return target.lust() >= 50 && target.HPQ() < 100;
+			}
+			Heal.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
+				return (target is PlayerCharacter && kGAMECLASS.flags["COC.SPELL_HEAL"] == 1 || target.hasStatusEffect("Knows Heal"));
+			}
+			a.push(Heal);
+			
+			// Might
+			Might = new SingleCombatAttack();
+			Might.ButtonName = "Might";
+			Might.EnergyCost = 25;
+			Might.DisabledIfEffectedBy = ["Silence"];
+			Might.TooltipTitle = "Might";
+			Might.TooltipBody = "The Might spell draws upon your lust and uses it to fuel a temporary increase in physique and HP.  It does carry the risk of backfiring and raising lust, like all black magic used on oneself. Effect is based on your intellegence.";
+			Might.Implementor = MightImpl;
+			Might.RequiresTarget = false;
+			Might.ExtendedAvailabilityCheck = function(target:Creature):Boolean {
+				return target.lust() < target.lustMax() * ((target.hasPerk("Enlightened") >= 0 && target.cor() < 10) ? 0.85 : 0.75) && !target.hasStatusEffect("Might");
+			}
+			Might.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
+				return (target is PlayerCharacter && kGAMECLASS.flags["COC.SPELL_MIGHT"] == 1 || target.hasStatusEffect("Knows Might"));
+			}
+			a.push(Might);
+			
+			// Dragon Breath - AoE stun + damage
+			DragonFire = new SingleCombatAttack();
+			DragonFire.ButtonName = "Dragonfire";
+			DragonFire.EnergyCost = 5;
+			DragonFire.RequiresPerk = "Dragonfire";
+			DragonFire.DisabledIfEffectedBy = ["Silence", "DragonfireCD"];
+			DragonFire.TooltipTitle = "Dragonfire";
+			DragonFire.TooltipBody = "Unleash fire from your mouth. This can only be done once a day. Damage is based on your level.";
+			DragonFire.Implementor = DragonFireImpl;
+			DragonFire.RequiresTarget = true;
+			DragonFire.ExtendedAvailabilityCheck = function(target:Creature):Boolean {
+				return !target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT); // makes sense when you can't use breath attacks in sealed armor
+			}
+			a.push(DragonFire);
+			
+			// Fox Fire - single target burning damage
+			KitsuneFoxFire = new SingleCombatAttack();
+			KitsuneFoxFire.ButtonName = "Fox Fire";
+			KitsuneFoxFire.EnergyCost = 20;
+			KitsuneFoxFire.RequiresPerk = "Enlightened Nine-tails";
+			KitsuneFoxFire.DisabledIfEffectedBy = [];
+			KitsuneFoxFire.TooltipTitle = "Fox Fire";
+			KitsuneFoxFire.TooltipBody = "Unleash an ethereal blue flame at your opponent for high burning damage. Damage is based on your intellegence.";
+			KitsuneFoxFire.Implementor = KitsuneFoxFireImpl;
+			KitsuneFoxFire.RequiresTarget = true;
+			a.push(KitsuneFoxFire);
+			
+			// Illusion - AoE blind
+			KitsuneIllusion = new SingleCombatAttack();
+			KitsuneIllusion.ButtonName = "Illusion";
+			KitsuneIllusion.EnergyCost = 15;
+			KitsuneIllusion.RequiresPerk = "Enlightened Nine-tails";
+			KitsuneIllusion.DisabledIfEffectedBy = [];
+			KitsuneIllusion.TooltipTitle = "Illusion";
+			KitsuneIllusion.TooltipBody = "Warp the reality around your opponents, lowering their accuracy. To succeed you should have successfull intellegence or willpower roll against target's ones.";
+			KitsuneIllusion.Implementor = KitsuneIllusionImpl;
+			KitsuneIllusion.RequiresTarget = false;
+			a.push(KitsuneIllusion);
+			
+			// Corrupted Fox Fire - single target burning damage
+			KitsuneCorruptFoxFire = new SingleCombatAttack();
+			KitsuneCorruptFoxFire.ButtonName = "Fox Fire";
+			KitsuneCorruptFoxFire.EnergyCost = 20;
+			KitsuneCorruptFoxFire.RequiresPerk = "Corrupted Nine-tails";
+			KitsuneCorruptFoxFire.DisabledIfEffectedBy = [];
+			KitsuneCorruptFoxFire.TooltipTitle = "Corrupted Fox Fire";
+			KitsuneCorruptFoxFire.TooltipBody = "Unleash an ethereal purple flame at your opponent for high burning damage. Damage is based on your intellegence.";
+			KitsuneCorruptFoxFire.Implementor = KitsuneCorruptFoxFireImpl;
+			KitsuneCorruptFoxFire.RequiresTarget = true;
+			a.push(KitsuneCorruptFoxFire);
+			
+			// Terror - single target stun
+			KitsuneTerror = new SingleCombatAttack();
+			KitsuneTerror.ButtonName = "Terror";
+			KitsuneTerror.EnergyCost = 15;
+			KitsuneTerror.RequiresPerk = "Corrupted Nine-tails";
+			KitsuneTerror.DisabledIfEffectedBy = [];
+			KitsuneTerror.TooltipTitle = "Terror";
+			KitsuneTerror.TooltipBody = "Instill fear into your opponent with eldritch horrors. To succeed you should have successfull intellegence or willpower roll against target's ones.";
+			KitsuneTerror.Implementor = KitsuneTerrorImpl;
+			KitsuneTerror.RequiresTarget = true;
+			a.push(KitsuneTerror);
 		}
 		
 		/**
@@ -1691,6 +1854,319 @@ package classes.GameData
 				target.createStatusEffect("Attempt Seduction", 0, 0, 0, 0, true, "", "", true, 0);
 			}
 		}
+		
+		/////////////////////////
+		////    CoC magic    ////
+		/////////////////////////
+		
+		public static var ChargeWeapon:SingleCombatAttack;
+		private static function ChargeWeaponImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		{
+			kGAMECLASS.clearList();
+			if (attacker.hasMeleeWeapon()) kGAMECLASS.addToList(attacker.meleeWeapon.longName);
+			if (attacker.hasRangedWeapon()) kGAMECLASS.addToList(attacker.rangedWeapon.longName);
+			var weapon:String = kGAMECLASS.formatList();
+			if (weapon.length == 0) weapon = attacker.meleeWeapon.longName;
+			
+			if (attacker is PlayerCharacter) {
+				output("You utter words of power, summoning an electrical charge around your " + weapon + ".  It crackles loudly, ensuring you'll do more damage with it for the rest of the fight.");
+				IncrementFlag("COC.SPELLS_CAST");
+			}
+			else output(attacker.capitalA + attacker.uniqueName + " utters words of power, summoning an electrical charge around " + target.mfn("his", "her", "its") + " " + weapon + ".");
+			
+			attacker.createStatusEffect("Charge Weapon", attacker.intelligence(), 0, 0, 0, false, "OffenseUp", "Infused with power of lightning!", true);
+		}
+		
+		public static var Blind:SingleCombatAttack;
+		private static function BlindImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		{
+			var aTarget:Creature = GetBestPotentialTarget(hGroup);
+			
+			if (attacker is PlayerCharacter) output("You glare at " + aTarget.a + aTarget.uniqueName + " and point at " + aTarget.mfn("him", "her", "it") + ".  A bright flash erupts before " + aTarget.mfn("him", "her", "it") + "!")
+			else if (aTarget is PlayerCharacter) output(attacker.capitalA + attacker.uniqueName + " points point at you.  A bright flash erupts before your eyes!")
+			else output(attacker.capitalA + attacker.uniqueName + " points at " + aTarget.a + aTarget.uniqueName + ".  A bright flash erupts before " + aTarget.mfn("him", "her", "it") + "!");
+			
+			for (var i:int = 0; i < hGroup.length; i++)
+			{	
+				if (hGroup[i].isDefeated()) continue;
+				
+				var cTarget:Creature = hGroup[i];
+				
+				if (cTarget.hasStatusEffect("Blinded"))
+				{
+					if (cTarget is PlayerCharacter) output("\nYou are already blinded.");
+					else output("\n" + cTarget.capitalA + cTarget.uniqueName + " is already blinded.");
+				}
+				else if(attacker.intelligence() / 2 + rand(20) + 6 >= cTarget.reflexes() / 2 + 10)
+				{
+					cTarget.createStatusEffect("Blinded", 3, 0, 0, 0, false, "Blind", "Accuracy is reduced, and ranged attacks are far more likely to miss.", true, 0);
+					
+					if (cTarget is PlayerCharacter) output("\n<b>You're blinded by the luminous flash.</b>");
+					else output("\n<b>" + cTarget.capitalA + cTarget.uniqueName + " is blinded by the luminous flash.</b>");
+				}
+				else
+				{
+					if (cTarget is PlayerCharacter) output("\nYou manage to close your eyes just in time.");
+					else output("\n" + cTarget.capitalA + cTarget.uniqueName + " blinked!");
+				}
+			}
+		}
+		
+		public static var Whitefire:SingleCombatAttack;
+		private static function WhitefireImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		{
+			if (attacker is PlayerCharacter) {
+				output("You narrow your eyes, focusing your mind with deadly intent.  You snap your fingers and " + target.a + target.uniqueName + " is enveloped in a flash of white flames!  ");
+				IncrementFlag("COC.SPELLS_CAST");
+			}
+			else if (target is PlayerCharacter) output(attacker.capitalA + attacker.uniqueName + " throws a white flame flame at you!  ");
+			else output(attacker.capitalA + attacker.uniqueName + " throws a white flame at " + target.a + target.uniqueName + "!  ");
+			
+			var d:int = 10 + attacker.intelligence() + rand(attacker.intelligence());
+			var damage:TypeCollection = damageRand(new TypeCollection( { burning: d } ), 15);
+			
+			applyDamage(damage, attacker, target);
+		}
+		
+		public static var Arouse:SingleCombatAttack;
+		private static function ArouseImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		{
+			if (attacker is PlayerCharacter) {
+				output("You make a series of arcane gestures, drawing on your own lust to inflict it upon your foe!  ");
+				IncrementFlag("COC.SPELLS_CAST");
+			}
+			else if (target is PlayerCharacter) output(attacker.capitalA + attacker.uniqueName + " makes a series of arcane gestures, drawing on " + attacker.mfn("his", "her", "its") + " own lust to inflict it upon you!  ");
+			else output(attacker.capitalA + attacker.uniqueName + " makes a series of arcane gestures, drawing on " + attacker.mfn("his", "her", "its") + " own lust to inflict it upon " + target.a + target.uniqueName + "!  ");
+			
+			var damage:TypeCollection;
+			var damageResult:DamageResult
+		
+			if (target.isLustImmune) {
+				output("It has no effect!  Your foe clearly does not experience lust in the same way as you.  ");
+				return;
+			}
+			var lustDmg:Number = attacker.intelligence() + rand(target.libido() - target.intelligence() * 2.5 - target.willpower() * 2.5 + target.cor()) / 5;
+			damage = new TypeCollection( { psionic : lustDmg } );
+			damageResult = applyDamage(damage, attacker, target, "suppress");
+			output("\n");
+			output(CombatContainer.teaseReactions(damageResult.lustDamage, target));
+			
+			outputDamage(damageResult);
+		}
+		
+		public static var Heal:SingleCombatAttack;
+		private static function HealImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		{
+			if (attacker is PlayerCharacter) {
+				output("You focus on your body and its desire to end pain, trying to draw on your arousal without enhancing it.  ");
+				IncrementFlag("COC.SPELLS_CAST");
+			}
+			else output(attacker.capitalA + attacker.uniqueName + " visibly focuses for a moment, trying to draw on " + attacker.mfn("his", "her", "its") + " own lust to close " + attacker.mfn("his", "her", "its") + " wounds. ");
+			
+			var backfire:int = 25 + attacker.lustQ() - attacker.WQ();
+			if (rand(100) < backfire) {
+				if (attacker is PlayerCharacter) {
+					output("An errant sexual thought crosses your mind, and you lose control of the spell!  Your ");
+					if (!attacker.hasGenitals()) output("[pc.asshole] tingles with a desire to be filled as your libido spins out of control.  ");
+					else if (attacker.isHerm()) output("[pc.vagina] and [pc.cocks] overfill with blood, becoming puffy and incredibly sensitive as the magic focuses on them.  ");
+					else if(attacker.hasCock()) {
+						if (attacker.cockTotal() == 1) output("[pc.cocks] twitches obscenely and drips with pre-cum as your libido spins out of control.  ");
+						else output("[pc.cocks] twitch obscenely and drip with pre-cum as your libido spins out of control.  ");
+					}
+					else if (attacker.hasVagina()) output("[pc.vagina] becomes puffy, hot, and ready to be touched as the magic diverts into it.  ");
+					attacker.slowStatGain("l", 0.25);
+				}
+				else {
+					output(attacker.capitalA + attacker.uniqueName + " has failed miserably!  ");
+				}
+				applyDamage(new TypeCollection( { truelust : 15 } ), attacker, attacker, "minimal");
+			}
+			else {
+				if (attacker is PlayerCharacter) output("You flush with success as your wounds begin to knit.  ");
+				else output(attacker.capitalA + possessive(attacker.uniqueName) + " wounds begin to knit!  ");
+				var hp:Number = int(attacker.level + (attacker.intelligence() / 1.5) + rand(attacker.intelligence()))
+				attacker.HP(Math.round(hp));
+			}
+		}
+		
+		public static var Might:SingleCombatAttack;
+		private static function MightImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		{
+			if (attacker is PlayerCharacter) {
+				output("You flush, drawing on your body's desires to empower your muscles and toughen you up.  ");
+				IncrementFlag("COC.SPELLS_CAST");
+			}
+			else output(attacker.capitalA + attacker.uniqueName + " visibly focuses for a moment, trying to draw on " + attacker.mfn("his", "her", "its") + " own lust to toughen up.  ");
+			
+			var backfire:int = 25 + attacker.lustQ() - attacker.WQ();
+			if (rand(100) < backfire) {
+				if (attacker is PlayerCharacter) {
+					output("An errant sexual thought crosses your mind, and you lose control of the spell!  Your ");
+					if (!attacker.hasGenitals()) output("[pc.asshole] tingles with a desire to be filled as your libido spins out of control.  ");
+					else if (attacker.isHerm()) output("[pc.vagina] and [pc.cocks] overfill with blood, becoming puffy and incredibly sensitive as the magic focuses on them.  ");
+					else if(attacker.hasCock()) {
+						if (attacker.cockTotal() == 1) output("[pc.cocks] twitches obscenely and drips with pre-cum as your libido spins out of control.  ");
+						else output("[pc.cocks] twitch obscenely and drip with pre-cum as your libido spins out of control.  ");
+					}
+					else if (attacker.hasVagina()) output("[pc.vagina] becomes puffy, hot, and ready to be touched as the magic diverts into it.  ");
+					attacker.slowStatGain("l", 0.25);
+				}
+				else {
+					output(attacker.capitalA + attacker.uniqueName + " has failed miserably!  ");
+				}
+				applyDamage(new TypeCollection( { truelust : 15 } ), attacker, attacker, "minimal");
+			}
+			else {
+				if (attacker is PlayerCharacter) output("The rush of success and power flows through your body.  You feel like you can do anything!");
+				else output(attacker.capitalA + attacker.uniqueName + " is now stronger!  ");
+				// +physique, +HP
+				attacker.createStatusEffect("Might", attacker.intelligence() / 2, attacker.intelligence(), 0, 0, false, "OffenseUp", "Infused with power of desire!", true);
+				attacker.HP(attacker.intelligence());
+			}
+		}
+		
+		public static var DragonFire:SingleCombatAttack;
+		private static function DragonFireImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		{
+			attacker.createStatusEffect("DragonfireCD", 0, 0, 0, 0, true, "Blocked", "Dragonfire is not available yet.", false, 24 * 60);
+			
+			if (attacker is PlayerCharacter) {
+				output("Tapping into the power deep within you, you let loose a bellowing roar at your enemy, so forceful that even the environs crumble around " + target.a + target.uniqueName + "!");
+			}
+			else if (target is PlayerCharacter) output(attacker.capitalA + attacker.uniqueName + " roars, exhaling a swirling tornado of fire directly at you");
+			else output(attacker.capitalA + attacker.uniqueName + " roars, exhaling a swirling tornado of fire directly at " + target.a + possessive(target.uniqueName) + "!");
+			
+			if (rangedCombatMiss(attacker, target, -1, 0.33)) {
+				if (attacker is PlayerCharacter) output("You manage to sidestep the flames in the nick of time.  ");
+				else if (target is PlayerCharacter) output("  Despite the heavy impact caused by your roar, " + target.a + target.uniqueName + " manages to take it at an angle and is ready to keep fighting.");
+				else output("  Despite the heavy impact caused by " + attacker.a + possessive(attacker.uniqueName) + " roar, " + target.a + target.uniqueName + " manages to take it at an angle and is ready to keep fighting.");
+				return;
+			}
+			
+			var d:int = 25 + attacker.level * 8 + rand(10);
+			
+			if(target.hasStatusEffect("Sandstorm")) {
+				output("  <b>Breath is massively dissipated by the swirling vortex, causing it to hit with far less force!</b>");
+				d *= 0.2;
+			}
+			
+			var damage:TypeCollection = damageRand(new TypeCollection( { burning: d } ), 15);
+			
+			if (attacker is PlayerCharacter) output("  " + target.capitalA + target.short + " reels as your wave of force slams into " + target.mfn("him", "her", "it") + " like a ton of rock!  ");
+			else if (target is PlayerCharacter) output("  You reel as " + attacker.a + possessive(attacker.uniqueName) + " wave of force slams into you like a ton of rock!  ");
+			else output("  " + target.capitalA + target.short + " reels as " + attacker.a + possessive(attacker.uniqueName) + " wave of force slams into " + target.mfn("him", "her", "it") + " like a ton of rock!  ");
+			
+			if(!target.hasStatusEffect("Stun Immune")) {
+				output("  The impact sends " + target.mfn("him", "her", "it") + " crashing to the ground, too dazed to strike back.  ");
+				target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Cannot take a turn.", true, 0);
+			}
+			
+			applyDamage(damage, attacker, target);
+		}
+		
+		public static var KitsuneFoxFire:SingleCombatAttack;
+		private static function KitsuneFoxFireImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		{
+			if (attacker is PlayerCharacter) {
+				output("Holding out your palm, you conjure an ethereal blue flame that dances across your fingertips.  You launch it at " + target.a + target.uniqueName + " with a ferocious throw, and it bursts on impact, showering dazzling azure sparks everywhere.");
+				IncrementFlag("COC.SPELLS_CAST");
+			}
+			else if (target is PlayerCharacter) output(attacker.capitalA + attacker.uniqueName + " throws an ethereal blue flame at you!");
+			else output(attacker.capitalA + attacker.uniqueName + " throws ethereal blue flame at " + target.a + possessive(target.uniqueName) + "!");
+			
+			// 10+(player.inte/3 + rand(player.inte/2)) * spellMod()
+			var d:int = 10 + attacker.intelligence() + rand(attacker.intelligence());
+			//d *= 0.66 + target.cor() * 0.66 * 0.01; // 66% damage to fully pure, 132% to fully corrupt
+			var damage:TypeCollection = damageRand(new TypeCollection( { burning: d } ), 15);
+			
+			applyDamage(damage, attacker, target);
+		}
+		
+		public static var KitsuneCorruptFoxFire:SingleCombatAttack;
+		private static function KitsuneCorruptFoxFireImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		{
+			if (attacker is PlayerCharacter) {
+				output("Holding out your palm, you conjure corrupted purple flame that dances across your fingertips.  You launch it at " + target.a + target.uniqueName + " with a ferocious throw, and it bursts on impact, showering dazzling lavender sparks everywhere.  ");
+				IncrementFlag("COC.SPELLS_CAST");
+			}
+			else if (target is PlayerCharacter) output(attacker.capitalA + attacker.uniqueName + " throws an ethereal purple flame at you!  ");
+			else output(attacker.capitalA + attacker.uniqueName + " throws ethereal purple flame at " + target.a + possessive(target.uniqueName) + "!  ");
+			
+			// 10+(player.inte/3 + rand(player.inte/2)) * spellMod()
+			var d:int = 10 + attacker.intelligence() + rand(attacker.intelligence());
+			//d *= 0.66 + (100 - target.cor()) * 0.66 * 0.01; // 66% damage to fully corrupt, 132% to fully pure
+			var damage:TypeCollection = damageRand(new TypeCollection( { burning: d } ), 15);
+			
+			applyDamage(damage, attacker, target);
+		}
+		
+		public static var KitsuneIllusion:SingleCombatAttack;
+		private static function KitsuneIllusionImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
+		{
+			if (attacker is PlayerCharacter) {
+				output("The world begins to twist and distort around you as reality bends to your will.");
+				IncrementFlag("COC.SPELLS_CAST");
+			}
+			else output(attacker.capitalA + attacker.uniqueName + " twists reality around!");
+			
+			for (var x:int = 0; x < hGroup.length; x++)
+			{
+				if (hGroup[x].intelligence() == 0 || hGroup[x].originalRace == "robot" || hGroup[x].originalRace == "Automaton") {
+					output("You reach for " + hGroup[x].capitalA + possessive(hGroup[x].uniqueName) + " mind, but cannot find anything.  You frantically search around, but there is no consciousness as you know it in the room.");
+					return;
+				}
+				
+				if (attacker.intelligence() / 2 + rand(attacker.intelligence() / 2) > hGroup[x].intelligence() || attacker.willpower() / 2 + rand(attacker.willpower() / 2) > hGroup[x].willpower())
+				{
+					if (!hGroup[x].hasStatusEffect("Blinded")) {
+						output("\n" + hGroup[x].capitalA + possessive(hGroup[x].uniqueName) + " mind blanketed in the thick fog of your illusions.");
+						hGroup[x].createStatusEffect("Blinded", 3, 0, 0, 0, false, "Blind", "Unable to keep pace with the shifting illusions. Accuracy is reduced, and ranged attacks are far more likely to miss.", true, 0);
+					} else {
+						output("\n" + hGroup[x].capitalA + hGroup[x].uniqueName + " stumble humorously to and fro, unable to keep pace with the shifting illusions.");
+						hGroup[x].getStatusEffect("Blinded").tooltip = "Unable to keep pace with the shifting illusions. Accuracy is reduced, and ranged attacks are far more likely to miss.";
+						hGroup[x].addStatusValue("Blinded", 1, 2);
+					}
+				}
+				else {
+					output("\nLike the snapping of a rubber band, reality falls back into its rightful place as " + hGroup[x].capitalA + hGroup[x].uniqueName + " resist illusory conjurations.");
+					if (hGroup[x].getStatusEffect("Blinded") != null && hGroup[x].getStatusEffect("Blinded").tooltip.indexOf("illusions") != -1)
+						hGroup[x].removeStatusEffect("Blinded");
+				}
+			}
+		}
+		
+		public static var KitsuneTerror:SingleCombatAttack;
+		private static function KitsuneTerrorImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		{
+			if (target.intelligence() == 0 || target.originalRace == "robot" || target.originalRace == "Automaton") {
+				output("You reach for " + target.capitalA + possessive(target.uniqueName) + " mind, but cannot find anything.  You frantically search around, but there is no consciousness as you know it in the room.");
+				return;
+			}
+			
+			if (attacker is PlayerCharacter) {
+				output("The world goes dark, an inky shadow blanketing everything in sight as you fill " + target.a + possessive(target.uniqueName) + " mind with visions of otherworldly terror that defy description.");
+				IncrementFlag("COC.SPELLS_CAST");
+			}
+			else if (target is PlayerCharacter) output("The world goes dark, an inky shadow blanketing everything in sight as " + attacker.capitalA + attacker.uniqueName + " fills your mind with visions of otherworldly terror that defy description!");
+			else output(attacker.capitalA + attacker.uniqueName + " fills " + target.a + possessive(target.uniqueName) + " mind with visions of otherworldly terror that defy description!");
+			
+			if ((attacker.intelligence() / 2 + rand(attacker.intelligence() / 2) > target.intelligence() || attacker.willpower() / 2 + rand(attacker.willpower() / 2) > target.willpower()) && !target.hasStatusEffect("Stun Immune"))
+			{
+				output("\nThe effect is immediate! ");
+				if (target is PlayerCharacter) output(" You cower in horror!");
+				else output(target.capitalA + target.uniqueName + " cower in horror as they succumb to illusion, believing themselves beset by eldritch horrors beyond their wildest nightmares.");
+				
+				if (!target.hasStatusEffect("Stunned")) {
+					target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Cowed in horror and cannot act.", true, 0);
+				} else {
+					target.getStatusEffect("Stunned").tooltip = "Cowed in horror and cannot act.";
+					target.addStatusValue("Stunned", 1, 2);
+				}
+			}
+			else
+			{
+				output(" The dark fog recedes as quickly as it rolled.");
+			}
+		}
 	}
-
 }

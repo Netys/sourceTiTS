@@ -291,6 +291,9 @@ package classes.Items.Transformatives
 				output("\n\nYour scalp begins to tingle, and you gently grasp a strand, pulling it forward to check it.  Your hair has become the same " + pc.hairColor + " as a kitsune's!");
 				changes++;
 			}
+			
+			kGAMECLASS.validatePlayerKitsuneElderColor();
+			
 			var tone:Array = mystic ? ["dark", "ebony", "ashen", "sable", "milky white"] : ["tan", "olive", "light", "pale", "fair"];
 			//[Change Skin Type: remove fur or scales, change skin to Tan, Olive, or Light]
 			if (((pc.skinType == GLOBAL.SKIN_TYPE_FUR 
@@ -330,7 +333,7 @@ package classes.Items.Transformatives
 				output("\n\nOdd.  You don't feel any different.");
 			}
 			
-			kGAMECLASS.flags["COC.TIMES_TRANSFORMED"] += changes;
+			IncrementFlag("COC.TIMES_TRANSFORMED");
 			return false;
 		}
 	}	

@@ -73,9 +73,9 @@ package classes.Items.Apparel
 		{
 			if (targetCreature.isExposed()) {
 				if (isActive(targetCreature)) {
-					output("\n\nWhile not covering anything, this bands still somehow give you decent appearance.");
+					output(" While not covering anything, this bands still somehow give you decent appearance.");
 				}
-				else output("\n\nWith this bands your appearance is even more provoking than simple nudity.");
+				else output(" With this bands your appearance is even more provoking than simple nudity.");
 			}
 		}
 	}

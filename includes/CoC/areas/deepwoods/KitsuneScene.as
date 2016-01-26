@@ -2394,9 +2394,7 @@ private function nonFutaRedHeadBondageIGuessYouTieHerUpWithYourPenisThenHuh():vo
 public function kitsuneShrine():void
 {
 	clearOutput();
-	if (flags["COC.KITSUNE_SHRINE_VISIT"] == undefined) {
-		flags["COC.KITSUNE_SHRINE_VISIT"] = 0;
-		flags["COC.TOOK_KITSUNE_STATUE"] = 0;
+	if (IncrementFlag("COC.KITSUNE_SHRINE_VISIT") == 1) {
 		output("Your travels take you down a winding path through the forest today, deep in the heart of the woods.  Each step you take makes it feel even more like the dense foliage is creeping in even closer, the rough-hewn dirt path dwindling down to almost nothing up ahead.  Whatever the trail was used for long ago, it is in the late stages of being reclaimed by the wilderness now.\n\n");
 
 		output("While you are mindful of this land's dangers, you are curious what secrets this part of the forest might hold.  You press on, trudging through the weed-choked trail, doing your best to keep your wits about you as you march onwards.\n\n");
@@ -2405,22 +2403,22 @@ public function kitsuneShrine():void
 
 		output("You call out, but the place seems to be abandoned.  Shrugging, you decide to take a look around the building, hefting a rotten timber out of the way of the door and creeping inside carefully, just in case you aren't really alone.\n\n");
 
-		output("It takes a moment for your eyes to adjust to the dim light inside the musty shed, but you eventually start to piece together the makings of a simple dwelling.  An old bedroll lies in one corner, assorted cooking implements hung with care over a small fire pit.  In the rear of the one-room building is enshrined a small pedestal, atop of which stands a small gold statue of an androgynous figure with nine tails.  A short distance away stands a bookcase filled with musty tomes and scrolls of all shapes and sizes.\n\n");
+		output("It takes a moment for your eyes to adjust to the dim light inside the musty shed, but you eventually start to piece together the makings of a simple dwelling.  An old bedroll lies in one corner, assorted cooking implements hung with care over a small fire pit.  In the rear of the one-room building is enshrined a small pedestal, atop of which stands a small gold statue of an androgynous figure with nine tails.  A short distance away stands a bookcase filled with musty tomes and scrolls of all shapes and sizes. Small locked box is tucked into corner.\n\n");
 
 		output("Judging by the layer of dust on everything, whoever lived here hasn't been around in quite some time.  You're sure they wouldn't mind if you helped yourself to some of those books - you might just learn a thing or two.  That gold statue is pretty tempting too, but on the other hand it seems to have some sort of spiritual significance - stealing it from its rightful place might not be the wisest idea.  Of course, you could always try praying to it.");
 	}
 	else {
 		output("You find your way to the abandoned kitsune shrine again.  The place is full of rotten timber, but it has a bookcase stuffed with well-maintained tomes.  The remains of a camp are in here as well, though the owner is curiously absent.  Judging by the layer of dust on everything, whoever lived here hasn't been around in quite some time.  You're sure they wouldn't mind if you helped yourself to some of those books - you might just learn a thing or two.");
 	}
-	flags["COC.KITSUNE_SHRINE_VISIT"]++;
 	//[Read Books] [Meditate] [Steal Statue] - [Leave]
 	clearMenu();
 	addButton(0, "Read Books", readKitsuneBooks);
-	if (flags["COC.TOOK_KITSUNE_STATUE"] == 0) {
+	if (flags["COC.TOOK_KITSUNE_STATUE"] != 1) {
 		if (pc.isBimbo() || pc.isBro()) addDisabledButton(1, "Meditate", "Meditate", "Boooring!"); // no enlightment for you, mindless slut!
 		else addButton(1, "Meditate", meditateLikeAKitsuneEhQuestionMark);
 	}
-	if (pc.hasItem(new CoCKitsuneStatue()) || flags["COC.TOOK_KITSUNE_STATUE"] == 0) addButton(2, "Statue", stealAKitsuneStatue);
+	if (pc.hasItem(new CoCKitsuneStatue()) || flags["COC.TOOK_KITSUNE_STATUE"] != 1) addButton(2, "Statue", stealAKitsuneStatue);
+	if (flags["COC.TOOK_KITSUNE_ATTIRE"] == undefined) addButton(3, "Stash", openAKitsuneStash);
 	addButton(14, "Leave", returnToCampUseOneHour);
 }
 
@@ -2515,7 +2513,7 @@ private function stealAKitsuneStatue():void
 {
 	clearOutput();
 	clearMenu();
-	if (flags["COC.TOOK_KITSUNE_STATUE"] == 0) {
+	if (flags["COC.TOOK_KITSUNE_STATUE"] != 1) {
 		output("Feeling the chance is just too great to pass up, you rub your hands together greedily and snatch the gold statue from the shrine.  As you stuff it into your pouch, you are overwhelmed with the sensation that what you are doing is very wrong.  You are starting to have second thoughts...");
 		//[Take It] [Put it Back]
 		addButton(0, "Take It", takeAKitsuneStatue);
@@ -2550,9 +2548,37 @@ private function putKitsuneStatueBack():void
 	output("Regretting your decision, you replace the statue on the pedestal, your guilty conscience winning out over greed today.");
 	//Advance 1hr and return to camp.
 	processTime(3);
-	flags["COC.TOOK_KITSUNE_STATUE"] = 0;
+	flags["COC.TOOK_KITSUNE_STATUE"] = undefined;
 	pc.destroyItem(new CoCKitsuneStatue());
 	addButton(0, "Next", kitsuneShrine);
+}
+
+private function openAKitsuneStash():void
+{
+	clearOutput();
+	processTime(5);
+	clearMenu();
+	output("You decide to try your luck with locked box. It is made of something smooth and milky-white, with animal paw outline drawn on it.\n\n");
+	if (!IllusoryAttire.isActive(pc)) {
+		output("You have no idea how to open it - there are no trace of keyhole, no gaps between parts, no hidden button.");
+		addButton(0, "Next", kitsuneShrine);
+	} else {
+		output("Surprisingly, it opens immediately, you just had to touch drawn pawprint with your own [pc.hand]. There are nearly two dozen of ornate bands inside! Two of them are marked 'forearm', nine have 'tail' marks and other are marked 'foot'.  ");
+		if (pc.hasTail() && pc.tailCount == 9) output("Considering amount of tail bands they are clearly designed for someone like you.  ");
+		if (!pc.hasLegFlag(GLOBAL.FLAG_DIGITIGRADE)) {
+			output("The 'foot' marks is a bit confusing, though - they are likely designed for digitigrade creature");
+			if (pc.hasLegFlag(GLOBAL.FLAG_PLANTIGRADE)) output(", but you can wear them on your shins.");
+			else  output(".  ");
+		} else output("The 'foot' marks likely means they are intended to be worn by digitigrade creature, though you can wear them on your shins as well.");
+		output("\n\n");
+		
+		flags["COC.TOOK_KITSUNE_ATTIRE"] = 1;
+		
+		itemScreen = kitsuneShrine;
+		lootScreen = kitsuneShrine;
+		useItemFunction = kitsuneShrine;
+		itemCollect([new IllusoryAttire()]);
+	}
 }
 
 public var basicKitsuneHair:Array = ["white", "black", "black", "black", "red", "red", "red"];
@@ -2649,7 +2675,7 @@ public function isNineTails(target:Creature):Boolean {
 }
 
 public function NineTailsTimePassedNotify():void {
-	if (minutes % 4 == 0 && isNineTails(pc)) {
+	if (isNineTails(pc)) {
 		if (!pc.hasTail(GLOBAL.TYPE_VULPINE) || pc.tailCount < 9) {
 			eventBuffer += "\n\n<b>Without your tails, the magic power they once granted withers and dies, vanishing completely.</b>";
 			pc.removePerk("Enlightened Nine-tails");
@@ -2665,7 +2691,7 @@ public function NineTailsTimePassedNotify():void {
 			//pc.removePerk("Enlightened Nine-tails");
 			//pc.removePerk("Corrupted Nine-tails");
 		//}
-		else pc.energy(1);
+		else if(minutes % 4 == 0) pc.energy(1);
 	}
 	
 	if (pc.armor is IllusoryAttire) {

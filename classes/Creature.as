@@ -2872,6 +2872,8 @@ package classes {
 		public function HPMax(): Number {
 			var bonus:int = 0;
 			bonus = fortification();
+			if (hasStatusEffect("Might")) bonus += statusEffectv2("Might");
+			
 			var hitPoints: Number = 15 + (level - 1) * 15 + HPMod + bonus;
 			if (characterClass == GLOBAL.CLASS_MERCENARY)
 				hitPoints += level * 5;
@@ -2971,7 +2973,8 @@ package classes {
 
 			var currPhys:int = physiqueRaw + physiqueMod;
 
-			if(hasStatusEffect("Tripped")) currPhys -= 4;
+			if (hasStatusEffect("Tripped")) currPhys -= 4;
+			if (hasStatusEffect("Might")) currPhys += statusEffectv1("Might");
 
 			if (currPhys > physiqueMax()) 
 			{
@@ -3233,7 +3236,8 @@ package classes {
 		}
 		public function physiqueMax(): Number {
 			var bonuses:int = 0;
-			if(hasStatusEffect("Quivering Quasar")) bonuses += 5;
+			if (hasStatusEffect("Quivering Quasar")) bonuses += 5;
+			if (hasStatusEffect("Might")) bonuses += statusEffectv1("Might");
 			return level * 5 + bonuses;
 		}
 		public function reflexesMax(): Number {
@@ -3465,6 +3469,9 @@ package classes {
 			modifiedDamage.add(lowerUndergarment.baseDamage);
 			modifiedDamage.add(accessory.baseDamage);
 			modifiedDamage.add(shield.baseDamage);
+			
+			if(hasStatusEffect("Charge Weapon"))
+				modifiedDamage.add(new TypeCollection( { electric : modifiedDamage.getTotal() * statusEffectv1("Charge Weapon") / 100 } ));
 			
 			return modifiedDamage;
 		}

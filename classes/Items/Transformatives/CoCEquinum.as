@@ -231,7 +231,7 @@ package classes.Items.Transformatives
 					}
 					//MULTICOCK
 					else {
-						for (temp = 0; temp < (pc.cockTotal()) && pc.cocks[temp].cType == GLOBAL.TYPE_EQUINE; temp++) {}
+						for (temp = 0; temp < (pc.cockTotal()) && pc.cocks[temp].cType == GLOBAL.TYPE_EQUINE && !pc.cockTypeUnlocked(temp, GLOBAL.TYPE_EQUINE); temp++) {}
 						output("\n\nOne of your penises begins to feel strange.  You pull down your clothes to take a look and see the skin of your " + pc.cockDescript(temp) + " darkening to a mottled brown and black pattern.");
 						//Already have a sheath
 						if (pc.hasSheath(temp)) output("  Your sheath tingles and begins growing larger as the cock's base shifts to lie inside it.");
@@ -306,6 +306,20 @@ package classes.Items.Transformatives
 			}
 			//FEMALE
 			if (pc.hasVagina()) {
+				temp = 0;
+				while (temp > 0) {
+					temp--;
+					if (pc.vaginas[temp].type != GLOBAL.TYPE_EQUINE) {
+						break;
+					}
+				}
+				if (pc.vaginas[temp].type != GLOBAL.TYPE_EQUINE && changes < changeLimit && rand(3) == 0 && pc.vaginaTypeUnlocked(temp, GLOBAL.TYPE_EQUINE)) {
+					output("You stagger as your " + pc.vaginaDescript(temp) + " abruptly engorges, feeling utterly and completely swollen with blood. It feels even fuller and more plush than when you're turned on, most noticeably around the outer lips. It looks just like... well, a horse-cunt. <b>You've got a big, puffy horse-cunt</b>, perfectly sized to take a big, blunted member.");
+					pc.shiftVagina(temp, GLOBAL.TYPE_EQUINE);
+					pc.lust(10);
+					changes++;
+				}
+				
 				//determine least wet
 				//temp - least wet
 				//temp2 - saved wetness
@@ -315,12 +329,12 @@ package classes.Items.Transformatives
 				temp3 = pc.vaginas.length;
 				while (temp3 > 0) {
 					temp3--;
-					if (temp2 > pc.vaginas[temp3].wetness()) {
+					if (temp2 > pc.vaginas[temp3].wetness() && pc.wetnessUnlocked(temp, pc.vaginas[temp].wetnessRaw + 1)) {
 						temp = temp3;
 						temp2 = pc.vaginas[temp].wetness();
 					}
 				}
-				if (pc.vaginas[temp].wetness() <= 2 && changes < changeLimit && rand(2) == 0) {
+				if (pc.vaginas[temp].wetnessRaw <= 2 && changes < changeLimit && rand(2) == 0 && pc.wetnessUnlocked(temp, pc.vaginas[temp].wetnessRaw + 1)) {
 					output("\n\nYour " + pc.vaginaDescript(temp) + " moistens perceptably, giving off an animalistic scent.");
 					pc.vaginas[0].wetness(temp);
 					changes++;
@@ -339,10 +353,10 @@ package classes.Items.Transformatives
 						temp2 = pc.vaginas[temp].minLooseness;
 					}
 				}
-				if (pc.vaginas[temp].minLooseness <= 4 && changes < changeLimit && rand(2) == 0) {
+				if (pc.vaginas[temp].minLooseness <= 4 && changes < changeLimit && rand(2) == 0 && pc.loosenessUnlocked(temp, pc.vaginas[temp].minLooseness + 1)) {
 					pc.vaginas[temp].minLooseness++;
 					if (pc.vaginas[temp].looseness() < pc.vaginas[temp].minLooseness) pc.vaginas[temp].looseness(1);
-					if (pc.vaginas[temp].bonusCapacity < 500) pc.vaginas[temp].bonusCapacity += 10;
+					if (pc.vaginas[temp].bonusCapacity < 500) pc.vaginas[temp].bonusCapacity += 15;
 					output("\n\nYou grip your gut in pain as you feel your organs shift slightly.  When the pressure passes, you realize your " + pc.vaginaDescript(temp) + " has grown larger, in depth AND size.");
 					changes++;
 				}
@@ -400,8 +414,8 @@ package classes.Items.Transformatives
 			}
 			//NON - GENDER SPECIFIC CHANGES
 			//Tail -> Ears -> Fur -> Face
-			//Centaur if hooved
-			if (changes < changeLimit && rand(6) == 0 && pc.legType == GLOBAL.TYPE_EQUINE && !pc.isTaur()) {
+			//possibly Centaur if hooved
+			if (changes < changeLimit && rand(6) == 0 && pc.legType == GLOBAL.TYPE_EQUINE && !pc.isTaur() && pc.legCountUnlocked(4)) {
 				changes++;
 				output("\n\nImmense pain overtakes you as you feel your backbone snap.  The agony doesn't stop, blacking you out as your spine lengthens, growing with new flesh from your backside as the bones of your legs flex and twist.  Muscle groups shift and rearrange themselves as the change completes, the pain dying away as your consciousness returns.  <b>You now have the lower body of a centaur</b>.");
 				if (pc.hasGenitals()) {
@@ -411,14 +425,16 @@ package classes.Items.Transformatives
 				pc.legCount = 4;
 				pc.genitalSpot = 2;
 			}
+			if (changes < changeLimit && rand(4) == 0 && Mutator.changeArms(pc, GLOBAL.TYPE_EQUINE, [GLOBAL.FLAG_FURRED])) changes++;
+			// legs
+			if (changes < changeLimit && rand(4) == 0 && pc.legType != GLOBAL.TYPE_EQUINE && Mutator.changeLegs(pc, GLOBAL.TYPE_EQUINE, [2, 4, -1, 2], [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_HOOVES, GLOBAL.FLAG_FURRED])) changes++;
 			//Remove odd eyes
-			if (changes < changeLimit && rand(5) == 0 && pc.eyeType != GLOBAL.TYPE_HUMAN) {
+			if (changes < changeLimit && rand(5) == 0 && Mutator.changeEyes(pc, GLOBAL.TYPE_HUMAN, null, false)) {
 				output("\n\nYou blink and stumble, a wave of vertigo threatening to pull your " + pc.feet() + " from under you.  As you steady and open your eyes, you realize something seems different.  Your vision is changed somehow.  <b>You have normal, humanoid eyes again.</b>");
-				pc.eyeType = GLOBAL.TYPE_HUMAN;
 				changes++;
 			}
 			//HorseFace - Req's Fur && Ears
-			if (pc.faceType != GLOBAL.TYPE_EQUINE && pc.skinType == GLOBAL.SKIN_TYPE_FUR && changes < changeLimit && rand(5) == 0 && pc.earType == GLOBAL.TYPE_EQUINE) {
+			if (pc.faceType != GLOBAL.TYPE_EQUINE && pc.hasFur() && changes < changeLimit && rand(5) == 0 && pc.earType == GLOBAL.TYPE_EQUINE && pc.faceTypeUnlocked(GLOBAL.TYPE_EQUINE)) {
 				if(pc.hasFaceFlag(GLOBAL.FLAG_MUZZLED)) output("Your muzzle stretches outward and squares off at the end as it takes on more horse-like proportions. It doesn't even hurt, though when the transformation finishes, you're left with a blend of equine and humanoid features. <b>You have an anthropomorphic horse face.</b>");
 				//Nonsnouted
 				else output("Your eyes water like crazy as the bones in your face abruptly... flex. Blinking like mad, you try to watch your expanding, lengthening nose and jaw, but your eyes just aren't working right. You're left nearly blind while <b>your face is rearranged into a elongated horse face!</b>");
@@ -429,7 +445,7 @@ package classes.Items.Transformatives
 				pc.addFaceFlag(GLOBAL.FLAG_MUZZLED);
 			}
 			//Fur - if has horsetail && ears and not at changelimit
-			if (pc.skinType != GLOBAL.SKIN_TYPE_FUR && changes < changeLimit && rand(4) == 0 && pc.tailType == GLOBAL.TYPE_EQUINE) {
+			if (pc.skinType != GLOBAL.SKIN_TYPE_FUR && changes < changeLimit && rand(4) == 0 && pc.tailType == GLOBAL.TYPE_EQUINE && pc.skinTypeUnlocked(GLOBAL.SKIN_TYPE_FUR)) {
 				pc.skinType = GLOBAL.SKIN_TYPE_FUR;
 				pc.clearSkinFlags();
 				if(!InCollection(pc.furColor, ["chocolate", "ivory", "brown-dappled", "sable"]))
@@ -443,7 +459,7 @@ package classes.Items.Transformatives
 				else output("Tiny hairs break through the surface of your [pc.skin], making you itch like crazy. It's enough to distract you for sure, and it only gets worse as more and more hair emerges. The ones that came out first are getting longer and thicker, with the newer additions following close behind. Before you know it, your [pc.skin] vanishes under your new coat of [pc.skinFurScales]. <b>You struggle with a strange desire to be brushed as you admire your new horse hair coat.</b>");
 			}
 			//Ears - requires tail
-			if (pc.earType != GLOBAL.TYPE_EQUINE && pc.tailType == GLOBAL.TYPE_EQUINE && changes < changeLimit && rand(3) == 0) {
+			if (pc.earType != GLOBAL.TYPE_EQUINE && pc.tailType == GLOBAL.TYPE_EQUINE && changes < changeLimit && rand(3) == 0 && pc.earTypeUnlocked(GLOBAL.TYPE_EQUINE)) {
 				if (pc.earType == GLOBAL.TYPE_HUMAN) output("\n\nYour ears tug painfully on your face as they begin shifting, moving upwards to the top of your head and transforming into a upright animalistic ears.  ");
 				else if (pc.earType == GLOBAL.TYPE_CANINE) output("\n\nYour ears change shape, morphing into from their doglike shape into equine-like ears!  ");
 				else output("\n\nYour ears change shape, morphing into teardrop-shaped horse ears!  ");
@@ -452,7 +468,7 @@ package classes.Items.Transformatives
 				changes++;
 			}
 			//Tail - no-prereq
-			if (pc.hasTail(GLOBAL.TYPE_EQUINE) && rand(2) == 0 && changes < changeLimit) {
+			if (pc.hasTail(GLOBAL.TYPE_EQUINE) && rand(2) == 0 && changes < changeLimit && pc.tailTypeUnlocked(GLOBAL.TYPE_EQUINE)) {
 				//no tail
 				if (!pc.hasTail()) {
 					output("\n\nThere is a sudden tickling on your ass, and you notice you have sprouted a long shiny horsetail of the same " + pc.hairColor + " color as your hair.");
@@ -467,12 +483,12 @@ package classes.Items.Transformatives
 				pc.tailType = GLOBAL.TYPE_EQUINE;
 				changes++;
 			}
-			if (rand(4) == 0 && pc.gills && changes < changeLimit) {
+			if (rand(4) == 0 && pc.gills && changes < changeLimit && pc.gillsUnlocked(false)) {
 				output("\n\nYour chest itches, and as you reach up to scratch it, you realize your gills have withdrawn into your skin.");
 				pc.gills = false;
 				changes++;
 			}
-			if (rand(3) == 0 && pc.tone < 60) pc.modTone(1, true);
+			if (rand(2) == 0 && pc.tone < 60) Mutator.modTone(pc, 60, 1, true);
 			//FAILSAFE CHANGE
 			if (changes == 0) {
 				output("\n\nInhuman vitality spreads through your body, invigorating you!\n");
