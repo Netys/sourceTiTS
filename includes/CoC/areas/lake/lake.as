@@ -14,7 +14,7 @@ import classes.Engine.Utility.*;
 public function exploreLake():void
 {
 	//Increment exploration count
-	flags["COC.EXPLORED_LAKE"]++;
+	IncrementFlag("COC.EXPLORED_LAKE");
 	
 	processTime(20 + rand(20)); // take your time looking for trouble!
 	
@@ -231,8 +231,7 @@ public function meetSomethingSlimyAndOoooozzzingAtTheShore():void {
 	}
 	//OOZE!
 	else {
-		if (flags["COC.TIMES_MET_OOZE"] == undefined) flags["COC.TIMES_MET_OOZE"] = 0;
-		flags["COC.TIMES_MET_OOZE"]++;
+		IncrementFlag("COC.TIMES_MET_OOZE");
 		//spriteSelect(25);
 		//High int starts on even footing.
 		fightGreenSlime();

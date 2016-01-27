@@ -46,7 +46,7 @@ package classes.Items.Apparel
 			this.shields = 0;
 			this.sexiness = 0;
 			this.critBonus = 0;
-			this.evasion = 0;
+			this.evasion = 1;
 			this.fortification = 0;
 			
 			this.version = _latestVersion;

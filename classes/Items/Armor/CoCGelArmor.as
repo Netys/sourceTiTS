@@ -35,15 +35,22 @@ package classes.Items.Armor
 			this.attackVerb = "null";
 			
 			//Information
-			this.basePrice = 1500;
+			this.basePrice = 300;
 			this.attack = 0;
-			this.defense = 7;
+			this.defense = 3;
 			this.shieldDefense = 0;
 			this.shields = 0;
 			this.sexiness = 0;
 			this.critBonus = 0;
 			this.evasion = 0;
 			this.fortification = 0;
+			
+			this.resistances.kinetic.resistanceValue = 30;
+			this.resistances.electric.resistanceValue = 30;
+			this.resistances.burning.resistanceValue = 0;
+			this.resistances.freezing.resistanceValue = 0;
+			this.resistances.corrosive.resistanceValue = 30;
+			this.resistances.poison.resistanceValue = 0;
 			
 			resistances.addFlag(DamageFlag.ABLATIVE);
 			

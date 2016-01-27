@@ -1,5 +1,6 @@
 package classes.Items.Apparel 
 {
+	import classes.Engine.Combat.DamageTypes.DamageFlag;
 	import classes.GameData.TooltipManager;
 	import classes.GLOBAL;
 	import classes.ItemSlotClass;
@@ -31,12 +32,17 @@ package classes.Items.Apparel
 			
 			this.basePrice = 6000;
 			this.attack = 0;
-			this.defense = 9;
+			this.defense = 6;
 			this.shieldDefense = 0;
 			this.sexiness = 0;
 			this.critBonus = 0;
 			this.evasion = 0;
 			this.fortification = 0;
+			
+			this.resistances.kinetic.resistanceValue = 25;
+			this.resistances.electric.resistanceValue = 25;
+			this.resistances.burning.resistanceValue = 50;
+			this.resistances.freezing.resistanceValue = 50;
 			
 			this.version = this._latestVersion;
 		}

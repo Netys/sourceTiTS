@@ -36,13 +36,18 @@ package classes.Items.Armor
 			//Information
 			this.basePrice = 6000;
 			this.attack = 0;
-			this.defense = 18;
+			this.defense = 8;
 			this.shieldDefense = 0;
 			this.shields = 0;
 			this.sexiness = 0;
 			this.critBonus = 0;
 			this.evasion = 0;
 			this.fortification = 0;
+			
+			this.resistances.kinetic.resistanceValue = 30;
+			this.resistances.electric.resistanceValue = 30;
+			this.resistances.burning.resistanceValue = 60;
+			this.resistances.freezing.resistanceValue = 60;
 			
 			this.version = _latestVersion;
 		}

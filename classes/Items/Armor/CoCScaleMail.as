@@ -37,7 +37,7 @@ package classes.Items.Armor
 			//Information
 			this.basePrice = 1700;
 			this.attack = 0;
-			this.defense = 12;
+			this.defense = 6;
 			this.shieldDefense = 0;
 			this.shields = 0;
 			this.sexiness = 0;

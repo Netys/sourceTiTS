@@ -38,6 +38,11 @@ package classes.Items.Apparel
 			this.evasion = 0;
 			this.fortification = 0;
 			
+			this.resistances.kinetic.resistanceValue = 25;
+			this.resistances.electric.resistanceValue = 50;
+			this.resistances.freezing.resistanceValue = 25;
+			this.resistances.corrosive.resistanceValue = 50;
+			
 			this.version = this._latestVersion;
 		}
 	}

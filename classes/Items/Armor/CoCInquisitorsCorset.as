@@ -1,6 +1,7 @@
 package classes.Items.Armor
 {
 	import classes.Creature;
+	import classes.Engine.Combat.DamageTypes.DamageFlag;
 	import classes.Engine.Interfaces.output;
 	import classes.ItemSlotClass;
 	import classes.GLOBAL;
@@ -39,13 +40,18 @@ package classes.Items.Armor
 			//Information
 			this.basePrice = 20000;
 			this.attack = 0;
-			this.defense = 4;
+			this.defense = 3;
 			this.shieldDefense = 0;
 			this.shields = 0;
 			this.sexiness = 4;
 			this.critBonus = 0;
-			this.evasion = 0;
+			this.evasion = 1;
 			this.fortification = 0;
+			
+			this.resistances.tease.resistanceValue = 50;
+			this.resistances.psionic.resistanceValue = 50;
+			
+			this.resistances.addFlag(DamageFlag.NULLIFYING);
 			
 			this.version = _latestVersion;
 		}
