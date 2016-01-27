@@ -2701,7 +2701,7 @@ public function NineTailsTimePassedNotify():void {
 		}
 		else if (isNineTails(pc) || pc.isPsionic()) {
 			if(!pc.armor.hasRandomProperties) { // first time message
-				eventBuffer += "\n\nYou feel your power resonating with your bands... You are fully in tune with them! Enchantement is now powerful enough to provide some real protection from attacks as well, and other effects are more powerful too.";
+				eventBuffer += "\n\nYou feel your power resonating with your bands... You are fully in tune with them! Enchantment is now powerful enough to provide some real protection from attacks as well, and glamour effect is more powerful too.";
 				pc.armor.type = GLOBAL.ARMOR;
 				pc.armor.tooltip = IllusoryAttire.descBasic + (isNineTails(pc) ? IllusoryAttire.descNineTails : IllusoryAttire.descPsionic);
 				TooltipManager.addTooltip(pc.armor.shortName, pc.armor.tooltip);

@@ -3226,8 +3226,8 @@ package classes {
 			{
 				if (bonus < statusEffectv2("Lane Detoxing Weakness")) bonus = statusEffectv2("Lane Detoxing Weakness");
 			}
-			if (hasStatusEffect("Pierced: Icestone")) bonus -= statusEffectv1("Pierced: Icestone");
-			if (hasStatusEffect("Pierced: Crimstone")) bonus += statusEffectv1("Pierced: Crimstone");
+			if (hasPerk("Pierced: Icestone")) bonus -= perkv1("Pierced: Icestone");
+			if (hasPerk("Pierced: Crimstone")) bonus += perkv1("Pierced: Crimstone");
 			if (hasStatusEffect("Pent Up")) bonus += statusEffectv1("Pent Up");
 			//Venom brings minimum up to 35.
 			if (bonus < 35 && hasStatusEffect("Red Myr Venom")) bonus = 35;

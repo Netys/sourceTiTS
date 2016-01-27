@@ -1860,7 +1860,7 @@ package classes.GameData
 		/////////////////////////
 		
 		public static var ChargeWeapon:SingleCombatAttack;
-		private static function ChargeWeaponImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		private static function ChargeWeaponImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
 			kGAMECLASS.clearList();
 			if (attacker.hasMeleeWeapon()) kGAMECLASS.addToList(attacker.meleeWeapon.longName);
@@ -1874,11 +1874,11 @@ package classes.GameData
 			}
 			else output(attacker.capitalA + attacker.uniqueName + " utters words of power, summoning an electrical charge around " + target.mfn("his", "her", "its") + " " + weapon + ".");
 			
-			attacker.createStatusEffect("Charge Weapon", attacker.intelligence(), 0, 0, 0, false, "OffenseUp", "Infused with power of lightning!", true);
+			attacker.createStatusEffect("Charge Weapon", attacker.intelligence() / 2 + 20, 0, 0, 0, false, "OffenseUp", "Infused with power of lightning!", true);
 		}
 		
 		public static var Blind:SingleCombatAttack;
-		private static function BlindImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		private static function BlindImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
 			var aTarget:Creature = GetBestPotentialTarget(hGroup);
 			
@@ -1913,7 +1913,7 @@ package classes.GameData
 		}
 		
 		public static var Whitefire:SingleCombatAttack;
-		private static function WhitefireImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		private static function WhitefireImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
 			if (attacker is PlayerCharacter) {
 				output("You narrow your eyes, focusing your mind with deadly intent.  You snap your fingers and " + target.a + target.uniqueName + " is enveloped in a flash of white flames!  ");
@@ -1929,7 +1929,7 @@ package classes.GameData
 		}
 		
 		public static var Arouse:SingleCombatAttack;
-		private static function ArouseImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		private static function ArouseImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
 			if (attacker is PlayerCharacter) {
 				output("You make a series of arcane gestures, drawing on your own lust to inflict it upon your foe!  ");
@@ -1955,7 +1955,7 @@ package classes.GameData
 		}
 		
 		public static var Heal:SingleCombatAttack;
-		private static function HealImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		private static function HealImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
 			if (attacker is PlayerCharacter) {
 				output("You focus on your body and its desire to end pain, trying to draw on your arousal without enhancing it.  ");
@@ -1990,7 +1990,7 @@ package classes.GameData
 		}
 		
 		public static var Might:SingleCombatAttack;
-		private static function MightImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		private static function MightImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
 			if (attacker is PlayerCharacter) {
 				output("You flush, drawing on your body's desires to empower your muscles and toughen you up.  ");
@@ -2020,13 +2020,13 @@ package classes.GameData
 				if (attacker is PlayerCharacter) output("The rush of success and power flows through your body.  You feel like you can do anything!");
 				else output(attacker.capitalA + attacker.uniqueName + " is now stronger!  ");
 				// +physique, +HP
-				attacker.createStatusEffect("Might", attacker.intelligence() / 2, attacker.intelligence(), 0, 0, false, "OffenseUp", "Infused with power of desire!", true);
-				attacker.HP(attacker.intelligence());
+				attacker.createStatusEffect("Might", Math.max(attacker.intelligence() / 2, 10), Math.max(attacker.intelligence(), 20), 0, 0, false, "OffenseUp", "Infused with power of desire!", true);
+				attacker.HP(Math.max(attacker.intelligence(), 20));
 			}
 		}
 		
 		public static var DragonFire:SingleCombatAttack;
-		private static function DragonFireImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		private static function DragonFireImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
 			attacker.createStatusEffect("DragonfireCD", 0, 0, 0, 0, true, "Blocked", "Dragonfire is not available yet.", false, 24 * 60);
 			
@@ -2050,7 +2050,7 @@ package classes.GameData
 				d *= 0.2;
 			}
 			
-			var damage:TypeCollection = damageRand(new TypeCollection( { burning: d } ), 15);
+			var damage:TypeCollection = damageRand(new TypeCollection( { burning: d / 2, kinetic : d / 2 }, DamageFlag.EXPLOSIVE ), 15);
 			
 			if (attacker is PlayerCharacter) output("  " + target.capitalA + target.short + " reels as your wave of force slams into " + target.mfn("him", "her", "it") + " like a ton of rock!  ");
 			else if (target is PlayerCharacter) output("  You reel as " + attacker.a + possessive(attacker.uniqueName) + " wave of force slams into you like a ton of rock!  ");
@@ -2065,7 +2065,7 @@ package classes.GameData
 		}
 		
 		public static var KitsuneFoxFire:SingleCombatAttack;
-		private static function KitsuneFoxFireImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		private static function KitsuneFoxFireImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
 			if (attacker is PlayerCharacter) {
 				output("Holding out your palm, you conjure an ethereal blue flame that dances across your fingertips.  You launch it at " + target.a + target.uniqueName + " with a ferocious throw, and it bursts on impact, showering dazzling azure sparks everywhere.");
@@ -2083,7 +2083,7 @@ package classes.GameData
 		}
 		
 		public static var KitsuneCorruptFoxFire:SingleCombatAttack;
-		private static function KitsuneCorruptFoxFireImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		private static function KitsuneCorruptFoxFireImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
 			if (attacker is PlayerCharacter) {
 				output("Holding out your palm, you conjure corrupted purple flame that dances across your fingertips.  You launch it at " + target.a + target.uniqueName + " with a ferocious throw, and it bursts on impact, showering dazzling lavender sparks everywhere.  ");
@@ -2113,14 +2113,14 @@ package classes.GameData
 			{
 				if (hGroup[x].intelligence() == 0 || hGroup[x].originalRace == "robot" || hGroup[x].originalRace == "Automaton") {
 					output("You reach for " + hGroup[x].capitalA + possessive(hGroup[x].uniqueName) + " mind, but cannot find anything.  You frantically search around, but there is no consciousness as you know it in the room.");
-					return;
+					continue;
 				}
 				
 				if (attacker.intelligence() / 2 + rand(attacker.intelligence() / 2) > hGroup[x].intelligence() || attacker.willpower() / 2 + rand(attacker.willpower() / 2) > hGroup[x].willpower())
 				{
 					if (!hGroup[x].hasStatusEffect("Blinded")) {
 						output("\n" + hGroup[x].capitalA + possessive(hGroup[x].uniqueName) + " mind blanketed in the thick fog of your illusions.");
-						hGroup[x].createStatusEffect("Blinded", 3, 0, 0, 0, false, "Blind", "Unable to keep pace with the shifting illusions. Accuracy is reduced, and ranged attacks are far more likely to miss.", true, 0);
+						hGroup[x].createStatusEffect("Blinded", 3, 0, 0, 0, false, "Blind", "Confused by illusions. Accuracy is reduced, and ranged attacks are far more likely to miss.", true, 0);
 					} else {
 						output("\n" + hGroup[x].capitalA + hGroup[x].uniqueName + " stumble humorously to and fro, unable to keep pace with the shifting illusions.");
 						hGroup[x].getStatusEffect("Blinded").tooltip = "Unable to keep pace with the shifting illusions. Accuracy is reduced, and ranged attacks are far more likely to miss.";
@@ -2136,7 +2136,7 @@ package classes.GameData
 		}
 		
 		public static var KitsuneTerror:SingleCombatAttack;
-		private static function KitsuneTerrorImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		private static function KitsuneTerrorImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
 			if (target.intelligence() == 0 || target.originalRace == "robot" || target.originalRace == "Automaton") {
 				output("You reach for " + target.capitalA + possessive(target.uniqueName) + " mind, but cannot find anything.  You frantically search around, but there is no consciousness as you know it in the room.");

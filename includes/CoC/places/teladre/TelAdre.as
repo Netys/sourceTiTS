@@ -205,12 +205,10 @@ private function armorShops():void {
 	output("The shopping district of Tel’adre happens to be contained in a large dead end street, with a large set of doors at the entrance to protect it from thieves at night, you’d assume from a higher elevation it would look like a giant square courtyard. Due to the cities shopping area being condensed into one spot, most if not every visible wall has been converted into a store front, in the center of the area are some small stands, guess not everyone can afford a real store.");
 	output("\n\nRight off the bat you see the ‘Piercing Studio’, its piercing covered centaur sign is a real eye catcher. You can also spot some kind of wolf-man banging away on an anvil in a blacksmith's stand. As well as other shops lining the walls, perhaps those shops will be interesting as well.");
 	addButton(0, "Blacksmith", TelAdreArmorShop);
-	addDisabledButton(1, "Piercing", "Piercing", "Not implemented");
-	//addButton(1, "Piercing", piercingStudio);
+	addButton(1, "Piercing", piercingStudio);
 	addButton(2, "Tailor", tailorShoppe);
 	addButton(3, "Weapons", TelAdreWeaponShop);
 	addButton(4, "Jewelry", jewelShopEntry);
-	//addDisabledButton(5, "Clinic");
 	if (flags["COC.LOPPE_PC_MET_UMA"] == 1)
 		addButton(5, "Clinic", umasShopEnterClinic);
 	//if (flags[kFLAGS.CAMP_CABIN_PROGRESS] >= 4)

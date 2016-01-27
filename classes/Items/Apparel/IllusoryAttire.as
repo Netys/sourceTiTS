@@ -6,12 +6,13 @@ package classes.Items.Apparel
 	import classes.GameData.TooltipManager;
 	import classes.GLOBAL;
 	import classes.ItemSlotClass;
+	import classes.kGAMECLASS;
 	import classes.StringUtil;
 
 	public class IllusoryAttire extends ItemSlotClass
 	{
-		public static var descBasic:String = "A set of ornate bands designed to be worn on wrists, feet (or shins for plantigrade) and tails. Enchanted with Kitsune's glamour, distracting unfocused attention.";
-		public static var descDefault:String = "\n\nAs long as your body is animalistic enough, you won't be accused in public indecency while wearing them. As side effect they can partially protect you from psionic attacks, but nothing else. Illusion requires several specific body points for proper work: fur or scales, long tail, digitigrade paws or other sort of inhuman legs, C-cup or smaller breasts. Also, it only can hide your male parts if your have genital slit or all your cocks are sheathed and your balls are not too large.";
+		public static var descBasic:String = "A set of ornate bands designed to be worn on feet and tails by Kitsune in feral or semi-feral form and enchanted with distracting unfocused attention glamour. Can be worn on wrists and shins as well.";
+		public static var descDefault:String = "\n\nAs long as your body is animalistic enough, you won't be accused in public indecency while wearing them. As side effect they can partially protect you from psionic attacks, but nothing else. Illusion requires several specific body points for proper work: fur or scales, long tail, digitigrade paws or other sort of inhuman legs, C-cup or smaller breasts. Also, it only can hide your male parts if your have genital slit or sheath and your balls are not too large.";
 		public static var descNineTails:String = " You won't be accused in public indecency while wearing them.\n\nSince they are worn by Kitsune, their potential is fully unleashed. Magic barrier is powerful enough to provide some protection from any threat, and any body type requirements are lifted.";
 		public static var descPsionic:String = " You won't be accused in public indecency while wearing them.\n\nSince they are worn by psionic, their potential is fully unleashed. Psionic barrier is powerful enough to provide some protection from any threat, and any body type requirements are lifted.";
 		
@@ -54,7 +55,7 @@ package classes.Items.Apparel
 		}
 		
 		public static function isActive(target:Creature):Boolean {
-			if (target.hasPerk("Enlightened Nine-tails") || target.hasPerk("Corrupted Nine-tails") || target.isPsionic()) return true; // when owned by psionic or Nine-tails all limitations are lifted
+			if (kGAMECLASS.isNineTails(target) || target.isPsionic()) return true; // when owned by psionic or Nine-tails all limitations are lifted
 			
 			if (!target.hasFur() && !target.hasScales()) return false;
 			if (target.hasLegFlag(GLOBAL.FLAG_PLANTIGRADE)) return false;
