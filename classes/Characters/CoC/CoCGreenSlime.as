@@ -1,6 +1,7 @@
 package classes.Characters.CoC
 {
 	import classes.Creature;
+	import classes.Engine.Combat.applyDamage;
 	import classes.Engine.Combat.DamageTypes.TypeCollection;
 	import classes.GameData.CombatAttacks;
 	import classes.GLOBAL;
@@ -8,6 +9,7 @@ package classes.Characters.CoC
 	import classes.Items.Melee.GooeyPsuedopod;
 	import classes.Items.Miscellaneous.CoCGreenGel;
 	import classes.kGAMECLASS;
+	import classes.Util.RandomInCollection;
 	
 	public class CoCGreenSlime extends Creature
 	{
@@ -41,6 +43,7 @@ package classes.Characters.CoC
 			this.intelligenceRaw = 1;
 			this.willpowerRaw = 1;
 			this.libidoRaw = 50;
+			this.personality = 50;
 			this.HPMod = 30;
 			this.shieldsRaw = 0;
 			this.HPRaw = this.HPMax();
@@ -130,7 +133,7 @@ package classes.Characters.CoC
 			//20 - inconceivably large/big/huge etc
 			this.buttRatingRaw = 8;
 			//No dicks here!
-			this.cocks = new Array();
+			this.cocks = new Array();			
 			//balls
 			this.balls = 0;
 			this.cumMultiplierRaw = 50;
@@ -171,19 +174,37 @@ package classes.Characters.CoC
 			
 			sexualPreferences.setRandomPrefs(3 + rand(3));
 			
-			inventory.push(kGAMECLASS.WeightedRandom( // TOFO: WETCLTH 1/2
+			inventory.push(kGAMECLASS.WeightedRandom( // TODO: WETCLTH 1/2
 				[new CoCGreenGel(), new CoCPipe()],
 				[1,                 10], true));
 			
 			this._isLoading = false;
 		}
 		
-		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void // TODO: stub
+		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void
 		{
 			var target:Creature = selectTarget(hostileCreatures);
 			if (target == null) return;
 			
-			CombatAttacks.MeleeAttack(this, target);
+			if (rand(2) == 0) {
+				if (rand(3) == 0 && lust() > 30) lustReduction(target);
+				else lustAttack(target)
+			}
+			else CombatAttacks.MeleeAttack(this, target);
+		}
+		
+		private function lustAttack(target:Creature):void {
+			output("The creature surges forward slowly with a swing that you easily manage to avoid.  You notice traces of green liquid spurt from the creature as it does, forming a thin mist");
+			if (!(target.hasArmor() && target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT))) {
+				output(" that makes your skin tingle with excitement when you inhale it.  ");
+				applyDamage(new TypeCollection( { tease : 8 + target.libido() / 10 } ), this, target);
+			}
+			else output(" that resides on your armor.  ");
+		}
+		
+		private function lustReduction(target:Creature):void {
+			output("The creature collapses backwards as its cohesion begins to give out, and the faint outline of eyes and a mouth form on its face.  Its chest heaves as if it were gasping, and the bolt upright erection it sports visibly quivers and pulses before relaxing slightly.  ");
+			lust( -13);
 		}
 	}
 }

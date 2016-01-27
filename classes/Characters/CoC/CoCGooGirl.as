@@ -48,6 +48,7 @@ package classes.Characters.CoC
 			this.intelligenceRaw = 4;
 			this.willpowerRaw = 4;
 			this.libidoRaw = 50;
+			this.personality = 10;
 			this.HPMod = 40;
 			this.shieldsRaw = 0;
 			this.HPRaw = this.HPMax();
@@ -236,7 +237,11 @@ package classes.Characters.CoC
 		//Throw – 
 		private function gooThrow(target:Creature):void
 		{
-			output("The girl reaches into her torso, pulls a large clump of goo out, and chucks it at you like a child throwing mud. The slime splatters on your chest and creeps under your [pc.gear], tickling your skin like fingers dancing across your body.  ");
+			output("The girl reaches into her torso, pulls a large clump of goo out, and chucks it at you like a child throwing mud. The slime splatters on your chest");
+			if (!(target.hasArmor() && target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)))
+				output(" and creeps under your [pc.gear], tickling your [pc.skinFurScales] like fingers dancing across your body");
+			output(".  ");
+			
 			applyDamage(new TypeCollection( { kinetic : 1 } ), this, target);
 			applyDamage(new TypeCollection( { tease : 5 + rand(3) + target.libido() / 10 } ), this, target);
 		}
