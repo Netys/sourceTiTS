@@ -215,7 +215,7 @@ private function chooseMaterials(arg:Array):void { // Array contents here: spot,
 	//output("\n1. Lethite - Fake lethicite.  While beautiful, it's known to attract demons.", false);
 	//output("\n2. Fertite - A green gem sometimes fished up from the bottom of Mareth's great lake, it is said to enhance the fertility of both genders.", false);
 	//output("\n3. Furrite - This beautiful purple gem is actually crystalized from materials used in hunting lures.  It is said to enhance the wearer's appeal to beast-people.", false);
-	output("\nCrimstone - Crimstone is said to be formed from volcanic fires, and to keep the fires of one's desires burning brightly.");
+	output("\nCrimstone - Crimstone is said to be formed from volcanic fires, and to keep the fires of one's desires burning brightly. Due to its rarity, this costs 1000 gems instead.");
 	output("\nIcestone - Found from the Glacial Rift, this rare gem is said to counter the effects of Crimstone and quell ever-burning desires. This will annihilate some of crimstone magic. Due to its rarity, this costs 2000 gems instead.");
 	output("\n\n<b>DISCLAIMER</b>: Yara's Piercing Studio is not responsible if the piercee's body absorbs any residual magic of these stones, and is not required to resolve any issues if the effects persist beyond removal.</b>");
 	

@@ -44,41 +44,18 @@ private function fightImp():void {
 	CombatManager.newGroundCombat();
 	CombatManager.setFriendlyCharacters(pc);
 	CombatManager.setHostileCharacters(new CoCImp());
-	CombatManager.victoryScene(CoCImpdefeated);
-	CombatManager.lossScene(CoCImpwon);
+	CombatManager.victoryScene(CoCImpPCVictory);
+	CombatManager.lossScene(CoCImpPCLoss);
 	CombatManager.displayLocation("IMP");
 
 	clearMenu();
 	addButton(0, "Next", CombatManager.beginCombat);
 }
 
-public function CoCImpdefeated():void
-{
-	kGAMECLASS.userInterface.showName("VICTORY:\nIMP");
-	IncrementFlag("COC.DEMONS_DEFEATED");
-	
-	//if (findStatusAffect(StatusAffects.KitsuneFight) >= 0) {
-		//game.forest.kitsuneScene.winKitsuneImpFight();
-	//} else
-		CoCimpVictory();
-}
-
-public function CoCImpwon():void
-{
-	kGAMECLASS.userInterface.showName("DEFEAT:\nIMP");
-	//if (findStatusAffect(StatusAffects.KitsuneFight) >= 0) {
-		//game.forest.kitsuneScene.loseKitsuneImpFight();
-	//} else if (pcCameWorms) {
-		//output("\n\nThe imp grins at your already corrupted state...", false);
-		//pc.lust = pc.maxLust();
-		//doNext(game.impScene.impRapesYou);
-	//} else
-		CoCimpRapesYou();
-}
-
-public function CoCimpVictory():void {
+public function CoCImpPCVictory():void {
 	clearOutput();
 	clearMenu();
+	IncrementFlag("COC.DEMONS_DEFEATED");
 	//var canFeed:Boolean = (pc.findStatusAffect(StatusAffects.Feeder) >= 0);
 	//var canBikiniTits:Boolean = (pc.hasVagina() && pc.biggestTitSize() >= 4 && pc.armor is LustyMaidensArmor);
 	output("You smile in satisfaction as " + enemy.a + enemy.short + " collapses and begins masturbating feverishly.");
@@ -101,7 +78,6 @@ public function CoCimpVictory():void {
 	if (pc.lust() >= 33) {
 		output("  Sadly you realize your own needs have not been met.");
 		output("  Of course you could always rape the poor thing...\n\n");
-		var maleRape:Function = null;
 		if (pc.hasCock()) {
 			if (pc.cockThatFits(enemy.analCapacity()) == -1) {
 				addDisabledButton(0, "Male Rape", "Male Rape", "You're too big to rape an imp with [pc.smallestCock].");
@@ -128,16 +104,9 @@ public function CoCimpVictory():void {
 private function rapeImpWithDick(condomed:Boolean = false):void {
 	var x:Number = pc.cockThatFits(enemy.analCapacity());
 	if (x < 0) x = 0;
-	//if (condomed) {
-		//pc.destroyItems(useables.CONDOM, 1);
-		//output("You first unwrap the condom wrapper and slide the latex all evenly all over your [pc.cock " + x + "] until it's fully covered.");
-	//}
-	// " + (condomed ? "": "") + "
-	//Single cock
-	//output(images.showImage("imp-win-male-fuck"), false);
 	clearOutput();
 	
-	output("With a demonic smile you grab the insensible imp and lift him from the ground by his neck.  The reduced airflow doesn't seem to slow his feverish masturbation at all, and only serves to make him harder.");
+	output("With a demonic smile you grab the insensible imp and lift him from the ground by his neck.  The reduced airflow doesn't seem to slow his feverish masturbation at all, and only serves to make his [enemy.cockNounComplex] harder.");
 
 	if(!pc.isTaur()) {
 		output("  You casually unclasp your [pc.lowerGarments] and reveal your [pc.cocks], ");
@@ -147,56 +116,55 @@ private function rapeImpWithDick(condomed:Boolean = false):void {
 	output("\n\nWith no foreplay, you press your [pc.cock " + x + "] against his tight little pucker and ram it in to the hilt.  The imp's eyes bulge in surprise even as a thick stream of pre leaks from his [enemy.cock].  You grab him by his distended waist and brutally rape the little demon, whose claws stay busy adding to his pleasure.");
 	if(pc.hasCockFlag(GLOBAL.FLAG_NUBBY, x)) output("  The tiny creature's claws dig into your sides at the feeling of soft, hooked barbs stroking his sensitive insides.");
 	if(pc.cocks[x].cLength() >= 7 && pc.cocks[x].cLength() <= 12) output("  Each thrust obviously distorts the imp's abdomen.  It amazes you that it doesn't seem to be hurting him.");
-	if(pc.cocks[x].cLength() > 12) output("  Each plunge into the imp's tight asshole seems to distort its entire body, bulging obscenely from its belly and chest.  Amazingly he doesn't seem to mind, his efforts focused solely on his sorely throbbing demon-dick.");
+	if(pc.cocks[x].cLength() > 12) output("  Each plunge into the imp's tight asshole seems to distort its entire body, bulging obscenely from its belly and chest.  Amazingly he doesn't seem to mind, his efforts focused solely on his sorely throbbing [enemy.cockNoun].");
 	if (pc.balls == 0) {
-		output("\n\nThe tight confines of the imp's ass prove too much for you, and you feel your orgasm build. The cum seems to boil out from inside you", false);
+		output("\n\nThe tight confines of the imp's ass prove too much for you, and you feel your orgasm build. The cum seems to boil out from inside you");
 		if (pc.hasVagina())
 			output(" as your [pc.vagina] soaks itself.");
 		else
 			output(", flowing up your [pc.cock " + x + "].");
 	}
 	else
-		output("The cum seems to boil in your balls, sending heat spreading through your [pc.cock " + x + "] as your muscles clench reflexively, propelling hot spurts of jism deep into the imp's rectum.");
+		output("The [pc.cumNoun] seems to boil in your balls, sending heat spreading through your [pc.cock " + x + "] as your muscles clench reflexively, propelling hot spurts of jism deep into the imp's rectum.");
 	if(pc.cocks.length > 1)
-		output("  Your other equipment pulses and dripples steady streams of its own cum.");
-	output("  With delicious slowness you fire rope after rope of cum deep into the imp's rectum.");
-	if(pc.cumQ() >= 14 && pc.cumQ() <= 30) output("  Your orgasm drags on and on, until your slick jism is dripping out around your [pc.cock " + x + "].");
-	if(pc.cumQ() > 30 && pc.cumQ() <= 100) output("  Your orgasm seems to last forever, jizz dripping out of the imp's asshole around your [pc.cock " + x + "] as you plunder him relentlessly.");
-	if(pc.cumQ() > 100) output("  Your orgasm only seems to grow more and more intense as it goes on, each spurt more powerful and copious than the last.  The imp begins to look slightly pregnant as you fill him, and tiny jets of cum squirt out around your [pc.cock " + x + "] with each thrust.");
+		output("  Your other equipment pulses and dripples steady streams of its own [pc.cumNoun].");
+	output("  With delicious slowness you fire rope after rope of [pc.cum] deep into the imp's rectum.");
+	if(pc.cumQ() >= 14 && pc.cumQ() <= 30) output("  Your orgasm drags on and on, until your [pc.cumVisc] jism is dripping out around your [pc.cock " + x + "].");
+	if(pc.cumQ() > 30 && pc.cumQ() <= 100) output("  Your orgasm seems to last forever, jizz dripping out of the imp's [enemy.asshole] around your [pc.cock " + x + "] as you plunder him relentlessly.");
+	if(pc.cumQ() > 100) output("  Your orgasm only seems to grow more and more intense as it goes on, each spurt more powerful and copious than the last.  The imp begins to look slightly pregnant as you fill him, and tiny jets of [pc.cum] squirt out around your [pc.cock " + x + "] with each thrust.");
 	output("\n\nSatisfied at last, you pull him off just as he reaches his own orgasm, splattering his hot demon-cum all over the ground.   You drop the imp hard and he passes out, dripping mixed fluids that seem to be absorbed by the dry earth as fast as they leak out.\n\n");
 
-	pc.orgasm();
 	enemy.loadInAss(pc);
 	pc.cor(1);
-	processTime(15);
+	processTime(25 + rand(10));
+	pc.orgasm();
 	CombatManager.genericVictory();
 }
 
 private function rapeImpWithPussy():void {
 	clearOutput();
-	//output(images.showImage("imp-win-female-fuck"), false);
-	output("You shed your [pc.lowerGarments] without a thought and approach the masturbating imp, looming over him menacingly.  Your [pc.vagina " + pc.biggestVaginaIndex() + "] moistens in anticipation as you gaze down upon his splendid rod. With no hesitation, you lower yourself until your lips are spread wide by his demon-head, the hot pre-cum tingling deliciously.");
+	output("You shed your [pc.lowerGarments] without a thought and approach the masturbating imp, looming over him menacingly.  Your [pc.vagina " + pc.biggestVaginaIndex() + "] moistens in anticipation as you gaze down upon his [enemy.cockNounComplex]. With no hesitation, you lower yourself until your lips are spread wide by his [enemy.cockHead], the hot pre-cum tingling deliciously.");
 	//Too small!
 	if(pc.biggestVaginalCapacity() < enemy.cockVolume(0)) {
-		output("  You frown as you push against him, but his demonic tool is too large for your [pc.vagina " + pc.biggestVaginaIndex() + "].  With a sigh, you shift position and begin grinding your [pc.vagina " + pc.biggestVaginaIndex() + "] against his [enemy.cock], coating it with fluids of your gender.  Your clit tingles wonderfully as it bumps against every vein on his thick appendage.");
+		output("  You frown as you push against him, but his [enemy.cock] is too large for your [pc.vagina " + pc.biggestVaginaIndex() + "].  With a sigh, you shift position and begin grinding your [pc.vagina " + pc.biggestVaginaIndex() + "] against his [enemy.cock], coating it with fluids of your gender.  Your clit tingles wonderfully as it bumps against every vein on his thick appendage.");
 		if(pc.breastRows.length > 0 && pc.breastRows[0].breastRating() > 1) {
 			output("  You happily tug and pinch on your erect nipples, adding to your pleasure and nearly driving yourself to orgasm.");
 		}
-		output("\n\nYou lose track of time as you languidly pump against the imp's [enemy.cock].  At long last you feel your [pc.vagina] ripple and quiver.  Your [pc.legs] give out as you lose your muscle control and collapse against the small demon.  You gasp as his [enemy.cock] erupts against you, splattering your chest with hot demonic cum that rapidly soaks into your skin.  You giggle as you rise up from the exhausted imp, feeling totally satisfied.\n\n");
+		output("\n\nYou lose track of time as you languidly pump against the imp's [enemy.cock].  At long last you feel your [pc.vagina] ripple and quiver.  Your [pc.legs] give out as you lose your muscle control and collapse against the small demon.  You gasp as his [enemy.cock] erupts against you, splattering your chest with hot demonic cum that rapidly soaks into your [pc.skinFurScales].  You giggle as you rise up from the exhausted imp, feeling totally satisfied.\n\n");
 	}
 	//Big enough!
 	else {
 		output("  You sink down his [enemy.cock] slowly, delighting in the gradual penetration and the tingling feeling of his dripping hot pre-cum.  At last you bottom out on his balls.");
 		pc.cuntChange(pc.biggestVaginaIndex(), enemy.cockVolume(0));
 		output("  Your lust and desire spurs you into movement, driving you to bounce yourself up and down on the [enemy.cock].  His exquisite member pushes you to the very height of pleasure, your [pc.vagina " + pc.biggestVaginaIndex() + "] clenching tightly of its own accord each time you bottom out.  The tensing of the little demon's hips is the only warning you get before he cums inside you, hot demonic jizz pouring into your womb.  Your [pc.legs] give out, pushing him deeper as he finishes filling you.");
-		output("\n\nThe two of you lay there a moment while you recover, at last separating as you rise up off his [enemy.cock].  Spunk drips down your legs, quickly wicking into your skin and disappearing.\n\n");
+		output("\n\nThe two of you lay there a moment while you recover, at last separating as you rise up off his [enemy.cock].  Spunk drips down your [pc.legs], quickly wicking into your [pc.skinFurScales] and disappearing.\n\n");
 		//Taking it internal is more corruptive!
 		pc.cor(1);
 		pc.loadInCunt(enemy);
 	}
-	pc.orgasm();
 	pc.cor(1);
-	processTime(15);
+	processTime(25 + rand(10));
+	pc.orgasm();
 	CombatManager.genericVictory();
 }
 
@@ -210,19 +178,19 @@ private function sprocketImp():void {
 	else output("His claws dig into your wrists ");
 	output("and you find yourself dragged upward with him, soaring over the tops of the trees.  The cool rush of air does nothing to abate your arousal.  If anything, the cold shock only makes your body more aware of its own need.  After just a few seconds that feel like an eternity to your lust-filled being, the imp hurls you down into a tree.  You flail as you fall, barely catching yourself on the upper branches.  Your hands and [pc.legs] are tangled in the smooth wooden spiderweb below you, your mind torn between desire for the imp above and fear of the fall below.  You can see from the gleam in the horned creature's red eyes that he has you right where he wants you.\n\n");
 
-	output("The imp pulls the loincloth from his waist, revealing his red throbbing cock.  It is certainly large, even though it stands smaller than your own erection.  He tosses the cloth aside, and you see him fluttering down toward you just before the rough fabric lands on your face.  His clawed fingers grasp your [pc.cock " + x +"], rubbing the tip of his prick against your [pc.cockHead " + x +"], smearing your pre-cum together.  You wonder if he is planning on just jerking both of you off as you shake the cloth from your face.  He flashes you an evil smile, making your eyes widen in terror as you realize what he is planning. Before you can even think to make a move to stop him, the imp ");
+	output("The imp pulls the loincloth from his waist, revealing his [enemy.cock].  It is certainly large, even though it stands smaller than your own erection.  He tosses the cloth aside, and you see him fluttering down toward you just before the rough fabric lands on your [pc.face].  His clawed fingers grasp your [pc.cock " + x +"], rubbing the tip of his prick against your [pc.cockHead " + x +"], smearing your pre-cum together.  You wonder if he is planning on just jerking both of you off as you shake the cloth from your [pc.face].  He flashes you an evil smile, making your eyes widen in terror as you realize what he is planning. Before you can even think to make a move to stop him, the imp ");
 	
 	//Variable cocktext
 	if(pc.hasCockFlag(GLOBAL.FLAG_TAPERED, 0)) output("finds the hole in the pointed head of your cock and plunges his shaft deeply into it, literally fucking your urethra.  ");
 	else if(pc.hasCockFlag(GLOBAL.FLAG_FLARED, 0)) output("seats his dick in the flared head of your prick, and then pushes farther. His shaft plunges into yours, filling your cock more than any cum load ever could.  ");
-	else if (pc.hasCockFlag(GLOBAL.FLAG_PREHENSILE, 0)) output("shoves his dick deeply into the slit in the head of your vine-like cock.  ");
+	else if (pc.hasCockFlag(GLOBAL.FLAG_PREHENSILE, 0)) output("shoves his dick deeply into the slit in the head of your cock.  ");
 	else output("shoves his shaft deeply into the slit in the head of your dick.  ");
 	
 	output("\n\nHe grips your cock tightly as he fucks you, treating you like a ");
 	
 	//Differing cocksleeve texts
-	if(pc.skinType == GLOBAL.SKIN_TYPE_FUR) output("furry cock-sleeve");
-	else if(pc.race() == "demon-morph") output("demonic cock-sleeve");
+	if(pc.hasFur()) output("furry cock-sleeve");
+	else if(pc.race().indexOf("demon") != -1) output("demonic cock-sleeve");
 	else output("[pc.race] cock-sleeve");
 
 	//Bonus boob shake or period if no boobs.
@@ -240,12 +208,12 @@ private function sprocketImp():void {
 	if(pc.isLactating() >= 1) output("At the same time, milk bursts from your [pc.nipples], splattering him in the face.  You feel a sick sort of triumph as you get him back for cumming inside you.  ");
 	//Vagoooz
 	if(pc.hasVagina()) output("Your [pc.vaginas] quivers, contracting furiously as your orgasm hits you - like it's trying to milk a phantom dick dry.  ");
-	pc.orgasm();
 
-	output("Satisfied, his dick slides from you and he flies away as mixed seed continues to spill from your abused body. Your limbs grow weak, and you fall from the tree with a hard thud before losing consciousness.\n\n");
+	output("Satisfied, his [enemy.cock] slides from you and he flies away as mixed seed continues to spill from your abused body. Your limbs grow weak, and you fall from the tree with a hard thud before losing consciousness.\n\n");
 	//Take some damage
 	pc.HP(-10);
-	processTime(15);
+	processTime(25 + rand(10));
+	pc.orgasm();
 	CombatManager.genericLoss();
 }
 
@@ -299,12 +267,14 @@ private function centaurGirlOnImps():void {
 		output("You trot over to the leader, still using the nearly unconscious imp as a cock sleeve, and pull the abused creature off of him. He looks shocked as you grab his cock and squeeze his balls, causing him to orgasm hard and spray you down in white hot seed. He collapses onto the ground, spent, as you wipe yourself down as best you can.");
 
 		output("  Collecting your things, you give the assorted bodies one last look and stumble back to camp.\n\n");
-		pc.orgasm();
+		
 		dynStats("cor", 1);
 	}
-	processTime(15);
+	processTime(25 + rand(10));
+	pc.orgasm();
 	CombatManager.genericVictory();
 }
+
 private function centaurOnImpStart():void {
 	clearOutput();
 	//Event: Centaur-Imp: pc Raping
@@ -414,7 +384,7 @@ private function centaurOnImpMale(vape:Boolean = false):void {
 	//}
 	// no tentackles
 	output("As your shadow falls over the imp, it looks between your [pc.legs] with a hint of fear.  ");
-	if(pc.cockVolume(x) <= 15) {
+	if(pc.cockVolume(x) <= 30) {
 		output("Relief washes over it followed by intense lust as is throws itself onto a mossy rock and eagerly presents its [enemy.asshole].   The sound of your [pc.feet] moving on either side of its body seems to send the creature into a frenzy as it begins humping the air while small mewling sounds escape its lips.  ");
 		//<<Cor <50>> 
 		if(cor() < 50) output("You slowly rub your [pc.cock " + x + "] between the creature's cheeks, letting your pre-cum oil the small hole, before slowly beginning the insertion.  Before you can get half-way the creatures drives its self back against you, impaling its [enemy.asshole] around your [pc.cock " + x + "] and making inhuman sounds of ecstasy. The [enemy.asshole] relaxes around your [pc.cock " + x + "], taking it all in while its practiced muscles grip and jerk you off internally.\n\n");
@@ -423,8 +393,8 @@ private function centaurOnImpMale(vape:Boolean = false):void {
 		//<<GoTo I1>>
 		centaurOnImpResults(1);
 		//<<End>>
+		processTime(25 + rand(10));
 		pc.orgasm();
-		processTime(15);
 		CombatManager.genericVictory();
 		return;
 	}
@@ -438,12 +408,12 @@ private function centaurOnImpMale(vape:Boolean = false):void {
 				output("It is not long before you feel its tongue slipping into your urethra, and cum rushes from your [pc.balls] as you feel the foreign invader wiggling inside.  ");
 				//<</Thick>>  
 			}
-			output("You cannot take the attention for long before your [pc.legs] are scraping at the ground and jets of sperm shoot out of your [pc.cock " + x + "] and down its waiting throat.\n\n");
+			output("You cannot take the attention for long before your [pc.legs] are scraping at the ground and jets of [pc.cum] shoot out of your [pc.cock " + x + "] and down its waiting throat.\n\n");
 			//<<GoTo I2>>
 			centaurOnImpResults(2);
 			//<<End>>
+			processTime(25 + rand(10));
 			pc.orgasm();
-			processTime(15);
 			CombatManager.genericVictory();
 			return;
 		}
@@ -453,8 +423,8 @@ private function centaurOnImpMale(vape:Boolean = false):void {
 			//<<GoTo I1>>
 			centaurOnImpResults(1);
 			//<<End>>
+			processTime(25 + rand(10));
 			pc.orgasm();
-			processTime(15);
 			CombatManager.genericVictory();
 			return;
 		}
@@ -496,41 +466,41 @@ private function centaurOnImpFemale(vape:Boolean = false):void {
 	else {
 		output("With a lascivious grin the imp hops forward, gripping your flanks as it drives its member forward into your [pc.vagina].  While you might have considered him large before you came to this place, the sensation is now merely pleasant, and you can't help but groan in slight disappointment.  ");
 		//<<Cor 50+>>
-		if(cor() >= 50) output("You take comfort in knowing that at least there is a cock inside of you, and that soon it will be filling you with its seed.  Perhaps it might even impregnate you!  ");
-		output("The imp seems to have shared your initial annoyance, and suddenly you feel strange and harsh objects prodding your [pc.vagina] near where you are being penetrated.  Suddenly you feel yourself being forced open even wider, and you feel almost as if you are getting kicked inside of your pussy.  A second object touches near where the first had entered and you quickly brace yourself against a nearby tree.  The second jolt is even harder, feeling as if your cervix is getting stomped.  You howl out in pain as your [pc.vagina] is virtually torn open, the imp using your tail to leverage not only his [enemy.cock] but also his [enemy.legs] inside your [pc.vagina].  ", false);
+		if(pc.cor() >= 50) output("You take comfort in knowing that at least there is a cock inside of you, and that soon it will be filling you with its seed.  Perhaps it might even impregnate you!  ");
+		output("The imp seems to have shared your initial annoyance, and suddenly you feel strange and harsh objects prodding your [pc.vagina] near where you are being penetrated.  Suddenly you feel yourself being forced open even wider, and you feel almost as if you are getting kicked inside of your pussy.  A second object touches near where the first had entered and you quickly brace yourself against a nearby tree.  The second jolt is even harder, feeling as if your cervix is getting stomped.  You howl out in pain as your [pc.vagina] is virtually torn open, the imp using your tail to leverage not only his [enemy.cock] but also his [enemy.legs] inside your [pc.vagina].  ");
 
-		if (cor() > 80 || pc.vaginalCapacity() >= 500) output("and you hang on to the tree, grunting like a rutting animal as you delight in the intense pain.  ");
-		if (cor() > 50 || pc.vaginalCapacity() >= 300) output("and you hang on to the tree, afraid of the pain from even the slightest movement.  ");
+		if (pc.cor() > 80 || pc.vaginalCapacity() >= 500) output("and you hang on to the tree, grunting like a rutting animal as you delight in the intense pain.  ");
+		if (pc.cor() > 50 || pc.vaginalCapacity() >= 300) output("and you hang on to the tree, afraid of the pain from even the slightest movement.  ");
 		else output("Tears pour out of your eyes and you are sure you must be bleeding slightly, ");
 		
 		//<<Cor 80+>>
-		if(cor() >= 80) output("You howl out in pain and pleasure, bucking and hoping to intensify the sensation, hurling enticements and insults at the imp like a slut.  ");
+		if(pc.cor() >= 80) output("You howl out in pain and pleasure, bucking and hoping to intensify the sensation, hurling enticements and insults at the imp like a slut.  ");
 		//<<Cor 50+, Breasts>>
-		if(cor() >= 50 && pc.biggestTitSize() >= 2) {
+		if(pc.cor() >= 50 && pc.biggestTitSize() >= 2) {
 			output("You release the tree as you begin playing with your [pc.chest]");
 			//<<w/ nip-pussies>>
-			if(pc.hasFuckableNipples()) output(" and shoving your fingers into your [pc.nipples].  ", false);
-			else output(".  ", false);
+			if(pc.hasFuckableNipples()) output(" and shoving your fingers into your [pc.nipples].  ");
+			else output(".  ");
 			//<</Breasts>>
 		}
 		output("The imp is pushing deeper and deeper and in moments you cry out again as you feel first its [enemy.feet] and then its [enemy.cock] tearing open your cervix and bottoming out in your womb.  ");
-		pc.cuntChange(0, 500);
+		pc.cuntChange(0, 500, true);
 		
 		//<<Asshole large+>>
 		if(pc.analCapacity() >= 35) {
 			output("When the imp realizes it cannot go any further you feel its hands against your [pc.asshole], and your eyes go wide in realization of what it is planning on doing.  Lubed up by your now drooling juices, the fist pushes hard into your [pc.asshole], shoving past your ring-muscles.  ");
 			//<<Assole <gaping, Cor <80>>
-			if(pc.analCapacity() < 100 && cor() < 80) output("Your howl of pain leaves your throat raw.  ");
+			if(pc.analCapacity() < 100 && pc.cor() < 80) output("Your howl of pain leaves your throat raw.  ");
 			else output("Your howl of perverse pleasure leaves your throat raw.  ");
-			pc.buttChange(100);
+			pc.buttChange(100, true);
 		}
 		output("\n\nIt is a relief when you feel the creature's sperm filling your womb and lubricating your raw cervix, your own body is wrecked by an intense orgasm while it breeds you.  You pass out, waking up to find that the imp has slipped out of you and is lying unconscious and coated completely in a mixture of your juices and his own. After looking for anything you might be able to take away from him you limp away, you ");
-		if(cor() < 80) output("promise to yourself that you will not do that again.\n\n");
-		else output("find your cunt juices already dripping down your legs in anticipation of doing this again.\n\n");
+		if(pc.cor() < 80) output("promise to yourself that you will not do that again.\n\n");
+		else output("find your cunt juices already dripping down your [pc.legs] in anticipation of doing this again.\n\n");
 	}
 	pc.loadInCunt(enemy);
+	processTime(35 + rand(10));
 	pc.orgasm();
-	processTime(15);
 	CombatManager.genericVictory();
 }
 
@@ -563,12 +533,12 @@ private function centaurOnImpResults(iNum:Number):void {
 			if(!pc.hasCockFlag(GLOBAL.FLAG_KNOTTED, x)) output("Soon the amount is overflowing from the abused [enemy.asshole], dripping between you with no sign of stopping as you continue thrusting yourself into the imp.  ");
 			//<<knot>>
 			else output("Soon the abused [enemy.asshole] is full to the brim, though your knot keeps any from escaping while more and more pumps in.  Soon the creature's belly is distending and the imp is gasping wordlessly. ");
-			output("When your [pc.cock " + x + "] finally emerges a torrent of cum follows out of the distended hole and covering the back of the creature's legs.  ", false);
+			output("When your [pc.cock " + x + "] finally emerges a torrent of [pc.cum] follows out of the distended hole and covering the back of the creature's legs.  ");
 			//<<I1_1>>
 			//<<2 cocks>>
 			if(pc.cockTotal() == 2) output("Your other cock drenches the imp's back with its own secretions that immediately start dripping down its sides.  ");
 			//<<3+ cocks>>
-			if(pc.cockTotal() > 2) output("Your other cocks release their cum all over the creature's back and sides, leaving it a glazed mess.  ");
+			if(pc.cockTotal() > 2) output("Your other cocks release their [pc.cumNoun] all over the creature's back and sides, leaving it a glazed mess.  ");
 			//<</I1_1>>
 			output("You leave him panting and lapping at a pool of your semen.");
 		}//<</multiplier>>
@@ -579,7 +549,7 @@ private function centaurOnImpResults(iNum:Number):void {
 			//<<2 cocks>>
 			if(pc.cockTotal() == 2) output("Your other cock drenches the imp's back with its own secretions that immediately start dripping down its sides.  ");
 			//<<3+ cocks>>
-			if(pc.cockTotal() > 2) output("Your other cocks release their cum all over the creature's back and sides, leaving it a glazed mess.  ");
+			if(pc.cockTotal() > 2) output("Your other cocks release their [pc.cumNoun] all over the creature's back and sides, leaving it a glazed mess.  ");
 			//<</I1_1>>
 			output("You leave him panting and draped over the mossy boulder in a pool of your joint cum.");
 		}
@@ -589,9 +559,9 @@ private function centaurOnImpResults(iNum:Number):void {
 	if(iNum == 2) {
 		//<<cum multiplier: lots>>
 		if(pc.cumQ() >= 250) {
-			output("The imp's eyes widen in at the amount pouring in, and gobs of sperm begin overflowing down its chin.  ");
+			output("The imp's eyes widen in at the amount pouring in, and gobs of [pc.cum] begin overflowing down its chin.  ");
 			//<<(lots cont.)  cum multiplier: excessive>>
-			if(pc.cumQ() >= 500) output("No matter how fast it is swallowing it does not seem to be enough, and soon its belly is distended and its skin is covered in a thick coating of cum.  ");
+			if(pc.cumQ() >= 500) output("No matter how fast it is swallowing it does not seem to be enough, and soon its belly is distended and its skin is covered in a thick coating of [pc.cumNoun].  ");
 			//<</multiplier>>  
 		}
 		output("Sated you trot away and leave the creature licking its lips and fingers, its eyes following you with lustful cunning.");
@@ -607,7 +577,7 @@ private function centaurOnImpResults(iNum:Number):void {
 			//<<(breasts cont.) nips have pussies>> 
 			if(pc.hasFuckableNipples()) {
 				//<<nip-pussies and milk>>
-				if(pc.isLactating()) output("Milk streams out from your [pc.nipples] as if they had been recently filled with dripping cum.  ");
+				if(pc.isLactating()) output("[pc.Milk] streams out from your [pc.nipples] as if they had been recently filled with dripping cum.  ");
 				else output("Your fingers slide faster and faster into your [pc.nipples] even as the imp begins to stroke itself under you.  ");
 			}
 			//No pussies
@@ -615,9 +585,9 @@ private function centaurOnImpResults(iNum:Number):void {
 				//<<else no pussies, has milk>>
 				if(pc.isLactating()) {
 					//<<little milk>>
-					if(pc.lactationQ() <= 50) output("Beads of milk begin to drip down your chest and occasionally spurt outward.  ");
+					if(pc.lactationQ() <= 50) output("Beads of [pc.milk] begin to drip down your chest and occasionally spurt outward.  ");
 					//<<else>>
-					else output("Milk pours out of your [pc.breasts] and streams down your body.  ");
+					else output("[pc.Milk] pours out of your [pc.breasts] and streams down your body.  ");
 				}//<</milk>>
 			}
 		}//<</Breasts>>
@@ -1328,26 +1298,25 @@ private function centaurOnImpResults(iNum:Number):void {
 	//if (getGame().inCombat) cleanupAfterCombat();
 	//else doNext(pcMenu);
 //}
-public function CoCimpRapesYou():void {
+public function CoCImpPCLoss():void {
 	clearOutput();
 	
 	if (pc.isBimbo() && !pc.isTaur() && pc.hasVagina()) {
-		//output(images.showImage("imp-loss-female-fuck"), false);
-		output("You sink to the ground, assuming a position that feels all too natural to you now, leaning forward to let your [pc.fullChest] hang down slightly. The imp looks you up and down, wickedly eyeing your ready, slightly open lips. He drops his loin-cloth to reveal a hardening cock. Your eyes bulge as it grows larger... and larger... and larger! The imp's cock finally bulges to a full twelve inches... and it's moving closer. You struggle to think... but you just can't! You want that in your mouth, like, so bad!\n\n");
-		output("Your [pc.vagina[ drips in anticipation, and you find yourself involuntarily moving your knees farther apart to prepare yourself to be filled. He smiles and presses his cock against your [pc.vagina], pushing you back to get a better angle. You try to make words, but your brain can only think of so much at once! Right now, it's thinking of cock, which, naturally, makes you open your mouth and let out a slutty moan.\n\n");
+		output("You sink to the ground, assuming a position that feels all too natural to you now, leaning forward to let your [pc.fullChest] hang down slightly. The imp looks you up and down, wickedly eyeing your ready, slightly open lips. He drops his loin-cloth to reveal a hardening [enemy.cockNounComplex]. Your eyes bulge as it grows larger... and larger... and larger! The imp's [enemy.cock] finally bulges to a full twelve inches... and it's moving closer. You struggle to think... but you just can't! You want that in your mouth, like, so bad!\n\n");
+		output("Your [pc.vagina] drips in anticipation, and you find yourself involuntarily moving your knees farther apart to prepare yourself to be filled. He smiles and presses his cock against your [pc.vagina], pushing you back to get a better angle. You try to make words, but your brain can only think of so much at once! Right now, it's thinking of cock, which, naturally, makes you open your mouth and let out a slutty moan.\n\n");
 
-		output("The imp pushes into you violently, ramming his cock in to the hilt, leaving you gasping in pain and surprise. He leaves it in your slutty pussy, giving you a second to... oh who is he kidding... he can tell by your air-headed look that you've done nothing but take cocks your whole life. He fucks you hard, slapping your [pc.ass] to remind you who is in charge. You can't help but think about, like, how you just love it when a man takes charge. Less thinking!");
-		pc.cuntChange(0, enemy.biggestCockVolume());
+		output("The imp pushes into you violently, ramming his [enemy.cock] in to the hilt, leaving you gasping in pain and surprise. He leaves it in your slutty pussy, giving you a second to... oh who is he kidding... he can tell by your air-headed look that you've done nothing but take cocks your whole life. He fucks you hard, slapping your [pc.ass] to remind you who is in charge. You can't help but think about, like, how you just love it when a man takes charge. Less thinking!");
+		pc.cuntChange(0, enemy.biggestCockVolume(), true, false, true);
 		output("\n\n");
 
-		output("The rough fucking becomes more and more pleasurable as time goes on. You moan air-headedly with each thrust, hips squeezing around the demon-cock- loving the feeling of his fullness. Before long you can't help but cum all over him, your vagina locking around his cock like a vice, muscles rippling, milking him for his cum. The imp's prick explodes inside you, pumping huge loads of hot demon-seed inside you with each eruption. You swoon, feeling it fill your womb and distend your belly as the imp's orgasm fills you with insane amounts of cum.\n\n");
+		output("The rough fucking becomes more and more pleasurable as time goes on. You moan air-headedly with each thrust, hips squeezing around the [enemy.cock], loving the feeling of his fullness. Before long you can't help but cum all over him, your vagina locking around his cock like a vice, muscles rippling, milking him for his cum. The imp's prick explodes inside you, pumping huge loads of hot demon-seed inside you with each eruption. You swoon, feeling it fill your womb and distend your belly as the imp's orgasm fills you with insane amounts of cum.\n\n");
 
-		output("With a sigh, he pulls his dick free, and you flop down, cum leaking out onto the ground from your well-fucked hole. If you could, like, focus at all, you'd totally be worrying about being, like, pregnant or whatever. But you lose consciousness.");
+		output("With a sigh, he pulls his [enemy.cock] free, and you flop down, cum leaking out onto the ground from your well-fucked hole. If you could, like, focus at all, you'd totally be worrying about being, like, pregnant or whatever. But you lose consciousness.");
 		pc.loadInCunt(enemy);
-		pc.orgasm();
 		pc.libido(1);
 		pc.cor(1);
-		processTime(15);
+		processTime(25 + rand(10));
+		pc.orgasm();
 		CombatManager.genericLoss();
 		return;
 	}
@@ -1360,31 +1329,30 @@ public function CoCimpRapesYou():void {
 		}
 		//Female or Futa
 		if(pc.hasVagina()) {
-			//output(images.showImage("imp-loss-female-fuck"), false);
-			output("You sink to the ground, too overcome by lust and desire to fight.  The imp smiles, a wicked look glinting in his eyes.  He drops his loincloth to reveal a hardening cock.  Your eyes bulge a bit as it grows...and grows...and grows!  That imp has a twelve inch cock..and he's walking towards you.   Your [pc.vagina] practically juices itself in anticipation, and you find yourself spreading your [pc.legs] in preparation.");
-			output("\n\nHe smiles and presses his cock against your [pc.vagina].  Your lust-driven mind is speechless, leaving you panting and moaning like a whore.");
+			output("You sink to the ground, too overcome by lust and desire to fight.  The imp smiles, a wicked look glinting in his eyes.  He drops his loincloth to reveal a hardening [enemy.cockNoun].  Your eyes bulge a bit as it grows...and grows...and grows!  That imp has a twelve inch [enemy.cock]..and he's walking towards you.   Your [pc.vagina] practically juices itself in anticipation, and you find yourself spreading your [pc.legs] in preparation.");
+			output("\n\nHe smiles and presses his [enemy.cock] against your [pc.vagina].  Your lust-driven mind is speechless, leaving you panting and moaning like a whore.");
 			//If too big, only partly penetrate.
 			if(pc.vaginalCapacity() < enemy.cockVolume(0)) {
 				if(pc.vaginas[0].hymen)
 					output("  He plunges in hard, breaking your hymen and stealing your virginity.  A look of surprise crosses his face, chased away by ecstasy.  If you had a rational bit left in your mind, you'd notice he looks... stronger somehow, but you're too horny to care.");
 				else
 					output("  He pushes against your tight little pussy, struggling to penetrate you.");
-				output("  His cock only sinks a few inches in, but he begins fucking you hard, each time claiming a bit more of your pussy for his demonic tool.  You feel a painful stretching as he gets half of it inside you, ruining your [pc.vagina] for most humans.  He fucks you like this for what seems like forever, never getting much further. ");
+				output("  His [enemy.cock] only sinks a few inches in, but he begins fucking you hard, each time claiming a bit more of your pussy for his demonic tool.  You feel a painful stretching as he gets half of it inside you, ruining your [pc.vagina] for most humans.  He fucks you like this for what seems like forever, never getting much further. ");
 			}
 			else
 				output("  He plunges in violently, ramming his [enemy.cock] in to the hilt, leaving you gasping in pain and surprise.  He leaves it there, giving you a second to get used to him, and then begins fucking you hard, slapping your [pc.ass] every few thrusts to remind you who is in charge.");
-			pc.cuntChange(0, 12);
+			pc.cuntChange(0, enemy.cockVolume(0), true, true, true);
 			
-			if(pc.hasCock()) output("\n\nThe rough fucking becomes more and more pleasurable as time passes, until you cannot help but stroke your [pc.cock] along with each plunge he takes in your [pc.vagina].  You feel yourself clench around him as your sexual organs release, erupting spurts of cum and milking the demon's cock like your life depended on it.");
+			if(pc.hasCock()) output("\n\nThe rough fucking becomes more and more pleasurable as time passes, until you cannot help but stroke your [pc.cock] along with each plunge he takes in your [pc.vagina].  You feel yourself clench around him as your sexual organs release, erupting spurts of [pc.cum] and milking the demon's cock like your life depended on it.");
 			else output("\n\nThe rough fucking becomes more and more pleasurable as time passes.  You moan loudly and lewdly with each thrust, hips squeezing around the demon-cock, relishing the feeling of fullness.  Before long you cannot help but cum all over him, [pc.vagina] locking around his cock like a vice, muscles rippling, milking him for his cum.");
-			output("  The imp's [enemy.cock] explodes inside you, pumping huge loads of hot demon-seed inside you with each eruption.  You swoon, feeling it fill your womb and distend your belly as the imp's orgasm fills you with an unnatural quantity of corrupted semen.\n\nWith a sigh, he pulls his dick free, and you flop back on your back, cum surging out onto the ground from your well-fucked hole.  ");
+			output("  The imp's [enemy.cock] explodes inside you, pumping huge loads of hot demon-seed inside you with each eruption.  You swoon, feeling it fill your womb and distend your belly as the imp's orgasm fills you with an unnatural quantity of corrupted semen.\n\nWith a sigh, he pulls his [enemy.cock] free, and you flop back on your back, cum surging out onto the ground from your well-fucked hole.  ");
 			if(pc.isPregnant(0)) {
 				output("You wonder what this will do to whatever is growing in your womb...  ");
 			}
 			else {
 				if(pc.hasStatusEffect("Heat")) output("You find yourself hoping you're pregnant as you swiftly lose consciousness.");
 				else if(!pc.isPregnant(0)) {
-					if(cor() > 75) output("With an appreciative moan, you bury your fingers in its slimy warmth, hoping you are pregnant with some fiendish offspring, and lose consciousness.");
+					if(pc.cor() > 75) output("With an appreciative moan, you bury your fingers in its slimy warmth, hoping you are pregnant with some fiendish offspring, and lose consciousness.");
 					else output("You hope you don't become pregnant, but promptly lose consciousness before you can contemplate the prospect any further.");
 				}
 			}
@@ -1392,28 +1360,26 @@ public function CoCimpRapesYou():void {
 			pc.libido(1);
 			pc.lust(1);
 			pc.cor(1);
-			pc.orgasm();
 		}
 		//Male or genderless
 		if(!pc.hasVagina()) {
 			//Alternate male-only case
 			if (pc.hasCock() && rand(2) == 0) {
-				//output(images.showImage("imp-loss-male-fuck"), false);
 				output("Your eyes glaze over with lust as the imp's dark magic destroys your will to continue fighting. You sink to your ");
 				if(pc.isTaur()) output("knees, your [pc.cock] hurting from the massive blood pressure caused by your unbridled lust. He approaches you and stops about two feet in front of you, watching with delight your helpless state");
 				else output("knees, pull out your [pc.cock] and begin mindlessly stroking yourself as the imp approaches you, a wicked grin on his face. Your mind races with thoughts and images of sucking the imp's cock. He approaches you and stops about two feet in front of you, watching with delight as you succumb to your own lust");
 				output(". Your eyes glance down to his waist and see a massive bulge form under his loincloth, the sight of which causes your [pc.cock] to twitch and begin leaking pre-cum.\n\n");
-				output("The imp drops his loincloth, revealing his huge 12-inch penis, and then forcefully grabs your head and pulls you down on to his hard throbbing demon dick. He shoves his cock past your lips and deep down your throat in one slow, forceful push. You can barely accommodate his huge cock, and yet your lust makes you hunger for more. You cough and gag while the imp proceeds to fuck your mouth hard, slapping his hot balls against your chin, disregarding your need to breathe.  ");
+				output("The imp drops his loincloth, revealing his huge 12-inch penis, and then forcefully grabs your head and pulls you down on to his hard throbbing [enemy.cock]. He shoves his [enemy.cockHead] past your lips and deep down your throat in one slow, forceful push. You can barely accommodate his huge cock, and yet your lust makes you hunger for more. You cough and gag while the imp proceeds to fuck your mouth hard, slapping his hot balls against your chin, disregarding your need to breathe.  ");
 				if(pc.isTaur()) output("Dropping down to the ground, your [pc.cock] trembles against your body to the rhythm of the imp's thrusts, leaving your underbelly smeared with its own pre-cum.\n\n");
 				else output("On all fours now, your [pc.cock] bounces up and down against you to the rhythm of the imp's thrusts, leaving your belly smeared in your own pre-cum.\n\n");
 				if(pc.balls > 0 && pc.ballSize() >= 5) output("Your [pc.balls] swing heavily against you as well, responding to the force of the imp's thrusts, slapping your own ass and driving your [pc.cock] even stiffer with lust, the pre-cum pulsing out of your cock in time with the slapping.\n\n");
-				output("You begin to feel light-headed from lack of air just as the imp grips your head firmly and begins making rapid, shallow thrusts down your throat, nearing his orgasm. Suddenly he clenches tight, his claws digging into your head and thrusts down your throat as far as he can, holding his massive cock deep in your stomach. Your eyes go wide as you feel the imp's balls on your chin spasm violently.  His cock pulses in your mouth as the thick demon cum is pumped violently down your throat. It feels like an eternity as the imp continues to fill your guts with his hot cum, his orgasm lasting far longer than any human's. ");
+				output("You begin to feel light-headed from lack of air just as the imp grips your head firmly and begins making rapid, shallow thrusts down your throat, nearing his orgasm. Suddenly he clenches tight, his claws digging into your head and thrusts down your throat as far as he can, holding his [enemy.cock] deep in your stomach. Your eyes go wide as you feel the imp's balls on your chin spasm violently.  His cock pulses in your mouth as the thick demon cum is pumped violently down your throat. It feels like an eternity as the imp continues to fill your guts with his hot cum, his orgasm lasting far longer than any human's. ");
 				pc.loadInMouth(enemy);
-				output("He slowly withdraws his still-pumping cock from you, coating your throat and then mouth with an almost continual spray of his unnaturally hot and sticky demon seed. The imp pulls out of your mouth just in time to splatter your face with his cum before his orgasm stops, coating your lips, nose, eyes, and hair with his incredibly thick and sticky cum.\n\n");
-				output("You fall to the ground gasping, exhausted and unable to move, the demon cum on your face and inside you still burning with intense heat and corruption. You lose consciousness, your [pc.cock] still firmly erect, your lust not sated.");
+				output("He slowly withdraws his still-pumping [enemy.cock] from you, coating your throat and then mouth with an almost continual spray of his unnaturally hot and sticky demon seed. The imp pulls out of your mouth just in time to splatter your face with his cum before his orgasm stops, coating your lips, nose, eyes, and [pc.hair] with his incredibly thick and sticky cum.\n\n");
+				output("You fall to the ground gasping, exhausted and unable to move, the demon cum on your [pc.face] and inside you still burning with intense heat and corruption. You lose consciousness, your [pc.cock] still firmly erect, your lust not sated.");
 				pc.lust(20);
 				pc.cor(1);
-				processTime(15);
+				processTime(25 + rand(10));
 				CombatManager.genericLoss();
 				return;					
 			}
@@ -1421,11 +1387,12 @@ public function CoCimpRapesYou():void {
 				output("You sink to the ground, too overcome by lust and desire to fight.  The imp smiles and circles you, dropping his loincloth as he goes.  You are roughly shoved to the ground, your backside slapped hard.  You're too horny to do anything but moan from the pain ");
 				if(!pc.isTaur() && pc.isCrotchGarbed()) output("as you are disrobed");
 				output(".  As the imp presses a large bulk against your backside, you realize he has a massive penis!\n\nThe imp pushes his [enemy.cock] into your ass and fucks you hard, with little regard to your pleasure.  After a rough fucking, he cums, stuffing your ass full of hot demon cum.  His orgasm lasts far longer than any human's, leaving your belly slightly distended.");
-				pc.buttChange(enemy.cockVolume(0));
+				pc.buttChange(enemy.cockVolume(0), true, true, true);
 				pc.loadInAss(enemy);
 				pc.libido(1);
 				pc.lust(1);
 				pc.cor(1);
+				processTime(25 + rand(10));
 				if(pc.libido() > 40) {
 					output("  You manage to orgasm from the feeling of being filled by hot cum.");
 					if(pc.hasCock()) output("  You jizz all over the ground in front of you, spraying cum in huge squirts in time with the demon's thrusts.");
@@ -1433,17 +1400,20 @@ public function CoCimpRapesYou():void {
 					pc.cor(1);
 				}
 				output("\n\nYou drop to the ground when he's done with you, cum spilling from your abused ass all over the ground, too exhausted to move.  Consciousness fades.  ");
+				CombatManager.genericLoss();
+				return;
 			}
 		}
 	}
 	//HP or insta-loss
 	else {
-		output("\n<b>You fall, defeated by the imp!</b>\nThe last thing you see before losing consciousness is the creature undoing its crude loincloth to reveal a rather disproportionately-sized member.");
+		output("\n<b>You fall, defeated by the imp!</b>\nThe last thing you see before losing consciousness is the creature undoing its crude loincloth to reveal a rather disproportionately-sized [enemy.cock].");
 		pc.buttChange(enemy.cockVolume(0));
 		pc.loadInAss(enemy);
 		pc.cor(1);
 	}
-	processTime(15);
+	processTime(25 + rand(10));
+	pc.orgasm();
 	CombatManager.genericLoss();
 }
 
@@ -1452,7 +1422,7 @@ private function noogaisNippleRape():void {
 	clearOutput();
 	output("You slowly walk over to the masturbating imp, your [pc.hips] and [pc.butt] swaying suggestively with every step.\n\n");
 	
-	output("Shedding your clothes you push the imp to the ground and straddle him, keeping his hands away from his twitching pecker while you quickly tie him up with his own loincloth.  The lust-addled demon utterly incapacitated, you start to use both of your hands to toy freely with your slimy nipple-holes, as well as your ");
+	output("Shedding your [pc.gear] you push the imp to the ground and straddle him, keeping his hands away from his twitching [enemy.cock] while you quickly tie him up with his own loincloth.  The lust-addled demon utterly incapacitated, you start to use both of your hands to toy freely with your slimy nipple-holes, as well as your ");
 	if(pc.hasCock()) output("[pc.cock]");
 	if(pc.hasCock() && pc.hasVagina()) output(" and ");
 	if(pc.hasVagina()) output("[pc.vagina]");
@@ -1477,8 +1447,8 @@ private function noogaisNippleRape():void {
 	output("\n\nYou continue finger-fucking your [pc.nipple], becoming more and more aroused as the imp gets harder and harder from watching the exotic display before him.  You soon tire of watching the imp squirm beneath you, desperate for sexual relief; you slowly move your hand away from your groin, reaching down towards his crotch, and start to toy with his apple-sized balls, fondling and squeezing them roughly.  You casually slip a second finger into your [pc.nipple], stretch it out teasingly, and hold the gaping orifice in front of the imp's face, giving him a good view of the inside of your freakish, wet nipple-cunt.\n\n");
 	
 	//(If corrupt: 
-	if(cor() >= 66) {
-		output("\"<i>Mmm, wouldn't you just love to stick your fat cock into this sopping wet hole, and cum deep inside my [pc.breast]?</i>\"  You whisper huskily into his ear, sliding your fingers away from his balls and up along the underside of his aching dick, teasing every inch of it until you reach his swollen head and start rubbing your finger around his glans in small circles.  The imp is panting heavily, his eyes firmly locked on your [pc.nipple], bucking his hips upwards in desperation.\n\n");
+	if(pc.cor() >= 66) {
+		output("\"<i>Mmm, wouldn't you just love to stick your [enemy.cockNounComplex] into this sopping wet hole, and cum deep inside my [pc.breast]?</i>\"  You whisper huskily into his ear, sliding your fingers away from his balls and up along the underside of his aching dick, teasing every inch of it until you reach his swollen head and start rubbing your finger around his glans in small circles.  The imp is panting heavily, his eyes firmly locked on your [pc.nipple], bucking his hips upwards in desperation.\n\n");
 	}
 	output("Deciding that the poor bastard has suffered enough, you guide your stretched [pc.nipple] down to his quivering member and hold it over the tip for a moment.  The imp groans in frustration, feeling the heat of your slutty juices dripping down onto his aching rod and overfull testes, making him even more desperate to drive deep into your waiting breast.  Without warning, you forcefully shove your breast onto his swollen fuckstick, ");
 	if(pc.biggestTitSize() <= 4) output("bottoming out halfway on his immense dick.");
@@ -1508,7 +1478,7 @@ private function noogaisNippleRape():void {
 		else if(pc.cumQ() < 1000) output("geyser ");
 		//(cum production > 1000ml)
 		else output("volcano ");
-		output("of cum sprays from your [pc.cock] and splatters over both you and the hapless imp");
+		output("of [pc.cum] sprays from your [pc.cocks] and splatters over both you and the hapless imp");
 		if(pc.hasVagina()) output(", while ");
 	}
 	if(pc.hasVagina()) {
@@ -1523,14 +1493,14 @@ private function noogaisNippleRape():void {
 	output("fem-spunk and hot demon cum leaks out from your gaping nipple-cunt.\n\n");
 
 	//(if corruption > 60)
-	if(cor() > 60) output("You thrust your digits into your [pc.nipple] once more, scooping out as much imp jizz as you can reach.  You happily drink up the thick goo, savoring the cloying taste before quickly getting dressed and leaving the imp to slumber.");
+	if(pc.cor() > 60) output("You thrust your digits into your [pc.nipple] once more, scooping out as much imp jizz as you can reach.  You happily drink up the thick goo, savoring the cloying taste before quickly getting dressed and leaving the imp to slumber.");
 	//(continue to non-corrupt text)
 	//(if not)
 	else output("You quickly get dressed and leave the imp to his slumbering, his hands still tied together by his loincloth.");
 	//Gain xp and gems here
-	pc.orgasm();
 	pc.cor(1);
 	processTime(15);
+	pc.orgasm();
 	CombatManager.genericVictory();
 }
 

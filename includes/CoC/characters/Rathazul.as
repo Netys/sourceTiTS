@@ -15,6 +15,10 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
+public function showRathazul():void {
+	userInterface.showName("\nRATHAZUL");
+}
+
 public function followerCampMenuBlurbRathazul(showInteractButton:Boolean):void {
 	if (flags["COC.RATHAZUL_IN_CAMP"] == 1) {
 		output("Tucked into a shaded corner of the rocks is a bevy of alchemical devices and equipment.  ");
@@ -57,7 +61,7 @@ private function RathazulTimePassedNotifyGrapple():* { timeChangeListeners.push(
 
 // TODO: rewrite all that messy shit for good
 public function encounterRathazul():void {
-	//spriteSelect(49);
+	showRathazul();
 	clearOutput();
 	clearMenu();
 	if (flags["COC.RATHAZUL_BOUGHT"] == undefined) flags["COC.RATHAZUL_BOUGHT"] = 0;
@@ -115,7 +119,7 @@ private function rathazulMoveDecline():void {
 }
 
 public function campRathazul(first:Boolean = true):void {
-	//spriteSelect(49);
+	showRathazul();
 	clearOutput();
 	clearMenu();
 	if (flags["COC.RATHAZUL_IN_CAMP"] != 1) {
@@ -168,7 +172,7 @@ public function campRathazul(first:Boolean = true):void {
 }
 
 private function rathazulWorkOffer():void {
-	//spriteSelect(49);
+	showRathazul();
 	var totalOffers:int = 0;
 	var spoken:Boolean = false;
 	var showArmorMenu:Boolean = false;
@@ -458,7 +462,7 @@ private function rathazulMakesPurifyPotion():void {
 }
 
 private function rathazulDebimboOffer():void {
-	//spriteSelect(49);
+	showRathazul();
 	clearOutput();
 	clearMenu();
 	if(IncrementFlag("COC.RATHAZUL_DEBIMBO_OFFERED") == 1) {
@@ -488,7 +492,7 @@ private function rathazulDebimboOffer():void {
 //Creation Of The Draft:*
 private function makeADeBimboDraft():void {
 	clearOutput();
-	//spriteSelect(49);
+	showRathazul();
 	output("Rathazul takes the teas and the gems into his wizened palms, shuffling the glittering jewels into a pouch and the teas into a large decanter.  He promptly sets the combined brews atop a flame and shuffles over to his workbench, where he picks up numerous pouches and vials of every color and description, adding them to the mix one after the other.  The mixture roils and bubbles atop the open flame like a monstrous, eerie thing, but quickly simmers down to a quiet boil.  Rathazul leaves it going for a while, stirring occasionally as he pulls out a smaller vial.  Once most of the excess liquid has evaporated, he pours the concoction into the glass container and corks it, holding it up to the light to check its coloration.");
 	output("\n\n\"<i>That <b>should</b> do,</i>\" he mutters to himself.  Rathazul turns, carefully handing you the mixture.  \"<i>This should counter the mental-inhibiting effects of the Bimbo Liqueur, but I have no idea to what extent those who imbibe it will retain of their time spent as a bimbo...</i>\"\n\n");
 	//Take items
@@ -502,7 +506,7 @@ private function makeADeBimboDraft():void {
 }
 	
 public function rathazulArmorMenu():void {
-	//spriteSelect(49);
+	showRathazul();
 	clearOutput();
 	clearMenu();
 	output("Which armor project would you like to pursue with Rathazul?");
@@ -537,7 +541,7 @@ public function rathazulArmorMenu():void {
 }
 
 private function craftSilkArmor():void {
-	//spriteSelect(49);
+	showRathazul();
 	clearOutput();
 	clearMenu();
 	output("You hand the bundled webbing to Rathazul carefully, lest you damage the elderly mouse.  He gives you a bemused smile and snatches the stuff from your grasp while he mutters, \"<i>I'm not falling apart you know.</i>\"\n\n", false);
@@ -571,7 +575,7 @@ private function craftSilkArmor():void {
 }
 
 private function commissionSilkArmorForReal():void {
-	//spriteSelect(49);
+	showRathazul();
 	clearOutput();
 	clearMenu();
 	output("You sort 500 gems into a pouch and toss them to Rathazul, along with the rest of the webbing.  The wizened alchemist snaps the items out of the air with lightning-fast movements and goes to work immediately.  He bustles about with enormous energy, invigorated by the challenging task before him.  It seems Rathazul has completely forgotten about you, but as you turn to leave, he calls out, \"<i>What did you want me to make?  A mage's robe or some nigh-impenetrable armor?  Or undergarments if you want.</i>\"\n\n");
@@ -587,7 +591,7 @@ private function commissionSilkArmorForReal():void {
 }
 
 private function declineSilkArmorCommish():void {
-	//spriteSelect(49);
+	showRathazul();
 	clearOutput();
 	output("You take the silk back from Rathazul and let him know that you can't spend 500 gems on a project like that right now.  He sighs, giving you a crestfallen look and a slight nod of his hooded muzzle.");
 	clearMenu();
@@ -596,7 +600,7 @@ private function declineSilkArmorCommish():void {
 
 public function chooseArmorOrRobes(robeType:int):void {
 	clearOutput();
-	//spriteSelect(49);
+	showRathazul();
 	if (robeType == 1 || robeType == 2) { //Armor or robes
 		pc.destroyItem(new CoCToughSpiderSilk(), 5);
 	}
@@ -622,7 +626,7 @@ public function chooseArmorOrRobes(robeType:int):void {
 }
 
 private function collectRathazulArmor():void {
-	//spriteSelect(49);
+	showRathazul();
 	clearOutput();
 	
 	output("Rathazul beams and ejaculates, \"<i>Good news everyone!  Your ");
@@ -684,7 +688,7 @@ private function collectRathazulArmor():void {
 }
 
 private function craftOozeArmor():void {
-	//spriteSelect(49);
+	showRathazul();
 	clearOutput();
 	clearMenu();
 	//output(images.showImage("rathazul-craft-gelarmor"));
@@ -703,7 +707,7 @@ private function craftOozeArmor():void {
 }
 
 private function craftCarapace():void {
-	//spriteSelect(49);
+	showRathazul();
 	clearOutput();
 	//output(images.showImage("rathazul-craft-chitinarmor"));
 	output("The rat takes the scales and works on his bench for an hour while you wait.  Once he has finished, Ratzhul is beaming with pride, \"<i>I think you'll be pleased. Go ahead and take a look.</i>\"\n\nHe hands you the armor.  ");
@@ -738,7 +742,7 @@ private function craftCarapace():void {
 }
 
 private function craftDragonscaleArmor():void {
-	//spriteSelect(49);
+	showRathazul();
 	clearOutput();
 	output("The rat looks at the sheets of dragon scales you're carrying and says, \"<i>I could work these into armor. Or if you want, undergarments. I have the necessary supplies.</i>\"");
 	clearMenu();
@@ -753,7 +757,7 @@ private function craftDragonscaleArmor():void {
 	addButton(14, "Nevermind", rathazulArmorMenu);
 }
 private function craftDragonscaleArmorForReal(type:int = 0):void {
-	//spriteSelect(49);
+	showRathazul();
 	if (type == 1 || type == 2) { //Armor or robes
 		pc.destroyItem(new CoCDragonScale(), 5);
 	}
@@ -837,7 +841,7 @@ private function craftDragonscaleArmorForReal(type:int = 0):void {
 
 ////Skin Oils
 //private function buyOils():void {
-	////spriteSelect(49);
+	//showRathazul();
 	//clearOutput();
 	//output("Rathazul smiles and pulls forth several bottles of skin oil.  Which type of skin oil would you like?");
 	//output("\n\n<b>(-50 Gems)</b>");
@@ -855,7 +859,7 @@ private function craftDragonscaleArmorForReal(type:int = 0):void {
 //}
 //
 //private function buyOil(oil:ItemType):void {
-	////spriteSelect(49);
+	//showRathazul();
 	//clearOutput();
 	//output(images.showImage("rathazul-buy-oil"));
 	//inventory.takeItem(oil, returnToRathazulMenu);
@@ -864,7 +868,7 @@ private function craftDragonscaleArmorForReal(type:int = 0):void {
 //}
 //
 //private function buyOilNevermind():void {
-	////spriteSelect(49);
+	//showRathazul();
 	//clearOutput();
 	//output("You change your mind about the oil, and Rathazul returns your gems.\n\n<b>(+50 Gems)</b>");
 	//pc.gems += 50;
@@ -874,7 +878,7 @@ private function craftDragonscaleArmorForReal(type:int = 0):void {
 //
 ////Body Lotions
 //private function buyLotions():void {
-	////spriteSelect(49);
+	//showRathazul();
 	//clearOutput();
 	//output("Rathazul smiles and pulls forth several vials of body lotion.  Which type of body lotion would you like?");
 	//output("\n\n<b>(-50 Gems)</b>");
@@ -889,7 +893,7 @@ private function craftDragonscaleArmorForReal(type:int = 0):void {
 //}
 //
 //private function buyLotion(lotion:ItemType):void {
-	////spriteSelect(49);
+	//showRathazul();
 	//clearOutput();
 	//output(images.showImage("rathazul-buy-lotion"));
 	//inventory.takeItem(lotion, returnToRathazulMenu);
@@ -898,7 +902,7 @@ private function craftDragonscaleArmorForReal(type:int = 0):void {
 //}
 //
 //private function buyLotionNevermind():void {
-	////spriteSelect(49);
+	//showRathazul();
 	//clearOutput();
 	//output("You change your mind about the lotion, and Rathazul returns your gems.\n\n<b>(+50 Gems)</b>");
 	//pc.gems += 50;
@@ -946,7 +950,7 @@ private function craftDragonscaleArmorForReal(type:int = 0):void {
 //}
 //
 //private function rathazulMakesTaurPotion():void {
-	////spriteSelect(49);
+	//showRathazul();
 	//clearOutput();
 	//if (pc.gems < 100) {
 		//output("\"<i>I'm sorry but you don't have the gems for this service,</i>\" Rathazul says.");
@@ -969,7 +973,7 @@ private function craftDragonscaleArmorForReal(type:int = 0):void {
 //}
 
 private function buyReducto():void {
-	//spriteSelect(49);
+	showRathazul();
 	clearOutput();
 	var cost:int = (flags["COC.AMILY_MET_RATHAZUL"] >= 2 ? 500 : 1000);
 	if (pc.credits >= cost) {
@@ -990,14 +994,14 @@ private function buyReducto():void {
 }
 
 //private function growLethiciteDefense():void {
-	////spriteSelect(49);
+	//showRathazul();
 	//clearOutput();
 	//output("Rathazul asks, \"<i>Are you absolutely sure?  Growing this thorn canopy as a defense will use one third of the crystal's power.</i>\"\n\n(Do you have Rathazul use the crystal to grow a defensive canopy?)");
 	//doYesNo(growLethiciteDefenseYesYesYes, growLethiciteDefenseGuessNot);
 //}
 //
 //private function growLethiciteDefenseYesYesYes():void {
-	////spriteSelect(49);
+	//showRathazul();
 	//clearOutput();
 	//output("Rathazul nods and produces a mallet and chisel from his robes.  With surprisingly steady hands for one so old, he holds the chisel against the crystal and taps it, easily cracking off a large shard.  Rathazul gathers it into his hands before slamming it down into the dirt, until only the smallest tip of the crystal is visible.  He produces vials of various substances from his robe, as if by magic, and begins pouring them over the crystal.  In a few seconds, he finishes, and runs back towards his equipment.\n\n\"<i>You may want to take a step back,</i>\" he warns, but before you have a chance to do anything, a thick trunk covered in thorny vines erupts from the ground.  Thousands of vine-like branches split off the main trunk as it reaches thirty feet in the air, radiating away from the trunk and intertwining with their neighbors as they curve back towards the ground.  In the span of a few minutes, your camp gained a thorn tree and a thick mesh of barbed vines preventing access from above.");
 	//pc.createStatusAffect(StatusAffects.DefenseCanopy, 0, 0, 0, 0);
@@ -1006,7 +1010,7 @@ private function buyReducto():void {
 //}
 //
 //private function growLethiciteDefenseGuessNot():void {
-	////spriteSelect(49);
+	//showRathazul();
 	//clearOutput();
 	//output("Rathazul nods sagely, \"<i>That may be wise.  Perhaps there will be another use for this power.");
 	//doNext(returnToRathazulMenu);

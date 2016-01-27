@@ -3,6 +3,10 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
+public function showJojo():void {
+	userInterface.showName("\nJOJO");
+}
+
 public function followerCampMenuBlurbJojo(showInteractButton:Boolean):void {
 	if (flags["COC.JOJO_IN_CAMP"] == 1) {
 		output("There is a small bedroll for Jojo near your own");
@@ -10,7 +14,7 @@ public function followerCampMenuBlurbJojo(showInteractButton:Boolean):void {
 		//if (!(hours > 4 && hours < 23)) outputText(" and the mouse is sleeping on it right now.\n\n");
 		//else 
 			output(", though the mouse is probably hanging around the camp's perimeter.\n\n");
-		if(showInteractButton) addButton(2, "Jojo", jojoCamp, null, "Talk", "Go find Jojo around the edges of your camp and meditate with him or talk about watch duty.");
+		if (showInteractButton) addButton(2, "Jojo", function():* { processTime(5); jojoCamp() } , null, "Talk", "Go find Jojo around the edges of your camp and meditate with him or talk about watch duty.");
 	}
 }
 
@@ -20,16 +24,13 @@ private function followerCampMenuBlurbJojoGrapple():* {
 }
 
 public function jojoFollowerMeditate(clear:Boolean = true):void {
-	//jojoSprite();
+	showJojo();
 	if(clear) clearOutput();	
 	if (flags["COC.JOJO_LAST_MEDITATION"] == days) {
 		output("Jojo smiles and meditates with you.  The experience is calming, but it's so soon after your last session that you don't get much benefit from it.");
-		pc.lust( -30);
 	}
 	else {
 		output("The mouse monk leads you to a quiet spot away from the portal and the two of you sit down, him cross-legged and you mimicking to the best of your ability, back to back.  You close your eyes and meditate for half-an hour, centering your body and mind.  Afterwards, he guides you through stretches and exercises to help keep your bodies fit and healthy.\n\nWhen you are done, Jojo nods to you, and climbs back onto his rock, still thinking.");
-		//Reduces lust
-		pc.lust( -30);
 		var cleanse:int = -2; //Corruption reduction - faster at high corruption
 		if (pc.cor() > 80)
 			cleanse -= 3;
@@ -54,13 +55,17 @@ public function jojoFollowerMeditate(clear:Boolean = true):void {
 		if(pc.libido() > 15) pc.libido( -1);
 	
 		flags["COC.JOJO_LAST_MEDITATION"] = days;
-		flags["COC.JOJO_MEDITATION_COUNT"]++;
+		IncrementFlag("COC.JOJO_MEDITATION_COUNT");
 	}
-	doNext(returnToCampUseOneHour);
+	processTime(50 + rand(20));
+	//Reduces lust
+	pc.lust( -30);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 public function jojoDefenseToggle():void {
-	//jojoSprite();
+	showJojo();
 	clearOutput();
 	if (flags["COC.JOJO_NIGHT_WATCH"] > 0) {
 		flags["COC.JOJO_NIGHT_WATCH"] = 0;
@@ -70,7 +75,9 @@ public function jojoDefenseToggle():void {
 		flags["COC.JOJO_NIGHT_WATCH"] = 1;
 		output("You ask the monk if he could guard the camp for you at night.  He smiles politely.  \"<i>Certainly, [pc.name].</i>\"");
 	}
-	doNext(jojoCamp);
+	processTime(2);
+	clearMenu();
+	addButton(0, "Next", jojoCamp);
 }
 
 // JOJO: THE EXPANSIONING
@@ -80,7 +87,7 @@ public function jojoDefenseToggle():void {
 public function lowCorruptionJojoEncounter():void
 {
 	clearOutput();
-	//jojoSprite();
+	showJojo();
 
 	output("Tired of exploring the forest for the moment, you decide to head back to camp.  Not feeling like taking the scenic route, you move to step through some bushes, but immediately your mind registers a yelp.  The instant you move to look at the source of the noise, a white blur smacks you right on your head.");
 
@@ -107,6 +114,7 @@ public function lowCorruptionJojoEncounter():void
 
 	output("Do you accept his apology?\n\n");
 
+	processTime(3);
 	clearMenu();
 	addButton(0, "Yes", acceptJojosApology);
 	addButton(1, "No", refuseJojosApology);
@@ -116,12 +124,13 @@ public function lowCorruptionJojoEncounter():void
 public function acceptJojosApology():void
 {
 	clearOutput();
-	//jojoSprite();
+	showJojo();
 
 	output("You forgive him for hitting you and apologize for spooking him yourself, prompting a relieved sigh.\n\n");
 
 	output("“<i>Thanks, it’s a relief to meet a friendly face,</i>” he says, his mouth breaking into a smile. “<i>Oh, where are my manners!</i>”\n\n");
 
+	processTime(1);
 	lowCorruptionIntro();
 }
 
@@ -129,13 +138,14 @@ public function acceptJojosApology():void
 public function refuseJojosApology():void
 {
 	clearOutput();
-	//jojoSprite();
+	showJojo();
 
 	output("With a smile you curl up a fist and knock the unsuspecting mouse morph upside the head, causing him drop his staff and rub the spot where you slugged him.  As he looks up at you you give his angry expression a shrug, telling him that now the two of you are even.\n\n");
 
 	output("“<i>O-Kay</i>” The mouse says slowly, suddenly watching your movements very closely with those quick little eyes of his, “<i>But I guess it’s fair, no harm done right?</i>”\n\n");
 	output("It’s all water under the bridge to you now; after all you did slug him real good. The two of you agree to start over.\n\n");
 
+	processTime(1);
 	lowCorruptionIntro();
 }
 
@@ -151,81 +161,85 @@ public function lowCorruptionIntro():void
 	output("He smiles knowingly, “<i>Yes I am a monk, and yes this is a strange place for one such as I... this world was not always this way.  Long ago this world was home to many villages, including my own.  But then the demons came.  I'm not sure if they were summoned, created, or simply a perversion of magic or breeding, but they came swarming out of the mountains to destroy everything in their path.</i>”\n\n");
 
 	output("Jojo sighs sadly, “<i>Enough of my woes.  Though I ");
-	if (cor() <= 5) output("don't ");
+	if (pc.cor() <= 5) output("don't ");
 	else output("barely ");
 	output("feel any corruption within you, it’s always best to be prepared.  Would you care to join me in meditation?</i>”\n\n");
 	//Choices time!
+	processTime(3);
 	clearMenu();
 	addButton(0, "Meditate", meditateInForest); // OH GOD NO SEND HELP
-	addButton(1, "Leave", returnToCampUseOneHour);
+	addButton(1, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 	addDisabledButton(2, "Rape", "Rape", "Not implemented");
 }
 
 public function highCorruptionJojoEncounter():void {
-	//kGAMECLASS.monk = 1;
-	//kGAMECLASS.jojoScene.jojoSprite();
-	output("While marvelling at the strange trees and vegetation of the forest, the bushes ruffle ominously.  A bush seems to explode into a flurry of swirling leaves and movement.  Before you can react you feel your " + pc.feet() + " being swept out from under you, and land hard on your back.\n\n", false);
-	output("The angry visage of a lithe white mouse gazes down on your prone form with a look of confusion.", false);
-	output("\n\n\"<i>I'm sorry, I sensed a great deal of corruption, and thought a demon or monster had come to my woods,</i>\" says the mouse, \"<i>Oh, where are my manners!</i>\"\n\nHe helps you to your feet and introduces himself as Jojo.  Now that you have a good look at him, it is obvious this mouse is some kind of monk, dressed in robes, holy symbols, and draped with prayer beads.\n\nHe smiles knowingly, \"<i>Yes I am a monk, and yes this is a strange place for one such as I... this world was not always this way.  Long ago this world was home to many villages, including my own.  But then the demons came.  I'm not sure if they were summoned, created, or simply a perversion of magic or breeding, but they came swarming out of the mountains to destroy everything in their path.</i>\"", false);
-	output("\n\nJojo sighs sadly, \"<i>Enough of my woes.  You are very corrupted.  If you cannot be sufficiently purified you WILL become one of them in time.  Will you let me help you?", false);
+	showJojo();
+	clearOutput();
+	output("While marvelling at the strange trees and vegetation of the forest, the bushes ruffle ominously.  A bush seems to explode into a flurry of swirling leaves and movement.  Before you can react you feel your [pc.feet] being swept out from under you, and land hard on your back.\n\n");
+	output("The angry visage of a lithe white mouse gazes down on your prone form with a look of confusion.");
+	output("\n\n\"<i>I'm sorry, I sensed a great deal of corruption, and thought a demon or monster had come to my woods,</i>\" says the mouse, \"<i>Oh, where are my manners!</i>\"\n\nHe helps you to your feet and introduces himself as Jojo.  Now that you have a good look at him, it is obvious this mouse is some kind of monk, dressed in robes, holy symbols, and draped with prayer beads.\n\nHe smiles knowingly, \"<i>Yes I am a monk, and yes this is a strange place for one such as I... this world was not always this way.  Long ago this world was home to many villages, including my own.  But then the demons came.  I'm not sure if they were summoned, created, or simply a perversion of magic or breeding, but they came swarming out of the mountains to destroy everything in their path.</i>\"");
+	output("\n\nJojo sighs sadly, \"<i>Enough of my woes.  You are very corrupted.  If you cannot be sufficiently purified you WILL become one of them in time.  Will you let me help you?");
 	//Choices time!
+	processTime(3);
 	clearMenu();
 	addButton(0, "Accept", meditateInForest);
-	addButton(1, "Decline", returnToCampUseOneHour);
+	addButton(1, "Decline", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 	addDisabledButton(2, "Rape", "Rape", "Not implemented");
 }
 
 //Repeat encounter
 public function repeatJojoEncounter():void {
-	//if (pc.findStatusAffect(StatusAffects.Infested) >= 0) {
-		////kGAMECLASS.jojoScene.//jojoSprite();
-		//output("As you approach the serene monk, you see his nose twitch, disturbing his meditation.\n\n", true);
-		//output("\"<i>It seems that the agents of corruption have taken residence within the temple that is your body.</i>\", Jojo says flatly. \"<i>This is a most unfortunate development. There is no reason to despair as there are always ways to fight the corruption. However, great effort will be needed to combat this form of corruption and may leave lasting impressions upon you. If you are ready, we can purge your being of the rogue creatures of lust.</i>\"\n\n", false);
-		////Choices time!
-		//menu();
-		//addButton(0, "Meditate", getGame().jojoScene.meditateInForest);
-		//addButton(1, "Purge", getGame().jojoScene.wormRemoval, null, null, null, "Request him to purge the worms from your body.");
-		//addDisabledButton(2, "Rape", "Rape", "Not implemented"));
-		//addButton(4, "Leave", returnToCampUseOneHour);
-		//return;
-	//}
-	//kGAMECLASS.jojoScene.//jojoSprite();
-	output("Jojo the monk appears before you, robes and soft white fur fluttering in the breeze.  He asks, \"<i>Are you ready for a meditation session?</i>\"", false);
+	showJojo();
+	clearOutput();
+	if (pc.hasStatusEffect("Infested")) {
+		output("As you approach the serene monk, you see his nose twitch, disturbing his meditation.\n\n");
+		output("\"<i>It seems that the agents of corruption have taken residence within the temple that is your body.</i>\", Jojo says flatly. \"<i>This is a most unfortunate development. There is no reason to despair as there are always ways to fight the corruption. However, great effort will be needed to combat this form of corruption and may leave lasting impressions upon you. If you are ready, we can purge your being of the rogue creatures of lust.</i>\"\n\n");
+		//Choices time!
+		clearMenu();
+		addButton(0, "Meditate", meditateInForest);
+		addButton(1, "Purge", jojoWormRemoval, null, "Purge", "Request him to purge the worms from your body.");
+		addDisabledButton(4, "Rape", "Rape", "Not implemented");
+		addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
+		return;
+	}
+	output("Jojo the monk appears before you, robes and soft white fur fluttering in the breeze.  He asks, \"<i>Are you ready for a meditation session?</i>\"");
 	//Choices time!
+	processTime(2);
 	clearMenu();
 	addButton(0, "Accept", meditateInForest);
-	addButton(1, "Decline", returnToCampUseOneHour);
-	addDisabledButton(2, "Rape", "Rape", "Not implemented");
+	addButton(1, "Decline", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
+	addDisabledButton(4, "Rape", "Rape", "Not implemented");
 }
 
 public function meditateInForest():void {
-	//jojoSprite();
+	showJojo();
 	clearOutput();
 	output("Jojo smiles and leads you off the path to a small peaceful clearing.  There is a stump in the center, polished smooth and curved in a way to be comfortable.  He gestures for you to sit, and instructs you to meditate.\n\nAn indeterminate amount of time passes, but you feel more in control of yourself.  Jojo congratulates you, but offers a warning as well.  \"<i>Be ever mindful of your current state, and seek me out before you lose yourself to the taints of this world.  Perhaps someday this tainted world can be made right again.</i>\"");
 	
 	//dynStats("str", .5, "tou", .5, "int", .5, "lib", -1, "lus", -5, "cor", (-1 - pc.countCockSocks("alabaster")));
+	processTime(100 + rand(40));
 	pc.libido( -1);
 	pc.lust( -30);
 	pc.cor( -1);	
 	
-	if (flags["COC.JOJO_MEDITATION_COUNT"] == undefined) flags["COC.JOJO_MEDITATION_COUNT"] = 0;
-	flags["COC.JOJO_MEDITATION_COUNT"]++;
-	if (flags["COC.JOJO_MEDITATION_COUNT"] % 5 == 0)
+	if (IncrementFlag("COC.JOJO_MEDITATION_COUNT") % 5 == 0)
 	{
-		output("\"<i>It seems you have quite a talent for this.  We should meditate together more often.</i>\"", false);
-		output("\n\nYou ponder and get an idea - the mouse could stay at your camp.  There's safety in numbers, and it would be easier for the two of you to get together for meditation sessions.  Do you want Jojo's company at camp?", false);
+		output("\"<i>It seems you have quite a talent for this.  We should meditate together more often.</i>\"");
+		output("\n\nYou ponder and get an idea - the mouse could stay at your camp.  There's safety in numbers, and it would be easier for the two of you to get together for meditation sessions.  Do you want Jojo's company at camp?");
 		clearMenu();
 		addButton(0, "Yes", acceptJojoIntoYourCamp);
 		addButton(1, "No", returnToCampUseTwoHours);
 		return;
 	}
-	else
-		output("\n\nHe bows his head sadly and dismisses you.", false);
-	doNext(returnToCampUseTwoHours);
+	
+	output("\n\nHe bows his head sadly and dismisses you.");
+	
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 public function acceptJojoIntoYourCamp():void {
-	//jojoSprite();
+	showJojo();
 	//if (pc.findStatusAffect(StatusAffects.EverRapedJojo) >= 0 || flags["COC.JOJO_MOVE_IN_DISABLED] == 1) {
 		//output("You offer Jojo the chance to stay at your camp, but before you can finish your sentence he shakes his head 'no' and stalks off into the woods, remembering.");
 	//}
@@ -234,7 +248,9 @@ public function acceptJojoIntoYourCamp():void {
 		output("You offer Jojo the chance to stay at your camp.  He cocks his head to the side and thinks, stroking his mousey whiskers.\n\n\"<i>Yes, it would be wise.   We would be safer together, and if you like I could keep watch at night to keep some of the creatures away.  I'll gather my things and be right there!</i>\"\n\nJojo scurries into the bushes, disappearing in a flash.  Knowing him, he'll be at camp before you!");
 		flags["COC.JOJO_IN_CAMP"] = 1;
 	//}
-	doNext(returnToCampUseOneHour);
+	processTime(2);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 //Jojo In Camp
@@ -243,9 +259,10 @@ public function acceptJojoIntoYourCamp():void {
 public function acceptOfferOfHelp():void
 {
 	clearOutput();
-	//jojoSprite();
+	showJojo();
 
 	output("<i>“Thank Marae.  You’re much stronger than I, my friend... to hold so much corruption and still retain your will.  But let us not tempt fate,”</i> he says before the two of you get to it.\n\n");
+	processTime(1);
 
 	jojoFollowerMeditate(false);
 }
@@ -254,7 +271,7 @@ public function acceptOfferOfHelp():void
 public function refuseOfferOfHelp():void
 {
 	clearOutput();
-	//jojoSprite();
+	showJojo();
 
 	output("You assure Jojo you're fine, and that you'll consider his offer.  “<i>But... I... we...</i>” he stammers. “<i>Alright, but please do not let the corruption get the better of you.  You’re my friend and I couldn't bear to lose you to its vile influence.</i>”  He recomposes himself and asks, “<i>So... is there anything I can assist you with?</i>”\n\n");
 	jojoCampMenu();
@@ -262,7 +279,7 @@ public function refuseOfferOfHelp():void
 
 public function jojoCamp():void {
 	clearOutput();
-	//jojoSprite();
+	showJojo();
 	//if (flags["COC.AMILY_MET_PURE_JOJO] == 0 && flags["COC.AMILY_FOLLOWER"] == 1 && amilyScene.amilyFollower()) {
 		//getGame().followerInteractions.amilyMeetsPureJojo();
 		//return;
@@ -277,8 +294,8 @@ public function jojoCamp():void {
 		//jojoCampMenu();
 		//return;
 	//}
-	if (cor() > 10 && flags["COC.JOJO_LAST_MEDITATION"] != days) { //New "offer of help" menu
-		if (cor() >= 40) {
+	if (pc.cor() > 10 && flags["COC.JOJO_LAST_MEDITATION"] != days) { //New "offer of help" menu
+		if (pc.cor() >= 40) {
 			output("You walk toward the boulder where Jojo usually sits, and as soon as you're close Jojo approaches you with urgency.  \"<i>By Marae! [pc.name], we must do something! I feel the corruption surrounding you like a dense fog.  We need to meditate or I’m going to lose you!</i>\" Jojo pleads.\n\n");
 		}
 		else {
@@ -321,10 +338,8 @@ private function jojoCampMenu():void {
 	else addDisabledButton(3, "Meditate", "Meditate", "Already done today.");
 	
 	addButton(4, flags["COC.JOJO_NIGHT_WATCH"] > 0 ? "N.Watch:ON" : "N.Watch:OFF", jojoDefenseToggle, null, "Night watch", (flags["COC.JOJO_NIGHT_WATCH"] > 0 ? "Request him to stop guarding the camp.": "Request him to guard the camp at night."));
-	//if (pc.findStatusAffect(StatusAffects.Infested) >= 0) addButton(5, "Purge", wormRemoval, null, null, null, "Request him to purge the worms from your body.");
+	if (pc.hasStatusEffect("Infested")) addButton(5, "Purge", jojoWormRemoval, null, "Purge", "Request him to purge the worms from your body.");
 	//if (cor() > 10 && pc.lust >= 33 && pc.gender > 0 && flags["COC.DISABLED_JOJO_RAPE"] <= 0) addButton(8, "Rape", jojoAtCampRape, null, null, null, "Rape the poor monk mouse-morph." + (cor() < 25 ? "  Why would you do that?": ""));
-	addDisabledButton(8, "Rape", "Rape", "Not implemented");
-	//if (pc.lust >= 33 && monk <= -3) addButton(8, "Sex", pureJojoSexMenu, null, null, null, "Initiate sexy time with the mouse-morph.");
 	addButton(14, "Leave", campFollowersMenu);
 }
 
@@ -332,7 +347,7 @@ private function jojoCampMenu():void {
 public function jojoAppearance():void
 {
 	clearOutput();
-	//jojoSprite();
+	showJojo();
 	//output(images.showImage("jojo-appearance"));
 	output("Jojo is a white furred mouse-morph with dish-like ears and a small muzzle below a sometimes twitchy nose. He watches you with striking blue eyes.\n\n");
 
@@ -342,15 +357,15 @@ public function jojoAppearance():void
 
 	output("His weapons of choice are his fists and a polished wooden staff he wields with practiced hands, right now it is tucked away in his bed roll.\n\n");
 	clearMenu();
-	doNext(jojoCamp);
+	addButton(0, "Next", jojoCamp);
 }
 
 public function talkMenuJojo():void
 {
 	if (flags["COC.TIMES_TALKED_WITH_JOJO"] == undefined) flags["COC.TIMES_TALKED_WITH_JOJO"] = 0;
-	//jojoSprite();
-	clearMenu();
+	showJojo();
 	clearOutput();
+	clearMenu();
 	output("“What's on yor mind, [pc.name]?”");
 	addButton(0, "Village", jojoTalkVillage, null, "Village", "Ask him about the village he was raised in.");
 	addButton(1, "Monks", jojoTalkJoiningTheMonks, null, "Monks", "Ask him about how and why he became a monk.");
@@ -380,8 +395,8 @@ public function talkMenuJojo():void
 public function jojoTalkVillage():void
 {
 	clearOutput();
-	//jojoSprite();
-	flags["COC.TIMES_TALKED_WITH_JOJO"]++;
+	showJojo();
+	IncrementFlag("COC.TIMES_TALKED_WITH_JOJO");
 
 	output("You decide to ask Jojo about his village.\n\n");
 	output("He speaks softly with a smile on his face and in his voice, “<i>It was a small village near a large beautiful lake. We were peaceful people who laughed and trusted one another, just good simple folk you know?”\n\n");
@@ -391,7 +406,7 @@ public function jojoTalkVillage():void
 	output("“<i>Then there was my mother who was a little high strung, but no one could hug you more fiercely or love you more dearly.  She was a small woman with a big soul who loved her family more than anything.  She was a seamstress before she met my dad and was always the brightest one in the room, which is hard when you have seventeen loud children clamoring for your attention.</i>”\n\n");
 	output("“<i>Even with 19 people living under one roof my family wasn’t the biggest family in town, but there was always plenty work and plenty food.  It was a nice simple existence and I am thankful for the time I had with everyone in that village,</i>” he finishes with a serene smile.\n\n");
 
-	if (cor() < 40)
+	if (pc.cor() < 40)
 	{
 		output("Looks like Jojo's childhood wasn't so bad... you thank the mouse morph monk for sharing his treasured memories with you now that the conversation is over.\n\n");
 	}
@@ -400,17 +415,17 @@ public function jojoTalkVillage():void
 		output("Looks like Jojo’s childhood wasn’t so bad. A little sickly sweet and void of wet pussies and drooling dicks but not bad. You tell him you’re happy to have him near you and he smiles for ear to ear, ignorant of your thoughts.\n\n");
 	}
 
-	processTime(10);
+	processTime(5);
 	clearMenu();
-	doNext(talkMenuJojo);
+	addButton(0, "Next", talkMenuJojo);
 }
 
 //Joining the Monks convo
 public function jojoTalkJoiningTheMonks():void
 {
 	clearOutput();
-	//jojoSprite();
-	flags["COC.TIMES_TALKED_WITH_JOJO"]++;
+	showJojo();
+	IncrementFlag("COC.TIMES_TALKED_WITH_JOJO");
 
 	output("You decide to ask Jojo why he decided to become a monk in the first place.\n\n");
 	output("He gives you a warm smile as he speaks, “<i>Well I grew up in a big family of 19 so when I was younger I was always the quiet one.  I guess I was just introverted but being quiet meant that I didn’t always get a lot of attention.  It didn’t bother me, quite the opposite actually, I enjoyed quiet introspection but with so many brothers and sisters it was next to impossible to get a quiet moment at home.</i>”\n\n");
@@ -419,17 +434,17 @@ public function jojoTalkJoiningTheMonks():void
 	output("“<i>The temple became very important to me.  I read about the world, I spoke to the clergy and I sat and thought.  I was enraptured with learning but I didn’t want to be a priest, I don’t know why... I guess it just didn’t appeal to me.  When I first saw the monks visiting the temple, it was like dawn breaking.  After that I waited until I was old enough to join and made the short pilgrimage to the Monastery of the Celestial Lotus.</i>”\n\n");
 	output("Jojo wears this quiet little smile as he finishes.  Then he chuckles and says, “<i>Thank you for the memories, [pc.name].  I enjoy our talks.</i>”\n\n");
 
-	processTime(10);
+	processTime(5);
 	clearMenu();
-	doNext(talkMenuJojo);
+	addButton(0, "Next", talkMenuJojo);
 }
 
 //Fall of the Monks convo
 public function jojoTalkFallOfTheMonks():void
 {
 	clearOutput();
-	//jojoSprite();
-	flags["COC.TIMES_TALKED_WITH_JOJO"]++;
+	showJojo();
+	IncrementFlag("COC.TIMES_TALKED_WITH_JOJO");
 
 	output("You decide to ask Jojo if he'd be willing to tell you exactly what happened to the monks of his order.\n\n");
 	output("Jojo speaks with eyes downcast and a voice soft as feathers landing on fallen soldiers, “<i>Truthfully?...  I don’t know exactly how it happened... or why... but my order was wiped out.  Though I've looked for my brothers and sisters of the Celestial Lotus ever since then, I'm the only survivor, as far as I can tell.  You see the demons attacked the monastery while I was away with one of the senior brothers.  I was a mere novice and he was one of the more fun teachers so we lost track of time.  The sun was setting and we were halfway back to the monastery when we saw what we thought was a huge column of smoke rising from the central building.  When we got closer we saw the cloud for what it truly was, a billowing tower of those imps.  We were spotted and several of them came flying at us - they crossed the distance far faster than we could have.</i>”\n\n");
@@ -439,28 +454,28 @@ public function jojoTalkFallOfTheMonks():void
 	output("You try to comfort Jojo, telling him he couldn’t have made a difference being but a single mouse, but he waves you off.  He tells you he is fine and thanks you for your concern.\n\n");
 	output("You can tell the story has affected him, but you’re surprised to hear the resolve in his voice and see the defiant strength in his eyes. Excusing yourself, you rise and leave him to do as he will.\n\n");
 
-	processTime(10);
+	processTime(5);
 	clearMenu();
-	doNext(talkMenuJojo);
+	addButton(0, "Next", talkMenuJojo);
 }
 
 //Forest Convo
 public function jojoTalkForestConvo():void
 {
 	clearOutput();
-	//jojoSprite();
-	flags["COC.TIMES_TALKED_WITH_JOJO"]++;
+	showJojo();
+	IncrementFlag("COC.TIMES_TALKED_WITH_JOJO");
 
 	output("You think for a while and decide to ask Jojo how he ended up in the forest.\n\n");
 	output("He looks at you with suddenly tired eyes as he says, “<i>Well, I was training in the fields with one of the senior brothers when we saw the monastery was under attack.  He sent me to the village to save me since I was a novice.  I decided to rally the people there.  I figured that I had ran like a coward, I wasn’t going to hide like one.  It was the village where I was born and a home to many of my brothers and sisters, both figuratively and literally.  I ran towards the village with everything I had, hoping to redeem my cowardice by returning with a militia of mice to aid the members of my order.</i>”  His voice catches and he looks away, obviously struggling to form words.\n\n");
 	output("When you open your mouth to speak he raises his hand, asking for a moment with a single furry finger.\n\n");
 	output("“<i>I was too late.  The demons had struck there first, then moved on to my monastery once they were finished.  I spent hours searching the streets; every basement, every alley, every attic, every place I could think of where somebody might have hidden.  Nothing but ruined buildings, smears of assorted tainted bodily fluids, and the occasional corpse - some demons, many more mice.</i>”\n\n");
 
-	if (cor() < 35)
+	if (pc.cor() < 35)
 	{
 		output("That's terrible... you can only imagine what you'd feel like if you returned to Ignam and saw it destroyed... your family, your friends... You put a hand on the monk's shoulder, intent on comforting him for the moment.\n\n");
 	}
-	else if (cor() >= 35 && cor() <= 75)
+	else if (pc.cor() >= 35 && pc.cor() <= 75)
 	{
 		output("Tough luck... thankfully your village still stands and you doubt any demons would dare attack on your watch...  You feel like you should do something for the monk though, so you put a hand on his shoulder, comforting him for the moment.\n\n");
 	}
@@ -471,18 +486,18 @@ public function jojoTalkForestConvo():void
 
 	output("“<i>Thank you [pc.name].  I was born there and seeing that...</i>”  The monk falls silent again.\n\n");
 
-	if (cor() < 35)
+	if (pc.cor() < 35)
 	{
 		output("You slide an arm around Jojo’s shoulders in an attempt to reassure the monk.  He manages a smile in response as he looks up at you.  A single tear manages to slide down his muzzle as he says, “<i>Thank you, my friend.</i>”\n\n");
 	}
-	else if (cor() >= 35 && cor() <= 75)
+	else if (pc.cor() >= 35 && pc.cor() <= 75)
 	{
 		output("You try to further console the distressed monk by moving your hand to his back and giving him a few friendly taps.  Jojo visibly pulls himself together. “Thank you, I’m alright now,” he tells you as he looks up and gives you a weak smile.\n\n");
 	}
 	else
 	{
 		output("Seeing an opportunity, you wrap your arms around the monk as he silently tries to reign in his emotions.  Holding him close you can feel the mouse morph’s lean muscles as you rub his back ‘accidentally’ going too low and feeling the base of his tail and the top of his tight little pert ass.  As you ‘hug’ the mouse you make sure he doesn’t notice your true intentions and when you release him he actually thanks you.\n\n");
-		dynStats("lus+", 10);
+		pc.lust(10);
 	}
 
 	output("After you’ve comforted the monk you ask him what he did next.\n\n");
@@ -495,7 +510,7 @@ public function jojoTalkForestConvo():void
 
 	processTime(10);
 	clearMenu();
-	doNext(talkMenuJojo);
+	addButton(0, "Next", talkMenuJojo);
 }
 
 //Yourself
@@ -503,9 +518,9 @@ public function jojoTalkForestConvo():void
 public function jojoTalkYourOrigin():void // Prob tack on some interaction count or something to unlock this
 {
 	clearOutput();
-	//jojoSprite();
-	flags["COC.TIMES_TALKED_WITH_JOJO"]++;
-
+	showJojo();
+	IncrementFlag("COC.TIMES_TALKED_WITH_JOJO");
+	
 	output("As you start up a conversation with Jojo, the two of you speak at length about nothing really important or noteworthy, just small talk.  That is until the monk brings up the subject of your background.  You tell him about Ingnam and your family there, and the tradition of sending a champion through the portal.  When he asks why anyone would choose to come here, you tell him how legends say that in years a champion wasn’t sent through the portal, terrible things happened to the village.\n\n");
 	output("“<i>That portal?</i>” Jojo asks, pointing to the very portal you stumbled through. You nod and he asks, “<i>So... what were you like in Ingnam?</i>”\n\n");
 
@@ -561,7 +576,7 @@ public function jojoTalkYourOrigin():void // Prob tack on some interaction count
 
 	processTime(10);
 	clearMenu();
-	doNext(talkMenuJojo);
+	addButton(0, "Next", talkMenuJojo);
 }
 
 //Dungeon Convo: Factory
@@ -569,8 +584,8 @@ public function jojoTalkYourOrigin():void // Prob tack on some interaction count
 public function jojoTalkFactory():void
 {
 	clearOutput();
-	//jojoSprite();
-	flags["COC.TIMES_TALKED_WITH_JOJO"]++;
+	showJojo();
+	IncrementFlag("COC.TIMES_TALKED_WITH_JOJO");
 
 	output("You tell Jojo about your having successfully found and stopped the demonic factory.  You tell him how you found out the factory was there and how you defeated the demons inside. He seems impressed.\n\n");
 
@@ -590,9 +605,9 @@ public function jojoTalkFactory():void
 
 	output("Once the two of you are done discussing the demonic factory Jojo excuses himself to think on what you’ve told him.\n\n");
 
-	processTime(10);
+	processTime(4);
 	clearMenu();
-	doNext(talkMenuJojo);
+	addButton(0, "Next", talkMenuJojo);
 }
 
 //Dungeon Convo: Sand Cave
@@ -600,8 +615,8 @@ public function jojoTalkFactory():void
 public function jojoTalkSandCave():void
 {
 	clearOutput();
-	//jojoSprite();
-	flags["COC.TIMES_TALKED_WITH_JOJO"]++;
+	showJojo();
+	IncrementFlag("COC.TIMES_TALKED_WITH_JOJO");
 
 	output("You tell Jojo about your discovery of a cave that served as a base for the sand witches of the desert. You tell him about the whole ordeal, and he listens with wide eyes and jaw agape. When you tell him about meeting the Sand Mother Jojo gasps.\n\n");
 	output("“<i>Wait... so you mean to tell me that these sand witches a-are... allies of Marae?  But they’re s-so... sexual.</i>”  He seems genuinely confused, but you tell him that sex is part of nature after all, and that there is nothing wrong or shameful about it.  He agrees with you, but decries the way the sand witches use their power.\n\n");
@@ -619,49 +634,49 @@ public function jojoTalkSandCave():void
 		 output("Jojo’s head tils to the side as he says, “<i>Maybe the whole thing didn’t need to come to an altercation in the first place, a little diplomacy on both sides....</i>”  He gives you a pointed look, “<i>Might have gone a long way.</i>”\n\n");
 	}
 	//if PC just spoke to the Sand Mother
-	else if (flags["COC.SAND_WITCHES_FRIENDLY"] == 1 && flags["COC.SAND_MOTHER_DEFEATED"] == 0)
+	else if (flags["COC.SAND_WITCHES_FRIENDLY"] == 1 && flags["COC.SAND_MOTHER_DEFEATED"] != 1)
 	{
 		output("You tell Jojo about how the Sand Mother spoke with you once you had battled your way to her.  You tell him she was reasonable and how the whole thing was, in the end, a simple misunderstanding.\n\n"); 
 		output("He marvels at the way you handled the situation, “<i>Many would have expected her trying to talk to them to be a trap [pc.name] and hurried to attack her but not you... that is... wow [pc.name], you are truly a great individual.</i>”\n\n");
 	}
 	
 	//[if {PC met bath slut} 
-	//if (flags["COC.MET_MILK_SLAVE"] == 1)
-	//{
-		//output("You tell Jojo about the poor mind addled thing you found sitting in a tub of milk acting as a slave to the sand witch coven.\n\n");
-		//output("He shudders like a child being told a scary story and asks, “<i>What did you do?</i>”\n\n");
-//
-		////[if {PC hasn’t spoken to Sand Mother about Bath Slut yet} 
-		//// Can't differentiate this
-		//// All I have is HAS_MET and HAS_RECRUITED effectively
-		//if (flags["COC.MILK_NAME"] is Number)
-		//{
-			//output("You tell Jojo about how the Sand Mother told you the bath girl was unfit to be free and how they care for her because she can’t care for herself.\n\n");
-			//output("Jojo reacts by putting his chin in his hands and thinking, “<i>Well... I guess that’s the human thing to do, especially since she doesn’t seem to be corrupted.  Maybe these sand witch covens aren’t all bad, still hard to believe that they’re on our side though....”  He looks up and shrugs, “<i>Any act of charity though is a good thing.  I do hope the poor girl will be alright.</i>”\n\n");
-		//}
-		//// [if {PC has bath slut in camp}
-		//else if (flags["COC.MILK_NAME"] is String)
-		//{
-			//output("As the question leaves his lips you give Jojo a confused look and, with a glance, direct his gaze toward " + flags["COC.MILK_NAME] + ".\n\n");
-			//output("He slaps his own forehead and says, “<i>Oh... yeah... right.</i>” Obviously embarrassed by not putting two and two together. He smiles good naturedly though, “<i>I don’t know I guess I just assumed you found some poor mind addled soul and decided to save her.</i>” Jojo says as he looks over at " + flags["COC.MILK_NAME] + ".\n\n");
-//
-			////[if (bathSlutStage1 - unaltered)
-			//if (flags["COC.MILK_SIZE"] == 0)
-			//{ 
-				//output("“<i>She’ll fare much better in our care than in the coven’s,</i>” he states with conviction.\n\n");
-			//}
-			////[if (bathSlutStage2 - HHH) 
-			//else if (flags["COC.MILK_SIZE"] == 1)
-			//{
-				//output("“<i>She’s already much better than she was when she got here,</i>” he says with a grin.\n\n");
-			//}
-			////[if (bathSlutStage3 - DD) 
-			//else
-			//{
-				//output("“<i>The coven wouldn’t have done what you’ve done for her.  You’ve given her a much, much better life and even aided in fixing her condition, you truly are a champion, [pc.name],</i>” he says, giving you a fond smile and a pat on the back.\n\n");
-			//}
-		//}	
-	//}
+	if (flags["COC.MET_MILK_SLAVE"] == 1)
+	{
+		output("You tell Jojo about the poor mind addled thing you found sitting in a tub of milk acting as a slave to the sand witch coven.\n\n");
+		output("He shudders like a child being told a scary story and asks, “<i>What did you do?</i>”\n\n");
+
+		//[if {PC hasn’t spoken to Sand Mother about Bath Slut yet} 
+		// Can't differentiate this
+		// All I have is HAS_MET and HAS_RECRUITED effectively
+		if (flags["COC.MILK_NAME"] == undefined)
+		{
+			output("You tell Jojo about how the Sand Mother told you the bath girl was unfit to be free and how they care for her because she can’t care for herself.\n\n");
+			output("Jojo reacts by putting his chin in his hands and thinking, “<i>Well... I guess that’s the human thing to do, especially since she doesn’t seem to be corrupted.  Maybe these sand witch covens aren’t all bad, still hard to believe that they’re on our side though....”  He looks up and shrugs, “<i>Any act of charity though is a good thing.  I do hope the poor girl will be alright.</i>”\n\n");
+		}
+		// [if {PC has bath slut in camp}
+		else
+		{
+			output("As the question leaves his lips you give Jojo a confused look and, with a glance, direct his gaze toward " + flags["COC.MILK_NAME"] + ".\n\n");
+			output("He slaps his own forehead and says, “<i>Oh... yeah... right.</i>” Obviously embarrassed by not putting two and two together. He smiles good naturedly though, “<i>I don’t know I guess I just assumed you found some poor mind addled soul and decided to save her.</i>” Jojo says as he looks over at " + flags["COC.MILK_NAME"] + ".\n\n");
+
+			//[if (bathSlutStage1 - unaltered)
+			if (flags["COC.MILK_SIZE"] == undefined)
+			{ 
+				output("“<i>She’ll fare much better in our care than in the coven’s,</i>” he states with conviction.\n\n");
+			}
+			//[if (bathSlutStage2 - HHH) 
+			else if (flags["COC.MILK_SIZE"] == 1)
+			{
+				output("“<i>She’s already much better than she was when she got here,</i>” he says with a grin.\n\n");
+			}
+			//[if (bathSlutStage3 - DD) 
+			else
+			{
+				output("“<i>The coven wouldn’t have done what you’ve done for her.  You’ve given her a much, much better life and even aided in fixing her condition, you truly are a champion, [pc.name],</i>” he says, giving you a fond smile and a pat on the back.\n\n");
+			}
+		}	
+	}
 
 	// There's an untracked gap here, where the player doesn't accept a blessing from the Cum Witch, but there's no other existing tracking for this shit.
 	//[if {PC met Cum Witch} 
@@ -691,7 +706,7 @@ public function jojoTalkSandCave():void
 
 	processTime(10);
 	clearMenu();
-	doNext(talkMenuJojo);
+	addButton(0, "Next", talkMenuJojo);
 }
 
 //Training
@@ -699,7 +714,7 @@ public function jojoTalkSandCave():void
 public function apparantlyJojoDOESlift():void
 {
 	clearOutput();
-	//jojoSprite();
+	showJojo();
 	
 	//{First Session only}
 	if (flags["COC.UNLOCKED_JOJO_TRAINING"] == undefined)
@@ -708,11 +723,12 @@ public function apparantlyJojoDOESlift():void
 		output("You ask Jojo if he can teach you how to fight like a monk.\n\n");
 		output("Jojo considers you for a moment before saying, “<i>Yes I can teach you the forms, skills and techniques I was taught by my order. Plus...</i>” Jojo gazes off into the distance, his attention drifing for a moment before he continues, “<i>since I am all that is left, it is up to me to bestow this knowledge upon a worthy soul.</i>”\n\n");
 
-		if (cor() >= 25)
+		if (pc.cor() >= 25)
 		{
 			output("Jojo frowns, “<i>I am willing to teach you [pc.name], when I can.  However I am no master, therefore I am unworthy of taking a disciple.  But as your friend, I will teach you what I know so that you may protect yourself.  I believe our time would be better spent meditating.  There is very little you can do with these techniques without first finding your center.</i>”\n\n");
 
 			// Kick back to previous menu
+			processTime(2);
 			clearMenu();
 			addButton(0, "Meditate", jojoFollowerMeditate, null, "Meditate", "Accept offer and meditate now.");
 			addButton(1, "Postpone", jojoCamp, null, "Postpone", "You have no time right now.");
@@ -723,8 +739,9 @@ public function apparantlyJojoDOESlift():void
 			output("Jojo smiles, “<i>I am not a master, therefore I am unworthy of taking you on as a disciple... but as a friend I can teach you all I know.  Whenever you are ready, just ask.</i>.”\n\n");
 
 			// Sounds like this should kick back to menu
+			processTime(1);
 			clearMenu();
-			doNext(jojoCamp);
+			addButton(0, "Next", jojoCamp);
 			return;
 		}
 	}
@@ -736,16 +753,18 @@ public function apparantlyJojoDOESlift():void
 			output("You ask the monk to continue your training; but he shakes his head.\n\n");
 			output("“<i>Not yet [pc.name]. Your body must be fit and rested before our training sessions. Rest first, and come back to me later.</i>”\n\n");
 
+			processTime(1);
 			clearMenu();
-			doNext(jojoCamp);
+			addButton(0, "Next", jojoCamp);
 			return;
 		}
 
-		if (cor() >= 25)
+		if (pc.cor() >= 25)
 		{
 			output("You ask the monk to continue your training; but he shakes his head.\n\n");
 			output("“<i>I fear that your time would be better spend meditating before we continue your training. Would you like to do so now?</i>”\n\n");
 			
+			processTime(1);
 			clearMenu();
 			addButton(0, "Meditate", jojoFollowerMeditate, null, "Meditate", "Accept offer and meditate now.");
 			addButton(1, "Postpone", jojoCamp, null, "Postpone", "You have no time right now.");
@@ -753,8 +772,8 @@ public function apparantlyJojoDOESlift():void
 		}
 	}
 
-	Flag("COC.TIMES_TRAINED_WITH_JOJO", 1, true);
-	trace("Jojo training sessions: " + flags["COC.TIMES_TRAINED_WITH_JOJO"]);
+	IncrementFlag("COC.TIMES_TRAINED_WITH_JOJO");
+	pc.energy( -60);
 
 	// {If everything is cool}
 	if (!pc.hasPerk("Controlled Breath"))
@@ -765,11 +784,8 @@ public function apparantlyJojoDOESlift():void
 		output("By the end of the training session you are covered in sweat, your lungs heaving for breath.\n\n");
 		output("As you bow to Jojo he bows back and says, “<i>Go get some rest [pc.name], you’ve earned it.</i>”\n\n");
 		
-		pc.energy( -60);
-
 		if (flags["COC.TIMES_TRAINED_WITH_JOJO"] >= 5)
 		{
-			trace("ADDING FIRST PERK");
 			output("“<i>Breathing is key.</i>”\n\n");
 			output("Jojo’s constantly repeated words resonate within you as you realize you’ve learned to control your breathing. It takes you less time to rest than normal and you feel as though you are bursting with energy because of it.  Your [pc.fullChest]");
 			if (pc.biggestTitSize() == 0) output(" rises and falls");
@@ -787,11 +803,8 @@ public function apparantlyJojoDOESlift():void
 		output("Jojo switches up the way he is instructing you.  Largely due to your increased endurance, the two of you spend more time moving through forms together and practicing strikes and maneuvers.  When it comes time for a brief lecture, he breaks out one of the few scrolls he has from his order and tells you what he knows about the contents.\n\n");
 		output("Before too long, the two of you are up again and practicing forms and mock strikes, even sparring briefly from time to time.  By the end of the intense training session you are covered in sweat... but so is Jojo, and neither of you are out of breath. As you bow to Jojo he returns the gesture and says, “<i>Go get some rest [pc.name], you’ve earned it.</i>”\n\n");
 		
-		pc.energy( -60);
-
 		if (flags["COC.TIMES_TRAINED_WITH_JOJO"] >= 10)
 		{
-			trace("ADDING SECOND PERK");
 			output("The repeated movements are slowly starting to sink in, your muscles becoming accustomed to Jojo’s training.\n\n");
 			output("By the end of the training session with the mouse, you think that you may have picked up something that might help against the denizens of this world.\n\n");
 
@@ -807,11 +820,8 @@ public function apparantlyJojoDOESlift():void
 		output("Then the two of you are back up, sweeping gracefully through forms and striking invisible enemies with fierce blows.  By the end of the intense training session both you and Jojo are tired, having trained to both of your limits.\n\n");
 		output("As the two of you give each other decidedly shaky bows, Jojo says, “<i>Great effort [pc.name], you are... wow... I need a rest. I’ve earned it.</i>”  The two of you share a laugh and end you training.\n\n");
 		
-		pc.energy( -60);
-
 		if (flags["COC.TIMES_TRAINED_WITH_JOJO"] >= 16 && pc.IQ() >= 70 && !pc.isBimbo() && !pc.isBro()) // no enlightment for you, mindless slut!
 		{
-			trace("ADDING THIRD PERK");
 			//{text shows after generic 16th technique training session}
 			output("As you finish training you decide to meditate alone; you close your eyes and begin to breathe.  Then the world around you begins to sing.\n\n");
 			output("The camp is alive with the sounds of voices on the wind, of the ominous sizzling of the great scar between worlds that is the portal that brought you here.  You feel open to the universe as if it were a lady in a dress sitting next to you, that you could easily reach out and touch.  You feel liberated and free despite the fact that you are not moving a muscle.  You are ready for anything but expecting nothing.  You are neither thinking nor dreaming, you simply are.\n\n");
@@ -826,23 +836,21 @@ public function apparantlyJojoDOESlift():void
 		output("Jojo smiles, “<i>In all honesty [pc.name], I should be asking you to teach me, but I’ll do my best.</i>”\n\n");
 		output("There are no lectures.  Neither you nor Jojo are masters, but as of right now, the two of you have exhausted the small store of knowledge available to you from the Celestial Lotus.  You and Jojo instead practice to exhaustion, heaving and panting for breath, whilst still finding time to enjoy each others company.\n\n");
 		
-		pc.energy( -60);
-
 		//{each scene only shows if the follower is there}
-		//var enlightenedBlurbs:Array = new Array();
-//
-		//enlightenedBlurbs.push("You can hear Jojo’s feet move through the campsite as he heads toward his rock, seeking rest after your training session.")
-//
+		var enlightenedBlurbs:Array = new Array();
+
+		enlightenedBlurbs.push("You can hear Jojo’s feet move through the campsite as he heads toward his rock, seeking rest after your training session.")
+
 		//// Lookit all these different ways followers are tracked! fml.
 		//if (pc.findStatusAffect(StatusAffects.CampMarble) >= 0) enlightenedBlurbs.push("You can hear Marble humming a song to herself you can’t place.");
-		//if (flags["COC.AMILY_FOLLOWER] > 0) enlightenedBlurbs.push("You can hear Amily changing the bedding to her nest.");
+		if (flags["COC.AMILY_FOLLOWER"] > 0) enlightenedBlurbs.push("You can hear Amily changing the bedding to her nest.");
 		//if (kGAMECLASS.emberScene.followerEmber()) enlightenedBlurbs.push("You can hear Ember cleaning" + emberScene.emberMF("his", "her") + "scales.");
-		//if (pc.findStatusAffect(StatusAffects.CampRathazul) >= 0) enlightenedBlurbs.push("You can hear Rathazul experimenting with surprisingly nimble fingers.");
+		if (flags["COC.RATHAZUL_IN_CAMP"] > 0) enlightenedBlurbs.push("You can hear Rathazul experimenting with surprisingly nimble fingers.");
 		//if (sophieFollower()) enlightenedBlurbs.push("You can hear Sophie breathing as she sleeps.");
 		//if (flags["COC.UNKNOWN_FLAG_NUMBER_00238] > 0) enlightenedBlurbs.push("You can hear Izma flipping through the pages of a book."); // TODO: (if Izmael gets put in) you can hear Izmael doing push ups to stay fit.
 		//if (kGAMECLASS.helScene.followerHel()) enlightenedBlurbs.push("You can hear Helia throwing her fists at nothing.");
-//
-		//output(enlightenedBlurbs[rand(enlightenedBlurbs.length)] + "\n\n");
+
+		output(enlightenedBlurbs[rand(enlightenedBlurbs.length)] + "\n\n");
 	}
 	//Boost attributes!
 	
@@ -864,22 +872,25 @@ public function ControlledBreathTimePassedNotify():void {
 private var ControlledBreathTimePassedNotifyHook: * = ControlledBreathTimePassedNotifyGrapple();
 private function ControlledBreathTimePassedNotifyGrapple():* { timeChangeListeners.push(ControlledBreathTimePassedNotify); }
 
-//public function wormRemoval():void {
-	////jojoSprite();
-	//clearOutput();
-	//output("\"<i>Excellent, young one,</i>\" Jojo continues. \"<i>Your dedication to purification is admirable. Relax and know that the parasites will leave you soon.</i>\"\n\n");
-	//output("Jojo gets up and walks over to a backpack hidden in the bushes. He removes a lacquered box. He removes and combines a rather noxious combination of herbs, oils and other concoctions into a mortar and grinds it with a pestle. After a few minutes, he ignites the mixture and uses a feathered fan to blow the fumes over you. The smell of the mix is nauseating and repugnant. Your stomach turns and you fight the urge to vomit. Eventually, you are no longer able to resist and you purge yourself onto the ground. Cramping from your vomiting fits, you wrack with discomfort, which slowly builds to genuine pain. As the pain sets in, you feel a stirring deep in your crotch. The worms inside you are stirring and thus are compelling another unwanted orgasm. Unable to control your body, your cock explodes, launching cum and worms everywhere. Jojo begins fanning faster as he sees the worms leave your body.\n\n");
-	//output("\"<i>Further endurance is needed, young one,</i>\" Jojo says. \"<i>The root of your problem must leave before you may pursue further purification. Healing is always twice as uncomfortable as the illness requiring attention.</i>\"\n\n");
-	//output("Your body cramps up as you feel the fat worm struggle. You feel it pushing up your urethra, fighting to escape your fumigated body. The worm rapidly peeks from the end of your penis. With expedience, Jojo quickly grabs the worm and pulls it out of you, triggering one last orgasm. The monk casts the fat worm to the ground and strikes it dead with his staff.\n\n");
-	//output("\"<i>The culprit has been exorcised and will no longer trouble you. Rest here for a while and join me in some meditation to heal your exhausted body and soul.</i>\"\n\n");
-	//output("Being too tired for anything else, you join Jojo in meditation, which does much to relive you of your former woes.");
-	////Infestation removed. HP reduced to 50% of MAX. Sensitivity reduced by -25 or reduced to 10, which ever is the smaller reduction.
-	////Infestation purged. Hit Points reduced to 10% of MAX. Corruption -20.
-	//if (pc.HP > int(pc.maxHP() * .5)) pc.HP = int(pc.maxHP() * .5);
-	//pc.damageHunger(30);
-	//pc.sens = 11;
-	//pc.removeStatusAffect(StatusAffects.Infested);
+public function jojoWormRemoval():void {
+	showJojo();
+	clearOutput();
+	output("\"<i>Excellent, young one,</i>\" Jojo continues. \"<i>Your dedication to purification is admirable. Relax and know that the parasites will leave you soon.</i>\"\n\n");
+	output("Jojo gets up and walks over to a backpack hidden in the bushes. He removes a lacquered box. He removes and combines a rather noxious combination of herbs, oils and other concoctions into a mortar and grinds it with a pestle. After a few minutes, he ignites the mixture and uses a feathered fan to blow the fumes over you. The smell of the mix is nauseating and repugnant. Your stomach turns and you fight the urge to vomit. Eventually, you are no longer able to resist and you purge yourself onto the ground. Cramping from your vomiting fits, you wrack with discomfort, which slowly builds to genuine pain. As the pain sets in, you feel a stirring deep in your crotch. The worms inside you are stirring and thus are compelling another unwanted orgasm. Unable to control your body, your cock explodes, launching cum and worms everywhere. Jojo begins fanning faster as he sees the worms leave your body.\n\n");
+	output("\"<i>Further endurance is needed, young one,</i>\" Jojo says. \"<i>The root of your problem must leave before you may pursue further purification. Healing is always twice as uncomfortable as the illness requiring attention.</i>\"\n\n");
+	output("Your body cramps up as you feel the fat worm struggle. You feel it pushing up your urethra, fighting to escape your fumigated body. The worm rapidly peeks from the end of your penis. With expedience, Jojo quickly grabs the worm and pulls it out of you, triggering one last orgasm. The monk casts the fat worm to the ground and strikes it dead with his staff.\n\n");
+	output("\"<i>The culprit has been exorcised and will no longer trouble you. Rest here for a while and join me in some meditation to heal your exhausted body and soul.</i>\"\n\n");
+	output("Being too tired for anything else, you join Jojo in meditation, which does much to relive you of your former woes.");
+	//Infestation removed. HP reduced to 50% of MAX. Sensitivity reduced by -25 or reduced to 10, which ever is the smaller reduction.
+	//Infestation purged. Hit Points reduced to 10% of MAX. Corruption -20.
+	if (pc.HPQ() > 50) pc.HPRaw = pc.HPMax() / 2;
+	pc.removeStatusEffect("Infested");
 	//dynStats("sen", -1, "lus", -99, "cor", -15);
-	//pc.orgasm();
-	//doNext(returnToCampUseOneHour);
-//}
+	pc.energy( -20);
+	processTime(90 + rand(60));
+	pc.orgasm();
+	pc.orgasm();
+	pc.orgasm();
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
+}

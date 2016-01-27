@@ -15,7 +15,7 @@ private function minotaurSprite():void
 	//else spriteSelect(106);
 	if (enemy == null || !(enemy is CoCMinotaur))
 		setEnemy(new CoCMinotaur());
-	userInterface.showName("MINOTAUR");
+	userInterface.showName("\nMINOTAUR");
 }
 
 private function minotaurPrepare():void {
@@ -32,7 +32,6 @@ public function encounterMinotaur():void {
 	minotaurSprite();
 	clearOutput();
 	clearMenu();
-	userInterface.showName("MINOTAUR");
 	
 	if (flags["COC.MINOTAUR_TF2_EVENT_SEEN"] == undefined && pc.level <= 1 && pc.PQ() <= 80) {
 		if (silly) {

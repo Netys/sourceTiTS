@@ -24,7 +24,7 @@ private function kitsuneSprite():void
 	//else spriteSelect(106);
 	if (enemy == null || !(enemy is CoCKitsune))
 		setEnemy(new CoCKitsune());
-	userInterface.showName("KITSUNE");
+	userInterface.showName("\nKITSUNE");
 }
 
 // NOT FORGET: CLEAR foes AFTER EVENT, this is dirty hack
@@ -2702,10 +2702,9 @@ public function NineTailsTimePassedNotify():void {
 		else if (isNineTails(pc) || pc.isPsionic()) {
 			if(!pc.armor.hasRandomProperties) { // first time message
 				eventBuffer += "\n\nYou feel your power resonating with your bands... You are fully in tune with them! Enchantment is now powerful enough to provide some real protection from attacks as well, and glamour effect is more powerful too.";
-				pc.armor.type = GLOBAL.ARMOR;
-				pc.armor.tooltip = IllusoryAttire.descBasic + (isNineTails(pc) ? IllusoryAttire.descNineTails : IllusoryAttire.descPsionic);
-				TooltipManager.addTooltip(pc.armor.shortName, pc.armor.tooltip);
 			}
+			pc.armor.type = GLOBAL.ARMOR;
+			pc.armor.tooltip = IllusoryAttire.descBasic + (isNineTails(pc) ? IllusoryAttire.descNineTails : IllusoryAttire.descPsionic);
 			pc.armor.defense = Math.ceil(pc.level / 4) + 2;
 			pc.armor.shieldDefense = pc.armor.defense;
 			pc.armor.evasion = Math.ceil(pc.level / 2) + 2;
@@ -2713,6 +2712,7 @@ public function NineTailsTimePassedNotify():void {
 			pc.armor.resistances.psionic.resistanceValue = 20;
 			pc.armor.hasRandomProperties = true;
 		}
+		TooltipManager.addTooltip(pc.armor.shortName, pc.armor.tooltip);
 	}
 }
 private var NineTailsTimePassedNotifyHook: * = NineTailsTimePassedNotifyGrapple();

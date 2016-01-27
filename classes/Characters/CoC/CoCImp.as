@@ -4,11 +4,13 @@ package classes.Characters.CoC
 	import classes.Engine.Combat.applyDamage;
 	import classes.Engine.Combat.DamageTypes.DamageFlag;
 	import classes.Engine.Combat.DamageTypes.TypeCollection;
+	import classes.Engine.Utility.weightedRand;
 	import classes.GameData.CombatAttacks;
 	import classes.GLOBAL;
 	import classes.Items.Miscellaneous.*;
 	import classes.Items.Transformatives.*;
 	import classes.kGAMECLASS;
+	import classes.Util.RandomInCollection;
 	
 	
 	public class CoCImp extends Creature
@@ -39,6 +41,7 @@ package classes.Characters.CoC
 			this.armor.defense = 0;
 			this.armor.hasRandomProperties = true;
 			
+			this.personality = 100;
 			this.physiqueRaw = 3;
 			this.reflexesRaw = 3;
 			this.aimRaw = 2;
@@ -125,7 +128,7 @@ package classes.Characters.CoC
 			//No dicks here!
 			this.cocks = new Array();
 			this.createCock();
-			this.shiftCock(0, GLOBAL.TYPE_DEMONIC);
+			this.shiftCock(0, weightedRand( { v: GLOBAL.TYPE_DEMONIC, w: 10 }, { v: GLOBAL.TYPE_CANINE, w: 3 }, { v: GLOBAL.TYPE_FELINE, w: 3 }, { v: GLOBAL.TYPE_EQUINE, w: 3 }, { v: GLOBAL.TYPE_TENTACLE, w: 1 }, { v: GLOBAL.TYPE_SNAKE, w: 1 } ));
 			this.cocks[0].cLengthRaw = rand(2) + 11;
 			this.cocks[0].cThicknessRatioRaw = 1.75;
 			this.cocks[0].cockColor = "red";
@@ -177,12 +180,12 @@ package classes.Characters.CoC
 			var target:Creature = selectTarget(hostileCreatures);
 			if (target == null) return;
 			
-			if (rand(4) == 0) LustAttack(target);
+			if (rand(3) == 0) LustAttack(target);
 			else CombatAttacks.MeleeAttack(this, target);
 		}
 
 		private function LustAttack(target:Creature):void {
-			output("You see " + a + short + " make sudden arcane gestures at you!\n\n");
+			output("You see " + a + uniqueName + " make sudden arcane gestures at you!\n\n");
 			
 			if (target.lust() < 30) output("You feel strangely warm.  ");
 			if (target.lust() >= 30 && target.lust() < 60) output("Blood rushes to your groin as a surge of arousal hits you, making your knees weak.  ");
