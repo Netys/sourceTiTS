@@ -2559,6 +2559,7 @@ package classes.GameData
 				else if (damage < 20) buffer = "The young alien huntress places a hand over her loins and rubs her thighs together. She's desperately trying to hide her rather obvious arousal. The sweet scent of her arousal fills the air.";
 				else buffer = "The wispy amazon parts her thighs and begins to stroke her twin clits to your lewd display, unable to stop herself. A few seconds later she jerks her webbed back, flushing wildly.";
 			}
+			else if (target.hasOwnProperty("teaseReactions")) buffer = target["teaseReactions"](damage);
 			else if (target.isPlural) {
 				if (damage == 0) buffer = target.capitalA + target.uniqueName  + " seem unimpressed.";
 				else if (damage < 4) buffer = target.capitalA + target.uniqueName + " look intrigued by what they see.";

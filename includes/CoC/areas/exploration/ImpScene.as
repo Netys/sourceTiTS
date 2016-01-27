@@ -101,7 +101,7 @@ public function CoCImpPCVictory():void {
 	addButton(14, "Leave", function():*{ processTime(15 + rand(10)); CombatManager.genericVictory(); } );
 }
 
-private function rapeImpWithDick(condomed:Boolean = false):void {
+private function rapeImpWithDick():void {
 	var x:Number = pc.cockThatFits(enemy.analCapacity());
 	if (x < 0) x = 0;
 	clearOutput();

@@ -1,8 +1,15 @@
 package classes.Characters.CoC
 {
+	import classes.Characters.PlayerCharacter;
 	import classes.Creature;
+	import classes.Engine.Combat.applyDamage;
+	import classes.Engine.Combat.DamageTypes.DamageFlag;
 	import classes.Engine.Combat.DamageTypes.TypeCollection;
+	import classes.Engine.Interfaces.addButton;
+	import classes.Engine.Interfaces.clearMenu;
+	import classes.Engine.Interfaces.clearOutput;
 	import classes.GameData.CombatAttacks;
+	import classes.GameData.CombatManager;
 	import classes.GLOBAL;
 	import classes.Items.Melee.CoCPipe;
 	import classes.Items.Melee.GooeyPsuedopod;
@@ -33,7 +40,7 @@ package classes.Characters.CoC
 			
 			this.XPRaw = 75;
 			this.level = 3;
-			this.credits = rand(50) + 10;
+			this.credits = (rand(5) + 1) * 10;
 			
 			this.physiqueRaw = 5;
 			this.reflexesRaw = 4;
@@ -45,7 +52,7 @@ package classes.Characters.CoC
 			this.shieldsRaw = 0;
 			this.HPRaw = this.HPMax();
 			this.energyRaw = 100;
-			this.lustRaw = 45;
+			this.lustRaw = 10;
 			
 			baseHPResistances = new TypeCollection();
 			baseHPResistances.kinetic.resistanceValue = 75.0;
@@ -61,19 +68,19 @@ package classes.Characters.CoC
 			
 			this.femininity = 90;
 			this.eyeType = 0;
-			this.eyeColor = "green";
-			this.tallness = 49;
+			this.eyeColor = kGAMECLASS.gooGirlColor(5);
+			this.tallness = rand(8) + 70;
 			this.thickness = 60;
 			this.tone = 50;
-			this.hairColor = "green";
-		    this.scaleColor = "green";
-			this.furColor = "green";
-			this.hairLength = 12;
+			this.hairColor = kGAMECLASS.gooGirlColor(2);
+		    this.scaleColor = kGAMECLASS.gooGirlColor(6);
+			this.furColor = kGAMECLASS.gooGirlColor(7);
+			this.hairLength = 12 + rand(10);
 			this.hairType = 0;
 			this.beardLength = 0;
 			this.beardStyle = 0;
 			this.skinType = GLOBAL.SKIN_TYPE_GOO;
-			this.skinTone = "green";
+			this.skinTone = kGAMECLASS.gooGirlColor();
 			this.skinFlags = [GLOBAL.FLAG_SQUISHY, GLOBAL.FLAG_LUBRICATED, GLOBAL.FLAG_AMORPHOUS];
 			this.faceType = 0;
 			this.faceFlags = new Array();
@@ -155,7 +162,7 @@ package classes.Characters.CoC
 			this.vaginas[0].wetnessRaw = 5;
 			this.vaginas[0].loosenessRaw = 1;
 			this.vaginas[0].bonusCapacity = 10;
-			this.vaginas[0].vaginaColor = "green";
+			this.vaginas[0].vaginaColor = kGAMECLASS.gooGirlColor(4);
 			//Goo is hyper friendly!
 			this.elasticity = 100;
 			//Fertility is a % out of 100. 
@@ -164,7 +171,7 @@ package classes.Characters.CoC
 			this.pregnancyMultiplierRaw = 1;
 			
 			this.breastRows[0].breastRatingRaw = 14;
-			this.nippleColor = "deep emerald";
+			this.nippleColor = kGAMECLASS.gooGirlColor(2);
 			this.milkMultiplier = 0;
 			this.milkType = GLOBAL.FLUID_TYPE_MILK;
 			//The rate at which you produce milk. Scales from 0 to INFINITY.
@@ -179,12 +186,6 @@ package classes.Characters.CoC
 				breastRows[0].breastRatingRaw = 3;
 			}
 			
-			skinTone = "blue"; // lightly contaminated lake
-			if(kGAMECLASS.flags["COC.FACTORY_SHUTDOWN"] == 1) skinTone = "crystal"; // pure lake
-			if(kGAMECLASS.flags["COC.FACTORY_SHUTDOWN"] == 2) skinTone = "purple"; // heavily contaminated lake
-			tallness = rand(8) + 70;
-			hairLength = 12 + rand(10);
-			
 			sexualPreferences.setRandomPrefs(3 + rand(3));
 			
 			if(rand(2) == 0) // TODO: WETCLTH 1/2
@@ -195,12 +196,91 @@ package classes.Characters.CoC
 			this._isLoading = false;
 		}
 		
-		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void // TODO: stub
+		public function additionalCombatMenuEntries():void
+		{
+			var pc:PlayerCharacter = kGAMECLASS.pc;
+			
+			if (pc.hasStatusEffect("Grappled")) {
+				addButton(0, "Struggle", gooStruggle, pc);
+				addButton(4, "Do Nothing", gooWait, pc);
+				return;
+			}
+		}
+		
+		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void
 		{
 			var target:Creature = selectTarget(hostileCreatures);
 			if (target == null) return;
 			
-			CombatAttacks.MeleeAttack(this, target);
+			if(target.hasStatusEffect("Grappled")) {}
+			else if (rand(5) == 0) gooEngulph(target);
+			else if (rand(3) == 0) gooPlay(target);
+			else gooThrow(target);
+		}
+
+		public function teaseReactions(damage:Number):String
+		{
+			if (lustQ() <= 33) return "The goo-girl looks confused by your actions, as if she's trying to understand what you're doing.";
+			else if (lustQ() < 66) return "The curious goo has begun stroking herself openly, trying to understand the meaning of your actions by imitating you.";
+			else if (lustQ() <= 99) return "The girl begins to understand your intent. She opens and closes her mouth, as if panting, while she works slimy fingers between her thighs and across her jiggling nipples.";
+			else return "It appears the goo-girl has gotten lost in her mimicry, squeezing her breasts and jilling her shiny " + skinTone + " clit, her desire to investigate you forgotten.";
+		}
+
+		//Play – 
+		private function gooPlay(target:Creature):void
+		{
+			output("The goo-girl lunges, wrapping her slimy arms around your waist in a happy hug, hot muck quivering excitedly against you. She looks up, empty eyes confused by your lack of enthusiasm and forms her mouth into a petulant pout before letting go.  You shiver in the cold air, regretting the loss of her embrace.  ");
+			applyDamage(new TypeCollection( { tease : 3 + rand(3) + target.libido() / 10 } ), this, target);
+		}
+		
+		//Throw – 
+		private function gooThrow(target:Creature):void
+		{
+			output("The girl reaches into her torso, pulls a large clump of goo out, and chucks it at you like a child throwing mud. The slime splatters on your chest and creeps under your [pc.gear], tickling your skin like fingers dancing across your body.  ");
+			applyDamage(new TypeCollection( { kinetic : 1 } ), this, target);
+			applyDamage(new TypeCollection( { tease : 5 + rand(3) + target.libido() / 10 } ), this, target);
+		}
+		
+		//Engulf – 
+		private function gooEngulph(target:Creature):void
+		{
+			output("The goo-girl gleefully throws her entire body at you and, before you can get out of the way, she has engulfed you in her oozing form!  ");
+			if (!(target.hasArmor() && target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)))
+				output("Tendrils of " + skinTone + " slime slide up your nostrils and through your lips, filling your lungs with the girl's muck. You begin suffocating!  ");
+			
+			target.createStatusEffect("Grappled", 0, 0, 0, 0, false, "Icon_Constricted", "You are engulfed by goo!", true);
+		}
+		
+		private function gooWait(target:Creature):void
+		{
+			clearOutput();
+			clearMenu();
+			if (target.hasArmor() && target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)) {
+				output("You writhe uselessly, trapped inside the goo girl's body. With your sealed armor this situation is clearly stalemate. ");
+			}
+			else {
+				output("You writhe uselessly, trapped inside the goo girl's warm, seething body. Darkness creeps at the edge of your vision as you are lulled into surrendering by the rippling vibrations of the girl's pulsing body around yours. ");
+				applyDamage(new TypeCollection( { truedamage : .35 * target.maxHP() }, DamageFlag.BYPASS_SHIELD ), this, target);
+			}
+			CombatManager.processCombat();
+		}
+		
+		private function gooStruggle(target:Creature):void
+		{
+			clearOutput();
+			clearMenu();
+			if (rand(3) == 0 || rand(80) < target.physique()) {
+				output("You claw your fingers wildly within the slime and manage to brush against her heart-shaped nucleus. The girl silently gasps and loses cohesion, allowing you to pull yourself free while she attempts to solidify.  ");
+				target.removeStatusEffect("Grappled");
+			}
+			else if (target.hasArmor() && target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)) {
+				output("You writhe uselessly, trapped inside the goo girl's body. With your sealed armor this situation is clearly stalemate. ");
+			}
+			else {
+				output("You writhe uselessly, trapped inside the goo girl's warm, seething body. Darkness creeps at the edge of your vision as you are lulled into surrendering by the rippling vibrations of the girl's pulsing body around yours. ");
+				applyDamage(new TypeCollection( { truedamage : .15 * target.maxHP() }, DamageFlag.BYPASS_SHIELD ), this, target);
+			}
+			CombatManager.processCombat();
 		}
 	}
 }
