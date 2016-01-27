@@ -3,8 +3,6 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-// TODO:
-// giacomoEncounter, lumiEncounter
 public function doExplore():void
 {
 	kGAMECLASS.userInterface.setLocation("", "EXPLORATION", "PLANET: MARETH");
@@ -14,10 +12,6 @@ public function doExplore():void
 		return;
 	} else if (flags["COC.EXPLORED"] > 1) outputText("You can continue to search for new locations, or explore your previously discovered locations.", true);
 
-	/*if (flags[kFLAGS.EXPLORATION_PAGE] == 2) {
-		explorePageII();
-		return;
-	}*/
 	clearMenu();
 	
 	addButton(0, "Explore", tryDiscover, null, "Explore", "Explore to find new regions and visit any discovered regions.\n\nTimes explored: " + flags["COC.EXPLORED"]);
@@ -45,9 +39,12 @@ public function doExplore():void
 		
 	if (flags["COC.EXPLORED_HIGH_MOUNTAIN"] != undefined) 
 		addButton(8, "High Mountain", exploreHighMountain, null, "Explore high mountains", "Visit the high mountains. \n\nRecommended level: 10\n\nTimes explored: " + flags["COC.EXPLORED_HIGH_MOUNTAIN"]);
-
-	// revamp content...
+	
+	
+	// bog is such meh...
 	//if (flags[kFLAGS.BOG_EXPLORED] > 0) addButton(9, "Bog", kGAMECLASS.bog.exploreBog, null, null, null, "Visit the dark bog. \n\nRecommended level: 14" + (debug ? "\n\nTimes explored: " + flags[kFLAGS.BOG_EXPLORED] : ""));
+	
+	// revamp content...
 	//if (flags[kFLAGS.DISCOVERED_GLACIAL_RIFT] > 0) addButton(10, "Glacial Rift", kGAMECLASS.glacialRift.exploreGlacialRift, null, null, null, "Visit the chilly glacial rift. \n\nRecommended level: 16" + (debug ? "\n\nTimes explored: " + flags[kFLAGS.DISCOVERED_GLACIAL_RIFT] : ""));
 	//if (flags[kFLAGS.DISCOVERED_VOLCANO_CRAG] > 0) addButton(11, "Volcanic Crag", kGAMECLASS.volcanicCrag.exploreVolcanicCrag, null, null, null, "Visit the infernal volcanic crag. \n\nRecommended level: 20" + (debug ? "\n\nTimes explored: " + flags[kFLAGS.DISCOVERED_VOLCANO_CRAG] : ""));
 
@@ -57,36 +54,31 @@ public function doExplore():void
 //Try to find a new location - called from doExplore once the first location is found
 public function tryDiscover():void
 {
-	// kGAMECLASS.goblinAssassinScene.goblinAssassinEncounter();
-	// return;
-
 	//if (flags[kFLAGS.PC_PROMISED_HEL_MONOGAMY_FUCKS] == 1 && flags[kFLAGS.HEL_RAPED_TODAY] == 0 && rand(10) == 0 && player.gender > 0 && !kGAMECLASS.helFollower.followerHel()) {
 		//kGAMECLASS.helScene.helSexualAmbush();
 		//return;
 	//}
 	
-	processTime(20 + rand(20)); // take your time looking for trouble!
+	IncrementFlag("COC.EXPLORED");
 	
 	if (cocGeneralAreasExplore()) return;
 	
-	flags["COC.EXPLORED"]++;
+	processTime(20 + rand(20)); // take your time looking for trouble!
 	
-	if (rand(2) == 0) {
-		genericGobImpEncounters();
-		return;
-	}
-
-	var chance:Array = [];
 	var events:Array = [];
+	var chance:Array = [];
 	
 	events.push(genericGobImpEncounters)
 	chance.push(1)
 	
 	events.push(giacomoEncounter)
-	chance.push(2)
+	chance.push(3)
 	
 	events.push(lumiEncounter)
-	chance.push(2)
+	chance.push(3)
+	
+	// kGAMECLASS.goblinAssassinScene.goblinAssassinEncounter();
+	// return;
 	
 	//if (flags["COC.CATHEDRAL_FOUND"] == undefined) {
 		//events.push(gargoylesTheShowNowOnWBNetwork);
@@ -190,20 +182,20 @@ public function showDungeonsMenu():Boolean {
 
 public function canExplore():Boolean {
 	var canExplore:Boolean = true;
-	if(pc.lust() >= pc.lustMax()) {
-		outputText("<b>You are debilitatingly aroused, and can think of doing nothing other than masturbating.</b>\n\n", false);
+	if(pc.lustQ() == 100) {
+		output("<b>You are debilitatingly aroused, and can think of doing nothing other than masturbating.</b>\n\n");
 		//canExplore = false;
 	}
 	if(hours < 6 || hours > 20) {
-		outputText("It is dark out, made worse by the lack of stars in the sky.  A blood-red moon hangs in the sky, seeming to watch you, but providing little light.  It's far too dark to leave camp.\n\n", false);
+		output("It is dark out, made worse by the lack of stars in the sky.  A blood-red moon hangs in the sky, seeming to watch you, but providing little light.  It's far too dark to leave camp.\n\n");
 		if (companionsCount() > 0 && !(hours > 4 && hours < 23)) {
-			outputText("Your camp is silent as your companions are sleeping right now.\n\n", false);
+			outputText("Your camp is silent as your companions are sleeping right now.\n\n");
 		}
 		//canExplore = false;
 	} else {
-		if (hours == 19) outputText("The sun is close to the horizon, getting ready to set. ", false);
-		if (hours == 20) outputText("The sun has already set below the horizon. The sky glows orange. ", false);
-		outputText("It's light outside, a good time to explore and forage for supplies with which to fortify your camp.\n\n", false);
+		if (hours == 19) outputText("The sun is close to the horizon, getting ready to set. ");
+		if (hours == 20) outputText("The sun has already set below the horizon. The sky glows orange. ");
+		output("It's light outside, a good time to explore and forage for supplies with which to fortify your camp.\n\n");
 	}
 	return canExplore;
 }
@@ -222,48 +214,52 @@ public function showExplorationButton():void {
 
 public function cocGeneralAreasExplore():Boolean {
 	clearOutput();
-	if (flags["COC.EXPLORED"] == undefined) {
-		output("You tentatively step away from your campsite, alert and scanning the ground and sky for danger.  You walk for the better part of an hour, marking the rocks you pass for a return trip to your camp.  It worries you that the portal has an opening on this side, and it was totally unguarded...\n\n...Wait a second, why is your campsite in front of you? The portal's glow is clearly visible from inside the tall rock formation.   Looking carefully you see your footprints leaving the opposite side of your camp, then disappearing.  You look back the way you came and see your markings vanish before your eyes.  The implications boggle your mind as you do your best to mull over them.  Distance, direction, and geography seem to have little meaning here, yet your campsite remains exactly as you left it.  A few things click into place as you realize you found your way back just as you were mentally picturing the portal!  Perhaps memory influences travel here, just like time, distance, and speed would in the real world!\n\nThis won't help at all with finding new places, but at least you can get back to camp quickly.  You are determined to stay focused the next time you explore and learn how to traverse this gods-forsaken realm.", true);
-		flags["COC.EXPLORED"] = 1;
-		doNext(returnToCampUseOneHour);
+	clearMenu();
+	
+	if (flags["COC.EXPLORED"] == 1) {
+		output("You tentatively step away from your campsite, alert and scanning the ground and sky for danger.  You walk for the better part of an hour, marking the rocks you pass for a return trip to your camp.  It worries you that the portal has an opening on this side, and it was totally unguarded...\n\n...Wait a second, why is your campsite in front of you? The portal's glow is clearly visible from inside the tall rock formation.   Looking carefully you see your footprints leaving the opposite side of your camp, then disappearing.  You look back the way you came and see your markings vanish before your eyes.  The implications boggle your mind as you do your best to mull over them.  Distance, direction, and geography seem to have little meaning here, yet your campsite remains exactly as you left it.  A few things click into place as you realize you found your way back just as you were mentally picturing the portal!  Perhaps memory influences travel here, just like time, distance, and speed would in the real world!\n\nThis won't help at all with finding new places, but at least you can get back to camp quickly.  You are determined to stay focused the next time you explore and learn how to traverse this gods-forsaken realm.");
+		processTime(50 + rand(20));
+		addButton(0, "Next", mainGameMenu);
 		return true;
 	}
-	
-	flags["COC.EXPLORED"]++;
 		
 	if (flags["COC.EXPLORED_FOREST"] == undefined) {
 		output("You walk for quite some time, roaming the hard-packed and pink-tinged earth of the demon-realm.  Rust-red rocks speckle the wasteland, as barren and lifeless as anywhere else you've been.  A cool breeze suddenly brushes against your face, as if gracing you with its presence.  You turn towards it and are confronted by the lush foliage of a very old looking forest.  You smile as the plants look fairly familiar and non-threatening.  Unbidden, you remember your decision to test the properties of this place, and think of your campsite as you walk forward.  Reality seems to shift and blur, making you dizzy, but after a few minutes you're back, and sure you'll be able to return to the forest with similar speed.\n\n<b>You've discovered the Forest!</b>", true);
 		flags["COC.EXPLORED_FOREST"] = 0;
-		doNext(returnToCampUseOneHour);
+		processTime(50 + rand(20));
+		addButton(0, "Next", mainGameMenu);
 		return true;
 	}
 	
 	if (flags["COC.EXPLORED_LAKE"] == undefined) {
 		output("Your wanderings take you far and wide across the barren wasteland that surrounds the portal, until the smell of humidity and fresh water alerts you to the nearby lake.  With a few quick strides you find a lake so massive the distant shore cannot be seen.  Grass and a few sparse trees grow all around it.\n\n<b>You've discovered the Lake!</b>");
 		flags["COC.EXPLORED_LAKE"] = 0;
-		doNext(returnToCampUseOneHour);
+		processTime(50 + rand(20));
+		addButton(0, "Next", mainGameMenu);
 		return true;
 	}
 	
 	if (flags["COC.EXPLORED_LAKE"] != undefined && rand(3) == 0 && flags["COC.EXPLORED_DESERT"] == undefined) {
 		output("You stumble as the ground shifts a bit underneath you.  Groaning in frustration, you straighten up and discover the rough feeling of sand under your [pc.legs].\n\n<b>You've discovered the Desert!</b>");
 		flags["COC.EXPLORED_DESERT"] = 0;
-		doNext(returnToCampUseOneHour);
+		processTime(50 + rand(20));
+		addButton(0, "Next", mainGameMenu);
 		return true;
 	}
 	
 	if (flags["COC.EXPLORED_DESERT"] != undefined && rand(3) == 0 && flags["COC.EXPLORED_MOUNTAIN"] == undefined) {
 		output("Thunder booms overhead, shaking you out of your thoughts.  High above, dark clouds encircle a distant mountain peak.  You get an ominous feeling in your gut as you gaze up at it.\n\n<b>You've discovered the Mountain!</b>");
 		flags["COC.EXPLORED_MOUNTAIN"] = 0;
-		flags["COC.EXPLORED"]++;
-		doNext(returnToCampUseOneHour);
+		processTime(50 + rand(20));
+		addButton(0, "Next", mainGameMenu);
 		return true;
 	}
 	
 	if (flags["COC.EXPLORED_MOUNTAIN"] != undefined && rand(3) == 0 && flags["COC.EXPLORED_PLAINS"] == undefined) {
 		output("You find yourself standing in knee-high grass, surrounded by flat plains on all sides.  Though the mountain, forest, and lake are all visible from here, they seem quite distant.\n\n<b>You've discovered the plains!</b>");
 		flags["COC.EXPLORED_PLAINS"] = 0;
-		doNext(returnToCampUseOneHour);
+		processTime(50 + rand(20));
+		addButton(0, "Next", mainGameMenu);
 		return true;
 	}
 	
@@ -273,7 +269,8 @@ public function cocGeneralAreasExplore():Boolean {
 		output("All things considered, you decide you wouldn't mind a change of scenery.  Gathering up your belongings, you begin a journey into the wasteland.  The journey begins in high spirits, and you whistle a little traveling tune to pass the time.  After an hour of wandering, however, your wanderlust begins to whittle away.  Another half-hour ticks by.  Fed up with the fruitless exploration, you're nearly about to head back to camp when a faint light flits across your vision.  Startled, you whirl about to take in three luminous will-o'-the-wisps, swirling around each other whimsically.  As you watch, the three ghostly lights begin to move off, and though the thought of a trap crosses your mind, you decide to follow.\n\n");
 		output("Before long, you start to detect traces of change in the environment.  The most immediate difference is the increasingly sweltering heat.  A few minutes pass, then the will-o'-the-wisps plunge into the boundaries of a dark, murky, stagnant swamp; after a steadying breath you follow them into the bog.  Once within, however, the gaseous balls float off in different directions, causing you to lose track of them.  You sigh resignedly and retrace your steps, satisfied with your discovery.  Further exploration can wait.  For now, your camp is waiting.\n\n");
 		output("<b>You've discovered the Swamp!</b>");
-		doNext(returnToCampUseTwoHours);
+		processTime(50 + rand(20));
+		addButton(0, "Next", mainGameMenu);
 		return true;
 	}
 	

@@ -41,7 +41,7 @@ public function giacomoEncounter():void {
 	addButton(0, "Shop", giacomoShop);
 	addButton(1, "Erotica", giacomoEroticaMenu);
 	addButton(14, "Leave", function():* { 
-		processTime(10 + rand(5));
+		processTime(10 + rand(10));
 		mainGameMenu();
 	} );
 }

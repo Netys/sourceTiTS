@@ -6446,7 +6446,12 @@ package classes {
 			}
 			return cocks[index].cLength();
 		}
-		//Find the biggest cock that fits inside a given value
+		/**
+		 * Find the biggest cock that fits inside a given value.
+		 * @param	fits maximal target capacity.
+		 * @param	type "area" (effective volume, actually) or "length".
+		 * @return index of largest fitting cock or -1 if no appropriate found.
+		 */
 		public function cockThatFits(fits: Number = 0, type: String = "area"): Number {
 			trace("Fits value: " + fits);
 			if (cocks.length <= 0) return -1;

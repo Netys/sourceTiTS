@@ -18,7 +18,7 @@ public function lumiEncounter():void {
 		output("Do you open it?", false);
 		addButton(0, "Yes", lumiLabChoices);
 		addButton(1, "No", function():*{ 
-			processTime(10 + rand(5));
+			processTime(10 + rand(10));
 			mainGameMenu();
 		} );
 	}
@@ -54,7 +54,7 @@ public function lumiLabChoices():void {
 	addButton(0, "Shop", lumiShop);
 	addButton(1, "Enhance", lumiEnhance);
 	addButton(14, "Leave", function():*{ 
-		processTime(10 + rand(5));
+		processTime(10 + rand(10));
 		mainGameMenu();
 	} );
 }

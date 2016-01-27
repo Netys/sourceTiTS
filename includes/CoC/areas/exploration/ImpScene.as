@@ -98,7 +98,7 @@ public function CoCImpPCVictory():void {
 	//addButton(6, "Kill Him", killImp);
 	//if (pc.canOvipositBee()) addButton(8, "Oviposit", putBeeEggsInAnImpYouMonster);
 	
-	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); CombatManager.genericVictory(); } );
+	addButton(14, "Leave", function():*{ processTime(15 + rand(10)); CombatManager.genericVictory(); } );
 }
 
 private function rapeImpWithDick(condomed:Boolean = false):void {

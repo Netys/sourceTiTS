@@ -11,7 +11,6 @@ package classes.Characters.CoC
 	import classes.Items.Transformatives.*;
 	import classes.Items.Transformatives.CoCDyes.*;
 	import classes.kGAMECLASS;
-	import classes.TITSSaveEdit.Data.CoCTypeDefs;
 	
 	public class CoCGoblin extends Creature
 	{
@@ -120,7 +119,7 @@ package classes.Characters.CoC
 			//10 - curvy//flaring
 			//15 - child-bearing/fertile
 			//20 - inhumanly wide
-			this.hipRatingRaw = CoCTypeDefs.HIP_RATING_AMPLE+2;
+			this.hipRatingRaw = 8;
 			//buttRating
 			//0 - buttless
 			//2 - tight
@@ -131,7 +130,7 @@ package classes.Characters.CoC
 			//13 - expansive
 			//16 - huge
 			//20 - inconceivably large/big/huge etc
-			this.buttRatingRaw = CoCTypeDefs.BUTT_RATING_LARGE;
+			this.buttRatingRaw = 8;
 			//No dicks here!
 			this.cocks = new Array();
 			
