@@ -3262,69 +3262,92 @@ package classes {
 			if(hasPerk("Drug Fucked")) bonus += 40;
 			return (0 + bonus);
 		}
+		/**
+		 * Method to alter base stats with diminishing returns.
+		 * @param	stat one of supported stats: physique, reflexes, aim, intelligence, willpower, libido. Supports both full stat name or only first letter.
+		 * @param	arg raw amount to apply, can be positive or negative, can be fractional.
+		 * @return stat value after change.
+		 */
 		public function slowStatGain(stat:String, arg:Number = 0):Number {
 			var statCurrent: Number = 0;
+			var statMax: Number = 0;
 			var change: Number = 0;
 			var mod: Number = 0;
 			// Affinity
-			if(stat == affinity)
+			if(stat == affinity || stat == affinity.charAt(0))
 			{
 				arg *= arg >= 0 ? 1.5 : 0.66; // more gains and less losses for affinity stats
 			}
 			// Normal
-			if (stat == "physique" || stat == "p") statCurrent = physique();
-			else if (stat == "reflexes" || stat == "r") statCurrent = reflexes();
-			else if (stat == "aim" || stat == "a") statCurrent = aim();
-			else if (stat == "intelligence" || stat == "i") statCurrent = intelligence();
-			else if (stat == "willpower" || stat == "w") statCurrent = willpower();
+			if (stat == "physique" || stat == "p") {
+				statCurrent = physique();
+				statMax = physiqueMax();
+			}
+			else if (stat == "reflexes" || stat == "r") {
+				statCurrent = reflexes();
+				statMax = reflexesMax();
+			}
+			else if (stat == "aim" || stat == "a") {
+				statCurrent = aim();
+				statMax = aimMax();
+			}
+			else if (stat == "intelligence" || stat == "i") {
+				statCurrent = intelligence();
+				statMax = intelligenceMax();
+			}
+			else if (stat == "willpower" || stat == "w") {
+				statCurrent = willpower();
+				statMax = willpowerMax();
+			}
 			else if (stat == "libido" || stat == "l") {
 				if (hasPerk("Purity Blessing") && arg > 0) arg *= 0.75;
 				statCurrent = libido();
+				statMax = libidoMax();
 			}
 			else {
 				kGAMECLASS.output("ERROR: slowStatGain called with stat argument of " + stat + ". This isn't a real stat!");
 				return 0;
 			}
 			
-			if (arg < 0) { // loss - diminishing loss on low stat
-				while (arg < 0) {
-					mod = Math.max(arg, -1); // to support fractional arguments
-					arg++;
-					if(arg > 0) arg = 0;
-					if (statCurrent + change < 5) mod *= .1;
-					else if (statCurrent + change < 10) mod *= .15;
-					else if (statCurrent + change < 15) mod *= .2;
-					else if (statCurrent + change < 20) mod *= .25;
-					else if (statCurrent + change < 25) mod *= .3;
-					else if (statCurrent + change < 30) mod *= .4;
-					else if (statCurrent + change < 35) mod *= .5;
-					else if (statCurrent + change < 40) mod *= .6;
-					else if (statCurrent + change < 50) mod *= .7;
-					else if (statCurrent + change < 60) mod *= .8;
-					else if (statCurrent + change < 70) mod *= .9;
-					else mod *= 1;
-					change += mod;
-				}
+			// loss - diminishing loss on low stat
+			while (arg < 0) {
+				mod = Math.max(arg, -1); // to support fractional arguments
+				arg++;
+				if(arg > 0) arg = 0;
+				if (statCurrent + change < 0.05 * statMax) mod *= .1;
+				else if (statCurrent + change < 0.10 * statMax) mod *= .15;
+				else if (statCurrent + change < 0.15 * statMax) mod *= .2;
+				else if (statCurrent + change < 0.20 * statMax) mod *= .25;
+				else if (statCurrent + change < 0.25 * statMax) mod *= .3;
+				else if (statCurrent + change < 0.30 * statMax) mod *= .4;
+				else if (statCurrent + change < 0.35 * statMax) mod *= .5;
+				else if (statCurrent + change < 0.40 * statMax) mod *= .6;
+				else if (statCurrent + change < 0.50 * statMax) mod *= .7;
+				else if (statCurrent + change < 0.60 * statMax) mod *= .8;
+				else if (statCurrent + change < 0.70 * statMax) mod *= .9;
+				else mod *= 1;
+				change += mod;
 			}
-			else // gain - diminishing gain on high stat
-				while (arg > 0) {
-					mod = Math.min(arg, 1); // to support fractional arguments
-					arg--;
-					if(arg < 0) arg = 0;
-					if (statCurrent + change < 30) mod *= 1;
-					else if (statCurrent + change < 40) mod *= .9;
-					else if (statCurrent + change < 50) mod *= .8;
-					else if (statCurrent + change < 60) mod *= .7;
-					else if (statCurrent + change < 65) mod *= .6;
-					else if (statCurrent + change < 70) mod *= .5;
-					else if (statCurrent + change < 75) mod *= .4;
-					else if (statCurrent + change < 80) mod *= .3;
-					else if (statCurrent + change < 85) mod *= .25;
-					else if (statCurrent + change < 90) mod *= .2;
-					else if (statCurrent + change < 95) mod *= .15;
-					else mod *= .1;
-					change += mod;
-				}
+			
+			// gain - diminishing gain on high stat
+			while (arg > 0) {
+				mod = Math.min(arg, 1); // to support fractional arguments
+				arg--;
+				if(arg < 0) arg = 0;
+				if (statCurrent + change < 0.30 * statMax) mod *= 1;
+				else if (statCurrent + change < 0.40 * statMax) mod *= .9;
+				else if (statCurrent + change < 0.50 * statMax) mod *= .8;
+				else if (statCurrent + change < 0.60 * statMax) mod *= .7;
+				else if (statCurrent + change < 0.65 * statMax) mod *= .6;
+				else if (statCurrent + change < 0.70 * statMax) mod *= .5;
+				else if (statCurrent + change < 0.75 * statMax) mod *= .4;
+				else if (statCurrent + change < 0.80 * statMax) mod *= .3;
+				else if (statCurrent + change < 0.85 * statMax) mod *= .25;
+				else if (statCurrent + change < 0.90 * statMax) mod *= .2;
+				else if (statCurrent + change < 0.95 * statMax) mod *= .15;
+				else mod *= .1;
+				change += mod;
+			}
 			
 			if (stat == "physique" || stat == "p") return physique(change);
 			else if (stat == "reflexes" || stat == "r") return reflexes(change);
