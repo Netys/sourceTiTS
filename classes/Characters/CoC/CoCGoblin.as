@@ -49,6 +49,7 @@ package classes.Characters.CoC
 			this.intelligenceRaw = 4;
 			this.willpowerRaw = 2;
 			this.libidoRaw = 45;
+			this.personality = 60;
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
 			this.lustRaw = 50;

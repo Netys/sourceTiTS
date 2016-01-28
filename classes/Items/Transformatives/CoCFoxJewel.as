@@ -174,8 +174,13 @@ package classes.Items.Transformatives
 				if (pc.vaginas[0].loosenessRaw > 1) pc.vaginas[0].loosenessRaw = 1;
 				changes++;
 			}
-
-
+			
+			// Kitsune sisters have some, why you can't?
+			if (changes < changeLimit && rand(3) == 0 && Mutator.changeTongue(pc, -1, [GLOBAL.FLAG_LONG, GLOBAL.FLAG_PREHENSILE], null, null, false)) {
+				output("\n\nYour tongue suddenly falls out of your mouth and begins undulating as it grows longer.  For a moment it swings wildly, completely out of control; but then settles down and you find you can control it at will, almost like a limb.  You're able to stretch it to nearly 2 feet and retract it back into your mouth to the point it looks normally.  <b>You now have a long, prehensile tongue.</b>");
+				changes++;
+			}
+			
 			//**********************
 			//BIG APPEARANCE CHANGES
 			//**********************

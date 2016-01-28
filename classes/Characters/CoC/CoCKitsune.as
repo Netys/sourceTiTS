@@ -38,6 +38,7 @@ package classes.Characters.CoC
 			
 			this.armor.longName = "skimpy robes";
 			this.armor.defense = 0;
+			this.armor.evasion = 10;
 			this.armor.hasRandomProperties = true;
 			
 			baseHPResistances = new TypeCollection();
@@ -59,19 +60,20 @@ package classes.Characters.CoC
 			this.intelligenceRaw = 95 / 20 * this.level;
 			this.willpowerRaw = 95 / 20 * this.level;
 			this.libidoRaw = 55;
+			this.personality = 45;
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
 			this.lustRaw = 20;			
 			
-			this.femininity = 75;
+			this.femininity = 100;
 			this.eyeType = GLOBAL.TYPE_HUMAN;
-			this.eyeColor = "blue";
+			this.eyeColor = "emerald";
 			this.tallness = 66;
 			this.thickness = 50;
 			this.tone = 30;
 			this.hairColor = "";
 			this.scaleColor = "none";
-			this.furColor = "none";
+			this.furColor = "red";
 			this.hairLength = 20;
 			this.hairType = GLOBAL.HAIR_TYPE_REGULAR;
 			this.beardLength = 0;
@@ -82,14 +84,15 @@ package classes.Characters.CoC
 			this.faceType = GLOBAL.TYPE_HUMAN;
 			this.faceFlags = new Array();
 			this.tongueType = GLOBAL.TYPE_HUMAN;
-			this.lipMod = 0;
+			this.tongueFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_PREHENSILE];
+			this.lipMod = 1;
 			this.earType = GLOBAL.TYPE_VULPINE;
 			this.antennae = 0;
 			this.antennaeType = GLOBAL.TYPE_HUMAN;
 			this.horns = 0;
 			this.hornType = 0;
 			this.armType = GLOBAL.TYPE_HUMAN;
-			this.gills = true;
+			this.gills = false;
 			this.wingType = GLOBAL.TYPE_HUMAN;
 			this.legType = GLOBAL.TYPE_HUMAN;
 			this.legCount = 2;
@@ -148,7 +151,7 @@ package classes.Characters.CoC
 			this.nippleColor = "pink";
 			this.milkMultiplier = 0;
 			this.milkType = GLOBAL.FLUID_TYPE_MILK;
-			this.milkRate = 1;
+			this.milkRate = 10;
 			
 			this.ass.wetnessRaw = 1;
 			this.ass.loosenessRaw = 1;
@@ -164,8 +167,9 @@ package classes.Characters.CoC
 				long += "unkempt, shoulder-length reddish";
 				hairLength = 10;
 				createCock(12);
-				balls = 2;
-				ballSizeRaw = 2;
+				shiftCock(0, GLOBAL.TYPE_VULPINE);
+				//balls = 2;
+				//ballSizeRaw = 2;
 			} else if (hairColor == "black") {
 				long += "lustrous, ass-length black";
 				hairLength = tallness / 1.5;

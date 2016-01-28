@@ -54,7 +54,7 @@ private function TelAdreGymMenu():void {
 	var but:int = 0;
 	
 	// physique training
-	if (pc.energy() >= 50 && !pc.hasStatusEffect("Sore")) addButton(but++, "LiftWeights", TelAdreGymLift, undefined, "Lift Weights", "A hard workout that'll help you build muscle <b>and</b> strength.");
+	if (pc.energy() >= 50 && !pc.hasStatusEffect("Sore")) addButton(but++, "LiftWeights", TelAdreGymLift, undefined, "Lift Weights", "A hard workout that'll help you build muscle and strength.");
 	else addDisabledButton(but++, "LiftWeights", "Lift Weights", "You're too tired for that workout.");
 	
 	// reflexes training
