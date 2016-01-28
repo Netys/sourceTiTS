@@ -17,8 +17,6 @@ public function whitneyCorrupt():Boolean {
 	return false;
 }
 
-// TODO:
-// centaur toys (also scenes)
 public function whitneySprite():void
 {
 	//spriteSelect(62);
@@ -28,6 +26,7 @@ public function whitneySprite():void
 public function farmExploreEncounter():void {
 	clearMenu();
 	clearOutput();
+	userInterface.setLocation("FARM\nSURROUNDINGS", "FARM", "PLANET: MARETH");
 	//if (flags[kFLAGS.FARM_CORRUPTION_STARTED] > 0)
 	//{
 		//farmCorruption.rootScene();
@@ -45,6 +44,7 @@ public function farmExploreEncounter():void {
 	//}
 	if (flags["COC.FARM_DISABLED"] > 0 && flags["COC.KELT_KILLED"] == 1)
 	{
+		whitneySprite();
 		output("Whitney marches up to you as soon as you approach the farm, a stoic expression plastered across her face.");
 		output("\n\n\"<i>What the fuck do you think you're doing here [pc.name]? After what you did to Kelt you still think you're welcome here? Leave. <b>Now</b>.</i>\"");
 		addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
@@ -71,9 +71,9 @@ public function farmExploreEncounter():void {
 	}
 	//Repeat Offender
 	else {
-		whitneySprite()
 		flags["COC.WHITNEY_MET"]++;
 		if (flags["COC.KELT_KILLED"] >= 1) {
+			whitneySprite()
 			output("As soon as you approach the farm, Whitney comes storming up to meet you.  \"<i>What the fuck have you done?!</i>\"");
 			output("\n\nYou hold your hands up, knowing full-well what the angry bitch is on about. She angrily says \"<i>You've fucking killed Kelt the centaur! He may be rude and I don't like him but still, what you've done is wrong. You're not welcome on my farm anymore! Leave. <b>Now.</b></i>\"");
 			flags["COC.FARM_DISABLED"] = 2;
@@ -82,6 +82,7 @@ public function farmExploreEncounter():void {
 		}
 		if(flags["COC.KELT_BREAK_LEVEL"] >= 4 && flags["COC.WHITNEY_FLIPPED_OUT_OVER_KELLY"] == undefined) {
 			clearOutput();
+			whitneySprite()
 			output("As soon as you head to the farm, Whitney comes storming up to meet you.  \"<i>What in tarnation do you think you're pulling?!</i>\"");
 			output("\n\nYou hold your hands up, knowing full-well what the angry bitch is on about.  \"<i>I didn't do anything he wouldn't have done to me.</i>\"");
 			output("\n\nWhitney fumes, \"<i>You might be right on that count, but the difference is that Kelt didn't keep coming to you to do it.  I don't much like him.</i>\"  Whitney spits for emphasis before continuing, \"<i>But I felt bad enough for him to let him stick around, so long as he left me an' everybody else well enough alone.  The boy's got... an aura or something, and sure, you likely would've wound up like he is.</i>\"  She glares back at the farm for emphasis.  \"<i>But only if you enjoyed it enough to keep hanging around the dipstick.  You... you just kept hounding him... drugging him with them demon fluids over and over.  The poor thing can barely sleep without whimpering after your dick.</i>\"");

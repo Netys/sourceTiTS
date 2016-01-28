@@ -11,7 +11,7 @@ public function showGreta():void
 //"Greta's Garments" - Interior
 private function gretasGarments():void {
 	clearOutput();
-	
+	showGreta();
 	if(Flag("COC.FOUND_SOCKS") == 1 && Flag("COC.SOCK_COUNTER") < timeAsStamp) {
 		output("As you enter the store, you're surprised to see that a variety of products line the shelves.  Clothing of various materials, sizes and shapes lay folded on shelves and tables around the little shop.  A lone, surprisingly anatomically correct mannequin stands by the counter nude except for a thin lacy piece of fabric held taut over its wooden penis.");
 		output("\n\nThe demoness, Greta, spies you looking at the strange piece of clothing.  \"<i>Aha, you're back!</i>\" she says, throwing her arms wide, which has the unintentional but not unappreciated effect of making her enormous boobs jiggle.  \"<i>As you can see, I'm back in full production.  I finally got that pesky backlog taken care of... although this one shy customer, a quiet browser, if you will, keeps me on my toes with new orders.  I swear he and his partner will be the death of me!</i>\"");

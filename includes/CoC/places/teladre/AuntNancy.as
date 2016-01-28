@@ -3,6 +3,11 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
+public function showAuntNancy():void {
+	if (Flag("COC.AUNT_NANCY_MET") > 0) userInterface.showName("AUNT\nNANCY");
+	else userInterface.showName("\nBARTENDER");
+}
+
 //[Introduction Blurb:
 //(appears in the Wet Bitch between 6:00 and 14:00)]
 public function auntNancy(display:Boolean = true):Boolean {
@@ -24,6 +29,7 @@ public function auntNancy(display:Boolean = true):Boolean {
 
 public function interactWithAuntNancy():void {
 	clearOutput();
+	showAuntNancy();
 	//[Interaction 2]
 	//[If Time = 1400, Relationship with Aunt Nancy >= 30, and PillowTalk= 0]
 	if(flags["COC.AUNT_NANCY_AFFECTION"] >= 30 && hours == 14 && Flag("COC.AUNT_NANCY_PILLOW_TALK") == 0) {
@@ -61,7 +67,8 @@ public function interactWithAuntNancy():void {
 
 		output("\"<i>Welcome to the Wet Bitch.  My name's Aunt Nancy, and I'll be your server this morning.</i>\"  She smiles.  \"<i>Well, what'll it be, friend?</i>\" the bartender asks, her voice rich and velvety rather than cute as she leans on the bar, giving you a good look at her cleavage.  \"<i>Bit early in the day for the strong stuff, I reckon.</i>\"\n\n");
 		//[If MetNancy < 1, MetNancy += 1]
-		if(Flag("COC.AUNT_NANCY_MET") < 1) Flag("COC.AUNT_NANCY_MET", 1);
+		if (Flag("COC.AUNT_NANCY_MET") < 1) Flag("COC.AUNT_NANCY_MET", 1);
+		showAuntNancy();
 		//[Choice: Strong, Light]
 		clearMenu();
 		addDisabledButton(0, "Strong", "Strong", "You can't afford it!");
@@ -77,6 +84,7 @@ public function interactWithAuntNancy():void {
 //[Strong:]
 private function strongStuff():void {
 	clearOutput();
+	showAuntNancy();
 	//[Lose 5 Gems.]
 	//dynStats("tou", 1, "int", -1, "lus", 15);
 	pc.credits -= 50;
@@ -109,6 +117,7 @@ private function strongStuff():void {
 //[Light:]
 private function lightStuff():void {
 	clearOutput();
+	showAuntNancy();
 	//[Lose 5 Gems.]
 	pc.credits -= 50;
 	//dynStats("tou", .5, "int", -.5, "lus", 7);
@@ -178,6 +187,7 @@ private function lightStuff():void {
 //[If Decline]
 private function declineAuntNancyMassage():void {
 	clearOutput();
+	showAuntNancy();
 	output("Aunt Nancy listens as you politely turn her down, and nods her head, the hungry look fading from her eyes.  \"<i>I understand completely.  Sorry to have bothered you.</i>\"  She starts to walk out of the bar, stops, and turns back to size you up again.  \"<i>Of course,</i>\" she says, \"<i>if you ever change your mind... just come by whenever my shift's over.</i>\"\n\n");
 
 	output("Aunt Nancy raises one of her black-covered hands in front of her mouth, and blows you a kiss before scuttling away.");
@@ -191,6 +201,7 @@ private function declineAuntNancyMassage():void {
 //[If Agree]
 private function timeForAuntNancySpiderCooch():void {
 	clearOutput();
+	showAuntNancy();
 	output("You look the still-beautiful spider-lady in the eye, and, half-mesmerized, nod in agreement.  She smiles broadly (and, you can't help but notice, quite lewdly) and puts one of her lower arms through one of yours, while putting the upper one on your shoulder.  \"<i>Well then,</i>\" Aunt Nancy says, \"<i>I suppose we should be off.</i>\"\n\n");
 
 	output("She leads you through the streets of Tel'Adre, weaving through crowds and back alleys, before you finally end up just outside a modest little adobe building tucked away in a side street.  Slowly, she wraps all four of her arms around you, giving you a gentle hug");
@@ -211,6 +222,7 @@ private function timeForAuntNancySpiderCooch():void {
 }
 private function auntNancyPoonPartII():void {
 	clearOutput();
+	showAuntNancy();
 	output("Slowly, you follow Aunt Nancy into her home. Inside, the building is fairly dark and gloomy, even in the middle of the day, with thick curtains of unidentifiable white matter keeping most of the sun outside. Blinded, your vision still attuned to the bright desert, you can discern little of the house's insides before you hear a sudden skittering sound behind you and, as you turn to face it, are pushed further into the gloom. Your heel is caught by a thick strand of what feels like rope, and you fall flat onto your back, arms and legs splayed out to either side of you, as you land on some sort of taut net.\n\n");
 
 	output("You try to climb back up, only to find that your flesh and [pc.gear] alike are caught fast against the adhesive matter of the net, which, you suddenly realize, is actually a thick web, spread across the house's floor. You feel a surge of panic and begin to pull and struggle, when suddenly you feel a smooth, cool hand on your face. Your night vision is beginning to recover, and you make out Aunt Nancy's face, her pale skin seeming to glow in the gloom, as she leans over you, staring into your eyes with hers, one finger trailing across your face before covering your lips in a gesture for quiet.\n\n"); 
@@ -368,6 +380,7 @@ private function auntNancyPoonPartII():void {
 
 private function auntNancyPoonPartIII():void {
 	clearOutput();
+	showAuntNancy();
 	//[If PC has a cock]
 	if(pc.hasCock()) {
 		var x:Number = pc.shortestCockIndex();
@@ -462,6 +475,7 @@ private function auntNancyPoonPartIII():void {
 }
 private function auntNancyPoonPartIV():void {
 	clearOutput();
+	showAuntNancy();
 	output("<b>Two passionate, sticky hours pass...</b>\n\n");
 	
 	//[70 % for Toughness, Strength to increase 2-6 points]

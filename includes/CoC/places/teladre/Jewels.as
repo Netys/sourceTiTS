@@ -18,6 +18,7 @@ public function jewelShopEntry():void {
 
 public function jewelShopInside():void {
 	clearOutput();
+	showName("\nJEWELRY");
 	output("<i>So what will it be?</i>", false);
 	clearMenu();
 	addButton(0, "Normal rings", jewelShopPageI);

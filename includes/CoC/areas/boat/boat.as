@@ -9,6 +9,8 @@ import classes.Engine.Utility.*;
 // Izma lost kids
 public function boatExplore():void
 {
+	kGAMECLASS.userInterface.setLocation("", "EXPLORATION", "PLANET: MARETH");
+	
 	flags["COC.EXPLORED_BOAT"]++;
 	
 	processTime(20 + rand(20)); // take your time looking for trouble!

@@ -47,7 +47,7 @@ public function brookeCapacity():Number {
 public function meetBrookeFirstTime():void {
 	clearOutput();
 	pc.shower();
-	showName("\nSHOWERS");
+	showName("\nBROOKE");
 	//output(images.showImage("brooke-first-meeting"));
 	output("After yet another successful, and rewarding, workout, you begin your way down the hallways of the gym back to your favorite machine in the building.  Even after putting in so much effort, you’ve yet to finish – you still have to work <i>every</i> muscle, after all.  However, as you walk down the halls, breath still heavy and feeling the sweat drip off your brow, you pause, taking a few sniffs.  Once you’re out of the gym and into somewhat fresher air, you smell something, and it smells <i>rank</i>.  Smelling around a bit, you lift an arm and whiff your pit – it’s you!  Maybe, for once, you should actually have a wash; as you are now, the monsters would smell you long before they’d see you.");
 
@@ -90,7 +90,7 @@ public function meetBrookeFirstTime():void {
 public function repeatChooseShower():void {
 	clearOutput();
 	pc.shower();
-	showName("\nSHOWERS");
+	showName("GYM\nSHOWERS");
 	if(hours < 16 || hours > 18 || pc.tone < 30 || flags["COC.BROOKE_MET_TODAY"] == days) {
 		//Before 16:00/after 18:00, affection <= 19
 		if(brookeAffection() <= 19) {

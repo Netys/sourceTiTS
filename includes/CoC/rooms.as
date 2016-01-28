@@ -38,7 +38,7 @@ rooms["VR_POD_ROOM"].addFlag(GLOBAL.PRIVATE);
 rooms["VR_POD_ROOM"].runOnEnter = cockyVrJunctionMenu;
 
 rooms["COC_CAMP"] = new RoomClass(this);
-rooms["COC_CAMP"].roomName = "";
+rooms["COC_CAMP"].roomName = "\nCAMPSITE";
 rooms["COC_CAMP"].planet = "YOUR CAMP";
 rooms["COC_CAMP"].system = "PLANET: MARETH";
 rooms["COC_CAMP"].addFlag(GLOBAL.PRIVATE);

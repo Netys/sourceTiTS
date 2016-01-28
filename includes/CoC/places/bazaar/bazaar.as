@@ -14,13 +14,13 @@ include "SlipperySqueeze.as";
 
 public function showBazaar():void
 {
-	userInterface.showName("BIZZARE\nBAZAAR");
+	userInterface.setLocation("BAZAAR\nINTERIOR", "BIZZARE BAZAAR", "PLANET: MARETH");
 }
 
 //[Find Travelling Bazaar]
 public function findBazaar():void {
 	clearOutput();
-	showBazaar();
+	userInterface.showName("BIZZARE\nBAZAAR");
 	if(IncrementFlag("COC.BAZAAR_ENCOUNTERED", false) == 0) {
 		IncrementFlag("COC.BAZAAR_ENCOUNTERED");
 		output("Warm, earthy breezes drift by as you explore the wind-blown grasses of the plains.  Though it seems you can see for miles, with the grasses subtly shifting between a few feet and over a dozen feet tall, it's impossible to tell what you'll stumble into next.  You trust your ears and your nose as much as your oft-blocked vision at this point, and before long you catch a whiff of blackened meat and aromatic spices.  There's some kind of camp not far away!\n\n");
@@ -42,7 +42,7 @@ public function findBazaar():void {
 //[FUCK YES I WILL PUT IT IN YOUR BIZARRE ANUS]
 private function approachBazaarGuard():void {
 	clearOutput();
-	showBazaar();
+	userInterface.showName("BIZZARE\nBAZAAR");
 	output("You step from concealment and walk up to the strange man, calling out in greeting.  He folds his arms across his chest and looks you up and down, peering at you with intense, black eyes.  They aren't solid onyx, but his irises are just as dark as the seemingly bottomless depths of his pupils.  His appraising gaze watches you, unblinking as second after second ticks by.  Just when you start to wonder if he speaks your language, he interrupts you by saying, \"<i>");
 	//if(pc.cor() < 33) output("Leave at once.  You are not yet ready for the wonders of the Bazaar.");
 	//else 

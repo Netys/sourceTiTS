@@ -109,6 +109,7 @@ private function telAdreTour():void {
 
 public function telAdreMenu():void {
 	clearOutput();
+	userInterface.setLocation("TEL'ADRE\nSTREETS", "TEL'ADRE", "PLANET: MARETH");
 	//if(flags[kFLAGS.VALENTINES_EVENT_YEAR] < date.fullYear && pc.balls > 0 && pc.hasCock() && flags[kFLAGS.NUMBER_OF_TIMES_MET_SCYLLA] >= 4 && flags[kFLAGS.TIMES_MET_SCYLLA_IN_ADDICTION_GROUP] > 0 && isValentine()) {
 		//kGAMECLASS.crazyVDayShenanigansByVenithil();
 		//return;
@@ -174,7 +175,6 @@ public function telAdreMenu():void {
 }
 
 public function telAdreMenuShow():void { //Just displays the normal Tel'Adre menu options, no special events, no description. Useful if a special event has already played
-	showName("\nTEL'ADRE");
 	var homes:Boolean = false;
 	//if (flags["COC.RAPHEAL_COUNTDOWN_TIMER"] == -2 && kGAMECLASS.raphael.RaphaelLikes())
 		//homes = true;
@@ -200,7 +200,7 @@ public function telAdreMenuShow():void { //Just displays the normal Tel'Adre men
 
 private function armorShops():void {
 	clearOutput();
-	showName("\nTEL'ADRE");
+	userInterface.setLocation("TEL'ADRE\nMERCHANTS", "TEL'ADRE", "PLANET: MARETH");
 	clearMenu();
 	output("The shopping district of Tel’adre happens to be contained in a large dead end street, with a large set of doors at the entrance to protect it from thieves at night, you’d assume from a higher elevation it would look like a giant square courtyard. Due to the cities shopping area being condensed into one spot, most if not every visible wall has been converted into a store front, in the center of the area are some small stands, guess not everyone can afford a real store.");
 	output("\n\nRight off the bat you see the ‘Piercing Studio’, its piercing covered centaur sign is a real eye catcher. You can also spot some kind of wolf-man banging away on an anvil in a blacksmith's stand. As well as other shops lining the walls, perhaps those shops will be interesting as well.");
@@ -220,7 +220,7 @@ private function armorShops():void {
 
 public function TelAdreHouses():void {
 	clearOutput();
-	showName("\nTEL'ADRE");
+	userInterface.setLocation("TEL'ADRE\nAPARTMENTS", "TEL'ADRE", "PLANET: MARETH");
 	clearMenu();
 	output("Whose home will you visit?");
 	//var orphanage:Function = null;
@@ -244,6 +244,7 @@ public function TelAdreHouses():void {
 
 private function urtaIsABadass():void {
 	flags["COC.PC_SEEN_URTA_BADASS_FIGHT"] = 1;
+	userInterface.setLocation("\nURTA", "TEL'ADRE", "PLANET: MARETH");
 	clearOutput();
 	output("There's a commotion in the streets of Tel'Adre.  A dense crowd of onlookers has formed around the center of the street, massed together so tightly that you're unable to see much, aside from the backs the other onlookers' heads.  The sound of blows impacting on flesh can be heard over the crowd's murmuring, alerting you of the fight at the gathering's core.");
 	processTime(1);
@@ -255,6 +256,7 @@ private function urtaIsABadass():void {
 //[Invetigate]
 private function watchUrtaBeABadass():void {
 	clearOutput();
+	userInterface.setLocation("\nURTA", "TEL'ADRE", "PLANET: MARETH");
 	//kGAMECLASS.urta.urtaSprite();
 	output("You shoulder past the bulky centaurs, ignore the rough fur of the nearby wolves and hounds as it brushes against you, and press your way through to the center of the crowd.  Eventually the throng parts, revealing the embattled combatants.  A snarling wolf, nearly eight feet tall, towers over Urta.  The comparatively diminutive fox-woman is girded in light leather armor and dripping with sweat.  The larger wolf-man is staggering about, and his dark brown fur is matted with blood.\n\n");
 

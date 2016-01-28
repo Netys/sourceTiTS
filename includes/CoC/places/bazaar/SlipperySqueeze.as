@@ -309,16 +309,16 @@ private function joeyBigBalls():void {
 		output(".  What do you decide?");
 		//[SuckCumOut] [MasturbateOut]
 		clearMenu();
-		addButton(0, "SuckCumOut", suckOffJoeysGardenHose);
-		addButton(1, "MasturbateOut", joeyWanksItOut);
+		addButton(0, "Suck Out", suckOffJoeysGardenHose, null, "Suck Out", "You can help him with his trouble.");
+		addButton(1, "Masturbate", joeyWanksItOut, null, "Masturbate", "He can deal with his problem himself.");
 	}
 	//(Sucked Joey once) 
 	else {
 		output("As soon as you enter The Slippery Squeeze, you know somehow that something is amiss.  Joey staggers out from a back-room, his balls once again swollen huge and round.  He looks at you and admits, \"<i>Someone's <b>got</b> to be sabotaging me... gods, this hurts!  Could you help me, or should I go in the back and jerk it out myself?</i>\"\n\n");
 		//[SuckCumOut] [MasturbateOut]
 		clearMenu();
-		addButton(0, "SuckCumOut", suckOffJoeysGardenHose);
-		addButton(1, "MasturbateOut", joeyWanksItOut);
+		addButton(0, "Suck Out", suckOffJoeysGardenHose, null, "Suck Out", "You can help him with his trouble.");
+		addButton(1, "Masturbate", joeyWanksItOut, null, "Masturbate", "He can deal with his problem himself.");
 	}
 }
 

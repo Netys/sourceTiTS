@@ -5,6 +5,7 @@ import classes.Engine.Utility.*;
 
 //[Mage's Tower]
 public function visitZeMagesTower():void {
+	userInterface.showName("\nLIBRARY");
 	if(IncrementFlag("COC.TIMES_BEEN_TO_LIBRARY", false) == 0) firstTowerVisit();
 	else towerFollowUpVisits();
 	clearMenu();
@@ -41,7 +42,7 @@ private function firstTowerVisit():void {
 private function towerFollowUpVisits():void {
 	clearOutput();
 	if (flags["COC.TIMES_BEEN_TO_LIBRARY"] == -1) { //Return visits before you meet Quinn. Either you meet him or you continue to go to the library at night like some bibliophile vampire
-		if(hours >= 6 && hours <= 17) {
+		if (hours >= 6 && hours <= 17) {
 			output("You return to the mage's tower.  Entering the main room, you're surprised to see a man carefully turning the pages of one of the tomes");
 			commonQuinnTroduction();
 		}
@@ -53,7 +54,8 @@ private function towerFollowUpVisits():void {
 	}
 	
 	//(follow-up visits, 6:00 – 17:00)
-	if(hours >= 6 && hours <= 17) {
+	if (hours >= 6 && hours <= 17) {
+		userInterface.showName("\nQUINN");
 		output("You return to the mage's tower.  Entering the main room, Quinn is carefully inspecting the pages of a book.  The room looks slightly more organized from when you last saw it, but it looks as though Quinn will be working on it for some time.");
 		output("\n\nHe notices you've arrived and quirks an eyebrow.  \"<i>Yes?</i>\" he asks wearily, \"<i>Is there something I can assist you with?</i>\"");
 		//If the player has encountered Asa Mali they may ask for Mali.  Otherwise they can either leave, ask to study, or ask Quinn if he is okay.
@@ -69,6 +71,7 @@ private function towerFollowUpVisits():void {
 }
 
 private function commonQuinnTroduction():void {
+	userInterface.showName("\nQUINN");
 	output(", though he does not seem to be reading it.  Stacks of books sit next to him.  As you close the door, he glances up at you.");
 	
 	output("\n\n\"<i>I'm sorry,</i>\" he says with a voice so weary you're surprised he doesn't fall over face-first upon exerting himself by speaking, \"<i>The library is not presently open to visitors, due to defacement and...</i>\"  He pauses, looking at a book next to him covered in an off-white crust.  \"<i>Vandalism.</i>\"  His eyes look twice as tired as his voice sounds, darkened to the point they almost seem bruised.  Pale – no, pallid - and lean to the point where you think you can see his cheekbones.  You're not convinced that this man has all of his health.  \"<i>I'm afraid there is no present estimate as to when we will re-open, as unfortunately no other members of the Covenant are presently able to devote the time to inspect and record the extent of the damages.</i>\"");
@@ -87,7 +90,8 @@ private function commonQuinnTroduction():void {
 private function studyInTA():void {
 	clearOutput();
 	//[Study, 6:00-17:00]
-	if(hours >= 6 && hours <= 17) {
+	if (hours >= 6 && hours <= 17) {
+		userInterface.showName("\nQUINN");
 		output("You ask Quinn if you can use the library to study and learn.");
 		output("\n\n\"<i>I'm afraid that I may have not made myself clear earlier, the library is not presently open,</i>\" Quinn sighs, rubbing his forehead.  \"<i>This means that it is closed, which is the opposite state of open.  While it is in this state its services are unavailable to the general public.  The general public in this particular instance are also the ones directly responsible for the necessity of it closing, leading to further hesitation in the Covenant's willingness to hasten the opening.  Your interest is noted, filed, and considered, but will be regarded as a data point and not the quote unquote voice of the people.</i>\"");
 		output("\n\nQuinn pauses for a few more moments, looking you in the eye thoughtfully before finishing with \"<i>That means no, in case we're unclear.</i>\"");
@@ -111,32 +115,32 @@ private function studyInTA():void {
 			//(Intelligence increase)
 			//Smart enough for arouse and doesnt have it
 			if(pc.IQ() >= 25 && flags["COC.SPELL_AROUSE"] != 1) {
-				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Arouse.</b>", false);
+				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Arouse.</b>");
 				flags["COC.SPELL_AROUSE"] = 1;
 			}
 			//Smart enough for arouse and doesnt have it
 			else if(pc.IQ() >= 30 && flags["COC.SPELL_HEAL"] != 1) {
-				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Heal.</b>", false);
+				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Heal.</b>");
 				flags["COC.SPELL_HEAL"] = 1;
 			}
 			//Smart enough for arouse and doesnt have it
 			else if(pc.IQ() >= 40 && flags["COC.SPELL_MIGHT"] != 1) {
-				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Might.</b>", false);
+				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Might.</b>");
 				flags["COC.SPELL_MIGHT"] = 1;
 			}
 			//Smart enough for arouse and doesnt have it
 			else if(pc.IQ() >= 25 && flags["COC.SPELL_CHARGE"] != 1) {
-				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Charge Weapon.</b>", false);
+				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Charge Weapon.</b>");
 				flags["COC.SPELL_CHARGE"] = 1;
 			}
 			//Smart enough for arouse and doesnt have it
 			else if(pc.IQ() >= 30 && flags["COC.SPELL_BLIND"] != 1) {
-				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Blind.</b>", false);
+				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Blind.</b>");
 				flags["COC.SPELL_BLIND"] = 1;
 			}
 			//Smart enough for arouse and doesnt have it
 			else if(pc.IQ() >= 40 && flags["COC.SPELL_WHITEFIRE"] != 1) {
-				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Whitefire.</b>", false);
+				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Whitefire.</b>");
 				flags["COC.SPELL_WHITEFIRE"] = 1;
 			}
 		}
@@ -153,6 +157,7 @@ private function studyInTA():void {
 //[You OK?]
 private function youOkayBuddy():void {
 	clearOutput();
+	userInterface.showName("\nQUINN");
 	output("A bit perturbed by Quinn's countenance and apparent exhaustion you can't help but inquire as to his well-being.");
 	
 	output("\n\n\"<i>The sycophants that clutter this town thought it would be amusing to fornicate wildly and rapidly within the library with no regard for where their filth would wind up or what would be damaged in the process.  So no, I am not particularly well.</i>\"  He answers the question with a slight sarcastic bend in his voice that you don't feel as though there was any real need for.  \"<i>It will take months to go through every tome and list the damages and details.  Updating the index, cross-referencing between existing damages, re-evaluating the justifications of placing it on the shelf... it's enough to slab a man.</i>\"  Quinn looks back at the library behind him and shakes his head in disappointment.");
@@ -170,7 +175,8 @@ private function youOkayBuddy():void {
 //[Mali]
 private function talkToMali():void {
 	clearOutput();
-	if(IncrementFlag("COC.TIMES_VISITED_MALI", false) == 0) {
+	userInterface.showName("\nMALI");
+	if(Flag("COC.TIMES_VISITED_MALI") == 0) {
 		IncrementFlag("COC.TIMES_VISITED_MALI");
 		output("You mention to Quinn that you're looking to speak with Mali.  \"<i>Ah, Asa Mali, our very own Alissyn del Aliana.</i>\"  Quinn chuckles and rubs his chin.  You think you're talking about the same person.  \"<i>How mysterious that she of all people should have a visitor.  Am I setting up a forbidden tryst?  A secret rendezvous?  Or perhaps, given the nature of her work, something far more... ominous.</i>\"  He looms curiously, but you clear your throat and ask if she's in.  Disappointed, he sighs and gestures up the stairs.  \"<i>Yes, our sylvan sorceress is not that much of a socialite.</i>\"");
 		

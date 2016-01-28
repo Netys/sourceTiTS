@@ -8,6 +8,7 @@ public function oswaldPawn():void {
 	//spriteSelect(47);
 	clearOutput();
 	clearMenu()
+	userInterface.showName("\nOSWALD");
 	if(flags["COC.MET_OSWALD"] == undefined) {
 		output("Upon closer inspection, you realize the pawnbroker appears to be some kind of golden retriever.  He doesn't look entirely comfortable and he slouches, but he manages to smile the entire time.  His appearance is otherwise immaculate, including his classy suit-jacket and tie, though he doesn't appear to be wearing any pants.  Surprisingly, his man-bits are retracted.  ");
 		if(pc.cor() < 75) output("Who would've thought that seeing someone NOT aroused would ever shock you?");
