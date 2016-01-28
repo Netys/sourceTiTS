@@ -16,7 +16,6 @@ public function returnToCampUseFourHours():void { returnToCamp(4); } //Replaceme
 public function returnToCampUseEightHours():void { returnToCamp(8); } //Replacement for event number 16;
 
 public function cocCampMenu():void {
-	userInterface.setLocation("", "", "PLANET: MARETH");
 	initCoCJunk();
 	output("Your campsite is fairly simple at the moment.  Your tent and bedroll are set in front of the rocks that lead to the portal.  You have a small fire pit as well.  "); // there are no actual counter for time in Mareth...
 	output("You have a number of traps surrounding your makeshift home, but they are fairly simple and may not do much to deter a demon.  ");
@@ -25,7 +24,7 @@ public function cocCampMenu():void {
 	showExplorationButton(); // as well as places
 	
 	campFollowersButton(); campFollowersMenu(true);
-	//campLoversButton();	
+	//campLoversButton();
 	//campSlavesButton();
 	
 	//addButton(5, "Debug", doDebugFunction);
