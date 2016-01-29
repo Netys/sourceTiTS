@@ -241,7 +241,7 @@ package classes.Items.Transformatives
 			var changes:int = 0;
 			
 			// should get rid of facial hair also
-			if (target.thickness >= 30 && target.thicknessUnlocked(target.thickness - 10)) changes++;
+			if (target.thickness > 30 && target.thicknessUnlocked(target.thickness - 10)) changes++;
 			if (target.femininity < target.femininityMax() && target.femininityUnlocked(target.femininity + 1)) changes++;
 			
 			if (target.femininity >= target.femininityMax() && target.femininity < 100 && !target.hasPerk("Androgyny")) changes++;
