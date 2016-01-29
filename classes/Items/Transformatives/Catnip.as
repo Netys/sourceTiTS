@@ -17,7 +17,7 @@ package classes.Items.Transformatives
 	 * Have 2 layers of effects. At first, basic layer it is cosmetic transformative, granting "little kitty" appearance, lean and androgynous.
 	 * 
 	 * Second layer is "legacy code" from another transformative used as base. It is only accessible with improper bypass of nanobots safety protocols. It grants cat-taur body, but much more practical than most tauric forms, with workarounds for most drawbacks of taur body. Based on chakat, but not exactly.
-	 * Legacy body features:
+	 * Legacy body features (some can be lore-only, it is not original transformative after all):
 	 *   Quadripedal taur with semi-prehensile forelegs.
 	 *   Herm (for more effecient reproduction) with internal balls and genital slit (for protection of vulnerable organs).
 	 *   Very, very flexible - not exactly at snake level, but can rival any other mammal (mostly lore feat, but makes possible to wave away some "how the fuck taur can do this").
@@ -269,13 +269,13 @@ package classes.Items.Transformatives
 			// should get rid of facial hair also
 			
 			// decrease thicknes
-			if (target.thickness >= 30 && Mutator.modThickness(target, 20, 10, false))
+			if (target.thickness >= 30 && Mutator.modThickness(target, 30, 10, false))
 			{
 				output("\n\nSomething is shifting inside you, and you suddenly feel you can move with less effort. <b>Looks like you lose some weight!</b> ");
 				changes++;
 				
 				// increase definition as side effect
-				if (target.tone <= 65 && Mutator.modTone(target, 70, 10, false))
+				if (target.tone <= 65 && Mutator.modTone(target, 65, 10, false))
 				{
 					output("Your muscles become a little more defined as you lose some fat.");
 				}
@@ -332,11 +332,23 @@ package classes.Items.Transformatives
 			}
 			
 			// ass looseness-
-			else if(target.ass.minLooseness > 1) // no function for ass looseness lock?
+			else if(target.ass.minLooseness > 1 || target.ass.wetness > 1) // no function for ass lock?
 			{
-				output("\n\nYou feel a rumbling in your gut and a strange half-pleasure sensation spreading up from your ass. <b>Giving your backdoor an experimental poke, your find it much more tight</b> than it was before!");
-				target.ass.minLooseness--;
-				if (target.ass.looseness() > target.ass.minLooseness) target.ass.looseness(target.ass.minLooseness, true);
+				output("\n\nYou feel a rumbling in your gut and a strange half-pleasure sensation spreading up from your [pc.asshole]. <b>Giving your backdoor an experimental poke, your find it ");
+				
+				if (target.vaginas[x].minLooseness > 1 && target.loosenessUnlocked(x, target.vaginas[x].minLooseness - 1)) {
+					kGAMECLASS.addToList("much more tight")
+					target.ass.minLooseness--;
+					if (target.ass.minLooseness < 1) target.ass.minLooseness = 1;
+					if (target.ass.looseness() > target.ass.minLooseness) target.ass.looseness(target.ass.minLooseness, true);
+				}
+				if (target.ass.wetnessRaw > 1) {
+					kGAMECLASS.addToList("much less wet")
+					target.ass.wetnessRaw--;
+					if (target.ass.wetnessRaw < 1) target.ass.wetnessRaw = 1;
+				}
+				output(kGAMECLASS.formatList() + "</b> than it was before!");
+				
 				target.lust(10+rand(4));
 				changes++;
 			}
