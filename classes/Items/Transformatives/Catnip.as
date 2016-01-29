@@ -314,7 +314,7 @@ package classes.Items.Transformatives
 			}
 			
 			// hit cap and still going up!
-			if (target.femininity >= target.femininityMax() && target.femininity < 100 && target.lipRating() <= 0 && target.mfn("m", "f", "n") == "m" && !target.hasPerk("Androgyny")) {
+			if (target.femininity >= target.femininityMax() && target.femininity < 100 && target.lipRating() <= 0 && !target.hasPerk("Androgyny")) {
 				output("\n\nYour [pc.face] is now very confusing - it have imponderable tint of feminity, while lacking distinct femine features. You suspect you could make your apparent gender even more ambiguous.");
 				target.createPerk("Androgyny", 0, 0, 0, 0, "No gender limits on facial masculinity or femininity.");
 				output("\n\n(<b>Perk Gained: Androgyny</b>)");

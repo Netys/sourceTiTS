@@ -3305,7 +3305,7 @@ package classes {
 				statMax = libidoMax();
 			}
 			else {
-				kGAMECLASS.output("ERROR: slowStatGain called with stat argument of " + stat + ". This isn't a real stat!");
+				output("ERROR: slowStatGain called with stat argument of " + stat + ". This isn't a real stat!");
 				return 0;
 			}
 			
@@ -3356,7 +3356,7 @@ package classes {
 			else if (stat == "willpower" || stat == "w") return willpower(change);
 			else if (stat == "libido" || stat == "l") return libido(change);
 			else {
-				trace("ERROR: slowStatGain got to the end with a stat that should've called the earlier error. Looks like the function has been changed, added to, or bugged. Make sure top stat list matches bottom!");
+				output("ERROR: slowStatGain got to the end with a stat that should've called the earlier error. Looks like the function has been changed, added to, or bugged. Make sure top stat list matches bottom!");
 				return 0;
 			}
 		}

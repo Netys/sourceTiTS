@@ -98,6 +98,7 @@ public function lumiEnhance():void {
 	add(new CoCGoldenSeed(), new CoCMagicSeed());
 	add(new CoCKangaFruit(), new CoCKangaFruitEnchanced());
 	add(new CoCSucDelight(), new CoCSucDream());
+	if (silly) add(new CoCWhiskerFruit(), new Catnip());
 }
 	//var laBova:Function =null;
 	//if(pc.hasItem(consumables.LABOVA_))
@@ -151,6 +152,11 @@ private function lumiEnhanceGo(args:/*ItemSlotClass*/Array):void
 	else if(temp == 0) output("She starts grabbing things from around the table, seemingly at random, and adds them to " + from.longName + ".  To your alarm, there is soon a large cloud of smoke coming off it! There is a strong smell to the smoke and it makes it hard to breathe.  Lumi grabs a mask out of a drawer and puts it on, continuing with her work unperturbed.  She suddenly stops and you wonder if she is done, but she takes off her mask and inhales deeply of the smoke, then keels over!  As you go over to help her she suddenly stands up, waves away some of the smoke, and says, \"<i>All dun!</i>\"\n\n");
 	else if(temp == 1) output("Taking hold of one of the bottles that were sitting where she put the tray, she seems to think for a moment before tossing the bottle into one of the corners of the room.  It shatters just behind the table, and a small puff of smoke goes up into the air.  You're a little nervous about that bottle, but before you have a chance to say anything, two more bottles fly off and join it; this time causing a small explosion. You ask her what she is thinking tossing those aside, and she simply responds, \"<i>Dey were in my way.</i>\"\n\n\"<i>What?!  So you just toss things that explode to the side?</i>\"\n\n<i>\"Don worry, I'll put counter agents in dere at de end of de day.  An I never throw stuff da'll do any damage.  Done!</i>\"\n\n");
 	else if (temp == 2) output("She adds a few things to the tray before moving down the table.  She adds some reagents to a bubbling chemical reaction, and then adds some more ingredients to that.  You wonder why she just left " + from.longName + " there to work on something else.  Then Lumi moves back across the table, past where " + from.longName + " sits, to start adding things to something else.  Before you have a chance to complain, she moves back to " + from.longName + " and continues.  You decide that it's probably best not to ask about her work ethic and just let her do her thing; she has more experience than you, after all.\n\nPOP! You look over in surprise as the first thing she worked on makes a small explosion.  POW! Now the second experiment has blown up!  You start to move in alarm, wondering if Lumi really knows what she's doing; just before " + from.longName + " seems to explode with an incredible BOOM.  Lumi stops moving for a moment, looking straight ahead before saying, \"<i>Dat was a gud one, Lumi dun!</i>\"\n\n");
+	
+	if (from as Class is CoCWhiskerFruit) {
+		output("Wait... Did she just... Rectified fruit into nanomachine based drug?\n\n");
+	}
+	
 	pc.destroyItem(from);
 	processTime(5 + rand(5));
 

@@ -58,7 +58,7 @@ public function CoCImpPCVictory():void {
 	IncrementFlag("COC.DEMONS_DEFEATED");
 	//var canFeed:Boolean = (pc.findStatusAffect(StatusAffects.Feeder) >= 0);
 	//var canBikiniTits:Boolean = (pc.hasVagina() && pc.biggestTitSize() >= 4 && pc.armor is LustyMaidensArmor);
-	output("You smile in satisfaction as " + enemy.a + enemy.short + " collapses and begins masturbating feverishly.");
+	output("You smile in satisfaction as " + enemy.a + enemy.short + " collapses and begins masturbating feverishly.\n\n");
 	//if (canFeed) {
 		//if (pc.lust() >= 33)
 			//output("  Of course you could always rape the poor thing, but it might be more fun to force it to guzzle your breast-milk.\n\nWhat do you do?");
