@@ -3311,8 +3311,8 @@ package classes {
 			
 			// loss - diminishing loss on low stat
 			while (arg < 0) {
-				mod = Math.max(arg, -1); // to support fractional arguments
-				arg++;
+				mod = Math.max(arg, -0.1); // breaking into multiple iterations for more smooth distribution
+				arg -= mod;
 				if(arg > 0) arg = 0;
 				if (statCurrent + change < 0.05 * statMax) mod *= .1;
 				else if (statCurrent + change < 0.10 * statMax) mod *= .15;
@@ -3331,8 +3331,8 @@ package classes {
 			
 			// gain - diminishing gain on high stat
 			while (arg > 0) {
-				mod = Math.min(arg, 1); // to support fractional arguments
-				arg--;
+				mod = Math.min(arg, 0.1); // breaking into multiple iterations for more smooth distribution
+				arg -= mod;
 				if(arg < 0) arg = 0;
 				if (statCurrent + change < 0.30 * statMax) mod *= 1;
 				else if (statCurrent + change < 0.40 * statMax) mod *= .9;
@@ -8181,6 +8181,7 @@ package classes {
 			if (horseScore() >= 3 && isCentaur()) race = taurRace(equineRace());
 			else if (bovineScore() >= 3 && isTaur()) race = rawmfn("bull", "cow", "bovine") + "-taur";
 			else if (race == "human" && isCentaur()) race = "centaur";
+			else if (race == "cat-morph" && isTaur() && isHerm()) race = "chakat";
 			else if (isTaur()) race = taurRace(race); // Other taurs
 			// Naga-morphs
 			if (naleenScore() >= 5 && isNaga()) race = "naleen";

@@ -194,19 +194,26 @@ package classes.Items.Transformatives
 			}
 			
 			//Cat dangly-doo.
-			if (pc.cockTotal() > 0 && pc.cockTotal(GLOBAL.TYPE_FELINE) < pc.cockTotal() && (pc.earType == GLOBAL.TYPE_FELINE || rand(3) > 0) && (pc.tailType == GLOBAL.TYPE_FELINE || rand(3) > 0) && changes < changeLimit && rand(4) == 0) {
+			if (pc.hasCock() && (pc.earType == GLOBAL.TYPE_FELINE || rand(3) > 0) && (pc.hasTail(GLOBAL.TYPE_FELINE) || rand(3) > 0) && changes < changeLimit && rand(4) == 0) {
 				//loop through and find a non-cat wang.
-				for (var i:Number = 0; i < (pc.cockTotal()) && pc.cocks[i].cType == GLOBAL.TYPE_FELINE; i++) {}
-				output("\n\nYour " + pc.cockDescript(i) + " swells up with near-painful arousal and begins to transform.  It turns pink and begins to narrow until the tip is barely wide enough to accommodate your urethra.  Barbs begin to sprout from its flesh, if you can call the small, fleshy nubs barbs. They start out thick around the base of your [pc.cockNoun " + i + "] and shrink towards the tip. The smallest are barely visible. <b>Your new feline dong throbs powerfully</b> and spurts a few droplets of cum.  ");
-				if (!pc.hasSheath(i)) {
-					output("Then, it begins to shrink and sucks itself inside your body.  Within a few moments, a fleshy sheath is formed.");
-					if (pc.balls > 0) output("  Thankfully, your balls appear untouched.");
+				for (temp = 0; temp < pc.cocks.length; temp++) {
+					if (pc.cocks[temp].cType == GLOBAL.TYPE_FELINE && pc.cocks[temp].hasFlag(GLOBAL.FLAG_NUBBY) && pc.cocks[temp].hasFlag(GLOBAL.FLAG_TAPERED) && pc.cocks[temp].hasFlag(GLOBAL.FLAG_SHEATHED)) continue;
+					
+					output("\n\nYour " + pc.cockDescript(temp) + " swells up with near-painful arousal and begins to transform.  It turns pink and begins to narrow until the tip is barely wide enough to accommodate your urethra.");
+					if(!pc.cocks[temp].hasFlag(GLOBAL.FLAG_NUBBY)) output("  Barbs begin to sprout from its flesh, if you can call the small, fleshy nubs barbs. They start out thick around the base and shrink towards the tip. The smallest are barely visible.");
+					output("  <b>Your new feline dong throbs powerfully</b> and spurts a few droplets of [pc.cum].");
+					if (!pc.cocks[temp].hasFlag(GLOBAL.FLAG_SHEATHED)) {
+						output("  Then, it begins to shrink and sucks itself inside your body.  Within a few moments, a fleshy sheath is formed.");
+						if (pc.balls > 0) output("  Thankfully, your balls appear untouched.");
+					}
+					else output("  Then, it disappears back into your sheath.");
+					pc.cocks[temp].cockColor = "pink";
+					pc.cocks[temp].cType = GLOBAL.TYPE_FELINE;
+					pc.cocks[temp].knotMultiplier = 1;
+					pc.cocks[temp].cockFlags = [GLOBAL.FLAG_NUBBY, GLOBAL.FLAG_TAPERED, GLOBAL.FLAG_SHEATHED];
+					changes++;
+					break;
 				}
-				else output("Then, it disappears back into your sheath.");
-				pc.cocks[i].cType = GLOBAL.TYPE_FELINE;
-				pc.cocks[i].knotMultiplier = 1;
-				pc.cocks[i].cockFlags = [GLOBAL.FLAG_NUBBY, GLOBAL.FLAG_TAPERED, GLOBAL.FLAG_SHEATHED];
-				changes++;
 			}
 			//Cat penorz shrink
 			if (pc.cockTotal(GLOBAL.TYPE_FELINE) > 0 && rand(3) == 0 && changes < changeLimit) {
@@ -214,7 +221,7 @@ package classes.Items.Transformatives
 				temp = 0;
 				for (var j:Number = 0; j < (pc.cockTotal()); j++) {
 					if (pc.cocks[j].cType == GLOBAL.TYPE_FELINE && pc.cocks[j].cLength() > 6) {
-						temp = 1;
+						temp = j;
 						break;
 					}
 				}
