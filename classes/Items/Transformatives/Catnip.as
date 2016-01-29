@@ -332,11 +332,11 @@ package classes.Items.Transformatives
 			}
 			
 			// ass looseness-
-			else if(target.ass.minLooseness > 1 || target.ass.wetness > 1) // no function for ass lock?
+			else if(target.ass.minLooseness > 1 || target.ass.wetnessRaw > 1) // no function for ass lock?
 			{
 				output("\n\nYou feel a rumbling in your gut and a strange half-pleasure sensation spreading up from your [pc.asshole]. <b>Giving your backdoor an experimental poke, your find it ");
 				
-				if (target.vaginas[x].minLooseness > 1 && target.loosenessUnlocked(x, target.vaginas[x].minLooseness - 1)) {
+				if (target.ass.minLooseness > 1) {
 					kGAMECLASS.addToList("much more tight")
 					target.ass.minLooseness--;
 					if (target.ass.minLooseness < 1) target.ass.minLooseness = 1;
