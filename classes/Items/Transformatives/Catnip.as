@@ -686,7 +686,7 @@ package classes.Items.Transformatives
 			}
 			
 			// Chakat surprise, can only happen when you overdose with safety off.
-			if (changes == 0 && target.isTaur())
+			if (changes == 0)
 			{
 				output(" Exception: Route have no targets available. Requesting instructions from monitor... Exception: protocol not supported. Fallback route found, executing...");
 				
@@ -709,7 +709,7 @@ package classes.Items.Transformatives
 				}
 				
 				// since it is "legacy code" of species designed for frontier, can't allow vilnerable organs to dangle free, especially since taurs can't quite defend themselves from behind
-				// change anatomy to internal without actually changing balls size, so production won't suffer unless had more than two balls
+				// change anatomy to internal without harming production
 				if (target.balls > 0 && target.ballsUnlocked(0))
 				{
 					output("\n\nA flash of sickening sensation ripples through your [pc.sack], and you can feel the skin pulling upward. The discomfort rises as you close your eyes and realize with some trepidation that your testicle");
@@ -722,6 +722,7 @@ package classes.Items.Transformatives
 					else output(" settles");
 					output(" in somewhere just above your dick, and all that's left beneath is a smooth patch of skin. No one would ever know you had balls.");
 					
+					target.ballSizeRaw = ((target.ballSizeRaw * target.ballSizeRaw * target.balls) / 2);
 					target.balls = 0;
 					
 					changes++;
@@ -746,18 +747,27 @@ package classes.Items.Transformatives
 					target.vaginas[0].hymen = false; // this is designed species, no useless, bad design shit here - comes all ready!
 					output(" <b>You’ve got a pretty, pink little pussy. </b> You’ll have to spend some quality time with it soon.");
 					
-					// buy vagina and get breasts for free!
-					// disabled, since not lore friendly
-					//if(target.breastRows.length > 0 && pc.hasNipples() && target.breastRows[0].breastRating() == 0 && target.breastRatingUnlocked(0, 1))
-					//{
-						//target.breastRows[0].breastRatingRaw += 1 + rand(2); // A/B cups
-						//output("\n\nThe [pc.skin] of your once-flat chest burgeons, filling out. You cup your new tits, shuddering at the suddenly sensitive flesh around your [pc.nipples]. Oh, that's nice.... You now have [pc.breastCupSize]s!");
-						//changes++;
-					//}
-					
 					changes++;
 					surprise = true;
 				}
+				
+				//for (x = 0; i < target.breastRows.length;) {
+					//if (target.breastRows[x].breastRatingRaw > 0 && target.breastRatingUnlocked(x, 0)) break;
+					//i++;
+				//}
+				//if (changes == 0 && x > 0 && i != target.breastRows.length)
+				//{
+					//output("\n\nYour [pc.fullChest] are absorbed into your body!");
+					//
+					//for (x = 0; x < target.breastRows.length; x++)
+						//if(target.breastRatingUnlocked(x, 0)) target.breastRows[x].breastRatingRaw = 0;
+					//
+					//if (target.biggestTitSize() > 0) output(" All that remains is [pc.milkNoun]-swollen bubbles beneath your [pc.nipples], which would appear flat witout being filled by [pc.milkNoun].");
+					//else output(" All that remains is unremarkable set of [pc.nipples].");
+					//
+					//changes++;
+					//surprise = true;
+				//}
 				
 				// since it is "legacy code" of species designed for frontier, gotta get good protection for vulnerable organs!
 				if (target.balls == 0 && target.hasGenitals() && !target.hasStatusEffect("Genital Slit"))
