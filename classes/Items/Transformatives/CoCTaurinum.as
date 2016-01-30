@@ -49,14 +49,14 @@ package classes.Items.Transformatives
 			if (pc.hasPerk("Transformation Resistance")) changeLimit--;
 
 			output("You down the potion, grimacing at the strong taste.");
-			if (changes < changeLimit && rand(2) == 0 && pc.RQ() < 80) {
+			if (changes < changeLimit && rand(2) == 0 && pc.RQ() < 100) {
 				changes++;
 				output("\n\nAfter drinking the potion, you feel a bit faster.");
 				pc.slowStatGain("r", 1);
 			}
 			
 			//classic horse-taur version
-			if (changes < changeLimit && rand(2) == 0 && !pc.isTaur()) {
+			if (changes < changeLimit && !pc.isTaur()) {
 				if(pc.hasLegFlag(GLOBAL.FLAG_HOOVES)) {
 					changes++;
 					output("\n\nImmense pain overtakes you as you feel your backbone snap.  The agony doesn't stop, blacking you out as your spine lengthens, growing with new flesh from your backside as the bones of your legs flex and twist.  Muscle groups shift and rearrange themselves as the change completes, the pain dying away as your consciousness returns.  <b>You now have the lower body of a centaur</b>.");
@@ -73,7 +73,7 @@ package classes.Items.Transformatives
 				}
 				//generic version
 				else {
-					if (changes < changeLimit && rand(3) == 0) {
+					if (changes < changeLimit && rand(2) == 0) {
 						changes++;
 						if (pc.isNaga() || pc.isGoo()) {
 							output("\n\nYou collapse as your sinuous snake-tail tears in half, shifting into legs.  The pain is immense, particularly in your new feet as they curl inward and transform into hooves!");
@@ -101,6 +101,14 @@ package classes.Items.Transformatives
 						changes++;
 					}
 				}
+			}
+			else if (changes < changeLimit && pc.isTaur() && pc.legCount == 4 && Mutator.changeLegs(pc, -1, 6, null, null, null, false)) {
+				output("\n\nYou feel a rush of pressure hammering at the middle of your tauric body, between your two sets of legs. You grunt and stagger around as a new pair of legs begins to grow out of the center of your body, twisting muscles beginning to take shape. After a few minutes, they solidify into <b>a pair of " + plural(pc.leg(true, true, false)) + ". You've got six of them in total now!</b>");
+				changes++;
+			}
+			else if (changes < changeLimit && pc.isTaur() && pc.legCount > 4 && Mutator.changeLegs(pc, -1, 2, null, null, null, false)) {
+				output("\n\nYou feel your bones and organs changing place, steadily mutating until it no longer resembles the body of a beast, but a human. Your additional legs are absorbed, drawing into your vanishing lower body until <b>you have a bipedal humanoid figure</b>");
+				changes++;
 			}
 			
 			IncrementFlag("COC.TIMES_TRANSFORMED");

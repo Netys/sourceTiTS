@@ -520,7 +520,7 @@ package classes.GameData
 			Might.Implementor = MightImpl;
 			Might.RequiresTarget = false;
 			Might.ExtendedAvailabilityCheck = function(target:Creature):Boolean {
-				return target.lust() < target.lustMax() * ((target.hasPerk("Enlightened") >= 0 && target.cor() < 10) ? 0.85 : 0.75) && !target.hasStatusEffect("Might");
+				return target.lust() >= 50 && !target.hasStatusEffect("Might");
 			}
 			Might.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
 				return (target is PlayerCharacter && kGAMECLASS.flags["COC.SPELL_MIGHT"] == 1 || target.hasStatusEffect("Knows Might"));

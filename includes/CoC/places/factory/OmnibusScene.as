@@ -137,12 +137,20 @@ public function DemonFactoryOmnibusChooseDick():void {
 	else if(pc.cocks.length == 1) {
 		if(pc.totalCocks(GLOBAL.TYPE_DEMONIC) < 1) {
 			output("You smile, watching your [pc.cock] grow longer.  Inches of newfound dick-flesh erupt from your crotch in response to omnibus' dark magics.  Before you can play with your transformed tool, a wave of burning desire passes through you.  ");
-			if(cor() < 80) output("You watch in horror as the skin of your [pc.cock] turns shiny and purplish-black.  ");
+			if(pc.cor() < 80) output("You watch in horror as the skin of your [pc.cock] turns shiny and purplish-black.  ");
 			else output("Curious, you watch the skin of your [pc.cock] turn a shiny-dark purple.  ");
 			pc.cocks[0].cLength(3 + rand(5));
 			pc.shiftCock(0, GLOBAL.TYPE_DEMONIC);
-			if(cor() < 50) output("Corrupt nodules begin to spring up over its entire length.  <b>Your penis is transforming into a [pc.cock]!<\b>  The new nubs wriggle about as they sprout over every inch of surface, save for the head.  Unable to do anything but groan with forced pleasure and horror, you can only watch.  One last batch of nodules forms in a ring around the crown of your [pc.cock], seemingly completing its transformation, until you notice, almost throwing up, that your testicles are also getting covered in black veins under your powerless eyes!  ");
-			else output("As you watch expectantly, tiny wriggling nodules begin to erupt from the purplish skin, like those magnificent cocks you saw on demons!  <b>Your penis is transforming into a [pc.cock]!<\b>  You pant and moan in happiness as it lengthens one last time.  As you stroke all of its amazing length with both hands, the excitement of possessing such a beautiful pleasure tool makes you cum.  As one last ring of nodules forms around the edge of your [pc.cockHead], you notice that the squirts getting out of your cock-slit are not completely [pc.cumColor] and gradually become darker, the last drops being purple! Your new [pc.cock] pulsates darkly with each beat of your heart, but the thick, throbbing veins that are finishing to cover your testicles do not contain blood, but a black liquid which apparently has perverted them. You ponder what its purpose might be, but then you decide, as you stroke the huge, dark, bumpy shaft, that if this feels as good as this looks, it doesn't really matter.  ");
+			if (pc.cor() < 50) {
+				output("Corrupt nodules begin to spring up over its entire length.  <b>Your penis is transforming into a [pc.cock]!</b>  The new nubs wriggle about as they sprout over every inch of surface, save for the head.  Unable to do anything but groan with forced pleasure and horror, you can only watch.  One last batch of nodules forms in a ring around the crown of your [pc.cock], seemingly completing its transformation");
+				if(pc.balls > 0) output(", until you notice, almost throwing up, that your testicles are also getting covered in black veins under your powerless eyes");
+				output("!  ");
+			}
+			else {
+				output("As you watch expectantly, tiny wriggling nodules begin to erupt from the purplish skin, like those magnificent cocks you saw on demons!  <b>Your penis is transforming into a [pc.cock]!<\b>  You pant and moan in happiness as it lengthens one last time.  As you stroke all of its amazing length with both hands, the excitement of possessing such a beautiful pleasure tool makes you cum.  As one last ring of nodules forms around the edge of your [pc.cockHead], you notice that the squirts getting out of your cock-slit are not completely [pc.cumColor] and gradually become darker, the last drops being purple!");
+				if(pc.balls > 0) output(" Your new [pc.cock] pulsates darkly with each beat of your heart, but the thick, throbbing veins that are finishing to cover your testicles do not contain blood, but a black liquid which apparently has perverted them.");
+				output(" You ponder what its purpose might be, but then you decide, as you stroke the huge, dark, bumpy shaft, that if this feels as good as this looks, it doesn't really matter.  ");
+			}
 		}
 		else {
 			output("Your [pc.cock] leaps forwards, taking to the dark magic with ease.  Inch after inch of new length erupts from your groin as your [pc.cock] gets longer and thicker.  It pulsates, as if promising dark pleasure as it settles into its new enhanced size.");
@@ -162,7 +170,7 @@ public function DemonFactoryOmnibusChooseDick():void {
 		//Not yet full of demoncocks...
 		else {
 			output("You smile, watching your [pc.cocksLight] grow longer.  Inches of newfound dick-flesh erupt from your crotch in response to omnibus' dark magics.  Before you can play with your transformed pleasure tools, a wave of burning desire passes through you.  You watch");
-			if(cor() < 80) output(" in horror");
+			if(pc.cor() < 80) output(" in horror");
 			else output(" curiously");			
 			output(" as the skin of your [pc.cocksLight] turns shiny and purplish-black.  Corrupt nodules begin to spring up over the entire length of each dick.  ");
 			temp = pc.cocks.length;
@@ -171,11 +179,18 @@ public function DemonFactoryOmnibusChooseDick():void {
 				pc.shiftCock(temp, GLOBAL.TYPE_DEMONIC);
 				pc.cocks[temp].cLength(3 + rand(5));
 			}
-			if(cor() < 50) output("<b>Your dicks are transforming into [pc.cocksLight]!</b>  The new nubs wriggle about as they sprout over every inch of surface, save for the heads.  Unable to do anything but groan with forced pleasure and horror, you can only watch.  One last batch of nodules forms in a ring around the crowns of your [pc.cocksLight], seemingly completing its transformation, until you notice, almost throwing up, that your testicles are also getting covered in black veins under your powerless eyes!  ", false);
-			else output("<b>Your dicks are transforming into [pc.cocksLight]!</b>  The new nubs wriggle about as they sprout over every inch of surface, save for the heads.  You pant and moan in happiness as they lengthen one last time.  As you stroke all of their amazing length with both hands, the excitement of possessing such a magnificent pleasure tool makes you cum. You lick your fingers eagerly, tasting your new cum, while a last ring of nodules forms around the crowns of your beautiful [pc.cocksLight].   Your new [pc.cocksLight] pulsate darkly with each beat of your heart, but the thick, throbbing veins that are finishing to cover your testicles do not contain blood, but a black liquid which apparently has perverted them. You ponder what its purpose might be, but then you decide, as you stroke a huge, dark, bumpy shaft, that if they feel as good as they look, it doesn't really matter.  ");
+			if (pc.cor() < 50) {
+				output("<b>Your dicks are transforming into [pc.multiCocks]!</b>  The new nubs wriggle about as they sprout over every inch of surface, save for the heads.  Unable to do anything but groan with forced pleasure and horror, you can only watch.  One last batch of nodules forms in a ring around the crowns of your [pc.multiCocks], seemingly completing its transformation");
+				if(pc.balls > 0) output(", until you notice, almost throwing up, that your testicles are also getting covered in black veins under your powerless eyes");
+				output("!  ");
+			}
+			else {
+				output("<b>Your dicks are transforming into [pc.multiCocks]!</b>  The new nubs wriggle about as they sprout over every inch of surface, save for the heads.  You pant and moan in happiness as they lengthen one last time.  As you stroke all of their amazing length with both hands, the excitement of possessing such a magnificent pleasure tool makes you cum. You lick your fingers eagerly, tasting your new purple cum, while a last ring of nodules forms around the crowns of your beautiful [pc.cocksLight].");
+				if(pc.balls > 0) output("   Your new [pc.multiCocks] pulsate darkly with each beat of your heart, but the thick, throbbing veins that are finishing to cover your testicles do not contain blood, but a black liquid which apparently has perverted them. You ponder what its purpose might be, but then you decide, as you stroke a huge, dark, bumpy shaft, that if they feel as good as they look, it doesn't really matter.  ");
+			}
 		}
 	}
-	pc.cumType = GLOBAL.FLUID_TYPE_NYREA_CUM;
+	pc.cumType = GLOBAL.FLUID_TYPE_NYREA_CUM; // purple cum, according to scene... not exactly right, but fitting quite good
 	DemonFactoryOmnibusBoon();
 }
 
@@ -466,8 +481,8 @@ public function DemonFactoryOmnibusDoBadEndPart2():void {
 	if(pc.cocks.length == 1) {
 		output("In her hand is a squirming purplish mass.  It has a smooth outer surface, spotted with dark shades of iridescent purple. The opposite side is comprised of a smooth mucusy membrane covered with wriggling pink cilia.\n\n");
 		output("She leans over you with a predatory smile, \"<i>This little guy is my favorite.  I've even given him a bit of 'field testing'.</i>\"  She gestures towards a small dripping orifice, explaining, \"<i>You see, once I put this on you, it'll open up niiice and wide.  It'll suck your nice little cock into its mouth and starting squeezing and massaging you with each of its tiny tentacles until you can't help but release all your ");
-		if(cor() < 33) output("sweet ");
-		if(cor() >= 66) output("tainted ");
+		if(pc.cor() < 33) output("sweet ");
+		if(pc.cor() >= 66) output("tainted ");
 		output("sexual energies deep into its gullet.  And that's just the start!</i>\"  Her hands let go of the squirming mass, dropping it squarely into your lap.\n\n");
 		if(pc.cocks[0].cLength() < 15) output("With one swift motion, the beast engulfs your [pc.cock] in its slimy maw.  ");
 		else output("Distending obscenely, the beast starts engulfing your [pc.cock] in its slimy maw, progressing along its entire length until you can no longer see your pleasure tool.  ");		

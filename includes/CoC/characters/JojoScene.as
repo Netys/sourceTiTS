@@ -865,8 +865,8 @@ public function apparantlyJojoDOESlift():void
 }
 
 public function ControlledBreathTimePassedNotify():void {
-	if (minutes % 15 == 0 && pc.hasPerk("Controlled Breath")) {
-		pc.energy(1);
+	if (pc.hasPerk("Controlled Breath")) {
+		pc.energy(1.0 / 15);
 	}
 }
 private var ControlledBreathTimePassedNotifyHook: * = ControlledBreathTimePassedNotifyGrapple();

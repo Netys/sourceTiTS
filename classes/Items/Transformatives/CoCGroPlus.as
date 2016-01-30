@@ -145,14 +145,14 @@ package classes.Items.Transformatives
 			consume();
 			kGAMECLASS.output("You sink the needle into the base of your [pc.multiCocks].  It hurts like hell, but as you depress the plunger, the pain vanishes, replaced by a tingling pleasure as the chemicals take effect.\n\n");
 			if (kGAMECLASS.pc.cocks.length == 1) {
-				kGAMECLASS.output("Your [pc.cock] twitches and thickens, pouring more than an inch of thick new length from your ");
-				kGAMECLASS.pc.increaseCock(4, 0);
+				kGAMECLASS.output("[pc.EachCock] twitches and thickens, pouring extra inches of thick new length from your ");
+				kGAMECLASS.pc.increaseCock(3 + rand(2), 0);
 			}
 			//MULTI
 			else {
-				kGAMECLASS.output("Your [pc.multiCocks] twitch and thicken, each member pouring out more than an inch of new length from your ");
+				kGAMECLASS.output("Your [pc.multiCocks] twitch and thicken, each member pouring extra inches of new length from your ");
 				for (var i:int = 0; i < kGAMECLASS.pc.cocks.length; i++) {
-					kGAMECLASS.pc.increaseCock(2, i);
+					kGAMECLASS.pc.increaseCock(2 + rand(2), i);
 				}
 			}
 			if (kGAMECLASS.pc.hasFullSheaths())

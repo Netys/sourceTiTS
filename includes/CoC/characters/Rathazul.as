@@ -408,13 +408,12 @@ public function rathPurifyGo(args:/*ItemSlotClass*/Array):void {
 	var from:Object = args[0];
 	var to:ItemSlotClass = args[1];
 	
-	pc.credits -= 20 * 10;
 	IncrementFlag("COC.RATHAZUL_BOUGHT");
 	clearOutput();
 	output("It should be much safer now, but still, be careful...\n\n");
 	
 	for (var key:* in from) {
-		if (key != "gems") {
+		if (key == "gems") {
 			pc.credits -= from[key] * 10;
 		} else {
 			pc.destroyItemByName(key, from[key]);

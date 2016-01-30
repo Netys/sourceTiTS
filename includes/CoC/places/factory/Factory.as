@@ -490,7 +490,7 @@ public function DemonFactoryPremiumStorage():Boolean {
 	}
 	if(flags["COC.FACTORY_TAKEN_GROPLUS"] > 0) {
 		if(flags["COC.FACTORY_TAKEN_GROPLUS"] < 5) {
-			output("There is a crate with " + num2Text(5 - flags["COC.FACTORY_TAKEN_GROPLUS"]) + " bottles of something called 'Gro+' inside.\n\n");
+			output("There is a crate with " + num2Text(5 - flags["COC.FACTORY_TAKEN_GROPLUS"]) + " syringes of something called 'Gro+' inside.\n\n");
 			addButton(1, "GroPlus", DemonFactoryTakeGroPlus);
 		} else {
 			output("There is an empty crate with label'GroPlus'.\n\n");
@@ -498,7 +498,7 @@ public function DemonFactoryPremiumStorage():Boolean {
 		}
 	}
 	else {
-		output("There is an unopened crate with five bottles of something called 'Gro+' inside.\n\n");
+		output("There is an unopened crate with five syringes of something called 'Gro+' inside.\n\n");
 		addButton(1, "GroPlus", DemonFactoryTakeGroPlus);
 	}
 	

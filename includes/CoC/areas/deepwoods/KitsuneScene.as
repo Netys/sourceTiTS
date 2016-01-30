@@ -2704,7 +2704,7 @@ public function NineTailsTimePassedNotify():void {
 			//pc.removePerk("Enlightened Nine-tails");
 			//pc.removePerk("Corrupted Nine-tails");
 		//}
-		else if(minutes % 4 == 0) pc.energy(1);
+		else pc.energy(0.25);
 	}
 	
 	if (pc.armor is IllusoryAttire) {

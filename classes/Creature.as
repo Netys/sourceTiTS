@@ -2216,6 +2216,7 @@ package classes {
 					//If we still need to eat some, eat em up!
 					while(amount > 0 && inventory[x].quantity > 0) 
 					{
+						foundAmount++;
 						inventory[x].quantity--;
 						amount--;
 						if(inventory[x].quantity <= 0) inventory.splice(x,1);

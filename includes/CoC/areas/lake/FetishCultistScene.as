@@ -31,40 +31,35 @@ public function fetishCultistEncounter():void
 	CombatManager.newGroundCombat();
 	CombatManager.setFriendlyCharacters(pc);
 	CombatManager.setHostileCharacters(new CoCFetishCultist());
-	CombatManager.victoryScene(FetishCultistDefeatedByPlayer);
-	CombatManager.lossScene(PlayerDefeatedByFetishCultist);
+	CombatManager.victoryScene(FetishCultistPCVictory);
+	CombatManager.lossScene(FetishCultistPCLoss);
 	CombatManager.displayLocation("FETISH CULTIST");
 
 	clearMenu();
 	addButton(0, "Next", CombatManager.beginCombat);
 }
 
-public function FetishCultistDefeatedByPlayer():void
+public function FetishCultistPCVictory():void
 {
 	clearOutput();
 	clearMenu();
 	
 	if (enemy.HP() < 1) {
-		output("Hurt too much to continue controlling her powers, the cultist collapses helplessly.");
+		output("Hurt too much to continue controlling her powers, the cultist collapses helplessly.\n\n");
 	} else {
-		output("Overwhelmed by her lusts, the cultist loses the ability to control herself and collapses.");
+		output("Overwhelmed by her lusts, the cultist loses the ability to control herself and collapses.\n\n");
 	}
 	
 	addDisabledButton(0, "Sex", "Sex", "This scene requires you to have genitals and sufficient arousal.");
-	addButton(14, "Leave", function():*{ processTime(15 + rand(5)); CombatManager.genericVictory(); } );
+	addButton(14, "Leave", function():* { processTime(15 + rand(5)); CombatManager.genericVictory(); } );
 	
 	if(pc.lust() >= 33 && pc.hasGenitals()) {
-		output("  You realize she'd make a perfect receptacle for your lusts.  Do you have your way with her?");
+		output("You realize she'd make a perfect receptacle for your lusts.  Do you have your way with her?\n\n");
 		addButton(0, "Sex", playerRapesCultist);
 	}
 }
 
-public function PlayerDefeatedByFetishCultist():void
-{
-	cultistRapesYou();
-}
-
-public function cultistRapesYou():void
+public function FetishCultistPCLoss():void
 {
 	clearOutput();
 	
