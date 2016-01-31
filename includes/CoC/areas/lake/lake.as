@@ -13,6 +13,7 @@ import classes.Engine.Utility.*;
 // dick-dragging
 public function exploreLake():void
 {
+	showName("\nLAKE SHORE");
 	//Increment exploration count
 	IncrementFlag("COC.EXPLORED_LAKE");
 	

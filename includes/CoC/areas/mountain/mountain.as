@@ -10,7 +10,8 @@ import classes.Engine.Utility.*;
 // worms
 // xmas event
 public function exploreMountain():void { 
-	flags["COC.EXPLORED_MOUNTAIN"]++;
+	showName("\nMOUNTAIN");
+	IncrementFlag("COC.EXPLORED_MOUNTAIN");
 	var chooser:Number = rand(4);
 	
 	processTime(20 + rand(20)); // take your time looking for trouble!

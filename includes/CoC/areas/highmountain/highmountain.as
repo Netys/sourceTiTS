@@ -12,6 +12,7 @@ import classes.Engine.Utility.*;
 // Mino addict scene (IF addiction done)
 // Phoenix scene (IF follower hel done)
 public function exploreHighMountain():void {
+	showName("HIGH\nMOUNTAIN");
 	IncrementFlag("COC.EXPLORED_HIGH_MOUNTAIN");
 	
 	processTime(20 + rand(20)); // take your time looking for trouble!

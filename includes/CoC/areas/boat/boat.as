@@ -9,7 +9,7 @@ import classes.Engine.Utility.*;
 // Izma lost kids
 public function boatExplore():void
 {
-	kGAMECLASS.userInterface.setLocation("", "EXPLORATION", "PLANET: MARETH");
+	showName("\nLAKE");
 	
 	flags["COC.EXPLORED_BOAT"]++;
 	

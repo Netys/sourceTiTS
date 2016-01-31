@@ -7,6 +7,7 @@ import classes.Engine.Utility.*;
 // (sigh) Hel encounter...
 // Ember? It's a follower, so big maybe
 public function exploreSwamp():void {
+	showName("\nSWAMP");
 	IncrementFlag("COC.EXPLORED_SWAMP");
 	
 	processTime(20 + rand(20)); // take your time looking for trouble!

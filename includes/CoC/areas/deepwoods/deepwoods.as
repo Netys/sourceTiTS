@@ -8,8 +8,9 @@ import classes.Engine.Utility.*;
 // Hel ambush
 public function exploreDeepwoods():void { 
 	clearOutput();
+	showName("\nDEEPWOODS");
 	//Increment deepwoods exploration counter.
-	flags["COC.EXPLORED_DEEPWOODS"]++;
+	IncrementFlag("COC.EXPLORED_DEEPWOODS");
 	
 	processTime(20 + rand(20)); // take your time looking for trouble!
 	

@@ -12,7 +12,8 @@ import classes.Engine.Utility.*;
 // Phylla
 public function exploreDesert():void
 {
-	flags["COC.EXPLORED_DESERT"]++;
+	showName("\nDESERT");
+	IncrementFlag("COC.EXPLORED_DESERT");
 	
 	processTime(20 + rand(20)); // take your time looking for trouble!
 	

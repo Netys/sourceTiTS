@@ -12,8 +12,9 @@ import classes.Engine.Utility.*;
 // dick-dragging
 public function exploreForest():void
 { 
+	showName("\nFOREST");
 	//Increment forest exploration counter.
-	flags["COC.EXPLORED_FOREST"]++;
+	IncrementFlag("COC.EXPLORED_FOREST");
 	
 	processTime(20 + rand(20)); // take your time looking for trouble!
 	

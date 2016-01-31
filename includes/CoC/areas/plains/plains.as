@@ -11,6 +11,7 @@ import classes.Engine.Utility.*;
 // Isabella/Hel interactions
 // Owca
 public function explorePlains():void { 
+	showName("\nPLAINS");
 	IncrementFlag("COC.EXPLORED_PLAINS");
 	
 	processTime(20 + rand(20)); // take your time looking for trouble!

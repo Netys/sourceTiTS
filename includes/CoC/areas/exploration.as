@@ -5,7 +5,7 @@ import classes.Engine.Utility.*;
 
 public function doExplore():void
 {
-	kGAMECLASS.userInterface.setLocation("", "EXPLORATION", "PLANET: MARETH");
+	userInterface.setLocation("\nCAMPSITE", "EXPLORATION", "PLANET: MARETH");
 	
 	if (flags["COC.EXPLORED"] == undefined || flags["COC.EXPLORED"] == 1) {
 		tryDiscover();
@@ -58,7 +58,7 @@ public function tryDiscover():void
 		//kGAMECLASS.helScene.helSexualAmbush();
 		//return;
 	//}
-	
+	showName("\nSHIFTING LANDS");
 	IncrementFlag("COC.EXPLORED");
 	
 	if (cocGeneralAreasExplore()) return;
