@@ -2688,7 +2688,7 @@ public function isNineTails(target:Creature):Boolean {
 }
 
 public function NineTailsTimePassedNotify():void {
-	if (isNineTails(pc)) {
+	if (pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Corrupted Nine-tails")) {
 		if (!pc.hasTail(GLOBAL.TYPE_VULPINE) || pc.tailCount < 9) {
 			eventBuffer += "\n\n<b>Without your tails, the magic power they once granted withers and dies, vanishing completely.</b>";
 			pc.removePerk("Enlightened Nine-tails");

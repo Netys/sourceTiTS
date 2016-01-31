@@ -38,8 +38,8 @@ public function fightMSpiderMorph():void {
 	CombatManager.newGroundCombat();
 	CombatManager.setFriendlyCharacters(pc);
 	CombatManager.setHostileCharacters(new CoCSpiderMorphMale());
-	CombatManager.victoryScene(defeatSpiderBoy);
-	CombatManager.lossScene(loseToMaleSpiderMorph);
+	CombatManager.victoryScene(SpiderBoyPCVictory);
+	CombatManager.lossScene(SpiderBoyPCLoss);
 	CombatManager.displayLocation("M.SPIDER");
 	CombatManager.beginCombat();
 }
@@ -64,7 +64,7 @@ private function talkToSpiderBoy():void
 }
 
 //*Victory Pretext:rr
-public function defeatSpiderBoy():void
+public function SpiderBoyPCVictory():void
 {
 	clearOutput();
 	//spriteSelect(74);
@@ -89,7 +89,7 @@ public function defeatSpiderBoy():void
 }
 
 //Loss selector
-public function loseToMaleSpiderMorph():void
+public function SpiderBoyPCLoss():void
 {
 	clearOutput();
 	if (pc.isHerm()) RandomInCollection(spiderBoyLossMaleButtfuck, loseToSpiderBoyVagFucked)();
@@ -136,7 +136,9 @@ private function victoryButtFuckSpider():void
 		if (pc.cockTotal() == 2) output(" resting atop the small of his back");
 		else output("es splaying out over his butt");
 	}
-	output(".\n\n");
+	output(".");
+	pc.cockChange();
+	output("\n\n");
 
 	output("The spider-morph cries out, \"<i>Oww... it's stretching me so much!  B-b-but why does it feel good?</i>\"\n\n");
 	output("Chuckling at his admission of enjoyment, you let go of the spider's twitching ball-sack and take advantage of your free hand to slap his pale white ass.  It leaves a red, hand-shaped mark on his perfect little hiney, a temporary reminder of your authority.  His abdomen rubs against your belly as you start to fuck him, the heavy organ swaying with the gentle sawing motions of two bodies locked in anal coitus.  You gradually increase the tempo and quickly reach a point where your hips are slapping against his butt with loud, echoing smacks.\n\n");
@@ -146,7 +148,7 @@ private function victoryButtFuckSpider():void
 	output(" during the brief instant you've got him hilted.  Inspired by his submissive, orgasm-induced dribbling, you reach down to catch some of his cream in your hand.  He isn't squirting enough to fully fill your hand, so you lean back and hilt him again, roughly milking his spooge into your palm.  You take the handful of cum and hold it to his mouth.  He licks up his wasted seed like a good little bitch, shuddering in between swallows while you continue to dominate his asshole.\n\n");
 	output("Once he's had most of it, you wipe the rest off in his raven-black hair, marking him as your spooge-slurping semen-slut.  He looks back with tearful eyes, but his beet-red cheeks and pursed, white-glazed lips tell a different story.  The spider-boy keeps mewling and moaning, strangling off his own sounds of pleasure as if he could deny the steady flow of seed that drips from his droopy, foreskin-shrouded shaft.\n\n");
 
-	output("You go wild on him, fucking his ass hard.  His limp dick swings back and forth, slapping down at his balls while it continues to spew white globs into the ground.  Watching the little slut cream out his load in response to your anal 'massage' sends a sexual thrill through your body, and when his tight little ass-ring clamps down on your [pc.cock " + x + "], you're pushed to ejaculation as well.  Your spunk glazes his intestines with cum, coating them in the thick white goo of your liquid love.");
+	output("You go wild on him, fucking his ass hard.  His limp dick swings back and forth, slapping down at his balls while it continues to spew white globs into the ground.  Watching the little slut cream out his load in response to your anal 'massage' sends a sexual thrill through your body, and when his tight little ass-ring clamps down on your [pc.cock " + x + "], you're pushed to ejaculation as well.  Your spunk glazes his intestines with cum, coating them in the [pc.cumVisc] [pc.cumColor] goo of your liquid love.");
 	if (pc.cockTotal() == 2) output("  The leftover dick spurts out its half of your load over his ass, making it look more pearly-white than ever before.");
 	else if (pc.cockTotal() > 2) output("  The leftover dicks spurt out their portion of your load across his ass-cheeks, making them look more pearl-white than ever before.");
 	if (pc.cumQ() >= 500) {
@@ -161,7 +163,7 @@ private function victoryButtFuckSpider():void
 	if (pc.cumQ() < 50) output("trickles");
 	else if (pc.cumQ() < 1000) output("streams");
 	else output("rivers");
-	output(" of semen sliding out of the abused opening.  He rolls onto his side and pants, still leaking his thick goo from the limp, weak little cock between his legs.  You bend down and wipe your dick off on his face, letting him lick at it like a trained puppy.  Once cleaned, you get dressed and wander back to camp, leaving the spider to recover from the ordeal.\n\n");
+	output(" of [pc.cum] sliding out of the abused opening.  He rolls onto his side and pants, still leaking his thick goo from the limp, weak little cock between his legs.  You bend down and wipe your dick off on his face, letting him lick at it like a trained puppy.  Once cleaned, you get dressed and wander back to camp, leaving the spider to recover from the ordeal.\n\n");
 	pc.orgasm();
 	processTime(20 + rand(10));
 	CombatManager.genericVictory();
@@ -193,7 +195,7 @@ private function victoryFrotTheSpoidah():void
 
 	output("Without the slightest shred of decency, you keep humping the spider-boy's body like an animal.  No matter how hard you grind your [pc.cock] against him or how forcefully you slide your girthy penis through the ring he's made from his arms, it isn't enough for you.  You let go of him completely and wrap both your hands around your own swollen mass, completely giving in to the artificial desire.  Immediately, your hands start to pump up and down, providing a cacophony of pleasure that makes your eyes cross and your tongue hang out.\n\n");
 
-	output("A spasm of pleasure sparks in your loins, slowly building into a knot of warm, liquid heat, and you know it's finally time to claim the release you so desperately crave.  You push as far forward as you can, grinding the slippery tip of your cock's cum-slit into the spider-boy's face while your urethra bulges wide at the base, distended by the building cum-bubble slowly pushing through your huge prick.  Climax arrives, and as your body expels the gush of creamy goo directly into the spider-boy's face, another two deliveries of spunk push their way up, squeezing the boy-slut's tiny dick even tighter between the two of you.  He loses it and squirts, adding his own lubricants to the mess while you paint his face a whorish, glistening white.  You shake from stem to stern, body clenching while you pump out the last of your spooge onto his well-bukkake'd face.");
+	output("A spasm of pleasure sparks in your loins, slowly building into a knot of warm, liquid heat, and you know it's finally time to claim the release you so desperately crave.  You push as far forward as you can, grinding the slippery tip of your cock's cum-slit into the spider-boy's face while your urethra bulges wide at the base, distended by the building [pc.cumNoun]-bubble slowly pushing through your huge prick.  Climax arrives, and as your body expels the gush of [pc.cumVisc] [pc.cumNoun] directly into the spider-boy's face, another two deliveries of spunk push their way up, squeezing the boy-slut's tiny dick even tighter between the two of you.  He loses it and squirts, adding his own lubricants to the mess while you paint his face a whorish, glistening [pc.cumColor].  You shake from stem to stern, body clenching while you pump out the last of your spooge onto his well-bukkake'd face.");
 	if (pc.cumQ() >= 750) {
 		output("  Only after you finish do you realize how much you came - there's a ");
 		if (pc.cumQ() >= 2000) output("huge ");
@@ -201,9 +203,9 @@ private function victoryFrotTheSpoidah():void
 	}
 	output("\n\n");
 
-	output("You stretch and sigh with contentment, looking over your cum-covered conquest while he tries to clean himself off.  Absolutely perfect.\n\n");
+	output("You stretch and sigh with contentment, looking over your [pc.cumNoun]-covered conquest while he tries to clean himself off.  Absolutely perfect.\n\n");
 	pc.orgasm();
-	processTime(20 + rand(10));
+	processTime(25 + rand(10));
 	CombatManager.genericVictory();
 }
 
@@ -255,7 +257,7 @@ private function victoryCowgirlRidingOnSpiderBoi():void
 	//pc.knockUp(PregnancyStore.PREGNANCY_SPIDER, PregnancyStore.INCUBATION_SPIDER, 151);
 	pc.loadInCunt(enemy);
 	pc.orgasm();
-	processTime(20 + rand(10));
+	processTime(25 + rand(10));
 	CombatManager.genericVictory();
 }
 
@@ -303,23 +305,23 @@ private function spiderBoyLossMaleButtfuck():void
 	output("You aren't left empty for long.  The hard-shelled aggressor propels his heavy cock forward.  It disappears into your hungry anus with a 'schliiooorp' and returns the feeling of blessed fullness to you.  This time, you can feel his crown bumping against something inside you, and the reaction is intense and immediate.  Pleasure hits you upside the head with a hammer-blow of sexual gratification.  It's almost like there's a button inside you, right behind your cock and labelled 'push here for bliss', and the spider is poking it hard.  ");
 	if (pc.cockTotal() == 1) output("A ribbon ");
 	else output("Ribbons ");
-	output(" of thick cum drizzle");
+	output(" of [pc.cum] drizzle");
 	if (pc.cockTotal() == 1) output("s");
 	output(" out from [pc.eachCock] over your belly, weakly leaking out in a slow, steady flow.\n\n");
 
 	output("\"<i>My my, what a little butt-slut you are,</i>\" he comments.  \"<i>Did you just get off from feeling my cock sliding into your hungry little asshole?</i>\"\n\n");
 
-	if (pc.cor() < 33) output("You blush shamefully and nod, utterly humiliated by the quick little orgasm.");
-	else if (pc.cor() < 66) output("You blush shamefully and nod, humiliated and aroused by how quickly you just came.");
+	if (pc.slut() < 33) output("You blush shamefully and nod, utterly humiliated by the quick little orgasm.");
+	else if (pc.slut() < 66) output("You blush shamefully and nod, humiliated and aroused by how quickly you just came.");
 	else output("You blush with arousal and humiliation, shaking your head up and down and hoping he'll hit that spot again.");
-	output("  Pumping his hips slowly, the spider-morph watches a few more weak trickles of seed squirt out.  He gives your ass a hearty smack and muses out loud, \"<i>That's a good " + pc.mf("boy", "girl") + ".  You make a");
+	output("  Pumping his hips slowly, the spider-morph watches a few more weak trickles of [pc.cumNoun] squirt out.  He gives your ass a hearty smack and muses out loud, \"<i>That's a good " + pc.mf("boy", "girl") + ".  You make a");
 	if (pc.ass.looseness() > 2) output("n okay");
 	else output(" great");
 	output(" cock-sleeve.  ");
 	if (pc.ass.looseness() > 2) output("I just wish you were less loose, but I guess you must let anyone with a nice fat cock plug your ass every chance you get, huh?  ");
-	output("Just lie there and take it bitch, I'm not going to cum until you've painted your belly white.</i>\"\n\n");
+	output("Just lie there and take it bitch, I'm not going to cum until you've painted your belly [pc.cumColor].</i>\"\n\n");
 
-	output("You sigh when he hits a particularly good spot and squirt a fresh strand of goop onto yourself.  There's nothing to do but lie there while your [pc.asshole] is used and hope that he keeps hitting your prostate.  It feels sooo good when he does.  The hard butt-fucking hits it more and more as time passes, the spider slowly adjusting his strokes to make you leak as much as possible.  Eventually you stop spurting, [pc.eachCock] continually spewing seed while you're raped by the arachnid boy's girthy penis.  Dollops of your submission roll off your belly to pool in the dirt.\n\n");
+	output("You sigh when he hits a particularly good spot and squirt a fresh strand of goop onto yourself.  There's nothing to do but lie there while your [pc.asshole] is used and hope that he keeps hitting your prostate.  It feels sooo good when he does.  The hard butt-fucking hits it more and more as time passes, the spider slowly adjusting his strokes to make you leak as much as possible.  Eventually you stop spurting, [pc.eachCock] continually spewing seed while you're raped by the arachnid boy's girthy penis.  Dollops of your submission roll off your [pc.belly] to pool in the dirt.\n\n");
 
 	output("Crossing your eyes, you grab the ground with both hands and struggle to hold on.  There's... too much... too much pleasure for you to think.  Muscles randomly seize and twitch throughout your body, and though the ");
 	if (pc.cumQ() >= 500) output("semen continues to leak out at the same pace");
@@ -330,12 +332,12 @@ private function spiderBoyLossMaleButtfuck():void
 
 	output("The spider smiles and groans, \"<i>Oh fuck yeah, you little bitch, I'm gonna... gonna... hnnnggg.</i>\"  Hot blooms of spunk splatter through your rectum, soaking your guts and washing over your prostate.  The explosion of perfect enjoyment locks every muscle in your body at once, forcing your sphincter to squeeze down on the still-pulsing penis.  ");
 	if (pc.cumQ() < 500) output("[pc.EachCock] bounces on your belly, leaking one last drop from its tip, utterly draining every drop from your [pc.balls].");
-	else output("[pc.EachCock] explodes again, dumping every remaining drop from your [pc.balls] directly onto your [pc.chest] and belly.");
+	else output("[pc.EachCock] explodes again, dumping every remaining drop from your [pc.balls] directly onto your [pc.chest] and [pc.belly].");
 	output("  Your eyelids flutter and droop, your tongue lolls out of your mouth, and you start drooling all over yourself.  Zombie-like, your body keeps shaking, locked in orgasm, even after the spider dumps you in the dirt and walks away.\n\n");
 	//pc.slimeFeed();
 	pc.loadInAss(enemy);
 	pc.orgasm();
-	processTime(20 + rand(10));
+	processTime(30 + rand(10));
 	CombatManager.genericLoss();
 }
 
@@ -373,13 +375,13 @@ private function loseToSpiderBoyVagFucked():void
 	output(".  You start rocking your [pc.hips] encouragingly, trying to snare his marvelous maleness, but every time you catch his tip within your lips, he changes the angle and swivels away, teasing you.\n\n");
 
 	output("The arachnid man kisses at your neck, slobbering a messy, unpracticed kiss against your throat.  For one so talented with his hands, he sure is a mess when it comes to kissing - maybe spider-people don't kiss each other much?  The spider-morph pops off, leaving a small hickey behind before revealing his true intent.  Fangs slide into the tender, bruised spot above your collarbone with a small burst of pain, making you gasp.  You hold absolutely still, not wanting to make it any worse.  Numbing, boiling warmth explodes inside you, making you gasp out in shock. A split-second later, the pain vanishes under a growing tide of arousal.  Your [pc.vagina] ");
-	if (pc.wetness() >= 5) output("pours out a river of lube");
-	else if (pc.wetness() >= 3) output("drools out a steady stream of lube");
-	else if (pc.wetness() >= 2) output("dribbles lube");
+	if (pc.wetness() >= 5) output("pours out a river of [pc.girlCum]");
+	else if (pc.wetness() >= 3) output("drools out a steady stream of [pc.girlCum]");
+	else if (pc.wetness() >= 2) output("dribbles [pc.girlCum]");
 	else output("gets soaked");
 	output(", your [pc.nipples] ");
-	if (pc.hasFuckableNipples()) output("drip their own slippery juices");
-	else if (pc.isLactating()) output("bead drops of milk");
+	if (pc.hasFuckableNipples()) output("drip their own [pc.girlCumVisc] juices");
+	else if (pc.isLactating()) output("bead drops of [pc.milk]");
 	else output("fully engorge");
 	output(", ");
 	if (pc.hasCock()) output("[pc.eachCock] becomes so full and hard it feels like it could burst, ");
@@ -403,7 +405,7 @@ private function loseToSpiderBoyVagFucked():void
 	pc.orgasm();
 	//pc.knockUp(PregnancyStore.PREGNANCY_SPIDER, PregnancyStore.INCUBATION_SPIDER);
 	pc.loadInCunt(enemy);
-	processTime(20 + rand(10));
+	processTime(30 + rand(10));
 	CombatManager.genericLoss();
 }
 

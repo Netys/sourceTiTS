@@ -31,7 +31,7 @@ public function wandererRouter():void {
 //Encounter the wanderer for the first time
 private function wandererFirstMeeting():void {
 	clearOutput()
-	userInterface.showName("DESERT\nWANDERER");
+	showName("MARCUS\n& LUCIA");
 	output("A small plume of dust rises in the distance, betraying the position of something else moving amongst the sandy dunes.   It grows larger as it approaches your position, revealing a bulky distorted shape lurking inside the cloud.  You cautiously approach, preparing to face some new demonic monstrosity.   As the sandy cloud parts, the blurred figure resolves itself into two distinct outlines.\n\n");
 	output("On the left is a man carrying a heavily loaded wheelbarrow and struggling not to stumble in the sandy desert soil.  Slightly behind and to the right of the man is a shapely woman, her demonic origins plain to anyone who notices the spikes on her head.  As they near the man notices your presence and calls out, \"<i>Ho, traveler!  Fine day isn't it?</i>\"\n\n");
 	output("The strange pair close the intervening distance, allowing you to make out more of their forms.  As expected, the succubus is quite a beauty, with curvy flesh in all the right places.  The man introduces himself as he struggles with his heavy load.  \"<i>I am Marcus,  former traveler of extraordinary places and seeker of forbidden knowledge!  Though all that was a long time ago; I'm retired, you see.  I've settled down with my new partner, Lucia.</i>\"  Marcus gestures, indicating the bored-looking succubus accompanying him.\n\n");
@@ -52,6 +52,7 @@ private function wandererLeave():void {
 }
 //Repeated encounter if he left
 private function wandererRepeatMeeting():void {
+	showName("MARCUS\n& LUCIA");
 	//spriteSelect(42);
 	clearOutput()
 	output("Marcus waves to you as he crests a nearby dune, yelling a greeting.  \"<i>Hey traveler!  Do you have a moment to help a man with a question of theological and moral imperatives?</i>\"\n\nHis succubus accomplice, Lucia, snorts in disdain.");
@@ -63,6 +64,7 @@ private function wandererRepeatMeeting():void {
 //Volunteer to help
 private function wandererHelpHim():void {
 	//spriteSelect(42);
+	showName("MARCUS\n& LUCIA");
 	clearOutput()
 	output("\"<i>Oh good!</i>\" he exclaims as he begins elaborating.  \"<i>My dear succubus here is growing tired of our arrangement, and she wants me to give up the last of my humanity and become a demon like her.  I'm not really sure I want to lose my soul, but at the same time, I know enough about their kind to know I'd REALLY enjoy being an incubus, if you know what I mean.  Before I make the plunge, I'd like a second opinion – what do you think?</i>\"\n\nHe glances over his shoulder with almost a small measure of fear.");
 	processTime(2);
@@ -73,6 +75,7 @@ private function wandererHelpHim():void {
 //Ask marcus to stay human
 private function wandererStayHuman():void {
 	//spriteSelect(42);
+	showName("MARCUS\n& LUCIA");
 	clearOutput()
 	output("\"<i>You little mortal fuckwit!</i>\" screams Lucia before turning to her human lover, \"<i>Don't listen to the foolish mortal, love; think of the fun we could have together!</i>\"\n\n");
 	output("Marcus shakes his head sadly, \"<i>[pc.HeShe] is right, my soul is immortal and not to be sacrificed so lightly.  Why don't we stick to our original agreement another decade and mull it over then?</i>\"\n\n");
@@ -89,6 +92,7 @@ private function wandererStayHuman():void {
 //Ask marcus to go demon
 private function wandererGoDemon():void {
 	//spriteSelect(42);
+	showName("MARCUS\n& LUCIA");
 	clearOutput()
 	output("Lucia breaks into a mischievious smile as you suggest taking her up on her offer.  She sashays over to you, flesh jiggling enticingly the whole way.  She leans close, sliding a slender finger down the center of your chest.  \"<i>Thank you for this.  Should we meet again, I promise rewards fit to make a whore faint.</i>\"\n\n");
 	output("Marcus raises an eyebrow at the exchange, but smiles as his demonic lover returns to his side.  Lucia winks again, and huge wings explode from her back.  She grabs Marcus, who bleats in surprise, and lifts off, flying away with her prize to her lair.");
@@ -109,7 +113,7 @@ private function wandererDemonEpilogue():void {
 	var catchIt:Boolean = false;
 	
 	if(flags["COC.MARCUS_CHOISE"] == -1) {
-		userInterface.showName("MARCUS&\nLUCIA");
+		showName("MARCUS\n& LUCIA");
 		output("A winged shadow flashes by.  You look up, but can't find its source in the searing desert sun.   A tap on your shoulder is all the warning you get before a curvy body is pressed against you, stroking and touching you in all the right ways.\n\n");
 		output("\"<i>I stopped by and I wanted to thank you for this,</i>\" Lucia purrs, balancing a purple crystal along her knuckles.  It sparkles and glitters with a light in the sunlight as she speaks, \"<i>You see, when a human or other mortal creature finally begins to desire corruption and pleasure more than everything else, they can become a demon.  The process leaves behind a single crystal of lethicite – this crystal.  It's a power source beyond anything you can comprehend, and I have you to thank for giving it to me.</i>\"\n\n");
 		output("Lucia places a small bottle in your hand.  \"<i>So thank you, and have this present.  Perhaps you can create some lethicite for us later... oh, and before I forget, Marcus is loving his new existence.</i>\"\n\n");
@@ -118,7 +122,7 @@ private function wandererDemonEpilogue():void {
 	}
 	//Second Encounter
 	else {
-		userInterface.showName("LUCIA");
+		userInterface.showName("\nLUCIA");
 		output("Lucia zips by overhead, spreading her legs and openly frigging her moist hairless slit and moaning lustily.  After a few moments she creams herself, dripping her juices over the dunes.  She licks her fingers and waves, unclipping an item from her belt and dropping it down towards you.\n\n");
 		//Catch it
 		if(50 < ((pc.RQ() + pc.AQ()) / 2 + rand(60))) {
@@ -156,7 +160,7 @@ private function wandererEpilogueHuman():void {
 	
 	//Human Epilogue 1
 	if(flags["COC.MARCUS_CHOISE"] == 1) {
-		userInterface.showName("MARCUS&\nLUCIA");
+		showName("MARCUS\n& LUCIA");
 		output("As you journey the desert, you see the twin figures of Marcus and his demonic companion, Lucia, in the distance.   Judging by the frantic bobbing of Lucia's head in Marcus's lap, she's just getting ready for a meal.  Closing the distance, you watch curiously as her throat bulges obscenely to keep up with the huge cum-load.  In time she flops back, a few huge globules of cum exploding onto her form like bursting water-balloons as Marcus' orgasm finishes, leaving her a cum-stained wreck.\n\n");
 		if(pc.cor() < 33) output("You duck back behind a dune, blushing furiously.");
 		else if(pc.cor() < 66) output("You blush crimson as you swear you see Lucia look right at you and wink.");
@@ -165,7 +169,7 @@ private function wandererEpilogueHuman():void {
 	}
 	//Human Epilogue 2
 	else {
-		userInterface.showName("LUCIA");
+		userInterface.showName("\nLUCIA");
 		output("While exploring the desert, you find a strange bottle half-buried in the sand.  A small note is tied to it:\n\n\"<i>I just knew you'd find this.  Try this a few times and I think you might change your mind about Marcus' situation.\n  -Lovely Lucia</i>\"\n\n");
 		catchIt = true;
 	}

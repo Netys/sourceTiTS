@@ -144,7 +144,7 @@ public function lakeQuickWalk():void {
 	
 	if (pc.RQ() < 50) {
 		output("  You bet you could cover the same distance even faster next time.\n");
-		pc.slowStatGain("reflexes", 0.25);
+		pc.slowStatGain("reflexes", 0.5);
 	}
 	
 	processTime(20 + rand(20));

@@ -56,7 +56,7 @@ package classes.Characters.CoC
 			this.libidoRaw = 35;
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
-			this.lustRaw = 20;			
+			this.lustRaw = 20;
 			
 			this.femininity = 25;
 			this.eyeType = GLOBAL.TYPE_ARACHNID;
@@ -129,6 +129,7 @@ package classes.Characters.CoC
 			//20 - inconceivably large/big/huge etc
 			this.buttRatingRaw = 9;
 			//No dicks here!
+			this.vaginas = [];
 			this.cocks = new Array();
 			this.createCock(6, 2);
 			this.cocks[0].cockColor = "ebony";
@@ -136,7 +137,7 @@ package classes.Characters.CoC
 			this.balls = 2;
 			this.ballSizeRaw = 2;
 			
-			this.breastRows[0].breastRatingRaw = 10;
+			this.breastRows[0].breastRatingRaw = 0;
 			this.nippleColor = "dusky";
 			this.milkMultiplier = 0;
 			this.milkType = GLOBAL.FLUID_TYPE_MILK;

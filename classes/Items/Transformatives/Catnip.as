@@ -1144,18 +1144,18 @@ package classes.Items.Transformatives
 				
 				if (wasLong || wasPrehensile)
 				{
-					kGAMECLASS.clearList();
 					output(" Strangely enough, it preserved its former ");
 					
+					enum.clear();
 					if (wasLong) {
-						kGAMECLASS.addToList("length")
+						enum.push("length")
 						target.addTongueFlag(GLOBAL.FLAG_LONG);
 					}
 					if (wasPrehensile) {
-						kGAMECLASS.addToList("dexterity")
+						enum.push("dexterity")
 						target.addTongueFlag(GLOBAL.FLAG_PREHENSILE);
 					}
-					output(kGAMECLASS.formatList() + ".");
+					output(enum.toString() + ".");
 				}
 				target.lust(10 + rand(10));
 				changes++;

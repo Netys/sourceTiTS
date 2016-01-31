@@ -133,7 +133,7 @@ public function AnemoneCombatStart():void {
 	CombatManager.setHostileCharacters(new CoCAnemone());
 	CombatManager.victoryScene(defeatAnemone);
 	CombatManager.lossScene(loseToAnemone);
-	CombatManager.displayLocation("IMP");
+	CombatManager.displayLocation("ANEMONE");
 
 	clearMenu();
 	addButton(0, "Next", CombatManager.beginCombat);

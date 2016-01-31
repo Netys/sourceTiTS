@@ -9,9 +9,9 @@ import classes.Engine.Utility.*;
 // Izma lost kids
 public function boatExplore():void
 {
-	showName("\nLAKE");
+	userInterface.setLocation("\nLAKE", "EXPLORATION", "PLANET: MARETH");
 	
-	flags["COC.EXPLORED_BOAT"]++;
+	IncrementFlag("COC.EXPLORED_BOAT");
 	
 	processTime(20 + rand(20)); // take your time looking for trouble!
 	
@@ -33,7 +33,7 @@ public function boatExplore():void
 		output("The water appears somewhat muddy and has a faint pungent odor.  ");
 		if (pc.IQ() > 40) output("You realize what it smells like – sex.  ");
 	}
-	output("You set out, wondering if you'll find any strange islands or creatures in the lake.\n\n", false);
+	output("You set out, wondering if you'll find any strange islands or creatures in the lake.\n\n");
 	
 	////BUILD LIST OF CHOICES
 	var choice:Array = [];
@@ -89,12 +89,16 @@ public function discoverBoat():void {
 	if(pc.cor() > 60) output(" or fuck");
 	output(".  The air is fresh, and the grass is cool and soft under your feet.   Soft waves lap against the muddy sand of the lake-shore, as if radiating outward from the lake.   You pass around a few bushes carefully, being wary of hidden 'surprises', and come upon a small dock.  The dock is crafted from old growth trees lashed together with some crude rope.  Judging by the appearance of the rope, it is very old and has not been seen to in quite some time.  Tied to the dock is a small rowboat, only about seven feet long and three feet wide.   The boat appears in much better condition than the dock, and appears to be brand new.\n\n");
 	output("<b>You have discovered the lake boat!</b>\n(You may return and use the boat to explore the lake's interior by using the 'places' menu.)");
-	doNext(returnToCampUseOneHour);
+	processTime(20 + rand(10));
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 public function rowUntilArmsDropOffAndAllForNothing():void {
 	clearOutput()
 	if(rand(2) == 0) output("You give up on finding anything interesting, and decide to go check up on your camp.");
 	else output("You row for nearly an hour, until your arms practically burn with exhaustion from all the rowing.");
-	doNext(returnToCampUseOneHour);
+	processTime(10 + rand(10));
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
