@@ -2009,7 +2009,7 @@ package classes.GameData
 				}		
 			}
 			if(pc.hasVagina()) {
-				if(pc.isTaur()) choices[choices.length] = 5;
+				if(pc.isTaur() && (pc.hasVaginaType(GLOBAL.TYPE_EQUINE) || pc.hasVaginaType(GLOBAL.TYPE_LEITHAN))) choices[choices.length] = 5;
 				else choices[choices.length] = 3;
 			}
 			//Reqs: PC has a vagina with maximum wetness
@@ -2072,7 +2072,7 @@ package classes.GameData
 			}
 			//4 Horsecock centaur tease
 			else if(select == 4) {
-				output("You let out a bestial whinny and stomp your hooves at your enemy.  They prepare for an attack, but instead you kick your front hooves off the ground, revealing the hefty horsecock hanging beneath your belly.  You let it flop around, quickly getting rigid and to its full erect length.  You buck your hips as if you were fucking a mare in heat, letting your opponent know just what's in store for them if they surrender to pleasure...");
+				output("You let out a bestial whinny and stomp your [pc.feet] at your enemy.  They prepare for an attack, but instead you kick your front [pc.feet] off the ground, revealing the hefty horsecock hanging beneath your belly.  You let it flop around, quickly getting rigid and to its full erect length.  You buck your hips as if you were fucking a mare in heat, letting your opponent know just what's in store for them if they surrender to pleasure...");
 			}
 			//5 Cunt grind tease
 			else if(select == 5) {
@@ -2276,9 +2276,9 @@ package classes.GameData
 				output(" to take a taste.");
 
 				output("\n\n<i>“");
-				if(pc.hasCock() && pc.hasVagina()) output("[pc.CumFlavor] and [pc.girlCumFlavor], two great tastes that go great together. Herm " + pc.mf("boys","girls") + " really do get the best of everything.");
+				if(pc.hasCock() && pc.hasVagina() && pc.cumType != pc.girlCumType) output("[pc.CumFlavor] and [pc.girlCumFlavor], two great tastes that go great together. Herm " + pc.mf("boys","girls") + " really do get the best of everything.");
 				//Male: 
-				else if(pc.hasCock()) output("Sure you don’t want some of this [pc.cumNoun] for yourself? It’s nice and [pc.cumFlavor], " + pc.mf("a real man’s spunk","perfect for a “girl” like me") + ".");
+				else if(pc.hasCock() && (!pc.hasVagina() || rand(2) == 0)) output("Sure you don’t want some of this [pc.cumNoun] for yourself? It’s nice and [pc.cumFlavor], " + pc.mf("a real man’s spunk","perfect for a “girl” like me") + ".");
 				else if(pc.hasVagina()) 
 				{
 					output("Mmm, can’t get enough of that all-natural [pc.girlCumFlavor] taste. Come get some");
@@ -2298,9 +2298,11 @@ package classes.GameData
 					}
 				}
 				output(", but they can still see vestiges of ");
-				if(pc.hasCock()) output("[pc.cumColor]");
-				if(pc.hasVagina() && pc.hasCock()) output(" and ");
-				if(pc.hasVagina()) output("[pc.girlCumColor]");
+				if (pc.hasCock()) output("[pc.cumColor]");
+				if (pc.cumColor != pc.girlCumColor || !pc.hasCock()) {
+					if (pc.hasVagina() && pc.hasCock()) output(" and ");
+					if (pc.hasVagina()) output("[pc.girlCumColor]");
+				}
 				output(" on your lips.");
 			}
 			//Reqs: PC is in combat with a zil male, zil female, or the dual zil when meeting Penny, PC has a zil vagina
