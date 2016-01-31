@@ -10,7 +10,8 @@ public function cockyVrJunctionMenu():void {
 	author("Etis");
 	setLocation("SHIP\nINTERIOR", rooms[rooms["SHIP INTERIOR"].outExit].planet, rooms[rooms["SHIP INTERIOR"].outExit].system);
 	
-	addButton(5, "Enter pod", enterCocVrPod);
+	//addButton(5, "Enter pod", enterCocVrPod);
+	addButton(0, "Next", move, "SHIP INTERIOR");
 }
 
 public function enterCocVrPod():void {
@@ -82,7 +83,7 @@ public function abortIAmNotBloodyChampion():void {
 	processTime(5);
 	
 	clearMenu();
-	addButton(0, "Next", move, "VR_POD_ROOM");
+	addButton(0, "Next", move, "SHIP INTERIOR");
 }
 
 public function EnterVRIAmYourBloodyChampionYouVapidCunt():void {

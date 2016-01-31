@@ -37,7 +37,7 @@ public function initializeRooms():void
 	rooms["SHIP INTERIOR"].outText = "Exit";
 	rooms["SHIP INTERIOR"].moveMinutes = 2;
 	rooms["SHIP INTERIOR"].runOnEnter = shipMenu;
-	rooms["SHIP INTERIOR"].westExit = "VR_POD_ROOM";
+	//rooms["SHIP INTERIOR"].westExit = "VR_POD_ROOM";
 	rooms["SHIP INTERIOR"].addFlag(GLOBAL.INDOOR);
 	rooms["SHIP INTERIOR"].addFlag(GLOBAL.BED);
 	rooms["SHIP INTERIOR"].addFlag(GLOBAL.PRIVATE);

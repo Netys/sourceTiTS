@@ -32,7 +32,7 @@ rooms["VR_POD_ROOM"].roomName = "VR POD\nROOM";
 rooms["VR_POD_ROOM"].description = "This small closet contains only virtual reality pod.";
 rooms["VR_POD_ROOM"].planet = "";
 rooms["VR_POD_ROOM"].system = "";
-rooms["VR_POD_ROOM"].eastExit = "SHIP INTERIOR";
+//rooms["VR_POD_ROOM"].eastExit = "SHIP INTERIOR";
 rooms["VR_POD_ROOM"].addFlag(GLOBAL.INDOOR);
 rooms["VR_POD_ROOM"].addFlag(GLOBAL.PRIVATE);
 rooms["VR_POD_ROOM"].runOnEnter = cockyVrJunctionMenu;
