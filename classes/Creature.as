@@ -9904,7 +9904,13 @@ package classes {
 			var descripted: Number = 0;
 			//Bald folks get one-off quick description
 			if (hairLength == 0) {
-				if (rand(2) == 0) descript += "shaved ";
+				if (hasFur()) {
+					if (rand(2) == 0) descript += "furry ";
+				}
+				else if (hasScales()) {
+					if (rand(2) == 0) descript += "scaly ";
+				}
+				else if (rand(2) == 0) descript += "shaved ";
 				else descript += "bald ";
 				descript += "head";
 				return descript;
@@ -10048,7 +10054,13 @@ package classes {
 			var descripted: Number = 0;
 			//Bald folks get one-off quick description
 			if (hairLength == 0) {
-				if (rand(2) == 0) descript += "shaved ";
+				if (hasFur()) {
+					if (rand(2) == 0) descript += "furry ";
+				}
+				else if (hasScales()) {
+					if (rand(2) == 0) descript += "scaly ";
+				}
+				else if (rand(2) == 0) descript += "shaved ";
 				else descript += "bald ";
 				descript += "head";
 				return descript;

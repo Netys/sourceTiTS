@@ -121,9 +121,7 @@ package classes.Items.Transformatives
 				if (target.IQ() > 35) {
 					target.intelligence(target.intelligenceMax() * 0.35, true);
 				}
-				if (target.libido() < 50) {
-					target.libido(50, true);
-				}
+				target.slowStatGain("libido", 50);
 			}
 			else {
 				output("You pop the cork from the flask and are immediately assaulted by a cloying, spiced scent that paints visions of a slutty slave-girl's slightly-spread folds.  Wow, this is some potent stuff!  Well, you knew what you were getting into when you found this bottle!  You open wide and guzzle it down, feeling the fire of alcohol burning a path to your belly.  The burning quickly fades to a pleasant warmth that makes you light-headed and giggly.\n\n");
@@ -241,9 +239,9 @@ package classes.Items.Transformatives
 				}
 				target.orgasm();
 				//game.dynStats("int", -1, "lib", 4, "sen", 25);
-				target.libido(4);
+				target.slowStatGain("libido", 4);
 				//FULL ON BITCHFACE
-				target.modFem(100);
+				target.femininity = 100; // forced override of max feminity
 				//Body
 				//Tease/Seduce Boost
 				//*boosts min lust and lust resistance)

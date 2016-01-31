@@ -90,7 +90,7 @@ package classes.Items.Transformatives
 					target.tallness = 77;
 					buffer += ".. Did the ground just get farther away?  You glance down and realize, you're growing!  Like a sped-up flower sprout, you keep on getting taller until finally stopping around... six and a half feet, you assume.  Huh.  You didn't expect that to happen!";
 				}
-				if (target.tone < 100) {
+				if (target.tone < 100) { // Intenionally skipped maxTone check - BroBrew can make bodybuilder even from goo!
 					buffer += "  A tingling in your arm draws your attention just in time to see your biceps and triceps swell with new-found energy, skin tightening until thick cords of muscle run across the whole appendage.  Your other arm surges forward with identical results.  To compensate, your shoulders and neck widen to bodybuilder-like proportions while your chest and abs tighten to a firm, statuesque physique.  Your [pc.legs] and glutes are the last to go, bulking up to proportions that would make any female martial artist proud.  You feel like you could kick forever with legs this powerful.";
 					target.tone = 100;
 				}
@@ -116,9 +116,7 @@ package classes.Items.Transformatives
 				if (target.IQ() > 35) {
 					target.intelligence(target.intelligenceMax() * 0.35, true);
 				}
-				if (target.libido() < 50) {
-					target.libido(50, true);
-				}
+				target.slowStatGain("libido", 50);
 				buffer += "\n\n";
 				if (target.hasPerk("Bimbo Brains")) buffer += "<b>(Lost Perk - Bimbo Brains)\n";
 				if (target.hasPerk("Bimbo Body"))  buffer += "<b>(Lost Perk - Bimbo Body)\n";
@@ -136,9 +134,9 @@ package classes.Items.Transformatives
 			//HP restore for bros!
 			if (target.hasPerk("Bro Body") || target.hasPerk("Futa Form")) {
 				buffer += "You crack open the can and guzzle it in a hurry.  Goddamn, this shit is the best.  As you crush the can against your forehead, you wonder if you can find a six-pack of it somewhere?\n\n";
+				target.removeStatusEffect("Sore");
 				target.energy(target.energyMax());
 				target.HP(target.HPMax());
-				//pc.refillHunger(30);
 				if (display) output(buffer);
 				return;
 			}
@@ -221,7 +219,7 @@ package classes.Items.Transformatives
 			}
 			buffer += "You finish admiring yourself and adjust your [pc.gear] to better fit your new physique.  Maybe there's some bitches around you can fuck.  Hell, as good as you look, you might have other dudes wanting you to fuck them too, no homo.\n\n";
 			//max tone.  Thickness + 50
-			target.tone = 100;
+			target.tone = 100; // Intenionally skipped maxTone check - BroBrew can make bodybuilder even from goo!
 			Mutator.modThickness(target, 100, 50, false);
 			//Bonus cum production!
 			
@@ -237,8 +235,8 @@ package classes.Items.Transformatives
 				}
 			}
 			
-			target.slowStatGain("p", 33);
-			target.slowStatGain("l", 4);
+			target.slowStatGain("physique", 33);
+			target.slowStatGain("libido", 4);
 			target.lust(40);
 			//dynStats("str", 33, "tou", 33, "int", -1, "lib", 4, "lus", 40);
 			

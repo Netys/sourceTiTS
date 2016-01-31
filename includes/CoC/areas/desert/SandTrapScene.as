@@ -93,8 +93,8 @@ private function saveTheSandTarps():void {
 	}
 	
 	prepareSandtrap();
+	CombatManager.getHostileCharacters()[0].setStatusValue("Level", 1, 2);
 	addButton(0, "Next", CombatManager.beginCombat);
-	foes[0].setStatusValue("Level", 1, 2);
 }
 
 //[Don't Save]: 

@@ -23,7 +23,7 @@ package classes.Items.Transformatives
             //Used on inventory buttons
             this.shortName = "W.Fruit";
             //Regular name
-            this.longName = "Whisker fruit";
+            this.longName = "whisker fruit";
             
             TooltipManager.addFullName(this.shortName, StringUtil.toTitleCase(this.longName));
             
@@ -61,32 +61,29 @@ package classes.Items.Transformatives
 				//low speed
 				if (pc.RQ() <= 30) {
 					output("\n\nYou feel... more balanced, sure of step. You're certain that you've become just a little bit faster.");
-					pc.reflexes(2);
 				}
 				//medium speed
 				else if (pc.RQ() <= 60) {
 					output("\n\nYou stumble as you shift position, surprised by how quickly you move. After a moment or two of disorientation, you adjust. You're certain that you can run faster now.");
-					pc.reflexes(1);
 				}
 				//high speed
 				else {
 					output("\n\nYou pause mid-step and crouch. Your leg muscles have cramped up like crazy. After a few moments, the pain passes and you feel like you could chase anything down.");
-					pc.reflexes(0.5);
 				}
+				pc.slowStatGain("r", 1.5);
 				changes++;
 			}
 			//Strength raises to 40
 			if (pc.PQ() < 40 && rand(3) == 0 && changes < changeLimit) {
 				if (rand(2) == 0) output("\n\nYour muscles feel taut, like a coiled spring, and a bit more on edge.");
 				else output("\n\nYou arch your back as your muscles clench painfully.  The cramp passes swiftly, leaving you feeling like you've gotten a bit stronger.");
-				pc.physique( 1);
-				changes++;
+				pc.slowStatGain("p", 1);
 			}
 			//Strength ALWAYS drops if over 60
 			//Does not add to change total
 			else if (pc.PQ() > 60 && rand(2) == 0) {
 				output("\n\nShivers run from your head to your toes, leaving you feeling weak.  Looking yourself over, your muscles seemed to have lost some bulk.");
-				pc.physique( -1);
+				pc.slowStatGain("p", -1);
 			}
 			//Intelliloss
 			if (rand(4) == 0 && changes < changeLimit && pc.intelligenceRaw >= 2) {
@@ -107,7 +104,7 @@ package classes.Items.Transformatives
 				}
 				//High intelligence
 				else output("\n\nYou start to feel a bit dizzy, but the sensation quickly passes.  Thinking hard on it, you mentally brush away the fuzziness that seems to permeate your brain and determine that this fruit may have actually made you dumber.  It would be best not to eat too much of it.");
-				pc.intelligence(-1);
+				pc.slowStatGain("i", -1);
 				changes++;
 			}
 			//Libido gain
@@ -127,7 +124,7 @@ package classes.Items.Transformatives
 					output("turned on.");
 				}
 				//dynStats("lib", 1, "sen", .25);
-				pc.libido(1);
+				pc.slowStatGain("l", 1);
 				changes++;
 			}
 			
@@ -290,15 +287,12 @@ package classes.Items.Transformatives
 				pc.HP(50);
 				pc.lust(3);
 			}
-			if (changes < changeLimit) {
-				if (rand(2) == 0 && pc.thickness > 5) output(pc.modThickness(-3));
-				if (rand(2) == 0 && pc.tone < 76) output(pc.modTone(3, true));
-				if (rand(2) == 0) {
-					var targetFem:int = pc.hasVagina() ? 85 : 65;
-					if (pc.femininity < targetFem) output(pc.modFem(3));
-				}
-			}
-			kGAMECLASS.flags["COC.TIMES_TRANSFORMED"] += changes;
+
+			if (rand(2) == 0 && pc.thickness > 5) Mutator.modThickness(pc, 5, 3);
+			if (rand(2) == 0 && pc.tone < 75) Mutator.modTone(pc, 75, 3);
+			if (rand(2) == 0 && pc.femininity < pc.femininityMax()) Mutator.modFem(pc, pc.femininityMax(), 3);
+			
+			IncrementFlag("COC.TIMES_TRANSFORMED");
 			return false;
 		}
 	}	
