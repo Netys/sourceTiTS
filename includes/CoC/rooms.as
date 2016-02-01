@@ -27,6 +27,7 @@ import classes.GLOBAL;
 //public static const PLANE:int									= 23;
 //public static const PLANT_BULB:int								= 24;
 
+// This room is deprecated.
 rooms["VR_POD_ROOM"] = new RoomClass(this);
 rooms["VR_POD_ROOM"].roomName = "VR POD\nROOM";
 rooms["VR_POD_ROOM"].description = "This small closet contains only virtual reality pod.";
@@ -36,6 +37,16 @@ rooms["VR_POD_ROOM"].system = "";
 rooms["VR_POD_ROOM"].addFlag(GLOBAL.INDOOR);
 rooms["VR_POD_ROOM"].addFlag(GLOBAL.PRIVATE);
 rooms["VR_POD_ROOM"].runOnEnter = cockyVrJunctionMenu;
+
+rooms["GUILD EMBASSY"] = new RoomClass(this);
+rooms["GUILD EMBASSY"].roomName = "STELLAR\nFURNACE";
+rooms["GUILD EMBASSY"].planet = "TAVROS STATION";
+rooms["GUILD EMBASSY"].system = "SYSTEM: KALAS";
+rooms["GUILD EMBASSY"].northExit = "9006";
+rooms["GUILD EMBASSY"].addFlag(GLOBAL.INDOOR);
+rooms["GUILD EMBASSY"].addFlag(GLOBAL.PRIVATE);
+rooms["GUILD EMBASSY"].addFlag(GLOBAL.NPC);
+rooms["GUILD EMBASSY"].runOnEnter = guildEmbassyBonusFunction;
 
 rooms["COC_CAMP"] = new RoomClass(this);
 rooms["COC_CAMP"].roomName = "\nCAMPSITE";

@@ -336,11 +336,12 @@ public function initializeRooms():void
 	//9006
 	rooms["9006"] = new RoomClass(this);
 	rooms["9006"].roomName = "MERCHANT'S\nTHOROUGHFARE";
-	rooms["9006"].description = "A spacious window (or convincing display) lines the curving wall to the north. The view is magnificent. You can see the sun drift across your view as the station spins, and just as it passes beyond sight, the faint sparkles of the system’s ice belt light up like shining diamonds against the glimmering starfield behind. A few kaithrit have their noses pressed up against the glass, their doubled tails curled up in excitement.";
+	rooms["9006"].description = "A spacious window (or convincing display) lines the curving wall to the north. The view is magnificent. You can see the sun drift across your view as the station spins, and just as it passes beyond sight, the faint sparkles of the system’s ice belt light up like shining diamonds against the glimmering starfield behind. A few kaithrit have their noses pressed up against the glass, their doubled tails curled up in excitement.\n\nHumble sign “Stellar Furnace” adorns northen door. Unlike other shops, this one have no glass or neon, just ostentatiously bare reinforced walls and massive blast door.";
 	rooms["9006"].planet = "TAVROS STATION";
 	rooms["9006"].system = "SYSTEM: KALAS";
 	rooms["9006"].eastExit = "9007";
 	rooms["9006"].westExit = "9005";
+	rooms["9006"].southExit = "GUILD EMBASSY";
 	rooms["9006"].moveMinutes = 1;
 	rooms["9006"].addFlag(GLOBAL.INDOOR);
 	rooms["9006"].addFlag(GLOBAL.PUBLIC);
