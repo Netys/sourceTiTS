@@ -101,14 +101,20 @@ package classes.Items.Transformatives
 					output("can certainly feel the vagina splitting " + (target.balls > 0 ? "from behind your testicles" : "your groin") + ".  Luckily, the cunt-forming doesn't yield any discomfort - on the contrary, you feel yourself falling farther into your chemically-dulled, libido-fueled rut.");
 					if (target.hipRating() < 12 || target.buttRating() < 12) output("  As if realizing the necessity of womanly proportions to attract the hard cocks your body now craves, your waist pinches slightly inward and your hips and butt swell.  You can't help but run a hand across your newly-feminized pelvis, admiring it.");
 					target.createVagina();
+					target.shiftVagina(0, Mutator.guessVagType(target));
 					target.clitLength = 0.25;
 					if (target.hipRating() < 12) target.hipRating( 12, true);
 					if (target.buttRating() < 12) target.buttRating( 12, true);
 				}
 				output("\n\n");
-				output("A wave of numbness rolls through your features, alerting you that another change is happening.  You reach up to your feel your jaw narrowing, becoming more... feminine?  Heavy, filling lips purse in disappointment as your face takes on a very feminine cast.  You're probably pretty hot now!\n\n");
-				if (target.femininity < 80) target.femininity = 80;
-
+				
+				if (target.femininity < target.femininityMax())
+				{
+					output("A wave of numbness rolls through your features, alerting you that another change is happening.  You reach up to your feel your jaw narrowing, becoming more... feminine?  Heavy, filling lips purse in disappointment as your face takes on a very feminine cast.  You're probably pretty hot now!\n\n");
+					if (target.lipMod < 1) target.lipMod = 1;
+					target.femininity = target.femininityMax();
+				}
+				
 				output("Your surging, absurdly potent libido surges through your body, reminding you that you need to fuck.  Not just bitches, but guys too.  Hard cocks, wet pussies, hell, you don't care.  They can have both or a dozen of either.  You just want to get laid and bone something, hopefully at the same time!");
 				output("\n\n<b>(Perks Lost: Bro Body");
 				if (target.hasPerk("Bro Brains")) output(", Bro Brains");
@@ -242,6 +248,7 @@ package classes.Items.Transformatives
 				target.slowStatGain("libido", 4);
 				//FULL ON BITCHFACE
 				target.femininity = 100; // forced override of max feminity
+				if (target.lipMod < 1) target.lipMod = 1;
 				//Body
 				//Tease/Seduce Boost
 				//*boosts min lust and lust resistance)

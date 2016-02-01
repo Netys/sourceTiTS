@@ -10,6 +10,7 @@ import classes.Engine.Utility.*;
 public function greetMaleSpiderMorph():void
 {
 	clearOutput();
+	userInterface.showName("\nM.SPIDER");
 	//spriteSelect(74);
 	output("A spider-morph drops out of a tree in front of you, hanging by a single thread of sparkling webbing.  His purple eyes gaze deeply into your own while he looks you up and down.  ");
 	//DANGER MODE: 

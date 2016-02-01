@@ -11,38 +11,38 @@ package classes.Items.Transformatives
 	import classes.Engine.Interfaces.*;
 	import classes.Engine.Utility.*;
 	
-    public class CoCCaninePepper extends ItemSlotClass
-    {        
-        public function CoCCaninePepper(dataObject:Object=null)
-        {
-            this._latestVersion = 1;
-            
-            this.quantity = 1;
-            this.stackSize = 5;
-            this.type = GLOBAL.POTION;
-            //Used on inventory buttons
-            this.shortName = "CanineP";
-            //Regular name
-            this.longName = "Canine pepper";
-            
-            TooltipManager.addFullName(this.shortName, StringUtil.toTitleCase(this.longName));
-            
-            //Longass shit, not sure what used for yet.
-            this.description = "a canine pepper";
-            //Displayed on tooltips during mouseovers
-            this.tooltip = "The pepper is shiny and red, bulbous at the base but long and narrow at the tip.  It smells spicy.";
-            
-            TooltipManager.addTooltip(this.shortName, this.tooltip);
-            
-            //Information
-            this.basePrice = 100;
-            
-            this.version = this._latestVersion;
-        }
-        
-        //METHOD ACTING!
-        override public function useFunction(pc:Creature, usingCreature:Creature = null):Boolean
-        {
+	public class CoCCaninePepper extends ItemSlotClass
+	{
+		public function CoCCaninePepper(dataObject:Object=null)
+		{
+			this._latestVersion = 1;
+			
+			this.quantity = 1;
+			this.stackSize = 10;
+			this.type = GLOBAL.POTION;
+			//Used on inventory buttons
+			this.shortName = "CanineP";
+			//Regular name
+			this.longName = "Canine pepper";
+			
+			TooltipManager.addFullName(this.shortName, StringUtil.toTitleCase(this.longName));
+			
+			//Longass shit, not sure what used for yet.
+			this.description = "a canine pepper";
+			//Displayed on tooltips during mouseovers
+			this.tooltip = "The pepper is shiny and red, bulbous at the base but long and narrow at the tip.  It smells spicy.";
+			
+			TooltipManager.addTooltip(this.shortName, this.tooltip);
+			
+			//Information
+			this.basePrice = 100;
+			
+			this.version = this._latestVersion;
+		}
+		
+		//METHOD ACTING!
+		override public function useFunction(pc:Creature, usingCreature:Creature = null):Boolean
+		{
 			CaninePepper(0, pc);
 			return false;
 		}
@@ -147,12 +147,6 @@ package classes.Items.Transformatives
 			if (pc.WQ() > 30 && rand(3) == 0 && changes < changeLimit) {
 				pc.willpower((-0.5 * crit))
 				output("\n\nThinking for yourself is so exhausting... May it be better to have master to follow?");
-				changes++;
-			}
-			if (changes < changeLimit && pc.armType != GLOBAL.TYPE_CANINE && pc.hasFur() && rand(4) == 0) {
-				output("\n\nYou scratch at your biceps absentmindedly, but no matter how much you scratch, it isn't getting rid of the itch.  Glancing down in irritation, you discover that your arms are changed!");
-				pc.armType = GLOBAL.TYPE_CANINE;
-				pc.armFlags = [GLOBAL.FLAG_FURRED];
 				changes++;
 			}
 			//-Remove feathery hair (copy for equinum, canine peppers, Labova)
@@ -313,17 +307,18 @@ package classes.Items.Transformatives
 					//Find smallest knot
 					while (temp > 0) {
 						temp--;
-						if (pc.cocks[temp].cType == GLOBAL.TYPE_CANINE && pc.cocks[temp].knotMultiplier < pc.cocks[temp2].knotMultiplier) temp2 = temp;
+						if (pc.cocks[temp].cType == GLOBAL.TYPE_CANINE && pc.cocks[temp].knotMultiplier < 2 && pc.cocks[temp].knotMultiplier < pc.cocks[temp2].knotMultiplier) temp2 = temp;
 					}
 					//Have smallest knotted cock selected.
 					temp3 = (rand(2) + 1) / 20 * crit;
 					if (pc.cocks[temp2].knotMultiplier >= 1.5) temp3 /= 2;
 					if (pc.cocks[temp2].knotMultiplier >= 1.75) temp3 /= 2;
-					if (pc.cocks[temp2].knotMultiplier >= 2) temp3 /= 5;
-					pc.cocks[temp2].knotMultiplier += (temp3);
-					if (temp3 < .06) output("\n\nYour " + pc.cockDescript(temp2) + " feels unusually tight in your sheath as your knot grows.", false);
-					if (temp3 >= .06 && temp3 <= .12) output("\n\nYour " + pc.cockDescript(temp2) + " pops free of your sheath, thickening nicely into a bigger knot.", false);
-					if (temp3 > .12) output("\n\nYour " + pc.cockDescript(temp2) + " surges free of your sheath, swelling thicker with each passing second.  Your knot bulges out at the base, growing far beyond normal.", false);
+					pc.cocks[temp2].knotMultiplier += temp3;
+					if (pc.cocks[temp2].knotMultiplier > 2) pc.cocks[temp2].knotMultiplier = 2;
+					
+					if (temp3 < .06) output("\n\nYour " + pc.cockDescript(temp2) + " feels unusually tight in your sheath as your knot grows.");
+					if (temp3 >= .06 && temp3 <= .12) output("\n\nYour " + pc.cockDescript(temp2) + " pops free of your sheath, thickening nicely into a bigger knot.");
+					if (temp3 > .12) output("\n\nYour " + pc.cockDescript(temp2) + " surges free of your sheath, swelling thicker with each passing second.  Your knot bulges out at the base, growing far beyond normal.");
 					pc.lust(5 * crit);
 					changes++;
 				}
@@ -651,16 +646,13 @@ package classes.Items.Transformatives
 				pc.hairColor = "midnight black";				
 				pc.furColor = pc.hairColor;
 			}
+			
 			//Become furred - requires paws and tail
-			if (rand(4) == 0 && changes < changeLimit && pc.legType == GLOBAL.TYPE_CANINE && pc.tailType == GLOBAL.TYPE_CANINE && pc.skinType != GLOBAL.SKIN_TYPE_FUR) {
-				if (pc.skinType == GLOBAL.SKIN_TYPE_SKIN) output("\n\nYour skin itches intensely.  You gaze down as more and more hairs break forth from your skin, quickly transforming into a soft coat of fur.  <b>You are now covered in " + pc.furColor + " fur from head to toe.</b>", false);
-				else if (pc.skinType == GLOBAL.SKIN_TYPE_SCALES) output("\n\nYour scales itch incessantly.  You scratch, feeling them flake off to reveal a coat of " + pc.furColor + " fur growing out from below!  <b>You are now covered in " + pc.furColor + " fur from head to toe.</b>", false);
-				else output("\n\nYou idly scratch at your arm, but find yourself catching on something. Looking closer, you see a single hair growing from a normally hairless part of your body. A second later, another pops out alongside it... then another, and another... and another. They’re everywhere! Tiny hairs are surfacing all across your body, thickening into a layer of fur before your eyes. <b>You pet your fur as you try to get used to it.</b>");
-				pc.skinType = GLOBAL.SKIN_TYPE_FUR;
-				pc.clearSkinFlags();
-				pc.furColor = RandomInCollection(["brown", "chocolate", "auburn", "caramel", "orange", "black", "dark gray", "gray", "light gray", "silver", "white", "orange and white", "brown and white", "black and white"]);
-				changes++;
-			}
+			if (rand(4) == 0 && changes < changeLimit && pc.legType == GLOBAL.TYPE_CANINE && pc.tailType == GLOBAL.TYPE_CANINE && pc.skinType != GLOBAL.SKIN_TYPE_FUR && Mutator.changeSkin(pc, GLOBAL.SKIN_TYPE_FUR, ["brown", "chocolate", "auburn", "caramel", "orange", "black", "dark gray", "gray", "light gray", "silver", "white", "orange and white", "brown and white", "black and white"], [], null, null, true)) changes++;
+			
+			// canine paw-arms - requires tail and ears
+			if (changes < changeLimit && pc.armType != GLOBAL.TYPE_CANINE && pc.hasFur() && rand(4) == 0 && Mutator.changeArms(pc, GLOBAL.TYPE_CANINE, [GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS], null, null, true)) changes++;
+			
 			//Change to paws - requires tail and ears
 			if (rand(3) == 0 && pc.legType != GLOBAL.TYPE_CANINE && pc.tailType == GLOBAL.TYPE_CANINE && pc.earType == GLOBAL.TYPE_CANINE && changes < changeLimit) {
 				if (pc.hasLegFlag(GLOBAL.FLAG_HOOVES)) output("\n\nYou feel your hooves suddenly splinter, growing into five unique digits.  Their flesh softens as your hooves reshape into furred paws.", false);
@@ -674,6 +666,7 @@ package classes.Items.Transformatives
 				pc.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_PAWS, GLOBAL.FLAG_FURRED];
 				changes++;
 			}
+			
 			//Change to dog-ears!  Requires dog-tail
 			if (rand(2) == 0 && pc.earType != GLOBAL.TYPE_CANINE && pc.tailType == GLOBAL.TYPE_CANINE && changes < changeLimit) {
 				//if (pc.earType == -1) output("\n\nTwo painful nubs begin sprouting from your head, growing and opening into canine ears.  ", false);
@@ -684,6 +677,7 @@ package classes.Items.Transformatives
 				output("<b>You now have dog ears.</b>", false);
 				changes++;
 			}
+			
 			//Grow tail if not dog-tailed
 			if (rand(3) == 0 && changes < changeLimit && pc.tailType != GLOBAL.TYPE_CANINE) {
 				if (!pc.hasTail()) output("\n\nA pressure builds on your backside.  You feel under your clothes and discover an odd bump that seems to be growing larger by the moment.  In seconds it passes between your fingers, bursts out the back of your clothes, and grows most of the way to the ground.  A thick coat of fur springs up to cover your new tail.  ", false);
@@ -697,6 +691,7 @@ package classes.Items.Transformatives
 				pc.tailFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_FLUFFY];
 				output("<b>You now have a dog-tail.</b>", false);
 			}
+			
 			if (changes < changeLimit && rand(3) == 0 && pc.hasVagina() && pc.vaginas[0].type != GLOBAL.TYPE_CANINE) {
 				output("\n\nSomething invisible brushes against your sex, making you twinge.  ");
 				if (!pc.isCrotchExposed()) output("Undoing your clothes, y");
@@ -705,19 +700,16 @@ package classes.Items.Transformatives
 				pc.shiftVagina(0, GLOBAL.TYPE_CANINE);
 				changes++;
 			}
+			
 			if (rand(4) == 0 && pc.gills && changes < changeLimit) {
-				output("\n\nYour chest itches, and as you reach up to scratch it, you realize your gills have withdrawn into your skin.", false);
+				output("\n\nYour chest itches, and as you reach up to scratch it, you realize your gills have withdrawn into your skin.");
 				pc.gills = false;
 				changes++;
 			}
-			//if (pc.hasFur() && changes < changeLimit && rand(3) == 0) {
-				//output("\n\nYou become more... solid.  Sinewy.  A memory comes unbidden from your youth of a grizzled wolf you encountered while hunting, covered in scars, yet still moving with an easy grace.  You imagine that must have felt something like this.", false);
-				//dynStats("tou", 4, "sen", -3);
-				//changes++;
-			//}
+			
 			//If no changes yay
 			if (changes == 0) {
-				output("\n\nInhuman vitality spreads through your body, invigorating you!\n", false);
+				output("\n\nInhuman vitality spreads through your body, invigorating you!\n");
 				pc.HP(20);
 				pc.lust(3);
 			}

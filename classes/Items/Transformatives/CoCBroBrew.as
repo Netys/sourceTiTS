@@ -135,6 +135,7 @@ package classes.Items.Transformatives
 			if (target.hasPerk("Bro Body") || target.hasPerk("Futa Form")) {
 				buffer += "You crack open the can and guzzle it in a hurry.  Goddamn, this shit is the best.  As you crush the can against your forehead, you wonder if you can find a six-pack of it somewhere?\n\n";
 				target.removeStatusEffect("Sore");
+				target.removeStatusEffect("Sore Counter");
 				target.energy(target.energyMax());
 				target.HP(target.HPMax());
 				if (display) output(buffer);

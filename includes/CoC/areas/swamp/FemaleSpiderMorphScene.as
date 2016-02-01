@@ -9,7 +9,7 @@ import classes.Engine.Utility.*;
 public function fSpiderMorphGreeting():void
 {
 	clearOutput();
-	userInterface.showName("SPIDER");
+	userInterface.showName("\nF.SPIDER");
 	//spriteSelect(73);
 	//Egg sack sometimes
 	//if (pregnancy.event == 2) { //If she's past event 2 then she has laid the eggs

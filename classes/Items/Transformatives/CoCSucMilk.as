@@ -1,6 +1,7 @@
 package classes.Items.Transformatives
 {
 	import classes.Engine.Utility.IncrementFlag;
+	import classes.Engine.Utility.Mutator;
 	import classes.Engine.Utility.rand;
     import classes.ItemSlotClass;
     import classes.GLOBAL;
@@ -403,80 +404,10 @@ package classes.Items.Transformatives
 			}
 		}
 		
-		public static function newVag(pc:Creature):void {
-			pc.createVagina();
-			pc.clitLength = .25;
-			pc.vaginas[0].hymen = true;
-			// pussybloom copy/paste
-			var pcRace:String = pc.race();
-			if(InCollection(pcRace, "horse-morph", "part horse-morph", "laquine", "centaur", "horse-taur", pc.mlpRace()))
-			{
-				pc.shiftVagina(0, GLOBAL.TYPE_EQUINE);
-				kGAMECLASS.output("You’ve got ");
-				if(pc.vaginaColor(0) == "black") kGAMECLASS.output("a dusky, black");
-				else kGAMECLASS.output(indefiniteArticle(pc.vaginaColor(0)));
-				kGAMECLASS.output(" horse-pussy.");
-			}
-			else if(InCollection(pcRace, "naleen", "naga"))
-			{
-				pc.shiftVagina(0, GLOBAL.TYPE_NAGA);
-				kGAMECLASS.output("You’ve got a slim, " + pc.vaginaColor(0) + "-hued snake-pussy.");
-			}
-			else if(pcRace == "zil")
-			{
-				pc.shiftVagina(0, GLOBAL.TYPE_BEE);
-				kGAMECLASS.output("You’ve got ");
-				if(pc.vaginaColor(0) == "black") kGAMECLASS.output("a dusky, black");
-				else kGAMECLASS.output(indefiniteArticle(pc.vaginaColor(0)));
-				kGAMECLASS.output(" zil-pussy.");
-			}
-			else if (InCollection(pcRace, "leithan", "half-leithan"))
-			{
-				pc.shiftVagina(0, GLOBAL.TYPE_LEITHAN);
-				kGAMECLASS.output("You’ve got ");
-				if(pc.vaginaColor(0) == "black") kGAMECLASS.output("a dusky, black");
-				else kGAMECLASS.output(indefiniteArticle(pc.vaginaColor(0)));
-				kGAMECLASS.output(" leithan pussy.");
-			}
-			else if (pcRace == "vanae-morph")
-			{
-				pc.shiftVagina(0, GLOBAL.TYPE_VANAE);
-				kGAMECLASS.output("You’ve got a virginal, " + pc.vaginaColor(0) + " vanae pussy.");
-			}
-			else if(InCollection(pcRace, "kui-tan", "half kui-tan"))
-			{
-				pc.shiftVagina(0, GLOBAL.TYPE_KUITAN);
-				kGAMECLASS.output("You’ve got ");
-				if(pc.vaginaColor(0) == "black") kGAMECLASS.output("a dusky, black");
-				else kGAMECLASS.output(indefiniteArticle(pc.vaginaColor(0)));
-				kGAMECLASS.output(" ‘nuki-pussy.");
-			}
-			else if (pcRace == "lapinara")
-			{
-				pc.shiftVagina(0, GLOBAL.TYPE_LAPINARA);
-				kGAMECLASS.output("You’ve got " + indefiniteArticle(pc.vaginaColor(0)) + " lapinara pussy.");
-			}
-			else if (pcRace == "canine-morph")
-			{
-				pc.shiftVagina(0, GLOBAL.TYPE_CANINE);
-				kGAMECLASS.output("You’ve got " + indefiniteArticle(pc.vaginaColor(0)) + " canine-pussy.");
-			}
-			else if (InCollection(pcRace, "gabilani", "goblin"))
-			{
-				pc.shiftVagina(0, GLOBAL.TYPE_GABILANI);
-				kGAMECLASS.output("You’ve got a muscular, " + pc.vaginaColor(0) + " goblin pussy.");
-			}
-			else
-			{
-				if(pc.skinType == GLOBAL.SKIN_TYPE_GOO)
-				{
-					pc.vaginas[0].addFlag(GLOBAL.FLAG_GOOEY);
-					pc.vaginas[0].vaginaColor = pc.skinTone;
-				}
-				kGAMECLASS.output("You’ve got a pretty, " + pc.vaginaColor(0) + " pussy");
-				if(pc.vaginas[0].hasFlag(GLOBAL.FLAG_GOOEY)) kGAMECLASS.output(" made of goo");
-				kGAMECLASS.output(".");
-			}
+		public static function newVag(target:Creature):void {
+			target.createVagina();
+			target.clitLength = .25;
+			target.shiftVagina(0, Mutator.guessVagType(target);
 		}
-	}	
+	}
 }

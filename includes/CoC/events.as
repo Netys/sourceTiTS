@@ -46,6 +46,7 @@ public function EventsAdopterHellNotify():void {
 		}
 		if (!pc.hasVagina()) { //Vagoo
 			pc.createVagina();
+			pc.shiftVagina(0, Mutator.guessVagType(pc));
 			if (pc.isBimbo())
 				eventBuffer += "\n\n<b>Your crotch is like, all itchy an' stuff.  Damn!  There's a wet little slit opening up, and it's all tingly!  It feels so good, why would you have ever gotten rid of it?</b>";
 			else eventBuffer += "\n\n<b>Your crotch tingles for a second, and when you reach down to feel, your [pc.legs] fold underneath you, limp.  You've got a vagina - the damned thing won't go away and it feels twice as sensitive this time.  Fucking bimbo liquer.</b>";
@@ -65,6 +66,7 @@ public function EventsAdopterHellNotify():void {
 		}
 		if (!pc.hasVagina()) { //Vagoo
 			pc.createVagina();
+			pc.shiftVagina(0, Mutator.guessVagType(pc));
 			if (pc.isBimbo())
 				eventBuffer += "\n\n<b>Your crotch is like, all itchy an' stuff.  Omigawsh!  There's a wet little slit opening up, and it's all tingly!  It feels so good, maybe like, someone could put something inside there!</b>";
 			else eventBuffer += "\n\n<b>Your crotch tingles for a second, and when you reach down to feel, your " + pc.legs() + " fold underneath you, limp.  You've got a vagina - the damned thing won't go away and it feels twice as sensitive this time.  Fucking bimbo liquer.</b>";

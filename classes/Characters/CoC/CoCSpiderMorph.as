@@ -44,7 +44,7 @@ package classes.Characters.CoC
 				addDisabledButton(1, "Shoot", "Shoot", "You are disarmed!");
 			}
 			
-			if (kGAMECLASS.pc.hasStatusEffect("Web") && kGAMECLASS.pc.energy() >= 5 && (kGAMECLASS.pc.hasPerk("Enlightened Nine-tails") || kGAMECLASS.pc.hasPerk("Corrupted Nine-tails") || kGAMECLASS.flags["COC.SPELL_WHITEFIRE"] == 1 && !kGAMECLASS.pc.hasStatusEffect("Silence"))) {
+			if ((kGAMECLASS.pc.hasStatusEffect("Web") || kGAMECLASS.pc.hasStatusEffect("Silence")) && kGAMECLASS.pc.energy() >= 5 && (kGAMECLASS.pc.hasPerk("Enlightened Nine-tails") || kGAMECLASS.pc.hasPerk("Corrupted Nine-tails") || kGAMECLASS.flags["COC.SPELL_WHITEFIRE"] == 1 && !kGAMECLASS.pc.hasStatusEffect("Silence"))) {
 				addButton(10, "Burn Webs", CleansingFlame, null, "Burn webs", "Get rid of that webs by <b>all</b> means!");
 			}
 		}
