@@ -1,21 +1,31 @@
 package classes.Engine.Utility 
 {
 	/**
-	 * ...
+	 * Basically wrapped "list".
 	 * @author Etis
 	 */
 	public class enum
 	{
 		private static var list:Array;
 		
-		public static function push(arg:*):void
+		public static function push(...args):void
 		{
-			list.push(arg);
+			list.push(args);
 		}
 		
 		public static function clear():void
 		{
 			list = new Array();
+		}
+		
+		public static function isEmpty():Boolean
+		{
+			return list.length == 0;
+		}
+		
+		public static function length():int
+		{
+			return list.length;
 		}
 		
 		public static function toString():String

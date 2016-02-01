@@ -3,6 +3,7 @@ package classes.Engine.Utility
 	import classes.kGAMECLASS;
 	import classes.Creature;
 	import classes.GLOBAL;
+	import classes.StringUtil;
 	import classes.Util.*;
 	import classes.Engine.Interfaces.*;
 	import classes.Engine.Utility.*;
@@ -115,17 +116,17 @@ package classes.Engine.Utility
 					buffer += " Your " + target.hairDescript(true, true) + " is changing!";
 					
 					// what is lost
-					if (target.hairType == GLOBAL.HAIR_TYPE_REGULAR) buffer += " Your hair is different now.";
-					if (target.hairType == GLOBAL.HAIR_TYPE_FEATHERS) buffer += " You hair is not feathery now.";
-					if (target.hairType == GLOBAL.HAIR_TYPE_TRANSPARENT) buffer += " You hair is not transpatent now.";
-					if (target.hairType == GLOBAL.HAIR_TYPE_GOO) buffer += " Your hair is solidifying.";
-					if (target.hairType == GLOBAL.HAIR_TYPE_TENTACLES) buffer += " You don't have tentacles for hair anymore.";
+					if (target.hairType == GLOBAL.HAIR_TYPE_REGULAR) buffer += " Your hair is changing into ";
+					if (target.hairType == GLOBAL.HAIR_TYPE_FEATHERS) buffer += " You feathers are reforming into ";
+					if (target.hairType == GLOBAL.HAIR_TYPE_TRANSPARENT) buffer += " You hair is losing it's transparency, changing into ";
+					if (target.hairType == GLOBAL.HAIR_TYPE_GOO) buffer += " Your hair is solidifying into ";
+					if (target.hairType == GLOBAL.HAIR_TYPE_TENTACLES) buffer += " Tentacles on your head are withering, changing into ";
 					//what is not changed or gained
-					if (newType == GLOBAL.HAIR_TYPE_REGULAR) buffer += " You now have human-like hair.";
-					if (newType == GLOBAL.HAIR_TYPE_FEATHERS) buffer += " You have feathers on your head now.";
-					if (newType == GLOBAL.HAIR_TYPE_TRANSPARENT) buffer += " You hair is transparent now.";
-					if (newType == GLOBAL.HAIR_TYPE_GOO) buffer += " Your hair is liquifying to goo.";
-					if (newType == GLOBAL.HAIR_TYPE_TENTACLES) buffer += " You are having tentacles for hair now.";
+					if (newType == GLOBAL.HAIR_TYPE_REGULAR) buffer += "human-like hair.";
+					if (newType == GLOBAL.HAIR_TYPE_FEATHERS) buffer += "feather plume.";
+					if (newType == GLOBAL.HAIR_TYPE_TRANSPARENT) buffer += "halo of ghostly locks.";
+					if (newType == GLOBAL.HAIR_TYPE_GOO) buffer += "heap of semi-liquid goo.";
+					if (newType == GLOBAL.HAIR_TYPE_TENTACLES) buffer += "crown of wriggling tentacles.";
 				} else buffer += " Is something changing?";
 				
 				if (newColors.length > 0 && !InCollection(target.hairColor, newColors)) {
@@ -141,7 +142,7 @@ package classes.Engine.Utility
 				
 				if(target.hasHair()) buffer += " <b>You now have " + target.hairDescript(true, true) + "!</b>";
 				
-				changes++;				
+				changes++;
 				if (display) output(buffer);
 				return changes > 0;
 			}
@@ -205,29 +206,35 @@ package classes.Engine.Utility
 					else toRemove.push(item); // since we are changing type now, ALL flags not in keep/add list are removed anyways
 				}
 				
-				buffer += "\n\nYour " + target.face(true) + " is itching, twitching and... Changing.";
+				buffer += "\n\nYour " + target.face(true) + " is losing it's " + GLOBAL.TYPE_NAMES[target.faceType].toLowerCase() + " form.";
 				
 				// what is lost
-				if (InCollection(GLOBAL.FLAG_SMOOTH, toRemove)) buffer += " Your face is not as smooth as it was.";
-				if (InCollection(GLOBAL.FLAG_LONG, toRemove)) buffer += " Your face shortens.";
-				if (InCollection(GLOBAL.FLAG_MUZZLED, toRemove)) buffer += " Your face is not resembling animal muzzle anymore.";
-				if (InCollection(GLOBAL.FLAG_ANGULAR, toRemove)) buffer += " Your face is not as angular as it was.";
+				enum.clear();
+				if (InCollection(GLOBAL.FLAG_SMOOTH, toRemove)) enum.push("smooth");
+				if (InCollection(GLOBAL.FLAG_LONG, toRemove)) enum.push("long");
+				if (InCollection(GLOBAL.FLAG_ANGULAR, toRemove)) enum.push("angular");
+				if (InCollection(GLOBAL.FLAG_MUZZLED, toRemove)) enum.push("muzzle");
+				else if (!enum.isEmpty()) enum.push("face");
+				if (!enum.isEmpty()) {
+					buffer += " You don't have a " + enum.toString() + " anymore.";
+				}
 				//what is not changed or gained
-				if (InCollection(GLOBAL.FLAG_SMOOTH, toKeep)) buffer += " Your face is still very smooth.";
-				else if (InCollection(GLOBAL.FLAG_SMOOTH, newFlags)) buffer += " Your face is very smooth now.";
-				if (InCollection(GLOBAL.FLAG_LONG, toKeep)) buffer += " Your face is still quite long.";
-				else if (InCollection(GLOBAL.FLAG_LONG, newFlags)) buffer += " Your face elongates.";
-				if (InCollection(GLOBAL.FLAG_MUZZLED, toKeep)) buffer += " Your face is still muzzle-like.";
-				else if (InCollection(GLOBAL.FLAG_MUZZLED, newFlags)) buffer += " Your face is gaining feral muzzle.";
-				if (InCollection(GLOBAL.FLAG_ANGULAR, toKeep)) buffer += " Your face is still angular.";
-				else if (InCollection(GLOBAL.FLAG_ANGULAR, newFlags)) buffer += " Your face is gaining rough angles.";
+				enum.clear();
+				if (InCollection(GLOBAL.FLAG_SMOOTH, newFlags)) enum.push("smooth");
+				if (InCollection(GLOBAL.FLAG_LONG, newFlags)) enum.push("long");
+				if (InCollection(GLOBAL.FLAG_MUZZLED, newFlags)) enum.push("angular");
+				if (InCollection(GLOBAL.FLAG_ANGULAR, newFlags)) enum.push("muzzle");
+				else if (!enum.isEmpty()) enum.push("face");
+				if (!enum.isEmpty()) {
+					buffer += " Now you have " + enum.toString() + ".";
+				}
 				
 				target.faceType = newType;
 				target.faceFlags = newFlags;
 				
-				buffer += " <b>You now have " + target.face(true) + "!</b>";
+				buffer += " <b>You now have " + target.face(true) + " appropriate for " + GLOBAL.TYPE_NAMES[newType].toLowerCase() + "!</b>";
 				
-				changes++;				
+				changes++;
 				if (display) output(buffer);
 				return changes > 0;
 			}
@@ -515,41 +522,16 @@ package classes.Engine.Utility
 					else toRemove.push(item); // since we are changing type now, ALL flags not in keep/add list are removed anyways
 				}
 				
-				buffer += "\n\nYour " + target.armsDescript(true) + " are itching, twitching and... Changing.";
+				buffer += "\n\nYour " + target.armsDescript(true) + " are losing their " + GLOBAL.TYPE_NAMES[target.armType].toLowerCase() + " form.";
 				
-				// what is lost
-				if (InCollection(GLOBAL.FLAG_SMOOTH, toRemove)) buffer += " Your arms are not as smooth as they were.";
-				if (InCollection(GLOBAL.FLAG_PAWS, toRemove)) buffer += " Your arms are not resembling paws so much.";
-				if (InCollection(GLOBAL.FLAG_FURRED, toRemove)) buffer += " Your arms are shedding fur.";
-				if (InCollection(GLOBAL.FLAG_SCALED, toRemove)) buffer += " Your arms are shedding scales.";
-				if (InCollection(GLOBAL.FLAG_CHITINOUS, toRemove)) buffer += " Your arms are shedding chitin.";
-				if (InCollection(GLOBAL.FLAG_FEATHERED, toRemove)) buffer += " Your arms are shedding feathers.";
-				if (InCollection(GLOBAL.FLAG_GOOEY, toRemove)) buffer += " Your arms are now solidified from former goo-like condition.";
-				if (InCollection(GLOBAL.FLAG_AMORPHOUS, toRemove)) buffer += " Your arms are not amorphous anymore.";
-				//what is not changed or gained
-				if (InCollection(GLOBAL.FLAG_SMOOTH, toKeep)) buffer += " Your arms are still very smooth.";
-				else if (InCollection(GLOBAL.FLAG_SMOOTH, newFlags)) buffer += " Your arms are very smooth now.";
-				if (InCollection(GLOBAL.FLAG_PAWS, toKeep)) buffer += " Your arms are still resembling paws.";
-				else if (InCollection(GLOBAL.FLAG_PAWS, newFlags)) buffer += " Your arms are now paw-like.";
-				if (InCollection(GLOBAL.FLAG_FURRED, toKeep)) buffer += " Your arms are still furry.";
-				else if (InCollection(GLOBAL.FLAG_FURRED, newFlags)) buffer += " Your arms are furry now.";
-				if (InCollection(GLOBAL.FLAG_SCALED, toKeep)) buffer += " Your arms are still scaled.";
-				else if (InCollection(GLOBAL.FLAG_SCALED, newFlags)) buffer += " Your arms are scaled now.";
-				if (InCollection(GLOBAL.FLAG_CHITINOUS, toKeep)) buffer += " Your arms are still chitinous.";
-				else if (InCollection(GLOBAL.FLAG_CHITINOUS, newFlags)) buffer += " Your arms are chitinous now.";
-				if (InCollection(GLOBAL.FLAG_FEATHERED, toKeep)) buffer += " Your arms are still feathered.";
-				else if (InCollection(GLOBAL.FLAG_FEATHERED, newFlags)) buffer += " Your arms are feathered now.";
-				if (InCollection(GLOBAL.FLAG_GOOEY, toKeep)) buffer += " Your arms are still have goo-like condition.";
-				else if (InCollection(GLOBAL.FLAG_GOOEY, newFlags)) buffer += " Your arms are now solidified from former goo-like condition.";
-				if (InCollection(GLOBAL.FLAG_AMORPHOUS, toKeep)) buffer += " Your arms are still amorphous.";
-				else if (InCollection(GLOBAL.FLAG_AMORPHOUS, newFlags)) buffer += " Your arms are amorphous now.";
+				// Screw this shit, native adjective picking function is fine here.
 				
 				target.armType = newType;
 				target.armFlags = newFlags;
 				
-				buffer += " <b>You now have " + target.armsDescript(true) + "!</b>";
+				buffer += " <b>You now have " + target.armsDescript(true) + " appropriate for " + GLOBAL.TYPE_NAMES[target.armType].toLowerCase() + "!</b>";
 				
-				changes++;				
+				changes++;
 				if (display) output(buffer);
 				return changes > 0;
 			}
@@ -570,32 +552,44 @@ package classes.Engine.Utility
 			
 			if (toKeep.length > 0 || toRemove.length > 0) {
 				if (flagsUnlocked) {
-					buffer += "\n\nYour " + target.armsDescript(true) + " are itching, twitching and... Changing.";
-				
+					buffer += "\n\nYour " + target.armsDescript(true) + " are changing.";
+					
+					enum.clear();
 					for each (item in toRemove) {
-						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your arms are not as smooth as they were.";
-						if (item == GLOBAL.FLAG_PAWS) buffer += " Your arms are not resembling paws so much.";
-						if (item == GLOBAL.FLAG_FURRED) buffer += " Your arms are shedding fur.";
-						if (item == GLOBAL.FLAG_SCALED) buffer += " Your arms are shedding scales.";
-						if (item == GLOBAL.FLAG_CHITINOUS) buffer += " Your arms are shedding chitin.";
-						if (item == GLOBAL.FLAG_FEATHERED) buffer += " Your arms are shedding feathers.";
-						if (item == GLOBAL.FLAG_GOOEY) buffer += " Your arms are now solidified from former goo-like condition.";
-						if (item == GLOBAL.FLAG_AMORPHOUS) buffer += " Your arms are not amorphous anymore.";
+						if (item == GLOBAL.FLAG_SMOOTH) enum.push("smooth");
+						if (item == GLOBAL.FLAG_FURRED) enum.push(RandomInCollection("furred", "furry"));
+						if (item == GLOBAL.FLAG_SCALED) enum.push(RandomInCollection("scaled", "scaly"));
+						if (item == GLOBAL.FLAG_CHITINOUS) enum.push(RandomInCollection("chitinous", "armored"));
+						if (item == GLOBAL.FLAG_FEATHERED) enum.push(RandomInCollection("feathered", "feathery"));
+						if (item == GLOBAL.FLAG_GOOEY) enum.push(RandomInCollection("slimy", "slick", "gooey"));
+						if (item == GLOBAL.FLAG_SPIKED) enum.push(RandomInCollection("spiked", "spiky", "prickly"));
+						if (item == GLOBAL.FLAG_STICKY) enum.push("sticky");
+						if (item == GLOBAL.FLAG_PAWS) enum.push("paw-like");
+						if (item == GLOBAL.FLAG_AMORPHOUS) enum.push(RandomInCollection("amorphous", "gooey"));
 						target.armFlags.splice(target.armFlags.indexOf(item), 1);
 					}
-				
+					if (!enum.isEmpty()) {
+						buffer += " They are not " + enum.toString() + " anymore.";
+					}
+					enum.clear();
 					for each (item in toKeep)
 					{
-						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your arms are very smooth now.";
-						if (item == GLOBAL.FLAG_PAWS) buffer += " Your arms are now paw-like.";
-						if (item == GLOBAL.FLAG_FURRED) buffer += " Your arms are furry now.";
-						if (item == GLOBAL.FLAG_SCALED) buffer += " Your arms are scaled now.";
-						if (item == GLOBAL.FLAG_CHITINOUS) buffer += " Your arms are chitinous now.";
-						if (item == GLOBAL.FLAG_FEATHERED) buffer += " Your arms are feathered now.";
-						if (item == GLOBAL.FLAG_GOOEY) buffer += " Your arms are now solidified from former goo-like condition.";
-						if (item == GLOBAL.FLAG_AMORPHOUS) buffer += " Your arms are amorphous now.";
+						if (item == GLOBAL.FLAG_SMOOTH) enum.push("smooth");
+						if (item == GLOBAL.FLAG_FURRED) enum.push(RandomInCollection("furred", "furry"));
+						if (item == GLOBAL.FLAG_SCALED) enum.push(RandomInCollection("scaled", "scaly"));
+						if (item == GLOBAL.FLAG_CHITINOUS) enum.push(RandomInCollection("chitinous", "armored"));
+						if (item == GLOBAL.FLAG_FEATHERED) enum.push(RandomInCollection("feathered", "feathery"));
+						if (item == GLOBAL.FLAG_GOOEY) enum.push(RandomInCollection("slimy", "gooey"));
+						if (item == GLOBAL.FLAG_SPIKED) enum.push(RandomInCollection("spiked", "spiky", "prickly"));
+						if (item == GLOBAL.FLAG_STICKY) enum.push("sticky");
+						if (item == GLOBAL.FLAG_PAWS) enum.push("paw-like");
+						if (item == GLOBAL.FLAG_AMORPHOUS) enum.push(RandomInCollection("amorphous"));
 						target.addArmFlag(item);
 					}
+					if (!enum.isEmpty()) {
+						buffer += " They are now " + enum.toString() + ".";
+					}
+					enum.clear();
 					
 					changes++;
 				} //else buffer += "\n\n" + target.tailFlagsLockedMessage();
@@ -702,7 +696,7 @@ package classes.Engine.Utility
 						buffer += " But itching is not only going stronger...";
 						
 				} else { // already has tail(s)
-					buffer += "\n\nYour " + target.tailsDescript(true, true) + " " + (target.tailCount > 1 ? "are" : "is") + " itching, twitching and... Changing.";
+					buffer += "\n\nYour " + target.tailsDescript(true, true) + " " + (target.legCount > 1 ? "are" : "is") + " flailing wildly as " + (target.legCount > 1 ? "they are" : "it is") + " losing " + (target.legCount > 1 ? "their" : "it's") + " " + GLOBAL.TYPE_NAMES[target.tailType].toLowerCase() + " form.";
 					
 					if (target.tailCount > newCount) {
 						target.tailCount = newCount;
@@ -713,58 +707,59 @@ package classes.Engine.Utility
 					isare = (newCount > 1 ? "are" : "is");
 					_s = (newCount > 1 ? "s" : "");
 					
-					// what is lost
-					if (InCollection(GLOBAL.FLAG_PREHENSILE, toRemove)) buffer += " Looks like you are losing fine control. Your tail" + _s + " " + isare + " not prehensile anymore.";
-					if (InCollection(GLOBAL.FLAG_LONG, toRemove)) buffer += " Your tail" + _s + " " + isare + " becoming shorter.";
-					if (InCollection(GLOBAL.FLAG_THICK, toRemove)) buffer += " Your tail" + _s + " " + isare + " becoming thinner.";
-					if (InCollection(GLOBAL.FLAG_GOOEY, toRemove)) buffer += " Your tail" + _s + " " + isare + " solidifying from goo-like consistency.";
-					if (InCollection(GLOBAL.FLAG_FEATHERED, toRemove)) buffer += " Your tail" + _s + " " + isare + " shedding feathers.";
-					if (InCollection(GLOBAL.FLAG_CHITINOUS, toRemove)) buffer += " Your tail" + _s + " " + isare + " shedding shitin.";
-					if (InCollection(GLOBAL.FLAG_SCALED, toRemove)) buffer += " Your tail" + _s + " " + isare + " shedding scales.";
-					if (InCollection(GLOBAL.FLAG_FURRED, toRemove)) buffer += " Your tail" + _s + " " + isare + " shedding fur.";
-					else if (InCollection(GLOBAL.FLAG_FLUFFY, toRemove)) buffer += " Fur on your tail" + _s + " " + isare + " now thinner.";
-					if (InCollection(GLOBAL.FLAG_SMOOTH, toRemove)) buffer += " Your tail" + _s + " " + isare + " losing that smooth texture.";
-					if (InCollection(GLOBAL.FLAG_TAILCOCK, toRemove)) buffer += " Genitalia on your tail" + _s + " " + isare + " disappearing.";
-					if (InCollection(GLOBAL.FLAG_OVIPOSITOR, toRemove)) buffer += " Ovipositor" + _s + " on your tail" + _s + " " + isare + " disappearing.";
-					if (InCollection(GLOBAL.FLAG_STINGER_TIPPED, toRemove)) buffer += " Stinger" + _s + " on your tail" + _s + " " + isare + " disappearing.";
-					//what is not changed or gained
-					if (InCollection(GLOBAL.FLAG_PREHENSILE, toKeep)) buffer += " Your ability to control your tail" + _s + " is intact.";
-					else if (InCollection(GLOBAL.FLAG_PREHENSILE, newFlags)) buffer += " Looks like you are able to control your tail" + _s + " better now. Your tail" + _s + " " + isare + " prehensile.";
-					
-					if (InCollection(GLOBAL.FLAG_LONG, toKeep)) buffer += " Your tail" + _s + " " + isare + " still long.";
-					else if (InCollection(GLOBAL.FLAG_LONG, newFlags)) buffer += " Your tail" + _s + " " + isare + " becoming longer.";
-					
-					if (InCollection(GLOBAL.FLAG_THICK, toKeep)) buffer += " Your tail" + _s + " " + isare + " still thick.";
-					else if (InCollection(GLOBAL.FLAG_THICK, newFlags)) buffer += " Your tail" + _s + " " + isare + " becoming thicker.";
-					
-					if (InCollection(GLOBAL.FLAG_GOOEY, toKeep)) buffer += " Your tail" + _s + " " + isare + " still retaining goo-like consistency.";
-					else if (InCollection(GLOBAL.FLAG_GOOEY, newFlags)) buffer += " Your tail" + _s + " " + isare + " liquifying to goo-like consistency.";
-					
-					if (InCollection(GLOBAL.FLAG_FEATHERED, toKeep)) buffer += " Your tail" + _s + " " + isare + " still retaining feathers.";
-					else if (InCollection(GLOBAL.FLAG_FEATHERED, newFlags)) buffer += " Your tail" + _s + " " + isare + " growing feathers.";
-					
-					if (InCollection(GLOBAL.FLAG_CHITINOUS, toKeep)) buffer += " Your tail" + _s + " " + isare + " still retaining shitinous plating.";
-					else if (InCollection(GLOBAL.FLAG_CHITINOUS, newFlags)) buffer += " Your tail" + _s + " " + isare + " growing shitinous plating.";
-					
-					if (InCollection(GLOBAL.FLAG_SCALED, toKeep)) buffer += " Your tail" + _s + " " + isare + " still retaining scales.";
-					else if (InCollection(GLOBAL.FLAG_SCALED, newFlags)) buffer += " Your tail" + _s + " " + isare + " growing scales.";
-					
-					if (InCollection(GLOBAL.FLAG_SMOOTH, toKeep)) buffer += " Your tail" + _s + " " + isare + " still retaining smooth texture.";
-					else if (InCollection(GLOBAL.FLAG_SMOOTH, newFlags)) buffer += " Your tail" + _s + " " + isare + " gaining smooth texture.";
-					
-					if (InCollection(GLOBAL.FLAG_FLUFFY, toKeep) && InCollection(GLOBAL.FLAG_FURRED, toKeep)) buffer += " Fur on your tail" + _s + " is still long and fluffy."; // still fluffy
-					else if (InCollection(GLOBAL.FLAG_FURRED, toKeep) && InCollection(GLOBAL.FLAG_FLUFFY, newFlags)) buffer += " Fur on your tail" + _s + " is now longer and fluffier."; // was furry, now fluffy
-					else if (InCollection(GLOBAL.FLAG_FLUFFY, newFlags) && !InCollection(GLOBAL.FLAG_FURRED, toKeep)) buffer += " Your tail" + _s + " " + isare + " growing long and fluffy fur."; // was not furry, now fluffy
-					else if (InCollection(GLOBAL.FLAG_FURRED, newFlags) && !InCollection(GLOBAL.FLAG_FURRED, toKeep)) buffer += " Your tail" + _s + " " + isare + " growing fur."; // was not furry, now furry
-					
-					//if (InCollection(GLOBAL.FLAG_TAILCOCK, toKeep)) buffer += " Genitalia on your tail" + _s + " " + isare + " .";
-					//else if (InCollection(GLOBAL.FLAG_TAILCOCK, newFlags)) buffer += " Genitalia on your tail" + _s + " " + isare + " ."; // custom handling
-					
-					if (InCollection(GLOBAL.FLAG_OVIPOSITOR, toKeep)) buffer += " Ovipositor" + _s + " on your tail" + _s + " " + isare + " still there.";
-					else if (InCollection(GLOBAL.FLAG_OVIPOSITOR, newFlags)) buffer += " Your tail" + _s + " " + isare + " growing" + _s + " ovipositor" + _s + "!";
-					
-					if (InCollection(GLOBAL.FLAG_STINGER_TIPPED, toKeep)) buffer += " Stinger" + _s + " on your tail" + _s + " " + isare + " still there.";
-					else if (InCollection(GLOBAL.FLAG_STINGER_TIPPED, newFlags)) buffer += " Your tail" + _s + " " + isare + " growing" + _s + " stinger" + _s + "!";
+					// screw this shit
+					//// what is lost
+					//if (InCollection(GLOBAL.FLAG_PREHENSILE, toRemove)) buffer += " Looks like you are losing fine control. Your tail" + _s + " " + isare + " not prehensile anymore.";
+					//if (InCollection(GLOBAL.FLAG_LONG, toRemove)) buffer += " Your tail" + _s + " " + isare + " becoming shorter.";
+					//if (InCollection(GLOBAL.FLAG_THICK, toRemove)) buffer += " Your tail" + _s + " " + isare + " becoming thinner.";
+					//if (InCollection(GLOBAL.FLAG_GOOEY, toRemove)) buffer += " Your tail" + _s + " " + isare + " solidifying from goo-like consistency.";
+					//if (InCollection(GLOBAL.FLAG_FEATHERED, toRemove)) buffer += " Your tail" + _s + " " + isare + " shedding feathers.";
+					//if (InCollection(GLOBAL.FLAG_CHITINOUS, toRemove)) buffer += " Your tail" + _s + " " + isare + " shedding shitin.";
+					//if (InCollection(GLOBAL.FLAG_SCALED, toRemove)) buffer += " Your tail" + _s + " " + isare + " shedding scales.";
+					//if (InCollection(GLOBAL.FLAG_FURRED, toRemove)) buffer += " Your tail" + _s + " " + isare + " shedding fur.";
+					//else if (InCollection(GLOBAL.FLAG_FLUFFY, toRemove)) buffer += " Fur on your tail" + _s + " " + isare + " now thinner.";
+					//if (InCollection(GLOBAL.FLAG_SMOOTH, toRemove)) buffer += " Your tail" + _s + " " + isare + " losing that smooth texture.";
+					//if (InCollection(GLOBAL.FLAG_TAILCOCK, toRemove)) buffer += " Genitalia on your tail" + _s + " " + isare + " disappearing.";
+					//if (InCollection(GLOBAL.FLAG_OVIPOSITOR, toRemove)) buffer += " Ovipositor" + _s + " on your tail" + _s + " " + isare + " disappearing.";
+					//if (InCollection(GLOBAL.FLAG_STINGER_TIPPED, toRemove)) buffer += " Stinger" + _s + " on your tail" + _s + " " + isare + " disappearing.";
+					////what is not changed or gained
+					//if (InCollection(GLOBAL.FLAG_PREHENSILE, toKeep)) buffer += " Your ability to control your tail" + _s + " is intact.";
+					//else if (InCollection(GLOBAL.FLAG_PREHENSILE, newFlags)) buffer += " Looks like you are able to control your tail" + _s + " better now. Your tail" + _s + " " + isare + " prehensile.";
+					//
+					//if (InCollection(GLOBAL.FLAG_LONG, toKeep)) buffer += " Your tail" + _s + " " + isare + " still long.";
+					//else if (InCollection(GLOBAL.FLAG_LONG, newFlags)) buffer += " Your tail" + _s + " " + isare + " becoming longer.";
+					//
+					//if (InCollection(GLOBAL.FLAG_THICK, toKeep)) buffer += " Your tail" + _s + " " + isare + " still thick.";
+					//else if (InCollection(GLOBAL.FLAG_THICK, newFlags)) buffer += " Your tail" + _s + " " + isare + " becoming thicker.";
+					//
+					//if (InCollection(GLOBAL.FLAG_GOOEY, toKeep)) buffer += " Your tail" + _s + " " + isare + " still retaining goo-like consistency.";
+					//else if (InCollection(GLOBAL.FLAG_GOOEY, newFlags)) buffer += " Your tail" + _s + " " + isare + " liquifying to goo-like consistency.";
+					//
+					//if (InCollection(GLOBAL.FLAG_FEATHERED, toKeep)) buffer += " Your tail" + _s + " " + isare + " still retaining feathers.";
+					//else if (InCollection(GLOBAL.FLAG_FEATHERED, newFlags)) buffer += " Your tail" + _s + " " + isare + " growing feathers.";
+					//
+					//if (InCollection(GLOBAL.FLAG_CHITINOUS, toKeep)) buffer += " Your tail" + _s + " " + isare + " still retaining shitinous plating.";
+					//else if (InCollection(GLOBAL.FLAG_CHITINOUS, newFlags)) buffer += " Your tail" + _s + " " + isare + " growing shitinous plating.";
+					//
+					//if (InCollection(GLOBAL.FLAG_SCALED, toKeep)) buffer += " Your tail" + _s + " " + isare + " still retaining scales.";
+					//else if (InCollection(GLOBAL.FLAG_SCALED, newFlags)) buffer += " Your tail" + _s + " " + isare + " growing scales.";
+					//
+					//if (InCollection(GLOBAL.FLAG_SMOOTH, toKeep)) buffer += " Your tail" + _s + " " + isare + " still retaining smooth texture.";
+					//else if (InCollection(GLOBAL.FLAG_SMOOTH, newFlags)) buffer += " Your tail" + _s + " " + isare + " gaining smooth texture.";
+					//
+					//if (InCollection(GLOBAL.FLAG_FLUFFY, toKeep) && InCollection(GLOBAL.FLAG_FURRED, toKeep)) buffer += " Fur on your tail" + _s + " is still long and fluffy."; // still fluffy
+					//else if (InCollection(GLOBAL.FLAG_FURRED, toKeep) && InCollection(GLOBAL.FLAG_FLUFFY, newFlags)) buffer += " Fur on your tail" + _s + " is now longer and fluffier."; // was furry, now fluffy
+					//else if (InCollection(GLOBAL.FLAG_FLUFFY, newFlags) && !InCollection(GLOBAL.FLAG_FURRED, toKeep)) buffer += " Your tail" + _s + " " + isare + " growing long and fluffy fur."; // was not furry, now fluffy
+					//else if (InCollection(GLOBAL.FLAG_FURRED, newFlags) && !InCollection(GLOBAL.FLAG_FURRED, toKeep)) buffer += " Your tail" + _s + " " + isare + " growing fur."; // was not furry, now furry
+					//
+					////if (InCollection(GLOBAL.FLAG_TAILCOCK, toKeep)) buffer += " Genitalia on your tail" + _s + " " + isare + " .";
+					////else if (InCollection(GLOBAL.FLAG_TAILCOCK, newFlags)) buffer += " Genitalia on your tail" + _s + " " + isare + " ."; // custom handling
+					//
+					//if (InCollection(GLOBAL.FLAG_OVIPOSITOR, toKeep)) buffer += " Ovipositor" + _s + " on your tail" + _s + " " + isare + " still there.";
+					//else if (InCollection(GLOBAL.FLAG_OVIPOSITOR, newFlags)) buffer += " Your tail" + _s + " " + isare + " growing" + _s + " ovipositor" + _s + "!";
+					//
+					//if (InCollection(GLOBAL.FLAG_STINGER_TIPPED, toKeep)) buffer += " Stinger" + _s + " on your tail" + _s + " " + isare + " still there.";
+					//else if (InCollection(GLOBAL.FLAG_STINGER_TIPPED, newFlags)) buffer += " Your tail" + _s + " " + isare + " growing" + _s + " stinger" + _s + "!";
 					
 					target.tailType = newType;
 					target.tailFlags = newFlags;
@@ -774,7 +769,7 @@ package classes.Engine.Utility
 						target.tailGenitalArg = GLOBAL.TYPE_FELINE; // PLACEHOLDER. TODO: either determine from race or pass as argument. That is if something is wrong with feline cocks. They are fine by me.
 						target.tailGenital = GLOBAL.TAIL_GENITAL_COCK;
 					}
-					buffer += " <b>You now have " + target.tailDescript(true, true) + "!</b>";
+					buffer += " <b>You now have " + num2Text(target.tailCount) + " " + target.tailsDescript(true, true) + " appropriate for " + (newType == GLOBAL.TYPE_VULPINE && target.tailCount > 1 ? "kitsune" : GLOBAL.TYPE_NAMES[newType].toLowerCase()) + "!</b>";
 					if(newCount > 1)
 						buffer += " But itching is only going stronger...";
 				}
@@ -791,7 +786,7 @@ package classes.Engine.Utility
 						if(target.tailCount == 1)
 							buffer += "\n\nThere is something strange in your tail. After some probing you've found your tail genitalia still present.";
 						else
-							buffer += "\n\nThere is something strange in your tails. After some probing you've found your tail genitalia still present in each of your tail.";
+							buffer += "\n\nThere is something strange in your tails. After some probing you've found your tail genitalia still present in each of your tails.";
 							
 					} else {
 						if(target.tailCount == 1)
@@ -799,7 +794,7 @@ package classes.Engine.Utility
 						else
 							buffer += "\n\nThere is something strange in your tails. After some probing you've found that <b>alls your tails are cock-tipped!</b>.";
 					}
-					if (target.tailCount > 0 && kGAMECLASS.silly) buffer += " One-[pc.race] gang-bang time!";
+					if (target.tailCount > 1 && kGAMECLASS.silly) buffer += " One-[pc.race] gang-bang time!";
 				}
 				changes++;
 				
@@ -809,8 +804,11 @@ package classes.Engine.Utility
 			
 			// changing tail count without changing type
 			if (target.tailCount != newCount)
-				if(target.tailCountUnlocked(newCount)) {
-					buffer += "\n\nYou have " + num2Text(newCount - target.tailCount) + " itching spots on your ass... That is because you have new tails growing!";
+				if (target.tailCountUnlocked(newCount)) {
+					if(newCount > target.tailCount)
+						buffer += "\n\nYou have " + num2Text(newCount - target.tailCount) + " itching spots on your ass... That is because you have new tails growing!";
+					else
+						buffer += "\n\n" + num2Text(newCount - target.tailCount, true) + " of your tails just fall off!";
 					target.tailCount = newCount;
 					buffer += " When all is settled down, you found yourself an owner of " + num2Text(target.tailCount) + " matching " + target.tailDescript(true, true) + ".";
 					changes++;
@@ -835,41 +833,51 @@ package classes.Engine.Utility
 					itthey = (target.tailCount > 1 ? "they" : "it");
 					isare = (target.tailCount > 1 ? "are" : "is");
 					_s = (target.tailCount > 1 ? "s" : "");
-					buffer += "\n\nYour " + target.tailsDescript(true, true) + " " + isare + " itching, twitching and... Changing.";
-				
+					buffer += "\n\nYour " + target.tailsDescript(true, true) + " " + isare + " changing.";
+					
+					enum.clear();
 					for each (item in toRemove) {
-						if (item == GLOBAL.FLAG_PREHENSILE) buffer += " Looks like you are losing fine control. Your tail" + _s + " " + isare + " not prehensile anymore.";
-						if (item == GLOBAL.FLAG_LONG) buffer += " Your tail" + _s + " " + isare + " becoming shorter.";
-						if (item == GLOBAL.FLAG_THICK) buffer += " Your tail" + _s + " " + isare + " becoming thinner.";
-						if (item == GLOBAL.FLAG_GOOEY) buffer += " Your tail" + _s + " " + isare + " solidifying from goo-like consistency.";
-						if (item == GLOBAL.FLAG_FEATHERED) buffer += " Your tail" + _s + " " + isare + " shedding feathers.";
-						if (item == GLOBAL.FLAG_CHITINOUS) buffer += " Your tail" + _s + " " + isare + " shedding shitin.";
-						if (item == GLOBAL.FLAG_SCALED) buffer += " Your tail" + _s + " " + isare + " shedding scales.";
-						if (item == GLOBAL.FLAG_FURRED) buffer += " Your tail" + _s + " " + isare + " shedding fur.";
-						if (item == GLOBAL.FLAG_FLUFFY) buffer += " Fur on your tail" + _s + " is now thinner.";
-						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your tail" + _s + " " + isare + " losing that smooth texture.";
-						if (item == GLOBAL.FLAG_TAILCOCK) buffer += " Genitalia on your tail" + _s + " " + isare + " disappearing.";
-						if (item == GLOBAL.FLAG_OVIPOSITOR) buffer += " Ovipositor" + _s + " on your tail" + _s + " " + isare + " disappearing.";
-						if (item == GLOBAL.FLAG_STINGER_TIPPED) buffer += " Stinger" + _s + " on your tail" + _s + " " + isare + " disappearing.";
+						if (item == GLOBAL.FLAG_PREHENSILE) enum.push("prehensile");
+						if (item == GLOBAL.FLAG_LONG) enum.push("long");
+						if (item == GLOBAL.FLAG_THICK) enum.push("thick");
+						if (item == GLOBAL.FLAG_GOOEY) enum.push(RandomInCollection("slimy", "gooey"));
+						if (item == GLOBAL.FLAG_FEATHERED) enum.push(RandomInCollection("feathered", "feathery"));
+						if (item == GLOBAL.FLAG_CHITINOUS) enum.push(RandomInCollection("chitinous", "armored"));
+						if (item == GLOBAL.FLAG_SCALED) enum.push(RandomInCollection("scaled", "scaly"));
+						if (item == GLOBAL.FLAG_FURRED) enum.push(RandomInCollection("furred", "furry"));
+						if (item == GLOBAL.FLAG_FLUFFY) enum.push("fluffy");
+						if (item == GLOBAL.FLAG_SMOOTH) enum.push("smooth");
+						if (item == GLOBAL.FLAG_TAILCOCK) enum.push("cock-tipped");
+						if (item == GLOBAL.FLAG_OVIPOSITOR) enum.push("ovipositor-tipped");
+						if (item == GLOBAL.FLAG_STINGER_TIPPED) enum.push("stinger-tipped");
 						target.tailFlags.splice(target.tailFlags.indexOf(item), 1);
 					}
-				
+					if (!enum.isEmpty()) {
+						buffer += " " + StringUtil.capitalize(itthey) + " " + isare + " not " + enum.toString() + " anymore.";
+					}
+					
+					enum.clear();
 					for each (item in toKeep)
 					{
-						if (item == GLOBAL.FLAG_PREHENSILE) buffer += " Looks like you are able to control your tail" + _s + " better now. Your tail" + _s + " " + isare + " prehensile.";						
-						if (item == GLOBAL.FLAG_LONG) buffer += " Your tail" + _s + " " + isare + " becoming longer.";						
-						if (item == GLOBAL.FLAG_THICK) buffer += " Your tail" + _s + " " + isare + " becoming thicker.";						
-						if (item == GLOBAL.FLAG_GOOEY) buffer += " Your tail" + _s + " " + isare + " liquifying to goo-like consistency.";						
-						if (item == GLOBAL.FLAG_FEATHERED) buffer += " Your tail" + _s + " " + isare + " growing feathers.";						
-						if (item == GLOBAL.FLAG_CHITINOUS) buffer += " Your tail" + _s + " " + isare + " growing shitinous plating.";						
-						if (item == GLOBAL.FLAG_SCALED) buffer += " Your tail" + _s + " " + isare + " growing scales.";						
-						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your tail" + _s + " " + isare + " gaining smooth texture.";
-						if (item == GLOBAL.FLAG_FURRED) buffer += " Your tail" + _s + " " + isare + " growing fur.";
-						if (item == GLOBAL.FLAG_FLUFFY) buffer += " Fur on your tail" + _s + " is now longer and fluffier.";			
-						if (item == GLOBAL.FLAG_OVIPOSITOR) buffer += " Your tail" + _s + " " + isare + " growing" + _s + " ovipositor" + _s + ".";
-						if (item == GLOBAL.FLAG_STINGER_TIPPED) buffer += " Your tail" + _s + " " + isare + " growing" + _s + " stinger" + _s + ".";
+						if (item == GLOBAL.FLAG_PREHENSILE) enum.push("prehensile");
+						if (item == GLOBAL.FLAG_LONG) enum.push("long");
+						if (item == GLOBAL.FLAG_THICK) enum.push("thick");
+						if (item == GLOBAL.FLAG_GOOEY) enum.push(RandomInCollection("slimy", "gooey"));
+						if (item == GLOBAL.FLAG_FEATHERED) enum.push(RandomInCollection("feathered", "feathery"));
+						if (item == GLOBAL.FLAG_CHITINOUS) enum.push(RandomInCollection("chitinous", "armored"));
+						if (item == GLOBAL.FLAG_SCALED) enum.push(RandomInCollection("scaled", "scaly"));
+						if (item == GLOBAL.FLAG_FURRED) enum.push(RandomInCollection("furred", "furry"));
+						if (item == GLOBAL.FLAG_FLUFFY) enum.push("fluffy");
+						if (item == GLOBAL.FLAG_SMOOTH) enum.push("smooth");
+						if (item == GLOBAL.FLAG_TAILCOCK) enum.push("cock-tipped");
+						if (item == GLOBAL.FLAG_OVIPOSITOR) enum.push("ovipositor-tipped");
+						if (item == GLOBAL.FLAG_STINGER_TIPPED) enum.push("stinger-tipped");
 						target.addTailFlag(item);
 					}
+					if (!enum.isEmpty()) {
+						buffer += " " + StringUtil.capitalize(itthey) + " " + isare + " " + enum.toString() + " now.";
+					}
+					enum.clear();
 					
 					changes++;
 				} else buffer += "\n\n" + target.tailFlagsLockedMessage();
@@ -972,7 +980,7 @@ package classes.Engine.Utility
 					else toRemove.push(item); // since we are changing type now, ALL flags not in keep/add list are removed anyways
 				}
 				
-				buffer += "\n\nYour " + target.legs(true, true) + " " + (target.legCount > 1 ? "are" : "is") + " itching, twitching and... Changing.";
+				buffer += "\n\nYour " + target.legs(true, true) + " give out as " + (target.legCount > 1 ? "they are" : "it is") + " changing as " + (target.legCount > 1 ? "they are" : "it is") + " losing " + (target.legCount > 1 ? "their" : "it's") + " " + GLOBAL.TYPE_NAMES[target.legType].toLowerCase() + " form.";
 				
 				if (target.legCount < targetCount) { // case of removing some legs
 					target.legCount = targetCount;
@@ -981,7 +989,7 @@ package classes.Engine.Utility
 				
 				if (target.legCount > targetCount) { // case of growing some legs
 					target.legCount = targetCount;
-					buffer += " They are merging, splitting and reshaping, until you are left with " + num2Text(target.legCount) + ".";
+					buffer += " They are merging, splitting and reshaping, until you are left with " + num2Text(target.legCount) + " limb" + (target.legCount > 1 ? "s" : "") + " below your waist.";
 				}
 				
 				if (target.legCount > 2 && newType != GLOBAL.TYPE_DRIDER && target.genitalSpot != 2 && target.genitalSpotUnlocked(2)) {
@@ -997,59 +1005,60 @@ package classes.Engine.Utility
 				itthey = (target.legCount > 1 ? "they" : "it");
 				isare = (target.legCount > 1 ? "are" : "is");
 				_s = (target.legCount > 1 ? "s" : "");
-							
+				
 				target.legType = newType;
 				target.legFlags = newFlags;
 				
-				// what is lost
-				if (InCollection(GLOBAL.FLAG_PREHENSILE, toRemove)) buffer += " Looks like you are losing fine limb control. Your [pc.legs] " + isare + " not prehensile anymore.";
-				if (InCollection(GLOBAL.FLAG_TENDRIL, toRemove)) buffer += " Your [pc.legs] " + isare + " not resembling tendril anymore.";
-				if (InCollection(GLOBAL.FLAG_DIGITIGRADE, toRemove)) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not digitigrade anymore.";
-				if (InCollection(GLOBAL.FLAG_PLANTIGRADE, toRemove)) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not plantigrade anymore.";
-				if (InCollection(GLOBAL.FLAG_AMORPHOUS, toRemove)) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not amoprhous anymore.";
-				if (InCollection(GLOBAL.FLAG_HOOVES, toRemove)) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not ending in hooves anymore.";
-				if (InCollection(GLOBAL.FLAG_PAWS, toRemove)) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not ending in paws anymore.";
-				if (InCollection(GLOBAL.FLAG_HEELS, toRemove)) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not ending in high heels anymore.";
-				if (InCollection(GLOBAL.FLAG_SCALED, toRemove)) buffer += " Your [pc.legs] " + isare + " shedding scales.";
-				if (InCollection(GLOBAL.FLAG_FURRED, toRemove)) buffer += " Your [pc.legs] " + isare + " shedding fur.";
-				if (InCollection(GLOBAL.FLAG_FEATHERED, toRemove)) buffer += " Your [pc.legs] " + isare + " shedding feathers.";
-				if (InCollection(GLOBAL.FLAG_CHITINOUS, toRemove)) buffer += " Your [pc.legs] " + isare + " shedding chitin.";
-				if (InCollection(GLOBAL.FLAG_SMOOTH, toRemove)) buffer += " Your [pc.legs] " + isare + " not as smooth as they were.";
-				if (InCollection(GLOBAL.FLAG_GOOEY, toRemove)) buffer += " Your [pc.legs] " + isare + " solidifying from goo-like consistence.";
-				if (InCollection(GLOBAL.FLAG_STICKY, toRemove)) buffer += " Your [pc.legs] " + isare + " are not sticky anymore.";
-				//what is not changed or gained
-				if (InCollection(GLOBAL.FLAG_PREHENSILE, toKeep)) buffer += " Your ability to control your [pc.legs] is intact.";
-				else if (InCollection(GLOBAL.FLAG_PREHENSILE, newFlags)) buffer += " Looks like you are able to control your [pc.legs] better now. Your[pc.legs] " + isare + " prehensile.";
-				if (InCollection(GLOBAL.FLAG_TENDRIL, toKeep)) buffer += " Your [pc.legs] still " + isare + " tendril-like.";
-				else if (InCollection(GLOBAL.FLAG_TENDRIL, newFlags)) buffer += " Your [pc.legs] " + isare + " tendril-like now.";
-				if (InCollection(GLOBAL.FLAG_DIGITIGRADE, toKeep)) buffer += " Your stance is not changed much, your [pc.legs] still " + isare + " digitigrade.";
-				else if (InCollection(GLOBAL.FLAG_DIGITIGRADE, newFlags)) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " digitigrade now.";
-				if (InCollection(GLOBAL.FLAG_PLANTIGRADE, toKeep)) buffer += " Your stance is not changed much, your [pc.legs] still " + isare + " plantigrade.";
-				else if (InCollection(GLOBAL.FLAG_PLANTIGRADE, newFlags)) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " plantigrade now.";
-				if (InCollection(GLOBAL.FLAG_AMORPHOUS, toKeep)) buffer += " Your stance is not changed much, your [pc.legs] still " + isare + " amoprhous.";
-				else if (InCollection(GLOBAL.FLAG_AMORPHOUS, newFlags)) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " amoprhous now.";
-				if (InCollection(GLOBAL.FLAG_HOOVES, toKeep)) buffer += " Your stance is not changed much, your [pc.legs] still " + isare + " ending in hooves.";
-				else if (InCollection(GLOBAL.FLAG_HOOVES, newFlags)) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " ending in hooves now.";
-				if (InCollection(GLOBAL.FLAG_PAWS, toKeep)) buffer += " Your stance is not changed much, your [pc.legs] still " + isare + " ending in paws.";
-				else if (InCollection(GLOBAL.FLAG_PAWS, newFlags)) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " ending in paws now.";
-				if (InCollection(GLOBAL.FLAG_HEELS, toKeep)) buffer += " Your stance is not changed much, your [pc.legs] still " + isare + " ending in heels.";
-				else if (InCollection(GLOBAL.FLAG_HEELS, newFlags)) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " ending in heels now.";
-				if (InCollection(GLOBAL.FLAG_SCALED, toKeep)) buffer += " Your [pc.legs] still " + isare + " covered in scales.";
-				else if (InCollection(GLOBAL.FLAG_SCALED, newFlags)) buffer += " Your [pc.legs] " + isare + " covered in scales now.";
-				if (InCollection(GLOBAL.FLAG_FURRED, toKeep)) buffer += " Your [pc.legs] still " + isare + " covered in fur.";
-				else if (InCollection(GLOBAL.FLAG_FURRED, newFlags)) buffer += " Your [pc.legs] " + isare + " covered in fur now.";
-				if (InCollection(GLOBAL.FLAG_FEATHERED, toKeep)) buffer += " Your [pc.legs] still " + isare + " covered in feathers.";
-				else if (InCollection(GLOBAL.FLAG_FEATHERED, newFlags)) buffer += " Your [pc.legs] " + isare + " covered in feathers now.";
-				if (InCollection(GLOBAL.FLAG_CHITINOUS, toKeep)) buffer += " Your [pc.legs] still " + isare + " covered in chitin.";
-				else if (InCollection(GLOBAL.FLAG_CHITINOUS, newFlags)) buffer += " Your [pc.legs] " + isare + " covered in chitin now.";
-				if (InCollection(GLOBAL.FLAG_SMOOTH, toKeep)) buffer += " Your [pc.legs] still " + isare + " very smooth.";
-				else if (InCollection(GLOBAL.FLAG_SMOOTH, newFlags)) buffer += " Your [pc.legs] " + isare + " very smooth now.";
-				if (InCollection(GLOBAL.FLAG_GOOEY, toKeep)) buffer += " Your [pc.legs] still " + isare + " have goo-like consistence.";
-				else if (InCollection(GLOBAL.FLAG_GOOEY, newFlags)) buffer += " Your [pc.legs] " + isare + " have goo-like consistence now.";
-				if (InCollection(GLOBAL.FLAG_STICKY, toKeep)) buffer += " Your [pc.legs] still " + isare + " sticky.";
-				else if (InCollection(GLOBAL.FLAG_STICKY, newFlags)) buffer += " Your [pc.legs] " + isare + " sticky now.";
+				// screw this shit.
+				//// what is lost
+				//if (InCollection(GLOBAL.FLAG_PREHENSILE, toRemove)) buffer += " Looks like you are losing fine limb control. Your [pc.legs] " + isare + " not prehensile anymore.";
+				//if (InCollection(GLOBAL.FLAG_TENDRIL, toRemove)) buffer += " Your [pc.legs] " + isare + " not resembling tendril anymore.";
+				//if (InCollection(GLOBAL.FLAG_DIGITIGRADE, toRemove)) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not digitigrade anymore.";
+				//if (InCollection(GLOBAL.FLAG_PLANTIGRADE, toRemove)) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not plantigrade anymore.";
+				//if (InCollection(GLOBAL.FLAG_AMORPHOUS, toRemove)) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not amoprhous anymore.";
+				//if (InCollection(GLOBAL.FLAG_HOOVES, toRemove)) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not ending in hooves anymore.";
+				//if (InCollection(GLOBAL.FLAG_PAWS, toRemove)) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not ending in paws anymore.";
+				//if (InCollection(GLOBAL.FLAG_HEELS, toRemove)) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not ending in high heels anymore.";
+				//if (InCollection(GLOBAL.FLAG_SCALED, toRemove)) buffer += " Your [pc.legs] " + isare + " shedding scales.";
+				//if (InCollection(GLOBAL.FLAG_FURRED, toRemove)) buffer += " Your [pc.legs] " + isare + " shedding fur.";
+				//if (InCollection(GLOBAL.FLAG_FEATHERED, toRemove)) buffer += " Your [pc.legs] " + isare + " shedding feathers.";
+				//if (InCollection(GLOBAL.FLAG_CHITINOUS, toRemove)) buffer += " Your [pc.legs] " + isare + " shedding chitin.";
+				//if (InCollection(GLOBAL.FLAG_SMOOTH, toRemove)) buffer += " Your [pc.legs] " + isare + " not as smooth as they were.";
+				//if (InCollection(GLOBAL.FLAG_GOOEY, toRemove)) buffer += " Your [pc.legs] " + isare + " solidifying from goo-like consistence.";
+				//if (InCollection(GLOBAL.FLAG_STICKY, toRemove)) buffer += " Your [pc.legs] " + isare + " are not sticky anymore.";
+				////what is not changed or gained
+				//if (InCollection(GLOBAL.FLAG_PREHENSILE, toKeep)) buffer += " Your ability to control your [pc.legs] is intact.";
+				//else if (InCollection(GLOBAL.FLAG_PREHENSILE, newFlags)) buffer += " Looks like you are able to control your [pc.legs] better now. Your[pc.legs] " + isare + " prehensile.";
+				//if (InCollection(GLOBAL.FLAG_TENDRIL, toKeep)) buffer += " Your [pc.legs] still " + isare + " tendril-like.";
+				//else if (InCollection(GLOBAL.FLAG_TENDRIL, newFlags)) buffer += " Your [pc.legs] " + isare + " tendril-like now.";
+				//if (InCollection(GLOBAL.FLAG_DIGITIGRADE, toKeep)) buffer += " Your stance is not changed much, your [pc.legs] still " + isare + " digitigrade.";
+				//else if (InCollection(GLOBAL.FLAG_DIGITIGRADE, newFlags)) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " digitigrade now.";
+				//if (InCollection(GLOBAL.FLAG_PLANTIGRADE, toKeep)) buffer += " Your stance is not changed much, your [pc.legs] still " + isare + " plantigrade.";
+				//else if (InCollection(GLOBAL.FLAG_PLANTIGRADE, newFlags)) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " plantigrade now.";
+				//if (InCollection(GLOBAL.FLAG_AMORPHOUS, toKeep)) buffer += " Your stance is not changed much, your [pc.legs] still " + isare + " amoprhous.";
+				//else if (InCollection(GLOBAL.FLAG_AMORPHOUS, newFlags)) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " amoprhous now.";
+				//if (InCollection(GLOBAL.FLAG_HOOVES, toKeep)) buffer += " Your stance is not changed much, your [pc.legs] still " + isare + " ending in hooves.";
+				//else if (InCollection(GLOBAL.FLAG_HOOVES, newFlags)) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " ending in hooves now.";
+				//if (InCollection(GLOBAL.FLAG_PAWS, toKeep)) buffer += " Your stance is not changed much, your [pc.legs] still " + isare + " ending in paws.";
+				//else if (InCollection(GLOBAL.FLAG_PAWS, newFlags)) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " ending in paws now.";
+				//if (InCollection(GLOBAL.FLAG_HEELS, toKeep)) buffer += " Your stance is not changed much, your [pc.legs] still " + isare + " ending in heels.";
+				//else if (InCollection(GLOBAL.FLAG_HEELS, newFlags)) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " ending in heels now.";
+				//if (InCollection(GLOBAL.FLAG_SCALED, toKeep)) buffer += " Your [pc.legs] still " + isare + " covered in scales.";
+				//else if (InCollection(GLOBAL.FLAG_SCALED, newFlags)) buffer += " Your [pc.legs] " + isare + " covered in scales now.";
+				//if (InCollection(GLOBAL.FLAG_FURRED, toKeep)) buffer += " Your [pc.legs] still " + isare + " covered in fur.";
+				//else if (InCollection(GLOBAL.FLAG_FURRED, newFlags)) buffer += " Your [pc.legs] " + isare + " covered in fur now.";
+				//if (InCollection(GLOBAL.FLAG_FEATHERED, toKeep)) buffer += " Your [pc.legs] still " + isare + " covered in feathers.";
+				//else if (InCollection(GLOBAL.FLAG_FEATHERED, newFlags)) buffer += " Your [pc.legs] " + isare + " covered in feathers now.";
+				//if (InCollection(GLOBAL.FLAG_CHITINOUS, toKeep)) buffer += " Your [pc.legs] still " + isare + " covered in chitin.";
+				//else if (InCollection(GLOBAL.FLAG_CHITINOUS, newFlags)) buffer += " Your [pc.legs] " + isare + " covered in chitin now.";
+				//if (InCollection(GLOBAL.FLAG_SMOOTH, toKeep)) buffer += " Your [pc.legs] still " + isare + " very smooth.";
+				//else if (InCollection(GLOBAL.FLAG_SMOOTH, newFlags)) buffer += " Your [pc.legs] " + isare + " very smooth now.";
+				//if (InCollection(GLOBAL.FLAG_GOOEY, toKeep)) buffer += " Your [pc.legs] still " + isare + " have goo-like consistence.";
+				//else if (InCollection(GLOBAL.FLAG_GOOEY, newFlags)) buffer += " Your [pc.legs] " + isare + " have goo-like consistence now.";
+				//if (InCollection(GLOBAL.FLAG_STICKY, toKeep)) buffer += " Your [pc.legs] still " + isare + " sticky.";
+				//else if (InCollection(GLOBAL.FLAG_STICKY, newFlags)) buffer += " Your [pc.legs] " + isare + " sticky now.";
 				
-				buffer += " <b>You now have " + target.legs(true, true) + "!</b>";
+				buffer += " <b>You now have " + num2Text(target.legCount) + " " + target.legs(true, true) + " appropriate for " + GLOBAL.TYPE_NAMES[newType].toLowerCase() + "!</b>";
 				changes++;
 				
 				if (display) output(buffer);
@@ -1092,46 +1101,55 @@ package classes.Engine.Utility
 					itthey = (target.legCount > 1 ? "they" : "it");
 					isare = (target.legCount > 1 ? "are" : "is");
 					_s = (target.legCount > 1 ? "s" : "");
-					buffer += "\n\nYour " + target.legs(true, true) + " " + isare + " itching, twitching and... Changing.";
-				
+					buffer += "\n\nYour " + target.legs(true, true) + " " + isare + " changing.";
+					
+					enum.clear();
 					for each (item in toRemove) {
-						if (item == GLOBAL.FLAG_PREHENSILE) buffer += " Looks like you are losing fine limb control. Your [pc.legs] " + isare + " not prehensile anymore.";
-						if (item == GLOBAL.FLAG_TENDRIL) buffer += " Your [pc.legs] " + isare + " not resembling tendril anymore.";
-						if (item == GLOBAL.FLAG_DIGITIGRADE) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not digitigrade anymore.";
-						if (item == GLOBAL.FLAG_PLANTIGRADE) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not plantigrade anymore.";
-						if (item == GLOBAL.FLAG_AMORPHOUS) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not amoprhous anymore.";
-						if (item == GLOBAL.FLAG_HOOVES) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not ending in hooves anymore.";
-						if (item == GLOBAL.FLAG_PAWS) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not ending in paws anymore.";
-						if (item == GLOBAL.FLAG_HEELS) buffer += " Your stance is now changed. Your [pc.legs] " + isare + " not ending in high heels anymore.";
-						if (item == GLOBAL.FLAG_SCALED) buffer += " Your [pc.legs] " + isare + " shedding scales.";
-						if (item == GLOBAL.FLAG_FURRED) buffer += " Your [pc.legs] " + isare + " shedding fur.";
-						if (item == GLOBAL.FLAG_FEATHERED) buffer += " Your [pc.legs] " + isare + " shedding feathers.";
-						if (item == GLOBAL.FLAG_CHITINOUS) buffer += " Your [pc.legs] " + isare + " shedding chitin.";
-						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your [pc.legs] " + isare + " not as smooth as they were.";
-						if (item == GLOBAL.FLAG_GOOEY) buffer += " Your [pc.legs] " + isare + " solidifying from goo-like consistence.";
-						if (item == GLOBAL.FLAG_STICKY) buffer += " Your [pc.legs] " + isare + " are not sticky anymore.";
+						if (item == GLOBAL.FLAG_PREHENSILE) enum.push("prehensile");
+						if (item == GLOBAL.FLAG_TENDRIL) enum.push("tendril");
+						if (item == GLOBAL.FLAG_DIGITIGRADE) enum.push("digitigrade");
+						if (item == GLOBAL.FLAG_PLANTIGRADE) enum.push("plantigrade");
+						if (item == GLOBAL.FLAG_AMORPHOUS) enum.push("amoprhous");
+						if (item == GLOBAL.FLAG_HOOVES) enum.push("hooves");
+						if (item == GLOBAL.FLAG_PAWS) enum.push("paws");
+						if (item == GLOBAL.FLAG_HEELS) enum.push("high heels");
+						if (item == GLOBAL.FLAG_SCALED) enum.push(RandomInCollection("scaled", "scaly"));
+						if (item == GLOBAL.FLAG_FURRED) enum.push(RandomInCollection("furred", "furry"));
+						if (item == GLOBAL.FLAG_FEATHERED) enum.push(RandomInCollection("feathered", "feathery"));
+						if (item == GLOBAL.FLAG_CHITINOUS) enum.push(RandomInCollection("chitinous", "armored"));
+						if (item == GLOBAL.FLAG_SMOOTH) enum.push("smooth");
+						if (item == GLOBAL.FLAG_STICKY) enum.push("sticky");
+						if (item == GLOBAL.FLAG_GOOEY) enum.push(RandomInCollection("slimy", "gooey"));
 						target.legFlags.splice(target.legFlags.indexOf(item), 1);
 					}
-				
+					if (!enum.isEmpty()) {
+						buffer += " " + StringUtil.capitalize(itthey) + " " + isare + " not " + enum.toString() + " anymore.";
+					}
+					
+					enum.clear();
 					for each (item in toKeep)
 					{
-						if (item == GLOBAL.FLAG_PREHENSILE) buffer += " Looks like you are able to control your [pc.legs] better now. Your[pc.legs] " + isare + " prehensile.";
-						if (item == GLOBAL.FLAG_TENDRIL) buffer += " Your [pc.legs] " + isare + " tendril-like now.";
-						if (item == GLOBAL.FLAG_DIGITIGRADE) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " digitigrade now.";
-						if (item == GLOBAL.FLAG_PLANTIGRADE) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " plantigrade now.";
-						if (item == GLOBAL.FLAG_AMORPHOUS) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " amoprhous now.";
-						if (item == GLOBAL.FLAG_HOOVES) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " ending in hooves now.";
-						if (item == GLOBAL.FLAG_PAWS) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " ending in paws now.";
-						if (item == GLOBAL.FLAG_HEELS) buffer += " Your stance is notably changed, since your [pc.legs] " + isare + " ending in heels now.";
-						if (item == GLOBAL.FLAG_SCALED) buffer += " Your [pc.legs] " + isare + " covered in scales now.";
-						if (item == GLOBAL.FLAG_FURRED) buffer += " Your [pc.legs] " + isare + " covered in fur now.";
-						if (item == GLOBAL.FLAG_FEATHERED) buffer += " Your [pc.legs] " + isare + " covered in feathers now.";
-						if (item == GLOBAL.FLAG_CHITINOUS) buffer += " Your [pc.legs] " + isare + " covered in chitin now.";
-						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your [pc.legs] " + isare + " very smooth now.";
-						if (item == GLOBAL.FLAG_GOOEY) buffer += " Your [pc.legs] " + isare + " have goo-like consistence now.";
-						if (item == GLOBAL.FLAG_STICKY) buffer += " Your [pc.legs] " + isare + " sticky now.";
+						if (item == GLOBAL.FLAG_PREHENSILE) enum.push("prehensile");
+						if (item == GLOBAL.FLAG_TENDRIL) enum.push("tendril");
+						if (item == GLOBAL.FLAG_DIGITIGRADE) enum.push("digitigrade");
+						if (item == GLOBAL.FLAG_PLANTIGRADE) enum.push("plantigrade");
+						if (item == GLOBAL.FLAG_AMORPHOUS) enum.push("amoprhous");
+						if (item == GLOBAL.FLAG_HOOVES) enum.push("hooves");
+						if (item == GLOBAL.FLAG_PAWS) enum.push("paws");
+						if (item == GLOBAL.FLAG_HEELS) enum.push("high heels");
+						if (item == GLOBAL.FLAG_SCALED) enum.push(RandomInCollection("scaled", "scaly"));
+						if (item == GLOBAL.FLAG_FURRED) enum.push(RandomInCollection("furred", "furry"));
+						if (item == GLOBAL.FLAG_FEATHERED) enum.push(RandomInCollection("feathered", "feathery"));
+						if (item == GLOBAL.FLAG_CHITINOUS) enum.push(RandomInCollection("chitinous", "armored"));
+						if (item == GLOBAL.FLAG_SMOOTH) enum.push("smooth");
+						if (item == GLOBAL.FLAG_STICKY) enum.push("sticky");
+						if (item == GLOBAL.FLAG_GOOEY) enum.push(RandomInCollection("slimy", "gooey"));
 						target.addLegFlag(item);
 					}
+					if (!enum.isEmpty()) {
+						buffer += " " + StringUtil.capitalize(itthey) + " " + isare + " " + enum.toString() + " now.";
+					}
+					enum.clear();
 					
 					changes++;
 				} else buffer += "\n\n" + target.legFlagsLockedMessage();
@@ -1216,41 +1234,46 @@ package classes.Engine.Utility
 					else toRemove.push(item); // since we are changing type now, ALL flags not in keep/add list are removed anyways
 				}
 				
-				buffer += "\n\nYour " + target.skinFurScales(true, true) + " is itching and... Changing.";
-				
+				buffer += "\n\n";
 				
 				// what is lost
-				if (target.skinType == GLOBAL.SKIN_TYPE_FUR) buffer += " You are shedding your fur.";
-				if (target.skinType == GLOBAL.SKIN_TYPE_SCALES) buffer += " You are shedding your scales.";
-				if (target.skinType == GLOBAL.SKIN_TYPE_GOO) buffer += " Your membrane is solidifying.";
-				if (target.skinType == GLOBAL.SKIN_TYPE_CHITIN) buffer += " You are shedding your chitin.";
-				if (target.skinType == GLOBAL.SKIN_TYPE_FEATHERS) buffer += " You are shedding your feathers.";
-				if (InCollection(GLOBAL.FLAG_SMOOTH, toRemove)) buffer += " Your skin is now less smooth.";
-				if (InCollection(GLOBAL.FLAG_THICK, toRemove)) buffer += " Your skin is now less thick.";
-				if (InCollection(GLOBAL.FLAG_STICKY, toRemove)) buffer += " Your skin is no longer sticky.";
-				if (InCollection(GLOBAL.FLAG_FLUFFY, toRemove)) buffer += " Your skin is no longer fluffy.";
-				if (InCollection(GLOBAL.FLAG_SQUISHY, toRemove)) buffer += " Your skin is no longer squishy.";
-				if (InCollection(GLOBAL.FLAG_LUBRICATED, toRemove)) buffer += " Your skin is no longer lubricated.";
-				if (target.skinType == GLOBAL.SKIN_TYPE_SKIN) buffer += " You skin is not just skin anymore.";
+				if (target.skinType == GLOBAL.SKIN_TYPE_SKIN) buffer += "Your " + target.skinFurScales(true, true) + "  itches intensely. You gaze down to see ";
+				if (target.skinType == GLOBAL.SKIN_TYPE_FUR) buffer += " You are shedding your " + target.skinFurScales(true, true) + ", revealing ";
+				if (target.skinType == GLOBAL.SKIN_TYPE_SCALES) buffer += "Your " + target.skinFurScales(true, true) + " itch incessantly. You scratch, feeling them flake off to reveal ";
+				if (target.skinType == GLOBAL.SKIN_TYPE_GOO) buffer += " Your membrane is solidifying into ";
+				if (target.skinType == GLOBAL.SKIN_TYPE_CHITIN) buffer += " You are shedding your chitin, revealing ";
+				if (target.skinType == GLOBAL.SKIN_TYPE_FEATHERS) buffer += " You are shedding your feathers, revealing ";
+				
+				if (newType == GLOBAL.SKIN_TYPE_SKIN) buffer += "usual bare skin.";
+				if (newType == GLOBAL.SKIN_TYPE_FUR) buffer += "more and more hairs breaking forth from your skin, quickly transforming into a soft coat of fur.";
+				if (newType == GLOBAL.SKIN_TYPE_SCALES) buffer += "growing scales.";
+				if (newType == GLOBAL.SKIN_TYPE_GOO) buffer += "softening to almost liquid consistency skin.";
+				if (newType == GLOBAL.SKIN_TYPE_CHITIN) buffer += "new shiny chitin carapace.";
+				if (newType == GLOBAL.SKIN_TYPE_FEATHERS) buffer += "coat of feathers.";
+				
+				enum.clear();
+				if (InCollection(GLOBAL.FLAG_SMOOTH, toRemove)) enum.push("smooth");
+				if (InCollection(GLOBAL.FLAG_THICK, toRemove)) enum.push("thick");
+				if (InCollection(GLOBAL.FLAG_STICKY, toRemove)) enum.push("sticky");
+				if (InCollection(GLOBAL.FLAG_FLUFFY, toRemove)) enum.push("fluffy");
+				if (InCollection(GLOBAL.FLAG_SQUISHY, toRemove)) enum.push("squishy");
+				if (InCollection(GLOBAL.FLAG_LUBRICATED, toRemove)) enum.push("lubricated");
+				if (!enum.isEmpty()) {
+					buffer += " Unlike your old surface, your " + newSkin + " " + isAre + " not " + enum.toString() + ".";
+				}
+				
 				//what is not changed or gained
-				if (newType == GLOBAL.SKIN_TYPE_SKIN) buffer += " You now have bare skin.";
-				if (newType == GLOBAL.SKIN_TYPE_FUR) buffer += " You are growing fur.";
-				if (newType == GLOBAL.SKIN_TYPE_SCALES) buffer += " You are growing scales.";
-				if (newType == GLOBAL.SKIN_TYPE_GOO) buffer += " Your skin is liquifying to goo.";
-				if (newType == GLOBAL.SKIN_TYPE_CHITIN) buffer += " You are growing chitin.";
-				if (newType == GLOBAL.SKIN_TYPE_FEATHERS) buffer += " You are growing feathers.";
-				if (InCollection(GLOBAL.FLAG_SMOOTH, toKeep)) buffer += " Your " + newSkin + " " + isAre + " still smooth.";
-				else if (InCollection(GLOBAL.FLAG_SMOOTH, newFlags)) buffer += " Your " + newSkin + " " + isAre + " smooth now.";
-				if (InCollection(GLOBAL.FLAG_THICK, toKeep)) buffer += " Your " + newSkin + " " + isAre + " still thick.";
-				else if (InCollection(GLOBAL.FLAG_THICK, newFlags)) buffer += " Your " + newSkin + " " + isAre + " thick now.";
-				if (InCollection(GLOBAL.FLAG_STICKY, toKeep)) buffer += " Your " + newSkin + " " + isAre + " still sticky.";
-				else if (InCollection(GLOBAL.FLAG_STICKY, newFlags)) buffer += " Your " + newSkin + " " + isAre + " sticky now.";
-				if (InCollection(GLOBAL.FLAG_FLUFFY, toKeep)) buffer += " Your " + newSkin + " " + isAre + " still fluffy.";
-				else if (InCollection(GLOBAL.FLAG_FLUFFY, newFlags)) buffer += " Your " + newSkin + " " + isAre + " fluffy now.";
-				if (InCollection(GLOBAL.FLAG_SQUISHY, toKeep)) buffer += " Your " + newSkin + " " + isAre + " still squishy.";
-				else if (InCollection(GLOBAL.FLAG_SQUISHY, newFlags)) buffer += " Your " + newSkin + " " + isAre + " squishy now.";
-				if (InCollection(GLOBAL.FLAG_LUBRICATED, toKeep)) buffer += " Your " + newSkin + " " + isAre + " still lubricated.";
-				else if (InCollection(GLOBAL.FLAG_LUBRICATED, newFlags)) buffer += " Your " + newSkin + " " + isAre + " lubricated now.";
+				enum.clear();
+				if (InCollection(GLOBAL.FLAG_SMOOTH, newFlags)) enum.push("smooth");
+				if (InCollection(GLOBAL.FLAG_THICK, newFlags)) enum.push("thick");
+				if (InCollection(GLOBAL.FLAG_STICKY, newFlags)) enum.push("sticky");
+				if (InCollection(GLOBAL.FLAG_FLUFFY, newFlags)) enum.push("fluffy");
+				if (InCollection(GLOBAL.FLAG_SQUISHY, newFlags)) enum.push("squishy");
+				if (InCollection(GLOBAL.FLAG_LUBRICATED, newFlags)) enum.push("lubricated");
+				if (!enum.isEmpty()) {
+					buffer += " Your " + newSkin + " " + isAre + " " + enum.toString() + " now.";
+				}
+				enum.clear();
 				
 				if (newColors.length > 0 && !InCollection(target[key], newColors)) {
 					newColor = RandomInCollection(newColors);
@@ -1266,7 +1289,7 @@ package classes.Engine.Utility
 				
 				buffer += " <b>You now have " + target.skinFurScales(true, true) + "!</b>";
 				
-				changes++;				
+				changes++;
 				if (display) output(buffer);
 				return changes > 0;
 			}
@@ -1287,28 +1310,37 @@ package classes.Engine.Utility
 			
 			if (toKeep.length > 0 || toRemove.length > 0) {
 				if (flagsUnlocked) {
-					buffer += "\n\nYour " + target.skinFurScales() + " is itching and... Changing.";
-				
+					buffer += "\n\nYour " + target.skinFurScales() + " is changing.";
+					
+					enum.clear();
 					for each (item in toRemove) {
-						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your " + newSkin + " " + isAre + " now less smooth.";
-						if (item == GLOBAL.FLAG_THICK) buffer += " Your " + newSkin + " " + isAre + " now less thick.";
-						if (item == GLOBAL.FLAG_STICKY) buffer += " Your " + newSkin + " " + isAre + " no longer sticky.";
-						if (item == GLOBAL.FLAG_FLUFFY) buffer += " Your " + newSkin + " " + isAre + " no longer fluffy.";
-						if (item == GLOBAL.FLAG_SQUISHY) buffer += " Your " + newSkin + " " + isAre + " no longer squishy.";
-						if (item == GLOBAL.FLAG_LUBRICATED) buffer += " Your " + newSkin + " " + isAre + " no longer lubricated.";
+						if (item == GLOBAL.FLAG_SMOOTH) enum.push("smooth");
+						if (item == GLOBAL.FLAG_THICK) enum.push("thick");
+						if (item == GLOBAL.FLAG_STICKY) enum.push("sticky");
+						if (item == GLOBAL.FLAG_FLUFFY) enum.push("fluffy");
+						if (item == GLOBAL.FLAG_SQUISHY) enum.push("squishy");
+						if (item == GLOBAL.FLAG_LUBRICATED) enum.push("lubricated");
 						target.skinFlags.splice(target.skinFlags.indexOf(item), 1);
 					}
-				
+					if (!enum.isEmpty()) {
+						buffer += " Your " + newSkin + " " + isAre + " no longer " + enum.toString() + ".";
+					}
+					
+					enum.clear();
 					for each (item in toKeep)
 					{
-						if (item == GLOBAL.FLAG_SMOOTH) buffer += " Your " + newSkin + " " + isAre + " smooth now.";
-						if (item == GLOBAL.FLAG_THICK) buffer += " Your " + newSkin + " " + isAre + " thick now.";
-						if (item == GLOBAL.FLAG_STICKY) buffer += " Your " + newSkin + " " + isAre + " sticky now.";
-						if (item == GLOBAL.FLAG_FLUFFY) buffer += " Your " + newSkin + " " + isAre + " fluffy now.";
-						if (item == GLOBAL.FLAG_SQUISHY) buffer += " Your " + newSkin + " " + isAre + " squishy now.";
-						if (item == GLOBAL.FLAG_LUBRICATED) buffer += " Your " + newSkin + " " + isAre + " lubricated now.";
+						if (item == GLOBAL.FLAG_SMOOTH) enum.push("smooth");
+						if (item == GLOBAL.FLAG_THICK) enum.push("thick");
+						if (item == GLOBAL.FLAG_STICKY) enum.push("sticky");
+						if (item == GLOBAL.FLAG_FLUFFY) enum.push("fluffy");
+						if (item == GLOBAL.FLAG_SQUISHY) enum.push("squishy");
+						if (item == GLOBAL.FLAG_LUBRICATED) enum.push("lubricated");
 						target.addSkinFlag(item);
 					}
+					if (!enum.isEmpty()) {
+						buffer += " Your " + newSkin + " " + isAre + " " + enum.toString() + " now.";
+					}
+					enum.clear();
 					
 					changes++;
 				} else buffer += "\n\n" + target.skinFlagsLockedMessage();
