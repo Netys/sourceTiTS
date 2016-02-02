@@ -193,6 +193,13 @@ package classes.Characters.CoC
 				this.inventory.push(new CoCKeltBow());
 			
 			sexualPreferences.setRandomPrefs(2 + rand(3));
+			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_FEMININE,		GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_HYPER,			GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_EXOTIC_BODYSHAPE,GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		GLOBAL.KINDA_DISLIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			0);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_HERMAPHRODITE,	0);
 			
 			this._isLoading = false;
 		}

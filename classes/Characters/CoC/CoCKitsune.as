@@ -162,24 +162,36 @@ package classes.Characters.CoC
 			hairColor = RandomInCollection(["red", "black", "blonde"]);
 			furColor = hairColor;
 			
+			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_LACTATION,		GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_BALLS,			GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_LONG_HAIR,		GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_FEMININE,		GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_HYPER,			GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_BIG_BREASTS,	GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_TAILS,			GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_TAILGENITALS,	GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		GLOBAL.REALLY_DISLIKES_SEXPREF);
+			
 			long = "A kitsune stands in front of you, about five and a half feet tall.  She has a head of ";
 			if (hairColor == "red") {
 				long += "unkempt, shoulder-length reddish";
 				hairLength = 10;
 				createCock(12);
 				shiftCock(0, GLOBAL.TYPE_VULPINE);
-				//balls = 2;
-				//ballSizeRaw = 2;
+				sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.REALLY_LIKES_SEXPREF);
 			} else if (hairColor == "black") {
 				long += "lustrous, ass-length black";
 				hairLength = tallness / 1.5;
+				sexualPreferences.setPref(GLOBAL.SEXPREF_LACTATION,		GLOBAL.REALLY_LIKES_SEXPREF);
+				sexualPreferences.setPref(GLOBAL.SEXPREF_BALLS,			GLOBAL.REALLY_LIKES_SEXPREF);
 			} else {
 				long += "long flaxen";
 				hairLength = tallness / 2.2;
+				sexualPreferences.setPref(GLOBAL.SEXPREF_HYPER,			GLOBAL.REALLY_LIKES_SEXPREF);
 			}
 			long += " hair.  She appears mostly human, except for a pair of large, furry ears poking through her hair and six luxurious silky tails swaying in the air behind her.  Her robes are revealing but comfortable-looking, hugging her voluptuous curves and exposing large swaths of tattooed skin.  A layer of ornate tattoos covers patches of her exposed flesh, accentuating her feminine curves nicely, and each movement brings a pleasant jiggle from her plump backside and large breasts.";
-			
-			sexualPreferences.setRandomPrefs(2 + rand(3));
 			
 			inventory = [new CoCFoxJewel()];
 			credits = (rand(10) + 10) * 10;

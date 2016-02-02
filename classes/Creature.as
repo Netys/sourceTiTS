@@ -8454,7 +8454,7 @@ package classes {
 				dragonCounter++;
 			if (legType == GLOBAL.TYPE_DRACONIC)
 				dragonCounter++;
-			if (hasHorns(GLOBAL.TYPE_DRACONIC))
+			if (hasHorns(GLOBAL.TYPE_DRACONIC) || hasHorns(GLOBAL.TYPE_LIZAN))
 				dragonCounter++;
 			if (skinType == GLOBAL.SKIN_TYPE_SCALES && dragonCounter > 0)
 				dragonCounter++;

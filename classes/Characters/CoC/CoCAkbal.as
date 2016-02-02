@@ -169,13 +169,21 @@ package classes.Characters.CoC
 			this.milkType = GLOBAL.FLUID_TYPE_MILK;
 			//The rate at which you produce milk. Scales from 0 to INFINITY.
 			this.milkRate = 0;
-			this.ass.wetnessRaw = 1;
+			this.ass.wetnessRaw = 2;
 			this.ass.loosenessRaw = 1;
 			//this.inventory.push();
 
 			this.createStatusEffect("Disarm Immune");
 			
-			sexualPreferences.setRandomPrefs(5+rand(3));
+			sexualPreferences.setPref(GLOBAL.SEXPREF_FEMININE,		GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_BALLS,			GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_BIG_BUTTS,		GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_TAILS,			GLOBAL.REALLY_LIKES_SEXPREF);
+			//sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		0);
+			//sexualPreferences.setPref(GLOBAL.SEXPREF_HERMAPHRODITE,	0);
+			//sexualPreferences.setPref(GLOBAL.SEXPREF_EXOTIC_BODYSHAPE,0);
 			
 			inventory.push(kGAMECLASS.WeightedRandom(
 						[new CoCIncubiD(), new CoCWhiskerFruit(), new CoCPipe(), new CoCAkbalSaliva()] ,

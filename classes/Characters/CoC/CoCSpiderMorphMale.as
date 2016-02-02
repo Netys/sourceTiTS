@@ -150,6 +150,8 @@ package classes.Characters.CoC
 			//this.createStatusEffect("Disarm Immune");
 			
 			sexualPreferences.setRandomPrefs(2 + rand(3));
+			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		GLOBAL.KINDA_DISLIKES_SEXPREF);
 			
 			var drop:* = kGAMECLASS.WeightedRandom(
 						[new CoCSweetGossamer(), new CoCToughSpiderSilk(), null] ,

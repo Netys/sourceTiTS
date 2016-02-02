@@ -192,6 +192,9 @@ package classes.Characters.CoC
 					(hasMeleeWeapon() ? "  <b>This minotaur seems to have found a deadly looking [enemy.meleeWeapon] somewhere!</b>" : "");
 			
 			sexualPreferences.setRandomPrefs(2 + rand(3));
+			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_BIG_BREASTS,	GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		GLOBAL.KINDA_DISLIKES_SEXPREF);
 			
 			if (rand(5) == 0) inventory.push(new CoCMinotaurCum());
 			else inventory.push(new CoCMinotaurBlood());

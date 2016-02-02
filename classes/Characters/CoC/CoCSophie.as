@@ -169,7 +169,8 @@ package classes.Characters.CoC
 			
 			this.createStatusEffect("Disarm Immune");
 			
-			sexualPreferences.setRandomPrefs(2 + rand(3));
+			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		GLOBAL.REALLY_DISLIKES_SEXPREF);
 			
 			//if (rand(10) == 0) inventory.push(new CoCWizardRobes()); // same as base
 			//else inventory.push(new CoCGoldenSeed());

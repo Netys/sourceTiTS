@@ -168,6 +168,12 @@ package classes.Characters.CoC
 			
 			isUniqueInFight = true;
 			sexualPreferences.setRandomPrefs(5 + rand(3));
+			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		GLOBAL.KINDA_DISLIKES_SEXPREF);
+			
+			
+			
 			inventory.push(kGAMECLASS.WeightedRandom(
 						[new CoCSucMilk(),	new CoCIncubiD(), new CoCImpFood()] ,
 						[3, 4, 4]));

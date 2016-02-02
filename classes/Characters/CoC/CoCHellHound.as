@@ -166,6 +166,9 @@ package classes.Characters.CoC
 			credits = (10 + rand(10)) * 10;
 			
 			sexualPreferences.setRandomPrefs(5+rand(3));
+			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_HERMAPHRODITE,	0);
 						
 			inventory.push(kGAMECLASS.WeightedRandom(
 						[new CoCCaninePepper(), new CoCCaninePepperBlack(), new CoCCaninePepperBulby(), new CoCCaninePepperDouble(), new CoCCaninePepperKnotty(), new CoCCaninePepperLarge()] ,

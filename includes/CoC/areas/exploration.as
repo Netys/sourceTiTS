@@ -38,7 +38,7 @@ public function doExplore():void
 		addButton(7, "Deepwoods", exploreDeepwoods, null, "Explore deepwoods", "Visit the dark, bioluminescent deepwoods. \n\nRecommended level: 5\n\nTimes explored: " + flags["COC.EXPLORED_DEEPWOODS"]);
 		
 	if (flags["COC.EXPLORED_HIGH_MOUNTAIN"] != undefined) 
-		addButton(8, "High Mountain", exploreHighMountain, null, "Explore high mountains", "Visit the high mountains. \n\nRecommended level: 10\n\nTimes explored: " + flags["COC.EXPLORED_HIGH_MOUNTAIN"]);
+		addButton(8, "HighMountain", exploreHighMountain, null, "Explore high mountains", "Visit the high mountains. \n\nRecommended level: 10\n\nTimes explored: " + flags["COC.EXPLORED_HIGH_MOUNTAIN"]);
 	
 	
 	// bog is such meh...

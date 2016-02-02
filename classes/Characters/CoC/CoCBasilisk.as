@@ -168,6 +168,11 @@ package classes.Characters.CoC
 			this.createStatusEffect("Genital Slit", 0, 0, 0, 0);
 			
 			sexualPreferences.setRandomPrefs(2 + rand(3));
+			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.KINDA_DISLIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_BALLS,			GLOBAL.KINDA_DISLIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		GLOBAL.REALLY_DISLIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_HERMAPHRODITE,	0);
 					
 			if (rand(10) != 0) inventory.push(new CoCReptilum());
 			

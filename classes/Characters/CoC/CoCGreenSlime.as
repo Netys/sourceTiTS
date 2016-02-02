@@ -173,6 +173,9 @@ package classes.Characters.CoC
 			tallness = rand(8) + 80;
 			
 			sexualPreferences.setRandomPrefs(3 + rand(3));
+			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_HERMAPHRODITE,	GLOBAL.KINDA_LIKES_SEXPREF);
 			
 			inventory.push(kGAMECLASS.WeightedRandom( // TODO: WETCLTH 1/2
 				[new CoCGreenGel(), new CoCPipe()],

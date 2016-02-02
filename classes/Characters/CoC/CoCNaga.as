@@ -175,8 +175,11 @@ package classes.Characters.CoC
 			//this.createPerk("Multiple Attacks",1,0,0,0,"");
 			this.createStatusEffect("Disarm Immune");
 			
-			sexualPreferences.setRandomPrefs(2 + rand(3));
-			credits = (rand(5) + 8) * 10;
+			sexualPreferences.setPref(GLOBAL.SEXPREF_EXOTIC_BODYSHAPE,GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_HERMAPHRODITE,	0);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		GLOBAL.REALLY_DISLIKES_SEXPREF);
 			
 			if (rand(2) == 0) inventory.push(new CoCSnakeOil());
 			else inventory.push(new CoCReptilum());

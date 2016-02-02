@@ -159,6 +159,9 @@ package classes.Characters.CoC
 			this.createStatusEffect("Disarm Immune");
 			
 			sexualPreferences.setRandomPrefs(2 + rand(3));
+			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_HERMAPHRODITE,	GLOBAL.KINDA_LIKES_SEXPREF);
 			
 			inventory.push(kGAMECLASS.WeightedRandom(
 						[new CoCLaBova(), new CoCRidingCrop(), new CoCOvipositionElixir(), new CoCLustDraft()] ,

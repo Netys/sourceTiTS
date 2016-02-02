@@ -187,7 +187,7 @@ package classes.Characters.CoC
 				breastRows[0].breastRatingRaw = 3;
 			}
 			
-			sexualPreferences.setRandomPrefs(3 + rand(3));
+			sexualPreferences.clearPrefs(); // no preferences here
 			
 			if(rand(2) == 0) // TODO: WETCLTH 1/2
 				inventory.push(kGAMECLASS.WeightedRandom(

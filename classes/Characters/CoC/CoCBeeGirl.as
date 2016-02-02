@@ -182,6 +182,12 @@ package classes.Characters.CoC
 			lust(20 + rand(40), true);
 			
 			sexualPreferences.setRandomPrefs(2 + rand(3));
+			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_BIG_MALEBITS,	GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_HYPER,			GLOBAL.REALLY_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.KINDA_LIKES_SEXPREF);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_HERMAPHRODITE,	0);
+			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		0);
 			
 			if (rand(10) == 0) inventory.push(new CoCOvipositionElixir());
 			else if (rand(10) == 0)inventory.push(new CoCBookWhite());
