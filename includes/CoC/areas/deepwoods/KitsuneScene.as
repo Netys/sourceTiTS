@@ -50,7 +50,7 @@ public function enterTheTricksterKitsune():void
 		return;
 	}
 	clearOutput();
-	userInterface.showName("???");
+	userInterface.showName("\n???");
 	output("\"<i>H-help!</i>\"\n\n");
 	output("You turn with a start as a woman bursts through the bushes, flinging herself into your arms.  It looks like she's been roughed up a bit - her simple peasant's robes are torn and frayed, and her forehead has a few smudges where it appears as though she was dragged through the dirt.\n\n");
 	output("\"<i>Th-thank goodness!  Please, you must help me!</i>\"  she cries, darting around to take shelter behind you.  \"<i>I was out picking wild berries, and, and...  the wretched, terrible little things attacked me!</i>\"\n\n");

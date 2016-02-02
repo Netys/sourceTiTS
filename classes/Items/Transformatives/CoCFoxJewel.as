@@ -185,7 +185,7 @@ package classes.Items.Transformatives
 			//BIG APPEARANCE CHANGES
 			//**********************
 			//[Grow Fox Tail]
-			if (!pc.hasTail(GLOBAL.TYPE_VULPINE) && changes < changeLimit && ((mystic && rand(2) == 0) || (!mystic && rand(4) == 0))) {
+			if (!pc.hasTail(GLOBAL.TYPE_VULPINE) && changes < changeLimit && ((mystic && rand(2) == 0) || (!mystic && rand(3) == 0))) {
 				var vine:Boolean = pc.hasParasiteTail();
 				if (pc.tailType == GLOBAL.TYPE_COCKVINE)
 				{

@@ -478,6 +478,11 @@ public function statisticsScreen(showID:String = "All"):void
 					else if(pc.pregnancyData[x].pregnancyType == "RenvraFullPregnancy") output2(" Renvra");
 					else if(pc.pregnancyData[x].pregnancyType == "CockvinePregnancy") output2(" Cockvine");
 					else if(pc.pregnancyData[x].pregnancyType == "DeepQueenPregnancy") output2(" Water Queen");
+					else if (pc.pregnancyData[x].pregnancyType == "CoCOviElixEggs") {
+						if (pc.statusEffectv2("MagicColorfulEggs") == 1) output2(" Large");
+						output2(" Eggs, Unfertilized");
+					}
+					else if (pc.pregnancyData[x].pregnancyType == "CoCAnemonePregnancy") output2(" Anemone");
 					else output2(" <i>Unknown</i>");
 					if(pc.pregnancyData[x].pregnancyIncubation > -1)
 					{

@@ -15,7 +15,7 @@ package classes.GameData.Pregnancy.Handlers
 		{
 			_handlesType = "CoCAnemonePregnancy";
 			_basePregnancyIncubationTime = 10.25 * 24 * 60;
-			_basePregnancyChance = 0.1;
+			_basePregnancyChance = 0.15;
 			_alwaysImpregnate = false;
 			_ignoreInfertility = false;
 			_ignoreMotherInfertility = false;
@@ -29,40 +29,40 @@ package classes.GameData.Pregnancy.Handlers
 			_definedAverageLoadSize = 100;
 			
 			this.addStageProgression(240 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 3, true);
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 5, true);
 				kGAMECLASS.eventBuffer += "\n\nYou feel something shifting and moving inside you.  You start to think you might be pregnant.";
 			}, true);
 			
 			this.addStageProgression(210 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 3, true);
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 5, true);
 				kGAMECLASS.eventBuffer += "\n\nThe fluttering of sensation inside you is getting stronger and more frequent.  At times it even feels as if the inner lining of your womb is tingling.";
 				kGAMECLASS.pc.lust(5 + kGAMECLASS.pc.libido() / 20);
 			}, true);
 			
 			this.addStageProgression(185 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 3, true);
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 5, true);
 			}, true);
 			
 			this.addStageProgression(154 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 3, true);
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 5, true);
+				kGAMECLASS.eventBuffer += "\n\nYou note that your swollen belly is shifting awkwardly.";
 			}, true);
 			
 			this.addStageProgression(120 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 3, true);
-				kGAMECLASS.pc.lust(10 + kGAMECLASS.pc.libido() / 20);
-				kGAMECLASS.eventBuffer += "\n\nYour larger, squirming belly makes your pregnancy obvious for those around you and keeps you aroused from the constant tingling in your womb.";
-			}, true);
-			
-			this.addStageProgression(72 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 3, true);
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 5, true);
 				kGAMECLASS.pc.lust(10 + kGAMECLASS.pc.libido() / 20);
 				kGAMECLASS.eventBuffer += "\n\nYour belly is noticeably distended, and constantly shifts and wriggles.  What manner of beast are you bringing into the world?";
 			}, true);
 			
-			this.addStageProgression(48 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 3, true);
+			this.addStageProgression(72 * 60, function(pregSlot:int):void {
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 5, true);
 				kGAMECLASS.pc.lust(10 + kGAMECLASS.pc.libido() / 20);
-				kGAMECLASS.eventBuffer += "\n\nYou note that your swollen belly is shifting awkwardly.";
+				kGAMECLASS.eventBuffer += "\n\nYour larger, squirming belly makes your pregnancy obvious for those around you and keeps you aroused from the constant tingling in your womb.";
+			}, true);
+			
+			this.addStageProgression(48 * 60, function(pregSlot:int):void {
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 5, true);
+				kGAMECLASS.pc.lust(10 + kGAMECLASS.pc.libido() / 20);
 			}, true);
 			
 			_onSuccessfulImpregnation = CoCAnemonePregnancyOnSuccessfulImpregnantion;
@@ -76,8 +76,8 @@ package classes.GameData.Pregnancy.Handlers
 			BasePregnancyHandler.defaultOnSuccessfulImpregnation(father, mother, pregSlot, thisPtr);
 			
 			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
-			pData.pregnancyBellyRatingContribution += 2 * pData.pregnancyQuantity;
-			mother.bellyRatingMod += 2 * pData.pregnancyQuantity;
+			pData.pregnancyBellyRatingContribution += 5 * pData.pregnancyQuantity;
+			mother.bellyRatingMod += 5 * pData.pregnancyQuantity;
 		}
 		
 		public static function CoCAnemonePregnancyOnDurationEnd(mother:Creature, pregSlot:int, thisPtr:BasePregnancyHandler):void
@@ -103,6 +103,17 @@ package classes.GameData.Pregnancy.Handlers
 			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
 						
 			pData.reset();
+		}
+		
+		override public function pregBellyFragment(target:Creature, slot:int):String
+		{
+			var pData:PregnancyData = target.pregnancyData[slot];
+			var retString:String = "";
+			
+			if(pData.pregnancyIncubation < 72 * 60) retString += "Your squirming belly makes your pregnancy obvious for those around you.";
+			else if(pData.pregnancyIncubation < 120 * 60) retString += "Your belly is noticeably distended, and constantly shifts and wriggles.";
+			
+			return retString;
 		}
 	}
 

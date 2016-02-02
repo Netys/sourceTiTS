@@ -15,8 +15,6 @@ package classes.Characters.CoC
 			this.version = _latestVersion;
 			this._neverSerialize = true;
 			
-			// Originally a clone of the zilpack
-			// Needs a few things checked.
 			this.short = "Tamani";
 			this.originalRace = "goblin";
 			this.a = "the ";
@@ -27,22 +25,23 @@ package classes.Characters.CoC
 			this.hairLength = 16;
 			this.tallness = 40;
 			
-			this.physiqueRaw = 2;
-			this.reflexesRaw = 4;
-			this.aimRaw = 3;
-			this.intelligenceRaw = 5;
-			this.willpowerRaw = 4;
-			this.libidoRaw = 45;
-			this.shieldsRaw = 0;
-			this.energyRaw = 100;
-			this.lustRaw = 40;
-			
 			this.XPRaw = 200;
 			this.level = 4;
-			this.credits = rand(250) + 50;
+			this.credits = (rand(25) + 5) * 10;
 			this.HPMod = 40;
 			this.shieldsRaw = this.shieldsMax();
 			this.HPRaw = this.HPMax();
+			
+			this.physiqueRaw = 32 / 20 * this.level;
+			this.reflexesRaw = 55 / 20 * this.level;
+			this.aimRaw = 55 / 20 * this.level;
+			this.intelligenceRaw = 62 / 20 * this.level;
+			this.willpowerRaw = 62 / 20 * this.level;
+			this.libidoRaw = 65;
+			this.personality = 50;
+			this.shieldsRaw = 0;
+			this.energyRaw = 100;
+			this.lustRaw = 20;
 			
 			this.vaginas[0].bonusCapacity = 55;
 			this.ass.bonusCapacity = 40;

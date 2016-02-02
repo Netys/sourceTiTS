@@ -81,7 +81,7 @@ package classes.Items.Transformatives
 			//Generic drinking text
 			output("You uncork the bottle and drink down the strange substance, struggling to down the thick liquid.");
 			//low corruption thoughts
-			if (target.cor() < 33) output("  This stuff is gross, why are you drinking it?");
+			if (target.cor() < 33 && tainted) output("  This stuff is gross, why are you drinking it?");
 			//high corruption
 			if (target.cor() >= 66) output("  You lick your lips, marvelling at how thick and sticky it is.");
 			//Corruption increase
@@ -110,8 +110,8 @@ package classes.Items.Transformatives
 			}
 			//Boost cum multiplier
 			if (changes < changeLimit && rand(2) == 0 && target.hasCock()) {
-				if (target.cumMultiplierRaw < 10) target.cumMultiplierRaw += .1 * crit;
-				target.cumMultiplierRaw += .1 * crit;
+				if (target.cumMultiplierRaw < 10) target.cumMultiplierRaw += .25 * crit;
+				target.cumMultiplierRaw += .25 * crit;
 				//Flavor text
 				if (target.balls == 0) output("\n\nYou feel a churning inside your body as something inside you changes.");
 				if (target.balls > 0) output("\n\nYou feel a churning in your [pc.balls].  It quickly settles, leaving them feeling somewhat more dense.");

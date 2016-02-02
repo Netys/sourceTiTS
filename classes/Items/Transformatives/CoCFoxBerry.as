@@ -49,11 +49,10 @@ package classes.Items.Transformatives
 				return false;
 			}
 			
-			FoxBerry(false, target);
-			return false;
+			return FoxBerry(false, target);;
 		}
 		
-		public static function FoxBerry(enhanced:Boolean,pc:Creature):void
+		public static function FoxBerry(enhanced:Boolean,pc:Creature):Boolean
 		{
 			clearOutput();
 			if (!enhanced) output("You examine the berry a bit, rolling the orangish-red fruit in your hand for a moment before you decide to take the plunge and chow down.  It's tart and sweet at the same time, and the flavors seem to burst across your tongue with potent strength.  Juice runs from the corners of your lips as you finish the tasty snack.");
@@ -70,7 +69,7 @@ package classes.Items.Transformatives
 			//Used for dick and boob TFs
 			var counter:int = 0;
 			
-			if (pc.faceType == GLOBAL.TYPE_VULPINE && pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount < 9 && pc.earType == GLOBAL.TYPE_VULPINE && pc.legType == GLOBAL.TYPE_VULPINE && pc.armType == GLOBAL.TYPE_VULPINE && pc.hasFur() && rand(3) == 0 && !pc.hasPerk("Transformation Resistance")) {
+			if (pc.faceType == GLOBAL.TYPE_VULPINE && pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount < 9 && pc.earType == GLOBAL.TYPE_VULPINE && pc.legType == GLOBAL.TYPE_VULPINE && pc.armType == GLOBAL.TYPE_VULPINE && pc.vaginaTotal() == pc.vaginaTotal(GLOBAL.TYPE_VULPINE) && pc.cockTotal() == pc.cockTotal(GLOBAL.TYPE_VULPINE) && pc.hasFur() && rand(3) == 0 && !pc.hasPerk("Transformation Resistance")) {
 				if (kGAMECLASS.flags["COC.FOX_BAD_END_WARNING"] == undefined) {
 					kGAMECLASS.output("\n\nYou get a massive headache and a craving to raid a henhouse.  Thankfully, both pass in seconds, but <b>maybe you should cut back on the vulpine items...</b>");
 					kGAMECLASS.flags["COC.FOX_BAD_END_WARNING"] = 1;
@@ -85,7 +84,7 @@ package classes.Items.Transformatives
 					output("\n\nA sharp spark of pain jolts through your spinal column as the bones shift themselves around, the joints in your hips migrating forward.  You continue to howl in agony even as you feel your intelligence slipping away.  In a way, it's a blessing - as your thoughts grow muddied, the pain is dulled, until you are finally left staring blankly at the sky above, tilting your head curiously.");
 					output("\n\nYou roll over and crawl free of the [pc.gear] covering you, pawing the ground for a few moments before a pang of hunger rumbles through your stomach.  Sniffing the wind, you bound off into the wilderness, following the telltale scent of a farm toward the certain bounty of a chicken coop.");
 					kGAMECLASS.badEnd();
-					return;
+					return true;
 				}
 			}
 			
@@ -323,7 +322,7 @@ package classes.Items.Transformatives
 				else
 				{
 				//4 legs good, 2 legs better
-					if (pc.isTaur()) output("\n\nYou shiver as the strength drains from your back legs.  Shaken, you sit on your haunches, forelegs braced wide to stop you from tipping over;  their hooves scrape the dirt as your lower body shrinks, dragging them backward until you can feel the upper surfaces of your hindlegs with their undersides.  A wave of nausea and vertigo overtakes you, and you close your eyes to shut out the sensations.  When they reopen, what greets them are not four legs, but only two...");
+					if (pc.isTaur()) output("\n\nYou shiver as the strength drains from your back legs.  Shaken, you sit on your haunches, forelegs braced wide to stop you from tipping over;  their [pc.feet] scrape the dirt as your lower body shrinks, dragging them backward until you can feel the upper surfaces of your hindlegs with their undersides.  A wave of nausea and vertigo overtakes you, and you close your eyes to shut out the sensations.  When they reopen, what greets them are not " + num2Text(pc.legCount) + " legs, but only two...");
 					//other digitigrade
 					if (pc.hasLegFlag(GLOBAL.FLAG_DIGITIGRADE))
 						output("\n\nYour legs twitch and quiver, forcing you to your seat.  As you watch, the ends shape themselves into furry, padded toes.  <b>You now have fox feet!</b>  Rather cute ones, actually.");
@@ -398,6 +397,8 @@ package classes.Items.Transformatives
 			}
 			//pc.refillHunger(15);
 			IncrementFlag("COC.TIMES_TRANSFORMED");
+			
+			return false;
 		}
 	}	
 }

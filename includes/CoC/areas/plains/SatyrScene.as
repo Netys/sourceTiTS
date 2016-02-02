@@ -272,9 +272,9 @@ internal function defeatASatyr():void {
 	clearOutput();
 	//spriteSelect(98);
 	//Lust Victory
-	if(enemy.lustQ() > 99) output("The satyr collapses to its caprine knees, bleating in dismay as it paws frantically at its huge cock, oblivious to everything in its need to get off.  Already, pre-cum is fountaining from the goat-man's shaft, his jerking motions smearing the pungent sexual fluid across the crown.");
+	if(enemy.lustQ() > 99) output("The satyr collapses to its caprine knees, bleating in dismay as it paws frantically at its huge cock, oblivious to everything in its need to get off.  Already, pre-cum is fountaining from the goat-man's shaft, his jerking motions smearing the pungent sexual fluid across the crown.\n\n");
 	//HP Victory
-	else output("Beaten and dazed, the satyr collapses to its caprine knees, shaking his head in a futile attempt to recover himself from the brutal trouncing you've just given him.  The combination of the blows and his previous drunken state mean he's quite incapable of getting back, however.");
+	else output("Beaten and dazed, the satyr collapses to its caprine knees, shaking his head in a futile attempt to recover himself from the brutal trouncing you've just given him.  The combination of the blows and his previous drunken state mean he's quite incapable of getting back, however.\n\n");
 	
 	clearMenu();
 	addButton(14, "Leave", function():*{ processTime(20 + rand(10)); CombatManager.genericVictory(); } );
@@ -282,7 +282,7 @@ internal function defeatASatyr():void {
 	addDisabledButton(1, "Ride Face", "Ride Face", "This scene requires you to have vagina.");
 	
 	if(pc.lust() >= 33 && pc.hasGenitals()) {
-		output("\n\nYou wonder if you should give the satyr some sort of payback for attempting to rape you... do you take advantage of the helpless goat-man?");
+		output("You wonder if you should give the satyr some sort of payback for attempting to rape you... do you take advantage of the helpless goat-man?\n\n");
 		//[Male][Female][Leave]
 		if (pc.hasCock() && pc.cockThatFits(enemy.analCapacity()) >= 0) addButton(0, "FuckHisButt", malesTakeAdvantageOfSatyrs);
 		if (pc.hasVagina()) addButton(1, "Ride Face", femaleTakesAdvantageOfSatyr);

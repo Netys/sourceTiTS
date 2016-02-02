@@ -131,7 +131,7 @@ package classes.Items.Transformatives
 			}
 			//Boost cum multiplier
 			if (changes < changeLimit && target.hasCock()) {
-				target.cumMultiplierRaw += .4 * crit;
+				target.cumMultiplierRaw += .5 * crit;
 				//Flavor text
 				if (target.balls == 0) output("\n\nYou feel a churning inside your body as something inside you changes.");
 				if (target.balls > 0) output("\n\nYou feel a churning in your [pc.balls].  It quickly settles, leaving them feeling somewhat more dense.");
@@ -141,7 +141,7 @@ package classes.Items.Transformatives
 			}
 			//Boost refactory
 			if (changes < changeLimit && target.refractoryRate < 100 && target.hasCock()) {
-				target.refractoryRate += .4 * crit;
+				target.refractoryRate += .2 * crit;
 				//Flavor text
 				if (target.balls == 0) output("\n\nThere's a heat rising in your gut, something warm and not altogether unpleasant. After a moment the heat passes and you feel... more productive, somehow.");
 				if (target.balls > 0) output("\n\nThere's a heat rising in your [pc.sack], something warm and not altogether unpleasant. After a moment the heat passes and you feel... more productive, somehow.");

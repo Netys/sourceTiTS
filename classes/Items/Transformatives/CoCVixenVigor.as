@@ -43,8 +43,7 @@ package classes.Items.Transformatives
         //METHOD ACTING!
         override public function useFunction(pc:Creature, usingCreature:Creature = null):Boolean
         {
-			CoCFoxBerry.FoxBerry(true, pc);
-			return false;
+			return CoCFoxBerry.FoxBerry(true, pc);
 		}
 	}	
 }

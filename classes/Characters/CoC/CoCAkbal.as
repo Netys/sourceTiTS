@@ -133,13 +133,16 @@ package classes.Characters.CoC
 			this.cocks = [];
 			this.createCock(15);
 			this.shiftCock(GLOBAL.TYPE_FELINE);
+			this.cocks[0].delFlag(GLOBAL.FLAG_TAPERED);
+			this.cocks[0].addFlag(GLOBAL.FLAG_FLARED);
+			this.cocks[0].addFlag(GLOBAL.FLAG_RIBBED);
 			//balls
 			this.balls = 2;
-			this.cumMultiplierRaw = 6;
+			this.cumMultiplierRaw = 15;
 			//Multiplicative value used for impregnation odds. 0 is infertile. Higher is better.
 			this.cumQualityRaw = 1;
 			this.cumType = GLOBAL.FLUID_TYPE_CUM;
-			this.ballSizeRaw = 4;
+			this.ballSizeRaw = 12;
 			this.ballFullness = 1;
 			//How many "normal" orgams worth of jizz your balls can hold.
 			this.ballEfficiency = 10;

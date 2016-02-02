@@ -233,7 +233,7 @@ package classes.Engine.Utility
 				target.faceType = newType;
 				target.faceFlags = newFlags;
 				
-				buffer += " <b>You now have " + target.face(true) + " appropriate for " + GLOBAL.TYPE_NAMES[newType].toLowerCase() + "!</b>";
+				buffer += " <b>You now have " + target.face(true) + " appropriate for " + GLOBAL.TYPE_NAMES[newType].toLowerCase() + " body!</b>";
 				
 				changes++;
 				if (display) output(buffer);
@@ -530,7 +530,7 @@ package classes.Engine.Utility
 				target.armType = newType;
 				target.armFlags = newFlags;
 				
-				buffer += " <b>You now have " + target.armsDescript(true) + " appropriate for " + GLOBAL.TYPE_NAMES[target.armType].toLowerCase() + "!</b>";
+				buffer += " <b>You now have " + target.armsDescript(true) + " appropriate for " + GLOBAL.TYPE_NAMES[target.armType].toLowerCase() + " body!</b>";
 				
 				changes++;
 				if (display) output(buffer);
@@ -697,7 +697,7 @@ package classes.Engine.Utility
 						buffer += " But itching is not only going stronger...";
 						
 				} else { // already has tail(s)
-					buffer += "\n\nYour " + target.tailsDescript(true, true) + " " + (target.legCount > 1 ? "are" : "is") + " flailing wildly as " + (target.legCount > 1 ? "they are" : "it is") + " losing " + (target.legCount > 1 ? "their" : "it's") + " " + GLOBAL.TYPE_NAMES[target.tailType].toLowerCase() + " form.";
+					buffer += "\n\nYour " + target.tailsDescript(true, true) + " " + (target.tailCount > 1 ? "are" : "is") + " flailing wildly as " + (target.tailCount > 1 ? "they are" : "it is") + " losing " + (target.tailCount > 1 ? "their" : "it's") + " " + GLOBAL.TYPE_NAMES[target.tailType].toLowerCase() + " form.";
 					
 					if (target.tailCount > newCount) {
 						target.tailCount = newCount;
@@ -766,12 +766,12 @@ package classes.Engine.Utility
 					target.tailFlags = newFlags;
 					
 					if (InCollection(target.tailFlags, GLOBAL.FLAG_TAILCOCK)) { // init tailcock junk
-						target.tailGenitalColor = "pink";
-						target.tailGenitalArg = GLOBAL.TYPE_FELINE; // PLACEHOLDER. TODO: either determine from race or pass as argument. That is if something is wrong with feline cocks. They are fine by me.
+						target.tailGenitalColor = RandomInCollection("pink", "red");
+						target.tailGenitalArg = guessCockType(target);
 						target.tailGenital = GLOBAL.TAIL_GENITAL_COCK;
 					}
-					buffer += " <b>You now have " + num2Text(target.tailCount) + " " + target.tailsDescript(true, true) + " appropriate for " + (newType == GLOBAL.TYPE_VULPINE && target.tailCount > 1 ? "kitsune" : GLOBAL.TYPE_NAMES[newType].toLowerCase()) + "!</b>";
-					if(newCount > 1)
+					buffer += " <b>You now have " + num2Text(target.tailCount) + " " + target.tailsDescript(true, true) + " appropriate for " + (newType == GLOBAL.TYPE_VULPINE && target.tailCount > 1 ? "kitsune's" : GLOBAL.TYPE_NAMES[newType].toLowerCase()) + " body!</b>";
+					if(newCount > target.tailCount)
 						buffer += " But itching is only going stronger...";
 				}
 				
@@ -1059,7 +1059,7 @@ package classes.Engine.Utility
 				//if (InCollection(GLOBAL.FLAG_STICKY, toKeep)) buffer += " Your [pc.legs] still " + isare + " sticky.";
 				//else if (InCollection(GLOBAL.FLAG_STICKY, newFlags)) buffer += " Your [pc.legs] " + isare + " sticky now.";
 				
-				buffer += " <b>You now have " + num2Text(target.legCount) + " " + target.legs(true, true) + " appropriate for " + GLOBAL.TYPE_NAMES[newType].toLowerCase() + "!</b>";
+				buffer += " <b>You now have " + num2Text(target.legCount) + " " + target.legs(true, true) + " appropriate for " + GLOBAL.TYPE_NAMES[newType].toLowerCase() + " body!</b>";
 				changes++;
 				
 				if (display) output(buffer);
@@ -1725,8 +1725,8 @@ package classes.Engine.Utility
 					//}
 					if(pc.breastRows[0].breastRatingRaw < 0) pc.breastRows[0].breastRatingRaw = 0;
 					//Talk about shrinkage
-					if (temp == 1) buffer += "\n\nYou feel a weight lifted from you, and realize your breasts have shrunk!  With a quick measure, you determine they're now " + pc.breastCup(0) + "s.";
-					if (temp == 2) buffer += "\n\nYou feel significantly lighter.  Looking down, you realize your breasts are much smaller!  With a quick measure, you determine they're now " + pc.breastCup(0) + "s.";
+					if (temp == 1) buffer += "\n\nYou feel a weight lifted from you, and realize your breasts have shrunk!  With a quick measure, you determine they're now " + (pc.breastRows[0].breastRating() >= 1 ? pc.breastCup(0) : "flat") + "s.";
+					if (temp == 2) buffer += "\n\nYou feel significantly lighter.  Looking down, you realize your breasts are much smaller!  With a quick measure, you determine they're now " + (pc.breastRows[0].breastRating() >= 1 ? pc.breastCup(0) : "flat") + "s.";
 					changed = true;
 				}
 			}
@@ -1740,13 +1740,14 @@ package classes.Engine.Utility
 				while(temp3 > 0) {
 					temp3--;
 					if(pc.breastRows[temp3].breastRatingRaw > 0) {
-						pc.breastRows[temp3].breastRatingRaw--;
-						if(pc.breastRows[temp3].breastRatingRaw < 0) pc.breastRows[temp3].breastRatingRaw = 0;
 						temp2++;
 						buffer += "\n";
 						if(temp3 < pc.breastRows.length - 1) buffer += "...and y";
 						else buffer += "Y";
-						buffer += "our " + pc.breastDescript(temp3) + " shrink, dropping to " + pc.breastCup(temp3) + "s.";
+						buffer += "our " + pc.breastDescript(temp3) + " shrink,";
+						pc.breastRows[temp3].breastRatingRaw--;
+						if(pc.breastRows[temp3].breastRatingRaw < 0) pc.breastRows[temp3].breastRatingRaw = 0;
+						buffer += " dropping to " + (pc.breastRows[temp3].breastRating() >= 1 ? pc.breastCup(temp3) : "flat") + "s.";
 					}
 					if(pc.breastRows[temp3].breastRatingRaw < 0) pc.breastRows[temp3].breastRatingRaw = 0;
 				}

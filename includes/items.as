@@ -1106,7 +1106,7 @@ public function shipStorageMenuRoot():void
 		addButton(5,"D.Designer",useInstalledDickBox,undefined,"Dong Designer","Use the TamaniCorp Hora Series Dong Designer you found on Tarkus.");
 	}
 	
-	if (kGAMECLASS.flags["COC.VR_POD_INSTALLED"] == 1 || 9999 == 9999)
+	if ((kGAMECLASS.flags["COC.VR_POD_INSTALLED"] == 1 || 9999 == 9999) && !kGAMECLASS.inMareth())
 	{
 		output("\n\nSmall closet containing only virtual reality pod is beyound next door.");
 		addButton(6, "VR Pod", enterCocVrPod, undefined, "VR Pod", "Use the VR Pod.");

@@ -52,7 +52,7 @@ public function jojoFollowerMeditate(clear:Boolean = true):void {
 		if (pc.RQ() < 75) pc.slowStatGain("reflexes", 0.5);
 		if (pc.IQ() < 80) pc.slowStatGain("intelligence", 0.5);
 		if (pc.WQ() < 80) pc.slowStatGain("willpower", 0.5);
-		if(pc.libido() > 15) pc.libido( -1);
+		if (pc.libido() > 5) pc.slowStatGain("libido", -1);
 	
 		flags["COC.JOJO_LAST_MEDITATION"] = days;
 		IncrementFlag("COC.JOJO_MEDITATION_COUNT");
@@ -218,9 +218,9 @@ public function meditateInForest():void {
 	
 	//dynStats("str", .5, "tou", .5, "int", .5, "lib", -1, "lus", -5, "cor", (-1 - pc.countCockSocks("alabaster")));
 	processTime(100 + rand(40));
-	pc.libido( -1);
+	if(pc.libido() > 5) pc.slowStatGain("libido", -1);
 	pc.lust( -30);
-	pc.cor( -1);	
+	pc.cor( -1);
 	
 	if (IncrementFlag("COC.JOJO_MEDITATION_COUNT") % 5 == 0)
 	{

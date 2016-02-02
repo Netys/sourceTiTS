@@ -104,7 +104,7 @@ package classes.Items.Miscellaneous
 							pc.bellyRatingMod += pc.pregnancyData[i].pregnancyBellyRatingContribution;
 						}
 					} else if(pc.pregnancyData[i].pregnancyIncubationMulti < 10) {
-						output("\n\nYou gasp as your pregnancy suddenly leaps forwards, your belly bulging outward a few inches as it gets closer to time for birthing.");
+						output("\n\nYou gasp as your pregnancy suddenly leaps forwards.");
 						pc.pregnancyData[i].pregnancyIncubationMulti *= 1.4;
 					}
 				}

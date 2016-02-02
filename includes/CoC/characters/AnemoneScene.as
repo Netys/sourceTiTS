@@ -400,8 +400,8 @@ private function rapeAnemoneWithPussy():void
 	pc.loadInCunt(enemy);
 	//(reduce lust to min, pregnancy check)
 	//(pass 1 hour, reset lust to min or min+10 if big or greater skeet)
+	processTime(25 + rand(10));
 	pc.orgasm();
-	processTime(60);
 	CombatManager.genericVictory();
 }
 
@@ -419,7 +419,8 @@ public function loseToAnemone():void
 	if (pc.HP() <= 1) {
 		output("You collapse face-first into the lake, weakened by your damage.  The last thing you hear before passing out is a faint <i>\"What?\"</i>\n\n", false);
 
-		output("Several minutes later you awake to feel yourself washed onto the sand and hurting all over.  <i>\"You... dead?\"</i> The anemone is still with you; she must have found a stick from somewhere and is sitting next to you, judiciously poking you with it.  As you force your eyes open in answer she drops the stick with a startled yelp and hugs her knees to her chest.  Too beat-up to say anything, you can only stare at her, which unnerves her further. <i>\"Umm... bye,\"</i> she says, getting to her feet.  She heads for the water again, leaving you alone to recover.", false);
+		output("Several minutes later you awake to feel yourself washed onto the sand and hurting all over.  <i>\"You... dead?\"</i> The anemone is still with you; she must have found a stick from somewhere and is sitting next to you, judiciously poking you with it.  As you force your eyes open in answer she drops the stick with a startled yelp and hugs her knees to her chest.  Too beat-up to say anything, you can only stare at her, which unnerves her further. <i>\"Umm... bye,\"</i> she says, getting to her feet.  She heads for the water again, leaving you alone to recover.");
+		processTime(20 + rand(10));
 		CombatManager.genericLoss();
 		return;
 	}
@@ -428,20 +429,21 @@ public function loseToAnemone():void
 	//The anemone, having reached out to try and catch some of the load but missing the grab, sets her face in an irate scowl and approaches you.
 	//loss, neuter:
 	if (!pc.hasGenitals()) {
-		output("Shivering, you slump before the anemone and begin trying to remove your [pc.gear].  She claps and peals happily, splashing over to you.  Pushing your trembling hands out of the way, she unfastens your garments and pulls them free of you... and then stops.  You look the girl in the face uncomprehendingly and she answers your gaze with a look of equal confusion.  Your head turns to follow her as she looks you up and down and even makes a circle around you, inspecting every inch and chewing her lip anxiously.", false);
+		output("Shivering, you slump before the anemone and begin trying to remove your [pc.gear].  She claps and peals happily, splashing over to you.  Pushing your trembling hands out of the way, she unfastens your garments and pulls them free of you... and then stops.  You look the girl in the face uncomprehendingly and she answers your gaze with a look of equal confusion.  Your head turns to follow her as she looks you up and down and even makes a circle around you, inspecting every inch and chewing her lip anxiously.");
 		//[(lactating)
-		if (pc.isLactating()) output("  For a moment the examination stops at the dribble of milk leaking from your " + pc.nippleDescript(0) + "s.  With one finger she collects a bit and tastes it, only to grimace and stick her tongue out.", false);
-		output("  Back at the front, the anemone motions questioningly toward your ornament-free groin with open palms.  You follow her gesture down to your spartan nethers, then look back up.  Her bottom lip is quivering and -- yes, it looks like water is beginning to well up in her eyes.\n\n", false);
+		if (pc.isLactating()) output("  For a moment the examination stops at the dribble of milk leaking from your " + pc.nippleDescript(0) + "s.  With one finger she collects a bit and tastes it, only to grimace and stick her tongue out.");
+		output("  Back at the front, the anemone motions questioningly toward your ornament-free groin with open palms.  You follow her gesture down to your spartan nethers, then look back up.  Her bottom lip is quivering and -- yes, it looks like water is beginning to well up in her eyes.\n\n");
 
-		output("Hurriedly you begin to compose an explanation for your anatomy, and you get as far as telling her that you have no genitalia thanks to events since your arrival before she bursts into tears.  ", false);
+		output("Hurriedly you begin to compose an explanation for your anatomy, and you get as far as telling her that you have no genitalia thanks to events since your arrival before she bursts into tears.  ");
 		//[(low cor)
-		if (cor() < 33) output("You reach out instinctively to comfort her, but ", false);
+		if (cor() < 33) output("You reach out instinctively to comfort her, but ");
 		//(high cor)
-		else output("You smirk, amused by the turnabout, until ", false);
-		output("the anemone lashes out with a slap that knocks the expression off your face and makes your eardrums sing.  <i>\"Dumb!\"</i> she shouts, turning sharply; her tentacles lash past you as she about-faces.  She dives down below the surface and kicks water into your face spitefully as she swims away.  You sputter and rub your jaw a bit, then stand up and walk dizzily back to camp.", false);
+		else output("You smirk, amused by the turnabout, until ");
+		output("the anemone lashes out with a slap that knocks the expression off your face and makes your eardrums sing.  <i>\"Dumb!\"</i> she shouts, turning sharply; her tentacles lash past you as she about-faces.  She dives down below the surface and kicks water into your face spitefully as she swims away.  You sputter and rub your jaw a bit, then stand up and walk dizzily back to camp.");
 		//(1 hour pass, lose 1/10th of max hp from current hp, lose 20 lust)
 		pc.HP( -10);
 		pc.lust( -20);
+		processTime(20 + rand(10));
 		CombatManager.genericLoss();
 		return;
 	}
@@ -521,6 +523,7 @@ public function loseToAnemone():void
 			}
 			output(".  The blue girl continues to stroke your privates with her tentacle hair, flicking your urethra with her tongue, until you've come twice more.  Nor does she display any intention of stopping there, but mercifully you black out and collapse into the water.  Half-frowning, the anemone shrugs and pushes your insensible form up onto the sandy shore.", false);
 			//(pass 8 hours, reset lust to min)
+			processTime(45 + rand(10));
 			pc.orgasm();
 			CombatManager.genericLoss();
 		}
@@ -589,8 +592,9 @@ public function loseToAnemone():void
 			else output("She leans over you and begins licking the semen off your body, not stopping until you're clean (if slightly sticky).", false);
 			output("  Having fed, she grins mischievously and grabs your [pc.cock], then tows your floating body to the shoreline with it.  She rolls you onto the sand and then swims for deep water, vanishing.", false);
 			//(pass 8 hours, minus libido, reset lust to min)
+			processTime(45 + rand(10));
 			pc.orgasm();
-			dynStats("lib", -1);
+			pc.slowStatGain("l", -1);
 			CombatManager.genericLoss();
 		}
 	}
@@ -618,8 +622,10 @@ public function loseToAnemone():void
 		//anemonePreg();
 		pc.loadInCunt(enemy);
 		//(reduce lust to min, add 10 lust, pregnancy check)
+		processTime(45 + rand(10));
 		pc.orgasm();
-		dynStats("lib", 1, "lus", 10);
+		pc.slowStatGain("l", 1);
+		pc.lust(10);
 		CombatManager.genericLoss();
 	}
 }

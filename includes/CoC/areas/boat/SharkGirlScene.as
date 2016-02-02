@@ -100,11 +100,11 @@ internal function sharkWinChoices():void {
 	//spriteSelect(70);
 	//HP Win
 	if(enemy.HP() <= 1) {
-		output("The shark-girl falls, clearly defeated.");
+		output("The shark-girl falls, clearly defeated.\n\n");
 	}
 	//Lust win
 	else {
-		output("The shark-girl begins masturbating, giving up on dominating you.  The sight is truly entrancing.");
+		output("The shark-girl begins masturbating, giving up on dominating you.  The sight is truly entrancing.\n\n");
 		pc.lust(15);
 	}
 	

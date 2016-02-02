@@ -214,12 +214,14 @@ public function CoCDeluxeDildo():void {
 				//output("his tentacles splattering mouse-jizz everywhere as he gets off from your show.");
 			//else output("splattering himself with mouse-spunk as he finishes enjoying your inadvertent show.  He runs off before you have a chance to react.");
 		//}
-		pc.loadInCunt();
-		pc.orgasm();
-		doNext(returnToCampUseOneHour);
 		output("\n");
 		pc.cuntChange(0, Math.min(500, pc.vaginalCapacity() * 0.9), true);
+		pc.loadInCunt();
+		processTime(45);
+		pc.orgasm();
 	}
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 public function lickYerGirlParts():void { //Female cat masturbation

@@ -136,8 +136,8 @@ public function EventsAdopterHellNotify():void {
 	////    HEAT AND RUT PROCESSORS    ////
 	///////////////////////////////////////
 	if ((pc.hasVaginaType(GLOBAL.TYPE_CANINE) || pc.hasVaginaType(GLOBAL.TYPE_FELINE)) // regulars heats for appropriate morphs... should be actually some function
-		&& pc.fertility() > 0 && (days % 30 == 0 || pc.fertility() >= 2 && days % (30 / int(pc.fertility())) == 0) && !pc.isPregnant()) { // same schedule with oviposition for correct overlaps
-		Mutator.goIntoHeat(pc, true, pc.fertility());
+		&& pc.fertility() > 0 && (days % 30 == 0 || pc.fertility() >= 2 && days % (30 / int(pc.fertility())) == 0) && !pc.isPregnant() && flags["HEAT_LAST_CYCLE"] != days) { // same schedule with oviposition for correct overlaps
+		if (Mutator.goIntoHeat(pc, true, pc.fertility())) flags["HEAT_LAST_CYCLE"] = days;
 	}
 	
 	if (pc.hasStatusEffect("Heat") && pc.statusEffectv3("Heat") == 0) {

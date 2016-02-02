@@ -73,7 +73,7 @@ private function askGretaAboutInventory():void {
 	if(Flag("COC.FOUND_SOCKS") == 0) Flag("COC.FOUND_SOCKS", 1);
 	if(Flag("COC.SOCK_COUNTER") == 0) Flag("COC.SOCK_COUNTER", timeAsStamp + 24 * 60);
 	clearMenu();
-	addButton(1, "Next", gretasGarments);
+	addButton(0, "Next", gretasGarments);
 }
 
 //Ask About Bikini:

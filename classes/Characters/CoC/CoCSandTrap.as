@@ -204,7 +204,7 @@ package classes.Characters.CoC
 			else addDisabledButton(12, "Climb", "Climb", "You already are on the edge of the pit.");
 			if(kGAMECLASS.pc.canFly())	addButton(14, "Fly Away", SandTrapRunaway, null, "Fly Away", "Just fly away.");
 			
-			addButton(0, "Attack", SandTrapMeleeAttack, null, "Attack", "Attack sand trap with a melee strike. Damage is based on physique. <b>You can use your elevation to add some more weight to you attack, but it is all-or-nothing move.</b>");
+			addButton(0, "Charge", SandTrapMeleeAttack, null, "Charge", "Attack sand trap with a melee strike. Damage is based on physique. <b>You can use your elevation to add some more weight to you attack, but it is all-or-nothing move.</b>");
 		}
 
 		public function SandTrapMeleeAttack():void {
