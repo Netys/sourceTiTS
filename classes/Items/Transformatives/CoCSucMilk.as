@@ -407,7 +407,7 @@ package classes.Items.Transformatives
 		public static function newVag(target:Creature):void {
 			target.createVagina();
 			target.clitLength = .25;
-			target.shiftVagina(0, Mutator.guessVagType(target);
+			target.shiftVagina(0, Mutator.guessVagType(target));
 		}
 	}
 }

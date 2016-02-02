@@ -69,7 +69,7 @@ package classes.Items.Transformatives
 			if (pc.hasPerk("Transformation Resistance")) changeLimit--;
 			//Used for dick and boob TFs
 			var counter:int = 0;
-
+			
 			if (pc.faceType == GLOBAL.TYPE_VULPINE && pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount < 9 && pc.earType == GLOBAL.TYPE_VULPINE && pc.legType == GLOBAL.TYPE_VULPINE && pc.armType == GLOBAL.TYPE_VULPINE && pc.hasFur() && rand(3) == 0 && !pc.hasPerk("Transformation Resistance")) {
 				if (kGAMECLASS.flags["COC.FOX_BAD_END_WARNING"] == undefined) {
 					kGAMECLASS.output("\n\nYou get a massive headache and a craving to raid a henhouse.  Thankfully, both pass in seconds, but <b>maybe you should cut back on the vulpine items...</b>");
@@ -81,13 +81,14 @@ package classes.Items.Transformatives
 					else output("berries ");
 					output("with an uncommonly voracious appetite, taking particular enjoyment in the succulent, tart flavor.  As you carefully suck the last drops of ochre juice from your fingers, you note that it tastes so much more vibrant than you remember.  Your train of thought is violently interrupted by the sound of bones snapping, and you cry out in pain, doubling over as a flaming heat boils through your ribs.");
 					output("\n\nWrithing on the ground, you clutch your hand to your chest, looking on in horror through tear-streaked eyes as the bones in your fingers pop and fuse, rearranging themselves into a dainty paw covered in coarse black fur, fading to a ruddy orange further up.  You desperately try to call out to someone - anyone - for help, but all that comes out is a high-pitched, ear-splitting yap.");
-					if (pc.tailVenom > 1) output("  Your tails thrash around violently as they begin to fuse painfully back into one, the fur bristling back out with a flourish.");
+					if (pc.tailCount > 1) output("  Your tails thrash around violently as they begin to fuse painfully back into one, the fur bristling back out with a flourish.");
 					output("\n\nA sharp spark of pain jolts through your spinal column as the bones shift themselves around, the joints in your hips migrating forward.  You continue to howl in agony even as you feel your intelligence slipping away.  In a way, it's a blessing - as your thoughts grow muddied, the pain is dulled, until you are finally left staring blankly at the sky above, tilting your head curiously.");
 					output("\n\nYou roll over and crawl free of the [pc.gear] covering you, pawing the ground for a few moments before a pang of hunger rumbles through your stomach.  Sniffing the wind, you bound off into the wilderness, following the telltale scent of a farm toward the certain bounty of a chicken coop.");
 					kGAMECLASS.badEnd();
 					return;
 				}
 			}
+			
 			//[increase Intelligence, Libido and Sensitivity]
 			if (changes < changeLimit && rand(3) == 0 && (pc.libido() < 80 || pc.IQ() < 80 || pc.WQ() < 80/* || pc.sens < 80*/)) {
 				output("\n\nYou close your eyes, smirking to yourself mischievously as you suddenly think of several new tricks to try on your opponents; you feel quite a bit more cunning.  The mental picture of them helpless before your cleverness makes you shudder a bit, and you lick your lips and stroke yourself as you feel your skin tingling from an involuntary arousal.");
@@ -99,37 +100,32 @@ package classes.Items.Transformatives
 				pc.lust(10);
 				changes++;
 			}
+			
 			//[decrease Strength] (to some floor) // I figured 15 was fair, but you're in a better position to judge that than I am.
 			if (changes < changeLimit && rand(3) == 0 && pc.PQ() > 40) {
 				output("\n\nYou can feel your muscles softening as they slowly relax, becoming a tad weaker than before.  Who needs physical strength when you can outwit your foes with trickery and mischief?  You tilt your head a bit, wondering where that thought came from.");
-				pc.physique( -0.5);
-				if (pc.PQ() > 60) pc.physique( -0.5);
-				if (pc.PQ() > 80) pc.physique( -0.5);
-				if (pc.PQ() > 90) pc.physique( -0.5);
+				pc.slowStatGain("p", -1);
 				changes++;
 			}
-			////[decrease Toughness] (to some floor) // 20 or so was my thought here
-			//if (changes < changeLimit && rand(3) == 0 && pc.tou > 30) {
-				//if (pc.tou < 60) output("\n\nYou feel your skin becoming noticeably softer.  A gentle exploratory pinch on your arm confirms it - your supple skin isn't going to offer you much protection.");
-				//else output("\n\nYou feel your skin becoming noticeably softer.  A gentle exploratory pinch on your arm confirms it - your hide isn't quite as tough as it used to be.");
-				//dynStats("tou", -1);
-				//if (pc.tou > 60) dynStats("tou", -1);
-				//if (pc.tou > 80) dynStats("tou", -1);
-				//if (pc.tou > 90) dynStats("tou", -1);
-				//changes++;
-			//}
-
+			
 			//[Change Hair Color: Golden-blonde or Reddish-orange]
 			var fox_hair:Array = ["golden blonde", "reddish-orange", "silver", "white", "red", "black"];
 			if (!InCollection(pc.hairColor, fox_hair) && !InCollection(pc.hairColor, kGAMECLASS.basicKitsuneHair, kGAMECLASS.elderKitsuneColors, kGAMECLASS.corruptKitsuneColors) && changes < changeLimit && rand(4) == 0) {
+				var newColor:String;
 				if (pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount > 1)
-					if(pc.tailVenom < 9) pc.hairColor = RandomInCollection(kGAMECLASS.basicKitsuneHair);
-					else pc.hairColor = pc.hasPerk("Enlightened Nine-tails") ? RandomInCollection(kGAMECLASS.elderKitsuneColors) : RandomInCollection(kGAMECLASS.corruptKitsuneColors);
-				else pc.hairColor = RandomInCollection(fox_hair);
-				output("\n\nYour scalp begins to tingle, and you gently grasp a strand of hair, pulling it out to check it.  Your hair has become " + pc.hairColor + "!");
+					if(pc.tailCount < 9) pc.hairColor = RandomInCollection(kGAMECLASS.basicKitsuneHair);
+					else newColor = pc.hasPerk("Enlightened Nine-tails") ? RandomInCollection(kGAMECLASS.elderKitsuneColors) : RandomInCollection(kGAMECLASS.corruptKitsuneColors);
+				else newColor = RandomInCollection(fox_hair);
+				if (pc.hairColorUnlocked(newColor))
+				{
+					pc.hairColor = newColor;
+					output("\n\nYour scalp begins to tingle, and you gently grasp a strand of hair, pulling it out to check it.  Your hair has become " + pc.hairColor + "!");
+					changes++;
+				} else output("\n\n" + pc.hairColorLockedMessage());
 			}
+			
 			//[Adjust hips toward 10 – wide/curvy/flared]
-			if (changes < changeLimit && rand(3) == 0 && pc.hipRating() != 10) {
+			if (changes < changeLimit && rand(3) == 0 && pc.hipRating() != 10 && pc.hipRatingUnlocked(10)) {
 				//from narrow to wide
 				if (pc.hipRating() < 10) {
 					output("\n\nYou stumble a bit as the bones in your pelvis rearrange themselves painfully.  Your waistline has widened into [pc.hips]!");
@@ -144,9 +140,10 @@ package classes.Items.Transformatives
 				}
 				changes++;
 			}
+			
 			//[Remove tentacle hair]
 			//required if the hair length change below is triggered
-			if (changes < changeLimit && pc.hairType != GLOBAL.HAIR_TYPE_REGULAR && rand(3) == 0) {
+			if (changes < changeLimit && rand(3) == 0 && Mutator.changeHair(pc, GLOBAL.HAIR_TYPE_REGULAR, null, false)) {
 				//-insert anemone hair removal into them under whatever criteria you like, though hair removal should precede abdomen growth; here's some sample text:
 				output("\n\nEerie flames of the jewel migrate up your body to your head, where they cover your [pc.hair].  Though they burned nowhere else in their lazy orbit, your head begins to heat up as they congregate.  Fearful, you raise your hands to it just as the temperature peaks, but as you touch your hair, the searing heat is suddenly gone - along with your inhuman hair!  <b>Your hair is normal again!</b>");
 				pc.hairType = GLOBAL.HAIR_TYPE_REGULAR;
@@ -194,15 +191,15 @@ package classes.Items.Transformatives
 						output("You shudder as the crown of your [pc.cock " + select + "] reshapes into a point, the sensations nearly too much for you.  ");
 					pc.shiftCock(select, GLOBAL.TYPE_VULPINE);
 					output("You throw back your head as the transformation completes.  <b>You now have animalistic fox-cock.</b>");
-
+					
 					pc.lust(5);
 					changes++;
 				}
-
 			}
+			
 			//Cum Multiplier Xform
 			if (pc.cumQ() < 5000 && rand(3) == 0 && changes < changeLimit && pc.hasCock()) {
-				temp = 2 + rand(4);
+				temp = 0.2 + rand(4) * 0.1;
 				//Lots of cum raises cum multiplier cap to 2 instead of 1.5
 				//if (pc.findPerk(PerkLib.MessyOrgasms) >= 0) temp += rand(10);
 				pc.cumMultiplierRaw += temp;
@@ -212,6 +209,7 @@ package classes.Items.Transformatives
 				output("  A bit of pre dribbles from your [pc.cocksLight], pushed out by the change.");
 				changes++;
 			}
+			
 			if (changes < changeLimit && pc.balls > 0 && pc.ballSizeRaw > 3 * Math.PI && rand(3) == 0) {
 				output("\n\nYour [pc.sack] gets lighter and lighter, the skin pulling tight around your shrinking balls until you can't help but check yourself.");
 				if (pc.ballSizeRaw > 10) pc.ballSizeRaw -= 5;
@@ -220,10 +218,12 @@ package classes.Items.Transformatives
 				if (pc.ballSizeRaw > 40) pc.ballSizeRaw -= 4;
 				if (pc.ballSizeRaw > 50) pc.ballSizeRaw -= 8;
 				if (pc.ballSizeRaw > 60) pc.ballSizeRaw -= 8;
-				if (pc.ballSizeRaw > 2 * Math.PI) pc.ballSizeRaw--;
+				if (pc.ballSizeRaw > 3 * Math.PI) pc.ballSizeRaw--;
+				if (pc.ballSizeRaw < 3 * Math.PI) pc.ballSizeRaw = 3 * Math.PI;
 				changes++;
-				output("  You now have a [pc.balls].");
+				output("  You now have " + pc.ballsDescript(false, true) + ".");
 			}
+			
 			//Sprouting more!
 			if (changes < changeLimit && enhanced && pc.bRows() < 4 && pc.breastRows[pc.bRows() - 1].breastRatingRaw > 1) {
 				output("\n\nYour belly rumbles unpleasantly for a second as the ");
@@ -244,6 +244,7 @@ package classes.Items.Transformatives
 				pc.lust(30);
 				changes++;
 			}
+			
 			//Find out if tits are eligible for evening
 			var tits:Boolean = false;
 			counter = pc.bRows();
@@ -281,18 +282,22 @@ package classes.Items.Transformatives
 						changes++;
 				}
 			}
+			
 			//[Grow Fur]
 			//FOURTH
+			var foxFurColors:Array = ["orange and white", "orange and white", "orange and white", "red and white", "black and white", "white", "tan", "brown"];
+			var kitsuneFurColors:Array = foxFurColors.concat(kGAMECLASS.basicKitsuneFur, kGAMECLASS.elderKitsuneColors, kGAMECLASS.corruptKitsuneColors);
+			
 			if ((enhanced || pc.legType == GLOBAL.TYPE_VULPINE) && pc.skinType != GLOBAL.SKIN_TYPE_FUR && changes < changeLimit && rand(4) == 0) {
 				if (pc.kitsuneScore() >= 4)
-					if(InCollection(pc.hairColor, kGAMECLASS.basicKitsuneFur, kGAMECLASS.elderKitsuneColors, kGAMECLASS.corruptKitsuneColors))
+					if(InCollection(pc.hairColor, kitsuneFurColors))
 						pc.furColor = pc.hairColor;
 					else
 						if (pc.hasPerk("Enlightened Nine-tails")) pc.furColor = RandomInCollection(kGAMECLASS.elderKitsuneColors);
 						else if (pc.hasPerk("Corrupted Nine-tails")) pc.furColor = RandomInCollection(kGAMECLASS.corruptKitsuneColors);
 						else pc.furColor = RandomInCollection(kGAMECLASS.basicKitsuneFur);
 				else
-					pc.furColor = RandomInCollection("orange and white", "orange and white", "orange and white", "red and white", "black and white", "white", "tan", "brown");
+					pc.furColor = RandomInCollection(foxFurColors);
 					
 				//from scales
 				if (pc.skinType == GLOBAL.SKIN_TYPE_SCALES) output("\n\nYour skin shifts and every scale stands on end, sending you into a mild panic.  No matter how you tense, you can't seem to flatten them again.  The uncomfortable sensation continues for some minutes until, as one, every scale falls from your body and a fine coat of fur pushes out.  You briefly consider collecting them, but when you pick one up, it's already as dry and brittle as if it were hundreds of years old.  <b>Oh well; at least you won't need to sun yourself as much with your new " + pc.furColor + " fur.</b>");
@@ -302,7 +307,10 @@ package classes.Items.Transformatives
 					
 				changes++;
 			}
+			
+			// Canine arms
 			if ((enhanced || pc.earType == GLOBAL.TYPE_VULPINE) && changes < changeLimit && rand(5) == 0 && Mutator.changeArms(pc, GLOBAL.TYPE_VULPINE, [GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS])) changes++;
+			
 			//[Grow Fox Legs]
 			//THIRD
 			if ((enhanced || pc.earType == GLOBAL.TYPE_VULPINE) && pc.legType != GLOBAL.TYPE_VULPINE && changes < changeLimit && rand(5) == 0) {
@@ -332,25 +340,27 @@ package classes.Items.Transformatives
 				pc.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_PAWS, GLOBAL.FLAG_FURRED];
 				changes++;
 			}
+			
 			//Grow Fox Ears]
 			//SECOND
-			if ((enhanced || pc.hasTail(GLOBAL.TYPE_VULPINE)) && pc.earType != GLOBAL.TYPE_VULPINE && changes < changeLimit && rand(4) == 0) {
-				output("\n\nYour ears change, shifting from their current shape to become vulpine in nature.  <b>You now have fox ears.</b>");
-				pc.earType = GLOBAL.TYPE_VULPINE;
-				changes++;
-			}
+			if ((enhanced || pc.hasTail(GLOBAL.TYPE_VULPINE)) && changes < changeLimit && rand(3) == 0 && Mutator.changeEars(pc, GLOBAL.TYPE_VULPINE)) changes++;
+			
 			//[Grow Fox Tail](fairly common)
 			//FIRST
-			if (!pc.hasTail(GLOBAL.TYPE_VULPINE) && changes < changeLimit && rand(4) == 0) {
-				//from no tail
-				if (!pc.hasTail()) output("\n\nA pressure builds on your backside.  You feel under your [pc.armor] and discover a strange nodule growing there that seems to be getting larger by the second.  With a sudden flourish of movement, it bursts out into a long and bushy tail that sways hypnotically, as if it had a mind of its own.  <b>You now have a fox's tail!</b>");
-				//from another type of tail
-				else output("\n\nPain lances through your lower back as your tail shifts violently.  With one final aberrant twitch, it fluffs out into a long, bushy fox tail that whips around in an almost hypnotic fashion.  <b>You now have a fox's tail!</b>");
-				pc.tailType = GLOBAL.TYPE_VULPINE;
-				pc.tailCount = 1;
-				pc.tailFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_FLUFFY];
-				changes++;
+			if (!pc.hasTail(GLOBAL.TYPE_VULPINE) && changes < changeLimit && rand(3) == 0) {
+				if (pc.tailTypeUnlocked(GLOBAL.TYPE_VULPINE))
+				{
+					//from no tail
+					if (!pc.hasTail()) output("\n\nA pressure builds on your backside.  You feel under your [pc.armor] and discover a strange nodule growing there that seems to be getting larger by the second.  With a sudden flourish of movement, it bursts out into a long and bushy tail that sways hypnotically, as if it had a mind of its own.  <b>You now have a fox's tail!</b>");
+					//from another type of tail
+					else output("\n\nPain lances through your lower back as your tail shifts violently.  With one final aberrant twitch, it fluffs out into a long, bushy fox tail that whips around in an almost hypnotic fashion.  <b>You now have a fox's tail!</b>");
+					pc.tailType = GLOBAL.TYPE_VULPINE;
+					pc.tailCount = 1;
+					pc.tailFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_FLUFFY];
+					changes++;
+				} else output("\n\n" + pc.tailTypeLockedMessage());
 			}
+			
 			//[Grow Fox Face]
 			//LAST - muzzlygoodness
 			//should work from any face, including other muzzles
@@ -365,15 +375,23 @@ package classes.Items.Transformatives
 				output("\n\nMoving brings with it a little more jiggle than you're used to.  You don't seem to have gained weight, but your muscles seem less visible, and various parts of you are pleasantly softer.");
 				pc.tone -= 4;
 			}
-			//Debugcunt
+			
+			// foxgina
 			if (changes < changeLimit && rand(3) == 0 && pc.hasVagina() && pc.vaginas[0].type != GLOBAL.TYPE_CANINE) {
 				output("\n\nSomething invisible brushes against your sex, making you twinge.  ");
 				if (!pc.isCrotchExposed()) output("Undoing your clothes, y");
 				else output("Y");
 				output("ou take a look at your vagina and find that it has turned into animalistic, vulpine form.");
+				// not using shiftVagina to bypass wetness and looseness enforcement... wetness and looseness should be high only during heat
 				pc.vaginas[0].type = GLOBAL.TYPE_CANINE;
+				pc.vaginas[0].clearFlags();
+				pc.vaginas[0].clits = 1;
+				pc.vaginas[0].vaginaColor = "pink";
+				if (pc.vaginas[0].wetnessRaw > 3) pc.vaginas[0].wetnessRaw = 3;
+				if (pc.vaginas[0].minLooseness > 3) pc.vaginas[0].minLooseness = 3;
 				changes++;
 			}
+			
 			if (changes == 0) {
 				output("\n\nWell that didn't do much, but you do feel a little refreshed!");
 				pc.energy(5);

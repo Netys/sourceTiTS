@@ -58,7 +58,7 @@ public function tryDiscover():void
 		//kGAMECLASS.helScene.helSexualAmbush();
 		//return;
 	//}
-	showName("\nSHIFTING LANDS");
+	showName("SHIFTING\nLANDS");
 	IncrementFlag("COC.EXPLORED");
 	
 	if (cocGeneralAreasExplore()) return;

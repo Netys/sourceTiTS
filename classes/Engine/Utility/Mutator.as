@@ -7,6 +7,7 @@ package classes.Engine.Utility
 	import classes.Util.*;
 	import classes.Engine.Interfaces.*;
 	import classes.Engine.Utility.*;
+	import classes.VaginaClass;
 	
 	/**
 	 * This is generic mutation engine to use when you don't want to write custom transition scenes. All functions here should return either number of changes done or boolean if any changes done. Changes should be atomic when it makes sense.
@@ -1760,21 +1761,20 @@ package classes.Engine.Utility
 
 		/** Attempts to put the player in heat (or deeper in heat).
 		* Returns true if successful, false if not.
-		* The player USUALLY cannot go into heat if she is already pregnant or have no vagina.
+		* The player usually cannot go into heat if she is already pregnant or have no vagina.
 		* 
 		* First parameter: boolean indicating if function should output standard text.
 		* Second parameter: intensity, an integer multiplier that can increase the duration and intensity. Defaults to 1.
-		* Third parameter: boolean indicating if this heat will end with pregnancy. If true, nothing would ever end it until it is gone over time.
-		* Fourth parameter: boolean indicating if this heat is necessarily requires vagina. If true, males/genderless can go into heat unless butt-pregnant (usually eggs).
+		* Third parameter: boolean indicating if this heat will end with pregnancy. If true, nothing would ever end it until it is gone over time, even lack of vagina.
 		*/
-		public static function goIntoHeat(pc:Creature, out:Boolean, intensity:int = 1, forced:Boolean = false, mpreg:Boolean = false):Boolean {
+		public static function goIntoHeat(pc:Creature, out:Boolean, intensity:Number = 1, forced:Boolean = false):Boolean {
 			var canVagPreg:Function = function():Boolean {
 				for (var i:int = 0; i < pc.vaginas.length; i++)
 					if (!pc.isPregnant(i)) return true;
 				return false;
 			}
 			
-			if(!forced && !canVagPreg() && !(mpreg && !pc.isPregnant(3))) {
+			if(!forced && !canVagPreg()) {
 				return false; // No vagina or already pregnant, can't go into heat.
 			}
 			
@@ -1786,15 +1786,21 @@ package classes.Engine.Utility
 				pc.setStatusValue("Heat", 1, pc.statusEffectv1("Heat") + 100 * intensity); // fertility bonus
 				pc.setStatusValue("Heat", 2, pc.statusEffectv2("Heat") + 10 * intensity); // libido bonus
 				if(forced) pc.setStatusValue("Heat", 3, 1); // forced means it would not end if pregnant
-				if(forced) pc.setStatusValue("Heat", 4, 1); // mpreg means it would not end if vagina lost
+				if (pc.hasVagina() && pc.statusEffectv4("Heat") < 4 && pc.vaginas[0].wetnessRaw < 5)
+				{
+					pc.setStatusValue("Heat", 4, 1); // vaginal wetness bonus
+					pc.vaginas[0].wetnessRaw += 1;
+				}
 				pc.addStatusMinutes("Heat", 48 * 60 * intensity);
 			}
-			//Go into heat.  Heats v1 is bonus fertility, v2 is bonus libido, v3 is forced (would not end by any means), v4 is mpreg (would apply to males and not gone with vagina)
+			//Go into heat.  Heats v1 is bonus fertility, v2 is bonus libido, v3 is forced (would not end by any means), v4 is wetness bonus
 			else {
 				if(out) {
 					output("\n\nYour mind clouds as your [pc.vagina] moistens.  Your hands begin stroking your body from top to bottom, your sensitive skin burning with desire.  Fantasies about bending over and presenting your needy pussy to a male overwhelm you as <b>you realize you have gone into heat!</b>");
 				}
-				pc.createStatusEffect("Heat", 100 * intensity, 10 * intensity, forced ? 1 : 0, mpreg ? 1 : 0, false, "LustUp", "You are aching to be on recieving end of a good fuck due to your animal heat!", false, 48 * 60 * intensity);
+				pc.createStatusEffect("Heat", 100 * intensity, 10 * intensity, forced ? 1 : 0, pc.hasVagina() ? 1 : 0, false, "LustUp", "You are aching to be on recieving end of a good fuck due to your animal heat!", false, 48 * 60 * intensity);
+				
+				if(pc.hasVagina()) pc.vaginas[0].wetnessRaw += 1; // actually, this is horrible, but since we can't access vagina's owner from vagina to check status... either this or special heat field
 			}
 			return true;
 		}
@@ -1929,7 +1935,7 @@ package classes.Engine.Utility
 			if (target.felineScore() >= 5) cType = GLOBAL.TYPE_FELINE;
 			if (target.leithanScore() >= 6) cType = GLOBAL.TYPE_LEITHAN;
 			if (target.nukiScore() >= 6) cType = GLOBAL.TYPE_KUITAN;
-			if (target.vanaeScore() >= 6) race = GLOBAL.TYPE_VANAE;
+			if (target.vanaeScore() >= 6) cType = GLOBAL.TYPE_VANAE;
 			if (target.raskvelScore() >= 6) cType = GLOBAL.TYPE_SNAKE;
 			if (target.zilScore() >= 6) cType = GLOBAL.TYPE_BEE;
 			//if (target.badgerScore() >= 4) race = "badger";

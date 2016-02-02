@@ -39,13 +39,14 @@ package classes.Items.Transformatives
             this.basePrice = 60;
 			
 			this.combatUsable = false;
-            
-            this.version = this._latestVersion;
-        }
-        
-        //METHOD ACTING!
-        override public function useFunction(pc:Creature, usingCreature:Creature = null):Boolean
-        {
+			
+			this.version = this._latestVersion;
+		}
+		
+		//METHOD ACTING!
+		override public function useFunction(pc:Creature, usingCreature:Creature = null):Boolean
+		{
+			var target:Creature = pc;
 			clearOutput();
 			//init variables
 			var changes:Number = 0;
@@ -121,8 +122,8 @@ package classes.Items.Transformatives
 				if (pc.hasSheath(temp2)) output("sheath ");
 				else output("base ");
 				output("to tip, undulating and convulsing as its color lightens, darkens, and finally settles on a purplish hue.  Your [pc.cock " + temp2 + "] resolves itself into a bulbous form, with a slightly pointed tip.  The 'bulbs' throughout its shape look like they would provide an interesting ride for your sexual partners, but the perverse, alien pecker ");
-				if (pc.cor() < 33) output("horrifies you.");
-				else if (pc.cor() < 66) output("is a little strange for your tastes.");
+				if (pc.slut() < 33) output("horrifies you.");
+				else if (pc.slut() < 66) output("is a little strange for your tastes.");
 				else {
 					output("looks like it might be more fun to receive than use on others.  ");
 					if (pc.hasVagina()) output("Maybe you could find someone else with one to ride?");
@@ -192,6 +193,47 @@ package classes.Items.Transformatives
 				pc.removeStatusEffect("Infested");
 				changes++;
 			}
+			
+			// reptile vag, Naleen copypaste
+			var x:int = 0;
+			var y:int = 0;
+			//Female TFs
+			var choices:Array = new Array();
+			for(x = 0; x < target.totalVaginas(); x++) {
+				if(target.vaginas[x].type != GLOBAL.TYPE_NAGA && target.vaginaTypeUnlocked(x, GLOBAL.TYPE_NAGA)) choices[choices.length] = x;
+			}
+			if(choices.length == 0) x = -1;
+			else x = choices[rand(choices.length)];
+			//Cunt -> Naleenslit TF
+			if(x >= 0 && changes < changeLimit && rand(3) == 0) {
+				output("\n\nA hot flash assaults your body, leaving you panting, sweating, and drooling from your [pc.vaginas]. ");
+				if(target.vaginaTotal() > 1) output("Each");
+				else output("It");
+				output(" is near-instantly engorged and wanting");
+				if(target.vaginas[x].clits > 0) output(", your [pc.clits] hard and easy to spot");
+				output(". You gasp and double over, bringing your hand up to start masturbating when you see [pc.oneVagina] changing before your eyes. It's getting longer vertically while the vulva, even aroused, become less noticeable.");
+				if(target.vaginas[x].clits <= 0) output(" A sensitive nub grows from the top, forming a pulsing, needy clit.");
+				else if(target.vaginas[x].clits > 1) {
+					if(target.vaginas[x].clits == 2) output(" A clit vanishes");
+					else if(target.vaginas[x].clits == 3) output(" A couple of clits vanish");
+					else if(target.vaginas[x].clits == 4) output(" A few clits vanish");
+					else if(target.vaginas[x].clits == 5) output(" Some clits vanish");
+					else output(" A number of clits vanish");
+					output(", leaving only the one at the top.");
+				}
+				if(target.totalVaginas() == 2) output(" Your other entrance soon follows after the first, reshaping to match.");
+				else if(target.totalVaginas() > 2) output(" Your other entrances soon follow after the first, reshaping to match.");
+				if((target.hasCock() && target.hasStatusEffect("Genital Slit")) || target.vaginaTotal(GLOBAL.TYPE_NAGA)) output(" With more than one slit in your groin, you hope any future partners can find their target.");
+				output("<b> You have a reptilian vagina.</b>");
+				//Loop through and set 'em all, baby!
+				for(x = 0; x < target.totalVaginas(); x++)
+				{
+					target.vaginas[x].clits = 1;
+					target.vaginas[x].type = GLOBAL.TYPE_NAGA;
+				}
+				changes++;
+			}
+			
 			//-Breasts vanish to 0 rating if male
 			if (pc.biggestTitSize() >= 1 && pc.hasCock() && !pc.hasVagina() && changes < changeLimit && rand(3) == 0) {
 				//(HUEG)

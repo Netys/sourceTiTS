@@ -123,7 +123,7 @@ public function EventsAdopterHellNotify():void {
 	//////////////////////////////////////////
 	////    OVIPOSITION PERK PROCESSOR    ////
 	//////////////////////////////////////////
-	if (pc.hasPerk("Oviposition") && pc.hasVagina() && pc.fertility() > 0 && (days % 30 == 0 || pc.fertility() >= 2 && days % (30 / int(pc.fertility())) == 0) && !pc.isPregnant(0)) {
+	if (pc.hasPerk("Oviposition") && pc.hasVagina() && pc.fertility() > 0 && (days % 30 == 0 || pc.fertility() >= 2 && days % (30 / int(pc.fertility())) == 0) && !pc.isPregnant()) {
 		if (PregnancyManager.findHandler("CoCOviElixEggs").tryKnockUp(pc, pc, 0)) {
 			eventBuffer += "\n\n<b>Somehow you know that eggs have begun to form inside you.  You wonder how long it will be before they start to show?</b>";
 			pc.createStatusEffect("MagicColorfulEggs", rand(5), 0, 0, 0);
@@ -135,9 +135,20 @@ public function EventsAdopterHellNotify():void {
 	///////////////////////////////////////
 	////    HEAT AND RUT PROCESSORS    ////
 	///////////////////////////////////////
+	if ((pc.hasVaginaType(GLOBAL.TYPE_CANINE) || pc.hasVaginaType(GLOBAL.TYPE_FELINE)) // regulars heats for appropriate morphs... should be actually some function
+		&& pc.fertility() > 0 && (days % 30 == 0 || pc.fertility() >= 2 && days % (30 / int(pc.fertility())) == 0) && !pc.isPregnant()) { // same schedule with oviposition for correct overlaps
+		Mutator.goIntoHeat(pc, true, pc.fertility());
+	}
+	
 	if (pc.hasStatusEffect("Heat") && pc.statusEffectv3("Heat") == 0) {
 		if (pc.isPregnant()) {
 			eventBuffer += "\n\n<b>Your heat is suddenly gone.</b>";
+			
+			if(pc.hasVagina() && pc.statusEffectv4("Heat") > 0) {
+				pc.vaginas[0].wetnessRaw -= pc.statusEffectv4("Heat");
+				pc.vaginas[0].wetnessRaw = 1;
+			}
+			
 			pc.removeStatusEffect("Heat");
 		}
 		if (!pc.hasVagina() && pc.statusEffectv4("Heat") == 0) {

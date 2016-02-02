@@ -2,6 +2,7 @@ import classes.Engine.Combat.DamageTypes.DamageFlag;
 import classes.GameData.TooltipManager;
 import classes.GLOBAL;
 import classes.ItemSlotClass;
+import classes.StringUtil;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -172,7 +173,7 @@ public function showNemo():void {
 }
 
 // note: he totally can talk normally, he just having some fun
-public function guildEmbassyBonusFunction():void {
+public function guildEmbassyBonusFunction():Boolean {
 	author("Etis");
 	showName("{ STELLAR		\nFURNACE }");
 	
@@ -189,15 +190,18 @@ public function guildEmbassyBonusFunction():void {
 		output("{ output to nemo; greeting; this name '[pc.fullName]'; request { protocol; shop state extended; embassy faction; nemo race } }\n\n");
 		output("{ input from nemo: protocol 'mind connection, limited'; shop state 'trading license pending, expected time over 100 years'; embassy faction { name undefined; id { guild, 'stellar furnace' } one of }; this race { kitsune; action 'jumps over counter to show nine fluffy tails' }; request response }\n\n");
 		processTime(6);
+		clearMenu();
 		addButton(0, "{ next }", approachNemo);
+		return true;
 	}
 	else
 	{
 		output("{ protocol: verbose deprecated; stream/representation enabled }\n\n");
 		output("{ location: name 'Stellar Furnace'; function embassy }\n\n");
 		output("{ interactions: nemo; exit }\n\n");
+		addButton(0, "{ nemo }", approachNemo);
 	}
-	addButton(0, "{ nemo }", approachNemo);
+	return false;
 }
 
 public function approachNemo():void {
@@ -221,6 +225,7 @@ public function approachNemo():void {
 public function leaveNemo():void {
 	clearOutput();
 	clearMenu();
+	author("Etis");
 	showName("{ STELLAR		\nFURNACE }");
 	output("{ input from nemo: bye }\n\n");
 	output("^%$@$adache after this chat. No doubts, little prankster is mocking you.");
@@ -238,7 +243,7 @@ public function nemoLook():void {
 	output("		species: kitsune;\n");
 	output("		size: { height: 4' 9\"; weight: 66 lb };\n");
 	output("		color: { fur: white; skin: white; accents: azure; eyes: azure };\n");
-	if (flags["COC.NEMO_GENDER_KNOWN"] == undefined) output("		gender: unclear;\n");
+	if (flags["COC.NEMO_GENDER_KNOWN"] == undefined) output("		gender: ambiguous;\n");
 	else output("		gender: male;\n");
 	output("		age: '800+ (presumably)';\n");
 	output("		form: 'semi-anthropomorphic vulpine';\n");
@@ -263,11 +268,13 @@ public function nemoCollection():void {
 	var btn:int = 0;
 	
 	tmp = new ItemSlotClass();
+	tmp.stackSize = 1;
 	tmp.type = GLOBAL.MELEE_WEAPON;
 	tmp.shortName = "Vorpal Blade";
 	tmp.longName = "Vorpal Blade";
 	tmp.description = "a vorpal blade";
 	tmp.tooltip = "Just a handle while disabled, it appears to be some sort of energy blade. It can cut through anything within range. Yes, that simple.";
+	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.baseDamage.unresistable_hp.damageValue = 100;
 	tmp.baseDamage.addFlag(DamageFlag.BYPASS_SHIELD);
@@ -278,11 +285,13 @@ public function nemoCollection():void {
 	addOverrideItemButton(btn++, tmp, tmp.shortName);
 	
 	tmp = new ItemSlotClass();
+	tmp.stackSize = 1;
 	tmp.type = GLOBAL.RANGED_WEAPON;
 	tmp.shortName = "Mass Driver";
 	tmp.longName = "mass driver";
 	tmp.description = "a mass driver";
 	tmp.tooltip = "Heavy kinetic cannon, using LightDrive technology to accelerate tungsten slugs.";
+	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.baseDamage.kinetic.damageValue = 1000;
 	tmp.baseDamage.addFlag(DamageFlag.BULLET);
@@ -294,11 +303,13 @@ public function nemoCollection():void {
 	addOverrideItemButton(btn++, tmp, tmp.shortName);
 	
 	tmp = new ItemSlotClass();
+	tmp.stackSize = 1;
 	tmp.type = GLOBAL.RANGED_WEAPON;
 	tmp.shortName = "Ultimatum";
 	tmp.longName = "Ultimatum";
 	tmp.description = "an anti-material cannon";
 	tmp.tooltip = "This huge and immensely massive contraption is actually a weapon of mass destruction. It uses laser to ionize air, then throws tiny portion af anti-matter in a magnetic trap through created channel. There are only one word for it's power: devastating.";
+	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.baseDamage.burning.damageValue = 1000;
 	tmp.baseDamage.kinetic.damageValue = 1000;
@@ -311,11 +322,13 @@ public function nemoCollection():void {
 	addOverrideItemButton(btn++, tmp, tmp.shortName);
 	
 	tmp = new ItemSlotClass();
+	tmp.stackSize = 1;
 	tmp.type = GLOBAL.RANGED_WEAPON;
 	tmp.shortName = "Pwr. Punch";
 	tmp.longName = "Power Punch";
 	tmp.description = "a power punch";
 	tmp.tooltip = "This thing is a bit misplaced in this collection, since it is not intended to be handheld. It is special equipment for boarding party shuttle, intended to suppress even fortress shields.";
+	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.baseDamage.unresistable_hp.damageValue = Number.POSITIVE_INFINITY;
 	tmp.baseDamage.addFlag(DamageFlag.ONLY_SHIELD);
@@ -327,11 +340,13 @@ public function nemoCollection():void {
 	addOverrideItemButton(btn++, tmp, tmp.shortName);
 	
 	tmp = new ItemSlotClass();
+	tmp.stackSize = 1;
 	tmp.type = GLOBAL.RANGED_WEAPON;
 	tmp.shortName = "AFL";
 	tmp.longName = "automatic fission laser";
 	tmp.description = "an automatic fission laser";
-	tmp.tooltip = "This little thing is far from impressive - little more than a foot long, with a short wooden butt and a short, heavily reinforced barrel. Quite weighty, though - nearly 14 pounds. Ultimate handheld weapon, the AFL have logarithmic scale of output power, from 'cut neat little hole' at 1 to 'evaporate this city, and that mountain too' at 10.";
+	tmp.tooltip = "This little thing is far from impressive - little more than a foot long, with a short wooden butt and a short, heavily reinforced barrel. Quite weighty, though - nearly 14 pounds. Ultimate handheld weapon, the automatic fission laser have logarithmic scale of output power, from 'cut neat little hole' at 1 to 'evaporate this city, and that mountain too' at 10.";
+	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.baseDamage.unresistable_hp.damageValue = Number.POSITIVE_INFINITY;
 	tmp.baseDamage.addFlag(DamageFlag.LASER);
@@ -342,11 +357,13 @@ public function nemoCollection():void {
 	addOverrideItemButton(btn++, tmp, tmp.shortName);
 	
 	tmp = new ItemSlotClass();
+	tmp.stackSize = 1;
 	tmp.type = GLOBAL.RANGED_WEAPON;
 	tmp.shortName = "Designator";
 	tmp.longName = "designator";
 	tmp.description = "a designator";
 	tmp.tooltip = "This tool is nothing more than simple rangefinder. The real ‘gun’, orbital cannon, would be somewhere above.";
+	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.baseDamage.addFlag(0);
 	tmp.attackVerb = "trigger";
@@ -354,11 +371,13 @@ public function nemoCollection():void {
 	addOverrideItemButton(btn++, tmp, tmp.shortName);
 	
 	tmp = new ItemSlotClass();
+	tmp.stackSize = 1;
 	tmp.type = GLOBAL.RANGED_WEAPON;
 	tmp.shortName = "Portal Gun";
 	tmp.longName = "portal gun";
 	tmp.description = "a portal gun";
-	tmp.tooltip = "This gun-like tool is actually a handheld Warp Gate unit. While quite useless by itself, it can be used to channel whatever you have on the other side, be it candy dispenser or star destroyer's main caliber.";
+	tmp.tooltip = "This gun-like tool is actually a handheld exit-only Warp Gate unit. While quite useless by itself, it can be used to channel whatever you have on the other side, be it candy dispenser or star destroyer's main caliber.";
+	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.baseDamage.addFlag(0);
 	tmp.attackVerb = "shoot";
@@ -366,20 +385,24 @@ public function nemoCollection():void {
 	addOverrideItemButton(btn++, tmp, tmp.shortName);
 	
 	tmp = new ItemSlotClass();
+	tmp.stackSize = 1;
 	tmp.type = GLOBAL.ACCESSORY;
 	tmp.shortName = "P.Heart";
-	tmp.longName = "heart of power";
-	tmp.description = "the heart of power";
+	tmp.longName = "Heart of Power";
+	tmp.description = "the Heart of Power";
 	tmp.tooltip = "The Heart of Power, implantable anti-matter power battery for undefeated fighter. Contains enough energy to power any weapons and gadgets you are using as long as you are able to fight. Contains enough energy to wipe a city during mandatory self-destruction protocol on loss. Either ways, you always have guaranteed draw.";
+	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	addOverrideItemButton(btn++, tmp, tmp.shortName);
 	
 	tmp = new ItemSlotClass();
+	tmp.stackSize = 1;
 	tmp.type = GLOBAL.ACCESSORY;
 	tmp.shortName = "Fin Funnels";
-	tmp.longName = "fin funnels";
-	tmp.description = "the fin funnels";
+	tmp.longName = "set of fin funnels";
+	tmp.description = "a set of fin funnels";
 	tmp.tooltip = "Set of 4 autonomous drones, equipped with heavy tachyon beam cannons and shield generators. While intended to be used as heavy support for heavy armour, their tremendously long operational time allows them to be used as standalone units.";
+	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.baseDamage.electric.damageValue = 10;
 	tmp.baseDamage.burning.damageValue = 25;
@@ -393,14 +416,27 @@ public function nemoCollection():void {
 	tmp.addFlag(GLOBAL.ITEM_FLAG_EFFECT_FLURRYBONUS);
 	addOverrideItemButton(btn++, tmp, tmp.shortName);
 	
+	tmp = new ItemSlotClass();
+	tmp.stackSize = 1;
+	tmp.type = GLOBAL.DRUG;
+	tmp.shortName = "Tabula Rasa";
+	tmp.longName = "container of Tabula Rasa";
+	tmp.description = "a container of Tabula Rasa";
+	tmp.tooltip = "The ultimate transformative. Breaks down user's body to atoms and builds it anew, using Guild's mainframe to temporary store user's mind. Creates new and absolutely flawless body with any desired features. Guild gives warranty to fix ANY conditions, from wrong splices to natural aging.";
+	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
+	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
+	addOverrideItemButton(btn++, tmp, tmp.shortName);
+	
 	if (flags["COC.NEMO_VR_POD_TAKEN"] == undefined)
 	{
 		tmp = new ItemSlotClass();
+		tmp.stackSize = 1;
 		tmp.type = GLOBAL.GADGET;
 		tmp.shortName = "VR Pod";
 		tmp.longName = "virtual reality pod";
 		tmp.description = "a virtual reality pod";
-		tmp.tooltip = "Archaic and seemingly overcomplicated virtual reality pod.";
+		tmp.tooltip = "Archaic and seemingly overcomplicated virtual reality pod. Definitely stands out from other merchandise.";
+		TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 		TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 		addOverrideItemButton(btn++, tmp, tmp.shortName);
 	}
@@ -418,8 +454,9 @@ public function nemoTalk():void {
 	if (flags["COC.NEMO_STOCK_SEEN"] == 1) addButton(btn++, "{ stock }", nemoTalkStock);
 	else addDisabledButton(btn++, "{ stock }", "{ stock }", "{ subject unknown }");
 	
-	if (flags["COC.NEMO_STOCK_SEEN"] == 1 && flags["COC.NEMO_VR_POD_TAKEN"] == undefined) addButton(btn++, "{ 'vr pod' }", nemoTalkVRPod);
-	else addDisabledButton(btn++, "{ 'vr pod' }", "{ 'vr pod' }", "{ subject unknown }");
+	if (flags["COC.NEMO_STOCK_SEEN"] == undefined) addDisabledButton(btn++, "{ 'vr pod' }", "{ 'vr pod' }", "{ subject unknown }");
+	else if(flags["COC.NEMO_VR_POD_TAKEN"] == undefined) addButton(btn++, "{ 'vr pod' }", nemoTalkVRPod);
+	else addDisabledButton(btn++, "{ 'vr pod' }", "{ 'vr pod' }", "{ subject exhausted }");
 	
 	if (flags["COC.NEMO_GENDER_KNOWN"] == undefined) addButton(btn++, "{ gender }", nemoTalkGender);
 	else addDisabledButton(btn++, "{ gender }", "{ gender }", "{ subject exhausted }");

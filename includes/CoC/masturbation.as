@@ -268,15 +268,15 @@ public function catAutoLick():void { //Male cat masturbation
 	
 	//1st time
 	if (flags["COC.TIMES_AUTOFELLATIO_DUE_TO_CAT_FLEXABILITY"] == 1) {
-		output("You get rid of your [pc.gear] and take a seat. You take a look at your inhuman body, making notes of things you haven't noticed before. Suddenly, an idea pops into your head: the cats back at the village could reach any place on their body with their tongues! You wonder... closing your eyes and slowly bending down, you try to get as close as possible to your [pc.cock " + x + "]. It only takes a moment before you feel warm breath blowing against your [pc.cockHead " + x + "]. You open your eyes, coming face to face with your erect member. Your body is twisted and bent in a way that only someone with cat-like flexibility can manage. You huff a cloud of hot air on your pecker, and the resulting sensation causes your [pc.eyes] to roll back in your head. That was incredible and it's about to get better as another thought passes through your head, giving you a dirty smile.\n\n");
+		output("You get rid of your [pc.gear] and take a seat. You take a look at your inhuman body, making notes of things you haven't noticed before. Suddenly, an idea pops into your head: the cats could reach any place on their body with their tongues! You wonder... closing your eyes and slowly bending down, you try to get as close as possible to your [pc.cock " + x + "]. It only takes a moment before you feel warm breath blowing against your [pc.cockHead " + x + "]. You open your eyes, coming face to face with your erect member. Your body is twisted and bent in a way that only someone with cat-like flexibility can manage. You huff a cloud of hot air on your pecker, and the resulting sensation causes your [pc.eyes] to roll back in your head. That was incredible and it's about to get better as another thought passes through your head, giving you a dirty smile.\n\n");
 	
 		output("You lick the [pc.cockHead " + x + "] of your throbbing man-meat and another bodyshaking shudder flows through you. You do it a few more times, enjoying the sensations running around inside of you. You bend down farther and lick from the [pc.base " + x + "] of your dick to the head. Slowly, you take the [pc.cockHead " + x + "] inside of your mouth and begin sucking on it, trying to keep the drool in your mouth. The feeling is enough to make you cum, but you hold it in and move on. You take a few more inches inside your mouth as you begin pumping and thrusting, making lewd noises of moaning and sucking. The feeling is better than any blowjob you've ever had. You start to pump faster and faster, desperate to cum all over your own [pc.face]. Just thinking about the fact that you're doing this to yourself turns you on even more. You take the rest of your [pc.cock " + x + "] inside of your mouth.");
 		if(pc.balls > 0) output(" You can smell the musty scent coming off of your [pc.sack].")
 		output(" Your throat closes up on your member as you hum and flick your [pc.tongueNoun] across its [pc.cockHead " + x + "].\n\n");
 		
-		output("A very familiar feeling of pleasure rushes through your body, causing you to shudder. You pull your cock out and begin to stroke it as you suck on the tip, practically drinking your pre-cum. You can feel your [pc.cum] building up as it gets ready to be released. After flicking your [pc.tongue] against the tip of your [pc.cock " + x + "], you feel the flood of [pc.cum] flowing up your dick");
+		output("A very familiar feeling of pleasure rushes through your body, causing you to shudder. You pull your cock out and begin to stroke it as you suck on the tip, practically drinking your pre-cum. You can feel your [pc.cumNoun] building up as it gets ready to be released. After flicking your [pc.tongue] against the tip of your [pc.cock " + x + "], you feel the flood of [pc.cumNoun] flowing up your dick");
 		
-		output(". Suddenly, a feeling of complete bliss takes over your body, and you start to squirm and writhe as [pc.cum] shoots down your throat. You pull off of the tip and let the next burst hit your [pc.face]. Soon, the torrent of [pc.cum] subsides, though your hips are still jerking in the air from the intense orgasm.");
+		output(". Suddenly, a feeling of complete bliss takes over your body, and you start to squirm and writhe as [pc.cumFlavor] [pc.cumNoun] shoots down your throat. You pull off of the tip and let the next burst hit your [pc.face]. Soon, the torrent of [pc.cum] subsides, though your hips are still jerking in the air from the intense orgasm.");
 		if (!rooms[currentLocation].hasFlag(GLOBAL.PUBLIC) && !rooms[currentLocation].hasFlag(GLOBAL.HAZARD)) output(" You take a moment to lie down properly and decide to take a small cat nap.");
 	}
 	//[Repeatable]
@@ -758,12 +758,14 @@ public function CoCDildoButts():void {
 	output(" As you gently rub your insides, you use your free hand and reach up to pinch and rub your [pc.nipples]. As the motions become easier, you push a second finger inside as well. You soon find your sensitive anal entrance begging for something more appropriate, and you happily oblige.");
 	output("\n\nGrabbing your toy, you give it several long wet licks before");
 	if (pc.isBiped()) output(" holding your [pc.legs] up");
-	output(" and sending the substitute cock to its true task. You rub the tip against your [pc.asshole] momentarily before finally pushing it inside. Stuttering moans escape your lips as your butt gets its much-needed fill of firm faux phallus");
+	output(" and sending the substitute cock to its true task. You rub the tip against your [pc.asshole] momentarily before finally pushing it inside.");
+	pc.buttChange(dildo.effectiveVolume(), true, true, false);
+	output(" Stuttering moans escape your lips as your butt gets its much-needed fill of firm faux phallus");
 	if (silly) output(", the alliteration of the experience further arousing you");
 	output(". Y");
 	if (pc.hasToes()) output("our [pc.toes] curl as y");
 	output("ou begin to pull in and out, pumping the dildo with smooth motions. Your [pc.tongue] hangs from your mouth, your breathing becomes heavy, and your moans lewdly express pure lust as you increase your tempo. Before too long, you feel your pucker becoming more sensitive and know an orgasm is quickly approaching.");
-	pc.buttChange(dildo.effectiveVolume(), true, true, false);
+	
 	if (pc.hasCock() && pc.hasVagina())
 		output("\n\nYou moan in ecstasy while your [pc.vagina] and [pc.cocks] erupt with sex juices. ");
 	else if (pc.hasCock())

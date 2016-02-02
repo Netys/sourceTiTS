@@ -146,7 +146,7 @@ private function plantsForMe2(BE:int = 0):void {
 		
 		output("\n\nEssy just smiles as she begins to bob her head, slowly at first, but with increasing speed as your moans of delight egg her on.  Two tentacles rise up, funneling wide at the tips and engulfing your [pc.nipples]");
 		if(pc.breastRows[0].breastRating() >= 1) output(" and " + pc.breastCup(0) + " breasts");
-		output(".  The opaque cups pump and suck, Essy humming to herself as the base of her tongue continues to skillfully tease over every hot spot near the [cockHead " + pc.biggestCockIndex()+ "]] of your [pc.cock " + pc.biggestCockIndex()+ "], her length slithering about it skillfully.");
+		output(".  The opaque cups pump and suck, Essy humming to herself as the base of her tongue continues to skillfully tease over every hot spot near the [pc.cockHeadBiggest] of your [pc.cockBiggest], her length slithering about it skillfully.");
 	}
 	//(Pussy=
 	else {
@@ -207,6 +207,7 @@ private function plantsForMe2(BE:int = 0):void {
 	//Slimefeed!
 	//pc.slimeFeed();
 	pc.libido(1);
+	pc.slowStatGain("l", 1);
 	doNext(returnToCampUseOneHour);
 }
 
@@ -270,7 +271,7 @@ private function feedTrappedEssy():void {
 private function hasCockFeedEssy(newPage:Boolean = true):void {
 	if(newPage) clearOutput();
 	else output("\n\n");
-	output("[pc.EachCock] stands erect as you grind it against her belly, enormous tits squishing wonderfully around it.  The udder-like melons squeeze [pc.oneCock] with every hot breath the plant girl takes, taut skin soaked with the sweat of her afterglow wetly suckling at your length.  Determined to use such productive breasts to the fullest, you move forward, your [pc.cock " + pc.biggestCockIndex()+ "]'s mass easily slipping between the bottom pair, her leaking, jade pillows snugly engulfing your girth as tightly as if she were holding them together with all four arms.");
+	output("[pc.EachCock] stands erect as you grind it against her belly, enormous tits squishing wonderfully around it.  The udder-like melons squeeze [pc.oneCock] with every hot breath the plant girl takes, taut skin soaked with the sweat of her afterglow wetly suckling at your length.  Determined to use such productive breasts to the fullest, you move forward, your [pc.cockBiggest]'s mass easily slipping between the bottom pair, her leaking, jade pillows snugly engulfing your girth as tightly as if she were holding them together with all four arms.");
 	
 	output("\n\nAs pliant as her mammaries are, a little extra lubrication couldn't hurt.  Grabbing two of her puffy, fist-sized teats, you begin to squeeze and tug at them as if you were milking a cow.  Essy pants with heated, bovine moans as syrupy, white sap gushes from her spouting nipples in thick, cascading gouts.  For being used so thoroughly by the sand witches, she seems remarkably receptive to your milking, as if her body's needed a more personal touch.  Not wanting to disappoint, you tighten your wringing grip and pump even harder.");
 	
