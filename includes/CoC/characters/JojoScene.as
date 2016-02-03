@@ -184,7 +184,7 @@ public function highCorruptionJojoEncounter():void {
 	clearMenu();
 	addButton(0, "Accept", meditateInForest);
 	addButton(1, "Decline", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
-	addDisabledButton(2, "Rape", "Rape", "Not implemented");
+	addDisabledButton(4, "Rape", "Rape", "Not implemented");
 }
 
 //Repeat encounter
@@ -305,7 +305,7 @@ public function jojoCamp():void {
 		clearMenu();
 		addButton(0, "Yes", acceptOfferOfHelp);
 		addButton(1, "No", refuseOfferOfHelp);
-		addDisabledButton(2, "Rape", "Rape", "Not implemented");
+		addDisabledButton(4, "Rape", "Rape", "Not implemented");
 		//addButton(2, "Rape", jojoAtCampRape);
 	}
 	else { //Normal shit

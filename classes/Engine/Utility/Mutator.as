@@ -1591,7 +1591,13 @@ package classes.Engine.Utility
 				//Select smallest breast, grow it, move on
 				while(amount > 0) {
 					//smallest tits index, topmost from even ones
-					currentRow = pc.smallestTitRow();
+					temp = pc.breastRows.length;
+					currentRow = 0;
+					while (temp > 0) {
+						temp--;
+						if (pc.breastRows[currentRow].breastRatingRaw >= pc.breastRows[temp].breastRatingRaw) currentRow = temp;
+					}
+					
 					trace("Breastrow chosen for growth: " + String(currentRow) + ".");
 					
 					// don't grow above hard limit
@@ -1600,13 +1606,13 @@ package classes.Engine.Utility
 					//track total amount grown
 					result++;
 					amount--;
-
+					
 					//Grow!
 					trace("Growing breast row " + currentRow + " by 1");
 					pc.breastRows[currentRow].breastRatingRaw++;
 				}
 			}
-
+			
 			if (growthType == 4) {
 				var minRow:int = 0;
 				//Select smallest breast, grow it, move on
@@ -1785,7 +1791,7 @@ package classes.Engine.Utility
 					output("\n\nYour mind clouds as your [pc.vagina] moistens.  Despite already being in heat, the desire to copulate constantly grows even larger.");
 				}
 				pc.setStatusValue("Heat", 1, pc.statusEffectv1("Heat") + 100 * intensity); // fertility bonus
-				pc.setStatusValue("Heat", 2, pc.statusEffectv2("Heat") + 10 * intensity); // libido bonus
+				pc.setStatusValue("Heat", 2, pc.statusEffectv2("Heat") + 20 * intensity); // libido bonus
 				if(forced) pc.setStatusValue("Heat", 3, 1); // forced means it would not end if pregnant
 				if (pc.hasVagina() && pc.statusEffectv4("Heat") < 4 && pc.vaginas[0].wetnessRaw < 5)
 				{
@@ -1799,7 +1805,7 @@ package classes.Engine.Utility
 				if(out) {
 					output("\n\nYour mind clouds as your [pc.vagina] moistens.  Your hands begin stroking your body from top to bottom, your sensitive skin burning with desire.  Fantasies about bending over and presenting your needy pussy to a male overwhelm you as <b>you realize you have gone into heat!</b>");
 				}
-				pc.createStatusEffect("Heat", 100 * intensity, 10 * intensity, forced ? 1 : 0, pc.hasVagina() ? 1 : 0, false, "LustUp", "You are aching to be on recieving end of a good fuck due to your animal heat!", false, 48 * 60 * intensity);
+				pc.createStatusEffect("Heat", 100 * intensity, 20 * intensity, forced ? 1 : 0, pc.hasVagina() ? 1 : 0, false, "LustUp", "You are aching to be on recieving end of a good fuck due to your animal heat!", false, 48 * 60 * intensity);
 				
 				if(pc.hasVagina()) pc.vaginas[0].wetnessRaw += 1; // actually, this is horrible, but since we can't access vagina's owner from vagina to check status... either this or special heat field
 			}

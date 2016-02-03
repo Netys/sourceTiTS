@@ -43,12 +43,6 @@ public function exploreDesert():void
 		chance.push(5);
 	}
 	
-	//if (sandWitchScene.pregnancy.event == 2 && rand(4) == 0) {
-		//if (flags[kFLAGS.EGG_WITCH_TYPE] == PregnancyStore.PREGNANCY_DRIDER_EGGS) sandWitchScene.sammitchBirthsDriders();
-		//else sandWitchScene.witchBirfsSomeBees();
-		//return;
-	//}
-	
 	//Ant colony debug chances
 	//if (pc.level >= 5 && flags["COC.ANT_WAIFU"] == undefined && flags["COC.EXPLORED_DESERT"] % 8 == 0 && flags["COC.ANTS_PC_FAILED_PHYLLA"] == 0 && flags["COC.ANT_COLONY_KEPT_HIDDEN"] == undefined) {
 		//antColonyEncounter();
@@ -59,20 +53,6 @@ public function exploreDesert():void
 	if (pc.IQ() > 50 && flags["COC.FOUND_WIZARD_STAFF"] == undefined) {
 		choice.push(encounterAliseInDesert);
 		chance.push(4);
-		//else if (pc.hasKeyItem("Carpenter's Toolbox") >= 0 && pc.keyItemv1("Carpenter's Toolbox") < 200 && rand(2) == 0) {
-			//clearOutput();
-			//output("While exploring the desert, you find the wreckage of a building. Judging from the debris, it's the remains of the library that was destroyed by the fire.\n\n", false);
-			//output("You circle the wreckage for a good while and you can't seem to find anything to salvage.  Until something shiny catches your eye.  There are exposed nails that look like they can be scavenged.\n\n", false)
-			//output("You take your hammer out of your toolbox and you spend time extracting straight nails.  Some of the nails you've pulled out are bent but some are incredibly in good condition.  You could use these nails for construction.\n\n");
-			//var extractedNail:int = 5 + rand(pc.inte / 5) + rand(pc.str / 10) + rand(pc.tou / 10) + rand(pc.spe / 20) + 5;
-			//flags[kFLAGS.ACHIEVEMENT_PROGRESS_SCAVENGER] += extractedNail;
-			//pc.addKeyValue("Carpenter's Toolbox", 1, extractedNail);
-			//output("After spending nearly an hour scavenging, you've managed to extract " + extractedNail + " nails.\n\n");
-			//output("Nails: " + pc.keyItemv1("Carpenter's Toolbox") + "/200")
-			//if (pc.keyItemv1("Carpenter's Toolbox") > 200) pc.addKeyValue("Carpenter's Toolbox", 1, -(pc.keyItemv1("Carpenter's Toolbox") - 200));
-			//doNext(returnToCampUseOneHour);
-			//return;
-		//}
 	}
 	
 	//Possible chance of boosting camp space!
@@ -96,17 +76,17 @@ public function exploreDesert():void
 	//}
 
 	//Encounter Sandwitch
-	if (IncrementFlag("COC.SAND_WITCH_LEAVE_ME_ALONE", false) == 0) {
+	if (Flag("COC.SAND_WITCH_LEAVE_ME_ALONE") == 0) {
 		choice.push(sandWitchSceneEncounter);
 		chance.push(1);
 	}
 	
-	//if (flags["COC.CUM_WITCHES_FIGHTABLE"] > 0) {
-		//choice.push(fightCumWitch);
-		//chance.push(1);
-	//}
+	if (flags["COC.CUM_WITCHES_FIGHTABLE"] > 0) {
+		choice.push(fightCumWitch);
+		chance.push(1);
+	}
 
-	//Encounter Marcus		
+	//Encounter Marcus
 	choice.push(wandererRouter);
 	chance.push(1);
 
@@ -116,9 +96,9 @@ public function exploreDesert():void
 	choice.push(mirageDesert);
 	chance.push(2);
 
-	//if(pc.level >= 2) {
-		//choice.push(oasisEncounter);
-		//chance.push(2); }
+	if(pc.level >= 2) {
+		choice.push(oasisEncounter);
+		chance.push(2); }
 
 	choice.push(nagaEncounter);
 	chance.push(1);
@@ -134,8 +114,10 @@ private function mirageDesert():void
 {
 	clearOutput();
 	output("While exploring the desert, you see a shimmering tower in the distance.  As you rush towards it, it vanishes completely.  It was a mirage!   You sigh, depressed at wasting your time.\n\n");
+	processTime(25 + rand(10));
 	pc.lust( -15);
-	doNext(returnToCampUseOneHour);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 private function walkingDesertStatBoost():void

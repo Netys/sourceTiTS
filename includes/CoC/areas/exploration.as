@@ -10,7 +10,7 @@ public function doExplore():void
 	if (flags["COC.EXPLORED"] == undefined || flags["COC.EXPLORED"] == 1) {
 		tryDiscover();
 		return;
-	} else if (flags["COC.EXPLORED"] > 1) outputText("You can continue to search for new locations, or explore your previously discovered locations.", true);
+	} else if (flags["COC.EXPLORED"] > 1) output("You can continue to search for new locations, or explore your previously discovered locations.");
 
 	clearMenu();
 	
@@ -108,7 +108,7 @@ public function placesCount():int {
 	//if (flags[kFLAGS.FOUND_CATHEDRAL] > 0) places++;
 	if (flags["COC.WHITNEY_MET"] >= 3) places++; 
 	//if (flags[kFLAGS.OWCA_UNLOCKED] > 0) places++;
-	//if (player.findStatusAffect(StatusAffects.HairdresserMeeting) >= 0) places++;
+	if (flags["COC.GOBLIN_SALON_FOUND"] > 0) places++;
 	if (flags["COC.TEL_ADRE_KNOWN"] >= 1) places++;
 	//if (flags[kFLAGS.AMILY_VILLAGE_ACCESSIBLE] > 0) places++;
 	if (flags["COC.MET_MINERVA"] >= 4) places++;
@@ -145,13 +145,9 @@ public function showPlacesMenu():Boolean {
 	//if (flags[kFLAGS.OWCA_UNLOCKED] == 1) addButton(6, "Owca", kGAMECLASS.owca.gangbangVillageStuff, null, null, null, "Visit the sheep village of Owca, known for its pit where a person is hung on the pole weekly to be gang-raped by the demons.");
 	if (flags["COC.GOBLIN_SALON_FOUND"] > 0) addButton(7, "Salon", salonGreeting, null, "Salon", "Visit the salon for hair services.");
 	if (flags["COC.TEL_ADRE_KNOWN"] >= 1) addButton(8, "Tel'Adre", telAdreMenu, null, "Tel'Adre", "Visit the city of Tel'Adre in desert, easily recognized by the massive tower.");
-	//
 	//if (flags["COC.AMILY_VILLAGE_ACCESSIBLE"] > 0) addButton(10, "Town Ruins", exploreVillageRuin, null, "Town Ruins", "Visit the village ruins.\n\nTimes explored: " + flags["COC.EXPLORED_AMILY_VILLAGE"]);
 	if (flags["COC.MET_MINERVA"] >= 4) addButton(11, "Oasis Tower", encounterMinerva, null, "Oasis Tower", "Visit the ruined tower in the high mountains where Minerva resides.");
-	//if (flags[kFLAGS.PRISON_CAPTURE_COUNTER] > 0) addButton(12, "Prison", kGAMECLASS.prison.prisonIntro, false, null, null, "Return to the prison and continue your life as Elly's slave.");
-	//if (debug) addButton(13, "Ingnam", kGAMECLASS.ingnam.returnToIngnam, null, null, null, "Return to Ingnam for debugging purposes. Night-time event weirdness might occur. You have been warned!");
 	
-	//addButton(13, "Next", placesPage2);
 	addButton(14, "Back", playerMenu);
 	return true;
 }

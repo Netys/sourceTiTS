@@ -26,6 +26,7 @@ include "areas/deepwoods/ErlKingScene.as";
 include "areas/deepwoods/Faerie.as";
 include "areas/deepwoods/KitsuneScene.as";
 include "areas/desert/desert.as";
+include "areas/desert/Oasis.as";
 include "areas/desert/NagaScene.as";
 include "areas/desert/SandTrapScene.as";
 include "areas/desert/SandWitchScene.as";

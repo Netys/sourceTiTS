@@ -809,8 +809,8 @@ private function anemoneQuoteUnquoteAnal():void
 	if (pc.isTaur()) output("unseen ");
 	output("eyes a-twinkle");
 	if (pc.balls > 0) {
-		output(", and her hair reaches forward to caress your [sack], delivering lancets of venom through the thin skin that send your arousal, and your production, into overdrive");
-		if (!pc.hasCock()) output(".  As your [balls] swell with blood and seed, you can't help but groan; there'll be nowhere for the largess to go, and it will be with you until your body reabsorbs it - or you make an outlet");
+		output(", and her hair reaches forward to caress your [pc.sack], delivering lancets of venom through the thin skin that send your arousal, and your production, into overdrive");
+		if (!pc.hasCock()) output(".  As your [pc.balls] swell with blood and seed, you can't help but groan; there'll be nowhere for the largess to go, and it will be with you until your body reabsorbs it - or you make an outlet");
 	}
 	output(".  Your hips take over, thrusting into her brutally and knocking her head back and forth.  Her tentacles fly wildly, brushing all along your stomach and hips as you pound her mouth, leaving little stripes of heat on your " + pc.skin() + " that seep into your body and only make you want to come even more.");
 
@@ -828,7 +828,7 @@ private function anemoneQuoteUnquoteAnal():void
 
 		output("\n\n\"<i>Don't mention it...</i>\"  You leave her there, ");
 		if (pc.cumQ() >= 1000) output("bobbing roundly in the water as she tries to make her way from the shallows, ");
-		output("and head back to camp.");
+		output("and head back to camp.\n\n");
 	}
 	else {
 		output("  Your clit, packed with nerves, shivers and sets off your orgasm as she strokes, and you bury it into her throat as your head rolls back.  The anemone flinches, unnoticed by you, as your vagina ");

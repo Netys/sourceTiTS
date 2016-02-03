@@ -9,17 +9,19 @@ import classes.Engine.Utility.*;
 
 include "../CoC/CoCGame.as"; // all other includes are there
 
-// This is deprecated function.
-public function cockyVrJunctionMenu():void {	
+// This is deprecated function. It can be removed and is only left to not screw saves within removed VR Pod room.
+public function cockyVrJunctionMenu():Boolean {	
 	author("Etis");
 	setLocation("SHIP\nINTERIOR", rooms[rooms["SHIP INTERIOR"].outExit].planet, rooms[rooms["SHIP INTERIOR"].outExit].system);
 	
 	//addButton(5, "Enter pod", enterCocVrPod);
 	addButton(0, "Next", move, "SHIP INTERIOR");
+	return true;
 }
 
 public function enterCocVrPod():void {
 	author("Etis");
+	showName("\nVR POD");
 	clearOutput();
 	output("You can swear you feel VR pod is <i>calling</i> you. Promising something. Something... Different.\n\n");
 	
@@ -64,12 +66,13 @@ public function enterCocVrPod():void {
 	clearMenu();
 	addButton(0, "Enter portal", EnterVRIAmYourBloodyChampionYouVapidCunt, null, "Enter portal", "Bring it on!");
 	addButton(4, "Abort", abortIAmNotBloodyChampion, null, "Abort", "You are not ready now.");
-	addDisabledButton(9, "Reset", "Reset", "Not implemented yet.");
+	//addDisabledButton(9, "Reset", "Reset", "Not implemented yet."); // not sure ever would be, since resetting would allow recollection of unique loot
 }
 
 public function abortIAmNotBloodyChampion():void {
 	updatePCStats();
 	author("Etis");
+	showName("\nVR POD");
 	clearOutput();
 	
 	output("System shutdown...\n\n");
@@ -190,18 +193,17 @@ public function guildEmbassyBonusFunction():Boolean {
 		output("{ output to nemo; greeting; this name '[pc.fullName]'; request { protocol; shop state extended; embassy faction; nemo race } }\n\n");
 		output("{ input from nemo: protocol 'mind connection, limited'; shop state 'trading license pending, expected time over 100 years'; embassy faction { name undefined; id { guild, 'stellar furnace' } one of }; this race { kitsune; action 'jumps over counter to show nine fluffy tails' }; request response }\n\n");
 		processTime(6);
-		clearMenu();
-		addButton(0, "{ next }", approachNemo);
-		return true;
 	}
 	else
 	{
 		output("{ protocol: verbose deprecated; stream/representation enabled }\n\n");
 		output("{ location: name 'Stellar Furnace'; function embassy }\n\n");
 		output("{ interactions: nemo; exit }\n\n");
-		addButton(0, "{ nemo }", approachNemo);
+		processTime(1);
 	}
-	return false;
+	clearMenu();
+	addButton(0, "{ next }", approachNemo);
+	return true;
 }
 
 public function approachNemo():void {
@@ -210,11 +212,9 @@ public function approachNemo():void {
 	showNemo();
 	output("{ input from nemo: welcome; request input }\n\n");
 	
-	processTime(1); // this is only place to process time intentionally
-	
 	addDisabledButton(0, "{ buy }", "{ buy }", "{ shop closed }");
 	
-	addButton(1, "{ museum }", nemoCollection, undefined, "{ museum }", "{ request: collection examine }");
+	addButton(1, "{ stock }", nemoCollection, undefined, "{ stock }", "{ request: stock examine }");
 	addButton(2, "{ talk }", nemoTalk, undefined, "{ talk }", "{ request: conversation }");
 	addButton(4, "{ look }", nemoLook, undefined, "{ look }", "{ action: nemo examine }");
 	
@@ -478,12 +478,12 @@ public function nemoTalkStock():void {
 	clearOutput();
 	clearMenu();
 	showNemo();
-	output("{ output to nemo: stock 'weapons of mass dectruction'; legality }\n\n");
+	output("{ output to nemo: stock wmd; legality }\n\n");
 	output("{ input from nemo: illegal }\n\n");
 	output("{ output to nemo: illegal; license }\n\n");
 	output("{ input from nemo: hopeless }\n\n");
 	output("{ output to nemo: license; declined }\n\n");
-	output("{ input from nemo: stock 'weapons of mass dectruction'; action 'mischievous smile' }\n\n");
+	output("{ input from nemo: stock wmd; action 'mischievous smile' }\n\n");
 	output("{ output to nemo: reason }\n\n");
 	output("{ input from nemo: bored }\n\n");
 	// yep, he totally can appear with fuckton of WMD in cargo hold and innocently ask if he can sell them to civilians just to see what happens...
@@ -497,7 +497,7 @@ public function nemoTalkVRPod():void {
 	clearMenu();
 	showNemo();
 	output("{ output to nemo: 'vr pod'; info }\n\n");
-	output("{ input from nemo: not stock; unknown origin; possibly alive; confusion; offer; barter; payment 'usage telemetry' }\n\n");
+	output("{ input from nemo: not stock; unknown origin; possibly alive; confusion; offer; barter; payment telemetry }\n\n");
 	
 	addButton(0, "{ accept }", nemoTakeVRPod);
 	addButton(1, "{ decline }", nemoTalk);

@@ -27,7 +27,7 @@ import classes.GLOBAL;
 //public static const PLANE:int									= 23;
 //public static const PLANT_BULB:int								= 24;
 
-// This room is deprecated.
+// This room is deprecated. It is only left to not screw saves inside it.
 rooms["VR_POD_ROOM"] = new RoomClass(this);
 rooms["VR_POD_ROOM"].roomName = "VR POD\nROOM";
 rooms["VR_POD_ROOM"].description = "This small closet contains only virtual reality pod.";
