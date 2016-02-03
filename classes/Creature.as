@@ -6371,8 +6371,9 @@ package classes {
 			if(arg < 0) return -1;
 			if (dynamicLength)
 			{
-				var lustRatio: Number = (lust()/100);
-				if (lustRatio > 1) lustRatio = 1; // To avoid over erect length
+				var lustRatio: Number = ((lust() - lustMin()) / (lustMax() - lustMin())); // no permaboner for characters with min lust
+				lustRatio = Math.max(Math.min(lustRatio, 1), 0); // To avoid length out of bounds
+				lustRatio = Math.pow(lustRatio, 2); // parabolic function to avoid notable boner on low lust
 				return (cocks[arg].cLengthFlaccid() + ((cocks[arg].cLength() - cocks[arg].cLengthFlaccid()) * lustRatio));
 			}
 			return cocks[arg].cLengthFlaccid();
