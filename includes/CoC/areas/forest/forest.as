@@ -158,15 +158,15 @@ public function forestEventJojo():void {
 public function forestCorruptedGlade():void {
 	if (rand(4) == 0) {
 		corruptedGladeTrappedSatyr();
-	} else
-	introCorruptedGlade();
+	} else introCorruptedGlade();
 }
 
 public function forestRootTrip():void {
 	clearOutput();
 	output("You trip on an exposed root, scraping yourself somewhat, but otherwise the hour is uneventful.");
 	takeDamage(10);
-	doNext(returnToCampUseOneHour);
+	clearMenu();
+	addButton(0, "Next", function():* { processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
 public function forestWastedTime():void {
@@ -178,8 +178,8 @@ public function forestWastedTime():void {
 	}
 	else {
 		output("As you wander in the forest, you keep ");
-		if (pc.isHerm()) output("stroking alternatively your [pc.cocksLight] and your [pc.vagina] as you daydream about fucking all kinds of women, from weeping tight virgins to lustful succubi with gaping, drooling fuck-holes, before, or while, getting fucked by various monstrous cocks, from minotaurs' thick, smelly dongs to demons' towering, bumpy pleasure-rods.");
-		else if (pc.hasCock()) output("stroking your half-erect [pc.cocksLight] as you daydream about fucking all kinds of women, from weeping tight virgins to lustful succubi with gaping, drooling fuck-holes.");
+		if (pc.isHerm()) output("stroking alternatively [pc.eachCock] and your [pc.vagina] as you daydream about fucking all kinds of women, from weeping tight virgins to lustful succubi with gaping, drooling fuck-holes, before, or while, getting fucked by various monstrous cocks, from minotaurs' thick, smelly dongs to demons' towering, bumpy pleasure-rods.");
+		else if (pc.hasCock()) output("stroking your half-erect [pc.cocks] as you daydream about fucking all kinds of women, from weeping tight virgins to lustful succubi with gaping, drooling fuck-holes.");
 		else if (pc.hasVagina()) output("idly toying with your [vagina] as you daydream about getting fucked by all kinds of monstrous cocks, from minotaurs' thick, smelly dongs to demons' towering, bumpy pleasure-rods.");
 		else if (!pc.hasGenitals()) output("daydreaming about sex-demons with huge sexual attributes, and how you could please them.");
 		//dynStats("tou", .5, "lib", .25, "lus", pc.lib / 5);

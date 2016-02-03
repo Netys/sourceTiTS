@@ -57,6 +57,7 @@ include "areas/lake/GreenSlimeScene.as";
 include "areas/lake/Kaiju.as";
 include "areas/lake/lake.as";
 include "areas/lake/SwordInStone.as";
+include "areas/mountain/CeraphScene.as";
 include "areas/mountain/GoblinSalon.as";
 include "areas/mountain/HellhoundScene.as";
 include "areas/mountain/MinotaurScene.as";

@@ -33,7 +33,7 @@ public function exploreDesert():void
 		return;
 	}
 	
-	if ((pc.level >= 4 || flags["COC.EXPLORED_DESERT"] > 45) && IncrementFlag("COC.DISCOVERED_WITCH_DUNGEON", false) == 0) {
+	if ((pc.level >= 4 || flags["COC.EXPLORED_DESERT"] > 45) && Flag("COC.DISCOVERED_WITCH_DUNGEON") == 0) {
 		choice.push(TravelToDesertCave);
 		chance.push(5);
 	}
@@ -45,7 +45,7 @@ public function exploreDesert():void
 	//}
 	
 	//int over 50?  Chance of alice encounter!
-	if (pc.IQ() > 50 && flags["COC.FOUND_WIZARD_STAFF"] == undefined) {
+	if (pc.intelligence() >= 15 && flags["COC.FOUND_WIZARD_STAFF"] == undefined) {
 		choice.push(encounterAliseInDesert);
 		chance.push(4);
 	}

@@ -42,7 +42,7 @@ public function boatExplore():void
 	//20% chance if not done with marae of meeting her.
 	if (flags["COC.MARAE_QUEST_COMPLETE"] == undefined && flags["COC.MET_MARAE_CORRUPTED"] == undefined) {
 		choice.push(encounterMarae);
-		chance.push(flags["COC.FACTORY_SHUTDOWN"] == 1 ? 1 : 10);
+		chance.push(flags["COC.MARAE_QUEST_START"] == undefined && pc.cor() <= 66 ? 1 : 10); // high chance to meet her first time to get quest
 	}
 	if (flags["COC.FACTORY_SHUTDOWN"] == 1 && flags["COC.MARAE_QUEST_COMPLETE"] >= 1 && flags["COC.MINERVA_PURIFICATION_MARAE_TALKED"] == 1) {
 		choice.push(talkToMaraeAboutMinervaPurification);
@@ -69,7 +69,7 @@ public function boatExplore():void
 	}
 	
 	choice.push(mortalAnemoneeeeee);
-	chance.push(2);
+	chance.push(1);
 	
 	choice.push(sharkGirlEncounter);
 	chance.push(1);
