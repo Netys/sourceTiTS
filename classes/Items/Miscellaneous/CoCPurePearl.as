@@ -1,5 +1,7 @@
 package classes.Items.Miscellaneous
 {
+	import classes.Engine.Interfaces.clearOutput;
+	import classes.Engine.Interfaces.output;
 	import classes.ItemSlotClass;
 	import classes.GLOBAL;
 	import classes.Creature;
@@ -47,7 +49,7 @@ package classes.Items.Miscellaneous
 			this.evasion = 0;
 			this.fortification = 0;
 			
-			this.combatUsable = true;
+			this.combatUsable = false;
 			this.targetsSelf = true;
 			
 			this.version = _latestVersion;
@@ -55,15 +57,16 @@ package classes.Items.Miscellaneous
 		
 		//METHOD ACTING!
 		override public function useFunction(target:Creature, usingCreature:Creature = null):Boolean
-		{			
-			kGAMECLASS.output("You cram the pearl in your mouth and swallow it like a giant pill with some difficulty.  Surprisingly there is no discomfort, only a cool calming sensation that springs up from your core.");
+		{
+			clearOutput();
+			output("You cram the pearl in your mouth and swallow it like a giant pill with some difficulty.  Surprisingly there is no discomfort, only a cool calming sensation that springs up from your core.");
 			
 			target.libido( -5);
 			target.lust( -25);
 			target.cor( -10);
 
 			if(!target.hasPerk("Purity Blessing")) {
-				kGAMECLASS.output("\n\n<b>(New Perk Gained: Purity Blessing)</b>", false);
+				output("\n\n<b>(New Perk Gained: Purity Blessing)</b>", false);
 				target.createPerk("Purity Blessing", 0, 0, 0, 0, "Reduces the rate at which your corruption, libido, and lust increase. Reduces minimum libido slightly.");
 			}
 			return false;

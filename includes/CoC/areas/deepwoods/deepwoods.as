@@ -57,7 +57,7 @@ public function exploreDeepwoods():void {
 	//Kitsunes
 	choice.push(enterTheTricksterKitsune);
 	chance.push(1);
-	choice.push(kitsuneShrine);
+	choice.push(kitsuneShrineEnter);
 	chance.push(2);
 	
 	if (flags["COC.ERLKING_DISABLED"] == undefined)

@@ -12,6 +12,7 @@ include "OmnibusScene.as";
 public function DemonFactoryEnter():void {
 	clearOutput();
 	clearMenu();
+	setLocation("FACTORY\nDOOR", rooms["COC_FACTORY_FOYER"].planet, rooms["COC_FACTORY_FOYER"].system);
 	
 	if (flags["COC.FACTORY_SHUTDOWN"] == undefined) flags["COC.FACTORY_SHUTDOWN"] = 0;
 	if (flags["COC.FACTORY_FOUND"] == undefined)    flags["COC.FACTORY_FOUND"] = 0;

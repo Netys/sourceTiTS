@@ -43,7 +43,7 @@ private function kitsunePrepare():void {
 //[Enter the Trickster] (Coded)
 public function enterTheTricksterKitsune():void
 {
-	if (flags["COC.MANSION_VISITED"] == undefined) flags["COC.MANSION_VISITED"] = 0;
+	Flag("COC.MANSION_VISITED");
 	
 	if (IncrementFlag("COC.MET_KITSUNES") > 1) {
 		willOWispKitsune();
@@ -2404,7 +2404,7 @@ private function nonFutaRedHeadBondageIGuessYouTieHerUpWithYourPenisThenHuh():vo
 
 //[The Shrine of the Ninetails]
 //Discovery
-public function kitsuneShrine():void
+public function kitsuneShrineEnter():void
 {
 	clearOutput();
 	if (IncrementFlag("COC.KITSUNE_SHRINE_VISIT") == 1) {
@@ -2422,6 +2422,15 @@ public function kitsuneShrine():void
 	}
 	else {
 		output("You find your way to the abandoned kitsune shrine again.  The place is full of rotten timber, but it has a bookcase stuffed with well-maintained tomes.  The remains of a camp are in here as well, though the owner is curiously absent.  Judging by the layer of dust on everything, whoever lived here hasn't been around in quite some time.  You're sure they wouldn't mind if you helped yourself to some of those books - you might just learn a thing or two.");
+	}
+	kitsuneShrine(true);
+}
+public function kitsuneShrine(first:Boolean = false):void
+{
+	if (!first) {
+		clearOutput();
+		output("The place is full of rotten timber, but it has a bookcase stuffed with well-maintained tomes.  The remains of a camp are in here as well, though the owner is curiously absent.  Judging by the layer of dust on everything, whoever lived here hasn't been around in quite some time.  You're sure they wouldn't mind if you helped yourself to some of those books - you might just learn a thing or two.");
+		if(flags["COC.TOOK_KITSUNE_STATUE"] != 1) output("\n\nThat gold statue is still on the shrine.  You feel like you can meditate here to cleanse your mind.");
 	}
 	//[Read Books] [Meditate] [Steal Statue] - [Leave]
 	clearMenu();
@@ -2443,7 +2452,7 @@ private function readKitsuneBooks():void
 	var choice:int = rand(3);
 	//Randomly Display one of the following:
 	if (choice == 0) {
-		output("It's a rather dry read, but informative.  Chapter after chapter explains the underlying theory of magic, going to almost excruciating levels of detail.  " + ((pc.IQ() < 50) ? "Much of it flies over your head, but the book does manage to clarify a few points.  You close the book and set it back on the shelf, feeling like you've learned something." : "Much of it is merely review, but you do manage to glean a few facts before closing the book and setting it back on the shelf."));
+		output("It's a rather dry read, but informative.  Chapter after chapter explains the underlying theory of magic, going to almost excruciating levels of detail.  " + ((pc.intelligence() < 30) ? "Much of it flies over your head, but the book does manage to clarify a few points.  You close the book and set it back on the shelf, feeling like you've learned something." : "Much of it is merely review, but you do manage to glean a few facts before closing the book and setting it back on the shelf."));
 		//+2 INT, Advance 1hr and return to camp
 		//dynStats("int", 2);
 		pc.slowStatGain("i", 1);
@@ -2455,11 +2464,17 @@ private function readKitsuneBooks():void
 		pc.cor( -1);
 	}
 	else {
-		output("You start to flip through the pages, a deep blush slowly forming on your cheeks the further you read into what is clearly an erotic novella of some form.  Graphic descriptions of women being violated by tentacle beasts abound on almost every page, " + ((pc.libido() < 50) ? "and you slam the book shut before reading further, already feeling a heat building in your groin." : "and you lick your lips hungrily, poring over every line and word of lascivious prose."));
+		output("You start to flip through the pages, a deep blush slowly forming on your cheeks the further you read into what is clearly an erotic novella of some form.  Graphic descriptions of women being violated by tentacle beasts abound on almost every page, and you ");
 		//+ 1 LIB, + 5 LUST, Advance 1hr and return to camp
 		//dynStats("lib", 1, "lus", 5);
 		pc.slowStatGain("l", 1);
-		pc.lust(5);
+		if (pc.libido() < 50) {
+			output("slam the book shut before reading further, already feeling a heat building in your groin.")
+			pc.lust(5);
+		} else {
+			output("lick your lips hungrily, poring over every line and word of lascivious prose.");
+			pc.lust(20);
+		}
 	}
 	processTime(30 + rand(20));
 	clearMenu();
@@ -2714,7 +2729,7 @@ public function NineTailsTimePassedNotify():void {
 		}
 		else if (isNineTails(pc) || pc.isPsionic()) {
 			if(!pc.armor.hasRandomProperties) { // first time message
-				eventBuffer += "\n\nYou feel your power resonating with your bands... You are fully in tune with them! Enchantment is now powerful enough to provide some real protection from attacks as well, and glamour effect is more powerful too.";
+				eventBuffer += "\n\nYou feel your power resonating with your bands... You are fully in tune with them! Enchantment is now powerful enough to provide some real protection from attacks as well, and glamour effect is more efective too.";
 			}
 			pc.armor.type = GLOBAL.ARMOR;
 			pc.armor.tooltip = IllusoryAttire.descBasic + (isNineTails(pc) ? IllusoryAttire.descNineTails : IllusoryAttire.descPsionic);

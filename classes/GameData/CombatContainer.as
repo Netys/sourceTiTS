@@ -2299,7 +2299,7 @@ package classes.GameData
 				}
 				output(", but they can still see vestiges of ");
 				if (pc.hasCock()) output("[pc.cumColor]");
-				if (pc.cumColor != pc.girlCumColor || !pc.hasCock()) {
+				if (pc.cumType != pc.girlCumType || !pc.hasCock()) {
 					if (pc.hasVagina() && pc.hasCock()) output(" and ");
 					if (pc.hasVagina()) output("[pc.girlCumColor]");
 				}

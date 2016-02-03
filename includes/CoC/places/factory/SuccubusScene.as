@@ -574,23 +574,21 @@ public function DemonFactorySuccubusDefeated():void
 	clearOutput();
 	clearMenu();
 	
-	if (enemy.lustQ() > 99) output("You smile in satisfaction as the [enemy.name] gives up on fighting you and starts masturbating, begging for you to fuck her.");
-	else output("You smile in satisfaction as the [enemy.name] collapses, unable to continue fighting.");
+	if (enemy.lustQ() > 99) output("You smile in satisfaction as the [enemy.name] gives up on fighting you and starts masturbating, begging for you to fuck her.\n\n");
+	else output("You smile in satisfaction as the [enemy.name] collapses, unable to continue fighting.\n\n");
 	pc.lust(1);
 	flags["COC.FACTORY_SUCCUBUS_DEFEATED"] = 1;
 	
-	if (!pc.hasGenitals() || pc.lust() < 33)
+	addDisabledButton(0, "Rape", "Rape", "This scene requires you to have genitals and sufficient arousal.");
+	addDisabledButton(1, "Dildo Rape", "Dildo Rape", "This scene requires you to have genitals and sufficient arousal. Deluxe Dildo exclusive scene.");
+	
+	if (pc.hasGenitals() && pc.lust() >= 33)
 	{
-		addButton(0, "Next", DemonFactoryDoLeaveSuccubus);
-		return;
+		output("Now would be the perfect opportunity to taste the fruits of her sex-ready form...  Do you fuck her?");
+		
+		addButton(0, "Rape", DemonFactoryDoRapeSuccubus);
+		if (pc.hasKeyItem("Deluxe Dildo")) addButton(1, "Dildo Rape", DemonFactoryDildoSuccubus);
 	}
-	
-	output("  Now would be the perfect opportunity to taste the fruits of her sex-ready form...\n\nDo you fuck her?");
-
-	
-	addButton(0, "Rape", DemonFactoryDoRapeSuccubus);
-	if (pc.hasKeyItem("Deluxe Dildo")) addButton(1, "Dildo Rape", DemonFactoryDildoSuccubus);
-	else addDisabledButton(1, "Dildo Rape", "Dildo Rape", "Deluxe Dildo exclusive scene.");
 	addButton(14, "Leave", DemonFactoryDoLeaveSuccubus);
 }
 
