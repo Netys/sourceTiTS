@@ -21,11 +21,6 @@ public function exploreDesert():void
 	var choice:Array = [];
 	var chance:Array = [];
 	
-	//if (rand(40) == 0) {
-		//kGAMECLASS.exgartuan.fountainEncounter();
-		//return;
-	//}
-	
 	//Helia monogamy fucks
 	//if (flags["COC.PC_PROMISED_HEL_MONOGAMY_FUCKS"] == 1 && flags[kFLAGS.HEL_RAPED_TODAY] == 0 && rand(10) == 0 && pc.gender > 0 && !kGAMECLASS.helScene.followerHel()) {
 		//kGAMECLASS.helScene.helSexualAmbush();
@@ -105,6 +100,9 @@ public function exploreDesert():void
 	
 	choice.push(encounterASandTarp);
 	chance.push(2);
+	
+	choice.push(fountainEncounter);
+	chance.push(20);
 	
 	//MAKE YOUR CHOICE
 	WeightedRandom(choice, chance, true)();
