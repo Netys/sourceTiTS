@@ -722,8 +722,7 @@ package classes.Items.Transformatives
 					else output(" settles");
 					output(" in somewhere just above your dick, and all that's left beneath is a smooth patch of skin. No one would ever know you had balls.");
 					
-					target.ballSizeRaw = ((target.ballSizeRaw * target.ballSizeRaw * target.balls) / 2);
-					target.balls = 0;
+					target.makeBallsInternal();
 					
 					changes++;
 					surprise = true;

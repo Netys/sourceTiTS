@@ -179,6 +179,7 @@ package classes.Items.Transformatives
 				target.addLegFlag(GLOBAL.FLAG_TENDRIL);
 				target.addLegFlag(GLOBAL.FLAG_SCALED);
 				target.legType = GLOBAL.TYPE_NAGA;
+				target.makeBallsInternal();
 				changes++;
 			}
 			if (rand(4) == 0 && target.gills && changes < changeLimit) {

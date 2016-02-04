@@ -9,7 +9,6 @@ import classes.Engine.Utility.*;
 // Sheila encounter
 // Isabella encounter
 // Isabella/Hel interactions
-// Owca
 public function explorePlains():void { 
 	showName("\nPLAINS");
 	IncrementFlag("COC.EXPLORED_PLAINS");
@@ -47,10 +46,10 @@ public function explorePlains():void {
 		return;
 	}
 	//Find Owca
-	//if ((pc.level >= 8 || flags["COC.EXPLORED_PLAINS"] > 50) && flags["COC.EXPLORED_PLAINS"] % 25 == 0 && flags["COC.OWCA_UNLOCKED"] == 0) {
-		//kGAMECLASS.owca.gangbangVillageStuff();
-		//return;
-	//}
+	if ((pc.level >= 8 || flags["COC.EXPLORED_PLAINS"] > 50) && flags["COC.EXPLORED_PLAINS"] % 25 == 0 && flags["COC.OWCA_UNLOCKED"] == undefined) {
+		gangbangVillageStuff();
+		return;
+	}
 	//Bazaar!
 	if (flags["COC.EXPLORED_PLAINS"] % 10 == 0 && flags["COC.BAZAAR_ENTERED"] != 1) {
 		findBazaar();

@@ -5,9 +5,6 @@ import classes.Engine.Utility.*;
 
 // TODO:
 // Hel hook
-// goblin salon
-// Ceraph
-// worms
 // xmas event
 public function exploreMountain():void { 
 	showName("\nMOUNTAIN");

@@ -1079,7 +1079,7 @@ package classes {
 				//ballSizeRaw = ((ballSizeRaw * ballSizeRaw * balls) / 2);
 				
 				//If diameter is greater than six inches, reduce size to make diameter be six. Only so much room inside.
-				if(ballDiameter() >= 6) ballSizeRaw = 6*Math.PI;
+				ballSizeRaw = Math.min(6 * Math.PI, ballSizeRaw * ballSizeRaw * balls / 2);
 			}
 			balls = 0;
 		}

@@ -56,7 +56,7 @@ package classes.GameData
 			combatContainer.setPlayerGroup(param);
 			_friendlyCharacters = param;
 		}
-		public static function getFriendlyCharacters():Array
+		public static function getFriendlyCharacters():/*Creature*/Array
 		{
 			return _friendlyCharacters;
 		}
@@ -77,7 +77,7 @@ package classes.GameData
 			combatContainer.setEnemyGroup(param);
 			_hostileCharacters = param;
 		}
-		public static function getHostileCharacters():Array
+		public static function getHostileCharacters():/*Creature*/Array
 		{
 			return _hostileCharacters;
 		}

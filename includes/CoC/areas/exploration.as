@@ -107,7 +107,7 @@ public function placesCount():int {
 	if (flags["COC.BOAT_DISCOVERED"] == 1) places++;
 	//if (flags[kFLAGS.FOUND_CATHEDRAL] > 0) places++;
 	if (flags["COC.WHITNEY_MET"] >= 3) places++; 
-	//if (flags[kFLAGS.OWCA_UNLOCKED] > 0) places++;
+	if (flags["COC.OWCA_UNLOCKED"] == 1) places++;
 	if (flags["COC.GOBLIN_SALON_FOUND"] > 0) places++;
 	if (flags["COC.TEL_ADRE_KNOWN"] >= 1) places++;
 	//if (flags[kFLAGS.AMILY_VILLAGE_ACCESSIBLE] > 0) places++;
@@ -142,7 +142,7 @@ public function showPlacesMenu():Boolean {
 	//}
 	if (dungeonsKnown() > 0) addButton(4, "Dungeons", showDungeonsMenu, null, "Dungeons", "Delve into dungeons.");
 	if (flags["COC.WHITNEY_MET"] >= 3) addButton(5, "Farm", farmExploreEncounter, null, "Farm", "Visit Whitney's farm.");
-	//if (flags[kFLAGS.OWCA_UNLOCKED] == 1) addButton(6, "Owca", kGAMECLASS.owca.gangbangVillageStuff, null, null, null, "Visit the sheep village of Owca, known for its pit where a person is hung on the pole weekly to be gang-raped by the demons.");
+	if (flags["COC.OWCA_UNLOCKED"] == 1) addButton(6, "Owca", gangbangVillageStuff, null, "Owca", "Visit the sheep village of Owca, known for its pit where a person is hung on the pole weekly to be gang-raped by the demons.");
 	if (flags["COC.GOBLIN_SALON_FOUND"] > 0) addButton(7, "Salon", salonGreeting, null, "Salon", "Visit the salon for hair services.");
 	if (flags["COC.TEL_ADRE_KNOWN"] >= 1) addButton(8, "Tel'Adre", telAdreMenu, null, "Tel'Adre", "Visit the city of Tel'Adre in desert, easily recognized by the massive tower.");
 	//if (flags["COC.AMILY_VILLAGE_ACCESSIBLE"] > 0) addButton(10, "Town Ruins", exploreVillageRuin, null, "Town Ruins", "Visit the village ruins.\n\nTimes explored: " + flags["COC.EXPLORED_AMILY_VILLAGE"]);

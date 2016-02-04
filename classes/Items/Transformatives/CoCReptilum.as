@@ -194,6 +194,45 @@ package classes.Items.Transformatives
 				changes++;
 			}
 			
+			var changedBalls:Boolean = false;
+			if ((target.ballSizeRaw <= 2 && target.balls > 0 && target.ballsUnlocked(0)) || (target.ballSizeRaw > 2 && target.ballSizeUnlocked(target.ballSizeRaw - 2)) && (changes < changeLimit && rand(5) == 0))
+			{
+				output("\n\nA flash of pain ripples through your body for a moment, centering on your groin. You wince, your hands darting between your legs. It's not your [pc.cocks] that's to blame though.... Your [pc.sack] aches, and you can feel the skin pulling upward");
+				if (target.ballSizeRaw <= 2) output(" more than usual");
+				output(". The discomfort rises as you close your eyes and realize with some trepidation that your testicle");
+				if (target.balls > 1) output("s are");
+				else output(" is");
+				output(" retreating upward, pulling into your body.");
+				
+				if (target.ballSizeRaw <= 2)
+				{
+					output(" They shift around, your internal anatomy rearranging to fit your new... configuration. Your testicle");
+					if (target.balls > 1) output("s settle");
+					else output(" settles");
+					output(" in somewhere just above your dick, and all that's left beneath is a smooth patch of skin. No one would ever know you had balls.");
+					
+					target.makeBallsInternal();
+				}
+				else
+				{
+					target.ballSizeRaw -= 2;
+					output(" <b>Your balls have shrunk!</b>");
+				}
+				
+				changes++;
+				changedBalls = true;
+			}
+			
+			if (target.balls == 0 && (target.refractoryRate < 2.5 || target.cumMultiplierRaw < 10) && changedBalls == false && (changes < changeLimit && rand(3) == 0))
+			{
+				//(If balls already removed, increase cum production!)
+				output("\n\nThere's a heat rising in your gut, something warm and not altogether unpleasant. You press a hand to your stomach and feel your insides churning. After a moment the heat passes and you feel... more productive, somehow.");
+				
+				if (target.refractoryRate < 2.5) target.refractoryRate += 0.25;
+				if (target.cumMultiplierRaw < 10) target.cumMultiplierRaw += 1;
+				changes++;
+			}
+			
 			// reptile vag, Naleen copypaste
 			var x:int = 0;
 			var y:int = 0;
