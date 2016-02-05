@@ -9932,6 +9932,10 @@ package classes {
 			if (hairLength == 0) {
 				if (hasFur()) {
 					if (rand(2) == 0) descript += "furry ";
+					else {
+						if (forceColor || rand(2) == 0) descript += furColor;
+						return descript + "head-fur";
+					}
 				}
 				else if (hasScales()) {
 					if (rand(2) == 0) descript += "scaly ";
@@ -10082,6 +10086,10 @@ package classes {
 			if (hairLength == 0) {
 				if (hasFur()) {
 					if (rand(2) == 0) descript += "furry ";
+					else {
+						if (forceColor || rand(2) == 0) descript += furColor;
+						return descript + "head-fur";
+					}
 				}
 				else if (hasScales()) {
 					if (rand(2) == 0) descript += "scaly ";
@@ -13546,8 +13554,10 @@ package classes {
 		 */
 		public function slut():Number
 		{
-			if (isBimbo() || isBro()) return 100;
-			return Math.max(libido(), cor(), exhibitionism() / 4); // Should corruption work outside of Mareth? Not that this function would be used outside of Mareth...
+			var score:Number = exhibitionism() / 4;
+			score += Math.max(libido(), cor()); // Should corruption work outside of Mareth? Not that this function would be used outside of Mareth...
+			if (isBimbo() || isBro()) score += 100;
+			return score;
 		}
 		
 		// Calculates the value of body strength (carry threshold).

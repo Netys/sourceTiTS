@@ -6,6 +6,8 @@ import classes.Engine.Utility.*;
 include "AuntNancy.as";
 include "Edryn.as";
 include "Niamh.as";
+include "Urta.as";
+include "UrtaSex.as";
 
 private function enterBarTelAdre():void {
 	//if(isThanksgiving() && flags[kFLAGS.PIG_SLUT_DISABLED] == 0) kGAMECLASS.pigSlutRoastingGreet();
@@ -157,7 +159,7 @@ public function barTelAdre():void {
 		//button = anotherButton(button,"ScyllaCats",katherine.katherineGreeting);
 	//}
 	//URTA
-	//if (kGAMECLASS.urta.urtaAtBar()) {
+	if (urtaAtBar()) {
 		////Scylla & The Furries Foursome
 		//if (scylla.action == Scylla.SCYLLA_ACTION_FURRY_FOURSOME)
 		//{
@@ -174,14 +176,15 @@ public function barTelAdre():void {
 			//flags[kFLAGS.URTA_TIME_SINCE_LAST_CAME] = 4;
 			//button = anotherButton(button, "Back Room", kGAMECLASS.urta.scyllaAndUrtaSittingInATree);
 		//}
-		//else if (kGAMECLASS.urta.urtaBarDescript()) {
-			//if (auntNancy.auntNancy(false) && flags[kFLAGS.URTA_INCUBATION_CELEBRATION] == 0 && kGAMECLASS.urta.pregnancy.type == PregnancyStore.PREGNANCY_PLAYER) {
-				//kGAMECLASS.urtaPregs.urtaIsHappyAboutPregnancyAtTheBar();
+		//else 
+		if (urtaBarDescript()) {
+			//if (auntNancy.auntNancy(false) && flags["COC.URTA_INCUBATION_CELEBRATION"] == undefined && urtaIsPregnant(true)) {
+				//urtaIsHappyAboutPregnancyAtTheBar();
 				//return;
 			//}
-			//button = anotherButton(button,"Urta",kGAMECLASS.urta.urtaBarApproach);
-		//}
-	//}
+			addButton(counter++, "Urta", urtaBarApproach);
+		}
+	}
 	//VALA
 	if(purifiedFaerieBitchBar()) addButton(counter++, "Vala", chooseValaInBar);
 

@@ -314,7 +314,6 @@ private function maraeStealLethicite():void {
 			if(pc.cocks.length > 1) output("largest ", false);
 			output(pc.cockDescript(pc.biggestCockIndex()), false);
 			output("'s tip.  Immediately a powerful suction draws your " + pc.cockDescript(pc.biggestCockIndex()) + " inside the tentacle-maw, burying you up to the base in squirming pleasure.   Marae watches the plant go to work, squeezing teasingly until you orgasm.  It takes mere moments for the gifted tentacle to achieve its goal.  Your cum makes a tasty treat for the plant-beast, and it sucks and sucks until your body feels empty and drained.\n\n", false);
-			pc.orgasm();
 			output("\"<i>Oh that simply won't do,</i>\" Marae whispers, cupping your ", false);
 			if(pc.balls > 0) output(pc.ballsDescript(), false);
 			else {
@@ -326,7 +325,10 @@ private function maraeStealLethicite():void {
 			output("Marae steps into your field of view, and pulls the tentacle free.  Your " + pc.cockDescript(pc.biggestCockIndex()) + " twitches pitifully, blasting a few massive loads onto your belly as your orgasm withers and dies from lack of stimulation.\n\n", false);
 			output("\"<i>Sorry about the pain, I had to tweak your body to make you a true breeder.  You can go now stud.  I expect the monsters ought to worry about you now, or they'll all have dripping twats and swollen bellies,</i>\" apologizes Marae.  She turns away from you, returning to the embrace of her tree's tentacles, sinking into debauchery.  You stagger into your boat and row away, oblivious to the stream to pre-cum dripping from your "+ pc.cocksDescript() +".", false);
 			pc.createPerk("Marae's Gift: Stud", 0, 0, 0, 0, "Increases your cum production and potency greatly.");
-			doNext(returnToCampUseTwoHours);
+			processTime(90 + rand(60));
+			pc.orgasm();
+			clearMenu();
+			addButton(0, "Next", mainGameMenu);
 		}
 		//FEM)
 		else {
@@ -641,8 +643,10 @@ private function MaraePt2RoundIIIPrizes():void {
 			output("<b>(New Perk Gained: Marae's Gift - Fertility)</b>", false);
 		}
 	}
+	processTime(90 + rand(60));
 	pc.orgasm();
-	doNext(returnToCampUseTwoHours);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 private function MaraeIIFlyAway():void {

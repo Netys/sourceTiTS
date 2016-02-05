@@ -1062,6 +1062,11 @@ private function edrynPregChance():void {
 	//}
 }
 
+// stub
+public function edrynisPregnant():Boolean {
+	return false;
+}
+
 
 //Male PC + Edryn, preferred at camp with preggo variance + bonus if some BJ, scent-induced rut
 //have the Scene taking place in Tel'Adre instead of the PC's Camp.

@@ -1638,8 +1638,10 @@ private function tutorAnemoneKid():void
 		output("\nYour bleary eyes open to a familiar-looking upside-down blue face.  It takes a minute before your brain can reconstruct the events preceding your lapse in consciousness; as soon as your expression gives a hint of understanding, Kid A sheepishly greets you.");
 		output("\n\n\"<i>Um... hi.</i>\"");
 		//(lose 8 hours, restore HP amount consonant with 8hrs rest)
-		doNext(returnToCampUseEightHours);
-		//pc.createStatusAffect(StatusAffects.PostAnemoneBeatdown, 0, 0, 0, 0);
+		processTime(7 * 60 + rand(2 * 60));
+		sleepHeal();
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
 		return;
 	}
 	
@@ -1701,10 +1703,12 @@ private function kidASex(cont:Boolean = true):Boolean
 		}
 		output("\n\nSpent, your blue girl slumps down onto your chest, not even bothering to avoid the puddle of her own spunk or pull your cock out, and is quickly asleep.  Your eyes close as sleep overtakes you as well, though the venom trickling into your chest as she rests her head on it ensures the scene will play over and over in your dreams...");
 		//pass 2 hr, remove 100 lust and add 30 base lust before resistance, set Kidswag = 3
-		pc.orgasm();
-		dynStats("lus", 30);
 		if (flags["COC.ANEMONE_KID"] < 3) flags["COC.ANEMONE_KID"] = 3;
-		doNext(returnToCampUseTwoHours);
+		processTime(90 + rand(60));
+		pc.orgasm();
+		pc.lust(30);
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
 		return true;
 	}
 	//sex revisited, for when KidXP >= 40 and confidence is mounting
@@ -1785,9 +1789,11 @@ private function kidASex(cont:Boolean = true):Boolean
 
 		output("\n\nYou lay back, spent, and slip from consciousness.");
 		//lose 100 lust, pass 2 hr, if Kidswag = 1, set Kidswag = 2
-		pc.orgasm();
 		if (flags["COC.ANEMONE_KID"] == 1) flags["COC.ANEMONE_KID"] = 2;
-		doNext(returnToCampUseTwoHours);
+		processTime(90 + rand(60));
+		pc.orgasm();
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
 		return true;
 	}
 	//femsex

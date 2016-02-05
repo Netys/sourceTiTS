@@ -228,7 +228,7 @@ public function meditateInForest():void {
 		output("\n\nYou ponder and get an idea - the mouse could stay at your camp.  There's safety in numbers, and it would be easier for the two of you to get together for meditation sessions.  Do you want Jojo's company at camp?");
 		clearMenu();
 		addButton(0, "Yes", acceptJojoIntoYourCamp);
-		addButton(1, "No", returnToCampUseTwoHours);
+		addButton(1, "No", mainGameMenu);
 		return;
 	}
 	

@@ -606,7 +606,9 @@ private function SWCentaurMore(argument:Number):Boolean {
 				output("\n\n", false);
 				//[SW_1]
 				SWCentaurMore(1);
-				doNext(returnToCampUseTwoHours);
+				processTime(90 + rand(60));
+				clearMenu();
+				addButton(0, "Next", mainGameMenu);
 				//Return true to indicate not to continue the scene.
 				return true;
 			}

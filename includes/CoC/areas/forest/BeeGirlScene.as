@@ -406,12 +406,14 @@ private function beeEncounterSheBeatsYouRegularlyAndYouLetHerLaysEggs(clearScree
 		output("You have no idea for how long it goes on for, or how many times the bee girl managed to get you to orgasm despite your lack of endowments, but the whole time, you felt nothing but bliss and release.\n\n");
 	}
 	output("Once the last of the eggs are pushed deep inside your bowels, the bee girl sighs and slowly removes the knotted implement that was filling your " + pc.buttDescript() + ".  She sets you back down on the flower and gives you a full mouth kiss before saying <i>“Zzzee you next time...”</i>  In a few moments, you drift off to sleep.  You wake up several hours later, feeling giddy, and you notice that something wet is leaking from your anus.\n\n");
-	pc.orgasm();
 	//dynStats("int", -.5);
 	//pc.slimeFeed();
 	//if (rand(2) == 0) pc.buttKnockUp(PregnancyStore.PREGNANCY_BEE_EGGS, PregnancyStore.INCUBATION_BEE, 1, 1); //Anal bee pregnancy!
 	pc.buttChange(25, true);
-	doNext(returnToCampUseFourHours);
+	processTime(4 * 60);
+	pc.orgasm();
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 //private function beeEncounterWithExgartuan():void {
@@ -595,7 +597,6 @@ private function beeEncounterClassicSex(postCombat:Boolean = true):void {
 			output("After hours of her forcefully filling your hole, her stinger pumping what feels like gallons of her bee-seed into your bowels while awkwardly dealing with your needs; she finally pulls out. She smiles and lies down on your back and your legs finally give out from exhaustion.\n\n", false);
 			output("When you awaken, you're covered in honey and what you can only assume is the lubrication from her ovipositor. You stand with a bit of a struggle and notice that in your wild state you seem to have devastated the little clearing, as it's covered with broken trees and trampled plants. A thin trail of honey leads away from the devastation into the undergrowth.", false);
 		}
-		pc.orgasm();
 		//dynStats("int", -.5);
 		//pc.slimeFeed();
 		//Anal bee pregnancy!
@@ -615,7 +616,6 @@ private function beeEncounterClassicSex(postCombat:Boolean = true):void {
 		//epilogue
 		output("You awaken, your nose full of a honey like scent, some strange fluid on your back, and the feeling of something leaking from you.", false);
 		pc.buttChange(25, true);
-		pc.orgasm();
 		//dynStats("int", -.5);
 		//Anal bee pregnancy!
 		//if (rand(3) == 0) pc.buttKnockUp(PregnancyStore.PREGNANCY_BEE_EGGS, PregnancyStore.INCUBATION_BEE, 1, 1);
@@ -663,18 +663,21 @@ private function beeEncounterClassicSex(postCombat:Boolean = true):void {
 		output("you drive yourself to orgasm after orgasm.  For hours you lie there, licking, masturbating, and allowing your backside to be slowly filled with sweet fluid and the occasional bump of what you can only assume is an egg.\n\n", false);
 		//Recovery
 		output("Eventually you realize she is no longer feeding you honey, and the bee-girl pulls her shriveled organ from your rectum.  She pats you on the head and begins to stagger away, honey dripping from between her thighs and her once bloated rear-abdomen now looking more appropriate for her thin frame.", false);
-		pc.orgasm();
 		//dynStats("int", -.5);
 		//pc.slimeFeed();
 		//Anal bee pregnancy!
 		//if (rand(3) == 0) pc.buttKnockUp(PregnancyStore.PREGNANCY_BEE_EGGS, PregnancyStore.INCUBATION_BEE, 1, 1);
 		pc.buttChange(25, true);
 	}
+	processTime(4*60);
+	pc.orgasm();
 	if (postCombat) {
-		processTime(4*60);
 		CombatManager.genericLoss();
 	}
-	else doNext(returnToCampUseFourHours);
+	else {
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
+	}
 }
 
 public function beeSexForCocks(clearScreen:Boolean = true):void {
