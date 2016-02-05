@@ -2669,8 +2669,8 @@ private function useRedoctoOnKatsKnot():void {
 
 	output("She rewards you with a glowing, orgasmic smile.  “<i>That was... incredible.  Thank you so much for the present... did you want to do anything else?  Maybe... have a little fun?</i>” she asks, her voice low and husky with desire.\n\n");
 	//use 1x Reducto, reduce Kat knot size by 2, increase PC lust value, go to Kat sex menu
-	cat.cocks[0].knotMultiplier -= 1.25;
-	if (cat.cocks[0].knotMultiplier < 1.5) cat.cocks[0].knotMultiplier = 1.5;
+	cat.cocks[0].knotMultiplier -= 0.55;
+	if (cat.cocks[0].knotMultiplier < 1.25) cat.cocks[0].knotMultiplier = 1.25;
 	if (cat.cockTotal() > 1) cat.cocks[1].knotMultiplier = cat.cocks[0].knotMultiplier;
 	kath = cat; // enforce save
 	pc.lust(10 + pc.libido() / 20);
@@ -2780,11 +2780,11 @@ private function giveKatACaninePepper():void {
 		var oldKnot:Number = cat.cocks[0].knotMultiplier;
 		cat.shiftCock(0, GLOBAL.TYPE_CANINE);
 		cat.cocks[0].knotMultiplier = oldKnot;
-		cat.cocks[0].cThicknessRatio = 4 / 3;
+		cat.cocks[0].cThicknessRatioRaw = 1;
 		if (cat.cockTotal() > 1) {
 			cat.shiftCock(1, GLOBAL.TYPE_CANINE);
 			cat.cocks[1].knotMultiplier = oldKnot;
-			cat.cocks[1].cThicknessRatio = 4 / 3;
+			cat.cocks[1].cThicknessRatioRaw = 1;
 		}
 		
 		output("The pepper doesn't disappoint and you watch the magic stretch her cock" + (cat.cockTotal() == 1 ? "" : "s") + " outwards, absorbing " + (cat.cockTotal() == 1 ? "its" : "their") + " barbs.  Kath once again sports a " + cat.multiCockDescript() + " and a happy, horny grin to go with " + (cat.cockTotal() == 1 ? "it" : "them") + ".");
@@ -2813,11 +2813,11 @@ private function giveKatABulbousPepper():void {
 			oldKnot = cat.cocks[0].knotMultiplier;
 			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
 			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatio = 4 / 3;
+			cat.cocks[0].cThicknessRatioRaw = 1;
 			if (cat.cockTotal() > 1) {
 				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
 				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatio = 4 / 3;
+				cat.cocks[1].cThicknessRatioRaw = 1;
 			}
 			if (cat.cockTotal() > 1)
 				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
@@ -2838,11 +2838,11 @@ private function giveKatABulbousPepper():void {
 			oldKnot = cat.cocks[0].knotMultiplier;
 			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
 			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatio = 4 / 3;
+			cat.cocks[0].cThicknessRatioRaw = 1;
 			if (cat.cockTotal() > 1) {
 				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
 				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatio = 4 / 3;
+				cat.cocks[1].cThicknessRatioRaw = 1;
 			}
 			if (cat.cockTotal() > 1)
 				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
@@ -2869,11 +2869,11 @@ private function giveKatABulbousPepper():void {
 			oldKnot = cat.cocks[0].knotMultiplier;
 			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
 			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatio = 4 / 3;
+			cat.cocks[0].cThicknessRatioRaw = 1;
 			if (cat.cockTotal() > 1) {
 				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
 				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatio = 4 / 3;
+				cat.cocks[1].cThicknessRatioRaw = 1;
 			}
 			if (cat.cockTotal() > 1)
 				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
@@ -2926,11 +2926,11 @@ private function giveKatAKnottyPepper():void {
 			oldKnot = cat.cocks[0].knotMultiplier;
 			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
 			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatio = 4 / 3;
+			cat.cocks[0].cThicknessRatioRaw = 1;
 			if (cat.cockTotal() > 1) {
 				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
 				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatio = 4 / 3;
+				cat.cocks[1].cThicknessRatioRaw = 1;
 			}
 			if (cat.cockTotal() > 1)
 				output("Her cocks stretch outwards, absorbing their barbs and getting fatter along their whole length.  In a few moments Kath is once again sporting a pair of " + cat.multiCockDescript() + ".");
@@ -2940,7 +2940,7 @@ private function giveKatAKnottyPepper():void {
 		pc.lust(10 + pc.libido() / 20);
 		pc.destroyItem(new CoCCaninePepperKnotty());
 	}
-	else if (cat.cocks[0].knotMultiplier >= 2,75) { //Need submissiveness 1+ to grow
+	else if (cat.cocks[0].knotMultiplier >= 2,35) { //Need submissiveness 1+ to grow
 		output("Kath takes the pepper a little uncertainly.  “<i>It brings back some good memories, from after I met you; it also brings back memories of being an outcast among my own kind.</i>”\n\n");
 		output("She tries to give the pepper back but you close your hand around hers and tell her to concentrate on the good memories.  She knows you won’t think she’s ugly.  The two of you got along just fine when she had a massive knot.  In a way it’s what brought you two together." + (flags["COC.KATHERINE_URTA_AFFECTION"] > 10 ? "  Besides, wouldn’t it be fun to share it with Urta?" : "") + "\n\n");
 		if (kathSubmissiveness() < 1) {
@@ -2956,11 +2956,11 @@ private function giveKatAKnottyPepper():void {
 				oldKnot = cat.cocks[0].knotMultiplier;
 				cat.shiftCock(0, GLOBAL.TYPE_CANINE);
 				cat.cocks[0].knotMultiplier = oldKnot;
-				cat.cocks[0].cThicknessRatio = 4 / 3;
+				cat.cocks[0].cThicknessRatioRaw = 1;
 				if (cat.cockTotal() > 1) {
 					cat.shiftCock(1, GLOBAL.TYPE_CANINE);
 					cat.cocks[1].knotMultiplier = oldKnot;
-					cat.cocks[1].cThicknessRatio = 4 / 3;
+					cat.cocks[1].cThicknessRatioRaw = 1;
 				}
 				if (cat.cockTotal() > 1)
 					output("Her cocks stretch outwards, absorbing their barbs and getting fatter along their whole length.  In a few moments Kath is once again sporting a pair of " + cat.multiCockDescript() + ".");
@@ -2968,7 +2968,7 @@ private function giveKatAKnottyPepper():void {
 			}
 			output("\n\nIt takes almost a minute before Kath’s knot" + (cat.cockTotal() == 1 ? " reacts" : "s react") + " to the pepper.  When the change comes it happens quickly - her knot" + (cat.cockTotal() == 1 ? " just inflates" : "s just inflate") + " without any fanfare, gaining a few inches.\n\n");
 			output("Kath watches it happen almost without any reaction.  You would guess she’s eaten so many her body has developed a resistance to the effects.  Apart from the knot" + (cat.cockTotal() == 1 ? ", which is throbbing slowly, the only indication that she just ate a magic imbued pepper is her rock solid erection." : "s, which are throbbing slowly, the only indications that she just ate a magic imbued pepper are her rock solid twin erections."));
-			cat.cocks[0].knotMultiplier += 1.25;
+			cat.cocks[0].knotMultiplier += 0.55;
 			if (cat.cocks[0].knotMultiplier > 4) cat.cocks[0].knotMultiplier = 4;
 			if (cat.cockTotal() > 1) cat.cocks[1].knotMultiplier = cat.cocks[0].knotMultiplier;
 			flags["COC.KBIT_SUB_GROW_KNOT"] = 1; //Have regrown her knot to full size at least once
@@ -2985,11 +2985,11 @@ private function giveKatAKnottyPepper():void {
 				oldKnot = cat.cocks[0].knotMultiplier;
 				cat.shiftCock(0, GLOBAL.TYPE_CANINE);
 				cat.cocks[0].knotMultiplier = oldKnot;
-				cat.cocks[0].cThicknessRatio = 4 / 3;
+				cat.cocks[0].cThicknessRatioRaw = 1;
 				if (cat.cockTotal() > 1) {
 					cat.shiftCock(1, GLOBAL.TYPE_CANINE);
 					cat.cocks[1].knotMultiplier = oldKnot;
-					cat.cocks[1].cThicknessRatio = 4 / 3;
+					cat.cocks[1].cThicknessRatioRaw = 1;
 				}
 				if (cat.cockTotal() > 1)
 					output("Her cocks stretch outwards, absorbing their barbs and getting fatter along their whole length.  In a few moments Kath is once again sporting a pair of " + cat.multiCockDescript() + ".");
@@ -2997,8 +2997,8 @@ private function giveKatAKnottyPepper():void {
 			}
 		output("It takes almost a minute before Kath’s knot" + (cat.cockTotal() == 1 ? " reacts" : "s react") + " to the pepper.  When the change comes it happens quickly - her knot" + (cat.cockTotal() == 1 ? " just inflates" : "s just inflate") + " without any fanfare, gaining a few inches.\n\n");
 		output("Kath watches it happen almost without any reaction.  You would guess she’s eaten so many her body has developed a resistance to the effects.  Apart from the knot" + kath.CockMultiple(", which is slowly shrinking, the only indication that she just ate a magic imbued pepper is her rock solid erection.", "s, which are slowly shrinking, the only indications that she just ate a magic imbued pepper are her rock solid twin erections."));
-		cat.cocks[0].knotMultiplier += 1.25;
-		if (cat.cocks[0].knotMultiplier > 2.75) cat.cocks[0].knotMultiplier = 2.75;
+		cat.cocks[0].knotMultiplier += 0.55;
+		if (cat.cocks[0].knotMultiplier > 2.35) cat.cocks[0].knotMultiplier = 2.35;
 		if (cat.cockTotal() > 1) cat.cocks[1].knotMultiplier = cat.cocks[0].knotMultiplier;
 		pc.lust(10 + pc.libido() / 20);
 		pc.destroyItem(new CoCCaninePepperKnotty());
@@ -3026,11 +3026,11 @@ private function giveKatADoublePepper():void {
 			oldKnot = cat.cocks[0].knotMultiplier;
 			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
 			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatio = 4 / 3;
+			cat.cocks[0].cThicknessRatioRaw = 1;
 			if (cat.cockTotal() > 1) {
 				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
 				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatio = 4 / 3;
+				cat.cocks[1].cThicknessRatioRaw = 1;
 			}
 			if (cat.cockTotal() > 1)
 				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
@@ -3055,11 +3055,11 @@ private function giveKatADoublePepper():void {
 			oldKnot = cat.cocks[0].knotMultiplier;
 			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
 			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatio = 4 / 3;
+			cat.cocks[0].cThicknessRatioRaw = 1;
 			if (cat.cockTotal() > 1) {
 				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
 				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatio = 4 / 3;
+				cat.cocks[1].cThicknessRatioRaw = 1;
 			}
 			if (cat.cockTotal() > 1)
 				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
@@ -3094,11 +3094,11 @@ private function giveKatAOverlyLargePepper():void {
 			oldKnot = cat.cocks[0].knotMultiplier;
 			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
 			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatio = 4 / 3;
+			cat.cocks[0].cThicknessRatioRaw = 1;
 			if (cat.cockTotal() > 1) {
 				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
 				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatio = 4 / 3;
+				cat.cocks[1].cThicknessRatioRaw = 1;
 			}
 			if (cat.cockTotal() > 1)
 				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
@@ -3134,11 +3134,11 @@ private function giveKatAOverlyLargePepper():void {
 			oldKnot = cat.cocks[0].knotMultiplier;
 			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
 			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatio = 4 / 3;
+			cat.cocks[0].cThicknessRatioRaw = 1;
 			if (cat.cockTotal() > 1) {
 				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
 				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatio = 4 / 3;
+				cat.cocks[1].cThicknessRatioRaw = 1;
 			}
 			output("  The effects of the pepper have also changed " + (cat.cockTotal() == 1 ? "it" : "them") + " back into canine cocks.");
 		}
@@ -3216,11 +3216,11 @@ private function giveKatWhiskerFruit():void {
 		var oldKnot:Number = cat.cocks[0].knotMultiplier;
 		cat.shiftCock(0, GLOBAL.TYPE_FELINE);
 		cat.cocks[0].knotMultiplier = oldKnot;
-		cat.cocks[0].cThicknessRatio = 2 / 3;
+		cat.cocks[0].cThicknessRatioRaw = 2 / 3;
 		if (cat.cockTotal() > 1) {
 			cat.shiftCock(1, GLOBAL.TYPE_FELINE);
 			cat.cocks[1].knotMultiplier = oldKnot;
-			cat.cocks[1].cThicknessRatio = 2 / 3;
+			cat.cocks[1].cThicknessRatioRaw = 2 / 3;
 		}
 		flags["COC.KBIT_SUB_CAT_DICK"] = 1; //Have given her a cat dick at least once
 		pc.lust(10 + pc.libido() / 20);
