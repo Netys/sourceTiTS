@@ -914,11 +914,18 @@ package classes.Items.Transformatives
 				}
 				else output(target.armTypeLockedMessage());
 			}
-			else if (target.armType == GLOBAL.TYPE_FELINE && !target.hasArmFlag(GLOBAL.FLAG_FURRED))
+			else if (target.armType == GLOBAL.TYPE_FELINE)
 			{
-				output("\n\nYou feel a powerful itch spread across your arms. You clutch at them, scratching violently as your hair grows and thickens, spreading out into a dark mat across your [pc.skin]. Within a few minutes, your arms are utterly covered in a thick, silky-smooth " + target.furColor + " fur! ");
-				target.addArmFlag(GLOBAL.FLAG_FURRED);
-				changes++;
+				if(!target.hasArmFlag(GLOBAL.FLAG_FURRED)) {
+					output("\n\nYou feel a powerful itch spread across your arms. You clutch at them, scratching violently as your hair grows and thickens, spreading out into a dark mat across your [pc.skin]. Within a few minutes, <b>your arms are utterly covered in a thick, silky-smooth " + target.furColor + " fur!</b> ");
+					target.addArmFlag(GLOBAL.FLAG_FURRED);
+					changes++;
+				}
+				if(!target.hasArmFlag(GLOBAL.FLAG_FURRED)) {
+					output("\n\nOpening your digits, you marvel at the appearance of small, [pc.skinTone] pads on the tips of your fingers. A larger one stretches across the top of your palm. They’re soft as hell and might feel pretty good in certain... tender areas. <b>You’ve got paw-like, padded feline arms!</b>");
+					target.addArmFlag(GLOBAL.FLAG_PAWS);
+					changes++;
+				}
 			}
 			
 			afterTF(target);

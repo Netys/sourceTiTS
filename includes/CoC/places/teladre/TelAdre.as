@@ -19,6 +19,9 @@ include "Tailor.as";
 include "UmasShop.as";
 include "Weapon.as";
 
+// NPCs
+include "Katherine.as";
+
 public function discoverTelAdre():void {
 	clearOutput();
 	clearMenu();
@@ -122,30 +125,32 @@ public function telAdreMenu():void {
 		//kGAMECLASS.urtaPregs.urtaIsAPregnantCopScene();
 	   //return;
 	//}
-	//switch (flags["COC.KATHERINE_UNLOCKED"]) {
-		//case undefined:
-		//case  0: //Still potentially recruitable
-			//if (flags["COC.KATHERINE_RANDOM_RECRUITMENT_DISABLED"] == undefined && pc.credits > 340 && rand(25) == 0) {
-				//if (flags["COC.KATHERINE_UNLOCKED"] == undefined)
-					//ambushByVagrantKittyKats()
-				//else repeatAmbushKatherineRecruitMent();
-				//return;
-			//}
-		//case  1: //In alley behind Oswald's
-		//case  2: //You are training her
-		//case  3: //You and Urta are training her
-			//break;
-		//case  4: //Employed
-			//if (!katherine.isAt(Katherine.KLOC_KATHS_APT) && flags["COC.KATHERINE_TRAINING"] >= 100) {
+	switch (flags["COC.KATHERINE_UNLOCKED"]) {
+		case undefined:
+		case -1:
+		case  0: //Still potentially recruitable
+			if (flags["COC.KATHERINE_LAST_AMBUSH"] != days && flags["COC.KATHERINE_RANDOM_RECRUITMENT_DISABLED"] == undefined && pc.credits >= 350 && rand(20) == 0) {
+				flags["COC.KATHERINE_LAST_AMBUSH"] = days; // can happen once a day
+				if (flags["COC.KATHERINE_UNLOCKED"] == undefined)
+					ambushByVagrantKittyKats()
+				else repeatAmbushKatherineRecruitMent();
+				return;
+			}
+		case  1: //In alley behind Oswald's
+		case  2: //You are training her
+		case  3: //You and Urta are training her
+			break;
+		case  4: //Employed
+			//if (!kathIsAt(KLOC_KATHS_APT) && flags["COC.KATHERINE_TRAINING"] >= 100) {
 				//katherineGetsEmployed();
 				//return;
 			//}
-		//default: //Has given you a spare key to her apartment
-			//if (hours < 10 && rand(12) == 0) { //If employed or housed she can sometimes be encountered while on duty
+		default: //Has given you a spare key to her apartment
+			//if (hours >= 5 && hours < 10 && rand(12) == 0) { //If employed or housed she can sometimes be encountered while on duty
 				//katherineOnDuty();
 				//return;
 			//}
-	//}
+	}
 	//if(flags["COC.ARIAN_PARK"] == undefined && rand(10) == 0 && flags["COC.NOT_HELPED_ARIAN_TODAY"] != days) {
 		//kGAMECLASS.arianScene.meetArian();
 		//return;
@@ -176,26 +181,17 @@ public function telAdreMenu():void {
 
 public function telAdreMenuShow():void { //Just displays the normal Tel'Adre menu options, no special events, no description. Useful if a special event has already played
 	var homes:Boolean = false;
-	//if (flags["COC.RAPHEAL_COUNTDOWN_TIMER"] == -2 && kGAMECLASS.raphael.RaphaelLikes())
-		//homes = true;
-	if (pc.hasKeyItem("Spare Key to Urta's House"))
-		homes = true;
-	if (flags["COC.KATHERINE_UNLOCKED"] >= 5)
-		homes = true;
-	//else if (flags["COC.ARIAN_PARK"] >= 4 && !arianFollower())
-		//homes = true;
 	clearMenu();
-	addButton(0, "Shops", armorShops);
-	addButton(1, "Bakery", bakeryuuuuuu);
-	addButton(2, "Bar", enterBarTelAdre);
-	addButton(3, "Gym", TelAdreGymDesc);
-	addDisabledButton(4, "Homes", "Homes", "You have no friends here.");
-	if (homes) addButton(4, "Homes", TelAdreHouses);
+	addButton(0, "Shops", armorShops, undefined, "Shops", "Check local shops.");
+	addButton(1, "Bakery", bakeryuuuuuu, undefined, "Bakery", "Visit bakery.");
+	addButton(2, "Bar", enterBarTelAdre, undefined, "Bar", "Visit \"Wet Bitch\" bar.");
+	addButton(3, "Gym", TelAdreGymDesc, undefined, "Gym", "Visit gym.");
+	addButton(4, "Homes", TelAdreHouses, undefined, "Homes", "If you have friends here, you can visit them.");
 	addDisabledButton(5, "Park", "Park", "You have nothing to do in park.");
 	//if (flags["COC.ARIAN_PARK"] > 0 && flags["COC.ARIAN_PARK"] < 4) addButton(5, "Park", arianSceneVisitThePark);
-	addButton(6, "Pawn", oswaldPawn);
-	addButton(7, "Tower", visitZeMagesTower);
-	addButton(14, "Leave", function():*{ processTime(15 + rand(5)); mainGameMenu(); });
+	addButton(6, "Pawn", oswaldPawn, undefined, "Gym", "You can always get rid of some junk here.");
+	addButton(7, "Tower", visitZeMagesTower, undefined, "Tower", "Mages tower is main landmark of Tel'Adre. Maybe you can find something useful there?");
+	addButton(14, "Leave", function():*{ processTime(15 + rand(5)); mainGameMenu(); }, undefined, "Leave", "Return to camp.");
 }
 
 private function armorShops():void {
@@ -239,6 +235,15 @@ public function TelAdreHouses():void {
 	//if (kGAMECLASS.urtaPregs.urtaKids() > 0 && pc.hasKeyItem("Spare Key to Urta's House") >= 0)
 		//addButton(2, "Urta's House", (katherine.isAt(Katherine.KLOC_URTAS_HOME) ? katherine.katherineAtUrtas : kGAMECLASS.urtaPregs.visitTheHouse));
 	//if (flags["COC.KATHERINE_UNLOCKED"] >= 5) addButton(3, "Kath's Apt", katherineVisitAtHome);
+
+	switch (flags["COC.KATHERINE_UNLOCKED"]) {
+		case 1:
+		case 2: addButton(3, "Kath's Alley", visitKatherine); break;
+		//case 3: addButton(3, "Safehouse", katherineTrainingWithUrta, undefined, "Safehouse", "Check Kath's training progress."); break;
+		//case 4: addButton(3, "Kath's Alley", postTrainingAlleyDescription); break; //Appears until Kath gives you her housekeys
+		//case 5: addButton(3, "Kath's Apt", katherineVisitAtHome); break;
+	}
+	
 	addButton(14, "Back", telAdreMenu);
 }
 

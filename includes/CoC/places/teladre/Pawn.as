@@ -50,13 +50,6 @@ private function oswaldPawnMenu():void { //Moved here from Inventory.as
 	//spriteSelect(47);	
 	addButton(0, "Sell", oswaldPawnSell);
 	if (pc.inventory.length == 0) addDisabledButton(0, "Sell", "Sell", "You have nothing to sell.");
-	//switch (flags["COC.KATHERINE_UNLOCKED"]) {
-		//case 1:
-		//case 2: addButton(1, "Kath's Alley", visitKatherine); break;
-		//case 3: addButton(1, "Safehouse", katherineTrainingWithUrta); break;
-		//case 4: addButton(1, "Kath's Alley", postTrainingAlleyDescription); //Appears until Kath gives you her housekeys
-		//default:
-	//}
 	addButton(14, "Back", telAdreMenu);
 }
 
