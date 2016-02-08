@@ -1115,7 +1115,7 @@ public function shipStorageMenuRoot():void
 		else if(9999 == 0) output(" You run a hand across your [pc.belly]. You could get your Faux Preg Egg out at any time with the device, if you wanted to.");
 		addButton(6,"EggTrainer",repeatEggTrainerApproach,undefined,"Egg Trainer","Put your Egg Trainer to use.");
 	}
-	if ((kGAMECLASS.flags["COC.VR_POD_INSTALLED"] == 1 || 9999 == 9999) && !kGAMECLASS.inMareth())
+	if ((kGAMECLASS.flags["COC.VR_POD_INSTALLED"] == 1) && !inMareth())
 	{
 		output("\n\nSmall closet containing only virtual reality pod is beyound next door.");
 		addButton(9, "VR Pod", enterCocVrPod, undefined, "VR Pod", "Use the VR Pod.");

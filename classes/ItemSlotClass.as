@@ -448,10 +448,10 @@
 				{
 					if (flipFlop)
 					{
-						if (i != typesList.length - 1)
-						{
+						//if (i != typesList.length - 1)
+						//{
 							damageString += "\n";
-						}
+						//}
 					}
 					else
 					{
@@ -462,7 +462,7 @@
 				}
 				
 				// Print the values
-				damageString += newItem.baseDamage.getType(damIndex).longName + ":\t ";
+				damageString += newItem.baseDamage.getType(damIndex).longName + ":\t";
 				damageString += "<b>" + String(newItem.baseDamage.getType(damIndex).damageValue) + "</b> (";
 				
 				// Print the comparison value
@@ -484,7 +484,7 @@
 					damageString += "<span class='words'><b>0";
 				}
 				
-				damageString += "</b></span>) ";
+				damageString += "</b></span>)";
 			}
 			
 			if (damageString.length > 0)

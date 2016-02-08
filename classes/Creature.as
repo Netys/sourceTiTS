@@ -8190,7 +8190,12 @@ package classes {
 			if (gabilaniScore() >= 5) race = "gabilani";
 			if (frogScore() >= 5) race = "kerokoras";
 			if (kaithritScore() >= 6) race = "kaithrit";
-			if (felineScore() >= 5 && race != "kaithrit") race = faceType == GLOBAL.TYPE_FELINE ? "cat-morph" : mf("cat-man", "cat-girl");
+			if (felineScore() >= 5 && race != "kaithrit") {
+				if (hasTail(GLOBAL.TYPE_FELINE) && tailCount > 1) race = "nekomata";
+				else if (dragonScore() >= 4)  race = "dragonne";
+				else if (faceType == GLOBAL.TYPE_FELINE) race = "cat-morph";
+				else race = mf("cat-man", "cat-girl");
+			}
 			if (leithanScore() >= 6) race = "leithan";
 			if (nukiScore() >= 6) race = "kui-tan";
 			if (vanaeScore() >= 6) race = "vanae-morph";

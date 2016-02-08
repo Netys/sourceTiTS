@@ -1111,7 +1111,9 @@ public function giveEmmyAnItem(item:String):void
 	}
 	// Determine weapon -- if AQ and PQ is equal and player affinity is physique, get melee!
 	var getRanged:Boolean = (pc.AQ() >= pc.PQ());
-	if(pc.AQ() == pc.PQ() && pc.affinity == "physique") getRanged = false;
+	if (pc.AQ() == pc.PQ() && pc.affinity == "physique") getRanged = false;
+	if (pc.hasPerk("Second Attack")) getRanged = false;
+	if (pc.hasPerk("Second Shot")) getRanged = true;
 	//Give Her A Crystal Shard - By Zeik
 	//get a misch point
 	//first tooltip: Give Emmy a Crystal Shard you obtained on Myrellion. It probably won’t make her swoon, but if it breaks it might be worth a laugh.

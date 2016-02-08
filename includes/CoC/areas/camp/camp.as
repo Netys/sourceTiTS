@@ -11,9 +11,6 @@ public function returnToCamp(timeUsed:int = 0):void {
 	mainGameMenu();
 }
 public function returnToCampUseOneHour():void { returnToCamp(1); } //Replacement for event number 13;		
-public function returnToCampUseTwoHours():void { returnToCamp(2); } //Replacement for event number 14;		
-public function returnToCampUseFourHours():void { returnToCamp(4); } //Replacement for event number 15;		
-public function returnToCampUseEightHours():void { returnToCamp(8); } //Replacement for event number 16;
 
 public function cocCampMenu():void {
 	initCoCJunk();
@@ -116,24 +113,27 @@ public function campSlavesMenu():void {
 }
 
 private function swimInStream():void {	
-	outputText("You ponder over the nearby stream that's flowing. Deciding you'd like a dip, ", true);
-	if (pc.inSwimwear()) outputText("you are going to swim while wearing just your swimwear. ", false);
-	else if(!pc.isNude()) outputText("you strip off your [pc.gear] until you are completely naked. ", false);
-	outputText("You step into the flowing waters. You shiver at first but you step in deeper. Incredibly, it's not too deep. ", false);
-	if (pc.tallness < 60) outputText("Your feet aren't even touching the riverbed. ", false);
-	if (pc.tallness >= 60 && pc.tallness < 72) outputText("Your feet are touching the riverbed and your head is barely above the water. ", false);
-	if (pc.tallness >= 72) outputText("Your feet are touching touching the riverbed and your head is above water. You bend down a bit so you're at the right height. ", false);
-	outputText("\n\nYou begin to swim around and relax. ", false);
+	clearMenu();
+	output("You ponder over the nearby stream that's flowing. Deciding you'd like a dip, ");
+	if (pc.inSwimwear()) output("you are going to swim while wearing just your swimwear. ");
+	else if(!pc.isNude()) output("you strip off your [pc.gear] until you are completely naked. ");
+	output("You step into the flowing waters. You shiver at first but you step in deeper. Incredibly, it's not too deep. ");
+	if (pc.tallness < 60) output("Your [pc.feet] aren't even touching the riverbed. ");
+	if (pc.tallness >= 60 && pc.tallness < 72) output("Your [pc.feet] are touching the riverbed and your head is barely above the water. ");
+	if (pc.tallness >= 72) output("Your [pc.feet] are touching touching the riverbed and your head is above water. You bend down a bit so you're at the right height. ");
+	output("\n\nYou begin to swim around and relax. ");
 	pc.shower();
 	//Blown up factory? Corruption gains.
 	if (flags["COC.FACTORY_SHUTDOWN"] == 2 && pc.cor() < 50)
 	{
-		outputText("\n\nYou feel a bit dirtier after swimming in the tainted waters. \n\n", false);
-		dynStats("cor", 0.5);
-		dynStats("lust", 15);
+		output("\n\nYou feel a bit dirtier after swimming in the tainted waters. \n\n");
+		pc.cor(0.5);
+		pc.lust(15);
 	}
-	outputText("\n\nEventually, you swim back to the riverbank and dry yourself off", false);
-	if (!pc.inSwimwear() && !pc.isNude()) outputText(" before you re-dress yourself" , false);
-	outputText(".", false)
-	doNext(returnToCampUseOneHour);
+	output("\n\nEventually, you swim back to the riverbank and dry yourself off");
+	if (!pc.inSwimwear() && !pc.isNude()) outputText(" before you re-dress yourself" );
+	output(".")
+	processTime(25 + rand(10));
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }

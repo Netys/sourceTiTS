@@ -149,7 +149,6 @@ private function katherinesAppearance(clear:Boolean = true):void {
 //Main menu for Kath while she lives in the alley behind Oswald's
 private function katherineMenu():void {
 	clearMenu();
-	flags["COC.KATHERINE_LOCATION"] = kathLocation(false); // to ensure current location is set right
 	addButton(14, "Leave", telAdreMenu); // failsafe
 	//One menu to rule them all (so the code never gets confused about what it should go back to
 	if (flags["COC.KATHERINE_UNLOCKED"] < 4) { //Behind Oswald's pawn shop
@@ -192,6 +191,8 @@ public function visitKatherine():void {
 
 public function katherineVisitNormal(checkTraining:Boolean = true):void
 {
+	trace("Kath location: " + kathLocation(false));
+	flags["COC.KATHERINE_LOCATION"] = kathLocation(false); // to ensure current location is set right
 	output("Katherine the cat is currently ");
 	switch (rand(5)) {
 		case  0: output("sitting in a corner"); break;
@@ -916,7 +917,7 @@ public function letKatKnotYourCuntPussyFuck():void {
 	else output("You tell her that it's all right; you'll stay here with her until nature takes its course.  Even though you can't really see her, given your respective positions, you know she's smiling.");
 	output("\n\n");
 
-	if (pc.vaginalCapacity() < kath.biggestCockVolume() * kath.cocks[0].knotMultiplier) {
+	if (pc.vaginalCapacity() < kath.biggestCockVolume() * kath.cocks[0].knotMultiplier || !kathIsAt(KLOC_STREETS)) {
 		output("About an hour later, she's deflated and y");
 		processTime(25 + rand(10));
 	}
@@ -1011,7 +1012,7 @@ public function getPenetratedByKath():void {
 	else output("You tell her that it's all right; you'll stay here with her until nature takes its course.  Even though you can't really see her, given your respective positions, you know she's smiling.");
 	output("\n\n");
 
-	if (pc.analCapacity() < kath.biggestCockVolume() * kath.cocks[0].knotMultiplier) {
+	if (pc.analCapacity() < kath.biggestCockVolume() * kath.cocks[0].knotMultiplier || !kathIsAt(KLOC_STREETS)) {
 		output("About an hour later, she's deflated and y");
 		processTime(25 + rand(10));
 	}

@@ -273,7 +273,7 @@ public function nemoCollection():void {
 	tmp.shortName = "Vorpal Blade";
 	tmp.longName = "Vorpal Blade";
 	tmp.description = "a vorpal blade";
-	tmp.tooltip = "Just a handle while disabled, it appears to be some sort of energy blade. It can cut through anything within range. Yes, that simple.";
+	tmp.tooltip = "Just a handle while disabled, it appears to be some sort of energy blade. It can cut through anything within reach.";
 	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.baseDamage.unresistable_hp.damageValue = 100;
@@ -290,7 +290,7 @@ public function nemoCollection():void {
 	tmp.shortName = "Mass Driver";
 	tmp.longName = "mass driver";
 	tmp.description = "a mass driver";
-	tmp.tooltip = "Heavy kinetic cannon, using LightDrive technology to accelerate tungsten slugs.";
+	tmp.tooltip = "Heavy kinetic cannon, using simple tungsten slugs as ammo. Beware of projectile ablation in atmosphere, recommended to limit initial velocity to 6 km/s for atmospheric pressure of 100 kPa.";
 	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.baseDamage.kinetic.damageValue = 1000;
@@ -311,8 +311,8 @@ public function nemoCollection():void {
 	tmp.tooltip = "This huge and immensely massive contraption is actually a weapon of mass destruction. It uses laser to ionize air, then throws tiny portion af anti-matter in a magnetic trap through created channel. There are only one word for it's power: devastating.";
 	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
-	tmp.baseDamage.burning.damageValue = 1000;
-	tmp.baseDamage.kinetic.damageValue = 1000;
+	tmp.baseDamage.burning.damageValue = 500;
+	tmp.baseDamage.kinetic.damageValue = 500;
 	tmp.baseDamage.addFlag(DamageFlag.EXPLOSIVE);
 	tmp.baseDamage.addFlag(DamageFlag.ENERGY_WEAPON);
 	tmp.addFlag(GLOBAL.ITEM_FLAG_ENERGY_WEAPON);
@@ -325,8 +325,8 @@ public function nemoCollection():void {
 	tmp.stackSize = 1;
 	tmp.type = GLOBAL.RANGED_WEAPON;
 	tmp.shortName = "Pwr. Punch";
-	tmp.longName = "Power Punch";
-	tmp.description = "a power punch";
+	tmp.longName = "Power Puncher";
+	tmp.description = "a power puncher";
 	tmp.tooltip = "This thing is a bit misplaced in this collection, since it is not intended to be handheld. It is special equipment for boarding party shuttle, intended to suppress even fortress shields.";
 	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
@@ -345,7 +345,7 @@ public function nemoCollection():void {
 	tmp.shortName = "AFL";
 	tmp.longName = "automatic fission laser";
 	tmp.description = "an automatic fission laser";
-	tmp.tooltip = "This little thing is far from impressive - little more than a foot long, with a short wooden butt and a short, heavily reinforced barrel. Quite weighty, though - nearly 14 pounds. Ultimate handheld weapon, the automatic fission laser have logarithmic scale of output power, from 'cut neat little hole' at 1 to 'evaporate this city, and that mountain too' at 10.";
+	tmp.tooltip = "This little thing is far from impressive - little more than a foot long, with a short wooden butt and a short, heavily reinforced barrel. Quite weighty, though - nearly 14 pounds. Ultimate handheld weapon, the automatic fission laser have logarithmic slider to control it's output power, from 'cut neat little hole' at 1 to 'evaporate this city, and that mountain too' at 10.";
 	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.baseDamage.unresistable_hp.damageValue = Number.POSITIVE_INFINITY;
@@ -427,6 +427,46 @@ public function nemoCollection():void {
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	addOverrideItemButton(btn++, tmp, tmp.shortName);
 	
+	tmp = new ItemSlotClass();
+	tmp.stackSize = 1;
+	tmp.type = GLOBAL.ARMOR;
+	tmp.shortName = "Lotus Suit";
+	tmp.longName = "Lotus Suit";
+	tmp.description = "a Lotus suit";
+	tmp.tooltip = "Advanced suit designed for infiltrators and diversionists. While suits constructed from a gray goo are not really new concept, this particular model is honed to perfection. It can take form of any outfit suitable for the situation. Even if quite thin, layer of nanobots is more than able to form a hard exoskeleton with all benefits usual power armor could provide, including thermal management and life support. Highly advanced mimicry software can imitate any species of appropriate body configuration or act as chameleon camouflage, allowing it's owner to blend in with the crowd or hide in a plain sight. Needless to say about functions like forming high variety of tools, weapons and gadgets.";
+	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
+	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
+	tmp.defense = 25;
+	tmp.sexiness = 6;
+	tmp.evasion = 5;
+	tmp.resistances.kinetic.resistanceValue = 50;
+	tmp.resistances.electric.resistanceValue = 50;
+	tmp.resistances.burning.resistanceValue = 50;
+	tmp.resistances.freezing.resistanceValue = 50;
+	tmp.resistances.corrosive.resistanceValue = 100;
+	tmp.resistances.poison.resistanceValue = 100;
+	tmp.resistances.psionic.resistanceValue = 0;
+	tmp.resistances.drug.resistanceValue = 100;
+	tmp.resistances.pheromone.resistanceValue = 100;
+	tmp.resistances.tease.resistanceValue = 0;
+	tmp.resistances.addFlag(DamageFlag.GROUNDED);
+	tmp.resistances.addFlag(DamageFlag.MIRRORED);
+	tmp.addFlag(GLOBAL.ITEM_FLAG_AIRTIGHT);
+	tmp.addFlag(GLOBAL.ITEM_FLAG_SWIMWEAR);
+	tmp.addFlag(GLOBAL.ITEM_FLAG_POWER_ARMOR);
+	addOverrideItemButton(btn++, tmp, tmp.shortName);
+	
+	tmp = new ItemSlotClass();
+	tmp.stackSize = 1;
+	tmp.type = GLOBAL.EXPLOSIVECONSUMABLE;
+	tmp.shortName = "Cyclonic Torp.";
+	tmp.longName = "Cyclonic Torpedo";
+	tmp.description = "a Cyclonic Torpedo";
+	tmp.tooltip = "The weapon of singular destruction. Of singular planet, to be precise. This device will burrow though a planet's surface and detonate at the core. This will destabilize a planet, and will shatter that world in many cases.";
+	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
+	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
+	addOverrideItemButton(btn++, tmp, tmp.shortName);
+	
 	if (flags["COC.NEMO_VR_POD_TAKEN"] == undefined)
 	{
 		tmp = new ItemSlotClass();
@@ -435,10 +475,10 @@ public function nemoCollection():void {
 		tmp.shortName = "VR Pod";
 		tmp.longName = "virtual reality pod";
 		tmp.description = "a virtual reality pod";
-		tmp.tooltip = "Archaic and seemingly overcomplicated virtual reality pod. Definitely stands out from other merchandise.";
+		tmp.tooltip = "Archaic and seemingly overcomplicated virtual reality pod with long-term life support system. Definitely stands out from other merchandise. Maybe you should ask about it?";
 		TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 		TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
-		addOverrideItemButton(btn++, tmp, tmp.shortName);
+		addOverrideItemButton(btn++, tmp, tmp.shortName, nemoTalkVRPod);
 	}
 	
 	addButton(14, "{ back }", approachNemo);

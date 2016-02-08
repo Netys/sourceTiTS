@@ -68,12 +68,12 @@ package classes.Engine.Combat.DamageTypes
 			"Freezing",
 			"Corrosive",
 			"Poison",
-			"True Damage",
+			"Direct",
 			"Psionic",
 			"Drug",
 			"Pheromone",
 			"Tease",
-			"True Lust"
+			"Direct"
 		];
 		
 		public static const TypeIndexes:Object = {
