@@ -337,8 +337,12 @@
 
 		public function TiTS()
 		{
-			Security.allowDomain("*");
-			Security.allowInsecureDomain("*");
+			CONFIG::FLASH
+			{
+				Security.allowDomain("*");
+				Security.allowInsecureDomain("*");
+			}
+			
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		
