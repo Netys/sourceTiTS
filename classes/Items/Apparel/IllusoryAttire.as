@@ -49,7 +49,7 @@ package classes.Items.Apparel
 			
 			this.resistances.addFlag(DamageFlag.NULLIFYING);
 			
-			this.itemFlags = [GLOBAL.ITEM_FLAG_EXPOSE_FULL];
+			this.itemFlags = [GLOBAL.ITEM_FLAG_EXPOSE_FULL, ITEM_FLAG_SWIMWEAR];
 			
 			this.version = this._latestVersion;
 		}

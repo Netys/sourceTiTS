@@ -102,6 +102,7 @@ package classes.Characters.CoC
 			this.cumMultiplierRaw = 10;
 			this.refractoryRate = 15;
 			this.cumQualityRaw = 0;
+			this.balls = 2;
 			this.ballSizeRaw = 3;
 			this.ballFullness = 100;
 			this.ballEfficiency = 4;

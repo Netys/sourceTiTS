@@ -63,7 +63,7 @@ package classes.Items.Transformatives
 			if (pc.hasPerk("History: Alchemist")) changeLimit++;
 			if (pc.hasPerk("Transformation Resistance")) changeLimit--;
 			
-			if(drakesHeart) output("You bring the flower up to your nose and smell it. It has exquisite smell. You suddenly have the strange desire to eat it. You pop the flower into your mouth and chew. It tastes like vanilla somehow. Before you know it, you're undergoing changes.");
+			if(drakesHeart) output("You bring the flower up to your nose and smell it. It has exquisite smell. You suddenly have the strange desire to eat it. You pop the flower into your mouth and chew. It tastes like vanilla somehow.");
 			
 			//Gain Dragon Dick
 			if (changes < changeLimit && pc.totalCocks(GLOBAL.TYPE_DRACONIC) < pc.totalCocks() && rand(3) == 0) {

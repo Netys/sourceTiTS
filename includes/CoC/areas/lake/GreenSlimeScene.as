@@ -219,10 +219,10 @@ private function serviceLowCorruptionHighLust():void
 			if(pc.vaginas.length > 0)
 			{
 				output("The intense sensations ripple through your entire body, and your [pc.vagina] grows wet with arousal.  You push against the creature and rhythmically slide back and forth, its soft, moist body conforming to your folds and creating a wonderfully arousing sensation.");
-				output("\n\nIt isn't long before you can no longer hold yourself back and with a groan, you explode, showering the creature with your seed as your [pc.cocks] and [pc.vagina] simultaneously explode into orgasm.  The ooze's penis also seems to swell and a torrent of the green fluid gushes from the tip, creating a large, slippery pool that coats your bottom half and forms a small pool on the ground around you before soaking into the earth.  As you catch your breath the creature's cock begins to lose definition and then recedes as the thing pulls itself back into a blob and slides out from under you, quietly escaping into the nearby water as you watch.  As you get up, you notice a still partly solid blob of green gel on the ground, and pick it up.");     
+				output("\n\nIt isn't long before you can no longer hold yourself back and with a groan, you explode, showering the creature with your seed as your [pc.cocks] and [pc.vagina] simultaneously explode into orgasm.  The ooze's penis also seems to swell and a torrent of the green fluid gushes from the tip, creating a large, slippery pool that coats your bottom half and forms a small pool on the ground around you before soaking into the earth.  As you catch your breath the creature's cock begins to lose definition and then recedes as the thing pulls itself back into a blob and slides out from under you, quietly escaping into the nearby water as you watch.  As you get up, you notice a still partly solid blob of green gel on the ground, and pick it up.\n\n");
 			}
 			//Pure male orgasm
-			else output("\n\nIt isn't long before you can no longer hold yourself back and with a groan, you explode, showering the creature with your seed.  The ooze's penis also seems to swell and a torrent of the green fluid gushes from the tip, creating a large, slippery pool that coats your bottom half and forms a small pool on the ground around you before soaking into the earth.  As you catch your breath the creature's cock begins to lose definition and then recedes as the thing pulls itself back into a blob and slides out from under you, quietly escaping into the nearby water as you watch.");
+			else output("\n\nIt isn't long before you can no longer hold yourself back and with a groan, you explode, showering the creature with your seed.  The ooze's penis also seems to swell and a torrent of the green fluid gushes from the tip, creating a large, slippery pool that coats your bottom half and forms a small pool on the ground around you before soaking into the earth.  As you catch your breath the creature's cock begins to lose definition and then recedes as the thing pulls itself back into a blob and slides out from under you, quietly escaping into the nearby water as you watch.\n\n");
 		}
 		//Female/Herm Masturbation
 		else if(pc.hasVagina() || pc.isHerm())
@@ -783,7 +783,7 @@ public function greenSlimeIsBeaten2():void
 	//higher corruption raaaaeeeep
 	else {
 		//male or futa
-		if (pc.hasVagina() && !pc.hasCock() || (pc.isHerm() && rand(2) == 0)) maleRapesOoze();
+		if (!pc.hasVagina() && pc.hasCock() || (pc.isHerm() && rand(2) == 0)) maleRapesOoze();
 		//female or futa
 		else if (pc.hasGenitals()) femaleRapesOoze();
 	}

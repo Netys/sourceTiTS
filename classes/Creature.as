@@ -7820,10 +7820,11 @@ package classes {
 					cocks[slot].addFlag(GLOBAL.FLAG_TAPERED);
 					break;
 				case GLOBAL.TYPE_DRACONIC:
-					cocks[slot].cockColor = "blue";
+					cocks[slot].cockColor = RandomInCollection(["red", "green", "blue", "aquamarine", "purple", "yellow", "gray", "black"]);
 					cocks[slot].knotMultiplier = RandomInCollection([1.25, 1.3]);
 					cocks[slot].addFlag(GLOBAL.FLAG_TAPERED);
 					cocks[slot].addFlag(GLOBAL.FLAG_KNOTTED);
+					cocks[slot].addFlag(GLOBAL.FLAG_RIBBED);
 					break;
 				case GLOBAL.TYPE_SIMII:
 					cocks[slot].knotMultiplier = 1;
@@ -8194,7 +8195,7 @@ package classes {
 				if (hasTail(GLOBAL.TYPE_FELINE) && tailCount > 1) race = "nekomata";
 				else if (dragonScore() >= 4)  race = "dragonne";
 				else if (faceType == GLOBAL.TYPE_FELINE) race = "cat-morph";
-				else race = mf("cat-man", "cat-girl");
+				else race = rawmfn(mfn("cat-man", "cat-girl", "cat-boy"), "cat-girl", "feline");
 			}
 			if (leithanScore() >= 6) race = "leithan";
 			if (nukiScore() >= 6) race = "kui-tan";

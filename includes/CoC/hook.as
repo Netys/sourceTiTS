@@ -290,7 +290,7 @@ public function nemoCollection():void {
 	tmp.shortName = "Mass Driver";
 	tmp.longName = "mass driver";
 	tmp.description = "a mass driver";
-	tmp.tooltip = "Heavy kinetic cannon, using simple tungsten slugs as ammo. Beware of projectile ablation in atmosphere, recommended to limit initial velocity to 6 km/s for atmospheric pressure of 100 kPa.";
+	tmp.tooltip = "Heavy kinetic cannon, using simple tungsten slugs as ammo. Beware of projectile ablation in atmosphere, recommended to limit initial velocity to 5 km/s.";
 	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.baseDamage.kinetic.damageValue = 1000;
@@ -308,7 +308,7 @@ public function nemoCollection():void {
 	tmp.shortName = "Ultimatum";
 	tmp.longName = "Ultimatum";
 	tmp.description = "an anti-material cannon";
-	tmp.tooltip = "This huge and immensely massive contraption is actually a weapon of mass destruction. It uses laser to ionize air, then throws tiny portion af anti-matter in a magnetic trap through created channel. There are only one word for it's power: devastating.";
+	tmp.tooltip = "This huge and immensely massive contraption is actually a weapon of mass destruction. Grenade launcher pushed to concept's limit, it throws tiny portions of an anti-matter contained inside of a hardlight trap as projectile. There are only one word for it's power: devastating.";
 	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.baseDamage.burning.damageValue = 500;
@@ -549,6 +549,8 @@ public function nemoTakeVRPod():void {
 	showNemo();
 	output("{ output to nemo: 'vr pod'; trade; accept }\n\n");
 	output("{ input from nemo: sold; delivered; installed; enjoy }\n\n");
+	
+	output("<b>You’ve a VR POD installed in your ship! You can access it from the storage menu.</b>");
 	
 	flags["COC.NEMO_VR_POD_TAKEN"] = 1;
 	flags["COC.VR_POD_INSTALLED"] = 1;

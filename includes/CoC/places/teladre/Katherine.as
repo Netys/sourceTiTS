@@ -1411,27 +1411,25 @@ public function giveKatOralPenisWingWang():void {
 		else output("fingering her");
 		if (!kath.hasBalls())
 			output(", you pull away for a moment and");
+		output(", you decide it's time to slightly change tactics in order not to humiliate the girl by making her blow her load too quickly.  The cat-herm's balls have been largely ignored so far, and you decide to amend that, slowly withdrawing from your blowjob and sinking your mouth down to her testicles.  You lick them softly before sucking one inside your mouth.\n\n");
+		//([Snake tongue]
+		if (pc.tongueType == GLOBAL.TYPE_SNAKE) {
+			output("Balls or no balls in the way, you find it pretty easy to mercilessly toy with the girl's pussy using your long tongue.  You can easily tease her clit and even slip the tip inside, flicking at the sides of her inner walls as she purrs with delight at the gentler attentions and occasionally releases a silent moan.  You stroke her cock at the base - this thing will have to wait for more attention.\n\n");
+			output("You attend to the cat-girl's member while teasing the insides of her pussy with your inhuman tongue, all the while slurping on her testicles.  Katherine has a look of bliss on her face - you think it may be too cruel not to push her to orgasm a bit more quickly than planned.\n\n");
+		}
+		//[Demon Tongue]
+		else if (pc.hasTongueFlag(GLOBAL.FLAG_LONG)) {
+			output("You can feel Katherine shiver with helpless desire once she feels your excessively long tongue sliding over her balls.  You slide it upwards, teasing the knot area of her member, and then back down, oozing it over the poor kitten's clitoris and completely smothering it with your tongue.  Finally, you slip it inside as Katherine releases a loud scream of pleasure, then bites her own hand to silence herself.\n\n");
+
+			output("You attend to the cat-girl's member while teasing the insides of her pussy with your inhuman tongue, all the while slurping on her testicles.  Katherine has a look of bliss on her face - you think it may be too cruel not to push her to orgasm a bit more quickly than planned.\n\n");
+		}
+		//{([Normal Tongue]
 		else {
-			output(", you decide it's time to slightly change tactics in order not to humiliate the girl by making her blow her load too quickly.  The cat-herm's balls have been largely ignored so far, and you decide to amend that, slowly withdrawing from your blowjob and sinking your mouth down to her testicles.  You lick them softly before sucking one inside your mouth.\n\n");
-			//([Snake tongue]
-			if (pc.tongueType == GLOBAL.TYPE_SNAKE) {
-				output("Balls or no balls in the way, you find it pretty easy to mercilessly toy with the girl's pussy using your long tongue.  You can easily tease her clit and even slip the tip inside, flicking at the sides of her inner walls as she purrs with delight at the gentler attentions and occasionally releases a silent moan.  You stroke her cock at the base - this thing will have to wait for more attention.\n\n");
-				output("You attend to the cat-girl's member while teasing the insides of her pussy with your inhuman tongue, all the while slurping on her testicles.  Katherine has a look of bliss on her face - you think it may be too cruel not to push her to orgasm a bit more quickly than planned.\n\n");
-			}
-			//[Demon Tongue]
-			else if (pc.hasTongueFlag(GLOBAL.FLAG_LONG)) {
-				output("You can feel Katherine shiver with helpless desire once she feels your excessively long tongue sliding over her balls.  You slide it upwards, teasing the knot area of her member, and then back down, oozing it over the poor kitten's clitoris and completely smothering it with your tongue.  Finally, you slip it inside as Katherine releases a loud scream of pleasure, then bites her own hand to silence herself.\n\n");
+			if (kath.ballDiameter() <= 1) output("You find it pretty easy to slip your tongue out further and gently lick her clit almost all the time while you're doing it.");
+			else if (kath.ballDiameter() <= 2) output("You can sometimes reach her pussy while toying with her balls, teasing it with your tongue.");
+			else output("You hoped to play with her pussy too, but the cat-girl's balls are too sizeable to do so with your tongue.  You can almost feel, maybe even hear the semen sloshing inside the big things, ready to shoot out any second.");
 
-				output("You attend to the cat-girl's member while teasing the insides of her pussy with your inhuman tongue, all the while slurping on her testicles.  Katherine has a look of bliss on her face - you think it may be too cruel not to push her to orgasm a bit more quickly than planned.\n\n");
-			}
-			//{([Normal Tongue]
-			else {
-				if (kath.ballDiameter() <= 1) output("You find it pretty easy to slip your tongue out further and gently lick her clit almost all the time while you're doing it.");
-				else if (kath.ballDiameter() <= 2) output("You can sometimes reach her pussy while toying with her balls, teasing it with your tongue.");
-				else output("You hoped to play with her pussy too, but the cat-girl's balls are too sizeable to do so with your tongue.  You can almost feel, maybe even hear the semen sloshing inside the big things, ready to shoot out any second.");
-
-				output("\n\nYou gently slide your fingers over the tip of her cock while teabagging her, but you don't want to give her an overload of sensations yet.\n\n");
-			}
+			output("\n\nYou gently slide your fingers over the tip of her cock while teabagging her, but you don't want to give her an overload of sensations yet.\n\n");
 		}
 
 		output("After molesting her with your tongue you pull away for a moment and announce that the cat-girl is very welcome to cum soon, " + (doneBefore ? "as you're happy to do this to her again and again" : "since this probably won't be a one time offer and she doesn't have to postpone things so desperately") + ".\n\n");
@@ -1466,7 +1464,7 @@ public function giveKatOralPenisWingWang():void {
 			if (kath.knotThickness() >= 6) output(", even making it hard for you to keep your tongue buried all the way inside");
 			output(".\n\n");
 
-			output("With a loud yowl, she cums, her pussy clenching around your demonic appendage and her penis twitching in your mouth.\n\n");
+			output("With a loud yowl, she cums, her pussy clenching around your [pc.tongue] and her penis twitching in your mouth.\n\n");
 
 			if (kath.cumQ() <= 500) output("She practically thrashes around in orgasm as you tease her " + (kath.hasBalls() ? "balls" : "clit") + " with your tongue, your mouth milking her and devouring the cum she releases quite easily.");
 			else if (kath.cumQ() <= 1500) output("Your tongue has no problems sliding across and teasing her " + (kath.hasBalls() ? "balls" : "clit") + " as your mouth drinks her dick-milk.  There is quite a lot of it, but you don't complain.");
@@ -2024,7 +2022,7 @@ private function bathTimeCentaurPenetrated():void {
 	output("She’s so lost in lust that she doesn’t talk or moan, though you are moaning enough for both of you.  At last you collapse forward, powerless to stop her as she drives home with one last thrust, her " + (kath.hasCock() ? "knot" : "arm") + " sinking into your [pc.vagOrAss]" + (kath.hasCock() ? "" : "all the way up to the elbow") + ".\n\n");
 
 	if (kath.hasCock()) {
-		output("Your belly expands with each squirt as her " + (kath.hasBalls() ? kath.ballAdj() + "testicles empty" : "bountiful prostate empties") + " into your");
+		output("Your belly expands with each squirt as her " + (kath.hasBalls() ? kath.ballAdj() + "testicles empty" : "bountiful prostate empties") + " into your ");
 		if (pc.hasVagina() && pc.isPregnant()) {
 			output("vagina, her semen gushing against your sealed cervix.  The pressure is so great you feel streams of it seeping out around her knot, jetting into the waters around you." + (kath.cumQ() > 500 ? "  Her cum is under such pressure that you can feel a small second bump forming above your belly as the uppermost part of your vagina swells up with Kath’s cum." : ""));
 		}

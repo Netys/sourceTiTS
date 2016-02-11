@@ -1919,6 +1919,11 @@ package classes.GameData
 		public static var Whitefire:SingleCombatAttack;
 		private static function WhitefireImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
+			if (attacker.hasCombatDrone())
+			{
+				attacker.droneTarget = target;
+			}
+			
 			if (attacker is PlayerCharacter) {
 				output("You narrow your eyes, focusing your mind with deadly intent.  You snap your fingers and " + target.a + target.uniqueName + " is enveloped in a flash of white flames!  ");
 				IncrementFlag("COC.SPELLS_CAST");
@@ -2032,6 +2037,11 @@ package classes.GameData
 		public static var DragonFire:SingleCombatAttack;
 		private static function DragonFireImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
+			if (attacker.hasCombatDrone())
+			{
+				attacker.droneTarget = target;
+			}
+			
 			attacker.createStatusEffect("DragonfireCD", 0, 0, 0, 0, true, "Blocked", "Dragonfire is not available yet.", false, 24 * 60);
 			
 			if (attacker is PlayerCharacter) {
@@ -2071,6 +2081,11 @@ package classes.GameData
 		public static var KitsuneFoxFire:SingleCombatAttack;
 		private static function KitsuneFoxFireImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
+			if (attacker.hasCombatDrone())
+			{
+				attacker.droneTarget = target;
+			}
+			
 			if (attacker is PlayerCharacter) {
 				output("Holding out your palm, you conjure an ethereal blue flame that dances across your fingertips.  You launch it at " + target.a + target.uniqueName + " with a ferocious throw, and it bursts on impact, showering dazzling azure sparks everywhere.");
 				IncrementFlag("COC.SPELLS_CAST");
@@ -2089,6 +2104,11 @@ package classes.GameData
 		public static var KitsuneCorruptFoxFire:SingleCombatAttack;
 		private static function KitsuneCorruptFoxFireImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
 		{
+			if (attacker.hasCombatDrone())
+			{
+				attacker.droneTarget = target;
+			}
+			
 			if (attacker is PlayerCharacter) {
 				output("Holding out your palm, you conjure corrupted purple flame that dances across your fingertips.  You launch it at " + target.a + target.uniqueName + " with a ferocious throw, and it bursts on impact, showering dazzling lavender sparks everywhere.  ");
 				IncrementFlag("COC.SPELLS_CAST");

@@ -701,7 +701,7 @@ private function fuckLynnette():void {
 	}
 	//Repeat cum within 24 hours check
 	else {
-		output("Lynnette licks her lips at your decision and sashays forward, her immense hips rocking with enough sensuality that her plush ass is practically having a sexquake.  \"<i>You'll understand if we do a quick check then, right, [pc.name]?</i>\" She doesn't wait for an answer, pressing herself against you so that you can get a good feel of her soft, sopping-wet tits conform to the shape of your body, letting the moist heat that seems to radiate from every pore of Lynnette's petite shape soak into your exposed " + pc.skinFurScales() + ".  Her hand dives right into your underwear without asking, seizing tight around [oneCock] to heft it.");
+		output("Lynnette licks her lips at your decision and sashays forward, her immense hips rocking with enough sensuality that her plush ass is practically having a sexquake.  \"<i>You'll understand if we do a quick check then, right, [pc.name]?</i>\" She doesn't wait for an answer, pressing herself against you so that you can get a good feel of her soft, sopping-wet tits conform to the shape of your body, letting the moist heat that seems to radiate from every pore of Lynnette's petite shape soak into your exposed " + pc.skinFurScales() + ".  Her hand dives right into your underwear without asking, seizing tight around [pc.oneCock] to heft it.");
 		output("\n\nYou give up an appreciative groan, [pc.eachCock] twitching in lewd enjoyment as ");
 		if(pc.lust() <= 75) output("it fills to full size almost immediately");
 		else output("it's fully-erect state makes itself known");
@@ -718,7 +718,7 @@ private function fuckLynnette():void {
 		}
 	}
 	//There is enough!
-	output("\n\nLynnette coos, \"<i>There it is... that yummy, nasty seed that you've let wait and bake for hour after hour.</i>\" She shivers in anticipation.  \"<i>You're going to stuff every single drop of that sticky stuff straight inside me, and it's going to be so thick it glues my snatch shut until it's time for birthing.  Got it?</i>\"  She squeezes down on [oneCock] with near-painful firmness, holding you completely and totally erect in the palm of her hand as she easily works off your [pc.gear].  \"<i>Yes you are.... Oh, this is just what I needed today,</i>\" the green woman sighs while rubbing your ");
+	output("\n\nLynnette coos, \"<i>There it is... that yummy, nasty seed that you've let wait and bake for hour after hour.</i>\" She shivers in anticipation.  \"<i>You're going to stuff every single drop of that sticky stuff straight inside me, and it's going to be so thick it glues my snatch shut until it's time for birthing.  Got it?</i>\"  She squeezes down on [pc.oneCock] with near-painful firmness, holding you completely and totally erect in the palm of her hand as she easily works off your [pc.gear].  \"<i>Yes you are.... Oh, this is just what I needed today,</i>\" the green woman sighs while rubbing your ");
 	if(pc.balls > 0) output("[pc.balls]");
 	else output("[pc.sheath]");
 	output(" with hunger in her eyes.");

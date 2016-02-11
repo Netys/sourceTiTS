@@ -214,20 +214,18 @@ package classes.Engine.Utility
 				if (InCollection(GLOBAL.FLAG_SMOOTH, toRemove)) enum.push("smooth");
 				if (InCollection(GLOBAL.FLAG_LONG, toRemove)) enum.push("long");
 				if (InCollection(GLOBAL.FLAG_ANGULAR, toRemove)) enum.push("angular");
-				if (InCollection(GLOBAL.FLAG_MUZZLED, toRemove)) enum.push("muzzle");
-				else if (!enum.isEmpty()) enum.push("face");
+				if (InCollection(GLOBAL.FLAG_MUZZLED, toRemove)) enum.push("muzzled");
 				if (!enum.isEmpty()) {
-					buffer += " You don't have a " + enum.toString() + " anymore.";
+					buffer += " You don't have a " + enum.toString() + " face anymore.";
 				}
 				//what is not changed or gained
 				enum.clear();
 				if (InCollection(GLOBAL.FLAG_SMOOTH, newFlags)) enum.push("smooth");
 				if (InCollection(GLOBAL.FLAG_LONG, newFlags)) enum.push("long");
-				if (InCollection(GLOBAL.FLAG_MUZZLED, newFlags)) enum.push("angular");
-				if (InCollection(GLOBAL.FLAG_ANGULAR, newFlags)) enum.push("muzzle");
-				else if (!enum.isEmpty()) enum.push("face");
+				if (InCollection(GLOBAL.FLAG_ANGULAR, newFlags)) enum.push("angular");
+				if (InCollection(GLOBAL.FLAG_MUZZLED, newFlags)) enum.push("muzzled");
 				if (!enum.isEmpty()) {
-					buffer += " Now you have " + enum.toString() + ".";
+					buffer += " Now you have " + enum.toString() + " face.";
 				}
 				
 				target.faceType = newType;
@@ -327,7 +325,7 @@ package classes.Engine.Utility
 					}
 				}
 				
-				buffer += " <b>You now have " + target.eyesDescript() + "!</b>";
+				buffer += " <b>You now have " + target.eyeColor + " " + GLOBAL.TYPE_NAMES[newType].toLowerCase() + " eyes!</b>";
 				
 				changes++;
 				if (display) output(buffer);

@@ -66,10 +66,11 @@ private function TelAdreGymMenu():void {
 	addButton(but++, "ChangeRoom", changingRoom);
 	
 	// Permanent membership
-	if (flags["COC.LIFETIME_GYM_MEMBER"] != 1 && pc.credits >= 5000)
-		addButton(but++, "Life Member", buyGymLifeTimeMembership);
-	else
-		addDisabledButton(but++, "Life Member", "Life Member", "You can't afford it!")
+	if (flags["COC.LIFETIME_GYM_MEMBER"] != 1)
+		if(pc.credits >= 5000)
+			addButton(but++, "Life Member", buyGymLifeTimeMembership);
+		else
+			addDisabledButton(but++, "Life Member", "Life Member", "You can't afford it!")
 	
 	// Loppe
 	if (flags["COC.LOPPE_MET"] == 1 && flags["COC.LOPPE_DISABLED"] != 1)
