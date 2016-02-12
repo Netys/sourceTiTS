@@ -1019,7 +1019,7 @@ public function move(arg:String, goToMainMenu:Boolean = true):void {
 	trace("Printing map for " + currentLocation);
 	//mapper.printMap(map);
 	//process time here, then back to mainGameMenu!
-	mainGameMenu();
+	if(goToMainMenu) mainGameMenu();
 }
 
 public function statusTick():void {
@@ -1212,22 +1212,31 @@ public function variableRoomUpdateCheck():void
 	/* TAVROS STATION */
 	
 	//Residental Deck
+	//Notices
+	if(tavrosRDActiveNotice()) rooms["RESIDENTIAL DECK 2"].addFlag(GLOBAL.OBJECTIVE);
+	else rooms["RESIDENTIAL DECK 2"].removeFlag(GLOBAL.OBJECTIVE);
 	//Place Aina's NPC flag depending whenever or not the PC meet her + generate her room
 	if(flags["HELPED_AINA"] == undefined) 
 	{ 
 		rooms["RESIDENTIAL DECK 15"].addFlag(GLOBAL.NPC);
+		lockAinasRoom();
 	}
-	else if(flags["HELPED_AINA"] == true) 
+	else if(flags["HELPED_AINA"] == true)
 	{ 
 		rooms["RESIDENTIAL DECK 15"].removeFlag(GLOBAL.NPC);
 		unlockAinasRoom();
-	} else {
+	}
+	else
+	{
 		rooms["RESIDENTIAL DECK 15"].removeFlag(GLOBAL.NPC);
 		lockAinasRoom();
 	}
 	
 	/* MHENGA */
 	
+	//Bounties
+	if(mhengaActiveBounty()) rooms["ESBETH'S NORTH PATH"].addFlag(GLOBAL.OBJECTIVE);
+	else rooms["ESBETH'S NORTH PATH"].removeFlag(GLOBAL.OBJECTIVE);
 	//Kelly's work - close/open Xenogen Biotech.
 	//Open up shop: link room
 	if(hours >= 6 && hours < 17) 
@@ -1417,6 +1426,7 @@ public function variableRoomUpdateCheck():void
 		else rooms["735"].removeFlag(GLOBAL.NPC);
 	}
 	// Steph Myrellion shit
+	/*
 	if (flags["STEPH_WATCHED"] == undefined)
 	{
 		rooms["1F22"].removeFlag(GLOBAL.NPC);
@@ -1432,6 +1442,7 @@ public function variableRoomUpdateCheck():void
 			rooms["1F22"].removeFlag(GLOBAL.NPC);
 		}
 	}
+	*/
 	// Doc McAllister
 	if (mcallisterIsIn())
 	{

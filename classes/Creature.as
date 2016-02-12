@@ -1079,7 +1079,10 @@ package classes {
 				//ballSizeRaw = ((ballSizeRaw * ballSizeRaw * balls) / 2);
 				
 				//If diameter is greater than six inches, reduce size to make diameter be six. Only so much room inside.
-				ballSizeRaw = Math.min(6 * Math.PI, ballSizeRaw * ballSizeRaw * balls / 2);
+				//if(ballDiameter() >= 6) ballSizeRaw = 6*Math.PI;
+				
+				// WhyNotBoth.gif?
+				ballSizeRaw = Math.min((6 * Math.PI), ((ballSizeRaw * ballSizeRaw * balls) / 2));
 			}
 			balls = 0;
 		}
@@ -7538,6 +7541,11 @@ package classes {
 		public function hasCocks(): Boolean {
 			if (cocks.length > 1) return true;
 			return false;
+		}
+		
+		public function hasVaginas():Boolean
+		{
+			return vaginas.length > 1;
 		}
 
 		public function hasGenitals():Boolean
