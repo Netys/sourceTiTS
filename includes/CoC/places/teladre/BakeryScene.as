@@ -199,8 +199,8 @@ public function nomnomnom(arg:*):void {
 	else {
 		output("You hand over " + num2Text(price / 10) + " gems and get your " + name + ".  A moment later you're at a table, licking the sugary residue from your fingertips and wondering just how they make the food so damned good.");
 		if(name == "doughnuts") {
-			output(pc.modTone(-2, false));
-			output(pc.modThickness(1, false));
+			Mutator.modTone(pc, 0, 2);
+			Mutator.modThickness(pc, 100, 1);
 			if(rand(3) == 0 && pc.buttRating() < 15) {
 				output("\n\nWhen you stand back up your [pc.ass] jiggles a little bit more than you'd expect.");
 				pc.buttRating(1);
@@ -211,30 +211,30 @@ public function nomnomnom(arg:*):void {
 			}
 		}
 		else if(name == "cookies") {
-			output(pc.modTone(-1, false), false);
-			output(pc.modThickness(2, false), false);
+			Mutator.modTone(pc, 0, 1);
+			Mutator.modThickness(pc, 100, 2);
 			if(rand(3) == 0 && pc.hipRating() < 20) {
 				output("\n\nAfter finishing, you find your gait has changed.  Did your hips widen?");
 				pc.hipRating(1);
 			}
 		}
-		else if(name == "brownies") {
-			output(pc.modThickness(4, false), false);
+		else if (name == "brownies") {
+			Mutator.modThickness(pc, 100, 4);
 			if(rand(2) == 0 && pc.hipRating() < 30) {
 				output("\n\nAfter finishing, you find your gait has changed.  Your [pc.hips] definitely got wider.");
 				pc.hipRating(2);
 			}
 		}
 		else if(name == "cupcakes") {
-			output(pc.modTone(-4, false), false);
+			Mutator.modTone(pc, 0, 4);
 			if(rand(2) == 0 && pc.buttRating() < 30) {
 				output("\n\nWhen you stand back up your [pc.ass] jiggles with a good bit of extra weight.");
 				pc.buttRating(2);
 			}
 		}
 		else if(name == "pound cake") {
-			output(pc.modTone(-2, false), false);
-			output(pc.modThickness(2, false), false);
+			Mutator.modTone(pc, 0, 2);
+			Mutator.modThickness(pc, 100, 2);
 			if(rand(3) == 0 && pc.buttRating() < 25) {
 				output("\n\nWhen you stand back up your [pc.ass] jiggles a little bit more than you'd expect.");
 				pc.buttRating(1);

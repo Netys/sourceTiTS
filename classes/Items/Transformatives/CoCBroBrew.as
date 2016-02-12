@@ -187,6 +187,7 @@ package classes.Items.Transformatives
 				//Dick already big enough! BALL CHECK!
 				if (target.balls > 0) {
 					buffer += "Churning audibly, your [pc.sack] sways, but doesn't show any outward sign of change.  Oh well, it's probably just like, getting more endurance or something.";
+					target.ballEfficiency += 3;
 				}
 				else {
 					buffer += "Two rounded orbs drop down below, filling out a new, fleshy sac above your [pc.legs].  Sweet!  You can probably cum buckets with balls like these.";
@@ -231,13 +232,13 @@ package classes.Items.Transformatives
 			if (!target.hasPerk("Bro Brains")) {
 				buffer += "(Bro Brains - Perk Gained!)\n";
 				target.createPerk("Bro Brains", 0, 0, 0, 0, "Makes thou... thin... fuck, that shit's for nerds.");
-				if (target.IQ() > target.intelligenceMax() / 5) {
-					target.intelligence(target.intelligenceMax() / 5 + target.intelligenceMax() * target.IQ() / 500);
+				if (target.IQ() > 35) {
+					target.intelligence(target.intelligenceMax() * 0.35, true);
 				}
 			}
 			
 			target.slowStatGain("physique", 33);
-			target.slowStatGain("libido", 4);
+			target.slowStatGain("libido", 50);
 			target.lust(40);
 			//dynStats("str", 33, "tou", 33, "int", -1, "lib", 4, "lus", 40);
 			

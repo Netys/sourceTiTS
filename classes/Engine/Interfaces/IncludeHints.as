@@ -21,8 +21,6 @@ package classes.Engine.Interfaces
 	{
 		return kGAMECLASS.chars;
 	}
-	public function get foes():/*Creature*/Array {
-		return kGAMECLASS.foes() }
 	
 	public function get enemy():Creature {
 		return kGAMECLASS.enemy; }

@@ -170,11 +170,16 @@ package classes.Characters.CoC
 			this.ass.bonusCapacity = 0;
 			
 			this.createStatusEffect("Disarm Immune");
+			this.createStatusEffect("Stun Immune");
 			this.createStatusEffect("Flee Disabled", 0, 0, 0, 0, true, "", "", false, 0);
 			
 			inventory = [new CoCJeweledRapier()];
 			
 			this._isLoading = false;
+		}
+		
+		override public function isImmobilized():Boolean {
+			return true;
 		}
 		
 		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void
@@ -285,7 +290,7 @@ package classes.Characters.CoC
 					if(target.cumQ() > 800) output("  Of course with all the semen you produce, the flesh-pod's ooze clouds over quite quickly, blocking your vision with a [pc.cumColor] haze.");
 				}
 				if(target.isLactating()) {
-					output("Milk leaks out too, ");
+					output(" Milk leaks out too, ");
 					if(target.milkQ() < 500) output("though the slight dribble is barely noticeable to you.");
 					else if(target.milkQ() < 1000) output("coloring things a little more [pc.milkColor].");
 					else output("thickening your fluid-filled prison with nutrients.");

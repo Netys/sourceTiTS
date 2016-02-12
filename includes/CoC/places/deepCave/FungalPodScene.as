@@ -30,7 +30,6 @@ public function EncapsulationPodGetSwordAndGetTrapped():void {
 	output("The sweet aroma that you smelled before is much, MUCH stronger when enclosed like this.  It's strong enough to make you feel a little dizzy and light-headed.  Deciding that you had best escape from this impromptu prison with all possible speed, you try to find a joint to force your way out through, but the pod's walls appear completely seamless.  You pound on the mushy surface, but your repeated blows have little effect.  Each impact brings with it a burst of violet radiance, but the fungus seems built to resist such struggles.  Moisture beads on the capsule's walls in larger and larger quantities, drooling into a puddle around your feet.\n\n");
 	output("Meanwhile, a number of tentacles have sprung up from below, and are crawling up your [pc.legs].  It's becoming fairly clear how the skeleton wound up in this cave...  You've got to escape!");
 	
-	chars["COC.FUNGAL_POD"].prepForCombat();
 	EncapsulationPodFight()
 }
 
@@ -42,8 +41,8 @@ private function EncapsulationPodFight():void {
 	CombatManager.lossScene(EncapsulationPodLoseToThisShitPartII);
 	CombatManager.displayLocation("POD");
 	
-	foes[0].EncapsulationPodUpdateDescription();
-
+	CombatManager.getHostileCharacters()[0].EncapsulationPodUpdateDescription(pc);
+	
 	clearMenu();
 	addButton(0, "FIGHT!", CombatManager.beginCombat);
 }
@@ -89,6 +88,7 @@ public function EncapsulationPodLoseToThisShitPartII():void {
 		enemy.lust(100, true);
 		//enemy.XP = 1;
 	}
+	output("\n\n");
 	//Done if escaped
 	if(enemy.lust() >= 100) {
 		flags["COC.ZETAZ_FUNGUS_ROOM_DEFEATED"] = 1;
