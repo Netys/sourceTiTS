@@ -204,15 +204,11 @@ package classes.Characters.CoC
 			moves[rand(moves.length)](target);
 		}
 		
-		public function onPlayerVictory():void {
+		public function onCleanup():void {
 			if(kGAMECLASS.pc.hasStatusEffect("Naga Venom")) {
 				kGAMECLASS.pc.reflexes(kGAMECLASS.pc.statusEffectv1("Naga Venom"));
 				kGAMECLASS.pc.removeStatusEffect("Naga Venom");
 			}
-		}
-		
-		public function onPlayerLoss():void {
-			onPlayerVictory();
 		}
 		
 		protected function MeleeAttack(target:Creature):void {

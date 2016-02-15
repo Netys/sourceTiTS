@@ -170,7 +170,7 @@ package classes.Characters.CoC
 			this._isLoading = false;
 		}
 		
-		public function onPlayerVictory():void {
+		public function onCleanup():void {
 			trace("Anemone cleanup: " + kGAMECLASS.pc.hasStatusEffect("Anemone Venom"));
 			if (kGAMECLASS.pc.hasStatusEffect("Anemone Venom")) {
 				trace("Venom cleanup: " + kGAMECLASS.pc.statusEffectv1("Anemone Venom") + " / " + kGAMECLASS.pc.statusEffectv2("Anemone Venom"));
@@ -180,10 +180,6 @@ package classes.Characters.CoC
 			}
 		}
 		
-		public function onPlayerLoss():void {
-			onPlayerVictory();
-		}
-
 		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void
 		{
 			var target:Creature = selectTarget(hostileCreatures);

@@ -189,15 +189,11 @@ package classes.Characters.CoC
 			else CombatAttacks.MeleeAttack(this, target);
 		}
 		
-		public function onPlayerVictory():void {
+		public function onCleanup():void {
 			if (kGAMECLASS.pc.hasStatusEffect("Basilisk Slow")) {
 				kGAMECLASS.pc.reflexes(kGAMECLASS.pc.statusEffectv1("Basilisk Slow"));
 				kGAMECLASS.pc.removeStatusEffect("Basilisk Slow");
 			}
-		}
-		
-		public function onPlayerLoss():void {
-			onPlayerVictory();
 		}
 		
 		public static function basiliskSpeed(target:Creature, amount:Number = 0):void {

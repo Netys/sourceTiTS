@@ -192,12 +192,8 @@ package classes.Characters.CoC
 			this._isLoading = false;
 		}
 		
-		public function onPlayerVictory():void {
-			kGAMECLASS.pc.removeStatusEffect("Whispered");
-		}
-		
-		public function onPlayerLoss():void {
-			onPlayerVictory();
+		public function onCleanup():void {
+			kGAMECLASS.pc.removeStatusEffect("Whispered"); // This is not actually requied, legacy check
 		}
 		
 		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void

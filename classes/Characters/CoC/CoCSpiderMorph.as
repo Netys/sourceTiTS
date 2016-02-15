@@ -81,14 +81,9 @@ package classes.Characters.CoC
 			CombatManager.processCombat();
 		}
 		
-		public function onPlayerVictory():void {
+		public function onCleanup():void {
 			WebCleanup();
 		}
-		
-		public function onPlayerLoss():void {
-			WebCleanup();
-		}
-		
 		
 		public function WebCleanup():void {
 			if (kGAMECLASS.pc.hasStatusEffect("Web")) {

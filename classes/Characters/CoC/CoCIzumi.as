@@ -230,14 +230,10 @@ package classes.Characters.CoC
 			}
 		}
 		
-		public function onPlayerVictory():void {			
+		public function onCleanup():void {			
 			cleanupChokeslam()
 			cleanupTitsmother();
 			cleanupGroundpound();
-		}
-		
-		public function onPlayerLoss():void {
-			onPlayerVictory();
 		}
 		
 		// Remove the effect post-combat

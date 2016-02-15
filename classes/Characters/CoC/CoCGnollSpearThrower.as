@@ -221,15 +221,11 @@ package classes.Characters.CoC
 			output("\n");
 		}
 		
-		public function onPlayerVictory():void {
+		public function onCleanup():void {
 			if (kGAMECLASS.pc.hasStatusEffect("Gnoll Spear")) {
 				kGAMECLASS.pc.reflexes(kGAMECLASS.pc.statusEffectv1("Gnoll Spear"));
 				kGAMECLASS.pc.removeStatusEffect("Gnoll Spear");
 			}
-		}
-		
-		public function onPlayerLoss():void {
-			onPlayerVictory();
 		}
 		
 		//<Writers note: I recommend that the javelin have a chance to greatly decrease speed for the remaining battle.  I am writing the flavor text for this event if you choose to include it>

@@ -3156,6 +3156,12 @@ package classes.GameData
 		
 		public function doCombatCleanup():void
 		{
+			// This should be done for EVERY combatant BEFORE calling clearCombatStatuses for ANY of them!
+			for (var i:int = 0; i < _hostiles.length; i++)
+				if (_hostiles[i].hasOwnProperty("onCleanup")) _hostiles[i].onCleanup();
+			for (var k:int = 0; k < _friendlies.length; k++)
+				if (_friendlies[k].hasOwnProperty("onCleanup")) _friendlies[k].onCleanup();
+			
 			kGAMECLASS.setEnemy(null);
 			kGAMECLASS.setAttacker(null);
 			kGAMECLASS.setTarget(null);	
