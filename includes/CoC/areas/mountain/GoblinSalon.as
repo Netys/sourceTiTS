@@ -692,7 +692,7 @@ private function fuckLynnette():void {
 		else output("curling her petite fingers around your [pc.sack] to heft it");
 		output(".");
 		//IF FAIL!
-		if(pc.minutesSinceCum < 60 * 24) {
+		if(pc.minutesSinceCum < 60 * 24 && pc.ballFullness < 100) {
 			output("\n\nA feminine giggle slips free of her lips.  \"<i>I'm sorry [pc.name], but I don't get knocked up unless I'm going to get knocked up with a dozen daughters.</i>\"  She gives your package a longing squeeze and extricates her hand, letting her palm caress your sensitive groin and belly on the way out.  \"<i>I need thick, sticky, pent-up jism that's going to be desperate to inseminate every egg it can get its hands on.</i>\"  She shivers at the thought, saying, \"<i>Come back when you've let yourself go a full twenty four hours without cumming.  Then you can get me pregnant... assuming some other lucky stud hasn't already.</i>\"");
 			output("\n\nShe licks your scent from her fingers and asks, \"<i>Now, was there another way you wanted to pay?</i>\"");
 			salonPaymentMenu();
@@ -710,7 +710,7 @@ private function fuckLynnette():void {
 		else output("gently at your [pc.balls], weighing them in her palm to get a feel for just how pent-up you are");
 		output(".");
 		//NOT ENOUGH!
-		if(pc.minutesSinceCum < 60 * 24)
+		if(pc.minutesSinceCum < 60 * 24 && pc.ballFullness < 100)
 		{
 			output("\n\nA frown slowly spreads across her face.  \"<i>[pc.name], this just won't do. I need anxious, needy little sperm that will scream out of your cock with enough force to impregnate my ovaries.  I can't get that if you're getting off all the time.  Come back after you've gone without blowing a load for twenty four hours, and I'll give you a proper place to do it... if someone else hasn't beaten you to it.  Did you want to stick around and pay another way?</i>\"");
 			salonPaymentMenu();

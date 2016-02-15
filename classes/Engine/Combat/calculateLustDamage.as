@@ -37,6 +37,7 @@ package classes.Engine.Combat
 		var lustDamage:TypeCollection = damageResult.remainingLustDamage.makeCopy();
 		
 		if (lustDamage.tease.damageValue > 0 && attacker != null) lustDamage.tease.damageValue += attacker.sexiness() / 2;
+		if (lustDamage.tease.damageValue > 0 && attacker != null && (attacker.hasPerk("Bimbo Body") || attacker.hasStatusEffect("Bimbo Champagne") || attacker.hasPerk("Bro Body") || attacker.hasPerk("Futa Form"))) lustDamage.tease.damageValue *= 1.1;
 		if (lustDamage.tease.damageValue > 0 && attacker != null && attacker.hasPerk("Pheromone Cloud")) lustDamage.pheromone.damageValue += 1 + rand(4);
 		//25% dam multiplier
 		if (lustDamage.tease.damageValue > 0 && target != null && target.hasStatusEffect("Red Myr Venom")) lustDamage.tease.damageValue *= 1.25; 
