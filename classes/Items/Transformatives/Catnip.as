@@ -336,6 +336,7 @@ package classes.Items.Transformatives
 			{
 				output("\n\nYou feel a rumbling in your gut and a strange half-pleasure sensation spreading up from your [pc.asshole]. <b>Giving your backdoor an experimental poke, your find it ");
 				
+				kGAMECLASS.clearList();
 				if (target.ass.minLooseness > 1) {
 					kGAMECLASS.addToList("much more tight")
 					target.ass.minLooseness--;
@@ -460,6 +461,7 @@ package classes.Items.Transformatives
 					if(target.totalVaginas() == 1) output("is ");
 					else output("are ");
 					
+					kGAMECLASS.clearList();
 					if (target.vaginas[0].type != GLOBAL.TYPE_FELINE)
 						kGAMECLASS.addToList("thin-lipped")
 					if (target.vaginas[x].vaginaColor != "pink")
@@ -479,6 +481,7 @@ package classes.Items.Transformatives
 				{
 					output("\n\nYou feel a strange half-pleasure sensation spreading up from your [pc.vagina " + x + "]. <b>Giving your muff an experimental poke, your find it ");
 					
+					kGAMECLASS.clearList();
 					if (target.vaginas[x].minLooseness > 1 && target.loosenessUnlocked(x, target.vaginas[x].minLooseness - 1)) {
 						kGAMECLASS.addToList("much more tight")
 						target.vaginas[x].minLooseness--;
@@ -717,10 +720,12 @@ package classes.Items.Transformatives
 					else output(" is");
 					output(" retreating upward, pulling into your body.");
 					
-					output(" They shift around, your internal anatomy rearranging to fit your new... configuration. Your testicle");
+					if (target.balls > 1) output(" They shift");
+					else output(" It shifts");
+					output(" around, your internal anatomy rearranging to fit your new... configuration. Your testicle");
 					if (target.balls > 1) output("s settle");
 					else output(" settles");
-					output(" in somewhere just above your dick, and all that's left beneath is a smooth patch of skin. No one would ever know you had balls.");
+					output(" in somewhere just above your dick, and all that's left beneath is a smooth patch of [pc.skinFurScales]. No one would ever know you had balls.");
 					
 					target.makeBallsInternal();
 					
@@ -761,7 +766,7 @@ package classes.Items.Transformatives
 					//for (x = 0; x < target.breastRows.length; x++)
 						//if(target.breastRatingUnlocked(x, 0)) target.breastRows[x].breastRatingRaw = 0;
 					//
-					//if (target.biggestTitSize() > 0) output(" All that remains is [pc.milkNoun]-swollen bubbles beneath your [pc.nipples], which would appear flat witout being filled by [pc.milkNoun].");
+					//if (target.biggestTitSize() > 0) output(" All that remains is [pc.milkNoun]-swollen bubbles beneath your [pc.nipples], which would appear flat without being filled by [pc.milkNoun].");
 					//else output(" All that remains is unremarkable set of [pc.nipples].");
 					//
 					//changes++;
@@ -1054,9 +1059,10 @@ package classes.Items.Transformatives
 			{
 				if (target.eyeTypeUnlocked(GLOBAL.TYPE_FELINE))
 				{
-					if (!InCollection(target.eyeColor, ["emerald", "amber", "green", "blue", "gold"]))
+					var catEyeColors:/*String*/Array = ["emerald", "turquoise", "green", "amber", "citrine", "yellow", "orange", "copper", "amethyst", "violet", "aquamarine", "blue", "crimson", "garnet", "gold"];
+					if (!InCollection(target.eyeColor, catEyeColors))
 					{
-						var color:String = RandomInCollection(["emerald", "amber", "green", "blue", "gold"]);
+						var color:String = RandomInCollection(catEyeColors);
 						if (target.eyeColorUnlocked(color)) target.eyeColor = color;
 					}
 					
@@ -1150,7 +1156,7 @@ package classes.Items.Transformatives
 				
 				if (wasLong || wasPrehensile)
 				{
-					output(" Strangely enough, it preserved its former ");
+					output(" Strangely enough, it preserved it's former ");
 					
 					enum.clear();
 					if (wasLong) {
