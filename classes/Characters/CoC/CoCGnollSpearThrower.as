@@ -252,7 +252,7 @@ package classes.Characters.CoC
 				//<Hyena Attack 2 – Javelin – Successful – Player Entangled>
 				else if(rand(3) >= 1) {
 					output("The gnoll pulls a long, black javelin from over her shoulder.  Her spotted arm strikes forward, launching the missile through the air.  You attempt to dive to the side, but are too late.  The powerful shaft slams, hard, into your back.  Pain radiates from the powerful impact.  Instead of piercing you, however, the tip seems to explode into a sticky goo that instantly bonds with your [pc.gear].  The four foot, heavy shaft pulls down on you awkwardly, catching at things and throwing your balance off.  You try to tug the javelin off of you but find that it has glued itself to you.  It will take time and effort to remove; making it impossible to do while a dominant hyena stalks you.  ");
-					if (!target.hasStatusEffect("Gnoll Spear") < 0) target.createStatusEffect("Gnoll Spear", 0, 0, 0, 0, false, "Icon_Slow", "You are slowed down by javelin!", true);
+					if (!target.hasStatusEffect("Gnoll Spear") < 0) target.createStatusEffect("Gnoll Spear", 0, 0, 0, 0, false, "Icon_Slow", "You are slowed down by javelin!");
 					slow = 0.15 * target.reflexesMax();
 					while(slow > 0 && target.reflexes() > 2) {
 						slow--;

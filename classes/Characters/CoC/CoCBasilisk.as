@@ -197,7 +197,7 @@ package classes.Characters.CoC
 		}
 		
 		public static function basiliskSpeed(target:Creature, amount:Number = 0):void {
-			if (!target.hasStatusEffect("Basilisk Slow") < 0) target.createStatusEffect("Basilisk Slow", 0, 0, 0, 0, false, "Icon_Slow", "You are slowed down by basilisk gaze!", true);
+			if (!target.hasStatusEffect("Basilisk Slow") < 0) target.createStatusEffect("Basilisk Slow", 0, 0, 0, 0, false, "Icon_Slow", "You are slowed down by basilisk gaze!");
 			
 			while(amount > 0 && target.reflexes() > 2) {
 				amount--;

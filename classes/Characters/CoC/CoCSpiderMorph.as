@@ -118,7 +118,7 @@ package classes.Characters.CoC
 					output("The silky strands hit you, webbing around you and making it hard to move with any degree of speed.");
 					if (target.canFly()) output("  Your wings struggle uselessly in the bindings, no longer able to flap fast enough to aid you.");
 					output("\n");
-					target.createStatusEffect("Web", 0, 0, 0, 0, false, "Icon_Slow", "You are strandled by spider web!", true);
+					target.createStatusEffect("Web", 0, 0, 0, 0, false, "Icon_Slow", "You are strandled by spider web!");
 				}
 				else {
 					output("The silky strands hit you, weighing you down and restricting your movement even further.\n");

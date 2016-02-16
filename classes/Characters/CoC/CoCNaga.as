@@ -226,7 +226,7 @@ package classes.Characters.CoC
 				damage = Math.min(3, int(target.reflexes() - 1));
 				damage = Math.max(damage, 0);
 				target.reflexes( -damage);
-				target.createStatusEffect("Naga Venom", damage, 0, 0, 0, false, "Icon_Poison", "You are poisoned by naga venom!", true);
+				target.createStatusEffect("Naga Venom", damage, 0, 0, 0, false, "Icon_Poison", "You are poisoned by naga venom!");
 				
 				if(damage < 3)
 					applyDamage(new TypeCollection( { poison : (3 + rand(3)) + (3 + rand(3)) * (3 - damage) / 3 }, DamageFlag.BYPASS_SHIELD ), this, target);

@@ -220,7 +220,7 @@ package classes.Items.Transformatives
 			}
 			
 			if (changes < changeLimit && rand(4) == 0 && Mutator.changeArms(target, GLOBAL.TYPE_HUMAN, [GLOBAL.FLAG_FURRED])) changes++;
-			if (changes < changeLimit && rand(4) == 0 && Mutator.changeLegs(target, GLOBAL.TYPE_HUMAN, [GLOBAL.FLAG_PLANTIGRADE, GLOBAL.FLAG_FURRED])) changes++;
+			if (changes < changeLimit && rand(4) == 0 && Mutator.changeLegs(target, GLOBAL.TYPE_HUMAN, 2, [GLOBAL.FLAG_PLANTIGRADE, GLOBAL.FLAG_FURRED])) changes++;
 			
 			IncrementFlag("COC.TIMES_TRANSFORMED");
 			
