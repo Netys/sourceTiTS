@@ -419,7 +419,7 @@ public function tooBigCumWitchLossFacial():void {
 	if(pc.ballSize() < 7) pc.ballSize(1);
 	pc.orgasm();
 	//dynStats("lib", 1, "sen", 1);
-	pc.libido(1);
+	pc.slowStatGain("libido", 1);
 	CombatManager.genericLoss();
 }
 
@@ -536,6 +536,7 @@ public function defeatedByCumWitch():void {
 
 //*Victory Intro
 public function cumWitchDefeated():void {
+	if (enemy == null) setEnemy(new CoCCumWitch());
 	clearOutput();
 	//(HP)
 	if(enemy.HP() <= 1) output("The chocolate-skinned witch collapses down onto her hands and knees with the tattered remnants of her robes swirling about her.  With her clothing destroyed, you're treated to the perfect view of her semi-erect cock and swollen testes swaying enticingly beneath her, paired with the glimmering wetness of her juicy cunny - also on display.  Her udder-like melons sway and jiggle in sympathy to her uncoordinated swaying.  She grumbles, \"<i>You've beaten me, interloper...</i>\"\n\n");
@@ -563,13 +564,15 @@ public function cumWitchDefeated():void {
 	if(inCombat()) {
 		if (enemy.HP() > 1) addButton(14, "Leave", declineSandWitch);
 		else addButton(14, "Leave", function():*{
-			clearOutput();
-			clearMenu();
 			processTime(15 + rand(5));
 			CombatManager.genericVictory();
 		});
 	}
-	else addButton(14, "Back", mainGameMenu);
+	else
+		addButton(14, "Back", function():*{ 
+				setEnemy(null);
+				mainGameMenu();
+			});
 }
 
 //*Decline Sex
@@ -581,7 +584,10 @@ public function declineSandWitch():void {
 		processTime(15 + rand(5));
 		CombatManager.genericVictory();
 	}
-	else addButton(0, "Next", mainGameMenu);
+	else {
+		setEnemy(null);
+		addButton(0, "Next", mainGameMenu);
+	}
 }
 
 //*Male Victory Sex
@@ -621,9 +627,7 @@ public function menFuckUpSomeCumWitch():void {
 		//sand witch preg
 		//pc.knockUp(PregnancyStore.PREGNANCY_SAND_WITCH, PregnancyStore.INCUBATION_SAND_WITCH, 90);
 		pc.loadInCunt(enemy);
-		pc.orgasm();
 		//dynStats("lus", 5);
-		pc.lust(5);
 	}
 	//DP Males
 	else if(y >= 0) {
@@ -672,10 +676,16 @@ public function menFuckUpSomeCumWitch():void {
 		if(cor() < 33) output("  You hope she learned something from the experience, but knowing most people in this strange land, she'll go right back to her rotten ways.");
 		else if(cor() < 66) output("  You wonder if she'll learn anything from this and shrug nonchalantly.  Who cares?");
 		else output("  You smirk as you wonder if she'll learn anything from this.  You hope not - it's a fun lesson to teach.\n\n");
-		pc.orgasm();
 	}
 	processTime(15 + rand(5));
-	CombatManager.genericVictory();
+	pc.orgasm();
+	pc.lust(5);
+	if (inCombat()) CombatManager.genericVictory();
+	else {
+		setEnemy(null);
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
+	}
 }
 //*Male "Too Big" Victory Sex
 public function maleTooBigVictorySex():void {
@@ -710,9 +720,14 @@ public function maleTooBigVictorySex():void {
 	output("\n\nYou aren't done!  Not by a long shot!  This dark creature blessed you with unholy levels of virility, and you aren't going to waste it.  You stand away and butt your [pc.cockHead " + x + "] into her nether-lips, and the remainder of your orgasm is injected directly into the woman's waiting womb.  Her belly rounds into a nice, gravid bump that carries her cock up with it, and you're given the first chance to see the results of the cum witch's own orgasm.  The dark, glossy cock is absolutely soaked in sperm, while her balls are wreathed in churned up, frothy cum.  Once you've made her uterus a swollen dome, you aim up and drizzle the last ropes atop her pathetic, half-limp dick.");
 	
 	output("\n\nExhausted at last, you pat your [pc.cock " + x + "] affectionately.  You'd wipe it off on the witch's hair, if it wasn't messier than the " + pc.skin() + " you plan to clean.  She begins to lick her fingers and clean the stuff off her face.  You just laugh, and get dressed.  There's still much to do.");
-	pc.orgasm();
 	processTime(15 + rand(5));
-	CombatManager.genericVictory();
+	pc.orgasm();
+	if (inCombat()) CombatManager.genericVictory();
+	else {
+		setEnemy(null);
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
+	}
 }
 
 //Female Victory Sex
@@ -744,9 +759,14 @@ public function ladyVictorySex():void {
 	
 	//pc.knockUp(PregnancyStore.PREGNANCY_SAND_WITCH, PregnancyStore.INCUBATION_SAND_WITCH, 90);
 	pc.loadInCunt(enemy);
-	pc.orgasm();
 	processTime(15 + rand(5));
-	CombatManager.genericVictory();
+	pc.orgasm();
+	if (inCombat()) CombatManager.genericVictory();
+	else {
+		setEnemy(null);
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
+	}
 }
 	
 //Tentacle Victory Gangbang
@@ -778,9 +798,14 @@ public function tentacleVictoryGangbangCumWitch():void {
 	
 	output("\n\nYou retract your spent shafts and smirk at the backflow of bukkake that bursts from the cum witch's soiled loins.  She's utterly wrecked, dominated by dick in every sense.  What delicious irony that a sorceress should be taken with the very type of organ she glorifies!  Getting dressed, you give her a lazy wave and invite her to try again some other time.");
 	
-	pc.orgasm();
 	processTime(15 + rand(5));
-	CombatManager.genericVictory();
+	pc.orgasm();
+	if (inCombat()) CombatManager.genericVictory();
+	else {
+		setEnemy(null);
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
+	}
 }
 
 //Repeat Desert Loss Female & Herm
@@ -843,8 +868,8 @@ public function resistSavinStuff():void {
 	
 	output("\n\nSilently, you nod, and collapse atop her, head buried in her milk-laden chest as you pass out from sexual exhaustion.");
 	pc.loadInCunt(enemy);
-	pc.orgasm();
 	processTime(15 + rand(5));
+	pc.orgasm();
 	CombatManager.genericVictory();
 	//dynStats("sen", 2);
 	//knock up hurrrr
@@ -863,9 +888,9 @@ public function doNotResistSavin():void {
 	
 	output("\n\nSilently, you nod, and collapse atop her, head buried in her milk-laden chest as you pass out from sexual exhaustion.");
 	pc.loadInCunt(enemy);
-	pc.orgasm();
 	processTime(15 + rand(5));
-	CombatManager.genericVictory();
+	pc.orgasm();
+	CombatManager.genericLoss();
 	//dynStats("sen", 2);
 	//knock up hurrrr
 	//pc.knockUp(PregnancyStore.PREGNANCY_SAND_WITCH, PregnancyStore.INCUBATION_SAND_WITCH, 90);
@@ -948,11 +973,12 @@ public function cumWitchBlessed(virility:Boolean = true):void {
 		// fertility, incubation
 		pc.createPerk("Magical Fertility", 0.1, 0.25, 0, 0, "10% higher chance of pregnancy and increased pregnancy speed.");
 	}
-	flags["COC.BEEN_BLESSED_BY_CUM_WITCH"] = 1;
-	pc.orgasm();
-	//dynStats("lib", 1, "sen", -5);
-	pc.libido(1);
 	output("</b>");
+	flags["COC.BEEN_BLESSED_BY_CUM_WITCH"] = 1;
+	//dynStats("lib", 1, "sen", -5);
+	pc.slowStatGain("libido", 1);
+	pc.loadInMouth(new CoCCumWitch());
+	pc.orgasm();
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 }
