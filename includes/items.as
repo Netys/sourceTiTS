@@ -521,6 +521,8 @@ public function sellItemMulti(arg:Array):void
 	var soldNumber:int = arg[1];
 	var soldPrice:Number = (getSellPrice(shopkeep,soldItem.basePrice) * soldNumber);
 	
+	sellItemBonus(soldItem, soldPrice);
+	
 	pc.credits += soldPrice;
 	
 	output("You sell " + soldItem.description + " (x" + soldNumber + ") for " + num2Text(soldPrice) + " credits.");
@@ -535,6 +537,9 @@ public function sellItemMulti(arg:Array):void
 public function sellItemGo(arg:ItemSlotClass):void {
 	clearOutput();
 	var price:Number = getSellPrice(shopkeep,arg.basePrice);
+	
+	sellItemBonus(arg, price);
+	
 	pc.credits += price;
 	output("You sell " + arg.description + " for " + num2Text(price) + " credits.");
 	arg.quantity--;
@@ -543,7 +548,17 @@ public function sellItemGo(arg:ItemSlotClass):void {
 	this.addButton(0,"Next",sellItem);
 }
 
-public function getSellPrice(keeper:Creature, basePrice:Number):Number {
+// Special seller/item handling
+public function sellItemBonus(arg:ItemSlotClass, price:Number = 0):void
+{
+	if(shopkeep is Sera)
+	{
+		pc.createStatusEffect("Sera Credit Debt", 0, 0, 0, 0, true, "", "", false, (7 * 24 * 60));
+		pc.addStatusValue("Sera Credit Debt", 1, price);
+	}
+}
+
+public function getSellPrice(keeper:Creature,basePrice:Number):Number {
 	var sellPrice:Number = basePrice * keeper.buyMarkdown * pc.sellMarkup;
 	if(pc.hasPerk("Supply And Demand")) sellPrice *= 1.1;
 	sellPrice = Math.round(sellPrice);
