@@ -4113,8 +4113,13 @@ package classes {
 		public function faceDesc(): String {
 			var faceo: String = "";
 			var hasSmallNose: Boolean = InCollection(faceType, GLOBAL.TYPE_HUMAN, GLOBAL.TYPE_NALEEN_FACE, GLOBAL.TYPE_LAPINE, GLOBAL.TYPE_HUMANMASKED, GLOBAL.TYPE_KUITAN, GLOBAL.TYPE_VULPINE, GLOBAL.TYPE_MOUSEMAN, GLOBAL.TYPE_MOUSE);
+			if (hasPerk("Androgyny")) {
+				faceo = "an androgynous " + face() + " that would work on either a male or a female and " + plural(lipDescript(true)) + faceLipMimbraneDescript();
+				if (mfn("m", "f", "n") != "n")
+					faceo += ". Despite that, your overall appearance leaves " + mf("boyish", "girly") + " impression";
+			}
 			//0-10
-			if (femininity < 10) {
+			else if (femininity < 10) {
 				faceo = "a square chin";
 				if(!hasBeard() && lipRating() > 2) faceo += ", " + plural(lipDescript(true)) + faceLipMimbraneDescript() + ", and chiseled jawline.";
 				else if (!hasBeard()) faceo += " and chiseled jawline";

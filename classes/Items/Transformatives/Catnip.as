@@ -286,6 +286,8 @@ package classes.Items.Transformatives
 			if (target.hipRating() > hipLimit && target.hipRatingUnlocked(target.hipRating() - 1))
 			{
 				output("\n\nA sudden tightness overtakes your midsection. A searing pain flashes through you, as though your bones themselves were changing. Your hips reshape themselves, becoming more slender, leaving you <b>a little less curvy.</b>");
+				if (target.hipRating() >= hipLimit + 10 && target.hipRatingUnlocked(target.hipRating() - 1)) target.hipRating( -1);
+				if (target.hipRating() >= hipLimit + 5 && target.hipRatingUnlocked(target.hipRating() - 1)) target.hipRating( -1);
 				target.hipRating( -1);
 				changes++;
 			}
@@ -295,6 +297,8 @@ package classes.Items.Transformatives
 			if (target.buttRating() > buttLimit && target.buttRatingUnlocked(target.buttRating() - 1))
 			{
 				output("\n\nYour butt all of a sudden feels tight, as though you were wearing a pair of pants two sizes too small. You wince and grip your buttocks, and feel it losing mass under your hand. After a moment you're left with a much <b>smaller, less curvy butt.</b>");
+				if (target.buttRating() >= buttLimit + 10 && target.buttRatingUnlocked(target.buttRating() - 1)) target.buttRating( -1);
+				if (target.buttRating() >= buttLimit + 5 && target.buttRatingUnlocked(target.buttRating() - 1)) target.buttRating( -1);
 				target.buttRating( -1);
 				changes++;
 			}
