@@ -1435,7 +1435,7 @@ package classes.GameData
 			{
 				if (!pc.hasStatusEffect("Reduced Goo"))
 				{
-					addButton(bOff, "Goo Clone", selectSimpleAttack, kGAMECLASS.pcGooClone, "Goo Clone", "Have [goo.name] hop off and start teasing your enemy. Reduces your armor value, but inflicts lust over time.");
+					addButton(bOff, "Goo Clone", selectSimpleAttack, { func: kGAMECLASS.pcGooClone }, "Goo Clone", "Have [goo.name] hop off and start teasing your enemy. Reduces your armor value, but inflicts lust over time.");
 				}
 				else
 				{
@@ -1512,7 +1512,14 @@ package classes.GameData
 			clearOutput();
 			clearMenu();
 			
-			opts.attack.execute(_friendlies, _hostiles, pc, opts.tar);
+			if (opts.tar is CrystalGooT1 && (opts.tar as CrystalGooT1).ShouldIntercept())
+			{
+				(opts.tar as CrystalGooT1).SneakSqueezeAttackReaction(opts);
+			}
+			else
+			{
+				opts.attack.execute(_friendlies, _hostiles, pc, opts.tar);
+			}
 			
 			processCombat();
 		}
@@ -1557,7 +1564,13 @@ package classes.GameData
 			{
 				if (!_hostiles[i].isDefeated())
 				{
-					addButton(bOff, (_hostiles[i] as Creature).buttonText, executeSimpleAttack, attackOpts );
+					addButton(bOff, (_hostiles[i] as Creature).buttonText, function(in_opts:Object, in_target:Creature):Function {
+						return function():void {
+							in_opts.tar = in_target;
+							executeSimpleAttack(in_opts);
+						}
+					}(attackOpts, _hostiles[i]));
+					
 					bOff++;
 				}
 			}
@@ -1584,7 +1597,7 @@ package classes.GameData
 			}
 			
 			// Hacky workaround to defer process combat for special cases.
-			if (opts.func != generateTeaseMenu && opts.func != generateSenseMenu)
+			if (opts.func != generateTeaseMenu)
 			{
 				processCombat();
 			}
