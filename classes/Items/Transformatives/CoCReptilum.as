@@ -195,7 +195,7 @@ package classes.Items.Transformatives
 			}
 			
 			var changedBalls:Boolean = false;
-			if ((target.ballSizeRaw <= 2 && target.balls > 0 && target.ballsUnlocked(0)) || (target.ballSizeRaw > 2 && target.ballSizeUnlocked(target.ballSizeRaw - 2)) && (changes < changeLimit && rand(5) == 0))
+			if (((target.ballSizeRaw <= 2 && target.balls > 0 && target.ballsUnlocked(0)) || (target.ballSizeRaw > 2 && target.ballSizeUnlocked(target.ballSizeRaw - 2))) && changes < changeLimit && rand(5) == 0)
 			{
 				output("\n\nA flash of pain ripples through your body for a moment, centering on your groin. You wince, your hands darting between your legs. It's not your [pc.cocks] that's to blame though.... Your [pc.sack] aches, and you can feel the skin pulling upward");
 				if (target.ballSizeRaw <= 2) output(" more than usual");

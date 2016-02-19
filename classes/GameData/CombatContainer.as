@@ -2821,6 +2821,13 @@ package classes.GameData
 							}
 						}
 						
+						
+						// This should be done for EVERY combatant BEFORE calling clearCombatStatuses for ANY of them!
+						for (var i:int = 0; i < _hostiles.length; i++)
+							if (_hostiles[i].hasOwnProperty("onCleanup")) _hostiles[i].onCleanup();
+						for (var k:int = 0; k < _friendlies.length; k++)
+							if (_friendlies[k].hasOwnProperty("onCleanup")) _friendlies[k].onCleanup();
+						
 						for (var l:int = 0; l < _hostiles.length; l++)
 							if (_hostiles[l].hasOwnProperty("onPlayerLoss")) _hostiles[l].onPlayerLoss();
 						for (var k:int = 0; k < _friendlies.length; k++)
@@ -2884,6 +2891,13 @@ package classes.GameData
 							msg += " too turned on to fight.</b>\n\n";
 							output(msg);
 						}
+						
+						
+						// This should be done for EVERY combatant BEFORE calling clearCombatStatuses for ANY of them!
+						for (var i:int = 0; i < _hostiles.length; i++)
+							if (_hostiles[i].hasOwnProperty("onCleanup")) _hostiles[i].onCleanup();
+						for (var k:int = 0; k < _friendlies.length; k++)
+							if (_friendlies[k].hasOwnProperty("onCleanup")) _friendlies[k].onCleanup();
 						
 						for (var l:int = 0; l < _hostiles.length; l++)
 							if (_hostiles[l].hasOwnProperty("onPlayerVictory")) _hostiles[l].onPlayerVictory();			

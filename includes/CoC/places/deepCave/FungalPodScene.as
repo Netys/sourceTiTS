@@ -88,12 +88,11 @@ public function EncapsulationPodLoseToThisShitPartII():void {
 		enemy.lust(100, true);
 		//enemy.XP = 1;
 	}
-	output("\n\n");
 	//Done if escaped
 	if(enemy.lust() >= 100) {
+		output("\n\n");
 		flags["COC.ZETAZ_FUNGUS_ROOM_DEFEATED"] = 1;
 		processTime(120 + rand(60));
-		clearMenu();
 		CombatManager.genericVictory();
 		return;
 	}
@@ -107,7 +106,7 @@ public function EncapsulationPodLoseToThisShitPartII():void {
 		
 		output("The vine-like stalks currently hugging your [pc.multiCocks] constrict the base and begin to swirl around it in a circular motion.  Warm fungi-flesh and viscous, drugged ooze work together to send hot spikes of pleasure up your spinal-cord.  Despite your recent orgasm, you aren't being given any chance to recover or refill your [pc.balls].  Things like logic and rest don't matter in this warm, soupy environment, at least not to your poor, unthinking mind and erect, sensitive dick");
 		if(pc.cockTotal() > 1) output("s");
-		output(".  With such stimulation coming so closely on the heels of your last orgasm, [eachCock] is suffering painful levels of pleasure.  Your whole body shakes from the sensory overload; though with your muscles so completely shut down, it's more of a shiver.\n\n");
+		output(".  With such stimulation coming so closely on the heels of your last orgasm, [pc.eachCock] is suffering painful levels of pleasure.  Your whole body shakes from the sensory overload; though with your muscles so completely shut down, it's more of a shiver.\n\n");
 		
 		output("Another wave of sperm begins the slow escape from your helpless, pinned form, drawn out by the fungus' constant sexual ministrations.  The fluid inside your pod gurgles noisily as the fluids are exchanged, but the sensory input doesn't register to your overloaded, drugged-out shell of a mind.  You've lost yourself to mindless pleasure, and repeated, endless orgasms.  The rest of your life is spent floating in an artificial womb, orgasming over and over to feed your fungus prison, and enjoying the pleasure that long ago eroded your ability to reason.");
 		badEnd();
