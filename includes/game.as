@@ -991,6 +991,8 @@ public function move(arg:String, goToMainMenu:Boolean = true):void {
 		if ((!pc.isChestGarbed() || pc.isChestExposed()) && pc.biggestTitSize() > 1) nudistPrevention = true;
 		if (!pc.isCrotchGarbed() || pc.isCrotchExposed() || pc.isAssExposed()) nudistPrevention = true;
 		if (pc.armor is IllusoryAttire && IllusoryAttire.isActive(pc)) nudistPrevention = false;
+		// Cover yourself with your fuckton of wings
+		if(InCollection(pc.wingType, GLOBAL.TYPE_DOVEFOUR, GLOBAL.TYPE_DOVESIX)) nudistPrevention = false;
 		if(nudistPrevention)
 		{
 			clearOutput();
@@ -1242,9 +1244,8 @@ public function variableRoomUpdateCheck():void
 		lockAinasRoom();
 	}
 	//Place/remove Semith's NPC flag from chess area based on time and if pc played with him already
-	if ((hours >= 12 && hours <= 17 && !playedChessWithSemithToday())) rooms["RESIDENTIAL DECK 7"].addFlag(GLOBAL.NPC);
+	if (hours >= 12 && hours <= 17) rooms["RESIDENTIAL DECK 7"].addFlag(GLOBAL.NPC);
 	else rooms["RESIDENTIAL DECK 7"].removeFlag(GLOBAL.NPC);
-	
 	//Place/remove Semith's NPC flag from his apartment based on time.
 	if (hours > 17) rooms["RESIDENTIAL DECK SEMITHS APARTMENT"].addFlag(GLOBAL.NPC);
 	else rooms["RESIDENTIAL DECK SEMITHS APARTMENT"].removeFlag(GLOBAL.NPC);
@@ -2107,6 +2108,14 @@ public function racialPerkUpdateCheck():void
 			eventBuffer += ".";
 			eventBuffer += "\n\n(<b>Perk Lost: Fecund Figure</b>)";
 			pc.removePerk("Fecund Figure");
+		}
+	}
+	if(pc.statusEffectv4("Vanae Markings") > 0)
+	{
+		if(pc.balls <= 0)
+		{
+			eventBuffer += "\n\nA tingling sensations hits your crotch as you feel something fading away... Your codex beeps, informing you that the last remnants of your " + pc.skinAccent + " testicular tattoos have left your body, leaving the area bare.";
+			pc.setStatusValue("Vanae Markings", 4, 0);
 		}
 	}
 }
