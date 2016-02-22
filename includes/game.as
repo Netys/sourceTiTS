@@ -990,7 +990,10 @@ public function move(arg:String, goToMainMenu:Boolean = true):void {
 		var nudistPrevention:Boolean = false;
 		if ((!pc.isChestGarbed() || pc.isChestExposed()) && pc.biggestTitSize() > 1) nudistPrevention = true;
 		if (!pc.isCrotchGarbed() || pc.isCrotchExposed() || pc.isAssExposed()) nudistPrevention = true;
+		// Hide behind an illusion.
 		if (pc.armor is IllusoryAttire && IllusoryAttire.isActive(pc)) nudistPrevention = false;
+		// Wrap yorself into your fluffy tails! At least 6 of them.
+		if (pc.hasTail() && pc.hasTailFlag(GLOBAL.FLAG_LONG) && pc.hasTailFlag(GLOBAL.FLAG_FLUFFY) && pc.hasTailFlag(GLOBAL.FLAG_FURRED) && pc.tailCount >= 6) nudistPrevention = false;
 		// Cover yourself with your fuckton of wings
 		if(InCollection(pc.wingType, GLOBAL.TYPE_DOVEFOUR, GLOBAL.TYPE_DOVESIX)) nudistPrevention = false;
 		if(nudistPrevention)

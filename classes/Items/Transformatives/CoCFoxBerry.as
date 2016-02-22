@@ -303,7 +303,8 @@ package classes.Items.Transformatives
 				//from skin
 				else output("\n\nYour [pc.skinFurScales] itches all over, the sudden intensity and uniformity making you too paranoid to scratch.  As you hold still through an agony of tiny tingles and pinches, fine, luxuriant fur sprouts from every bare inch of your skin!  <b>You'll have to get used to being furry...</b>");
 				pc.skinType = GLOBAL.SKIN_TYPE_FUR;
-					
+				pc.clearSkinFlags();
+				
 				changes++;
 			}
 			
