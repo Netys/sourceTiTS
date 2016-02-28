@@ -289,6 +289,10 @@ public function debugMenusTwo():void
 	addItemButton(9, new GooArmor(), function():void {
 		quickLoot(new GooArmor());
 	});
+	
+	addItemButton(10, new DBGShield(), function():void {
+		quickLoot(new DBGShield());
+	});
 }
 
 public function debugFuckWithRival():void
@@ -305,8 +309,33 @@ public function debugMenusThree():void
 	addButton(1, "1v2", pcVsTwoEnemies);
 	addButton(2, "2v1", pcPlusAnnoVsOneEnemy);
 	addButton(3, "2v2", pcPlusAnnoVsTwoEnemies);
-	addButton(4, "CLUSTER", maximumClusterfuck);
+	addButton(4, "CGoo T1", testGooT1);
+	addButton(5, "CGoo T2", testGooT2);
 	addButton(10, "SUPERTIME", superTimePassage);
+}
+
+public function testGooT1():void
+{
+	CombatManager.newGroundCombat();
+	CombatManager.setFriendlyCharacters(pc);
+	CombatManager.setHostileCharacters(new CrystalGooT1());
+	CombatManager.victoryScene(pcDefeatsCrystalGooToo);
+	CombatManager.lossScene(crystalGooPCLoss);
+	CombatManager.displayLocation("CRYSTAL GOO");
+	
+	CombatManager.beginCombat();
+}
+
+public function testGooT2():void
+{
+	CombatManager.newGroundCombat();
+	CombatManager.setFriendlyCharacters(pc);
+	CombatManager.setHostileCharacters(new CrystalGooT2());
+	CombatManager.victoryScene(pcDefeatsCrystalGooToo);
+	CombatManager.lossScene(crystalGooPCLoss);
+	CombatManager.displayLocation("CRYSTAL GOO");
+	
+	CombatManager.beginCombat();
 }
 
 public function superTimePassage():void

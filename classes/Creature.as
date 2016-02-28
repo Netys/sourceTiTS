@@ -75,7 +75,11 @@ package classes {
 				"buttonText",
 				"btnTargetText",
 				"alreadyDefeated",
-				"shieldDisplayName"
+				"shieldDisplayName",
+				"skipIntercept",
+				"skipTurn",
+				"_skipRound",
+				"OnTakeDamageOutput"
 			);
 
 			cocks = new Array();
@@ -3520,7 +3524,11 @@ package classes {
 					modifiedDamage.multiply(1.2);
 					
 				// Easiest way I can think of conveying base damage - might be better to add this as a flat bonus some other way.
-				modifiedDamage.unresistable_hp.damageValue += statusEffectv1("Concentrated Fire"); 
+				// Only add bonus if the weapons already doing SOME HP damage
+				if (modifiedDamage.hasHPDamage())
+				{
+					modifiedDamage.unresistable_hp.damageValue += statusEffectv1("Concentrated Fire"); 
+				}
 			}
 			
 			modifiedDamage.add(armor.baseDamage);
@@ -14069,7 +14077,7 @@ package classes {
 		public var uniqueName:String = null; // Transient
 		public function get flags():Dictionary { return kGAMECLASS.flags; } // Transient
 		public var alreadyDefeated:Boolean = false; // Transient
-		public var shieldDisplayName:String = "SHIELD"; // Transient
+		public var shieldDisplayName:String = "SHIELDS"; // Transient
 		
 		/**
 		 * Return the name for the bust this character should display. This'll be used during combat, but also potentially
@@ -14098,6 +14106,16 @@ package classes {
 			return false; // 9999
 		}
 		
+		// OnTakeDamage is called as part of applyDamage.
+		// You should generate a message for /deferred/ display in the creature
+		// rather than emitting text immediately. You should then emit it
+		// during the CombatAI call before taking any other action. See
+		// CrystalGooT1 for an example.
+		protected var OnTakeDamageOutput:String;
+		public function OnTakeDamage(incomingDamage:TypeCollection):void
+		{
+			
+		}
 	}
 	
 }

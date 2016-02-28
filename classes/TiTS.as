@@ -365,7 +365,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.34";
+			version = "0.6.35";
 
 			//temporary nonsense variables.
 			temp = 0;
@@ -1139,6 +1139,13 @@
 		public function get semith():Semith
 		{
 			return chars["SEMITH"];
+		}
+		
+		private var _dbgtestvar:int = 0;
+		public function dbgshieldparsertag():String
+		{
+			_dbgtestvar++;
+			return "This tag has been parsed " + _dbgtestvar + " time" + (_dbgtestvar == 1 ? "" : "s") +".";
 		}
 	}
 }

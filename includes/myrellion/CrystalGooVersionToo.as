@@ -1,6 +1,13 @@
+import classes.Items.Transformatives.GooBallBlue;
+import classes.Items.Transformatives.GooBallGreen;
+import classes.Items.Transformatives.GooBallOrange;
+import classes.Items.Transformatives.GooBallPink;
+import classes.Items.Transformatives.GooBallPurple;
+import classes.Items.Transformatives.GooBallRed;
 public function encounterCrystalGooV2():void 
 {
-	
+	if (rand(2) == 0) crystalGooEncounterType1();
+	else crystalGooEncounterType2();
 }	
 
 public function crystalGooEncounterType1():void
@@ -47,7 +54,7 @@ public function crystalGooEncounterType1():void
 		}
 		else output("\n\nThe alien trembles, and if its mouth could open you’re certain it would be salivating. <i>“Pleased to meet you,”</i> it buzzes. <i>“Hold still so I can enjoy myself.”</i>");
 
-		output("<b>It’s a fight!</b>");
+		output("\n\n<b>It’s a fight!</b>");
 	}
 	// Repeat
 	else
@@ -84,7 +91,7 @@ public function crystalGooEncounterType1():void
 
 			//go to fight
 			//begin fight with 11 points of damage on enemy shield if armed, else 3 if unarmed (wibble the numbers with RNG if you feel like it)
-			output("<b>It’s a fight!</b>");
+			output("\n\n<b>It’s a fight!</b>");
 		}
 		else
 		{
@@ -123,11 +130,14 @@ public function crystalGooEncounterType1():void
 	CombatManager.setHostileCharacters(tEnemy);
 	CombatManager.displayLocation("CRYSTAL GOO");
 
+	showCrystalGooToo();
+	showName("\nAMBUSH!");
+
 	clearMenu();
 	addButton(0, "Next", CombatManager.beginCombat);
 }
 
-public function encounterCrystalGooType2():void
+public function crystalGooEncounterType2():void
 {
 	var tEnemy:Creature = new CrystalGooT2();
 
@@ -141,7 +151,7 @@ public function encounterCrystalGooType2():void
 		flags["CRYSTALGOO_T2_ENCOUNTERS"] = 0;
 		output("\n\nA feminine figure stands in the center of this area, immobile, like a statue. Tiny glowing mushrooms lend it an unworldly air; you creep closer for an examination and the details come into relief.");
 		
-		output("\n\nThe piece’s beauty is remarkable. It’s suited in "+enemy.skinTone+" armor shaped to resemble a nude woman. The chestplate is ornamented with two smooth breasts, at least C-cup, and circling to the rear reveals a toned back and shoulders above a depending plate molded like a tight, cute butt. Even the head, with its short, pointed ears and representation of cropped, wavy hair, is a masked helmet covering the true face underneath. Darker, glossier "+enemy.skinTone+", perhaps representing the model’s skin, is visible on the few unarmored areas like the groin.");
+		output("\n\nThe piece’s beauty is remarkable. It’s suited in " +tEnemy.skinTone+ " armor shaped to resemble a nude woman. The chestplate is ornamented with two smooth breasts, at least C-cup, and circling to the rear reveals a toned back and shoulders above a depending plate molded like a tight, cute butt. Even the head, with its short, pointed ears and representation of cropped, wavy hair, is a masked helmet covering the true face underneath. Darker, glossier "+tEnemy.skinTone+", perhaps representing the model’s skin, is visible on the few unarmored areas like the groin.");
 		if (CodexManager.entryUnlocked("Nyrea")) output(" It very much resembles an idealized version of the nyrea who call these caves home.");
 		
 		output("\n\nThe poor thing looks like a victim of a horrible attack; crude picks and needles protrude from gaps in its armor. Perhaps it honors some ill-fated messenger who brought warning to her people despite terrible wounds. The stone is clean and unweathered by age; whoever put it here must have done so recently. The feet stand in the dirt rather than on a plinth, posing some question as to how it’s expected to stay upright.");
@@ -156,7 +166,7 @@ public function encounterCrystalGooType2():void
 		else if (pc.race().indexOf("myr") != -1 || pc.race().indexOf("zil") != -1) output("Do you really want to fight so far from home, myr?");
 		else if (pc.isGoo()) output("Are you trying to poach my territory? That’s not nice,");
 		else output("Oh? We can fight if you like,");
-		output("<i>“ it sighs, in a feminine voice.");
+		output("”</i> it sighs, in a feminine voice.");
 		
 		output("\n\nYour codex beeps out a warning too late: <i>“Ganrael detected. An amorphous, intelligent lifeform capable of hardening its outer skin into exoskeletal arms and armor. Available reports indicate that ganrael will attempt to harvest genetic material from individuals they encounter.”</i> On cue, the statue closes in!");
 		
@@ -191,6 +201,9 @@ public function encounterCrystalGooType2():void
 	CombatManager.lossScene(crystalGooPCLoss);
 	CombatManager.setHostileCharacters(tEnemy);
 	CombatManager.displayLocation("CRYSTAL GOO");
+
+	showCrystalGooToo();
+	showName("\nAMBUSH!");
 
 	clearMenu();
 	addButton(0, "Next", CombatManager.beginCombat);
@@ -306,12 +319,32 @@ public function pcDefeatsCrystalGooToo():void
 	addButton(14, "Leave", crystalGooLeaveAfterWin);
 }
 
+private function addCrystalGooBallLoot():void
+{
+	if (enemy.hasStatusEffect("Unarmored") && rand(5) <= 1)
+	{	
+		switch (enemy.skinTone)
+		{
+			case "green": enemy.inventory.push(new GooBallGreen()); break;
+			case "blue": enemy.inventory.push(new GooBallBlue()); break;
+			case "yellow": enemy.inventory.push(new GooBallYellow()); break;
+			case "pink": enemy.inventory.push(new GooBallPink()); break;
+			case "red": enemy.inventory.push(new GooBallRed()); break;
+			case "purple": enemy.inventory.push(new GooBallPurple()); break;
+			case "orange": enemy.inventory.push(new GooBallOrange()); break;
+			default: break;
+		}
+	}
+}
+
 public function crystalGooLeaveAfterWin():void
 {
 	clearOutput();
 	showCrystalGooToo();
 	
 	output("You give the ganraels offer a momentary thought, but ultimately opt to leave the " + enemy.skinTone +" goo to their own devices.");
+	
+	addCrystalGooBallLoot();
 	
 	clearMenu();
 	CombatManager.genericVictory();
@@ -443,6 +476,8 @@ public function crystalGooSculptingMale():void
 	processTime(20+rand(10));
 	pc.orgasm();
 
+	addCrystalGooBallLoot();
+	
 	clearMenu();
 	CombatManager.genericVictory();
 }
@@ -626,6 +661,9 @@ public function crystalGooSculptingFem():void
 
 	processTime(30+rand(10));
 	pc.orgasm();
+	
+	addCrystalGooBallLoot();
+	
 	clearMenu();
 	CombatManager.genericVictory();
 }
@@ -902,6 +940,8 @@ public function crystalGooFreeformFucks():void
 	processTime(30+rand(10));
 	pc.orgasm();
 
+	addCrystalGooBallLoot();
+	
 	clearMenu();
 	CombatManager.genericVictory();
 }
@@ -1078,6 +1118,8 @@ public function crystalGooCuddlebug(pcVictory:Boolean = false):void
 		output(" as it slides from your stretched anus, <i>“I told you I’d do all the work.”</i> It rolls over with you clasped in its legs, then opens the");
 		if (pc.hasCock()) output(" semen-stained");
 		output(" cage, placing you on the ground with care. Your head lolls back from the all-over tenderizing you just took. <i>“Bye bye,”</i> it says, leaving you alone to collect your muscle tension and rein in your still-twitching asshole.");
+		addCrystalGooBallLoot();
+		
 		clearMenu();
 		CombatManager.genericVictory();
 	}
@@ -1296,6 +1338,8 @@ public function crystalGooSounding(pcVictory:Boolean = false):void
 		processTime(30+rand(10));
 		pc.orgasm();
 
+		addCrystalGooBallLoot();
+		
 		clearMenu();
 		CombatManager.genericVictory();
 	}
@@ -1319,7 +1363,6 @@ public function crystalGooPCLoss():void
 	clearOutput();
 	showCrystalGooToo();
 
-	output("\n\n");
 	if (pc.HP() <= 0) output("You stumble on the dirty cave floor, try to get your balance, and fall again. With a thump, you plop down on your ass.");
 	else output("You quiver and lose balance, falling on your ass. Fantasies parade through your thoughts, distracting you so much that you don’t immediately remember how to stand again.");
 	if (enemy.hasStatusEffect("Unarmored")) output(" The sexless, blank-faced ganrael approaches by inches, trying to conceal its vulnerability until it understands that you’re even worse off. Once it understands, though, it acts.");
@@ -1691,7 +1734,7 @@ public function crystalGooVagooLoss():void
 	//else other PC
 	else
 	{
-		output("\n\n<i>“You have a very good body,<i>“ the ganrael admits. <i>“I’m going to use it until I’m satisfied.”</i>");
+		output("\n\n<i>“You have a very good body,</i>” the ganrael admits. <i>“I’m going to use it until I’m satisfied.”</i>");
 	}
 
 	//merge
