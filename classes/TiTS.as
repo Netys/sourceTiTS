@@ -365,7 +365,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.36";
+			version = "0.6.37";
 
 			//temporary nonsense variables.
 			temp = 0;
@@ -445,6 +445,8 @@
 			this.configureMails();
 			this.userInterface.showMainMenu();
 			buildWTF();
+			
+			//addGhostButton(0, "HAHAHA", YouThinkThisIsAGame, undefined, "HAHA!", "DO YOU THINK THIS IS A GAME???");
 		}
 		
 		private function buildWTF():void
@@ -1151,5 +1153,27 @@
 			_dbgtestvar++;
 			return "This tag has been parsed " + _dbgtestvar + " time" + (_dbgtestvar == 1 ? "" : "s") +".";
 		}
+		
+		/*
+		// Embed(source = "../Silence.swf")
+		public var Silence:Class;
+		
+		public function YouThinkThisIsAGame():void
+		{
+			var s = new this.Silence();
+			s.addEventListener(Event.COMPLETE, GameGo);
+		}
+		
+		public function GameGo(e:Event):void
+		{
+			trace("loaded");
+			var b:Sprite = new Sprite();
+			b.graphics.beginFill(0x636363);
+			b.graphics.drawRect(0, 0, 1200, 800);
+			b.graphics.endFill();
+			stage.addChild(b);
+			stage.addChild(e.target.getChildAt(0).content);
+		}
+		*/
 	}
 }
