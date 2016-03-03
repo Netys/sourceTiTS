@@ -826,7 +826,7 @@ package classes.Items.Transformatives
 					if (target.hasTailCock())
 					{
 						target.clearTailFlags();
-						target.tailGenitalColor = target.skinTone;
+						target.tailGenitalColor = "pink";
 						target.tailGenitalArg = GLOBAL.TYPE_FELINE;
 						target.tailGenital = GLOBAL.TAIL_GENITAL_COCK;
 						target.addTailFlag(GLOBAL.FLAG_TAILCOCK); // that's a hell load of flags...
@@ -843,7 +843,6 @@ package classes.Items.Transformatives
 					target.tailType = GLOBAL.TYPE_FELINE;
 					target.addTailFlag(GLOBAL.FLAG_LONG);
 					target.addTailFlag(GLOBAL.FLAG_FURRED);
-					// FIXME: according to codex, felines should also have FLAG_PREHENSILE...
 					changes++;
 				}
 				else output(target.tailTypeLockedMessage());

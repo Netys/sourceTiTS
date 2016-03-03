@@ -2858,8 +2858,8 @@ package classes.GameData
 						
 						for (var l:int = 0; l < _hostiles.length; l++)
 							if (_hostiles[l].hasOwnProperty("onPlayerLoss")) _hostiles[l].onPlayerLoss();
-						for (var k:int = 0; k < _friendlies.length; k++)
-							if (_friendlies[k].hasOwnProperty("onPlayerLoss")) _friendlies[k].onPlayerLoss();
+						for (var m:int = 0; m < _friendlies.length; m++)
+							if (_friendlies[m].hasOwnProperty("onPlayerLoss")) _friendlies[m].onPlayerLoss();
 						
 						kGAMECLASS.setEnemy(t_enemy);
 						CombatManager.showCombatUI();
@@ -2928,9 +2928,9 @@ package classes.GameData
 							if (_friendlies[k].hasOwnProperty("onCleanup")) _friendlies[k].onCleanup();
 						
 						for (var l:int = 0; l < _hostiles.length; l++)
-							if (_hostiles[l].hasOwnProperty("onPlayerVictory")) _hostiles[l].onPlayerVictory();			
-						for (var k:int = 0; k < _friendlies.length; k++)
-							if (_friendlies[k].hasOwnProperty("onPlayerVictory")) _friendlies[k].onPlayerVictory();
+							if (_hostiles[l].hasOwnProperty("onPlayerVictory")) _hostiles[l].onPlayerVictory();
+						for (var m:int = 0; m < _friendlies.length; m++)
+							if (_friendlies[m].hasOwnProperty("onPlayerVictory")) _friendlies[m].onPlayerVictory();
 						
 						kGAMECLASS.setEnemy(t_enemy);
 						CombatManager.showCombatUI();
