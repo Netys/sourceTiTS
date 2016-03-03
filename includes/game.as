@@ -266,7 +266,7 @@ public function showCodex():void
 	//addGhostButton(2, "Log", function():void { } );
 	//addGhostButton(3, "CHEEVOS", function():void { } );
 	addGhostButton(1, "Log", displayQuestLog, flags["TOGGLE_MENU_LOG"]);
-	
+	if(flags["EMMY_QUEST"] >= 6 && flags["EMMY_QUEST"] != undefined) addGhostButton(3,"EmmyRemote",pushEmmysButtonsMenu);
 	addGhostButton(4, "Back", userInterface.showPrimaryOutput);
 }
 
@@ -1351,13 +1351,18 @@ public function processTime(arg:int):void {
 	var tightnessChanged:Boolean = false;
 	
 	var productionFactor:Number = 100 / (1920) * ((pc.libido() * 3 + 100) / 100);
-	
 	// Ideally most of this character updating shit needs to be shifted into the Creature class itself
 	// Then everything can just get stuffed in this loop as like chars[prop].processTime(arg) and hook everything like that.
 	for (var prop:String in chars)
 	{
-		if(chars[prop].ballFullness < 100 || chars[prop] == pc) chars[prop].cumProduced(arg);
+		//Cum volume only simulated for those that simulate dat shit.
+		if(chars[prop].fluidSimulate)
+		{
+			if(chars[prop].ballFullness < 100 || chars[prop] is PlayerCharacter) chars[prop].cumProduced(arg);
+			chars[prop].cumFlationSimulate(arg);
+		}
 	}
+	pc.cumFlationSimulate(arg);
 	
 	//Double time
 	if (pc.hasPerk("Extra Ardor")) productionFactor *= 2;
@@ -1497,7 +1502,7 @@ public function processTime(arg:int):void {
 		minutes++;
 
 		//Status Effect Updates
-		pc.statusTick();
+		for (prop in chars) { if(chars[prop].statusSimulate) chars[prop].statusTick(); }
 		//AlcoholTic
 		if(pc.hasStatusEffect("Alcohol")) pc.alcoholTic();
 		
@@ -1590,8 +1595,8 @@ public function processTime(arg:int):void {
 			
 			minutes = 0;
 			hours++;
+
 			//Hours checks here!
-			
 			if(flags["SHEKKA_TALK_COOLDOWN"] != undefined)
 			{
 				if(flags["SHEKKA_TALK_COOLDOWN"] > 0) flags["SHEKKA_TALK_COOLDOWN"]--;
@@ -1869,11 +1874,9 @@ public function processTime(arg:int):void {
 	if (!MailManager.isEntryUnlocked("emmy_apology") && flags["EMMY_EMAIL_TIMER"] <= (GetGameTimestamp() - (24 * 60))) emmyMailGet();
 	//Emmy mail stage 2 START
 	if (!MailManager.isEntryUnlocked("emmy_gift_starter") && flags["EMMY_ORAL_TIMER"] <= (GetGameTimestamp() - (72 * 60))) emmyMailGet2();
-	/* 9999
 	//Emmy mail set up for sextoy go
 	if (!MailManager.isEntryUnlocked("emmy_implant_explain_email") && flags["EMMY_PRESEX_FUN_TIMER"] <= (GetGameTimestamp() - (100 * 60))) emmyMailGet3();
 	if (!MailManager.isEntryUnlocked("emmy_harness_here") && flags["EMMY_TOY_TIMER"] <= GetGameTimestamp()) emmyMailGet4();
-	*/
 
 	//Saendra Mail
 	if (!MailManager.isEntryUnlocked("saendrathanks") && flags["FALL OF THE PHOENIX STATUS"] >= 1 && flags["SAENDRA_DISABLED"] != 1 && rooms[currentLocation].planet != "SHIP: PHOENIX" && currentLocation != "SHIP INTERIOR") saendraPhoenixMailGet();

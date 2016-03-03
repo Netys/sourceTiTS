@@ -301,6 +301,7 @@ public function pantyFapCount():Number
 	if(pc.hasKeyItem("Panties - Penny's - Plain, blue, and crotchless.")) count++;
 	if(pc.hasKeyItem("Panties - Syri's - Sky blue, silky, and extra crotch room.")) count++;
 	if(pc.hasKeyItem("Panties - Saendra's - Ultra-tight and bright pink.")) count++;
+	if(pc.hasKeyItem("Panties - Emmy's - Silky, purple, and cum-stained.")) count++;
 	return count;
 }
 
@@ -2330,6 +2331,7 @@ public function futaBabePantyfapsRouter():void
 		if(pc.hasKeyItem("Panties - Penny's - Plain, blue, and crotchless.")) futaBabePantyfaps("Penny");
 		if(pc.hasKeyItem("Panties - Saendra's - Ultra-tight and bright pink.")) futaBabePantyfaps("Saendra");
 		if(pc.hasKeyItem("Panties - Syri's - Sky blue, silky, and extra crotch room.")) futaBabePantyfaps("Syri");
+		if(pc.hasKeyItem("Panties - Emmy's - Silky, purple, and cum-stained.")) futaBabePantyfaps("Emmy");
 	}	
 	//More than one pair? Build a menu.
 	else
@@ -2338,6 +2340,11 @@ public function futaBabePantyfapsRouter():void
 		output("You've collected " + pantyFapCount() + " of 4 possible pairs of ladies' underwear. Which will you use?");
 		clearMenu();
 		var button:int = 0;
+		if(pc.hasKeyItem("Panties - Emmy's - Silky, purple, and cum-stained."))
+		{
+			addButton(button,"Emmy's",futaBabePantyfaps,"Emmy","Emmy's Panties","Use Emmy's cum-stained, purple panties for a quick wank.");
+			button++;
+		}
 		if(pc.hasKeyItem("Panties - Kiro's - Lacy, black, and crotchless.")) 
 		{
 			addButton(button,"Kiro's",futaBabePantyfaps,"Kiro","Kiro's Panties","Use Kiro's lacy, crotchless panties for a quick wank.");
@@ -2370,6 +2377,7 @@ public function futaBabePantySchlicksRouter():void
 		if(pc.hasKeyItem("Panties - Penny's - Plain, blue, and crotchless.")) futaPantiesFapInPussy("Penny");
 		if(pc.hasKeyItem("Panties - Saendra's - Ultra-tight and bright pink.")) futaPantiesFapInPussy("Saendra");
 		if(pc.hasKeyItem("Panties - Syri's - Sky blue, silky, and extra crotch room.")) futaPantiesFapInPussy("Syri");
+		if(pc.hasKeyItem("Panties - Emmy's - Silky, purple, and cum-stained.")) futaPantiesFapInPussy("Emmy");
 	}	
 	//More than one pair? Build a menu.
 	else
@@ -2378,6 +2386,11 @@ public function futaBabePantySchlicksRouter():void
 		output("You've collected " + pantyFapCount() + " of 4 possible pairs of ladies' underwear. Which will you use?");
 		clearMenu();
 		var button:int = 0;
+		if(pc.hasKeyItem("Panties - Emmy's - Silky, purple, and cum-stained.")) 
+		{
+			addButton(button,"Emmy's",futaPantiesFapInPussy,"Emmy","Emmy's Panties","Use Emmy's purple, cummy panties for a quick jill-off session.");
+			button++;
+		}
 		if(pc.hasKeyItem("Panties - Kiro's - Lacy, black, and crotchless.")) 
 		{
 			addButton(button,"Kiro's",futaPantiesFapInPussy,"Kiro","Kiro's Panties","Use Kiro's lacy, crotchless panties for a quick jill-off session.");
@@ -2409,6 +2422,7 @@ public function getPantyColor(waifu:String = ""):String
 	else if(waifu == "Penny") pantyColor = "blue";
 	else if(waifu == "Syri") pantyColor = "blue";
 	else if(waifu == "Saendra") pantyColor = "bright pink";
+	else if(waifu == "Emmy") pantyColor = "purple";
 	return pantyColor;
 }
 
