@@ -430,15 +430,20 @@ public function workFarm():void {
 		output("You find Whitney getting a scythe out of her tool shed. \"<i>Do you know how to muck out a stable?</i>\" she asks when you offer to help. You admit that you did a lot of that while growing up in your village. After passing you a rake, shovel, and pitchfork, she leads you to the milking barn.");
 		output("  The first thing that hits you is the smell, a mingling of sweat, milk, droppings, and rotting hay. There are also probably some cows in Whitney's herd ready for breeding.\n\n");
 		output("Opening the door to one of the empty stalls, Whitney says, \"<i>I don't get to them as often as I should. Anything you can do would help.</i>\"\n\n");
-		output("You steel yourself, ignore your ");
-		if(pc.hasFaceFlag(GLOBAL.FLAG_MUZZLED)) output("sensitive ");
-		output("nose, and set to work.");
+		output("You steel yourself");
+		if(!pc.hasArmor() || !pc.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)) {
+			output(", ignore your ");
+			if(pc.hasFaceFlag(GLOBAL.FLAG_MUZZLED)) output("sensitive ");
+			output("nose,");
+		}
+		output(" and set to work.");
 		//[Lust increase based on libido, degree of cow/mino features] 
 		pc.lust(pc.bovineScore() * 2);
 		//dynStats("lus", pc.cowScore() + pc.minoScore());
 		output("\n\nAn hour later you can stand it no more and exit the milking barn. Gulping down the fresher air and dragging the tools back to their shed, you admit to yourself that Whitney is a much harder worker and has a stronger constitution than you thought. You promise yourself you'll come back and help her out some more -- as soon as your nose recovers.");
 		//always +1 str till 50, then 50% chance.
 		pc.slowStatGain("physique", 1);
+		clearMenu();
 		addButton(0, "Next", function():*{ processTime(60 + rand(10)); mainGameMenu(); });
 		return;
 	}
