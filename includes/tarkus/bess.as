@@ -3037,7 +3037,7 @@ public function setBessCockType(newType:int):void
 		if (!bess.hasCock()) bess.cocks.push(new CockClass());
 		bess.cocks[0].cType = GLOBAL.TYPE_SAURIAN;
 		bess.cocks[0].cLengthRaw = 20;
-		bess.cocks[0].cThicknessRatioRaw = 3;
+		bess.cocks[0].cThicknessRatioRaw = 1.2;
 		bess.cocks[0].clearFlags();
 
 		bess.balls = 2;
@@ -3058,7 +3058,7 @@ public function setBessCockType(newType:int):void
 		if (!bess.hasCock()) bess.cocks.push(new CockClass());
 		bess.cocks[0].cType = GLOBAL.TYPE_EQUINE;
 		bess.cocks[0].cLengthRaw = 16;
-		bess.cocks[0].cThicknessRatioRaw = 2.5;
+		bess.cocks[0].cThicknessRatioRaw = 1.1;
 		bess.cocks[0].clearFlags();
 		bess.cocks[0].addFlag(GLOBAL.FLAG_FLARED);
 
@@ -3079,7 +3079,7 @@ public function setBessCockType(newType:int):void
 		if (!bess.hasCock()) bess.cocks.push(new CockClass());
 		bess.cocks[0].cType = GLOBAL.TYPE_CANINE;
 		bess.cocks[0].cLengthRaw = 12;
-		bess.cocks[0].cThicknessRatioRaw = 2;
+		bess.cocks[0].cThicknessRatioRaw = 1;
 		bess.cocks[0].clearFlags();
 		if (knot) bess.cocks[0].addFlag(GLOBAL.FLAG_KNOTTED);
 		bess.cocks[0].addFlag(GLOBAL.FLAG_TAPERED);
@@ -3105,7 +3105,7 @@ public function setBessCockType(newType:int):void
 		if (!bess.hasCock()) bess.cocks.push(new CockClass());
 		bess.cocks[0].cType = GLOBAL.TYPE_TENTACLE;
 		bess.cocks[0].cLengthRaw = 24;
-		bess.cocks[0].cThicknessRatioRaw = 1.5;
+		bess.cocks[0].cThicknessRatioRaw = 1;
 		bess.cocks[0].clearFlags();
 		bess.cocks[0].addFlag(GLOBAL.FLAG_PREHENSILE);
 
@@ -3125,7 +3125,7 @@ public function setBessCockType(newType:int):void
 		if (!bess.hasCock()) bess.cocks.push(new CockClass());
 		bess.cocks[0].cType = GLOBAL.TYPE_GOOEY;
 		bess.cocks[0].cLengthRaw = 16;
-		bess.cocks[0].cThicknessRatioRaw = 1.5;
+		bess.cocks[0].cThicknessRatioRaw = 1;
 		bess.cocks[0].clearFlags();
 
 		bess.balls = 0;
@@ -3142,7 +3142,7 @@ public function setBessCockType(newType:int):void
 		if (!bess.hasCock()) bess.cocks.push(new CockClass());
 		bess.cocks[0].cType = GLOBAL.TYPE_VENUSPITCHER;
 		bess.cocks[0].cLengthRaw = 12;
-		bess.cocks[0].cThicknessRatioRaw = 1.5;
+		bess.cocks[0].cThicknessRatioRaw = 1;
 		bess.cocks[0].clearFlags();
 		bess.cocks[0].addFlag(GLOBAL.FLAG_PREHENSILE);
 		bess.cocks[0].addFlag(GLOBAL.FLAG_TAPERED);
@@ -3167,7 +3167,7 @@ public function setBessCockType(newType:int):void
 		if (!bess.hasCock()) bess.cocks.push(new CockClass());
 		bess.cocks[0].cType = GLOBAL.TYPE_DRACONIC;
 		bess.cocks[0].cLengthRaw = 16;
-		bess.cocks[0].cThicknessRatioRaw = 2;
+		bess.cocks[0].cThicknessRatioRaw = 1.1;
 		bess.cocks[0].clearFlags();
 		bess.cocks[0].addFlag(GLOBAL.FLAG_PREHENSILE);
 

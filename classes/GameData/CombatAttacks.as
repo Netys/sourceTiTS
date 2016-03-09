@@ -408,6 +408,7 @@ package classes.GameData
 			ConcussiveShot.EnergyCost = 25;
 			ConcussiveShot.IsRangedBased = true;
 			ConcussiveShot.RequiresItemFlags = [GLOBAL.ITEM_FLAG_BOW_WEAPON];
+			ConcussiveShot.RequiresPerk = "Concussive Shot";
 			ConcussiveShot.ExtendedDisplayabilityCheck = function():Boolean {
 				return kGAMECLASS.pc.rangedWeapon.hasFlag(GLOBAL.ITEM_FLAG_BOW_WEAPON);
 			}
@@ -854,9 +855,10 @@ package classes.GameData
 				
 				for (i = 0; i < others.length; i++)
 				{
-					if (!others[i].isDefeated())
+					if (!others[i].isDefeated() && others[i] != target)
 					{
-						if (numHits > 0 || i != 0) output("\n");
+						//if (numHits > 0 || i != 0) output("\n");
+						output("\n");
 						if (SingleMeleeAttackImpl(attacker, others[i], false)) numHits++;
 					}
 				}

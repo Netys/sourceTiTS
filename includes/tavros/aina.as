@@ -113,6 +113,7 @@ public function approachAinaOnTheWalkway():void
 	output("\n\nWhat do you do?");
 	
 	processTime(2);
+	pc.lust(10);
 	
 	clearMenu();
 	addButton(0, "Help Her", helpAina);
@@ -194,7 +195,7 @@ public function helpAina():void
 	else output(", even though you're not a taur!");
 	
 	processTime(10+rand(5));
-	pc.lust(20);
+	pc.lust(25);
 	
 	clearMenu();
 	if(pc.lust() >= 33) addButton(0, "Offer Sex", helpAinaWithSex);
