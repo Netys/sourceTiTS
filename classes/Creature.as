@@ -4190,9 +4190,12 @@
 			var faceo: String = "";
 			var hasSmallNose: Boolean = InCollection(faceType, GLOBAL.TYPE_HUMAN, GLOBAL.TYPE_NALEEN_FACE, GLOBAL.TYPE_LAPINE, GLOBAL.TYPE_HUMANMASKED, GLOBAL.TYPE_KUITAN, GLOBAL.TYPE_VULPINE, GLOBAL.TYPE_MOUSEMAN, GLOBAL.TYPE_MOUSE);
 			if (hasPerk("Androgyny")) {
-				faceo = "an androgynous " + face() + " that would work on either a male or a female and " + plural(lipDescript(true)) + faceLipMimbraneDescript();
-				if (mfn("m", "f", "n") != "n")
-					faceo += ". Despite that, your overall appearance leaves " + mf("boyish", "girly") + " impression";
+				faceo = "an androgynous " + face();
+				if (mfn("m", "f", "n") == "n")
+					faceo += " that would work on either a male or a female"
+				else
+					faceo += " which leaves a subtle " + mf("boyish", "girly") + " impression";
+				if(lipRating() > 1) faceo += " and " + plural(lipDescript(true)) + faceLipMimbraneDescript();
 			}
 			//0-10
 			else if (femininity < 10) {
@@ -7948,7 +7951,8 @@
 					cocks[slot].addFlag(GLOBAL.FLAG_TAPERED);
 					break;
 				case GLOBAL.TYPE_DRACONIC:
-					cocks[slot].cockColor = RandomInCollection(["red", "green", "blue", "aquamarine", "purple", "yellow", "gray", "black"]);
+					if (hasChitin() || hasScales()) cocks[slot].cockColor = scaleColor;
+					else cocks[slot].cockColor = RandomInCollection(["red", "green", "blue", "aquamarine", "purple", "yellow", "gray", "black"]);
 					cocks[slot].knotMultiplier = RandomInCollection([1.25, 1.3]);
 					cocks[slot].addFlag(GLOBAL.FLAG_TAPERED);
 					cocks[slot].addFlag(GLOBAL.FLAG_KNOTTED);

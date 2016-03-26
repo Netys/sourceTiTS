@@ -911,7 +911,7 @@ public function HairSerumTimePassedNotify():void {
 			eventBuffer += "\n\nThe tingling on your scalp slowly fades away as the hair extension serum wears off.  Maybe it's time to go back to the salon for more?";
 			flags["COC.INCREASED_HAIR_GROWTH_SERUM_POWER"] = 0;
 		}
-		//trace("Serum tick! After: " + pc.hairLength);
+		//trace("Serum tick! After: " + pc.hairLength + ", ticks left: " + flags["COC.INCREASED_HAIR_GROWTH_SERUM_TIME"]);
 	}
 }
 private var HairSerumTimePassedNotifyHook: * = HairSerumTimePassedNotifyGrapple();

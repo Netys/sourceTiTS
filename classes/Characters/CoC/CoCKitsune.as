@@ -331,12 +331,13 @@ package classes.Characters.CoC
 		{
 			output("You struggle to keep your eyes on the kitsune, ghostly laughter echoing all around you as you turn to and fro, trying to track her movements.  It almost seems like the edges of reality are blurring around her, severely distorting your perceptions and making it hard to follow her.  It's going to be much harder to hit her if she keeps this up!");
 			//Resist: - successfully resisting deals small health & lust damage to kitsune
-			var resist:int = Math.min(30, target.WQ() / 3);
+			var resist:int = Math.max(target.intelligence(), target.willpower());
+			if (target.isPsionic()) resist += 10;
 			if (target.hasPerk("Whispered")) resist += 20;
-			if (target.hasPerk("History: Religious") && target.cor() < 20) resist += 20 - target.cor();
+			if ((target.hasPerk("History: Religious") || target.hasPerk("Enlightened")) && target.cor() < 20) resist += 20 - target.cor();
 			if (target.hasTail(GLOBAL.TYPE_VULPINE)) resist += (target.tailCount - 1) * 10; // fellow kitsunes should be highly resistant!
 			
-			if (rand(100) < resist) {
+			if (rand(70) + 30 < resist) {
 				output("\n\nThe kitsune seems to melt away before your eyes for a moment, as though the edges of reality are blurring around her.  You tighten your focus, keeping your eyes trained on her, and she suddenly reels in pain, clutching her forehead as she is thrust back into view.  She lets out a frustrated huff of disappointment, realizing that you have resisted her illusions.");
 			}
 			else {
@@ -349,9 +350,10 @@ package classes.Characters.CoC
 		//PCs with "Religious" background and < 20 corruption have up to 20% resistance to sealing at 0 corruption, losing 1% per corruption.
 		private function kitsuneSealAttack(target:Creature):void
 		{			
-			var resist:int = Math.min(30, target.WQ() / 3);
+			var resist:int = Math.max(target.intelligence(), target.willpower());
+			if (target.isPsionic()) resist += 10;
 			if (target.hasPerk("Whispered")) resist += 20;
-			if (target.hasPerk("History: Religious") && target.cor() < 20) resist += 20 - target.cor();
+			if ((target.hasPerk("History: Religious") || target.hasPerk("Enlightened")) && target.cor() < 20) resist += 20 - target.cor();
 			if (target.hasTail(GLOBAL.TYPE_VULPINE)) resist += (target.tailCount - 1) * 10; // fellow kitsunes should be highly resistant!
 			
 			var select:int = rand(5);
@@ -385,8 +387,8 @@ package classes.Characters.CoC
 				output("\n\n<b>The kitsune's spell has sealed your special skills!</b>  You won't be able to use any of them until the spell wears off.");
 				target.createStatusEffect("Sealed", 4, 4, 0, 0, false, "Icon_Blocked", "Your special skills are blocked by kitsune's magic!", true);
 			}
-			if (resist >= rand(100)) {
-				output("\n\nUpon your touch, the seal dissipates, and you are free of the kitsune's magic!  She pouts in disappointment, looking thoroughly irritated, but quickly resumes her coy trickster facade.");
+			if (resist >= rand(70) + 30) {
+				output("\n\n<b>Upon your touch, the seal dissipates, and you are free of the kitsune's magic!</b>  She pouts in disappointment, looking thoroughly irritated, but quickly resumes her coy trickster facade.");
 				target.removeStatusEffect("Sealed");
 			}
 		}

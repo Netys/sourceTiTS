@@ -546,7 +546,7 @@ public function brookeAnal():void {
 		output("Bluntly, you ask Brooke what her opinion is on anal.  <i>\"What, with you?\"</i> she asks playfully");
 	}
 	//[if {not first time}]
-	else output("\n\nRemembering how hard on you she was last time, you're almost hesitant to ask, but the allure of her sweet, toned ass is too strong.  You ask her if she's up for some anal.  She doesn't answer – instead, she smiles greedily");
+	else output("Remembering how hard on you she was last time, you're almost hesitant to ask, but the allure of her sweet, toned ass is too strong.  You ask her if she's up for some anal.  She doesn't answer – instead, she smiles greedily");
 	output(", leaning her ass back and trapping your [pc.cock " + x + "] between her asscheeks expertly.  You moan with pleasure while she glides her globes up and down, feeling your manhood rise and swell with each bob.  Your hands are already on her butt, clenching the skin hard together while you thrust in the space between her buttocks.  <i>\"Well... all right.  But only because I like you so much.\"</i>");
 
 	output("\n\nYou grip onto her hips, dragging your [pc.cock " + x + "] through the crack of her ass, working yourself up further before you jump right in.  Thanks to the shower, you're both lubed up well enough - just what you were both waiting on.  Brooke leans into the wall of the shower stall, bracing herself while trying to keep herself relaxed, waiting for you to make your move although it's difficult; the thought of taking you up her ass is making her a little short of breath.");
@@ -572,7 +572,7 @@ public function brookeAnal():void {
 
 	output("\n\n<i>\"Little harder,\"</i> she asks, when you're already going about as hard as you can.  You sacrifice a bit of speed for power as you plunge harder into her, spearing her anus apart with your [pc.cock " + x + "], driving yourself harder into her.  She relents more space, practically crawling herself up the wall, and you continue to go up to your ");
 	if(pc.balls > 0) output("[pc.balls]");
-	else output("[sheath]");
+	else output("[pc.sheath]");
 	output(", burying yourself into her voracious ass.  With her body climbs her voice: a few pumps more and her moans become wails, loud enough that you're sure someone else must have heard.");
 	if(cor() >= 45) output("  With any luck, that someone will come to investigate – you're sure it wouldn't take much convincing to start a party.");
 
@@ -1107,7 +1107,7 @@ public function brookeSpecialMediumSceneContinued():void {
 
 		output("\n\nBrooke moves fluidly, her own hands returning the favor, gently gliding over every muscle and admiring everything they find.  Her right hand travels around your back with her left runs and combs through your [pc.hair].  Her body grinds against you, her breasts heaving and pressing against your [pc.chest].  She humps her hips up and against you, letting her tight vagina run and rub against your hard [pc.cock " + x + "].  All the while her mouth hungrily explores yours, her long, fat canine tongue dancing excitedly in your mouth, learning everything there is to know of your own.");
 
-		output("\n\nShe's relentless.  You feel her every excited movement – the claws on her hands rake through your " + (pc.hasFur() ? "[pc.fur]" : "[pc.hair]") + " and the heat of her belly presses into yours, the strength of her six-pack abs making itself known.  Her mouth eventually, almost reluctantly, pulls away from yours, gasping for air, but she doesn't spend much time recovering as she immediately starts laving your neck with her tongue.  Her hands continue to explore, one gripping softly at your love-handles while the other dips lower, approaching the height of your [pc.butt].  She's deliberately avoiding contact with your [pc.cock " + x + "], save for teasing it roughly with her abdomen as she rocks against you.");
+		output("\n\nShe's relentless.  You feel her every excited movement – the claws on her hands rake through your " + (pc.hasFur() ? "[pc.skinFurScales]" : "[pc.hair]") + " and the heat of her belly presses into yours, the strength of her six-pack abs making itself known.  Her mouth eventually, almost reluctantly, pulls away from yours, gasping for air, but she doesn't spend much time recovering as she immediately starts laving your neck with her tongue.  Her hands continue to explore, one gripping softly at your love-handles while the other dips lower, approaching the height of your [pc.butt].  She's deliberately avoiding contact with your [pc.cock " + x + "], save for teasing it roughly with her abdomen as she rocks against you.");
 
 		output("\n\nYour hands roam in time with hers, and just as she comes to the fat of your ass, you come to hers (as little fat as there is).  You grip, squeezing as much as you can into your palms, and you're simultaneously excited and disappointed when the tightness of her bottom prevents you from gripping much.  Not to be outdone, she pulls her claws against the skin of yours – knowing she unfortunately can't actually grip yours, she does the next best thing.  Wantonly, you slap both her ass-cheeks as hard as you can, making her yelp and jump, then immediately coo.");
 

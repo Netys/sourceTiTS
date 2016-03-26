@@ -16,30 +16,36 @@ package classes.Items.Transformatives
 	 * 
 	 * Have 2 layers of effects. At first, basic layer it is cosmetic transformative, granting "little kitty" appearance, lean and androgynous.
 	 * 
-	 * Second layer is "legacy code" from another transformative used as base. It is only accessible with improper bypass of nanobots safety protocols. It grants cat-taur body, but much more practical than most tauric forms, with workarounds for most drawbacks of taur body. Based on chakat, but not exactly.
+	 * Second layer is "legacy code" from another transformative used as base. It is only accessible with improper bypass of nanobots safety protocols with not-actually-compatible control device. It grants cat-taur body, but much more practical than most tauric forms, with workarounds for most drawbacks of taur body. Based on chakat, but not exactly.
+	 * 
 	 * Legacy body features (some can be lore-only, it is not original transformative after all):
-	 *   Quadripedal taur with semi-prehensile forelegs.
-	 *   Herm (for more effecient reproduction) with internal balls and genital slit (for protection of vulnerable organs).
+	 *   Quadripedal taur with semi-prehensile forelegs (technically, forelegs should be considered plantigrade, but this would be overcomplication). Pawpads (on all 6 limbs) are soft and sensitive, but very tough.
+	 *   All are herms (for more effecient reproduction) with internal balls and genital slit (for protection of vulnerable organs).
 	 *   Very, very flexible - not exactly at snake level, but can rival any other mammal (mostly lore feat, but makes possible to wave away some "how the fuck taur can do this").
 	 *   Neat musclemass and tone balance - they are strong, but they are first of all sentients, so physique was considered secondary stat for them during development.
 	 *   Long and prehensile tongue (one more limb? handy!).
 	 *   Long and prehensile tail (same reason).
 	 *   Note about lactation: they are mammals by all means, but leaking precious nutrients all the time is barely a viable survival strategy. Also, having extra useless weight on chest is not very practical too. They have naturally flat chest unless lactating, and their lactation is easily induced just by prolonged enough nipples stimulation, so anyone can feed a baby when have to, and quickly subsides (not hardlocked though, player can grow breasts by any other way).
+	 *   Lifespan 150-200 years without modern medicine, but this is purposive flaw to stimulate maintaining high technological level, since their lifespan with proper medicine is essentially unlimited, especially with help of cybernetic surgery, which can  improve "autonomous time" up to millenias.
+	 *   Designed to be totally fine without clothes in most but harshest environments, so they have predisposition to nudism, but not to exhibitionism, nakedness itself just doesn't matter for them.
+	 *   Have no hair, only fur on head.
 	 * 
-	 * Special racial feature: Mental Equilibrium. This is one of the "frontier species", and, as well as other of type, has it's attempt to create more stable community.
-	 * 
-	 * Lore effects:
-	 *   They are very friendly (unless abused - they are far from being pacificts).
-	 *   Are highly resistant to mind-affecting drugs and poisons (maybe even to point of rejecting bimbofication drugs).
-	 *   They are designed to be totally fine without clothes in most but harshest environments, so they have predisposition to nudism, but not to exhibitionism (nakedness itself just doesn't matter for them, though they have no problems with humoring other races nudity taboos when on their territory).
+	 * Neural system specifics (mostly lore only):
+	 *   Special racial feature: Mental Equilibrium. This is one of the "frontier species", and, as well as other of type, has it's attempt to create more stable community.
+	 *   Very friendly (unless abused - they are far from being pacificts).
+	 *   Highly resistant to drugs and poisons, including mind-affecting (maybe even to point of rejecting bimbofication drugs which would work for other races).
+	 *   Have semi-electrical nervous system rather than fully chemical, so their reflexes are on par with ones of syntethics.
 	 * 
 	 * Possible gameplay effects:
 	 *   Can't have personality score above 60 (being assholes without good reason is nearly physically painful for them).
 	 *   Libido gain/loss bonus/penalty pushing towards 30 (friendly in all ways, but not to the point when it becomes problem).
-	 *   Extreme alcohol resistance.
-	 *   Bonus to chemical-based lust damage resistance (pheromones and drugs), penalty to tease damage resistance, being damaged by foe reduces lust notably and grants stacking tease resistance until combat end (have hard times resisting pure teasers, but being physically attacked turns them off greatly).
-	 *   Exhibitionism is hardlocked on "don't care" due to deeply hidden genitals and natural resilience to environmental hazards.
-	 *   Have some minimal amount of defence as long as they have their fur. Especially resistant to freezing and possibly poisons.
+	 *   Imbibing alcohol restores their energy without getting drunk (though would requre branch for all related scenes, but this could be not only one alcohol immune race).
+	 *   Bonus to chemical-based lust damage resistance (pheromones and drugs), penalty to tease damage resistance, being damaged by foe reduces lust notably and grants stacking tease resistance until combat end (have hard times resisting pure teasers, but being physically attacked turns off greatly).
+	 *   Exhibitionism is hardlocked on "don't care" as long as genitals have specific configuration.
+	 *   Perk idea: Natural Armor. Can be shared with other races with tough natural defence. Resistance bonus to thermal damage (freeze/burn). Immune to effects of moderately harsh climate (on level with natives), and their pelts are unlikely to be damaged by minor enveiromental hazards (like Mhen'ga's spiked weeds).
+	 *   Perk idea: Flexibility. Pretty much self explaining. Possibly scene variants. Possibly minor bonus to avoid attacks. Can be shared with other races, like Naleen.
+	 *   Perk idea: Wired Reflexes. Can be shared with syntethic implants. Can grant different benefits, like counterpart to Cybernetic Synchronization, but for Reflexes rather than Intellegence.
+	 *   Perk idea: Mental Equilibrium. Grants resistances to mental derangements.
 	 *
 	 * @author Etis
 	 */
@@ -128,7 +134,7 @@ package classes.Items.Transformatives
 			
 			output("Status report:");
 			
-			if (!force) addButton(13, "Override", function():* { clearOutput(); routeMenu(target, true); }, null, "Override", "Enable override mode. System would attempt to execute route without checking it's availability. Warning: bypassing of safety protocols is not advised.");
+			if (!force) addButton(13, "Override", function():* { clearOutput(); routeMenu(target, true); }, null, "Override", "Enable override mode. System would attempt to execute route without checking it's availability.\nWarning: this menu is for authorized personnel only.\nWarning: bypassing of safety protocols is not advised, those functions are called unsafe for a reason.");
 			else {
 				addButton(13, "Safe", function():* { clearOutput(); routeMenu(target, false); }, null, "Safe", "Enable safe mode. System would check route availability before executing it.");
 				output(" status scan is bypassed.");
@@ -241,17 +247,17 @@ package classes.Items.Transformatives
 			var changes:int = 0;
 			
 			// should get rid of facial hair also
-			if (target.thickness > 30 && target.thicknessUnlocked(target.thickness - 10)) changes++;
+			if (target.thickness > 20 && target.thicknessUnlocked(target.thickness - 10)) changes++;
 			if (target.femininity < target.femininityMax() && target.femininityUnlocked(target.femininity + 1)) changes++;
 			
-			if (target.femininity >= target.femininityMax() && target.femininity < 100 && !target.hasPerk("Androgyny")) changes++;
+			if (target.femininity >= target.femininityMax() && !target.hasPerk("Androgyny")) changes++;
 			
 			var buttLimit:Number = 2;
-			if (target.mf("", "girl") == "girl") buttLimit = 4;
+			if (target.hasVagina()) buttLimit = 4;
 			if (target.buttRating() > buttLimit && target.buttRatingUnlocked(target.buttRating() - 1)) changes++;
 			
 			var hipLimit:Number = 2;
-			if (target.mf("", "girl") == "girl") hipLimit = 4;
+			if (target.hasVagina()) hipLimit = 4;
 			if (target.hipRating() > hipLimit && target.hipRatingUnlocked(target.hipRating() - 1)) changes++;
 			
 			if (target.elasticity < (target.hasPerk("Elasticity") ? 4 : 3)) changes++;
@@ -269,20 +275,20 @@ package classes.Items.Transformatives
 			// should get rid of facial hair also
 			
 			// decrease thicknes
-			if (target.thickness >= 30 && Mutator.modThickness(target, 30, 10, false))
+			if (target.thickness >= 20 && Mutator.modThickness(target, 20, 10, false))
 			{
 				output("\n\nSomething is shifting inside you, and you suddenly feel you can move with less effort. <b>Looks like you lose some weight!</b> ");
 				changes++;
 				
-				// increase definition as side effect
+				// increase definition as side effect only
 				if (target.tone <= 65 && Mutator.modTone(target, 65, 10, false))
 				{
-					output("Your muscles become a little more defined as you lose some fat.");
+					output("It doesn't look like your muscles are affected, though - if anything, they are even more defined now.");
 				}
 			}
 			
 			var hipLimit:Number = 2;
-			if (target.mf("", "girl") == "girl") hipLimit = 4;
+			if (target.hasVagina()) hipLimit = 4;
 			if (target.hipRating() > hipLimit && target.hipRatingUnlocked(target.hipRating() - 1))
 			{
 				output("\n\nA sudden tightness overtakes your midsection. A searing pain flashes through you, as though your bones themselves were changing. Your hips reshape themselves, becoming more slender, leaving you <b>a little less curvy.</b>");
@@ -293,7 +299,7 @@ package classes.Items.Transformatives
 			}
 			
 			var buttLimit:Number = 2;
-			if (target.mf("", "girl") == "girl") buttLimit = 4;
+			if (target.hasVagina()) buttLimit = 4;
 			if (target.buttRating() > buttLimit && target.buttRatingUnlocked(target.buttRating() - 1))
 			{
 				output("\n\nYour butt all of a sudden feels tight, as though you were wearing a pair of pants two sizes too small. You wince and grip your buttocks, and feel it losing mass under your hand. After a moment you're left with a much <b>smaller, less curvy butt.</b>");
@@ -318,7 +324,7 @@ package classes.Items.Transformatives
 			}
 			
 			// hit cap and still going up!
-			if (target.femininity >= target.femininityMax() && target.femininity < 100 && target.lipRating() <= 0 && !target.hasPerk("Androgyny")) {
+			if (target.femininity >= target.femininityMax() && target.lipRating() <= 0 && !target.hasPerk("Androgyny")) {
 				output("\n\nYour [pc.face] is now very confusing - it have imponderable tint of feminity, while lacking distinct femine features. You suspect you could make your apparent gender even more ambiguous.");
 				target.createPerk("Androgyny", 0, 0, 0, 0, "No gender limits on facial masculinity or femininity.");
 				output("\n\n(<b>Perk Gained: Androgyny</b>)");
@@ -371,8 +377,8 @@ package classes.Items.Transformatives
 			if(9999 == 0 && target.hasTail(GLOBAL.TYPE_FELINE) && target.legType == GLOBAL.TYPE_FELINE && target.armType == GLOBAL.TYPE_FELINE && target.earType == GLOBAL.TYPE_FELINE && target.hasPerk("Flexibility") && !target.hasPerk("Feline Reflexes"))
 			{
 				output("\n\nYou suddenly realize how unusually quick and precise your movements are.");
-				output("\n\n(<b>Perk Gained: Feline Reflexes</b> - You have unnaturally quick reflexes.)");
-				target.createPerk("Feline Reflexes", 0, 0, 0, 0, "You have unnaturally quick reflexes.");
+				output("\n\n(<b>Perk Gained: Wired Reflexes</b> - You have unnaturally quick reflexes.)");
+				target.createPerk("Wired Reflexes", 0, 0, 0, 0, "You have unnaturally quick reflexes.");
 				changes++;
 			}
 			
@@ -967,17 +973,17 @@ package classes.Items.Transformatives
 				{
 					if (!target.hasLegFlag(GLOBAL.FLAG_FURRED) && !target.hasFur()) output("\n\nYou feel a powerful itch spread across your [pc.legs]. You clutch at them, scratching violently as your hair grows and thickens, spreading out into a [pc.furColor] mat across your [pc.skin]. Within a few minutes, your legs are utterly covered in a thick, silky-smooth [pc.furColor] fur! ");
 					
-					if(target.legCount < 2) // naga to biped
+					if(target.legCount < 2) // naga can be only changed to biped
 					{
 						output("\n\nYour [pc.leg] wobbles then folds, dropping you onto your [pc.butt]. It thrashes wildly around, uncontrolled and spasmatic. Something inside is changing, and you're helpless to do anything but clench your fists and hold on for the ride. A seam appears in your [pc.leg] a moment before it divides into <b>two leg-like shapes.</b>");
 						target.legCount = 2;
 					}
-					// More than biped to cat-taur/chakat, fix non-even leg count.
+					// More than biped? change to cat-taur/chakat, fix non-even leg count.
 					else if (target.legCount > 2)
 					{
 						output("\n\nTwitching wildly, your [pc.legs] give out, dumping you to the floor in a heap of uncoordinated, splayed limbs. They twitch wildly as they reform, starting at your waist and spreading down. Their bones melt like butter as they flow into new shapes.");
 						
-						if (target.legCount > 4 && count == 4) // 50% to get "normal" taur body if have too much legs
+						if (target.legCount > 4 && count == 4) // shorten to "normal" taur body option
 						{
 							output(" The front four do anyway. <b>Your body shortens up behind them, becoming more traditionally tauric in shape and size.</b>");
 							target.legCount = 4;
@@ -1021,6 +1027,7 @@ package classes.Items.Transformatives
 				changes++;
 			}
 			
+			// override and overuse - change bipedal body to quadripedal tauric
 			if (changes == 0 && target.legType == GLOBAL.TYPE_FELINE && target.hasLegFlag(GLOBAL.FLAG_DIGITIGRADE) && target.legCount == 2 && target.legCountUnlocked(4))
 			{
 				output(" Exception: Route have no targets available. Requesting instructions from monitor... Exception: protocol not supported. Fallback route found, executing...");
@@ -1093,19 +1100,30 @@ package classes.Items.Transformatives
 			//Grow fur
 			if(target.skinType != GLOBAL.SKIN_TYPE_FUR && target.skinTypeUnlocked(GLOBAL.SKIN_TYPE_FUR))
 			{
+				var catFurColors:/*String*/Array = ["brown", "chocolate", "auburn", "caramel", "orange", "sandy brown", "golden", "black", "jet black", "dark gray", "gray", "light gray", "silver gray", "white", "orange and white", "brown and white", "black and white", "gray and white"];
+				if (!InCollection(target.furColor, catFurColors))
+				{
+					var color:String = RandomInCollection(catFurColors);
+					if (target.furColorUnlocked(color)) target.furColor = color;
+				}
+				
 				//From scales
 				if(target.skinType == GLOBAL.SKIN_TYPE_SCALES)
 				{
-					output("\n\nYou idly scratch at a loose scale, feeling it come loose under your fingers, but the one alongside it is also loose now. You flick it off just before you become aware that the sensation is spreading; scales are dropping like rain now, even without you touching them. Underneath, a lush carpet is springing up from your [pc.skin]. <b>You’re growing fur.</b> You pet yourself to try and get used to the sensation.");
+					output("\n\nYou idly scratch at a loose scale, feeling it come loose under your fingers, but the one alongside it is also loose now. You flick it off just before you become aware that the sensation is spreading; scales are dropping like rain now, even without you touching them. Underneath, a lush carpet is springing up from your [pc.skin].");
 				}
 				//From skin
 				else
 				{
-					output("\n\nYou idly scratch at your arm, but find yourself catching on something. Looking closer, you see a single hair growing from a normally hairless part of your body. A second later, another pops out alongside it... then another, and another... and another. They’re everywhere! Tiny hairs are surfacing all across your body, thickening into a layer of fur before your eyes. <b>You pet your fur as you try to get used to it.</b>");
+					output("\n\nYou idly scratch at your arm, but find yourself catching on something. Looking closer, you see a single hair growing from a normally hairless part of your body. A second later, another pops out alongside it... then another, and another... and another. They’re everywhere! Tiny hairs are surfacing all across your body, thickening into a layer of fur before your eyes.");
 				}
 				target.skinType = GLOBAL.SKIN_TYPE_FUR;
 				target.clearSkinFlags();
+				if (rand(3) == 0) target.addSkinFlag(GLOBAL.FLAG_FLUFFY);
 				changes++;
+				output(" <b>You’re growing " + target.skinFurScales(true, true) + ".</b> You pet yourself,");
+				if(target.race().indexOf("cat") == -1) output(" almost");
+				output(" purring from the suddenly pleasant sensation.");
 			}
 			
 			afterTF(target);

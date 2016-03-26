@@ -190,7 +190,6 @@ public function DemonFactoryOmnibusChooseDick():void {
 			}
 		}
 	}
-	pc.cumType = GLOBAL.FLUID_TYPE_NYREA_CUM; // purple cum, according to scene... not exactly right, but fitting quite good
 	DemonFactoryOmnibusBoon();
 }
 

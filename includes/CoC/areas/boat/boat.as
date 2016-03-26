@@ -42,13 +42,13 @@ public function boatExplore():void
 	//20% chance if not done with marae of meeting her.
 	if (flags["COC.MARAE_QUEST_COMPLETE"] == undefined && flags["COC.MET_MARAE_CORRUPTED"] == undefined) {
 		choice.push(encounterMarae);
-		chance.push(flags["COC.MARAE_QUEST_START"] == undefined && pc.cor() <= 66 ? 1 : 10); // high chance to meet her first time to get quest
+		chance.push((flags["COC.MARAE_QUEST_START"] == undefined || flags["COC.FACTORY_SHUTDOWN"] > 0) && pc.cor() <= 66 ? 1 : 10); // high chance to meet her first time to get quest or after blowing factory to get reward
 	}
 	if (flags["COC.FACTORY_SHUTDOWN"] == 1 && flags["COC.MARAE_QUEST_COMPLETE"] >= 1 && flags["COC.MINERVA_PURIFICATION_MARAE_TALKED"] == 1) {
 		choice.push(talkToMaraeAboutMinervaPurification);
 		chance.push(10);
 	}
-	if (flags["COC.FACTORY_SHUTDOWN"] == 1 && flags["COC.MARAE_QUEST_COMPLETE"] >= 1 && flags["COCkFLAGS.MINERVA_PURIFICATION_MARAE_TALKED"] != 1 && flags["COC.LETHICE_DEFEATED"] > 0 && flags["COC.PURE_MARAE_ENDGAME"] < 2 && pc.level >= 30) {
+	if (flags["COC.FACTORY_SHUTDOWN"] == 1 && flags["COC.MARAE_QUEST_COMPLETE"] >= 1 && flags["COC.MINERVA_PURIFICATION_MARAE_TALKED"] != 1 && flags["COC.LETHICE_DEFEATED"] > 0 && flags["COC.PURE_MARAE_ENDGAME"] < 2 && pc.level >= 30) {
 		choice.push(encounterPureMaraeEndgame);
 		chance.push(10);
 	}

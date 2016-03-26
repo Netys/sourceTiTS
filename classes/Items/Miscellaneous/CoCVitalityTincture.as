@@ -20,7 +20,7 @@ package classes.Items.Miscellaneous
             this._latestVersion = 1;
             
             this.quantity = 1;
-            this.stackSize = 5;
+            this.stackSize = 10;
             this.type = GLOBAL.POTION;
             //Used on inventory buttons
             this.shortName = "Vital T";

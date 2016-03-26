@@ -584,7 +584,7 @@ public function DemonFactorySuccubusDefeated():void
 	
 	if (pc.hasGenitals() && pc.lust() >= 33)
 	{
-		output("Now would be the perfect opportunity to taste the fruits of her sex-ready form...  Do you fuck her?");
+		output("Now would be the perfect opportunity to taste the fruits of her sex-ready form...  Do you fuck her?\n\n");
 		
 		addButton(0, "Rape", DemonFactoryDoRapeSuccubus);
 		if (pc.hasKeyItem("Deluxe Dildo")) addButton(1, "Dildo Rape", DemonFactoryDildoSuccubus);

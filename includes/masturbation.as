@@ -5,6 +5,7 @@ import classes.Items.Miscellaneous.MagicMilker;
 import classes.Items.Toys.HoverHole;
 import classes.Items.Toys.NivasBionaHole;
 import classes.Items.Toys.TamaniBionaHole;
+import classes.Util.InCollection;
 
 public function availableFaps(roundTwo:Boolean = false):/*FapCommandContainer*/Array
 {
@@ -106,7 +107,7 @@ public function availableFaps(roundTwo:Boolean = false):/*FapCommandContainer*/A
 		faps.push(fap);
 	}
 	
-	if (hasFeedableMimbranes() && currentLocation == "SHIP INTERIOR")
+	if (hasFeedableMimbranes() && InCollection(currentLocation, "SHIP INTERIOR", "COC_CAMP"))
 	{
 		if (pc.hasCock())
 		{

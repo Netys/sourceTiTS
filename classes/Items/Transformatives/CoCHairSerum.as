@@ -86,7 +86,7 @@ package classes.Items.Transformatives
 				kGAMECLASS.flags["COC.INCREASED_HAIR_GROWTH_SERUM_POWER"] = 3;
 			}
 			
-			kGAMECLASS.flags["COC.INCREASED_HAIR_GROWTH_SERUM_TIME"] = 7 * 24 * kGAMECLASS.flags["COC.INCREASED_HAIR_GROWTH_SERUM_POWER"]; // from one to three ticks per day
+			kGAMECLASS.flags["COC.INCREASED_HAIR_GROWTH_SERUM_TIME"] = 7 * kGAMECLASS.flags["COC.INCREASED_HAIR_GROWTH_SERUM_POWER"]; // from one to three ticks per day
 			
 			clearMenu();
 			addButton(0, "Next", kGAMECLASS.inventory);

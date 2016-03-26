@@ -4,6 +4,7 @@ import classes.Creature;
 import classes.Engine.Combat.DamageTypes.DamageResult;
 import classes.Engine.Combat.DamageTypes.TypeCollection;
 import classes.GameData.CombatAttacks;
+import classes.Util.InCollection;
 /*
 
 Removal and Body Part Change Denial
@@ -4128,7 +4129,7 @@ public function mimbraneMenu():void
 	output2("\n\n");
 
 	// Fap/feeding stuff
-	if (hasFeedableMimbranes() && currentLocation == "SHIP INTERIOR")
+	if (hasFeedableMimbranes() && InCollection(currentLocation, "SHIP INTERIOR", "COC_CAMP"))
 	{
 		if (pc.lust() < 33)
 		{
@@ -4168,7 +4169,7 @@ public function mimbraneMenu():void
 			else addDisabledGhostButton(1, "Vag Feed","Vag Feed","You don't have a vagina to use for this.");
 		}
 	}
-	else if (hasFeedableMimbranes() && currentLocation != "SHIP INTERIOR")
+	else if (hasFeedableMimbranes() && !InCollection(currentLocation, "SHIP INTERIOR", "COC_CAMP"))
 	{
 		output2("Maybe if you were somewhere a little more private, you could ensure your Mimbranes were properly fed....");
 		
@@ -4548,7 +4549,10 @@ public function feedMimbranesWithCock():void
 	clearOutput();
 	userInterface.showBust("MIMBRANE");
 
-	output("Feeding time’s come early to the ship. Your [pc.cock] is ready for some manual milking, dribbling a little [pc.cumColor] pre to help things along. You talk a little to your parasite");
+	output("Feeding time’s come early to");
+	if (currentLocation == "SHIP INTERIOR") output(" the ship");
+	if (currentLocation == "COC_CAMP") output(" your camp");
+	output(". Your [pc.cock] is ready for some manual milking, dribbling a little [pc.cumColor] pre to help things along. You talk a little to your parasite");
 	if (attachedMimbranes() > 1) output("s");
 	output(", cluing them in to your actions working for");
 	if (attachedMimbranes() == 1) output(" its");

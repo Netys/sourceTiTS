@@ -116,7 +116,7 @@ package classes.Items.Transformatives
 						pc.cocks[0].cLength(-.5);
 						temp3 -= .5;
 					}
-					temp3 += pc.increaseCock(0, (rand(3) + 1) * -1);
+					temp3 += pc.increaseCock((rand(3) + 1) * -1, 0);
 					Mutator.lengthChange(pc, temp3, 1);
 				}
 			}

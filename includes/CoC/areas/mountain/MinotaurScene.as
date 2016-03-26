@@ -679,6 +679,9 @@ private function bumRapeaMinotaur():void {
 	output("\n\n");
 	output("With little warning, you push inside, amazed to feel his sphincter relax completely.  Pushing forward with ease, you slide all " + num2Text(Math.round(pc.cocks[x].cLength())) + " inches into him, bottoming out completely, feeling each beat of your victim's heart massage your [pc.cock " + x + "] inside his rectum.  Each beat sends a rhythmic contraction through the minotaur's backside, working forwards and with arousing intensity.  Between the sensations squeezing your [pc.cock " + x + " and the intoxicating musk filling your head, you lose control, your hips pistoning rapidly of their own accord, pumping harder and harder with every thrust, exhausting your body as you overexert yourself.\n\n");
 	output("At last you feel the pressure of your climax approaching, spurring you on to jackhammer the mino's poor abused tail-hole even more brutally. ");
+	
+	processTime(25 + rand(5));
+	
 	if(pc.cumQ() <= 25) {
 		output("With long deep strokes you bury your [pc.cock " + x + "] inside him, jizz spurting into his backside.  The bull-man moans in helpless pleasure and pain as he continues jerking himself, unable to cum.  Eventually you pull away with a satisfied sigh.  The minotaur is a mess, still masturbating furiously and helpless with desire to orgasm.\n\n");
 		pc.orgasm();
@@ -698,7 +701,6 @@ private function bumRapeaMinotaur():void {
 		pc.lust(15 + pc.libido() / 7);
 	}
 	
-	processTime(25 + rand(5));
 	clearMenu();
 	CombatManager.genericVictory();
 }

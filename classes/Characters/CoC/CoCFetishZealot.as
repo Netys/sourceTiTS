@@ -260,7 +260,7 @@ package classes.Characters.CoC
 			//A pirate costume; 
 			if(armor.longName == PIRATE_CLOTHES) {
 				//You are faced with one of the strangest things you have ever seen in your life.  A stereotypical pirate, who has not replaced his hand with a hook, but rather a collection of sex toys.  You can see at least two dildos, a fleshlight, and numerous other toys that you're incapable of recognizing.
-				output("The zealot turns to the side holding his prosthetic towards you and doing something that sends the devices spinning and clicking.  <i>So that's how that would work...<i> you find yourself thinking for a few moments before realizing that he had both distracted and aroused you.  ");
+				output("The zealot turns to the side holding his prosthetic towards you and doing something that sends the devices spinning and clicking.  <i>So that's how that would work...</i> you find yourself thinking for a few moments before realizing that he had both distracted and aroused you.  ");
 			}
 			//Military attire;
 			if(armor.longName == MILITARY_CLOTHES) {

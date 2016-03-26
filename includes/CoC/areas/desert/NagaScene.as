@@ -50,7 +50,7 @@ public function nagaEncounter():void {
 		//dude secks
 		if(pc.hasCock() && !pc.isHerm() || (pc.isHerm() && rand(2) == 0)) {
 			//[Player cock is too big]
-			var x:Number = pc.cockThatFits(enemy.vaginalCapacity());
+			var x:Number = pc.cockThatFits(new CoCNaga().vaginalCapacity());
 			if (x == -1) {
 				x = pc.biggestCockIndex();
 				output("The kiss continues as both of your bodies rub together sensually, your tails continuing to wrap around one another. There is a pulsing in your [pc.cock " + x + "] as it starts to grow hard against the naga's soft belly. Feeling this, the naga gently pulls away, slowly letting your tongue out of her mouth as she does so. Her hands make their way over your shoulders, down your abs, and stop at your [pc.cocksLight].\n\n", false); 
