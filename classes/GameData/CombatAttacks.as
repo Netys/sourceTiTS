@@ -570,6 +570,48 @@ package classes.GameData
 			}
 			a.push(DragonFire);
 			
+			// Whisper - single target stun
+			Whisper = new SingleCombatAttack();
+			Whisper.ButtonName = "Whisper";
+			Whisper.EnergyCost = 15;
+			Whisper.RequiresPerk = "Whispered";
+			Whisper.DisabledIfEffectedBy = [];
+			Whisper.TooltipTitle = "Whisper";
+			Whisper.TooltipBody = "Whisper and induce fear in your opponent. To succeed you should break your enemy's will.";
+			Whisper.Implementor = WhisperImpl;
+			Whisper.RequiresTarget = true;
+			a.push(Whisper);
+			
+			// Terrestrial Fire - single target burning damage
+			FireBreath = new SingleCombatAttack();
+			FireBreath.ButtonName = "Fire Breath";
+			FireBreath.EnergyCost = 20;
+			FireBreath.RequiresPerk = "Fire Lord";
+			FireBreath.DisabledIfEffectedBy = ["Silence"];
+			FireBreath.TooltipTitle = "Dragonfire";
+			FireBreath.TooltipBody = "Unleash fire from your mouth. Damage is based on your level.";
+			FireBreath.Implementor = FireBreathImpl;
+			FireBreath.RequiresTarget = true;
+			FireBreath.ExtendedAvailabilityCheck = function(target:Creature):Boolean {
+				return !target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT); // makes sense when you can't use breath attacks in sealed armor
+			}
+			a.push(FireBreath);
+			
+			// Hellfire - single target burning damage
+			Hellfire = new SingleCombatAttack();
+			Hellfire.ButtonName = "Hellfire";
+			Hellfire.EnergyCost = 20;
+			Hellfire.RequiresPerk = "Hellfire";
+			Hellfire.DisabledIfEffectedBy = ["Silence"];
+			Hellfire.TooltipTitle = "Hellfire";
+			Hellfire.TooltipBody = "Unleash fire from your mouth. Damage is based on your level.";
+			Hellfire.Implementor = HellfireImpl;
+			Hellfire.RequiresTarget = true;
+			Hellfire.ExtendedAvailabilityCheck = function(target:Creature):Boolean {
+				return !target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT); // makes sense when you can't use breath attacks in sealed armor
+			}
+			a.push(Hellfire);
+			
 			// Fox Fire - single target burning damage
 			KitsuneFoxFire = new SingleCombatAttack();
 			KitsuneFoxFire.ButtonName = "Fox Fire";
@@ -2103,6 +2145,110 @@ package classes.GameData
 				output("  The impact sends " + target.mfn("him", "her", "it") + " crashing to the ground, too dazed to strike back.  ");
 				target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Cannot take a turn.", true, 0);
 			}
+			
+			applyDamage(damage, attacker, target);
+		}
+		
+		public static var Whisper:SingleCombatAttack;
+		private static function WhisperImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
+		{
+			if (target.intelligence() == 0 || target.originalRace == "robot" || target.originalRace == "Automaton") {
+				output("You reach for " + target.capitalA + possessive(target.uniqueName) + " mind, but cannot find anything.  You frantically search around, but there is no consciousness as you know it in the room.");
+				return;
+			}
+			
+			if (attacker is PlayerCharacter) {
+				output("You reach for your enemy's mind");
+				IncrementFlag("COC.SPELLS_CAST");
+			}
+			else if (target is PlayerCharacter) output("You hear whispers in your head, which are trying to confuse you mind");
+			else output(attacker.capitalA + attacker.uniqueName + " fills " + target.a + possessive(target.uniqueName) + " mind with dark whispers");
+			
+			if (attacker.intelligence() >= target.intelligence() && attacker.willpower() >= target.willpower() && !target.isPlural && !target.hasStatusEffect("Stun Immune") && rand(10) != 0)
+			{
+				if (target is PlayerCharacter) output(", and you cower in horror!");
+				else output(target.capitalA + target.uniqueName + ", watching as its sudden fear petrifies " + target.uniqueName + ".");
+				
+				if (!target.hasStatusEffect("Stunned")) {
+					target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Cowed in horror and cannot act.", true, 0);
+				} else {
+					target.getStatusEffect("Stunned").tooltip = "Cowed in horror and cannot act.";
+					target.addStatusValue("Stunned", 1, 2);
+				}
+			}
+			else
+			{
+				output(", but can't break through.");
+			}
+		}
+		
+		public static var FireBreath:SingleCombatAttack;
+		private static function FireBreathImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
+		{
+			if (attacker.hasCombatDrone())
+			{
+				attacker.droneTarget = target;
+			}
+			
+			if (rand(5) == 0) {
+				output("You reach for the terrestrial fire, but as you ready to release a torrent of flame, the fire inside erupts prematurely, causing you to cry out as the sudden heated force explodes in your own throat. ");
+				applyDamage(damageRand(new TypeCollection( { burning: 10 + rand(20) }, DamageFlag.BYPASS_SHIELD ), 15), attacker, attacker);
+				return;
+			}
+			
+			if (attacker is PlayerCharacter) {
+				output("A growl rumbles deep with your chest as you charge the terrestrial fire.  When you can hold it no longer, you release an ear splitting roar and hurl a giant green conflagration at " + target.a + target.uniqueName + "!");
+			}
+			else if (target is PlayerCharacter) output(attacker.capitalA + attacker.uniqueName + " roars, exhaling a swirling ball of green fire directly at you!");
+			else output(attacker.capitalA + attacker.uniqueName + " roars, exhaling a swirling ball of green fire directly at " + target.a + possessive(target.uniqueName) + "!");
+			
+			var d:int = attacker.level * 8 + 15 + rand(10);
+			
+			if(target.hasStatusEffect("Sandstorm")) {
+				output("  <b>Breath is massively dissipated by the swirling vortex, causing it to hit with far less force!</b>");
+				d *= 0.2;
+			}
+			
+			var damage:TypeCollection = damageRand(new TypeCollection( { burning: d / 2, kinetic : d / 2 } ), 15);
+			
+			if (attacker is PlayerCharacter) output("  " + target.capitalA + target.short + " is burning!  ");
+			else if (target is PlayerCharacter) output("  You are " + attacker.a + possessive(attacker.uniqueName) + " burning!  ");
+			else output("  " + target.capitalA + target.short + " is burning!  ");
+			
+			// TODO: on fire debuff instead of part of the damage?
+			
+			applyDamage(damage, attacker, target);
+		}
+		
+		public static var Hellfire:SingleCombatAttack;
+		private static function HellfireImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
+		{
+			if (attacker.hasCombatDrone())
+			{
+				attacker.droneTarget = target;
+			}
+			
+			if (attacker is PlayerCharacter) {
+				output("A growl rumbles deep with your chest as you charge your inner fire.  When you can hold it no longer, you release an ear splitting roar and hurl a giant conflagration at " + target.a + target.uniqueName + "!");
+			}
+			else if (target is PlayerCharacter) output(attacker.capitalA + attacker.uniqueName + " roars, exhaling a swirling ball of  fire directly at you!");
+			else output(attacker.capitalA + attacker.uniqueName + " roars, exhaling a swirling ball of fire directly at " + target.a + possessive(target.uniqueName) + "!");
+			
+			var d:int = attacker.level * 4 + rand(10) + attacker.intelligence() / 2 + attacker.cor() / 5;
+			
+			if(target.hasStatusEffect("Sandstorm")) {
+				output("  <b>Breath is massively dissipated by the swirling vortex, causing it to hit with far less force!</b>");
+				d *= 0.2;
+			}
+			
+			//var lustPercent:Number = (target.isLustImmune || target.intelligence() < 2 || target.libido < 5 || target.originalRace == "robot" || target.originalRace == "Automaton" ? 0 : target.libido()) / 100.;
+			var damage:TypeCollection = damageRand(new TypeCollection( { burning: d } ), 15);
+			
+			if (attacker is PlayerCharacter) output("  " + target.capitalA + target.short + " lets out a shriek as their form is engulfed in the blistering flames!  ");
+			else if (target is PlayerCharacter) output("  You let out a shriek as your form is engulfed in the blistering flames!  ");
+			else output("  " + target.capitalA + target.short + " lets out a shriek as their form is engulfed in the blistering flames!  ");
+			
+			// TODO: on fire debuff instead of part of the damage? change to define lust percent on caster's stat?
 			
 			applyDamage(damage, attacker, target);
 		}

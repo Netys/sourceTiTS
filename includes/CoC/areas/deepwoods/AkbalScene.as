@@ -1101,7 +1101,7 @@ public function akbalSubmissionFollowup():void
 	clearOutput();
 	
 	//[After 4th submission if corruption is greater than 40%]
-	if (flags["COC.PLAYER_RESISTED_AKBAL"] == 0 && flags["COC.AKBAL_SUBMISSION_COUNTER"] >= 4 && !pc.hasPerk("Whispered") && pc.cor() >= 40)
+	if (Flag("COC.PLAYER_RESISTED_AKBAL") == 0 && Flag("COC.AKBAL_SUBMISSION_COUNTER") >= 4 && !pc.hasPerk("Whispered") && pc.cor() >= 40)
 	{
 		output("You awake in your camp with Akbal standing over you, the chorus of voices in your head reaching the apex of an agonizingly beautiful song, and then falling silent.  When you rise, Akbal licks your face before turning away and sprinting into the forest.\n\n");
 		output("(You are now Whispered.)");
@@ -1111,7 +1111,7 @@ public function akbalSubmissionFollowup():void
 	}
 	//[After 8th submission, if whispered and corruption is greater than 80%]
 	//(fighting Akbal disables this scene, but you retain the ability if you rape him after)
-	else if (flags["COC.PLAYER_RESISTED_AKBAL"] == 0 && flags["COC.AKBAL_SUBMISSION_COUNTER"] >= 8 && !pc.hasPerk("Fire Lord") && pc.cor() > 80)
+	else if (Flag("COC.PLAYER_RESISTED_AKBAL") == 0 && Flag("COC.AKBAL_SUBMISSION_COUNTER") >= 8 && !pc.hasPerk("Fire Lord") && pc.cor() > 80)
 	{
 		output("You open your eyes and almost yell in surprise when you see Akbal's emerald eyes looking into yours.  You are still in the forest and his lithe jaguar body is still over you; you quickly realize he hasn't moved you, as you're still resting in a puddle of mixed sex juices.\n\n");
 		output("\"<i>You are a loyal pet,</i>\" Akbal says as he stands. The compliment makes you smile, but it quickly fades into a look of fear when he suddenly releases a bone-chilling roar right in your face.  Green flames begin to pour from his open maw, and you scream as you flail your hands in a pointless attempt to block the fire.\n\n");
