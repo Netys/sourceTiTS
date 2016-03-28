@@ -97,7 +97,7 @@ package classes.Items.Transformatives
 			//(decrease strength to 70)
 			if (pc.PQ() > 70 && rand(3) == 0) {
 				output("\n\nLethargy rolls through you while you burp noisily.  You rub at your muscles and sigh, wondering why you need to be strong when you could just sew up a nice sticky web to catch your enemies.  ");
-				if (pc.hasTail(GLOBAL.TYPE_ARACHNID) || pc.hasTail(GLOBAL.TYPE_DRIDER)) output("Wait, you're not a spider, that doesn't make any sense!");
+				if (!(pc.hasTail(GLOBAL.TYPE_ARACHNID) || pc.hasTail(GLOBAL.TYPE_DRIDER))) output("Wait, you're not a spider, that doesn't make any sense!");
 				else output("Well, maybe you should put your nice, heavy abdomen to work.");
 				pc.slowStatGain("p", -1);
 				changes++;
@@ -192,8 +192,8 @@ package classes.Items.Transformatives
 			}
 			//Nipples Turn Black:
 			if (pc.nippleColor != "black" && rand(6) == 0 && changes < changeLimit) {
-				output("\n\nA tickling sensation plucks at your nipples and you cringe, trying not to giggle.  Looking down you are in time to see the last spot of flesh tone disappear from your [nipples].  They have turned an onyx black!");
-				pc.nippleColor == "black";
+				output("\n\nA tickling sensation plucks at your nipples and you cringe, trying not to giggle.  Looking down you are in time to see the last spot of flesh tone disappear from your [pc.nipples].  They have turned an onyx black!");
+				pc.nippleColor = "black";
 				changes++;
 			}
 			//eyes!
@@ -225,13 +225,18 @@ package classes.Items.Transformatives
 				////Even while unfertilized, eggs can be deposited inside NPCs - obviously, unfertilized eggs will never hatch and cannot lead to any egg-birth scenes that may be written later.
 				//changes++;
 			//}
-			// (Drider Item Only: Drider Legs)
-			if (black && pc.hasTail(GLOBAL.TYPE_DRIDER) && changes < changeLimit && rand(4) == 0 && Mutator.changeLegs(pc, GLOBAL.TYPE_DRIDER, [4, 8, 8, 2], [GLOBAL.FLAG_CHITINOUS])) changes++;
+			
+			if (black && changes < changeLimit && pc.legType == GLOBAL.TYPE_DRIDER && rand(4) == 0 && Mutator.changeTail(pc, GLOBAL.TYPE_DRIDER, 1, [GLOBAL.FLAG_CHITINOUS, GLOBAL.FLAG_SMOOTH])) changes++;
+			if (black && changes < changeLimit && !pc.hasTail(GLOBAL.TYPE_DRIDER) && (pc.legType == GLOBAL.TYPE_ARACHNID || pc.legType == GLOBAL.TYPE_DRIDER) && pc.armType == GLOBAL.TYPE_ARACHNID && rand(4) == 0 && Mutator.changeTail(pc, GLOBAL.TYPE_ARACHNID, 1, [GLOBAL.FLAG_CHITINOUS, GLOBAL.FLAG_SMOOTH])) changes++;
+			
+			// (Drider Item Only: Drider Legs), requires abdomen
+			if (black && (pc.hasTail(GLOBAL.TYPE_ARACHNID) || pc.hasTail(GLOBAL.TYPE_DRIDER)) && changes < changeLimit && rand(4) == 0 && Mutator.changeLegs(pc, GLOBAL.TYPE_DRIDER, [4, 8, 8, 2], [GLOBAL.FLAG_CHITINOUS])) changes++;
+			
 			// Carapace-Clad Legs
 			if (!black && changes < changeLimit && rand(4) == 0 && Mutator.changeLegs(pc, GLOBAL.TYPE_ARACHNID, 2, [GLOBAL.FLAG_PLANTIGRADE, GLOBAL.FLAG_CHITINOUS])) changes++;
+			if (black && changes < changeLimit && rand(4) == 0 && pc.legType != GLOBAL.TYPE_ARACHNID && pc.legType != GLOBAL.TYPE_DRIDER && Mutator.changeLegs(pc, GLOBAL.TYPE_ARACHNID, 2, [GLOBAL.FLAG_PLANTIGRADE, GLOBAL.FLAG_CHITINOUS])) changes++;
 			//(Tail becomes spider abdomen GRANT WEB ATTACK)
 			if (!black && changes < changeLimit && pc.legType == GLOBAL.TYPE_ARACHNID && pc.armType == GLOBAL.TYPE_ARACHNID && rand(4) == 0 && Mutator.changeTail(pc, GLOBAL.TYPE_ARACHNID, 1, [GLOBAL.FLAG_CHITINOUS, GLOBAL.FLAG_SMOOTH])) changes++;
-			if (black && changes < changeLimit && pc.legType == GLOBAL.TYPE_DRIDER && pc.armType == GLOBAL.TYPE_ARACHNID && rand(4) == 0 && Mutator.changeTail(pc, GLOBAL.TYPE_DRIDER, 1, [GLOBAL.FLAG_CHITINOUS, GLOBAL.FLAG_SMOOTH])) changes++;
 			
 			if (rand(4) == 0 && pc.gills && changes < changeLimit) {
 				output("\n\nYour chest itches, and as you reach up to scratch it, you realize your gills have withdrawn into your skin.");

@@ -762,7 +762,7 @@
 			if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9 && (hasPerk("Enlightened Nine-tails") || hasPerk("Corrupted Nine-tails"))) {
 				msg += "You are startled by sudden burst of dazzling ";
 				if (hasPerk("Enlightened Nine-tails")) msg += "azure";
-				else msg += "purple";
+				else msg += "lavender";
 				msg += " sparks from your [pc.tails], but nothing is changed.";
 				return msg;
 			}
@@ -8313,7 +8313,10 @@
 			if (kangaScore() >= 4) race = "kangaroo-morph";
 			if (bunnyScore() >= 4) race = "bunny-" + mf("boy", "girl");
 			if (harpyScore() >= 4) race = mf("avian", "harpy");
-			if (spiderScore() >= 4) race = "spider-" + mf("boy", "girl");
+			if (spiderScore() >= 4) {
+				if(isDrider()) race = "drider";
+				else race = "spider-" + mf("boy", "girl");
+			}
 			if (dragonScore() >= 5) race = faceType == GLOBAL.TYPE_DRACONIC ? "dragon-morph" : mf("dragon-man", "dragon-girl");
 			if (foxScore() >= 4) race = faceType == GLOBAL.TYPE_VULPINE ? "fox-morph" : mf("fox-man", "fox-girl");
 			if (kitsuneScore() >= 5 && (race.indexOf("fox") == -1 || tailCount > 1)) race = "kitsune";
@@ -8336,7 +8339,7 @@
 				if (hasTail(GLOBAL.TYPE_FELINE) && tailCount > 1) race = "nekomata";
 				else if (dragonScore() >= 4)  race = "dragonne";
 				else if (faceType == GLOBAL.TYPE_FELINE) race = "cat-morph";
-				else race = rawmfn(mfn("cat-man", "cat-girl", "cat-boy"), "cat-girl", "feline");
+				else race = rawmfn(mf("cat-man", "cat-boy"), "cat-girl", "feline");
 			}
 			if (leithanScore() >= 6) race = "leithan";
 			if (nukiScore() >= 6) race = "kui-tan";
