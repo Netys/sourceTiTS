@@ -83,6 +83,15 @@ package classes.Items.Transformatives.CoCDyes
 			return true;
 		}
 		
+		private function consume(target:Creature):void {
+			if (kGAMECLASS.infiniteItems()) return;
+			this.quantity--;
+			if (this.quantity <= 0 && target.inventory.indexOf(this) != -1)
+			{
+				target.inventory.splice(target.inventory.indexOf(this), 1);
+			}
+		}
+		
 		private function dyeHair(target:Creature):void {
 			clearOutput();
 			
@@ -96,11 +105,7 @@ package classes.Items.Transformatives.CoCDyes
 				target.lust( -15);
 			}
 			
-			this.quantity--; // ugh... where are .consume function?
-			if (this.quantity <= 0 && target.inventory.indexOf(this) != -1)
-			{
-				target.inventory.splice(target.inventory.indexOf(this), 1);
-			}
+			consume(target);
 			
 			clearMenu();
 			addButton(0, "Next", kGAMECLASS.mainGameMenu);
@@ -119,11 +124,7 @@ package classes.Items.Transformatives.CoCDyes
 				target.lust( -15);
 			}
 			
-			this.quantity--; // ugh... where are .consume function?
-			if (this.quantity <= 0 && target.inventory.indexOf(this) != -1)
-			{
-				target.inventory.splice(target.inventory.indexOf(this), 1);
-			}
+			consume(target);
 			
 			clearMenu();
 			addButton(0, "Next", kGAMECLASS.mainGameMenu);

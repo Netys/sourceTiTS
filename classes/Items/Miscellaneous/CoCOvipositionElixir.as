@@ -68,10 +68,12 @@ package classes.Items.Miscellaneous
 				return false;
 			}
 			
-			this.quantity--; // ugh... where are .consume function?
-			if (this.quantity <= 0 && pc.inventory.indexOf(this) != -1)
-			{
-				pc.inventory.splice(pc.inventory.indexOf(this), 1);
+			if (!kGAMECLASS.infiniteItems()) {
+				this.quantity--; // ugh... where are .consume function?
+				if (this.quantity <= 0 && pc.inventory.indexOf(this) != -1)
+				{
+					pc.inventory.splice(pc.inventory.indexOf(this), 1);
+				}
 			}
 			
 			output("You pop the cork and gulp down the thick greenish fluid.  The taste is unusual and unlike anything you've tasted before.");

@@ -97,6 +97,7 @@ package classes.Items.Transformatives
 		}
 		
 		private function consume():void {
+			if (kGAMECLASS.infiniteItems()) return;
 			this.quantity--;
 			if (this.quantity <= 0 && kGAMECLASS.pc.inventory.indexOf(this) != -1)
 			{

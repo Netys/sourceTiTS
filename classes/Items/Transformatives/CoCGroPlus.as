@@ -92,6 +92,7 @@ package classes.Items.Transformatives
 		}
 		
 		private function consume(target:Creature):void {
+			if (kGAMECLASS.infiniteItems()) return;
 			this.quantity--;
 			if (this.quantity <= 0 && target.inventory.indexOf(this) != -1)
 			{
