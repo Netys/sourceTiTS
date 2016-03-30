@@ -590,6 +590,37 @@ public function gildenmereStreetBonus():Boolean
 	return false;
 }
 
+public function northwestMushroomParkBonus():Boolean
+{
+	if (flags["LIRIEL_MET"] == undefined)
+	{
+		if (lirielStandActiveHours()) return lirielMyrellionBonus(0);
+	}
+	else
+	{
+		output("\n\n");
+		
+		// Only Available during the day, at night Liriel goes and sha-boinks the locals.
+		if (lirielStandActiveHours())
+		{
+			output("Nearby, you can see Liriel’s stand, and behind it, is Liriel herself.");
+			if (flags["LIRIEL_BUTTSEXED"] != undefined) output(" She gives you a bright smile and waves as she notices you.");
+			else output(" She doesn’t seem to notice you at the moment.");
+			
+			return lirielMyrellionBonus(0);
+		}
+		else if (flags["LIRIEL_MET"] >= 2)
+		{
+			output("Nearby is Liriel’s usual vending spot though her silvery lemonade stand is nowhere to be found.");
+			if (flags["LIRIEL_TALK_STAND"] == undefined) output(" Is her stand mobile or something?");
+			if (flags["LIRIEL_BUTTSEXED"] != undefined) output(" She must be out boinking the natives... And a distant echo of a euphoric moan confirms this.");
+			else output(" She must be closed for the evening.");
+		}
+	}
+	
+	return false;
+}
+
 public function southwestMushroomParkBonus():Boolean
 {
 	if(flags["IRELLIA_QUEST_STATUS"] == 2 && hours == 18 && minutes < 30)
@@ -772,7 +803,11 @@ public function DeepCavesBonus():Boolean
 		//if(pc.accessory is JungleLure) flags["NO_MANS_STEP"]++;
 		flags["NO_MANS_STEP"]++;
 	}
-	
+	if(rand(200) == 0) 
+	{
+		quickLoot(new StrangeEgg());
+		return true;
+	}
 	var choices:Array = new Array();
 	//If walked far enough w/o an encounter
 	if((pc.accessory is MuskRepel && flags["NO_MANS_STEP"] >= 10 && rand(4) == 0) || (pc.accessory is MuskLure && flags["NO_MANS_STEP"] >= 3 && rand(2) == 0) || (!(pc.accessory is MuskRepel) && flags["NO_MANS_STEP"] >= 5 && rand(4) == 0)) {

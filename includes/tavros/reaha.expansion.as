@@ -561,7 +561,7 @@ public function reahaTalkAddictionCure():void
 
 		output("<i>“Is there anything I can do to help?”</i> you ask. ");
 		
-		output("\n\n <i>“I don’t... I don’t know, [pc.name]. Unless you want to drop me off at at whatever the lust-patch equivalent of an AA meeting is...”</i>");
+		output("\n\n <i>“I don’t... I don’t know, [pc.name]. Unless you want to drop me off at whatever the lust-patch equivalent of an AA meeting is...”</i>");
 		
 		output("\n\n<i>“Rehab is an option...”</i>");
 		
@@ -1042,7 +1042,7 @@ public function reahaAddictionTherapyDickwielder():void
 
 	processTime(60);
 
-	reaha.loadInCunt(pc);
+	reaha.loadInCunt(pc, 0);
 
 	reaha.orgasm();
 	pc.orgasm();
@@ -1163,7 +1163,7 @@ public function reahaBreastMilkIceCream():void
 	output("\n\nThe two of you quickly make your way out of the customs office and out into the New Texan main street. From there, it’s a hop and a skip to the Iced Teats shop. You usher Reaha up into the storefront, into the refreshing coolness of the shop.");
 	if (flags["REAHA_ICE_CREAM_TIMES"] == undefined) output(" Reaha’s eyes go wide as she sees the girls trapped in glass cases, their teats strapped to suction devices to draw out their milk.");
 	
-	output("\n\n<i>“Hello! Welcome to Iced Teats, <i>“My name is");
+	output("\n\n<i>“Hello, welcome to Iced Teats! My name is");
 	if (!yammiIsOwned()) output(" Yammi");
 	else output(" Salire");
 	output("!  What can I get for you today?”</i> the girl behind the counter chirps happily, indicating the large flavor list behind her.  <i>“We have cones, bowls, or frozen feasts, in any combination of flavors you prefer!”</i>");
@@ -1395,7 +1395,7 @@ public function reahaDommyFuxTimeWait():void
 
 	processTime(30);
 
-	reaha.loadInCunt(pc);
+	reaha.loadInCunt(pc, 0);
 	reaha.orgasm();
 	pc.orgasm();
 	pc.milkInMouth(chars["REAHA"]);

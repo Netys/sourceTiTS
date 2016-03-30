@@ -335,7 +335,7 @@ public function codexMailFunction():void
 	m.htmlText = "<span class='words'><p>";
 	m.htmlText += "Welcome to the Steele Industries® CODEX™ Extranet Messenger Extension.";
 	m.htmlText += "\n\nThe Codex EME system allows you, as a user of a Steele Industries® CODEX™ device, to exchange messages with other EME system users, allowing you to keep a historical record of various communications and transactions.";
-	m.htmlText += "\n\nRecieved messages are displayed to the right of the CODEX™ display, with as-yet unread messages sorted to the top and displayed in <b>bold</b>.\n\nThe CODEX™ root menu will alert you to new messages via an un-obtrusive notification - the access icon for the system will display as a green icon when unread messages are detected.";
+	m.htmlText += "\n\nReceived messages are displayed to the right of the CODEX™ display, with as-yet unread messages sorted to the top and displayed in <b>bold</b>.\n\nThe CODEX™ root menu will alert you to new messages via an un-obtrusive notification - the access icon for the system will display as a green icon when unread messages are detected.";
 	m.htmlText += "</p></span>";
 	
 	clearGhostMenu();
@@ -656,6 +656,8 @@ public function shipMenu():Boolean {
 	rooms["SHIP INTERIOR"].outExit = shipLocation;
 	
 	setLocation("SHIP\nINTERIOR", rooms[rooms["SHIP INTERIOR"].outExit].planet, rooms[rooms["SHIP INTERIOR"].outExit].system);
+
+	if(shipLocation == "KIROS SHIP AIRLOCK") output("\n\n<b>You're parked in the hangar of the distressed ship. You can step out to investigate at your leisure.</b>");
 	
 	// Lane follower hook
 	if (tryFollowerLaneIntervention())
@@ -771,6 +773,18 @@ public function flyTo(arg:String):void {
 	}
 	else if(!InCollection(arg, ["Poe A", "karaQuest2"]))
 	{
+		//Eggshit Override!
+		if (pc.hasItem(new StrangeEgg()) || pc.hasItemInStorage(new StrangeEgg()))
+		{
+			//PC can preggo with it?
+			//Has an open spot!
+			if(pc.findEmptyPregnancySlot(0) != -1 && !pc.hasPregnancyOfType("PsychicTentacles"))
+			{
+				fuckingEggHatchOhFuck(arg);
+				return;
+			}
+		}
+		//Normal message events.
 		var tEvent:Function = tryProcTravelEvent();
 		if (tEvent != null)
 		{
@@ -995,7 +1009,7 @@ public function move(arg:String, goToMainMenu:Boolean = true):void {
 		// Wrap yorself into your fluffy tails! At least 6 of them.
 		if (pc.hasTail() && pc.hasTailFlag(GLOBAL.FLAG_LONG) && pc.hasTailFlag(GLOBAL.FLAG_FLUFFY) && pc.hasTailFlag(GLOBAL.FLAG_FURRED) && pc.tailCount >= 6) nudistPrevention = false;
 		// Cover yourself with your fuckton of wings
-		if(InCollection(pc.wingType, GLOBAL.TYPE_DOVEFOUR, GLOBAL.TYPE_DOVESIX)) nudistPrevention = false;
+		if(InCollection(pc.wingType, GLOBAL.TYPE_DOVEFOUR, GLOBAL.TYPE_DOVESIX) && pc.genitalLocation() <= 1) nudistPrevention = false;
 		if(nudistPrevention)
 		{
 			clearOutput();
@@ -1280,6 +1294,15 @@ public function variableRoomUpdateCheck():void
 	else
 	{
 		rooms["XBMYRELLIONLAB"].removeFlag(GLOBAL.NPC);
+	}
+	// Liriel's Lemonade Stand
+	if (flags["LIRIEL_MET"] != undefined && lirielStandActiveHours())
+	{
+		rooms["706"].addFlag(GLOBAL.NPC);
+	}
+	else
+	{
+		rooms["706"].removeFlag(GLOBAL.NPC);
 	}
 	//Irellia quest stuff.
 	//IrelliaQuest incomplete. No east passage, people token in main room.
@@ -1600,6 +1623,7 @@ public function processTime(arg:int):void {
 			hours++;
 
 			//Hours checks here!
+			letsFapUpdateCheck();
 			if(flags["SHEKKA_TALK_COOLDOWN"] != undefined)
 			{
 				if(flags["SHEKKA_TALK_COOLDOWN"] > 0) flags["SHEKKA_TALK_COOLDOWN"]--;
@@ -1666,6 +1690,8 @@ public function processTime(arg:int):void {
 			}
 			//Egg trainer stuff
 			carryTrainingBonusBlurbCheck();
+			//Nessa cumflationshit
+			nessaBellyTic();
 			//Cunt stretching stuff
 			if(pc.hasVagina()) {
 				for(x = 0; x < pc.totalVaginas(); x++) {

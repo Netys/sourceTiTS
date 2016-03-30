@@ -962,7 +962,12 @@ package classes.GameData
 			{
 				if (hasEnemyOfClass(Kaska)) kGAMECLASS.doNothingWhileTittyGrappled();
 				else if (hasEnemyOfClass(GrayPrime)) kGAMECLASS.grayPrimeFailEscape();
-				else if (hasEnemyOfClass(MaidenVanae) || hasEnemyOfClass(HuntressVanae)) kGAMECLASS.vanaeWaitWhilstGrappled();
+				else if (hasEnemyOfClass(MaidenVanae) || hasEnemyOfClass(HuntressVanae))
+				{
+					kGAMECLASS.setEnemy(_hostiles[0]);
+					kGAMECLASS.vanaeWaitWhilstGrappled();
+					kGAMECLASS.setEnemy(null);
+				}
 				else output("You choose not to act.");
 				processCombat();
 			}
@@ -1272,6 +1277,8 @@ package classes.GameData
 		
 		private function doStruggleRecover(target:Creature):void
 		{
+			var latexBonus:int = 0;
+			if(target.hasPerk("Black Latex")) latexBonus = 2;
 			// TODO Tweak the shit out of this probably for other NPCs to be able to call into it			
 			if (target is PlayerCharacter) clearOutput();
 			
@@ -1297,14 +1304,14 @@ package classes.GameData
 			{
 				if(target.hasPerk("Escape Artist"))
 				{
-					if(target.reflexes() + rand(20) + 6 + target.statusEffectv1("Naleen Coiled") * 5 > 24) {
+					if(target.reflexes() + rand(20) + 6 + latexBonus + target.statusEffectv1("Naleen Coiled") * 5 > 24) {
 						output("You display a remarkable amount of flexibility as you twist and writhe through the coils to freedom.");
 						target.removeStatusEffect("Naleen Coiled");
 					}
 				}
 				else 
 				{
-					if(target.physique() + rand(20) + 1 + target.statusEffectv1("Naleen Coiled") * 5 > 24) {
+					if(target.physique() + rand(20) + 1 + latexBonus + target.statusEffectv1("Naleen Coiled") * 5 > 24) {
 						output("With a mighty heave, you tear your way out of the coils and onto your [pc.feet].");
 						target.removeStatusEffect("Naleen Coiled");
 					}
@@ -1322,7 +1329,7 @@ package classes.GameData
 			{
 				if (target.hasPerk("Escape Artist"))
 				{
-					if (target.reflexes() + rand(10) > target.statusEffectv1("Mimbrane Smother") * 5)
+					if (target.reflexes() + rand(10) + latexBonus > target.statusEffectv1("Mimbrane Smother") * 5)
 					{
 						output("You keep your cool, calmly feeling around the edges of the parasite attached to your face and manage to find a weakness in its hold; working your fingers into the small imperfection in the Mimbranes seal around your features, you manage to pry it away from you.");
 						target.removeStatusEffect("Mimbrane Smother");
@@ -1330,7 +1337,7 @@ package classes.GameData
 				}
 				else
 				{
-					if (target.physique() + rand(10) > target.statusEffectv1("Mimbrane Smother") * 5)
+					if (target.physique() + rand(10) + latexBonus > target.statusEffectv1("Mimbrane Smother") * 5)
 					{
 						output("You manage to force your fingers under the edge of the Mimbrane smothering you, and forcefully tear it away from your face.");
 						target.removeStatusEffect("Mimbrane Smother");
@@ -1368,7 +1375,7 @@ package classes.GameData
 			{
 				if (target.hasPerk("Escape Artist") && target.reflexes() >= target.physique())
 				{
-					if (target.reflexes() + rand(20) + 7 + target.statusEffectv1("Grappled") * 5 > target.statusEffectv2("Grappled"))
+					if (target.reflexes() + rand(20) + 7 + latexBonus + target.statusEffectv1("Grappled") * 5 > target.statusEffectv2("Grappled"))
 					{
 						if (hasEnemyOfClass(SexBot)) output("You almost dislocate an arm doing it, but, ferret-like, you manage to wriggle out of the sexbot’s coils. Once your hands are free, the droid does not seem to know how to respond, and you are able to grapple the rest of your way out easily, ripping away from its molesting grip. The sexbot clicks and stutters a few times before going back to staring at you blankly, swinging its fibrous limbs over its head.");
 						else if (hasEnemyOfClass(MaidenVanae) || hasEnemyOfClass(HuntressVanae)) kGAMECLASS.vanaeEscapeGrapple("Escape Artist");
@@ -1378,7 +1385,7 @@ package classes.GameData
 				}
 				else
 				{
-					if(target.physique() + rand(20) + 6 + target.statusEffectv1("Grappled") * 5 > target.statusEffectv2("Grappled"))
+					if(target.physique() + rand(20) + 6 + latexBonus + target.statusEffectv1("Grappled") * 5 > target.statusEffectv2("Grappled"))
 					{
 						// TODO It might be an idea to do something similar to how drone targets work now, in that the actual
 						// enemy DOING the grappling is stored as a transient property on the victim of the grapple,
@@ -1667,7 +1674,7 @@ package classes.GameData
 			if ((InCollection(pc.milkType, GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK, GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK) && pc.isLactating()) || (pc.isMilkTank() && pc.canMilkSquirt())) addButton(4, "Milk Squirt", teaseSquirt, target, "Milk Squirt", "Spray the enemy with your [pc.milk], arousing them.");
 			else if (InCollection(pc.milkType, GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK, GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK) || pc.isMilkTank()) addDisabledButton(4, "Milk Squirt", "Milk Squirt", "You do not currently have enough [pc.milkNoun] available to squirt any.");
 			//Reqs: PC has an aphrodisiac-laced cock big enough to slap
-			if(pc.biggestCockLength() >= 12 && pc.hasCockFlag(GLOBAL.FLAG_APHRODISIAC_LACED, pc.biggestCockIndex())) addButton(5,"Dick Slap",dickslap,undefined,"Dick Slap","Slap the enemy with your aphrodisiac-coated dick.");
+			if(pc.biggestCockLength() >= 12 && pc.hasCockFlag(GLOBAL.FLAG_APHRODISIAC_LACED, pc.biggestCockIndex())) addButton(5, "Dick Slap" , dickslap, target, "Dick Slap", "Slap the enemy with your aphrodisiac-coated dick.");
 
 			addButton(14, "Back", generateCombatMenu, undefined, "Back", "Back out. Recommended if you haven’t yet used “Sense” to determine your foe’s likes and dislikes. Remember you can pull up your appearance screen in combat or use the scene buffer buttons in the lower left corner to compare yourself to your foe’s preferences!");
 		}
@@ -2621,6 +2628,7 @@ package classes.GameData
 		
 			if (attacker.hasPerk("Pheromone Cloud")) bonus += 1;
 			if (teaseType == "SQUIRT") bonus += 2;
+			if (attacker.hasStatusEffect("Sweet Tooth")) bonus += 1;
 			
 			var sweatyBonus:int = 0;
 			if(attacker.hasStatusEffect("Sweaty") && target.hasPerk("Likes_Sweaty")) 
@@ -2701,14 +2709,14 @@ package classes.GameData
 				output("\n\n");
 				if(teaseType == "SQUIRT")
 				{
-					if(target.isPlural) output(target.capitalA + target.uniqueName + " are splattered with your [pc.milk], unable to get it off. All of a sudden, their faces begin to flush, and they look quite aroused.");
-					else output(target.capitalA + target.uniqueName + " is splattered with your [pc.milk], unable to get it off. All of a sudden, " + target.mfn("his","her","its") + " " + target.face() + " begins to flush, and " + target.mfn("he","she","it") + " looks quite aroused.");
+					if(target.isPlural) output(target.capitalA + target.uniqueName + " are splattered with your [pc.milk], unable to get it off. All of a sudden, their faces begin to flush, and they look quite aroused. ");
+					else output(target.capitalA + target.uniqueName + " is splattered with your [pc.milk], unable to get it off. All of a sudden, " + target.mfn("his","her","its") + " " + target.face() + " begins to flush, and " + target.mfn("he","she","it") + " looks quite aroused. ");
 				}
 				if(teaseType == "DICK SLAP")
 				{
-					if(target.isPlural) output(possessive(target.capitalA + target.uniqueName) + " faces look rather flush as they quickly wipe your [pc.cum] off.");
-					else output(possessive(target.capitalA + target.uniqueName) + " face looks rather flush as " + target.mfn("he","she","it") + " quickly wipes your [pc.cum] off.");
-					if(kGAMECLASS.silly) output(" Ha! GOT ‘EM!");
+					if(target.isPlural) output(possessive(target.capitalA + target.uniqueName) + " faces look rather flush as they quickly wipe your [pc.cum] off. ");
+					else output(possessive(target.capitalA + target.uniqueName) + " face looks rather flush as " + target.mfn("he","she","it") + " quickly wipes your [pc.cum] off. ");
+					if(kGAMECLASS.silly) output(" Ha! GOT ‘EM! ");
 				}
 				else output(teaseReactions(damage,target));
 				target.lust(damage);

@@ -356,7 +356,7 @@ public function initializeMyrellionRooms():void
 	rooms["706"].eastExit = "705";
 	rooms["706"].southExit = "707";
 	rooms["706"].moveMinutes = 3;
-	rooms["706"].runOnEnter = undefined;
+	rooms["706"].runOnEnter = northwestMushroomParkBonus;
 	rooms["706"].addFlag(GLOBAL.INDOOR);
 	rooms["706"].addFlag(GLOBAL.PUBLIC);
 	rooms["706"].addFlag(GLOBAL.CAVE);
@@ -447,7 +447,7 @@ public function initializeMyrellionRooms():void
 	rooms["GMEREHOSPITAL"].runOnEnter = viBonus;
 	rooms["GMEREHOSPITAL"].addFlag(GLOBAL.INDOOR);
 	rooms["GMEREHOSPITAL"].addFlag(GLOBAL.PUBLIC);
-	rooms["GMEREHOSPITAL"].addFlag(GLOBAL.NPC);
+	rooms["GMEREHOSPITAL"].addFlag(GLOBAL.MEDICAL);
 	
 	//712 Irellia’s\nWay
 	rooms["712"] = new RoomClass(this);
@@ -1419,7 +1419,7 @@ public function initializeMyrellionRooms():void
 	rooms["KRESSIA MEDICAL"].runOnEnter = hospitalShit;
 	rooms["KRESSIA MEDICAL"].addFlag(GLOBAL.INDOOR);
 	rooms["KRESSIA MEDICAL"].addFlag(GLOBAL.PUBLIC);
-	rooms["KRESSIA MEDICAL"].addFlag(GLOBAL.NPC);
+	rooms["KRESSIA MEDICAL"].addFlag(GLOBAL.MEDICAL);
 
 	//827 - tradin' poast
 	rooms["827"] = new RoomClass(this);

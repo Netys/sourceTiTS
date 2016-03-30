@@ -4959,7 +4959,7 @@ public function bessSpendTime28():void
 	clearOutput();
 	bessHeader();
 
-	output("You sit down with [bess.name] to talk. You ask [bess.hisHer] simple questions about [bess.himHer]self and [bess.heShe] eagerly responds, quite happy to give you [bess.hisHer] full specs in every single detail. By the time you’ve both finished talking you know ");
+	output("You sit down with [bess.name] to talk. You ask [bess.himHer] simple questions about [bess.himHer]self and [bess.heShe] eagerly responds, quite happy to give you [bess.hisHer] full specs in every single detail. By the time you’ve both finished talking you know ");
 	output(
 		RandomInCollection(
 			"the exact size of [bess.hisHer] brain",
@@ -5222,11 +5222,11 @@ public function talkToBessAboutPC():void
 
 		if (bessAffection() >= 90)
 		{
-			output("\n\n<i>“I think you are wonderful " + bess.mf(", and the light of my life", ", and treat me like a princess") + "! Even though I spend so much time with you, I feel like I can never get enough.”</i> The silver skinned synthetic wraps [bess.hisHer] arms around your waist. <i>“I know some people would say we’re always in each other’s arms, but I don’t care one bit!”</i>");
+			output("\n\n<i>“I think you are wonderful" + bess.mf(", and the light of my life", ", and you treat me like a princess") + "! Even though I spend so much time with you, I feel like I can never get enough.”</i> The silver skinned synthetic wraps [bess.hisHer] arms around your waist. <i>“I know some people would say we’re always in each other’s arms, but I don’t care one bit!”</i>");
 		}
 		else if (bessAffection() >= 70)
 		{
-			output("\n\n<i>“I think you are wonderful " + bess.mf(", and the light of my life", ", and treat me like a princess") + ". You make my life complete in so many ways, and I’m glad you can always find time to spend with me and make me feel special.”</i>");
+			output("\n\n<i>“I think you are wonderful" + bess.mf(", and the light of my life", ", and you treat me like a princess") + ". You make my life complete in so many ways, and I’m glad you can always find time to spend with me and make me feel special.”</i>");
 		}
 		else if (bessAffection() >= 50)
 		{
@@ -10435,7 +10435,7 @@ public function bessMorningMessages():void
 	msg += " over you, trailing";
 	if (bess.biggestTitSize() > 0) msg += " them";
 	else msg += " it";
-	msg += " along your [pc.skinFurScalesNoun]. <i>“... Morning, "+ bessPCName() +".”</i> [bess.HisHer] voice practically purrs.";
+	msg += " along your [pc.skinFurScalesNounSimple]. <i>“... Morning, "+ bessPCName() +".”</i> [bess.HisHer] voice practically purrs.";
 
 	msgs.push(msg);
 
@@ -11192,7 +11192,7 @@ public function bessGetBlowjob():void
 			{
 				output("\n\nWhen your knot finally goes down, the "+ bess.mf("male synthetic", "synthetic girl") +" seems to be glowing with sheer satisfaction, an utterly blissed-out look in [bess.hisHer] crystalline [bess.eyeColor] eyes. It seems [bess.heShe] thoroughly enjoyed you knotting [bess.hisHer] mouth. <i>“That was the best... my stomach feels like it’s completely filled with nothing but you...”</i>");
 				
-				output("\n\nGiven how long you came in [bess.hisHer] mouth, it probably <i>is</i> filled with you... or at least your spunk. Knowing that gives you a little burst of possessive pride, like you’ve claimed [bess.himHer] with your seed.”</i>");
+				output("\n\nGiven how long you came in [bess.hisHer] mouth, it probably <i>is</i> filled with you... or at least your spunk. Knowing that gives you a little burst of possessive pride, like you’ve claimed [bess.himHer] with your seed.");
 			}
 		}
 	}
@@ -12411,9 +12411,17 @@ public function bessBreastFeed(opts:Array = null):void
 	if (bess.hasCock() || bess.hasVagina())
 	{
 		output(" [bess.HisHer] thighs are a mess with");
-		if (bess.hasCock()) output(" [bess.cum]");
-		if (bess.hasCock() && bess.hasVagina()) output(" and");
-		if (bess.hasVagina()) output(" [bess.girlCum]");
+		if(bess.cumType != bess.girlCumType)
+		{
+			if (bess.hasCock()) output(" [bess.cum]");
+			if (bess.hasCock() && bess.hasVagina()) output(" and");
+			if (bess.hasVagina()) output(" [bess.girlCum]");
+		}
+		else
+		{
+			if (bess.hasCock()) output(" [bess.cum]");
+			else output(" [bess.girlCum]");
+		}
 		output(", occasionally twitching as [bess.heShe] falls back on the ground. [bess.HisHer] nipples really are sensitive!");
 	}
 
@@ -13202,7 +13210,7 @@ public function bessEventMap(bChance:Boolean = false):void
 		if (flags["BESS_EVENT_17"] != undefined)
 		{
 			output("\n<b>* Event 17:</b> Completed");
-			if (bChance && flags["BESS_EVENT_10"] == undefined)
+			if (bChance && flags["BESS_EVENT_18"] == undefined)
 			{
 				nTimer = flags["BESS_EVENT_17"] + (1.5 * 24 * 60);
 				output("\n<b>* Next Event:</b> <i>Pending</i>");
@@ -13214,7 +13222,7 @@ public function bessEventMap(bChance:Boolean = false):void
 		if (flags["BESS_EVENT_18"] != undefined)
 		{
 			output("\n<b>* Event 18:</b> Completed");
-			if (bChance && flags["BESS_EVENT_10"] == undefined)
+			if (bChance && flags["BESS_EVENT_19"] == undefined)
 			{
 				nTimer = flags["BESS_EVENT_18"] + (2 * 24 * 60);
 				var e19Chance:int = 1;
@@ -13226,14 +13234,15 @@ public function bessEventMap(bChance:Boolean = false):void
 				if (bessAffection() < 70) output(" and 70% affection");
 			}
 		}
-	}
-	if (flags["BESS_LOVER"] != undefined)
-	{
 		if (flags["BESS_EVENT_19"] != undefined)
 		{
 			output("\n<b>* Event 19:</b> Completed");
 			if (flags["BESS_EVENT_19_REJECTION"] == 1) output(", [bess.name] has been rejected");
 		}
+	}
+	if (flags["BESS_LOVER"] != undefined)
+	{
+		output("\n<b><u>Lover Events</u></b>");
 		if (flags["BESS_EVENT_20"] != undefined)
 		{
 			output("\n<b>* Event 20:</b> Completed");
@@ -13344,6 +13353,7 @@ public function bessEventMap(bChance:Boolean = false):void
 			if (flags["BESS_EVENT_25_SPINOFF"] == 1) output(", [bess.name] is upset");
 		}
 	}
+	output("\n\n");
 	
 	clearMenu();
 	if (!bChance) addButton(0, "Hint: Off", bessEventMap, true, "Hints", "Toggle hints on.");

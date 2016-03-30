@@ -146,7 +146,7 @@ public function leaveLikeABitch():void
 	output("Deciding that it’s probably better to try your luck elsewhere, you curtly tell Holiday that you’ve seen enough and head for the door. <i>“Woah, hold up there, ya butt,”</i> she calls out, her tail whipping out and grabbing you by the wrist. <i>“What a cocktease,”</i> she scolds, looking around and snatching a small strip of black cloth from a shelf. <i>“If you’re going back outside, you’ll need something, so just take this mask. No charge - I’ll consider protecting innocent citizens from your sour puss payment enough.”</i>");
 	output("\n\nUncertainly, you take the mask from her. Sure enough, it’s a simple black mask designed to cover the eyes and nose, with a band to hold it in place. <i>“Yeah, don’t fall over yourself thanking me,”</i> she mutters, pushing you out the door and locking it behind you. Well, that was weird. But, at least you’ve got a mask! Slipping it on over your [pc.hair], you adjust it a bit and allow yourself a grin. Such a small thing, but apparently it makes all the difference to these people. Trying to remember the path you took, you wind your way through the alleys.");
 	output("\n\nJust as you believe you’ve found the right way, you turn a corner and come up inches away from a knot of celebrants, standing in a tight huddle. Noticing you, they turn around, each robed in strange and sickening masks with costumes as hideous as the faces topping them. The empty, leering disguises stare for a long moment before turning to each other, silently affirming some unspoken conviction. Backing up, you glance about and reach for your [pc.weapon]. You don’t want trouble, you explain, you just got lost. A throaty chuckle echoes from behind the masks and is quickly joined by more figures approaching from behind them. A literal mob of frightening fiends in front, you decide this kind of situation calls for the better part of valor and you turn about, running for it.");
-	output("\n\nThe veiled natives behind you shout something, but you’re too focused on getting the fuck out of there, your heart pounding in your chest, ever corridor you pass seems to vomit more of the ghoulishly disguised figures, their attention firmly fixed on your passage. A shout of alarm rises like a siren as the swarm chasing you grows, the sea of bodies unarmed yet unspeakably dreadful in their single-minded pursuit. Your lungs burn, your [pc.legOrLegs] ache");
+	output("\n\nThe veiled natives behind you shout something, but you’re too focused on getting the fuck out of there, your heart pounding in your chest, every corridor you pass seems to vomit more of the ghoulishly disguised figures, their attention firmly fixed on your passage. A shout of alarm rises like a siren as the swarm chasing you grows, the sea of bodies unarmed yet unspeakably dreadful in their single-minded pursuit. Your lungs burn, your [pc.legOrLegs] ache");
 	if(pc.legCount == 1) output("s");
 	output(", but you push on, unwilling to imagine what might happen if they catch you. Sight blurring and your gasping breath feeding the fire searing your chest, you choose directions at random, navigating the labyrinthian backstreets while the minotaur of a hundred masks seems at your very heels.");
 	output("\n\nYour panicked flight is rewarded when, at last, you burst out of the oppressive alleys and into the main streets, your body immediately pressed on all sides by the crush of celebrants. You stop, catching your breath and looking for any trace of your pursuers, but in the garish gaiety of the masquerade, it’s impossible to tell one from another. The more you look at the thousands surrounding you, the more sinister their appearances seem - twisted expressions and monstrous visages with the cold black eyes of dolls or sharks. Suddenly, you don’t feel very much like partying.");
@@ -943,7 +943,7 @@ public function hotelPartyPartyParty():void
 	if(pc.hasVagina())
 	{
 		var pp:PregnancyPlaceholder = new PregnancyPlaceholder();
-		pc.loadInCunt(pp);
+		pc.loadInCunt(pp, 0);
 	}
 
 	processTime(77);
@@ -1128,7 +1128,7 @@ public function taurStreetAdventure(config:int = 1):void
 	//Horsecunt and Horsecock
 	else
 	{
-		output("\n\nThe first indication that you might be in trouble is the feeling of cool air against the flare of your artificial erection, now exposed just beyond the edge of your sheath. With that realization comes the knowledge that you can also feel every breeze against your rapidly moistening cuntlips. Sure, they were already wet, but you can feel beads of moisture trickling down them down them. That sensation feeds right back into your cock, the thought of a wet pussy forcing heartbeat after heartbeat worth of new blood into your swelling erection.");
+		output("\n\nThe first indication that you might be in trouble is the feeling of cool air against the flare of your artificial erection, now exposed just beyond the edge of your sheath. With that realization comes the knowledge that you can also feel every breeze against your rapidly moistening cuntlips. Sure, they were already wet, but you can feel beads of moisture trickling down them. That sensation feeds right back into your cock, the thought of a wet pussy forcing heartbeat after heartbeat worth of new blood into your swelling erection.");
 		output("\n\n");
 		if(pc.hasCock()) output("Did getting an erection ever feel this good with your old [pc.cocksNounSimple]?");
 		else output("Does getting an erection always feel like this?");
@@ -1286,7 +1286,7 @@ public function femaleTaurLadySex():void
 	else output("they");
 	output(" glow with eager pleasure, delirious with the desire to be touched.");
 
-	output("\n\nYou lick lips that suddenly feel dry and empty, looking back at Dane with a smile. <i>“I’m okay... better than okay, really.”</i> Hormones too potent for any sapient flood your brain with visions of you on the floor, all four legs splayed while Dane humps away at your cum-splattered hindquarters. You lean up to one of his ears and whisper, <i>“I just need fucked is all.”</i> Squeezing his crotch, you giggle when his member squirms and thickens against your fingers, distending the shimmery fabric. <i>“");
+	output("\n\nYou lick lips that suddenly feel dry and empty, looking back at Dane with a smile. <i>“I’m okay... better than okay, really.”</i> Hormones too potent for any sapient flood your brain with visions of you on the floor, all four legs splayed while Dane humps away at your cum-splattered hindquarters. You lean up to one of his ears and whisper, <i>“I just need to be fucked is all.”</i> Squeezing his crotch, you giggle when his member squirms and thickens against your fingers, distending the shimmery fabric. <i>“");
 	if(flags["WHUPPED_DANES_ASS_ON_MHENGA"] == undefined) output("In my pussy this time.");
 	else output("I forgot to prepare my ass, but my pussy is ready.");
 	output("”</i>");
@@ -1314,7 +1314,7 @@ public function ladyTaursFuckDane():void
 	output("\n\nIt feels like a normal ausar cock at first. The tapered tip lets it slide with ease, quickly broadening into a sturdy base, the kind you’d imagine could lift your hind legs off the ground with a single frenzied hump, and that’s only the beginning. Dane’s knot, the anchor of his pillar of cock, stretches you wide open. It’s pleasant, really. Your body is built to be stuffed with bigger dicks than this, so the swollen lump in the base is nothing more than erotic bonus.");
 	output("\n\nAll things considered, it’s a pretty good start to your evening.");
 	output("\n\nThe knot pushes deeper. Your eyes widen in surprise as the bulb burrows into your passage, leaving your lips hanging cutely agape behind. There’s no time to puzzle over this most recent development, not when Dane is spooling near-equine lengths of prick into your quim. Another knot pushes in, and your legs tremble, making your hooves slip and slide in in the puddle you’ve made below. Your alien partner holds you upright, keeping you from spilling entirely to the ground. He literally saves your ass, if only so that he can hold his hips against it and continue to deep-dick you.");
-	output("\n\nSomewhat cowed by his display of might and control, you kneel down on your forelegs, ceding Dane the authority to use your body as he will, allowing you to focus on the way he’s slowly but steadily filling your cunt. His dick seems endless, revealing more and more knot-like bulges with each passing minute. You look back at him, delirious with pleasure, squeezing down on the wiggling, hybrid cock until until the pleasure inflates every orb along the length of his phallus. They open you wider than two rutting pony-boys ever could.");
+	output("\n\nSomewhat cowed by his display of might and control, you kneel down on your forelegs, ceding Dane the authority to use your body as he will, allowing you to focus on the way he’s slowly but steadily filling your cunt. His dick seems endless, revealing more and more knot-like bulges with each passing minute. You look back at him, delirious with pleasure, squeezing down on the wiggling, hybrid cock until the pleasure inflates every orb along the length of his phallus. They open you wider than two rutting pony-boys ever could.");
 	output("\n\nDane slaps your ass, keeping ahold of you with his other three hands. <i>“You got a tight cunt for a taur-[pc.boyGirl], you know?”</i> He yanks back, dragging dozens of spherical protrusions against misfiring nerves, then slowly pushes back in. <i>“A guy could get used to this.”</i>");
 	output("\n\n<i>“Room for one more?”</i> a high-pitched, mischievous voice calls over the debauched din.");
 	output("\n\nYou blink tears of pleasure from your eyes and suck your tongue back into your mouth.");
@@ -1335,11 +1335,11 @@ public function ladyTaursFuckDane():void
 		pc.orgasm();
 	}
 	//Kiro used for volume~
-	pc.loadInCunt(chars["DANE"]);
-	pc.loadInCunt(chars["KIRO"]);
-	pc.loadInCunt(chars["KIRO"]);
-	pc.loadInCunt(chars["KIRO"]);
-	pc.loadInCunt(chars["KIRO"]);
+	pc.loadInCunt(chars["DANE"], 0);
+	pc.loadInCunt(chars["KIRO"], 0);
+	pc.loadInCunt(chars["KIRO"], 0);
+	pc.loadInCunt(chars["KIRO"], 0);
+	pc.loadInCunt(chars["KIRO"], 0);
 	pc.loadInMouth(chars["DANE"]);
 	pc.loadInMouth(chars["KIRO"]);
 	pc.loadInMouth(chars["KIRO"]);

@@ -71,6 +71,9 @@ public function configureCodex():void
 	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_ITEM, "Legal Items", "BionaHoles", bionaholeCodex);
 	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_ITEM, "Legal Items", "Grav Cuffs", gravCuffsCodex);
 	//9999 CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_ITEM, "Legal Items", "Holodom", holodomCodex);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_ITEM, "Legal Items", "Suma Cream", sumaCreamCodex);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_ITEM, "Legal Items", "ClearYu", clearYuCodex);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_ITEM, "Legal Items", "Rubber-Made", rubberMadeCodex);
 	
 	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_ITEM, "Technology", "AI Systems", AISystemsCodexEntry, true);
 	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_ITEM, "Technology", "Item Mechanics", mechanicsCodex, true);
@@ -78,6 +81,7 @@ public function configureCodex():void
 	
 	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_STORY, "Fiction", "Dragon’s Hoard", dragonsHordeCodexStory, true);
 	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_STORY, "Fiction", "Bull’s Strength", bullsStrength, true);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_STORY, "Fiction", "Diverting Jokes", DivertingTarkusJokesAndJests);
 
 	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_ROBOT, "Androids", "V-Ko", VKoCodex);
 	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_ROBOT, "Androids", "V-Ko IVs", VKoIVsCodex);
@@ -734,7 +738,7 @@ public function vulkrimiCodexEntry():void
 	outputCodex("The vulkrimi are a species of impish humanoids with traits reminiscent of demonic mythologies from other U.G.C. cultures. They are an all-male race, as the female sex has been rendered extinct. Those females that do exist are either former males or clones. Their bodies are elastic and smooth, capable of stretching themselves far more than other species while leaving them unharmed. This characteristic gives the skin the benefit of holding itself tight against the flesh, stopping bleeding and hiding scars far more easily than the skin of other species.\n\nTheir bodies are covered in chitinous plates, some of them loose while other are tight against the body, taking the shape of a huge armor similar to those worn by the ancient samurai. This armor is extremely inconvenient, especially on the hands and legs, and give them a reputation of being exceedingly clumsy. Most vulkrimi consider these plates as nothing more than a vestigial evolutionary remnant, so they choose to surgically remove them.\n\nVulkrim cocks are usually four to six inches long, one inch across and are very similar to dog cocks, tapered and with a pointed head, but lacking the iconic knot. When flaccid it will rest inside a sheath of the same color as the skin. When erect it will reveal a shaft covered in a usually darker foreskin hiding a cockhead that can be red, blue, purple, black, pink or bright orange in color. Below is a scrotum of the same color as the skin with a pair of balls, three inches across inside. Without the surgery, these are hidden by a pair of hanging plates that sprout from their belly buttons.\n\nWhile they come in a variety of colors, a vulkrim’s secondary pigmentation tends to be naturally coordinated, with the most notable combination being orange accents appearing exclusively on obsidian skin.");
 	outputCodex("\n\n");
 	outputCodex(blockHeader("Modification"));
-	outputCodex("Traditionally, in order to become more efficient and aesthetically pleasing to their females the males often surgically removed the armor plates covering their bodies. This cultural tradition carries on to this day, with the vast majority surgically removing the plates at one point in their lives, normally as early as possible. This practice often gives them a more relaxed view of gene-modding than other races, often taking them to fit in more easily within other societies. One good example of this attitude is their willingness to take the Treatment when visiting New Texas, greatly boosting both their height and demonic features, turning them into incubus adonis.\n\nNinety percent of the vulkrim population participates in procedures to remove the plates, though in more recent times preferences have changed from surgery to specialized mods. They can choose which plates to remove, but most prefer to remove the plates from their whole bodies, resulting in an impish look, with human-looking hands and feet, black claws and an almost prehensile, demonic tail that ends in a spade, tipped with a small black barb.\n\nTheir elastic skin hides almost all scars from surgery, except for few pores around irremovable roots that even genemods can’t remove. They take the form of triads of parallel holes above each of their pectoral muscles, and on their forearm, forelegs, brows and head. These scars are often erogenous zones, akin to nipples, although most try keep this a secret from their alien lovers.\n\nAround eighty percent of this race use mods to grow hair on their scalps and crotches, with some going further and giving themselves hair on their faces and bodies, just to seem more enticing to other races. Since their females had naturally black hair, most males tend to pick black for their own hair, making other colors a rare sight.");
+	outputCodex("Traditionally, in order to become more efficient and aesthetically pleasing to their females the males often surgically removed the armor plates covering their bodies. This cultural tradition carries on to this day, with the vast majority surgically removing the plates at one point in their lives, normally as early as possible. This practice often gives them a more relaxed view of gene-modding than other races, often taking them to fit in more easily within other societies. One good example of this attitude is their willingness to take the Treatment when visiting New Texas, greatly boosting both their height and demonic features, turning them into incubus adonis.\n\nNinety percent of the vulkrim population participates in procedures to remove the plates, though in more recent times preferences have changed from surgery to specialized mods. They can choose which plates to remove, but most prefer to remove the plates from their whole bodies, resulting in an impish look, with human-looking hands and feet, black claws and an almost prehensile, demonic tail that ends in a spade, tipped with a small black barb.\n\nTheir elastic skin hides almost all scars from surgery, except for few pores around irremovable roots that even genemods can’t remove. They take the form of triads of parallel holes above each of their pectoral muscles, and on their arms, legs, brows and head. These scars are often erogenous zones, akin to nipples, although most try keep this a secret from their alien lovers.\n\nAround eighty percent of this race use mods to grow hair on their scalps and crotches, with some going further and giving themselves hair on their faces and bodies, just to seem more enticing to other races. Since their females had naturally black hair, most males tend to pick black for their own hair, making other colors a rare sight.");
 	outputCodex("\n\n");
 	outputCodex(blockHeader("Habitat"));
 	outputCodex("Vulkrimi were originally from Maggrath, a very humid planet with strong volcanic activity and very few predators. This gives them the ability to thrive in worlds that are both hot and humid, and since their accession to the UGC they have settled several colonies in similar environments. These colonies tend to be seedy places due to their higher propensity toward criminal activity.\n\nIn the past vulkrimi were divided into several sub-races: the black-skinned from the volcanic zones; the red-skinned from the tropical zones; the blue-skinned from the more humid zones and the purple-skinned from the more arid zones. Nowadays this is a meaningless definition due to technological development and hybridization.");
@@ -1450,12 +1454,12 @@ public function crystalGooCodexEntry():void
 	showBust("GOOCUBATOR");
 	outputCodex(header("Ganrael"));
 	outputCodex("<b>Name (Singular & Plural):</b> Ganrael");
-	outputCodex("\n<b>Sexes:</b> Monogendered");
-	outputCodex("\n<b>Height:</b> 5 to 6 feet. Some exceptional specimens can reach up to eight feet of height, though their dietary requirements to maintain such mass makes such individuals exceedingly rare.");
-	outputCodex("\n<b>Senses:</b> As goo-type creatures, the Ganrael have very limited perceptive organs. They are capable of 360 degree sight and have acute senses of smell and hearing. Most ganrael, will affect humanoid eyes and ears as part of their limited shapeshifting, in order to appear more familiar and appealing to their mates.");
 	// Gardeford
 	if(silly)
 	{
+		outputCodex("\n<b>Sexes:</b> Monogendered");
+		outputCodex("\n<b>Height:</b> 5 to 6 feet. Some exceptional specimens can reach up to eight feet of height, though their dietary requirements to maintain such mass makes such individuals exceedingly rare.");
+		outputCodex("\n<b>Senses:</b> As goo-type creatures, the Ganrael have very limited perceptive organs. They are capable of 360 degree sight and have acute senses of smell and hearing. Most ganrael, will affect humanoid eyes and ears as part of their limited shapeshifting, in order to appear more familiar and appealing to their mates.");
 		outputCodex("\n<b>Skin:</b> Ganrael come in a variety of colors, ranging from viridian (the most common), through red, purple, dark blues, and rarely brighter shades of yellow, orange, and pink.");
 		outputCodex("\n\n");
 		outputCodex(blockHeader("Combat"));
@@ -1473,19 +1477,23 @@ public function crystalGooCodexEntry():void
 	// Zeikfried
 	else
 	{
-		outputCodex("\n<b>Skin:</b> Ganrael come in a variety of colors, ranging from green (the most common), through red, pink, purple, and dark blues. Rarely, some specimens of yellow or orange coloration have been seen, though they appear to be vastly in the minority.");
+		outputCodex("\n<b>Sexes:</b> Unisex, though individuals may adopt a gendered appearance.");
+		outputCodex("\n<b>Height:</b> Varies depending on the assumed shape, which changes with environment. Specimens that far exceed dietary requirements may be much larger than average.");
+		outputCodex("\n<b>Senses:</b> Capable of 360-degree sight using a diffuse array of photoreceptors, with acute smell and hearing. Most ganrael will affect humanoid facial features in order to appear more familiar and appealing, but these are cosmetic.");
+		outputCodex("\n<b>Hair:</b> None natively, though individuals may counterfeit it to attract mates.");
+		outputCodex("\n<b>Skin Color:</b> Green is the most common, followed by blue and yellow. Rarely, specimens of pink or red are seen. Color is determined by trace impurities, and an individual’s color may change in response to environmental factors.");
 		outputCodex("\n\n");
-		outputCodex(blockHeader("Combat"));
-		outputCodex("Unlike many goo creatures, the ganrael are not stealth predators, but prefer to openly challenge their opponents. This shift in tactics compared to similar species is likely based in the ganrael’s unique evolutionary adaptation: armor. Species like the rahn and galotians are completely soft-bodied, constantly keeping their gooey extremities saturated with liquid to maintain their easy range of motion and shape-shifting abilities, with varying levels of penetrable dermises. Ganrael instead have adapted to slowly dry out and harden their outermost layers of goo, which eventually crystallizes into a nearly diamond-hard armor plating around the subject.\n\nThis hardened outer armor protects the otherwise vulnerable ganrael inside, allowing it to engage in direct combat against even armed foes, such as the myrmedion who live in the upper caverns above the ganraels’ natural habitat. Crystal armor regenerates quickly with focus and food consumption on the part of the ganrael, and can even be adapted to grow semi-biological weapons for use: many ganrael hunt with crystal daggers, axes, or spears.");
+		outputCodex(blockHeader("Habitat"));
+		outputCodex("Ganrael are native to the deepest cavern level of the planet Myrellion. Most live their lives without visiting the surface, though thanks to the abundance of bioluminescent fungus the ganrael retain the ability to see in light. Ganrael prefer wet, humid areas, particularly those near underground water sources and thermal vents.");
 		outputCodex("\n\n");
-		outputCodex(blockHeader("Environs Typically Inhabited"));
-		outputCodex("Ganrael are natives of Myrellion, specifically the deepest caverns on the planet. Most live their entire lives without seeing the surface, though thanks to the abundance of bioluminescent cave fungus and creatures within the deep caves the ganrael retain their ability to see in light. Ganrael prefer wet, humid areas in the caves, particularly those near underground lakes, rivers, and thermal vents.");
+		outputCodex(blockHeader("Biology & Behavior"));
+		outputCodex("Unlike many amorphous creatures, the ganrael are not social or symbiotic and prefer to rely on intimidation or physical force. This evolutionary strategy likely arose with their adaptation of armor. Unlike rahn and galotians, who both maintain a moist, penetrable dermis, ganrael are able to modify their outer layers, hardening them into plating and weapons as durable as tungsten or carbon steel.\n\nAccording to available field reports and research records provided by Myrellion governments, the ganrael store liquid supersaturated with silicate minerals in specialized organelles inside their cells. When new plating is needed, an enzyme is secreted that ruptures the chamber, allowing the liquid to crystallize rapidly. Other compounds in the destroyed cell function as resins that bond the tiny crystals together into a composite.");
 		outputCodex("\n\n");
 		outputCodex(blockHeader("Reproduction"));
-		outputCodex("Ganrael, like most goo creatures, have distinctly non-mammalian reproduction patterns. Though some ganrael will adapt the appearance of one gender or the other, they are fundamentally a mono-gendered race, with any individual capable of bearing children. When a ganrael is ready to mate and bear children, it need only acquire the genetic material of another compatible creature - male or female, semen or other form of genetic carrier. The genetic material can then be absorbed through the skin (or, more commonly, inserted into the bearer through penetrative sex). Ganrael have several erogenous zones in their natural form, and usually shift these to more traditional areas when mimicking humanoid shape so that both the ganrael and its mate can enjoy the proceedings.\n\nOnce proper genetic material has been absorbed, the ganrael’s reproductive cycle begins. Over the course of the next 24 hours, the ganrael will begin to divide its cells, with half of the resultant cells carrying the new genetic material mixed with the parent’s. The parent ganrael will shed its crystal armor and effectively split in two, resulting in a smaller (some say younger) copy of the parent along with a fully-formed child. Both parent and child are fairly weak for the next few days, requiring some time to gather their energy and eat enough to begin restoring their full size and armor plating. Between “insemination” and the resultant ganrael being fit to hunt again, perhaps a full week has passed.");
+		outputCodex("Ganrael reproduce similar to Terran prokaryotes, collecting new genetic material and then producing offspring clonally. As a unisex species, any individual is potentially capable of reproduction. When ready to mate, the ganrael seeks out compatible genetic material and absorbs it through the skin, commonly in the form of penetrative sex, which the ganrael enjoy thanks to several erogenous zones that shift responsively to heighten the experience.\n\nA ganrael retains and incorporates a donor’s genetic material into its own after mating, via a poorly-understood process. Eyewitness accounts report that individuals experience euphoria, addiction, and loss of cognitive function during this time, akin to intoxication or narcotic effects. For unknown reasons, no such reaction occurs with conspecifics. Approximately twenty-four hours after assimilation of enough material, the ganrael will enter the reproductive phase, shedding its armor and undergoing rapid cell proliferation. The phase culminates with the ganrael separating into two identical individuals, each carrying the new genetic signature. Ganrael are vulnerable after division, as their new cells contain low mineral levels and create weak plating.\n\nGanrael may reproduce before assimilating. This has only been observed when an individual with damaged plating receives too much genetic material to contain without its exoskeleton. The ganrael will immediately divide the material between two bodies which both later undergo the reproductive phase. Each clone will assimilate the foreign DNA slightly differently, resulting in two pairs of related but non-identical ganrael.\n\nGanrael who do not acquire enough DNA from one partner seek another, and when denied access to gametes will collect and use other, non-germ cells. These occurrences should theoretically result in a significant number of triploid and polyploid ganrael. It's currently unknown how or even if individuals with odd chromosome numbers prevent aneuploidy during reproduction, but theories have been proposed whereby ganrael are unable to divide until their total number of chromosomes are evenly paired, are able to identify and splice compatible donor DNA directly into their own via a hitherto unidentified enzyme, or have some other redundancy that prevents aneuploid cells from resulting in a defective organism. The 'even pairs' theory would suggest a sharp increase in the number of chromosomes over time which has not been observed, and has not been widely accepted for this reason.");
 		outputCodex("\n\n");
 		outputCodex(blockHeader("Culture & Society"));
-		outputCodex("Most ganrael are nomadic, moving through the caverns in pursuit of game and mates. There are relatively few ganrael settlements and little in the way of organized civilization. At best, a family unit of a mated pair of their children may stay together until the children are old enough to hunt on their own, at which point the family usually disintegrates. Ganrael are, as a rule, individualists who struggle to work together with other creatures (of their own race or others), which has made organized ganrael societies rare, and keeps them relatively small and insignificant.");
+		outputCodex("Ganrael are nomadic, moving through the caverns in pursuit of food and mates. ‘Growth’ and reproduction through aggressive acquisition of genetic material is usually the highest goal of any individual. Because of their potential to become addicted to other species, ganrael are not infrequently taken as slaves. There are few ganrael settlements and little in the way of organization. Ganrael are, as a rule, individualists who struggle to work together, which has kept their society nonexistent and the species insignificant.");
 	}
 	outputCodex("\n\n");
 	CodexManager.viewedEntry("Ganrael");
@@ -1644,7 +1652,44 @@ public function holodomCodex():void
 	outputCodex("\n");
 	CodexManager.viewedEntry("Holodom");
 }
+public function sumaCreamCodex():void
+{
+	clearOutputCodex();
+	showBust("9999");
+	outputCodex(header("Suma Cream"));
+	outputCodex("\n<b>Manufactured By:</b> J’ejune Pharmaceuticals");
+	outputCodex("\n\n");
+	outputCodex(blockHeader("About:"));
+	outputCodex("J’ejune Pharmaceuticals are not known for their originality, though they’re quite adept at making the best of a bad situation. The “Suma Cream” line of beauty products is no different. Originally intended as a facial cream to bring out plump, rosy cheeks, it was discovered that the plumping agent in the salve had almost no effect on female test subjects, but produced testicular swelling in hermaphrodites and males. When the balm was actually applied directly to the balls, the effect was even more pronounced.\n\nRebranding it as an alternative to Xenogen’s similar products, J’ejune marketed the cream specifically to those who wanted bigger testicles without adopting bovine or kui-tan traits. Their ad slogan “Pinch the pearl and make a kui-tan squirm!” was widely regarded as being both offensive and frankly misleading. Despite marketing missteps, they’ve finally managed to begin shipping the cream to vendors across the rim.\n\nRumors persist that “black pearl” versions of the cream have entered production. The black cream supposedly contains undiluted formula, producing an irresponsible amount of growth. J’ejune denies that such an oversight could’ve occurred, but their history speaks more loudly than their press statements.");
+	outputCodex("\n");
+	CodexManager.viewedEntry("Suma Cream");
+}
 
+public function clearYuCodex():void
+{
+	clearOutputCodex();
+	showBust("9999");
+	outputCodex(header("ClearYu"));
+	outputCodex("\n<b>Manufactured By:</b> Xenogen Biotech");
+	outputCodex("\n\n");
+	outputCodex(blockHeader("About:"));
+	outputCodex("Never one to completely abandon a product line, when Xenogen discontinued work on Dumbfuck for its unexpected mind-altering side effects, they transferred much of the research to another department, who came up with ClearYu. The candied lollipop vastly increases one's hand-eye coordination, physical reflexes, and bodily responsiveness by hindering the higher brain functions that would normally obstruct these instincts. It's found surprising popularity among mercenaries and adventure seekers who don't mind losing a few points of IQ for a more steady gun hand.");
+	outputCodex("\n");
+	CodexManager.viewedEntry("ClearYu");
+}
+
+public function rubberMadeCodex():void
+{
+	clearOutputCodex();
+	showBust("9999");
+	outputCodex(header("Rubber-Made"));
+	outputCodex("\n<b>Manufactured By:</b> J'ejune Pharmaceuticals");
+	outputCodex("\n\n");
+	outputCodex(blockHeader("About:"));
+	outputCodex("Rubber-Made was originally intended as a body hair removal paste by the overworked and undersupervised folks at J'ejune Pharmaceuticals. They were somewhat taken aback when their product responded vigorously to high levels of moisture, such as is typically found on the inside of one's mouth. The specific incident that lead to this discovery is not recorded, but the company's reputation for lax testing protocols may be responsible.\n\nWhen exposed to moisture and sufficiently agitated, the gum-like product will spread rapidly, synthetically bonding with the subject's underlying skin and fur. This produces a thin, latex-like coating over much if not all of a subject's body. Repeat use creates subsequently thicker layers, potentially subsuming body hair and fur. J'ejune representatives caution against the accidental ingestion of Rubber-Made.");
+	outputCodex("\n");
+	CodexManager.viewedEntry("Rubber-Made");
+}
 
 /* Technology */
 

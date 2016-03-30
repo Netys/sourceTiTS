@@ -74,6 +74,9 @@ package classes.Resources
 		[Embed(source = "../../assets/icons/statuseffects/drug-vial.svg", mimeType = "image/svg")]
 		public static var Icon_DrugVial:Class;
 		
+		[Embed(source = "../../assets/icons/statuseffects/gears_three.svg", mimeType = "image/svg")]
+		public static var Icon_Gears_Three:Class;
+
 		[Embed(source = "../../assets/icons/statuseffects/haste.svg", mimeType = "image/svg")]
 		public static var Icon_Haste:Class;
 
@@ -88,6 +91,9 @@ package classes.Resources
 		public static var Icon_Lips_Glossed:Class;
 		[Embed(source = "../../assets/icons/statuseffects/lips_lick.svg", mimeType = "image/svg")]
 		public static var Icon_Lips_Lick:Class;
+
+		[Embed(source = "../../assets/icons/statuseffects/lollipop.svg", mimeType = "image/svg")]
+		public static var Icon_Lollipop:Class;
 
 		[Embed(source = "../../assets/icons/statuseffects/lust-down.svg", mimeType = "image/svg")]
 		public static var Icon_LustDown:Class;

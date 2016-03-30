@@ -628,7 +628,7 @@ public function queenOfTheDeepCloacaFuck():void
 	clearOutput();
 	queenOfTheDeepHeader();
 	
-	var selCock:int = (pc as Creature).cockThatFits(queenOfTheDeep.ass.capacity());
+	var selCock:int = (pc as Creature).cockThatFits(queenOfTheDeep.analCapacity());
 	
 	if (selCock == -1) selCock = (pc as Creature).smallestCockIndex();
 
@@ -718,7 +718,7 @@ public function queenOfTheDeepCloacaFuck():void
 
 	output("\n\nYou doubt you’ll see it again.");
 
-	queenOfTheDeep.loadInCunt(pc);
+	queenOfTheDeep.loadInCunt(pc, 0);
 	pc.orgasm();
 	if (pc.libido() >= 75) pc.orgasm();
 

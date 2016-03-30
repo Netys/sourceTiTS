@@ -542,6 +542,7 @@ public function statisticsScreen(showID:String = "All"):void
 					}
 					else if (pData.pregnancyType == "CoCAnemonePregnancy") output2(" Anemone");
 					else if(pData.pregnancyType == "OviliumEggPregnancy") output2(" Ovilium, Eggs");
+					else if(pData.pregnancyType == "PsychicTentacles") output2(" Psychic Tentacle Beast");
 					else output2(" <i>Unknown</i>");
 					if(pData.pregnancyIncubation > -1)
 					{
@@ -803,6 +804,8 @@ public function statisticsScreen(showID:String = "All"):void
 				}
 				if(nyreanEggs > 0)
 					output2("\n<b>* Births, Nyrean Eggs, Total: </b>" + nyreanEggs);
+				if(StatTracking.getStat("pregnancy/psychic tentacle beast birthed") > 0)
+					output2("\n<b>* Births, Psychic Tentacle Beasts: </b>" + StatTracking.getStat("pregnancy/psychic tentacle beast birthed"));
 				if(StatTracking.getStat("pregnancy/renvra kids") > 0)
 					output2("\n<b>* Births, Renvra’s Children: </b>" + StatTracking.getStat("pregnancy/renvra kids"));
 				if(StatTracking.getStat("pregnancy/venus pitcher seeds") > 0)
@@ -1626,8 +1629,36 @@ public function displayQuestLog(showID:String = "All"):void
 					if(MailManager.isEntryViewed("emmy_gift_starter") && flags["EMMY_QUEST"] == 2) output2(", <i>Gift her with a gem!</i>");
 					else output2(", Gave her a gemstone");
 				}
+				if(flags["EMMY_QUEST"] >= 3)
+				{
+					if(MailManager.isEntryViewed("emmy_implant_explain_email") && flags["EMMY_QUEST"] == 3) output2(", <i>Talk to her about her implant!</i>");
+					else if(flags["EMMY_QUEST"] == 4)
+					{
+						output2(", She requests a herm harness");
+						if(flags["GET_ME_ONE"] != undefined) output2(" (You asked for one, too!)");
+						if(pc.credits < 15000) output2(", Too poor to pay 15000 credits");
+						else output2(", Have 15000 credits to pay");
+					}
+					if(flags["EMMY_QUEST"] == 5)
+					{
+						output2(", Paid for herm harness");
+						if(flags["GET_ME_ONE"] != undefined) output2(" (You asked for one, too!)");
+						if(MailManager.isEntryViewed("emmy_harness_here") && flags["EMMY_QUEST"] == 5) output2(", <i>Return to Emmy!</i>");
+					}
+				}
+				if(flags["EMMY_QUEST"] >= 6)
+				{
+					output2(", Paid for and have controls to her herm harness");
+					if(flags["GET_ME_ONE"] != undefined) output2(" (You asked for one, too!)");
+				}
 				if(flags["EMMY_BANNED"] != undefined) output2(", Banned from her shop, Failed");
 				else if(9999 == 0) output2(", Completed");
+				if(flags["EMMY_QUEST"] == 5)
+				{
+					output2("\n<b>Toy Delivery Time:</b>");
+					if(flags["EMMY_TOY_TIMER"] > GetGameTimestamp()) output2(" " + prettifyMinutes(flags["EMMY_TOY_TIMER"] - GetGameTimestamp()));
+					else output2(" <i>Delivered</i>");
+				}
 				sideCount++;
 			}
 			// IrelliaQuest
@@ -2371,7 +2402,7 @@ public function displayEncounterLog(showID:String = "All"):void
 				variousCount++;
 			}
 			// Residential Deck Stuff!
-			if(flags["AINA_DAY_MET"] != undefined || flags["SEEN_FYN"] == true)
+			if(flags["AINA_DAY_MET"] != undefined || flags["SEEN_FYN"] == true || flags["MET_SEMITH"] == true)
 			{
 				output2("\n<b><u>Residential Deck</u></b>");
 				// Aina
@@ -2402,6 +2433,12 @@ public function displayEncounterLog(showID:String = "All"):void
 						output2("\n<b>* Fyn:</b> Met him");
 						if(flags["FYN_SEXED"] > 0) output2("\n<b>* Fyn, Times Sexed: </b>" + flags["FYN_SEXED"]);
 					}
+				}
+				// Semith
+				if(flags["MET_SEMITH"] == true)
+				{
+					output2("\n<b>* Semith:</b> Met him");
+					if(flags["SEMITH_SEXED"] > 0) output2("\n<b>* Semith, Times Sexed: </b>" + flags["SEMITH_SEXED"]);
 				}
 				variousCount++;
 			}
@@ -2554,9 +2591,27 @@ public function displayEncounterLog(showID:String = "All"):void
 				if(StatTracking.getStat("milkers/prostate milker uses") > 0 || flags["CARRIE_BLOWJOBBED"] != undefined)
 				{
 					output2("\n<b>* Carrie:</b> Met her");
-					if(flags["CARRIE_BLOWJOBBED"] != undefined) output2(", Gave you a blowjob");
+					if(flags["CARRIE_BLOWJOBBED"] != undefined)
+					{
+						output2(", Gave you a blowjob");
+						if(flags["CARRIE_BLOWJOBBED"] != 1) output2(" " + flags["CARRIE_BLOWJOBBED"] + " times");
+					}
 					if(flags["CARRIE_SMALLCOCK_SUX"] != undefined) output2(", Sucked your small cock");
-					if(flags["CORA_SUCKED"] != undefined) output2("\n<b>* Cora:</b> Met her, Sucked your dick with Carrie");
+					if(flags["CORA_SUCKED"] != undefined)
+					{
+						output2("\n<b>* Cora:</b> Met her, Sucked your dick with Carrie");
+						if(flags["CORA_SUCKED"] != 1) output2(" " + flags["CORA_SUCKED"] + " times");
+					}
+					if(flags["CARRIE_SHOWER_THREESOME"] != undefined)
+					{
+						output2("\n<b>* Carrie and Cora:</b> Had shower threesome");
+						if(flags["CARRIE_SHOWER_THREESOME"] != 1) output2(" " + flags["CARRIE_SHOWER_THREESOME"] + " times");
+					}
+					if(flags["CARRIE_SHOWER_FIVESOME"] != undefined)
+					{
+						output2("\n<b>* Horisha and Peck:</b> Met them, Had shower fivesome with Carrie and Cora");
+						if(flags["CARRIE_SHOWER_FIVESOME"] != 1) output2(" " + flags["CARRIE_SHOWER_FIVESOME"] + " times");
+					}
 				}
 				// Giannannanna
 				if(flags["MET_GIANNA"] != undefined)
@@ -3138,6 +3193,14 @@ public function displayEncounterLog(showID:String = "All"):void
 				}
 				variousCount++;
 			}
+			// Nessa
+			if(flags["MET_NESSA"] != undefined)
+			{
+				output2("\n<b><u>U.G.C. Scout Authority</u></b>");
+				output2("\n<b>* Nessa:</b> Met her");
+				if(nessaBellyRating() > 0) output2("\n<b>* Nessa, Belly Size Rating:</b> " + formatFloat(nessaBellyRating(), 3));
+				variousCount++;
+			}
 			// Shekka
 			if(flags["MET_SHEKKA"] != undefined)
 			{
@@ -3253,7 +3316,7 @@ public function displayEncounterLog(showID:String = "All"):void
 						output2("\n<b>* [bess.name], Body, Posterior Size: </b>" + formatFloat(chars["BESS"].buttRating(), 3));
 					}
 					if(flags["BESS_BOOBCHANGED"] != undefined && chars["BESS"].hasNipples()) output2("\n<b>* [bess.name], Nipple Type: </b>" + GLOBAL.NIPPLE_TYPE_NAMES[chars["BESS"].breastRows[0].nippleType]);
-					if(chars["BESS"].isLactating()) output2(", Lactation Active");
+					if(chars["BESS"].isLactating()) output2("\n<b>* [bess.name], Lactation:</b> Active");
 					if(chars["BESS"].hasCock() || chars["BESS"].hasVagina() || flags["BESS_FUCKED"] != undefined)
 					{
 						if(chars["BESS"].hasCock()) output2("\n<b>* [bess.name], Cum Type: </b>" + GLOBAL.FLUID_TYPE_NAMES[chars["BESS"].cumType]);
@@ -3513,6 +3576,7 @@ public function displayEncounterLog(showID:String = "All"):void
 					else if(flags["EMMY_POLY"] != undefined) output2(" You’ve both agreed to be polyamorous");
 					else if(flags["EMMY_BF"] != undefined) output2(" You’re her [pc.boy]friend");
 					else output2(" <i>Unknown</i>");
+					if(9999 == 9999 && flags["EMMY_CREW_REQUESTED"] != undefined) output2(", Asked her to join your crew");
 				}
 				if(flags["EMMY_ORALED"] != undefined) output2("\n<b>* Emmy, Times She Oral Sexed You: </b>" + flags["EMMY_ORALED"]);
 			}
@@ -3520,25 +3584,32 @@ public function displayEncounterLog(showID:String = "All"):void
 			if(flags["MET_NEVRIE"] != undefined || flags["MET_MCALLISTER"] != undefined)
 			{
 				output2("\n<b><u>Xenogen Biotech Office</u></b>");
-				// Nevrie
-				if(flags["MET_NEVRIE"] != undefined)
-				{
-					output2("\n<b>* Nevrie:</b> Met her");
-					if(flags["FUCKED_NEVRIE"] != undefined) output2(", Sexed her");
-					if(flags["NEVRIE_SHOPPED"] != undefined) output2(", Accessed her shop");
-					if(flags["NEVRIE_DISCOUNT"] != undefined) output2(", Store discount active");
-				}
 				// Byron McAllister
 				if(flags["MET_MCALLISTER"] != undefined)
 				{
 					output2("\n<b>* Dr. McAllister:</b> Met him");
 				}
+				// Nevrie
+				if(flags["MET_NEVRIE"] != undefined)
+				{
+					output2("\n<b>* Nevrie:</b> Met her");
+					if(flags["FUCKED_NEVRIE"] != undefined) output2(", Sexed her");
+					if(flags["NEVRIE_FIRST_DISCOUNT_DATE"] != undefined) output2("\n<b>* Nevrie, Days Since Last Store Discount:</b> " + (days - flags["NEVRIE_FIRST_DISCOUNT_DATE"]));
+				}
 				variousCount++;
 			}
 			// Streets of Gildenmere
-			if(flags["MET_ORRYX"] != undefined)
+			if(flags["MET_ORRYX"] != undefined || flags["LIRIEL_MET"] != undefined)
 			{
 				output2("\n<b><u>Gildenmere</u></b>");
+				// Liriel, Martians
+				if (flags["LIRIEL_MET"] != undefined)
+				{
+					output2("\n<b>* Liriel:</b> Met her");
+					if (flags["LIRIEL_TALK_STAND"] != undefined) output2(", Talked about The Little Green Man stand");
+					if (flags["LIRIEL_BUTTSEXED"] != undefined) output2("\n<b>* Liriel, Times She Fucked Your Ass: </b>" + flags["LIRIEL_BUTTSEXED"]);
+					if (flags["LIRIEL_TITFUCKED"] != undefined) output2("\n<b>* Liriel, Times Titfucked: </b>" + flags["LIRIEL_TITFUCKED"]);
+				}
 				// Orryx, step right up ladies and gents!
 				if(flags["MET_ORRYX"] != undefined)
 				{
@@ -4337,6 +4408,28 @@ public function displayEncounterLog(showID:String = "All"):void
 			{
 				output2("\n<b>* The Treatment:</b> Known");
 				if(pc.hasStatusEffect("Treated")) output2(", Used");
+			}
+			miscCount++;
+		}
+		// Sexploration: Porny Smuts
+		if(flags["LETS_FAP_ARCHIVES"] != undefined)
+		{
+			output2("\n<b><u>Pornography</u></b>");
+			// Atha's Adventures
+			if(flags["LETS_FAP_ARCHIVES"] != undefined)
+			{
+				output2("\n<b>* Champeon, Atha’s Let’s Fap Series:</b> Donated");
+				if(flags["CUMSTREAM_UNLOCKED"] != undefined) output2(", Geyser Tier");
+				else if(flags["EARLY_LETS_FAPS"] != undefined) output2(", Hydrant Tier");
+				else output2(", Faucet Tier");
+				if(flags["LETS_FAP_RELEASE_TIMER"] != undefined)
+				{
+					var unlockLength:Number = 10080;
+					if(flags["EARLY_LETS_FAPS"] != undefined) unlockLength = 7200;
+					output2(", Next video release");
+					if(GetGameTimestamp() - flags["LETS_FAP_RELEASE_TIMER"] < unlockLength) output2(" ready after " + prettifyMinutes(unlockLength - (GetGameTimestamp() - flags["LETS_FAP_RELEASE_TIMER"])));
+					else output2(" at 13:00");
+				}
 			}
 			miscCount++;
 		}

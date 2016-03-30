@@ -95,6 +95,7 @@
 		include "../includes/CodexEntries.as";
 		include "../includes/CodexFiction.as";
 		include "../includes/creation.as";
+		include "../includes/creation_custom_PCs.as";
 		include "../includes/debug.as";
 		include "../includes/dynamicGrowth.as";
 		include "../includes/engine.as";
@@ -103,9 +104,11 @@
 		include "../includes/gooExtras.as";
 		include "../includes/lightsOut.as";
 		include "../includes/items.as";
+		include "../includes/items.tooltips.as";
 		include "../includes/MailEntries.as";
 		include "../includes/masturbation.as";
 		include "../includes/masturbation.eggTrainer.as";
+		include "../includes/masturbation.magicMilker.as";
 		include "../includes/NPCTemplates.as";
 		include "../includes/rooms.as";
 		include "../includes/roomFunctions.as";
@@ -134,7 +137,10 @@
 		include "../includes/travelEvents.kiro.as";
 		
 		// Misc Events
+		include "../includes/events/atha_lets_fapper.as";
 		include "../includes/events/bimboPennyAndBadgerQuest/badgerGifts.as";
+		include "../includes/events/sumaBonus.as";
+		include "../includes/events/tentacle_psychic_hatchling.as";
 
 		//Tavros Station
 		include "../includes/tavros/aina.as";
@@ -199,6 +205,7 @@
 		include "../includes/tarkus/shekka.as";
 		include "../includes/tarkus/stellarTether.as";
 		include "../includes/tarkus/sydianMale.as";
+		include "../includes/tarkus/taxi.as";
 		include "../includes/tarkus/theMess.as";
 
 		//Third planet
@@ -238,6 +245,7 @@
 		include "../includes/myrellion/landmines.as";
 		include "../includes/myrellion/lieve.as";
 		include "../includes/myrellion/liliana.as";
+		include "../includes/myrellion/littleGreenMan.as";
 		include "../includes/myrellion/lyralla.as";
 		include "../includes/myrellion/manor.as";
 		include "../includes/myrellion/merchantQueen.as";
@@ -365,7 +373,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.40";
+			version = "0.6.43";
 
 			//temporary nonsense variables.
 			temp = 0;
@@ -1069,7 +1077,6 @@
 		{
 			return chars["HUNTRESS_VANAE"];
 		}
-		
 		public function get gianna():Gianna
 		{
 			return chars["GIANNA"];
@@ -1145,6 +1152,10 @@
 		public function get emmy():Emmy
 		{
 			return chars["EMMY"];
+		}
+		public function get liriel():Liriel
+		{
+			return chars["LIRIEL"];
 		}
 		
 		private var _dbgtestvar:int = 0;

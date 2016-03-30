@@ -231,6 +231,7 @@ public function chooseStartingRace(race:String = "human"):void {
 		pc.faceType = GLOBAL.TYPE_HUMANMASKED;
 		pc.armType = GLOBAL.TYPE_KUITAN;
 		pc.addArmFlag(GLOBAL.FLAG_FURRED);
+		pc.addLegFlag(GLOBAL.FLAG_PLANTIGRADE);
 		//output("male or hermaphroditic");
 		addButton(0,"Male",setStartingSex,1);
 		addDisabledButton(1,"Female","Female","Kui-tan cannot be female.")
@@ -1239,8 +1240,15 @@ public function setClass(arg:int = 0):void {
 		pc.upperUndergarment = new classes.Items.Apparel.PlainUndershirt() // (items["11"]);
 	else 
 		pc.upperUndergarment = new classes.Items.Apparel.PlainBra() // (items["10"]);
-	tutorialSkipOption();
-	pc.maxOutHP();
+	if(customPCCheck(false)) 
+	{
+		nameOfDestinyChoice();
+	}
+	else
+	{
+		tutorialSkipOption();
+		pc.maxOutHP();
+	}
 }
 
 //Tutorial Skip Option

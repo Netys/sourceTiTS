@@ -497,10 +497,12 @@
 		public var skinType: Number = 0;
 		public function skinTypeUnlocked(newSkinType:Number):Boolean
 		{
+			if(hasPerk("Black Latex")) return false;
 			return true;
 		}
 		public function skinTypeLockedMessage():String
 		{
+			if(hasPerk("Black Latex")) return "Your rubbery skin briefly tingles, but stops shortly after, blocking any attempt to change it.";
 			return "Your [pc.skin] briefly itches, but nothing happens.";
 		}
 
@@ -720,7 +722,7 @@
 		public var cumType: Number = GLOBAL.FLUID_TYPE_CUM;
 		public function cumTypeUnlocked(newCumType:Number):Boolean
 		{
-			if(cumType == GLOBAL.FLUID_TYPE_SPECIAL_GOO) return false;
+			if(cumType == GLOBAL.FLUID_TYPE_SPECIAL_GOO || cumType == GLOBAL.FLUID_TYPE_SPECIAL_CUMGOO) return false;
 			return true;
 		}
 		public function cumTypeLockedMessage():String
@@ -1498,6 +1500,12 @@
 					break;
 				case "skinFurScalesNoun":
 					buffer = skinNoun(false);
+					break;
+				case "skinNounSimple":
+					buffer = skinNoun(true, true);
+					break;
+				case "skinFurScalesNounSimple":
+					buffer = skinNoun(false, true);
 					break;
 				case "skinFurScalesColor":
 					buffer = skinFurScalesColor();
@@ -3293,11 +3301,13 @@
 			if (hasPerk("Venom Slut") && hasStatusEffect("Red Myr Venom")) bonus += 35;
 			if (hasPerk("Bimbo Body") || hasPerk("Bro Body") || hasPerk("Futa Form")) bonus += 20;
 			if (hasPerk("Omnibus' Gift")) bonus += 15;
+			if(hasStatusEffect("Perfect Simulant")) bonus += 50;
 			return (100 + bonus);
 		}
 		public function lustMin(): Number {
 			var bonus:int = 0;
 			if (hasPerk("Drug Fucked")) bonus += 10;
+			if (hasPerk("Black Latex")) bonus += 10;
 			if (hasPerk("Bimbo Body") || hasPerk("Bro Body") || hasPerk("Futa Form")) {
 				if(bonus > 40) bonus += 10;
 				else if(bonus >= 20) bonus += 20;
@@ -3307,8 +3317,7 @@
 				if(bonus > 40) bonus += 10;
 				else if(bonus >= 20) bonus += 20;
 				else bonus += 35;
-			}
-			if (hasStatusEffect("Ellie's Milk")) bonus += 33;
+			}			if (hasStatusEffect("Ellie's Milk")) bonus += 33;
 			if (hasStatusEffect("Lane Detoxing Weakness"))
 			{
 				if (bonus < statusEffectv2("Lane Detoxing Weakness")) bonus = statusEffectv2("Lane Detoxing Weakness");
@@ -3325,24 +3334,34 @@
 			var bonuses:int = 0;
 			if (hasStatusEffect("Quivering Quasar")) bonuses += 5;
 			if (hasStatusEffect("Might")) bonuses += statusEffectv1("Might");
+			if(hasStatusEffect("Perfect Simulant")) bonuses += 3;
 			return level * 5 + bonuses;
 		}
 		public function reflexesMax(): Number {
-			return level * 5;
+			var bonuses:int = 0;
+			if(hasStatusEffect("Perfect Simulant")) bonuses += 3;
+			return level * 5 + bonuses;
 		}
 		public function aimMax(): Number {
-			return level * 5;
+			var bonuses:int = 0;
+			if(hasStatusEffect("Perfect Simulant")) bonuses += 3;
+			return level * 5 + bonuses;
 		}
 		public function intelligenceMax(): Number {
 			var bonuses:int = 0;
 			if(hasPerk("Cybernetic Synchronization")) bonuses += (perkv1("Cybernetic Synchronization") * cyborgScore());
+			if(hasStatusEffect("Perfect Simulant")) bonuses += 3;
 			return level * 5 + bonuses;
 		}
 		public function willpowerMax(): Number {
-			return level * 5;
+			var bonuses:int = 0;
+			if(hasStatusEffect("Perfect Simulant")) bonuses += 3;
+			return level * 5 + bonuses;
 		}
 		public function libidoMax(): Number {
-			return 100;
+			var bonuses:int = 0;
+			if(hasStatusEffect("Perfect Simulant")) bonuses += 50;
+			return 100 + bonuses;
 		}
 		public function libidoMin(): Number {
 			var bonus:int = 0;
@@ -4200,7 +4219,7 @@
 			//0-10
 			else if (femininity < 10) {
 				faceo = "a square chin";
-				if(!hasBeard() && lipRating() > 2) faceo += ", " + plural(lipDescript(true)) + faceLipMimbraneDescript() + ", and chiseled jawline.";
+				if(!hasBeard() && lipRating() > 2) faceo += ", " + plural(lipDescript(true)) + faceLipMimbraneDescript() + ", and chiseled jawline";
 				else if (!hasBeard()) faceo += " and chiseled jawline";
 				else faceo += ", chiseled jawline, and " + beard();
 			}
@@ -4576,6 +4595,7 @@
 			var adjectives:Array = [];
 			//33% of the time, add an adjective.
 			if (forceAdjective || rand(3) == 0) {
+				if (skinType == GLOBAL.SKIN_TYPE_LATEX) adjectives.push(RandomInCollection(["slick","glistening","squeaky","glossy","oiled","lacquered","sleek","polished","supple"]));
 				if (hasSkinFlag(GLOBAL.FLAG_SMOOTH)) adjectives.push("smooth");
 				if (hasSkinFlag(GLOBAL.FLAG_THICK)) adjectives.push("thick");
 				if (hasSkinFlag(GLOBAL.FLAG_STICKY)) adjectives.push("sticky");
@@ -4658,6 +4678,8 @@
 				if (temp <= 7 || appearance) output += "chitin";
 				else if (temp <= 8) output += "armor";
 				else output += "carapace";
+			} else if (skinType == GLOBAL.SKIN_TYPE_LATEX) {
+				output += RandomInCollection(["latex","rubber","plastic","casing","dermis","film"]);
 			}
 			return output;
 		}
@@ -6854,9 +6876,18 @@
 		public function vaginalCapacity(arg: int = 0): Number {
 			//If the player has no vaginas
 			if (vaginas.length == 0) return 0;
-			var amount:Number = vaginas[arg].capacity() * elasticity;
-			if(isTaur()) amount += 400;
-			return amount;
+
+			var capacity:Number = 20;
+			//Factor in looseness! - 2/24/15 - buffed looseness a bunch
+			capacity *= (vaginas[arg].looseness() * 5 + 1)/3;
+			//Add bonuses!
+			capacity += vaginas[arg].bonusCapacity;
+			//CoC-tier wetness 5 will double capacity.
+			capacity *= (vaginas[arg].wetness()+4)/5;
+			//elasticity bonuses!
+			capacity *= elasticity;
+			if(isTaur()) capacity += 400;
+			return capacity;
 		}
 		public function smallestVaginalCapacity(): Number {
 			return vaginalCapacity(smallestVaginaIndex());
@@ -6953,7 +6984,17 @@
 			return index;
 		}
 		public function analCapacity(): Number {
-			return ass.capacity() * elasticity;
+			var capacity:Number = 20;
+			//Factor in looseness! - 2/24/15 - buffed looseness a bunch
+			capacity *= (ass.looseness() * 5 + 1)/3;
+			//Add bonuses!
+			capacity += ass.bonusCapacity;
+			//CoC-tier wetness 5 will double capacity.
+			capacity *= (ass.wetness()+4)/5;
+			//elasticity bonuses!
+			capacity *= elasticity;
+			if(isTaur()) capacity += 100;
+			return capacity;
 		}
 		//Goddamnit Savin
 		public function cockCapacity(x:int = -1): Number
@@ -6972,6 +7013,7 @@
 			}
 			return false;
 		}
+		public function hasNippleCunts(): Boolean { return hasCuntNipples(); }
 		public function hasCuntNipples(): Boolean {
 			var counter: Number = breastRows.length;
 			while (counter > 0) {
@@ -7057,7 +7099,7 @@
 		{
 			if(!hasNipples()) return false;
 			//PC has reached lactation threshold!
-			if(milkMultiplier > 50 || milkFullness >= 50) return true;
+			if(milkMultiplier > 50 || milkFullness >= 50 || hasPerk("Mega Milk")) return true;
 			return false;
 		}
 		public function isLactating(): Boolean {
@@ -7065,7 +7107,7 @@
 			if(canLactate())
 			{
 				//Is there enough milk in yer tits for lactation?
-				if(milkFullness >= 10 || milkQ() >= 1000)
+				if(milkFullness >= 10 || milkQ() >= 1000 || hasPerk("Mega Milk"))
 				{
 					//yes? true!
 					return true;
@@ -7076,7 +7118,7 @@
 		}
 		public function canMilkSquirt():Boolean
 		{
-			if(milkFullness >= 80) return true;
+			if(milkFullness >= 80 || hasPerk("Mega Milk")) return true;
 			return false;
 		}
 		public function isMilkTank():Boolean
@@ -7169,15 +7211,17 @@
 			var total:Number = 0;
 			//So much easier now - just a quick lookup.
 			//Arg -1 = amount from biggest tits.
-			if(arg == -1) return milkFullness/100 * milkCapacity();
+			var fullness:Number = milkFullness;
+			if(fullness < 40 && hasPerk("Mega Milk")) fullness = 40;
+			if(arg == -1) return fullness/100 * milkCapacity();
 			//Arg 99 = amount from all tits
 			else if(arg == 99)
 			{
 				//Total it up!
 				for(var x:int = 0; x < breastRows.length; x++)
 				{
-					//trace("Row " + x + " mLs: " + (milkFullness * milkCapacity(x)));
-					total += milkFullness/100 * milkCapacity(x);
+					//trace("Row " + x + " mLs: " + (fullness * milkCapacity(x)));
+					total += fullness/100 * milkCapacity(x);
 				}
 				//trace("MilkQ total: " + total);
 				return total;
@@ -7186,7 +7230,7 @@
 			else
 			{
 				if(arg < 0 || arg >= breastRows.length) return 0;
-				else return milkFullness/100 * milkCapacity(arg);
+				else return fullness/100 * milkCapacity(arg);
 			}
 			//Failsafe:
 			return 0;
@@ -7408,6 +7452,7 @@
 		
 		//Calculate cum return
 		public function cumQ(): Number {
+			if (hasPerk("Fixed CumQ")) return perkv1("Fixed CumQ");
 			if (!hasCock()) return 0;
 			var quantity: Number = 0;
 			//lust - 50% = normal output. 0 = 75%. 100 = +125% output.
@@ -8014,6 +8059,12 @@
 					cocks[slot].addFlag(GLOBAL.FLAG_SMOOTH);
 					cocks[slot].addFlag(GLOBAL.FLAG_LUBRICATED);
 					break;
+				case GLOBAL.TYPE_HRAD:
+					cocks[slot].knotMultiplier = 1;
+					cocks[slot].cockColor = RandomInCollection(["purple", "angry purple", "reddish-purple"]);
+					cocks[slot].addFlag(GLOBAL.FLAG_FORESKINNED);
+					cocks[slot].addFlag(GLOBAL.FLAG_FLARED);
+					break;
 			}
 		}
 		//PC can fly?
@@ -8250,11 +8301,13 @@
 		public function removeVaginasUnlocked():Boolean
 		{
 			if (hasStatusEffect("Mimbrane Pussy")) return false;
+			if (isPregnant(0) || isPregnant(1) || isPregnant(2)) return false;
 			return true;
 		}
 		public function removeVaginasLockedMessage():String
 		{
 			if (hasStatusEffect("Mimbrane Pussy")) return "A powerful stretching overtakes your " + vaginaDescript(0) + ", your Mimbrane is doing everything in its power to keep the feminine canyon from vanishing. Seems you won’t be able to get rid of your pussy so long as the parasite is in control of it.";
+			if (isPregnant(0) || isPregnant(1) || isPregnant(2)) return "A powerful sensation can be felt in your womb. Your body actively fights the change, keeping you from losing your pregnant vagina entirely.";
 			else return "Your body practically glows with groin-focused effort, keeping you from losing your genitalia entirely.";
 		}
 
@@ -8355,6 +8408,7 @@
 			if (nyreaScore() >= 5) race = "nyrea";
 			// Human-morphs
 			if (race == "human" && cowScore() >= 4) race = mfn("cow-boy", "cow-girl", "hucow");
+			if (race == "human" && hradScore() >= 4) race = "hrad";
 			// Centaur-morphs
 			if (horseScore() >= 3 && isCentaur()) race = taurRace(equineRace());
 			else if (bovineScore() >= 3 && isTaur()) race = rawmfn("bull", "cow", "bovine") + "-taur";
@@ -8837,6 +8891,23 @@
 			if (counter > 3 && hairType == GLOBAL.HAIR_TYPE_REGULAR && hasPerk("Mane")) counter++;
 			return counter;
 		}
+		public function hradScore():int
+		{
+			var counter:int = 0;
+			if (hasAntennae(GLOBAL.TYPE_HRAD))
+			{
+				counter++;
+				if (skinType == GLOBAL.SKIN_TYPE_SKIN && InCollection(skinTone, "emerald", "green", "viridescent")) counter++;
+				if (hairType == GLOBAL.HAIR_TYPE_REGULAR && hairColor == "vibrant purple") counter++;
+				if (InCollection(nippleColor, "bright purple", "pink", "purple","violet")) counter++;
+			}
+			if (counter > 0 && hasCock(GLOBAL.TYPE_HRAD) && balls >= 2) counter++;
+			if (counter > 1 && canLactate() && milkType == GLOBAL.FLUID_TYPE_BLUEBERRY_YOGURT) counter++;
+			if (counter > 1 && hasCock() && cumType == GLOBAL.FLUID_TYPE_HRAD_CUM) counter++;
+			if (counter > 1 && hasVagina() && girlCumType == GLOBAL.FLUID_TYPE_HRAD_CUM) counter++;
+			if (!isBiped() || !hasLegFlag(GLOBAL.FLAG_PLANTIGRADE)) counter--;
+			return counter;
+		}
 		public function myrScore(): int
 		{
 			var counter:int = 0;
@@ -9265,7 +9336,7 @@
 			if (rando == 6) desc += "teste";
 			if (rando == 7) desc += "gonad";
 			if (rando == 8) desc += "nut";
-			if (balls > 0 || !forceSingular) desc += "s";
+			if (balls != 1 && !forceSingular) desc += "s";
 			return desc;
 		}
 		public function ballDescript(forceCount: Boolean = false, forcedSize: Boolean = false): String {
@@ -9285,7 +9356,7 @@
 			}
 			else if (rando <= 7) desc += "gonad";
 			else desc += "nut";
-			if (asPlural) desc = plural(desc);
+			if (asPlural && balls != 1) desc = plural(desc);
 			return desc;
 		}
 		public function assholeDescript(): String {
@@ -10115,6 +10186,7 @@
 				descript += "head";
 				return descript;
 			}
+
 			//50% odds of adjectives
 			if ((forceLength || rand(2) == 0) && !InCollection(hairStyle, "afro", "mohawk")) {
 				if (hairLength < 1) {
@@ -10160,6 +10232,12 @@
 				if (descripted > 0) descript += ", ";
 				descript += hairColor;
 				descripted++;
+			}
+			//Latex!
+			if (rand(2) == 0 && descripted <= 1 && hasStatusEffect("Latex Hair"))
+			{
+				if(descripted > 0) descript += ", ";
+				descript += "latex";
 			}
 			//Mane special stuff.
 			if (hasPerk("Mane") && hairLength > 3 && rand(2) == 0) {
@@ -10319,6 +10397,12 @@
 				if (descripted > 0) descript += ", ";
 				descript += hairColor;
 				descripted++;
+			}
+			//Latex!
+			if (rand(2) == 0 && descripted <= 1 && hasStatusEffect("Latex Hair"))
+			{
+				if(descripted > 0) descript += ", ";
+				descript += "latex";
 			}
 			//Not manes
 			//Oddball shit
@@ -10771,7 +10855,8 @@
 					if (temp <= 4) vag += "gaped";
 					else if (temp <= 8) vag += "cavernous";
 					else if (temp <= 9) vag += "wide-open";
-					else vag += "ruined";
+					else if (vaginas[vaginaNum].minLooseness > 4) vag += "ruined";
+					else vag += "yawning";
 				}
 				descripted++;
 			}
@@ -11205,6 +11290,9 @@
 				case GLOBAL.TYPE_VANAE:
 					collection = ["vanae", "cephalopod-like"];
 					break;
+				case GLOBAL.TYPE_HRAD:
+					collection = ["human", "terran", "bullet-shaped", "bullet-headed"];
+					break;
 				case GLOBAL.TYPE_INHUMAN:
 					collection = ["inhuman", "human-like", "alien"];
 					break;
@@ -11322,6 +11410,8 @@
 			} else if (type == GLOBAL.TYPE_VANAE) {
 				adjectives.push("vanae", "alien", "suckler-tipped", "vanae", "cephalopod-like", "inhuman", "exotic");
 				nouns.push("vanae-dick", "vanae-cock", "vanae-prick");
+			} else if (type == GLOBAL.TYPE_HRAD) {
+				adjectives.push("human", "terran", "bullet-shaped", "bullet-headed");
 			} else if (type == GLOBAL.TYPE_INHUMAN) {
 				adjectives.push("inhuman", "human-like", "almost-human", "alien");
 			} else {
@@ -12032,7 +12122,11 @@
 				collection = ["salty","potent"];
 			} else if (arg == GLOBAL.FLUID_TYPE_GABILANI_GIRLCUM) {
 				collection = ["tangy","flavorful"];
-			} else if (arg == GLOBAL.FLUID_TYPE_SPECIAL_GOO) {
+			} else if (arg == GLOBAL.FLUID_TYPE_BLUEBERRY_YOGURT) {
+				collection = ["blueberry","blueberry","blueberry","delicious","sweet","fruity"];
+			} else if (arg == GLOBAL.FLUID_TYPE_HRAD_CUM) {
+				collection = ["sweet","vanilla","sugary"];
+			} else if (arg == GLOBAL.FLUID_TYPE_SPECIAL_GOO || arg == GLOBAL.FLUID_TYPE_SPECIAL_CUMGOO) {
 				collection = ["sweet","tangy","citrusy"];
 			}
 			
@@ -12067,12 +12161,16 @@
 				if(statusEffectv1("Nyrea Eggs") > 0) collection.push("egg-filled","eggy","bubbly","pulpy");
 			} else if (InCollection(arg, GLOBAL.FLUID_TYPE_GABILANI_CUM, GLOBAL.FLUID_TYPE_GABILANI_GIRLCUM)) {
 				collection = ["oily","coating"];
-			} else if (arg == GLOBAL.FLUID_TYPE_SPECIAL_GOO) {
+			} else if (arg == GLOBAL.FLUID_TYPE_SPECIAL_GOO || arg == GLOBAL.FLUID_TYPE_SPECIAL_CUMGOO) {
 				collection = ["slick","viscous","slippery"]; /* "slimy", */
 			} else if (arg == GLOBAL.FLUID_TYPE_CHOCOLATE_CUM) {
 				collection = ["thick","sticky"];
 			} else if (arg == GLOBAL.FLUID_TYPE_NYREA_GIRLCUM) {
 				collection = ["thick","sticky"];
+			} else if (arg == GLOBAL.FLUID_TYPE_BLUEBERRY_YOGURT) {
+				collection = ["thick"];
+			} else if (arg == GLOBAL.FLUID_TYPE_HRAD_CUM) {
+				collection = ["semi-thick","syrupy"];
 			}
 			
 			else collection = ["fluid"];
@@ -12117,7 +12215,11 @@
 				collection = ["off-white", "semi-clear", "semi-transparent"];
 			} else if (arg == GLOBAL.FLUID_TYPE_GABILANI_GIRLCUM) {
 				collection = ["gray", "semi-clear", "semi-transparent"];
-			} else if (arg == GLOBAL.FLUID_TYPE_SPECIAL_GOO) {
+			} else if (arg == GLOBAL.FLUID_TYPE_BLUEBERRY_YOGURT) {
+				collection = ["violet","purple"];
+			} else if (arg == GLOBAL.FLUID_TYPE_HRAD_CUM) {
+				collection = ["translucent white","creamy white","nearly transparent","ghostly white"];
+			} else if (arg == GLOBAL.FLUID_TYPE_SPECIAL_GOO || arg == GLOBAL.FLUID_TYPE_SPECIAL_CUMGOO) {
 				if(skinType == GLOBAL.SKIN_TYPE_GOO) collection = [String(skinTone)];
 				else if(hairType == GLOBAL.HAIR_TYPE_GOO) collection = [String(hairColor)];
 				else collection = ["green","emerald"];
@@ -12150,7 +12252,7 @@
 				case "pink":
 					return "rose quartz";
 				case "red":
-					return RandomInCollection("Ruby","garnet");
+					return RandomInCollection("ruby","garnet");
 				case "orange":
 				case "yellow":
 					return RandomInCollection("amber","citrine","topaz");
@@ -12159,16 +12261,16 @@
 				case "blue":
 					return RandomInCollection("aquamarine","sapphire");
 				case "purple":
-					return RandomInCollection("amethyst");
+					return RandomInCollection("amethyst","amethyst");
 				case "transparent":
 					return RandomInCollection("crystal","diamond");
 				case "brown":
-					return RandomInCollection("citrine");
+					return RandomInCollection("citrine","citrine");
 				case "silver":
 				case "gray":
-					return RandomInCollection("silver");
+					return RandomInCollection("silver","silver");
 				default:
-					return RandomInCollection("pearl");		
+					return RandomInCollection("pearl","pearl");		
 			}
 		}
 		public function fluidColorSimple(arg: int):String
@@ -12185,7 +12287,9 @@
 			else if (arg == GLOBAL.FLUID_TYPE_NYREA_GIRLCUM) return "white";
 			else if (arg == GLOBAL.FLUID_TYPE_GABILANI_CUM) return "white";
 			else if (arg == GLOBAL.FLUID_TYPE_GABILANI_GIRLCUM) return "gray";
-			else if (arg == GLOBAL.FLUID_TYPE_SPECIAL_GOO)
+			else if (arg == GLOBAL.FLUID_TYPE_BLUEBERRY_YOGURT) return "purple";
+			else if (arg == GLOBAL.FLUID_TYPE_HRAD_CUM) return "white";
+			else if (arg == GLOBAL.FLUID_TYPE_SPECIAL_GOO || arg == GLOBAL.FLUID_TYPE_SPECIAL_CUMGOO)
 			{
 				if(skinType == GLOBAL.SKIN_TYPE_GOO) return skinTone;
 				else if(hairType == GLOBAL.HAIR_TYPE_GOO) return hairColor;
@@ -12225,8 +12329,14 @@
 				collection = ["girl-cum"];
 			} else if (arg == GLOBAL.FLUID_TYPE_NYREA_GIRLCUM) {
 				collection = ["cum"];
+			} else if (arg == GLOBAL.FLUID_TYPE_BLUEBERRY_YOGURT) {
+				collection = ["yogurt"];
+			} else if (arg == GLOBAL.FLUID_TYPE_HRAD_CUM) {
+				collection = ["syrup","cum"];
 			} else if (arg == GLOBAL.FLUID_TYPE_SPECIAL_GOO) {
 				collection = ["slime","goo"];
+			} else if (arg == GLOBAL.FLUID_TYPE_SPECIAL_CUMGOO) {
+				collection = ["slime-spunk","goo-cum","slime-semen","goo-spooge","slime-spooge","goo-spunk","slime-cum"]
 			}
 			
 			else collection = ["ERROR: NONVALID FLUID TYPE PASSED TO fluidNoun."];
@@ -12776,6 +12886,13 @@
 				else if (temp <= 2) return "bowl-like glans";
 				else if (temp <= 3) return "sucker tip";
 				else return "suckered cock-head";
+			} else if (type == GLOBAL.TYPE_HRAD) {
+				temp = rand(5);
+				if (temp == 0) return "bullet-shaped tip";
+				else if (temp == 1) return "angry cock-head";
+				else if (temp == 2) return "foreskin-covered crown";
+				else if (temp == 3) return "foreskin-covered tip";
+				else return "bullet-shaped head";
 			}
 			/*else if (type == 9999) {
 				temp = rand(5);
@@ -12882,6 +12999,9 @@
 		}
 		public function cumflationHappens(cumFrom:Creature, hole:Number):void
 		{
+			// Exceptions
+			if(cumFrom.hasStatusEffect("Ovilium Effect")) return;
+			
 			if(hole >= 0 && hole < 3)
 			{
 				if(!hasStatusEffect("Vaginally-Filled")) createStatusEffect("Vaginally-Filled",cumFrom.cumQ(),cumFrom.cumQ(),cumFrom.cumType,0,false,"Icon_Vagina","You've got some fluids inside you, leftovers from a recent lover.",false,0,0xB793C4);
@@ -13880,6 +14000,9 @@
 					adjectives.push("myr", "ant-like", "insect-like", "insectile");
 					nouns.push("feeler");
 					break;
+				case GLOBAL.TYPE_HRAD:
+					adjectives.push("hradian", "bubble-topped", "ball-tipped", "orb-capped", "alien");
+					break;
 			}
 			
 			if(adjectives.length > 0 && rand(2) == 0) description += RandomInCollection(adjectives) + " ";
@@ -14032,7 +14155,7 @@
 				if(hasPerk("Fertility")) weightBreast *= 0.75;
 				if(milkQ() > 0)
 				{
-					weightFluid = fluidWeight(milkQ());
+					weightFluid = fluidWeight(milkQ(), milkType);
 					if(isMilkTank()) weightFluid *= 0.5;
 					else if(hasPerk("Milky") || hasPerk("Treated Milk")) weightFluid *= 0.75;
 					if(partNum >= 0) weightFluid /= bRows();
@@ -14070,6 +14193,12 @@
 					}
 					if(hasPerk("Breed Hungry")) weightBelly *= 0.75;
 				}
+				weightFluid = 0;
+				weightFluid += fluidWeight(statusEffectv1("Anally-Filled"), statusEffectv3("Anally-Filled"));
+				weightFluid += fluidWeight(statusEffectv1("Vaginally-Filled"), statusEffectv3("Vaginally-Filled"));
+				weightFluid += fluidWeight(statusEffectv1("Orally-Filled"), statusEffectv3("Orally-Filled"));
+				//if(hasCock() || balls > 0) weightFluid += fluidWeight((cumQ() * 0.5), cumType);
+				weightBelly += weightFluid;
 				if(thickness > tone)
 				{
 					weightFat = (thickness - tone) * 0.01 * (tallness / 60);
@@ -14095,74 +14224,84 @@
 			{
 				// Get total length:
 				tempSize = 0;
-				if(partNum >= 0) tempSize += clitLength * vaginas[partNum].clits;
-				else tempSize += clitLength * totalClits();
-				// Calculate weight: Simple, Each inch of length is 1/80th lbs.
-				weightClitoris += tempSize * 0.0125;
-				// Modifiers:
-				if(hasPerk("Hung")) weightClitoris *= 0.75;
+				if(hasVagina())
+				{
+					if(partNum >= 0) tempSize += clitLength * vaginas[partNum].clits;
+					else tempSize += clitLength * totalClits();
+					// Calculate weight: Simple, Each inch of length is 1/80th lbs.
+					weightClitoris += tempSize * 0.0125;
+					// Modifiers:
+					if(hasPerk("Hung")) weightClitoris *= 0.75;
+				}
 			}
 			// Penis:
 			if(partName == "penis" || partName == "total")
 			{
 				// Get total size/volume:
 				tempSize = 0;
-				if(partNum >= 0)
+				if(hasCock())
 				{
-					tempSize += cockVolume(partNum);
-				}
-				else
-				{
-					for (num = 0; num < cocks.length; num++)
+					if(partNum >= 0)
 					{
-						tempSize += cockVolume(num);
+						tempSize += cockVolume(partNum);
 					}
-				}
-				// Calculate weight: Simple, Each volume unit is 1/20th lbs.
-				weightPenis += tempSize * 0.05;
-				// Modifiers:
-				if(partNum >= 0)
-				{
-					if(hasKnot(partNum))
+					else
 					{
-						weightFat = cocks[partNum].thickness() * cocks[partNum].knotMultiplier * 0.25;
-						weightPenis += weightFat;
-					}
-				}
-				else
-				{
-					for (num = 0; num < cocks.length; num++)
-					{
-						if(hasKnot(num))
+						for (num = 0; num < cocks.length; num++)
 						{
-							weightFat = cocks[num].thickness() * cocks[num].knotMultiplier * 0.25;
+							tempSize += cockVolume(num);
+						}
+					}
+					// Calculate weight: Simple, Each volume unit is 1/20th lbs.
+					weightPenis += tempSize * 0.05;
+					// Modifiers:
+					if(partNum >= 0)
+					{
+						if(hasKnot(partNum))
+						{
+							weightFat = cocks[partNum].thickness() * cocks[partNum].knotMultiplier * 0.25;
 							weightPenis += weightFat;
 						}
 					}
+					else
+					{
+						for (num = 0; num < cocks.length; num++)
+						{
+							if(hasKnot(num))
+							{
+								weightFat = cocks[num].thickness() * cocks[num].knotMultiplier * 0.25;
+								weightPenis += weightFat;
+							}
+						}
+					}
+					if(hasPerk("Hung")) weightPenis *= 0.75;
 				}
-				if(hasPerk("Hung")) weightPenis *= 0.75;
 			}
 			// Testicles:
 			if(partName == "testicle" || partName == "total")
 			{
 				// Get total size/volume:
-				if(balls <= 0) num = 1;
-				else num = balls;
-				tempSize = ballVolume();
-				// Calculate weight: Simple, Each volume unit is 1/80th lbs.
-				weightTesticle += tempSize * num * 0.0125;
-				// Modifiers:
-				if(cumQ() > 0)
+				tempSize = 0;
+				if(hasCock() || balls > 0)
 				{
-					// Maybe only 50% is housed in the balls?
-					weightFluid = fluidWeight(cumQ() * 0.5);
-					if(hasPerk("Potent") && hasPerk("Breed Hungry")) weightFluid *= 0.5;
-					else if(hasPerk("Potent") || hasPerk("Breed Hungry")) weightFluid *= 0.75;
-					if(hasStatusEffect("Nyrea Eggs")) weightFluid += (0.125 * statusEffectv1("Nyrea Eggs"));
-					if(partNum > 0 && partNum <= balls) weightFluid = (weightFluid / partNum);
-					weightTesticle += weightFluid;
+					if(balls <= 0) num = 1;
+					else num = balls;
+					tempSize = ballVolume();
+					// Calculate weight: Simple, Each volume unit is 1/80th lbs.
+					weightTesticle += tempSize * num * 0.0125;
+					// Modifiers:
+					if(cumQ() > 0)
+					{
+						// Maybe only 50% is housed in the balls?
+						weightFluid = fluidWeight((cumQ() * 0.5), cumType);
+						if(hasPerk("Potent") && hasPerk("Breed Hungry")) weightFluid *= 0.5;
+						else if(hasPerk("Potent") || hasPerk("Breed Hungry")) weightFluid *= 0.75;
+						if(hasStatusEffect("Nyrea Eggs")) weightFluid += (0.125 * statusEffectv1("Nyrea Eggs"));
+						if(partNum > 0 && partNum <= balls) weightFluid = (weightFluid / partNum);
+						weightTesticle += weightFluid;
+					}
+					if(hasPerk("Bulgy")) weightTesticle *= 0.75;
 				}
-				if(hasPerk("Bulgy")) weightTesticle *= 0.75;
 			}
 			
 			// Add up all the weights
@@ -14176,10 +14315,10 @@
 			return weight;
 		}
 		// Calculates the weight of an amount of fluid.
-		public function fluidWeight(fluidAmount: Number = 0):Number
+		public function fluidWeight(fluidAmount: Number = 0, fluidType:int = -1):Number
 		{
-			if(InCollection(cumType, GLOBAL.FLUID_TYPE_HONEY, GLOBAL.FLUID_TYPE_MILKSAP, GLOBAL.FLUID_TYPE_CUMSAP, GLOBAL.FLUID_TYPE_NECTAR)) fluidAmount *= 0.005;
-			else if(InCollection(cumType, GLOBAL.FLUID_TYPE_CUM, GLOBAL.FLUID_TYPE_GABILANI_CUM, GLOBAL.FLUID_TYPE_NYREA_CUM, GLOBAL.FLUID_TYPE_VANAE_CUM)) fluidAmount *= 0.0035;
+			if(InCollection(fluidType, GLOBAL.FLUID_TYPE_HONEY, GLOBAL.FLUID_TYPE_MILKSAP, GLOBAL.FLUID_TYPE_CUMSAP, GLOBAL.FLUID_TYPE_NECTAR, GLOBAL.FLUID_TYPE_BLUEBERRY_YOGURT)) fluidAmount *= 0.005;
+			else if(InCollection(fluidType, GLOBAL.FLUID_TYPE_CUM, GLOBAL.FLUID_TYPE_GABILANI_CUM, GLOBAL.FLUID_TYPE_NYREA_CUM, GLOBAL.FLUID_TYPE_VANAE_CUM)) fluidAmount *= 0.0035;
 			else fluidAmount *= 0.0025;
 			
 			return fluidAmount;
