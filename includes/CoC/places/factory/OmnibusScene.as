@@ -383,7 +383,7 @@ public function DemonFactoryOmnibusBoon(willing:Boolean = false):void {
 	}
 	else
 		output("The omnibus disappeared while you were examining the changes.  You guess you did get what you wanted.  You blush and smile, still feeling very horny.  You decide to use the privacy of the office to relieve the tension you've been building up since you arrived.\n\nYou masturbate quickly and efficiently, eager to calm down and resume your exploration.  In no time at all an orgasm crashes through your body.  Stretching and standing up, you find yourself still aroused.\n\nYou slap your forehead as realization washes over you - <b>the demoness' magic is keeping you from ever being totally satisfied!</b>\n(Perk Gained - Omnibus' Gift - Minimum lust has been increased!)\n\n");
-	pc.createPerk("Omnibus' Gift", 0, 0, 0, 0, "Increases minimum lust but provides some lust resistance.");
+	if (!pc.hasPerk("Omnibus' Gift")) pc.createPerk("Omnibus' Gift", 0, 0, 0, 0, "Increases minimum lust but provides some lust resistance.");
 	output("\n\n");
 	pc.orgasm();
 	pc.cor(2);

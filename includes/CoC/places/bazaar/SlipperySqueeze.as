@@ -135,7 +135,7 @@ private function joeyAndrogyny():void {
 	output("You ask for a mirror, but Joey just titters with a knowing smile on his succulent lips as he replies, \"<i>Oh, you haven't changed at all " + pc.mf("handsome", "dear") + ".  This will let you change it to whatever extreme you like, but those kinds of facials aren't a service we currently offer.  I do hear that there's a goblin salon in the mountains that might be able to help you finish up your look though!</i>\"\n\n");
 	
 	output("Thanking the cute bunny-boy for his help, you hand over the payment and head back to check on camp.");
-	pc.createPerk("Androgyny", 0, 0, 0, 0, "No gender limits on facial masculinity or femininity.");
+	pc.createPerk("Androgyny", 0, 0, 0, 0, "Your face is always androgynous.");
 	pc.lust(5);
 	processTime(50 + rand(20));
 	clearMenu();

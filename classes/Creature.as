@@ -3317,7 +3317,8 @@
 				if(bonus > 40) bonus += 10;
 				else if(bonus >= 20) bonus += 20;
 				else bonus += 35;
-			}			if (hasStatusEffect("Ellie's Milk")) bonus += 33;
+			}
+			if (hasStatusEffect("Ellie's Milk")) bonus += 33;
 			if (hasStatusEffect("Lane Detoxing Weakness"))
 			{
 				if (bonus < statusEffectv2("Lane Detoxing Weakness")) bonus = statusEffectv2("Lane Detoxing Weakness");

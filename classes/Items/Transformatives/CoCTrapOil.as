@@ -218,7 +218,7 @@ package classes.Items.Transformatives
 					if (pc.femininity < 70 && pc.femininity >= 60) {
 						output("\n\nYou laugh as you feel your features once again soften, before stopping abruptly.  Your laugh sounded more like a girly giggle than anything else.  Feeling slightly more sober, you touch the soft flesh of your face prospectively.  The trap oil has changed you profoundly, making your innate maleness... difficult to discern, to say the least.  You suspect you could make yourself look even more like a girl now if you wanted to.");
 						if (!pc.hasPerk("Androgyny")) {
-							pc.createPerk("Androgyny", 0, 0, 0, 0, "No gender limits on facial masculinity or femininity.");
+							pc.createPerk("Androgyny", 0, 0, 0, 0, "Your face is always androgynous.");
 							output("\n\n(<b>Perk Gained: Androgyny</b>)");
 						}
 						pc.femininity += 10;
@@ -249,7 +249,7 @@ package classes.Items.Transformatives
 						//Masculinity Increase Final (max masculinity allowed increased by +10):
 						output("\n\nYou laugh as you feel your features once again soften, before stopping abruptly.  Your laugh sounded more like a boyish crow than anything else.  Feeling slightly more sober, you touch the defined lines of your face prospectively.  The trap oil has changed you profoundly, making your innate femaleness... difficult to discern, to say the least.  You suspect you could make yourself look even more like a boy now if you wanted to.");
 						if (!pc.hasPerk("Androgyny")) {
-							pc.createPerk("Androgyny", 0, 0, 0, 0, "No gender limits on facial masculinity or femininity.");
+							pc.createPerk("Androgyny", 0, 0, 0, 0, "Your face is always androgynous.");
 							output("\n\n(<b>Perk Gained: Androgyny</b>)");
 						}
 					}

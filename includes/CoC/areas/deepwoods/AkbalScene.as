@@ -611,7 +611,7 @@ private function loseToAckballllllz():void
 		output("\"<i>Defiance repaid,</i>\" is all you hear from the chorus of voices in your head as Akbal displays his massive length to you. Your eyes widen in horror as you count a dozen wicked looking barbs on the head of his overtly thick, gargantuan cock.\n\n");
 
 		//(Small/Virgin Pucker)
-		if (pc.ass.capacity() < enemy.cockVolume(0) * 0.66)
+		if (pc.analCapacity() < enemy.cockVolume(0) * 0.66)
 		{
 			output("Akbal begins to push into you, the barbs on his massive head causing you to howl as your [pc.asshole] is forcibly stretched. His jaguar claws grab your sides as he uses your body as leverage to force his demonic erection into you.\n\n");
 
@@ -620,7 +620,7 @@ private function loseToAckballllllz():void
 			output("After hours of Akbal's long cat dick being slowly forced into your [pc.asshole] your body gives out and you become too exhausted from the strain to even lift your arms. With a triumphant growl Akbal thrusts forward, his cock head spikes burying themselves into you but, without your resistance, they seem to vibrate inside you like twelve little beads massaging your innards. The sudden change makes you croon as you paw the ground with your hooves, suddenly desperate for more.", false);
 		}
 		//(Medium Pucker)
-		else if (pc.ass.capacity() < enemy.cockVolume(0))
+		else if (pc.analCapacity() < enemy.cockVolume(0))
 		{
 			output("Akbal begins to push into you, the barbs on his massive cock head causing you to wince as you are forcibly stretched. Without warning he forces the entirety of his massive length into you with a snarl. The initial incursion makes you grind your teeth as that spiked rod invades your [pc.asshole].  You widen your stance in an attempt to lessen the sudden slicing pressure created by the barbed cock head. The moment you do the barbs start to vibrate, beginning to feel more like humming sex beads than the wicked looking battering ram you know is inside you. You can't suppress the sudden sounds coming from your throat and exclaiming your ecstasy to your rapist.");
 		}
@@ -656,12 +656,12 @@ private function loseToAckballllllz():void
 	output("You fall to your knees and begin to feverishly masturbate.  Akbal rises onto his two hind legs, his body shifting into a more humanoid form as he stands.  His long cock swings ominously between his legs as he walks towards you.  The first thing he does is pull his massive 15-inch cock to your lips, slapping the shaft against your chin.\n\n");
 	output("Like a whore in heat, you open your mouth and lewdly lick the jaguar demon's cock head, feeling odd barbs rub against your tongue.  Your mouth opens wide, but can't even get past the head before the sheer girth of Akbal's massive sex organ halts its advance.  Akbal is content to let you orally fumble with the head for only a few moments before he pushes down onto your back. His claws tickle your thighs as he forces your [pc.legs] up over your head, bringing your [pc.asshole] into plain view.\n\n");
 	output("\"<i>Defiance repaid,</i>\" is all you hear from the chorus of voices in your head as Akbal displays his massive length to you.  Your eyes widen in horror, counting a dozen wicked-looking barbs on the head of his overtly thick and over-sized cock.\n\n");
-	if (pc.ass.capacity() < enemy.cockVolume(0) * 0.66) //[Small/virgin pucker]
+	if (pc.analCapacity() < enemy.cockVolume(0) * 0.66) //[Small/virgin pucker]
 	{
 		output("Akbal begins to push into you, the barbs on his massive cockhead causing you to howl as your [pc.asshole] is forcibly stretched.  His jaguar claws grab your shoulders, and he uses your body as leverage to force his demonic erection into you.\n\n");
 		output("The strain from Akbal's shoving makes you feel like you're going to pass out, yet the pain from his spiked sex organ keeps you conscious. After a while, you realize he's not even fucking you with his entire length; his swollen member is slowly forcing less than half its massive length into your [pc.asshole].\n\n");
 		output("After what seems like hours of Akbal's long cat dick being slowly forced into your [pc.asshole], your body finally gives out. You've become so exhausted from the strain that you can barely even lift your arms.  With a triumphant growl Akbal thrusts forward, his cockhead spikes burying themselves into you.  Without your resistance, they seem to vibrate inside you like twelve little beads, massaging your innards.  The sudden change makes you croon as you spread your [pc.butts], suddenly desperate for more.");
-	} else if (pc.ass.capacity() < enemy.cockVolume(0)) //[Medium pucker]
+	} else if (pc.analCapacity() < enemy.cockVolume(0)) //[Medium pucker]
 	{
 		output("Akbal begins to push into you, the barbs on his massive cockhead causing you to wince as are forcibly stretched.  Without warning, he forces the entirety of his massive length into you in with a snarl.  You almost pass out just from the initial incursion, but as he saws his length in and out, your body reacts of its own accord. You spread your [pc.butts] in an attempt to lessen the sudden slicing pressure created by the barbed cock head.  The moment you stop resisting, the barbs start to vibrate; they start to feel more like humming sex beads than the wicked-looking barbs you know are inside you.  You can't suppress the shuddering and groaning coming from your body as you are hit with a tidal wave of ecstasy.");
 	}
@@ -881,14 +881,14 @@ private function akbalSubmit():void
 		output("A sudden warmth heats your innards, making you shiver in ecstasy.  Akbal takes a moment to uncoil your bottom half from around his chest before he rises to mount you. A single paw shoves your lifted chest and face back into the dirt, causing cold earth to cling to your body as Akbal gets into position above you.\n\n");
 
 		//(Small/Virgin Pucker)
-		if (pc.ass.capacity() < akbal.cockVolume(0) * 0.66)
+		if (pc.analCapacity() < akbal.cockVolume(0) * 0.66)
 		{
 			output("You feel him poking around your [pc.asshole] and quickly realize his member is not only insanely large but its head is covered in a dozen tiny barbs. You grit your teeth, expecting pain and yet, thanks to the weird saliva he slathered your innards with, there is none as his gargantuan member forcibly widens your [pc.asshole].\n\n");
 
 			output("The feeling of being stretched by Akbal's long, slimy member makes you shudder, the weird spit even heats up, creating a steamy warmth inside you as Akbal's equally hot member stretches you out and makes your body spasm slightly. After a few slow, shallow strokes you begin to feel the barbs vibrate. This vibrating drives you insane, and the wicked looking barbs feel more like humming sex beads than punishing spikes. When Akbal picks up the pace you grit your teeth as you are stretched beyond your natural limits.");
 		}
 		//(Medium Pucker)
-		if (pc.ass.capacity() < akbal.cockVolume(0))
+		if (pc.analCapacity() < akbal.cockVolume(0))
 		{
 			output("You feel him poking around your [pc.asshole] and quickly realize his member is not only quite large but covered in almost a dozen tiny barbs. Yet, thanks to the weird spit he slathered your innards with, there is none as his gargantuan member forcibly widens your [pc.asshole].\n\n");
 
@@ -961,13 +961,13 @@ private function akbalSubmit():void
 
 		//(Small/Virgin Pucker)
 		//[Small/virgin pucker]
-		if (pc.ass.capacity() < akbal.cockVolume(0) * 0.66)
+		if (pc.analCapacity() < akbal.cockVolume(0) * 0.66)
 		{
 			output("You feel him poking around your [pc.asshole] and quickly realize his member is not only insanely large but its head is covered in a dozen tiny barbs.  You grit your teeth, expecting pain and yet, thanks to the weird saliva he slathered your innards with, there is none as his gargantuan member forcibly widens your [pc.asshole].\n\n");
 			output("The feeling of being stretched by Akbal's long, slimy member makes you shudder.  The weird spit even heats up which creates a steamy warmth inside you as Akbal's hot member makes your body spasm slightly.  After a few slow, shallow strokes you begin to feel the barbs vibrate.  This vibrating sends your body into convulsions, the wicked-looking barbs feel more like humming sex beads than punishing spikes.  When Akbal picks up the pace you grit your teeth as you are stretched beyond your natural limits.");
 		}
 		//(Medium Pucker)
-		if (pc.ass.capacity() < akbal.cockVolume(0))
+		if (pc.analCapacity() < akbal.cockVolume(0))
 		{
 			output("You feel him poking around your [pc.asshole] and quickly realize his member is not only quite large but covered in almost a dozen tiny barbs.  Yet,  thanks to the weird spit he slathered your innards with, there is none as his gargantuan member forcibly widens your [pc.asshole].\n\n");
 			output("Akbal's titanic member stretches your [pc.asshole] and makes you groan and claw at the tree he has you pressed against, reveling in the slick heat and fullness of your bowels.  His saliva heats up, creating a steamy yet pleasurable warmth inside your body.  As he begins to pump his huge sex organ in and out of you the barbs covering his head begin to vibrate and hit your body with tidal waves of unbearable pleasure, feeling more like vibrating sex beads than punishing spikes.  You lean back into his thrusts as his trunk begins slamming into your [pc.ass] in rhythmic claps that echo throughout the forest.");
@@ -1034,7 +1034,7 @@ private function akbalSubmit():void
 
 	output("You feel him poking around your [pc.asshole], learning quickly that not only is his member insanely large, but its head is covered in dozens of tiny barbs.  ");
 	//[Small/virgin pucker]
-	if (pc.ass.capacity() < akbal.cockVolume(0) * 0.66)
+	if (pc.analCapacity() < akbal.cockVolume(0) * 0.66)
 	{
 		output("You grit your teeth, expecting pain. However, thanks to the weird saliva he slathered your innards with, you feel none as his gargantuan member forcibly widens your [pc.asshole].");
 		pc.buttChange(akbal.cockVolume(0), true);
@@ -1043,7 +1043,7 @@ private function akbalSubmit():void
 		output("Being stretched by Akbal's long and slick member makes you shudder. The weird spit even begins to heat up, creating a steamy warmth inside you as Akbal's equally hot member stretches you out, your body spasming slightly in response.  After a few slow and shallow strokes, you can feel the barbs begin to vibrate.  The sudden motion sends your body into convulsions, the wicked-looking barbs acting more like humming sex beads than barbs.  When Akbal picks up the pace, you can only grit your teeth harder as you're stretched more and more beyond your natural limits.\n\n");
 	}
 	//[Medium Pucker]
-	if (pc.ass.capacity() < akbal.cockVolume(0))
+	if (pc.analCapacity() < akbal.cockVolume(0))
 	{
 		output("Thanks to the weird saliva he slathered your innards with, you feel no pain as his gargantuan member forcibly widens your [pc.asshole].");
 		pc.buttChange(akbal.cockVolume(0), true);
@@ -1452,10 +1452,10 @@ private function topAkbitchFromBottomDuex():void
 	//output(images.showImage("akbal-deepwoods-male-akbalonback2"));
 	//-page turn-
 	//{tight/virgin vag/ass}
-	if ((!pc.hasVagina() && pc.ass.capacity() < akbal.cockVolume(0) * 0.66) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0) * 0.66))
+	if ((!pc.hasVagina() && pc.analCapacity() < akbal.cockVolume(0) * 0.66) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0) * 0.66))
 		output("As you begin to impale yourself on the demonic pole, you gasp as your [pc.vagOrAss] is spread wide by Akbal’s rather large demon-cat dick.  The remnants of his spit on your [pc.vagOrAss] reacts to the mystic lube and any pain you would have felt is gone, replaced by mind numbing bliss.  The demon begins to thrust up into your [pc.vagOrAss], which you cannot help but allow.  The sensation is beyond ecstasy - it is pure euphoria, exploding like a firecracker and blasting through you like a wave.  All too soon the pleasure peaks.");
 	//{medium vag/ass}
-	else if ((!pc.hasVagina() && pc.ass.capacity() < akbal.cockVolume(0)) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0)))
+	else if ((!pc.hasVagina() && pc.analCapacity() < akbal.cockVolume(0)) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0)))
 		output("As you impale yourself on the demon’s quivering dick, a moan finds itself coming out of your mouth.  The moment the remnants of saliva in your [pc.vagOrAss] touch the lube coating his barbed cock, you see stars.  Lost in the moment, you cannot believe anything can feel this good.  You ride up and down the entire length of the demon’s damned sex organ.  It’s almost as if you’re bouncing up and down on a rod of pure bliss, like your entire being is being impaled by pure joy.  All too soon the pleasure peaks.");
 	//{gapped pussy}
 	else
@@ -1589,10 +1589,10 @@ private function akbitchHighStrengthVariant():void
 		output("\n\nWithout warning, you shove the little bitch onto his back and press his legs to his chest.  His heavy sack is drawn up tight, his self-lubing cock still pumping a river of lubricant and pre.  Using your muscles, you trap him in this position with your [pc.legs] before reaching behind you to grab his barbed cock.  The barbed appendage is rubbery and wet with slick fluid.  Touching it causes Akbal to try to thrust upward, but it's damn near impossible against someone as strong as you.  Aiming his slick, ribbed demon-cat dick into your [pc.vagOrAss], you begin to ease down onto it.");
 
 		//{tight/virgin vagorass}
-		if ((!pc.hasVagina() && pc.ass.capacity() < akbal.cockVolume(0) * 0.66) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0) * 0.66))
+		if ((!pc.hasVagina() && pc.analCapacity() < akbal.cockVolume(0) * 0.66) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0) * 0.66))
 			output("\n\nAs soon as your [pc.vagOrAss] begins to envelop the thick head of Akbal’s giant, barbed dick, you let out a loud moan.  As the remnants of the spit slathered across your [pc.vagOrAss] mixes with the lube on Akbal’s swollen sex organ, your body flinches from the tidal wave of pleasure.  Even those gorgeous barbs feel as though they’re soft, vibrating beads, wiggling as you envelop the demonic cock.  Thanks to the mixture, you are able to take his full length and revel in the stretched feeling having all that man meat gives you.  Akbal attempts to move, to thrust up into your [pc.vagOrAss], but you hold him here, asserting your dominance as you easily keep the bitch boy pinned.");
 		//{medium vagorAss}
-		if ((!pc.hasVagina() && pc.ass.capacity() < akbal.cockVolume(0)) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0)))
+		if ((!pc.hasVagina() && pc.analCapacity() < akbal.cockVolume(0)) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0)))
 			output("\n\nAs soon as your [pc.vagOrAss] begins to envelop the thick head of Akbal’s giant, barbed dick, you let out a squeal of delight. As your saliva drenched [pc.vagOrAss] comes into contact with the lube soaking his demon dick, you almost pass out from the immense pleasure the mixture causes.  Those wonderful barbs are even vibrating against your tender flesh.  The girthy prick inside you is pure heat and vibrating pleasure that has your body tingling from your [pc.vagOrAss] to your [feet].  Akbal attempts to move, to thrust up into your [pc.vagOrAss] but you hold him here, asserting your dominance as you easily keep the bitch boy pinned.");
 		//{Gaped vagorAss}
 		else
@@ -1682,12 +1682,12 @@ private function akbalBitchSpeed():void
 		output(" with his long tongue, you begin to shiver.  Then you remember what it is you wanted to do.  Before he makes you cum, you shove his face away from you, pushing him onto his back with his cock once again standing tall.  Unable to contain yourself and draw this out any longer, you straddle the more than willing Jaguar demon and lower yourself onto his twitching erection without a second thought.");
 
 		//{tight/virgin vagorass}
-		if ((!pc.hasVagina() && pc.ass.capacity() < akbal.cockVolume(0) * 0.66) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0) * 0.66))
+		if ((!pc.hasVagina() && pc.analCapacity() < akbal.cockVolume(0) * 0.66) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0) * 0.66))
 		{
 			output("\n\nWhen the mushroom-shaped head of Akbal’s monstrous dick touches your [pc.vagOrAss], a lightning bolt of ecstasy shoots through your body.  The saliva coating your [pc.vagOrAss] mixes with the fluid coating the demon’s dick and makes you call out from the very depths of your soul.  As if the heated, almost drug-like pleasure wasn’t enough, your [pc.vagOrAss] is being stretched, somehow taking the full length of Akbal’s monster dick without a problem.  Once you’ve fully enveloped him, the barbs begn to vibrate, pulsing like sex beads that send you into overdrive.\n\nYou begin to bounce.  Your body cries out for more and you answer the call by bouncing up and down the entire length of Akbal’s wonderfully rigid dick as fast as you can.  Each time you crash your [pc.vagOrAss] into his, there is a hard clap, and soon, you’re going so fast it sounds like excited applause.  Beneath you, Akbal shakes as you ride him faster and harder than he’s ever been ridden before.  The tightness of your [pc.vagOrAss] seems to be rare treat to such a well-endowed demon.");
 		}
 		//{medium vagorass}
-		if ((!pc.hasVagina() && pc.ass.capacity() < akbal.cockVolume(0)) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0)))
+		if ((!pc.hasVagina() && pc.analCapacity() < akbal.cockVolume(0)) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0)))
 		{
 			output("\n\nWhen the mushroom shaped head of Akbal’s barbed dick touches your [pc.vagOrAss], you feel the invasion with your entire body.  The saliva coating your spit-slick vagina reacts with the fluids coating Akbal’s dick, causing a chemically induced euphoria.  As if that wasn’t enough the barbs covering the shaft begin to vibrate, tingling your [pc.vagOrAss] and driving you wild.\n\nYou plant your feet and begin riding Akbal for all you are worth.  With all your speed and strength, you smash your body into his, causing an unsteady, almost unending rhythm.  Beneath you Akbal shivers as you ride him so hard and fast that he can’t keep up. The demon’s toes curl, his eyes are even rolled into the back of his head.");
 		}
@@ -1847,12 +1847,12 @@ private function akbitchToughness():void
 		output("\n\nYou shove the demon away from you, sliding down his body with a sexy little grin.  You waste no time reaching for his barbed dick and aiming it at your [pc.vagOrAss] before squatting down until his rigid length is poised at your entrance.");
 
 		//{tight/virgin Vag/ass}
-		if ((!pc.hasVagina() && pc.ass.capacity() < akbal.cockVolume(0) * 0.66) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0) * 0.66))
+		if ((!pc.hasVagina() && pc.analCapacity() < akbal.cockVolume(0) * 0.66) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0) * 0.66))
 		{
 			output("\n\nAs your [pc.vagOrAss] touches the mushroom-shaped head of Akbal’s barbed dick, your body is hit with an explosion of pleasure.  The sensation is pure ecstasy, blasting through your body from your [pc.vagOrAss].  Your [pc.vagOrAss] begins to stretch, the mystic mixture of Akbal’s spit and the lube soaking his erect dick allowing you to take the gargantuan barbed dick without a problem.  The feeling of your flesh widening to encompass Akbal’s dick is both alien and wonderful.  Once you can take the entire length you begin bouncing up and down his euphoria inducing dick with a huge grin on your [pc.face].");
 		}
 		//{medium vag/ass}
-		if ((!pc.hasVagina() && pc.ass.capacity() < akbal.cockVolume(0)) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0)))
+		if ((!pc.hasVagina() && pc.analCapacity() < akbal.cockVolume(0)) || (pc.hasVagina() && pc.vaginalCapacity() < akbal.cockVolume(0)))
 		{
 			output("\n\nAs your [pc.vagOrAss] touches the mushroom-shaped head of Akbal’s barbed dick, your body is hit with an explosion of ecstasy.  The feeling of Akbal’s giant sex organ just sitting inside your [pc.vagOrAss] sends waves of pure pleasure through your body.  Throwing your head back you ride the demon for all you are worth.");
 		}

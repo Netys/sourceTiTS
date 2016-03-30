@@ -366,7 +366,7 @@ public function ZetazCaveMalesZetazOver():void {
 	output(" you as you're thrown atop one of the tables and rolled onto your side.   You grunt as leather straps are produced and laid over your form to restrain you.  In the span of a minute you're completely immobilized from the neck down, and your " + pc.legs() + " are kept spread to allow easy access to [pc.multiCocks] and [pc.multiCocks].\n\n");
 	
 	output("Zetaz leaps atop the table in a single bound, the barely concealed bulge in his loincloth dangling freely underneath.  You begin to struggle, fearful of the cruel imp's intentions and ");
-	if(pc.ass.capacity() < enemy.cockVolume(0)) output("worried he'll try to force the mammoth between his thighs into your backdoor");
+	if(pc.analCapacity() < enemy.cockVolume(0)) output("worried he'll try to force the mammoth between his thighs into your backdoor");
 	else output("worried he'll take advantage of your well-stretched backdoor");
 	output(", but your feverish efforts are in vain – the restraints are too strong!  The imps start to laugh at your predicament, and Zetaz pushes the humiliation a step further by stepping squarely on your groin, painfully squeezing your [pc.cock] with his heel.  He throws his arms up in the air and shouts, \"<i>I am your champion!  I have brought the scourge of our kind to his knees, and ground him under my heel!</i>\"\n\n");
 	
