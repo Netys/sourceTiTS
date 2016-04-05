@@ -576,20 +576,9 @@ public function sleep(outputs:Boolean = true):void {
 	sleepHeal();
 	
 	processTime(minutes);
+	dreamChances();
 	if(outputs)
 	{
-		if (pc.hasStatusEffect("Queen Pregnancy State"))
-		{
-			if (pc.statusEffectv1("Queen Pregnancy State") > 0 && flags["Queen Message Supression"] == undefined && (flags["Queen Dream Last Day"] < days || flags["Queen Dream Last Day"] == undefined))
-			{
-				queenDreamEvent();
-				flags["Queen Message Supression"] = 1;
-				flags["Queen Dream Last Day"] = days;
-				clearMenu();
-				addButton(0, "Next", mainGameMenu);
-				return;
-			}
-		}
 		mimbraneSleepEvents();
 		if(currentLocation == "SHIP INTERIOR") grayGooSpessSkype();
 	}
@@ -1122,6 +1111,9 @@ public function variableRoomUpdateCheck():void
 		rooms["DEEP JUNGLE 2"].addFlag(GLOBAL.PLANT_BULB);
 	}
 	else rooms["DEEP JUNGLE 2"].removeFlag(GLOBAL.PLANT_BULB);
+	// Visited Thare Plantation
+	if(flags["THARE_MANOR_ENTERED"] != undefined) rooms["THARE MANOR"].addFlag(GLOBAL.OBJECTIVE);
+	else rooms["THARE MANOR"].removeFlag(GLOBAL.OBJECTIVE);
 	//Mhenga Probe
 	if(flags["DIDNT_ENGAGE_RIVAL_ON_MHENGA"] == undefined && flags["FOUGHT_DANE_ON_MHENGA"] == undefined)
 	{

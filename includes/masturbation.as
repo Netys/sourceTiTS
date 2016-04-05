@@ -106,8 +106,7 @@ public function availableFaps(roundTwo:Boolean = false):/*FapCommandContainer*/A
 		faps.push(fap);
 	}
 	
-	if (hasFeedableMimbranes() && InCollection(currentLocation, "SHIP INTERIOR", "COC_CAMP"))
-	{
+	if (hasFeedableMimbranes() && mimbranePrivateLocation())	{
 		if (pc.hasCock())
 		{
 			fap = new FapCommandContainer();
