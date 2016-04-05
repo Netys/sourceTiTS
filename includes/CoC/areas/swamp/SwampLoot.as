@@ -121,7 +121,7 @@ public function retributionArmorIsCoolShit():void {
 	flags["COC.GOTTEN_INQUISITOR_ARMOR"] = 1;
 	processTime(30 + rand(10));
 	itemScreen = mainGameMenu;
-	lootScreen = mainGameMenu;
+	lootScreen = returnInquisitorArmor;
 	useItemFunction = mainGameMenu;
 	itemCollect([new CoCInquisitorsRobes()]);
 }
@@ -140,7 +140,24 @@ public function carnalityArmorIsCoolShitToo():void {
 	flags["COC.GOTTEN_INQUISITOR_ARMOR"] = 1;
 	processTime(30 + rand(10));
 	itemScreen = mainGameMenu;
-	lootScreen = mainGameMenu;
+	lootScreen = returnInquisitorArmor;
 	useItemFunction = mainGameMenu;
 	itemCollect([new CoCInquisitorsCorset()]);
+}
+
+public function returnInquisitorArmor():void
+{
+	if(pc.armor is CoCInquisitorsRobes || pc.hasItemByType(CoCInquisitorsRobes) || pc.armor is CoCInquisitorsCorset || pc.hasItemByType(CoCInquisitorsCorset))
+	{
+		mainGameMenu();
+		return;
+	}
+	
+	clearOutput();
+	output("After some thoughts, you place it back where it belongs.  At the entrance, you replace the moss, doing your best to conceal the portal in the event you wish to return, or at least to keep any items of power inside from the hands of hostile swamp denizens.  You may as well not have spent the effort, for as you're walking away, you hear the stones grinding and shifting behind you.  Sure enough, an inspection affirms that the door has sealed itself again.\n\n");
+	
+	flags["COC.GOTTEN_INQUISITOR_ARMOR"] = undefined;
+	processTime(30 + rand(10));
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }

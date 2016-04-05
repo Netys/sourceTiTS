@@ -69,6 +69,7 @@ public function statisticsScreen(showID:String = "All"):void
 		if(pc.isAss()) output2(", Hard");
 		if(pc.isBimbo()) output2(", Ditz");
 		if(pc.isBro()) output2(", Brute");
+		if(kGAMECLASS.inMareth()) output2("\n<b>* Corruption: </b>" + Math.round(pc.cor()));
 		output2("\n<b>* Alcohol Tolerance: </b>" + pc.tolerance() + "/100");
 		output2("\n<b>* Exhibitionism: </b>" + formatFloat(pc.exhibitionism(), 1) + "/100");
 		output2("\n<b>* Carry Threshold: </b>" + prettifyWeight(pc.bodyStrength()));

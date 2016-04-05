@@ -391,17 +391,17 @@ public function fuckDatLionPussah():void {
 	
 	output("\n\nYou can't hold out much further either, and give one last push forward, embedding your cock as far as it will go");
 	if(pc.hasKnot(pc.biggestCockIndex())) output(", your knot slipping into place with a moist <b>pop</b>, ensuring you'll be locked together for the foreseeable future");
-	output(".  Jet after jet of cum erupts from your [pc.cock " + pc.biggestCockIndex() + "], painting the sphinx's inner walls white.");
+	output(".  Jet after jet of cum erupts from your [pc.cock " + pc.biggestCockIndex() + "], painting the sphinx's inner walls [pc.cumColor].");
 	
 	//(low-average cum)
 	if(pc.cumQ() < 250) output("\n\nSome of your spunk dribbles out the side and down your shaft before dripping into the hot desert sand below.");
 	//(average-high cum)
-	else if(pc.cumQ() < 750) output("\n\nA spurt of cum escapes Sanura's folds, splattering out onto your legs and the hot desert sand.");
+	else if(pc.cumQ() < 750) output("\n\nA spurt of cum escapes Sanura's folds, splattering out onto your [pc.legs] and the hot desert sand.");
 	//(high-really high cum)
 	else if(pc.cumQ() < 3000) output("\n\nSanura's belly visibly enlarges with all the love spunk you're pumping into her, and several spurts of the stuff escape her folds, coating your [pc.legs] and the sand beneath you.");
 	//(really high-woah there cum)
-	else if(pc.cumQ() < 10000) output("\n\nSanura's belly distends, looking suddenly pregnant with an enormous cum-baby.  A veritable flood of spooge surges out of her abused cunt, absolutely coating your lower body and almost all the sand within several feet in the hot white fluid.");
-	else output("\n\nSanura's belly expands outwards, as though she were suddenly nine months pregnant, but it doesn't stop there.  Her belly continues to inflate until it's resting on your stomach... and then it lifts her body off several inches of yours.  To top it all off, a milky white flood of biblical proportions flows out of her abused hole, coating your entire body, as well as most of the desert within ten feet, in semeny goodness.");
+	else if(pc.cumQ() < 10000) output("\n\nSanura's belly distends, looking suddenly pregnant with an enormous cum-baby.  A veritable flood of spooge surges out of her abused cunt, absolutely coating your lower body and almost all the sand within several feet in the hot [pc.cumColor] fluid.");
+	else output("\n\nSanura's belly expands outwards, as though she were suddenly nine months pregnant, but it doesn't stop there.  Her belly continues to inflate until it's resting on your stomach... and then it lifts her body off several inches of yours.  To top it all off, a [pc.cumColor] flood of biblical proportions flows out of her abused hole, coating your entire body, as well as most of the desert within ten feet, in semeny goodness.");
 	
 	output("\n\nFinally you collapse, letting all your muscles relax.  Sanura isn't far behind, falling to the side of you, ");
 	if(pc.hasKnot(pc.biggestCockIndex())) output("which proves somewhat uncomfortable, given your knot is still lodged firmly within her, ");
@@ -410,8 +410,8 @@ public function fuckDatLionPussah():void {
 	output("but you finally gather the strength to haul yourself up onto your [pc.feet].");
 	
 	output("\n\n\"<i>Well, that's certainly not what I had in mind,</i>\" Sanura says, recomposing herself after that vicious fucking.  \"<i>But I can't say I can complain.</i>\"  Neither can you, you smirk to yourself.");
-	pc.orgasm();
 	processTime(25 + rand(10));
+	pc.orgasm();
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 }

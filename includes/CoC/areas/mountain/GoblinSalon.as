@@ -833,15 +833,18 @@ private function fuckLynnette():void {
 	}
 	IncrementFlag("COC.LYNNETTE_FUCK_COUNTER");
 	pc.orgasm();
-	flags["COC.LYNNETTE_CARRYING_COUNT"] = 3 + rand(3);
-	if(pc.cumQ() >= 1000) flags["COC.LYNNETTE_CARRYING_COUNT"] += 1 + rand(3);
-	if(pc.cumQ() >= 2000) flags["COC.LYNNETTE_CARRYING_COUNT"] += 1 + rand(3);
-	if(pc.cumQ() >= 3000) flags["COC.LYNNETTE_CARRYING_COUNT"] += 2 + rand(3);
-	if(pc.cumQ() >= 4000) flags["COC.LYNNETTE_CARRYING_COUNT"] += 2 + rand(3);
-	if(pc.cumQ() >= 6000) flags["COC.LYNNETTE_CARRYING_COUNT"] += 2 + rand(3);
-	if(pc.cumQ() >= 10000) flags["COC.LYNNETTE_CARRYING_COUNT"] += 2 + rand(3);
 	
-	flags["COC.LYNNETTE_PREGNANCY_CYCLE"] = 0;
+	if (pc.virility() > 0) {
+		flags["COC.LYNNETTE_CARRYING_COUNT"] = 3 + rand(3);
+		if(pc.cumQ() >= 1000) flags["COC.LYNNETTE_CARRYING_COUNT"] += 1 + rand(3);
+		if(pc.cumQ() >= 2000) flags["COC.LYNNETTE_CARRYING_COUNT"] += 1 + rand(3);
+		if(pc.cumQ() >= 3000) flags["COC.LYNNETTE_CARRYING_COUNT"] += 2 + rand(3);
+		if(pc.cumQ() >= 4000) flags["COC.LYNNETTE_CARRYING_COUNT"] += 2 + rand(3);
+		if(pc.cumQ() >= 6000) flags["COC.LYNNETTE_CARRYING_COUNT"] += 2 + rand(3);
+		if(pc.cumQ() >= 10000) flags["COC.LYNNETTE_CARRYING_COUNT"] += 2 + rand(3);
+		flags["COC.LYNNETTE_PREGNANCY_CYCLE"] = 0;
+	}
+	
 	salonPurchaseMenu();
 }
 

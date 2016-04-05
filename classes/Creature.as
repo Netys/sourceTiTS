@@ -3067,6 +3067,10 @@
 
 			if (hasStatusEffect("Tripped")) currPhys -= 4;
 			if (hasStatusEffect("Might")) currPhys += statusEffectv1("Might");
+			if (hasPerk("Implant: Iron Body")) {
+				currPhys += perkv3("Implant: Iron Body");
+				currPhys += level * 5 * perkv4("Implant: Iron Body");
+			}
 
 			if (currPhys > physiqueMax()) 
 			{
@@ -3107,6 +3111,10 @@
 			if (hasStatusEffect("Staggered")) currReflexes *= 0.8;
 			if (hasStatusEffect("Watered Down")) currReflexes *= 0.9;
 			if (hasStatusEffect("Pitch Black")) currReflexes *= 0.66;
+			if (hasPerk("Implant: Wired Reflexes")) {
+				currReflexes += perkv3("Implant: Wired Reflexes");
+				currReflexes += level * 5 * perkv4("Implant: Wired Reflexes");
+			}
 
 			if (currReflexes > reflexesMax())
 			{
@@ -3141,6 +3149,10 @@
 			
 			if (hasStatusEffect("Staggered")) currAim *= 0.8;
 			if (hasStatusEffect("Pitch Black")) currAim *= 0.66;
+			if (hasPerk("Implant: Tactical Analyzer")) {
+				currAim += perkv3("Implant: Tactical Analyzer");
+				currAim += level * 5 * perkv4("Implant: Tactical Analyzer");
+			}
 			
 			if (currAim > aimMax())
 			{
@@ -3193,6 +3205,10 @@
 			var currInt:int = intelligenceRaw + intelligenceMod;
 			
 			if (hasStatusEffect("Focus Pill")) currInt += 5;
+			if (hasPerk("Implant: Cognitive Coprocessor")) {
+				currInt += perkv3("Implant: Cognitive Coprocessor");
+				currInt += level * 5 * perkv4("Implant: Cognitive Coprocessor");
+			}
 
 			if (currInt > intelligenceMax())
 			{
@@ -3234,6 +3250,10 @@
 			if(hasPerk("Iron Will")) currWill += Math.floor(physique()/5);
 			//Roshan Blue gives 25% more xp and lowers willpower by 30% until next rest
 			if(hasStatusEffect("Roshan Blue")) currWill -= Math.floor(currWill*0.3);
+			if (hasPerk("Implant: Mental Shield")) {
+				currWill += perkv3("Implant: Mental Shield");
+				currWill += level * 5 * perkv4("Implant: Mental Shield");
+			}
 			
 			if (currWill > willpowerMax())
 			{
@@ -3301,6 +3321,10 @@
 			if (hasPerk("Venom Slut") && hasStatusEffect("Red Myr Venom")) bonus += 35;
 			if (hasPerk("Bimbo Body") || hasPerk("Bro Body") || hasPerk("Futa Form")) bonus += 20;
 			if (hasPerk("Omnibus' Gift")) bonus += 15;
+			if (hasPerk("Implant: Hormonal Controller")) {
+				bonus += perkv1("Implant: Hormonal Controller");
+				bonus += level * 5 * perkv2("Implant: Hormonal Controller");
+			}
 			if(hasStatusEffect("Perfect Simulant")) bonus += 50;
 			return (100 + bonus);
 		}
@@ -3335,28 +3359,48 @@
 			var bonuses:int = 0;
 			if (hasStatusEffect("Quivering Quasar")) bonuses += 5;
 			if (hasStatusEffect("Might")) bonuses += statusEffectv1("Might");
-			if(hasStatusEffect("Perfect Simulant")) bonuses += 3;
+			if (hasStatusEffect("Perfect Simulant")) bonuses += 3;
+			if (hasPerk("Implant: Iron Body")) {
+				bonuses += perkv1("Implant: Iron Body");
+				bonuses += level * 5 * perkv2("Implant: Iron Body");
+			}
 			return level * 5 + bonuses;
 		}
 		public function reflexesMax(): Number {
 			var bonuses:int = 0;
 			if(hasStatusEffect("Perfect Simulant")) bonuses += 3;
+			if (hasPerk("Implant: Wired Reflexes")) {
+				bonuses += perkv1("Implant: Wired Reflexes");
+				bonuses += level * 5 * perkv2("Implant: Wired Reflexes");
+			}
 			return level * 5 + bonuses;
 		}
 		public function aimMax(): Number {
 			var bonuses:int = 0;
-			if(hasStatusEffect("Perfect Simulant")) bonuses += 3;
+			if (hasStatusEffect("Perfect Simulant")) bonuses += 3;
+			if (hasPerk("Implant: Tactical Analyzer")) {
+				bonuses += perkv1("Implant: Tactical Analyzer");
+				bonuses += level * 5 * perkv2("Implant: Tactical Analyzer");
+			}
 			return level * 5 + bonuses;
 		}
 		public function intelligenceMax(): Number {
 			var bonuses:int = 0;
 			if(hasPerk("Cybernetic Synchronization")) bonuses += (perkv1("Cybernetic Synchronization") * cyborgScore());
 			if(hasStatusEffect("Perfect Simulant")) bonuses += 3;
+			if (hasPerk("Implant: Cognitive Coprocessor")) {
+				bonuses += perkv1("Implant: Cognitive Coprocessor");
+				bonuses += level * 5 * perkv2("Implant: Cognitive Coprocessor");
+			}
 			return level * 5 + bonuses;
 		}
 		public function willpowerMax(): Number {
 			var bonuses:int = 0;
 			if(hasStatusEffect("Perfect Simulant")) bonuses += 3;
+			if (hasPerk("Implant: Mental Shield")) {
+				bonuses += perkv1("Implant: Mental Shield");
+				bonuses += level * 5 * perkv2("Implant: Mental Shield");
+			}
 			return level * 5 + bonuses;
 		}
 		public function libidoMax(): Number {
@@ -11475,15 +11519,15 @@
 				descript += "pierced";
 			}
 			//Cocksocks!
-			else if (!multi && rand(5) == 0 && cocks[cockNum].sock != "") {
-				rando = rand(6);
-				if (rando == 0) descript += "sock-sheathed";
-				else if (rando == 1) descript += "garment-wrapped";
-				else if (rando == 2) descript += "smartly dressed";
-				else if (rando == 3) descript += "cloth-shrouded";
-				else if (rando == 4) descript += "fabric swaddled";
-				else descript += "covered";
-			}
+			//else if (!multi && rand(5) == 0 && cocks[cockNum].sock != "") {
+				//rando = rand(6);
+				//if (rando == 0) descript += "sock-sheathed";
+				//else if (rando == 1) descript += "garment-wrapped";
+				//else if (rando == 2) descript += "smartly dressed";
+				//else if (rando == 3) descript += "cloth-shrouded";
+				//else if (rando == 4) descript += "fabric swaddled";
+				//else descript += "covered";
+			//}
 			//Goo - 1/4 chance
 			else if (skinType == GLOBAL.SKIN_TYPE_GOO || cocks[cockNum].hasFlag(GLOBAL.FLAG_GOOEY) && rand(4) == 0) {
 				rando = rand(3);
@@ -11493,7 +11537,7 @@
 			}
 			//Knot - 1/5 chance. Only specifically called out if dick isn't dog, since knot shows up with the
 			//canine nouns.
-			else if(rand(5) == 0 && cocks[cockNum].hasFlag(GLOBAL.FLAG_KNOTTED) && cocks[cockNum].cType != GLOBAL.TYPE_CANINE && cocks[cockNum].cType != GLOBAL.TYPE_SNAKE && cocks[cockNum].cType != GLOBAL.TYPE_NAGA)
+			else if(rand(5) == 0 && cocks[cockNum].hasFlag(GLOBAL.FLAG_KNOTTED) && !InCollection(cocks[cockNum].cType, GLOBAL.TYPE_CANINE, GLOBAL.TYPE_VULPINE, GLOBAL.TYPE_SNAKE, GLOBAL.TYPE_NAGA))
 			{
 				if(rand(3) == 0) descript += "knotted";
 				else if(rand(2) == 0) descript += "bulbous";

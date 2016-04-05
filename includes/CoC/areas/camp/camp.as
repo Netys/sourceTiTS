@@ -90,7 +90,12 @@ public function campLoversButton():void {
 	if (loversCount() > 0) addButton(10, "Lovers", campFollowersMenu);
 	else addDisabledButton(10, "Lovers", "Lovers", "Not implemented");
 }
-public function campLoversMenu():void {
+public function campLoversMenu(descOnly:Boolean = false):void {
+	if (!descOnly) {
+		clearMenu();
+		clearOutput();
+	}
+	addButton(14,"Back",mainGameMenu);
 }
 
 public function slavesCount():int {
@@ -109,7 +114,12 @@ public function campSlavesButton():void {
 	if (slavesCount() > 0) addButton(12, "Slaves", campFollowersMenu);
 	else addDisabledButton(12, "Slaves", "Slaves", "Not implemented");
 }
-public function campSlavesMenu():void {
+public function campSlavesMenu(descOnly:Boolean = false):void {
+	if (!descOnly) {
+		clearMenu();
+		clearOutput();
+	}
+	addButton(14,"Back",mainGameMenu);
 }
 
 private function swimInStream():void {	

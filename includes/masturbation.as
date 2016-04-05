@@ -275,7 +275,8 @@ public function availableFaps(roundTwo:Boolean = false):/*FapCommandContainer*/A
 		fap.ttBody = "You bet that if you cuffed yourself naked somewhere public, there'd be at least one randy bull or cow to give you a reaming.";
 		fap.func = cuffSelfRouter;
 		faps.push(fap);
-	}	if(MailManager.isEntryViewed("lets_fap_unlock") && currentLocation == "SHIP INTERIOR")
+	}
+	if(MailManager.isEntryViewed("lets_fap_unlock") && currentLocation == "SHIP INTERIOR")
 	{
 		fap = new FapCommandContainer();
 		fap.text = "Smut";
@@ -284,6 +285,7 @@ public function availableFaps(roundTwo:Boolean = false):/*FapCommandContainer*/A
 		fap.func = smutFapMenu;
 		faps.push(fap);
 	}
+	getCoCFapOptions(faps, roundTwo);
 	return faps;
 }
 

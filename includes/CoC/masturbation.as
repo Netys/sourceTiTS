@@ -7,7 +7,7 @@ import classes.Engine.Utility.*;
 
 public function getCoCFapOptions(faps:Array, roundTwo:Boolean):void {
 	var fap:FapCommandContainer;
-	if((pc.hasPerk("Flexibility") || pc.race() == "kaithrit" || pc.isNaga() || pc.felineScore() > 3 && pc.race().indexOf("cat") != -1) && !pc.isTaur()) { // ugh... really want cat-taur variant of scene
+	if((pc.hasPerk("Flexibility") || pc.legType == GLOBAL.TYPE_FELINE && pc.hasTail(GLOBAL.TYPE_FELINE) && pc.earType == GLOBAL.TYPE_FELINE) && !pc.isTaur()) { // ugh... really want cat-taur variant of scene
 		if(pc.hasCock() && pc.smallestCockLength() <= 12) // scene does little sense for longer ones
 		{
 			fap = new FapCommandContainer();
@@ -80,6 +80,8 @@ public function getCoCFapOptions(faps:Array, roundTwo:Boolean):void {
 		faps.push(fap);
 	}
 	
+	trace(pc.hasKeyItem("Dildo"));
+	trace(pc.genitalLocation());
 	if(pc.hasKeyItem("Dildo") && pc.genitalLocation() <= 1)
 	{
 		fap = new FapCommandContainer();
@@ -126,7 +128,7 @@ public function meditate():void {
 	output("You find a comfortable and secluded place to sit down on and meditate.  As always, meditation brings a sense of peace and calm to you, but it eats up two hours of the day.");
 	
 	pc.cor( -0.3); // Cleanse some corruption.
-	pc.slowStatGain("l", -0.25); // Small libdo loss.
+	if(pc.libido() > 5) pc.slowStatGain("l", -0.25); // Small libdo loss.
 	pc.slowStatGain("w", 0.25); // Small willpower training.
 	pc.lust(pc.lustMin(), true); // Calm as much as possible.
 	pc.energy(pc.energyMax() / 4); // You are basically resting, so energy restoration is appropriate.

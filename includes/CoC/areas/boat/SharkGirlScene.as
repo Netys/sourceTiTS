@@ -130,7 +130,7 @@ internal function sharkWinChoices():void {
 
 //Male and Herm: 
 private function sharkgirlDickFuck():void {
-	flags["COC.SHARK_GIRLS_BAD_END_CD"]++;
+	if(pc.virility() > 0) flags["COC.SHARK_GIRLS_BAD_END_CD"]++;
 	clearOutput();
 	var x:Number = 0;
 	//spriteSelect(70);
@@ -345,7 +345,7 @@ internal function sharkLossRape():void {
 		output("The shark girl has no such qualms and rides you like a mechanical bull, hammering up and down your " + pc.cockDescript(0) + " with incredible speed. It certainly feels nice, but the rough nature of the ride also certainly hurts. You'll be walking funny for a while after this, that's for sure.\n\n", false);
 		
 		output("Eventually, her vagina clamps down on your cock and she cries out in orgasm. You grunt loudly and cum a few seconds after, pumping your seed into her womb. The shark girl leans over and plants a tiny kiss on your lips. \"<i>Good boy. I'll be sure to see you again</i>\". She gets up again and you watch her re-enter the water before you pass out.\n\n", false);
-		flags["COC.SHARK_GIRLS_BAD_END_CD"]++;
+		if (pc.virility() > 0) flags["COC.SHARK_GIRLS_BAD_END_CD"]++;
 		pc.orgasm();
 		//dynStats("sen", 1);
 		if (cor() < 30) pc.cor(1);

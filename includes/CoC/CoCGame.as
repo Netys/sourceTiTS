@@ -87,6 +87,7 @@ include "places/teladre/TelAdre.as";
 // FOLLOWERS
 //include "characters/AmilyScene.as";
 include "characters/AnemoneScene.as";
+include "characters/ArianScene.as";
 include "characters/Hel.as";
 include "characters/JojoScene.as";
 include "characters/KihaScene.as";
@@ -215,4 +216,8 @@ public function getKnownFireBreath():String {
 	if (pc.hasPerk("Hellfire")) return "hellfire";
 	if (pc.hasPerk("Dragonfire")) return "dragonfire";
 	return null;
+}
+
+public function hasSpells():Boolean {
+	return flags["COC.SPELL_AROUSE"] == 1 || flags["COC.SPELL_HEAL"] == 1 || flags["COC.SPELL_MIGHT"] == 1 || flags["COC.SPELL_CHARGE"] == 1 || flags["COC.SPELL_BLIND"] == 1 || flags["COC.SPELL_WHITEFIRE"] == 1 || pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Corrupted Nine-tails");
 }

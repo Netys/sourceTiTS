@@ -157,7 +157,7 @@ package classes.Characters.CoC
 			this.clitLength = .5;
 			this.pregnancyMultiplierRaw = 1;
 			
-			this.breastRows[0].breastRatingRaw = 5;
+			this.breastRows[0].breastRatingRaw = 0;
 			this.nippleColor = "cerulean";
 			this.milkMultiplier = 0;
 			this.milkType = GLOBAL.FLUID_TYPE_MILK;

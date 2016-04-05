@@ -273,8 +273,7 @@ public function eggChooseColorEncounter():void {
 	addButton(0, "Blue", eggChooseColor, 2);
 	addButton(1, "Pink", eggChooseColor, 3);
 	addButton(2, "White", eggChooseColor, 4);
-	addDisabledButton(3, "Black", "Black", "NOT IMPLEMENTED.");
-	//addButton(3, "Black", eggChooseColor, 5);
+	addButton(3, "Black", eggChooseColor, 5);
 	addButton(4, "Purple", eggChooseColor, 1);
 	addButton(5, "Brown", eggChooseColor, 0);
 	addButton(14, "Escape", eggChooseColorEscape);

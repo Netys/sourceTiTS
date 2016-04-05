@@ -136,7 +136,6 @@ package classes.Characters.CoC
 			this.cocks = new Array();
 			this.createCock(rand(13) + 24);
 			this.shiftCock(0, GLOBAL.TYPE_EQUINE);
-			this.cumMultiplierRaw = 1.5;
 			//Multiplicative value used for impregnation odds. 0 is infertile. Higher is better.
 			this.cumQualityRaw = 1;
 			this.cumType = GLOBAL.FLUID_TYPE_CUM;
@@ -144,6 +143,7 @@ package classes.Characters.CoC
 			this.ballFullness = 100;
 			//How many "normal" orgams worth of jizz your balls can hold.
 			this.ballEfficiency = 90;
+			this.cumMultiplierRaw = 15;
 			//Scales from 0 (never produce more) to infinity.
 			this.refractoryRate = 9999;
 			this.minutesSinceCum = 9000;
@@ -153,7 +153,7 @@ package classes.Characters.CoC
 			this.analVirgin = false;
 			this.vaginas = new Array();
 			//Goo is hyper friendly!
-			this.elasticity = 1;
+			this.elasticity = 2;
 			//Fertility is a % out of 100. 
 			//this.fertility = 0;
 			this.clitLength = .5;
@@ -167,7 +167,7 @@ package classes.Characters.CoC
 			this.milkRate = 1;
 			this.ass.wetnessRaw = 4;
 			this.ass.loosenessRaw = 6;
-			this.ass.bonusCapacity = 30;
+			this.ass.bonusCapacity = 20;
 			
 			this.createStatusEffect("Disarm Immune");
 			

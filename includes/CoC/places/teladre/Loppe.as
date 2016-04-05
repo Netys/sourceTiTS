@@ -1069,7 +1069,7 @@ private function loppeRidesYouSpunksInYourEye():void {
 	output("You keep your ");
 	if(pc.isDrider()) output("legs");
 	else output("arms");
-	output(" wrapped around your lover, welcoming what's approaching as her horse-prick throbs and her flared tip inflates.  With a rapturous howl the laquine's cumslit opens like a floodgate, spurting jet after jet of cum onto your [pc.chest], [face] and even the wall behind you; her own pillowy breasts and face are splashed with the force of her orgasm.  Her tight pussy contracts, milking your [pc.cock " + x + "] for all its worth");
+	output(" wrapped around your lover, welcoming what's approaching as her horse-prick throbs and her flared tip inflates.  With a rapturous howl the laquine's cumslit opens like a floodgate, spurting jet after jet of cum onto your [pc.chest], [pc.face] and even the wall behind you; her own pillowy breasts and face are splashed with the force of her orgasm.  Her tight pussy contracts, milking your [pc.cock " + x + "] for all its worth");
 	if(y >= 0) output(", while her anal ring constricts your " + pc.cockDescript(y) + " tightly, intent on holding you in place");
 	output(".");
 

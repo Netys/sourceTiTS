@@ -151,10 +151,10 @@ public function telAdreMenu():void {
 				//return;
 			//}
 	}
-	//if(flags["COC.ARIAN_PARK"] == undefined && rand(10) == 0 && flags["COC.NOT_HELPED_ARIAN_TODAY"] != days) {
-		//kGAMECLASS.arianScene.meetArian();
-		//return;
-	//}
+	if(!(flags["COC.ARIAN_PARK"] > 0) && rand(10) == 0 && flags["COC.NOT_HELPED_ARIAN_TODAY"] != days) {
+		meetArian();
+		return;
+	}
 	//Display Tel'adre menu options//
 	//Special Delivery☼☼☼
 	//Has a small-ish chance of playing when the PC enters Tel'Adre.
@@ -188,7 +188,7 @@ public function telAdreMenuShow():void { //Just displays the normal Tel'Adre men
 	addButton(3, "Gym", TelAdreGymDesc, undefined, "Gym", "Visit gym.");
 	addButton(4, "Homes", TelAdreHouses, undefined, "Homes", "If you have friends here, you can visit them.");
 	addDisabledButton(5, "Park", "Park", "You have nothing to do in park.");
-	//if (flags["COC.ARIAN_PARK"] > 0 && flags["COC.ARIAN_PARK"] < 4) addButton(5, "Park", arianSceneVisitThePark);
+	if (Flag("COC.ARIAN_PARK") > 0 && Flag("COC.ARIAN_PARK") < 4 && Flag("COC.ARIAN_PARK_VISITED_TODAY") != days) addButton(5, "Park", arianSceneVisitThePark, "Arian is likely there, why not visit him?");
 	addButton(6, "Pawn", oswaldPawn, undefined, "Gym", "You can always get rid of some junk here.");
 	addButton(7, "Tower", visitZeMagesTower, undefined, "Tower", "Mages tower is main landmark of Tel'Adre. Maybe you can find something useful there?");
 	addButton(14, "Leave", function():*{ processTime(15 + rand(5)); mainGameMenu(); }, undefined, "Leave", "Return to camp.");
@@ -230,7 +230,7 @@ public function TelAdreHouses():void {
 		//}
 	//}
 	clearMenu();
-	//if(flags["COC.ARIAN_PARK"] >= 4 && !arianFollower()) addButton(0,"Arian's", visitAriansHouse);
+	if (flags["COC.ARIAN_PARK"] >= 4 && !arianFollower()) addButton(0, "Arian's", visitAriansHouse);
 	//addButton(1,"Orphanage",orphanage);
 	//if (kGAMECLASS.urtaPregs.urtaKids() > 0 && pc.hasKeyItem("Spare Key to Urta's House") >= 0)
 		//addButton(2, "Urta's House", (katherine.isAt(Katherine.KLOC_URTAS_HOME) ? katherine.katherineAtUrtas : kGAMECLASS.urtaPregs.visitTheHouse));

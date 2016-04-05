@@ -177,6 +177,9 @@ package classes.GameData.Pregnancy.Handlers
 				case 4:
 					egg = large? new CoCWhiteEggLarge() : new CoCWhiteEgg();
 					break;
+				case 5:
+					egg = large? new CoCBlackEggLarge() : new CoCBlackEgg();
+					break;
 			}
 			return egg;
 		}

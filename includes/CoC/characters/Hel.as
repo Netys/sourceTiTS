@@ -42,6 +42,7 @@ public function fuckBuddyHel():Boolean {
 
 //Introduction – First Encounter
 public function encounterAJerkInThePlains():void {
+	clearOutput();
 	//spriteSelect(68);
 	IncrementFlag("COC.HEL_TIMES_ENCOUNTERED");
 	//Mino threesome proc

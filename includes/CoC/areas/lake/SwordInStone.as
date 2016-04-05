@@ -54,9 +54,9 @@ private function tryToTakeSwordInStone():void
 	{
 		output("You grip the handle with both hands and ");
 	
-		if (pc.PQ() > 70) output("pull so hard you fall on your ass when the sword slips free.  The tip buries itself a few inches from your head.  You count yourself lucky and stand up.  ");
-		if (pc.PQ() <= 70 && pc.PQ() >= 40) output("give a mighty pull and nearly fall over as the sword easily slides free from the tree.  ");
-		if (pc.PQ() < 40) output("easily pull the sword free, surprising yourself with how easy it was to remove.  ");
+		if (pc.physique() > 35) output("pull so hard you fall on your ass when the sword slips free.  The tip buries itself a few inches from your head.  You count yourself lucky and stand up.  ");
+		if (pc.physique() <= 35 && pc.physique() >= 15) output("give a mighty pull and nearly fall over as the sword easily slides free from the tree.  ");
+		if (pc.physique() < 15) output("easily pull the sword free, surprising yourself with how easy it was to remove.  ");
 		
 		output("Remarkably the tree's trunk is entirely intact.  While marveling at this new development, a leaf brushes your shoulder.  You look up and watch as every single leaf turns from healthy green, to brilliant orange, and finally changes to brown.  The leaves rain down around you, covering the ground in dead plant-matter, leaving you alone with the withering skeleton of a dead tree.  The sight saddens you, though you cannot fathom why.\n\n");
 	
@@ -68,8 +68,25 @@ private function tryToTakeSwordInStone():void
 		processTime(10);
 		
 		itemScreen = mainGameMenu;
-		lootScreen = mainGameMenu;
+		lootScreen = returnSwordInStone;
 		useItemFunction = mainGameMenu;
 		itemCollect([new CoCBeautifulSword()]);
 	}
+}
+
+public function returnSwordInStone():void
+{
+	if(pc.meleeWeapon is CoCBeautifulSword || pc.hasItemByType(CoCBeautifulSword))
+	{
+		mainGameMenu();
+		return;
+	}
+	
+	clearOutput();
+	output("You thrust the sword back into tree where you found it and see dead tree suddenly growing leafs again! Looks like it really would be better to leave it where it belongs.");
+	
+	flags["COC.SWORD_IN_A_STONE"] = undefined;
+	processTime(10 + rand(10));
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
