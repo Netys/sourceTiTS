@@ -27,7 +27,7 @@ public function enterCocVrPod():void {
 	
 	if (flags["COC_VR_INTRO_SEEN"] == undefined) {
 		flags["COC_VR_INTRO_SEEN"] = 1;
-		output("Pod is filled with strange viscous liquid, which smells like... Blood. According to manual, you can actually breath in it.  ");
+		output("Pod is filled with strange viscous liquid, which smells like... Blood? According to manual, you can actually breath in it.  ");
 		output("Instruction said you have to strip naked and put your gear inside specail section of the pod. Wait... That section is full of liquid too. You open instruction again.\n\n");
 		output("<i>“Yes, you actually should do it. Liquid is there for purpose. It is safe for any equipment.”</i>\n\n");
 		output("Looks like your confusion were expected. Here goes nothing... You lay inside and watch capsule lid closing.\n\n");
@@ -39,8 +39,8 @@ public function enterCocVrPod():void {
 		output("Few seconds after VR system kicks in and you've found yourself in a dark cave in front of glowing purple-pink portal. Simulation ia amazingly realistic - you can feel air flows caressing your [pc.skinFurScales], stone floor texture under your [pc.legs], humming and light of portal...  ");
 		output("And, suddenly, holo-screen, totally misplaced here, appears.");
 		
-		output("\n\nWelcome to Corruption of Champions simulation. Running init sequence...");
-		output("\nHardware: E.22.5 R2 Prototype, feedback status: full/extended (not configurable).");
+		output("\n\nWelcome to Corruption of Champions. Running init sequence...");
+		output("\nHardware: E.22.5 Prototype/R2, feedback system status: full/extended, auto-ajust mode.");
 		output("\nSoftware: M.15.12 R1 Legacy, running in failsafe/minimal mode.");
 		output("\nUser sync system: fully functional.");
 		output("\nUser sync level: 87%, stable.");
@@ -55,9 +55,24 @@ public function enterCocVrPod():void {
 		output("\nExit is possible from entry point only. Warning: this means you will remain inside until you reach entry point.");
 		output("\nFeedback power is not limited. Warning: this can include permanent physical and mental changes.");
 		output("\nUser's personal memory is suppressed during simulation.");
-		output("\n\n");
-		output("Would you kindly enter the portal to launch main sequence?\n\n");
+		output("\n\nWould you kindly enter the portal to launch main sequence?\n\n");
 		processTime(20);
+	}
+	else if (flags["COC.PLOT_END"] == 1 && flags["COC_VR_INTRO_SEEN"] == 1) {
+		flags["COC_VR_INTRO_SEEN"] = 2; // first enter after plot end - there are some changes here...
+		output("Repaired pod is still filled with same strange viscous liquid with faint smell of blood. You lay inside and watch capsule lid closing again.");
+		output("\n\nSame familiar holo-screen.");
+		output("\n\nWelcome to Corruption of Champions simulation. Running init sequence...");
+		output("\nHardware: E.22.5 Prototype/R2.1, feedback system status: full/extended, auto-ajust mode.");
+		output("\nSoftware: unknown proprietary system.");
+		output("\nUser sync system: online.");
+		output("\nWorld init... Saved state loaded.");
+		output("\nWarning: previous session was aborted.");
+		output("\nProcessing recovery protocol... Done. Warning: partial data loss registered.");
+		output("\nProcessing world changes... Done.");
+		output("\n\nWould you kindly enter the portal to launch main sequence?\n\n");
+		processTime(10);
+		
 	} else {
 		output("You lay inside and watch capsule lid closing. Few seconds, and familiar portal is ahead...\n\n");
 		processTime(5);
@@ -512,7 +527,7 @@ public function abortVRAfterVictory():void {
 	author("Etis");
 	clearOutput();
 	
-	output("Wait, what? Portal? World? You are [pc.fullName], not some Champion! With all possible speed you rush to your camp. To your relief, portal is still faintly glowing...");
+	output("Wait, what? Portal? World? You are [pc.fullName], not some Champion! With all possible speed you rush to your camp. Usually travels here are astoundingly quick, but this time it feels like eternity sor some reason. To your relief, portal is still faintly glowing...");
 	
 	processTime(3 * 24 * 60 + rand(24 * 60));
 	clearMenu();
@@ -546,8 +561,9 @@ public function abortVRAfterVictoryIII():void {
 	output("\n\nLooks like he is not really in mood for a talk. But this could be your chance to actually inquire something. Or you could ask for something...");
 	
 	clearMenu();
-	addButton(0, "Fix VR", abortVRAfterVictoryFixIt, undefined, "Fix VR", "It is just a piece of tech, anyways.");
+	addButton(0, "Fix VR", abortVRAfterVictoryFixIt, undefined, "Fix VR", "It is just a piece of tech, and broken machines are meant to be fixed.");
 	addButton(1, "Recompense", abortVRAfterVictoryRecompense, undefined, "Recompense", "You feel that even if fixed, it would never be the same. Time to move on.");
+	// maybe add option to change pod into controllable body transformation system? it can do this, just change firmware...
 }
 
 public function abortVRAfterVictoryFixIt():void {
@@ -557,9 +573,11 @@ public function abortVRAfterVictoryFixIt():void {
 	output("You make your choice and ask him to fix the pod.");
 	
 	//output("\n\n<i>\"So, no way back?\"</i> you ask in confusion. <i>\"Not in this reality branch. And I'm not going to fiddle with such matters without some really good reason.\"</i>");
-	output("\n\n<i>\"You said fix? Fix? This? You... Fine. If you are asking for it you either know what you are asking for and ready for it or have no idea and that is only your problem, not mine. Fine. I'll do my best. Just go. You'll find your ship on it's usual place.\"</i>");
+	output("\n\n<i>\"Fix. This. Fix. You... Fine. If you are asking for it you either know what you are asking for and ready for it or have no idea and that is only your problem, not mine. Fine. I'll do my best. Just go. You'll find your ship in hangar, as usual.\"</i>");
 	
 	output("\n\nLooks like you are dismissed...");
+	
+	output("\n\n<b>You still have VR POD installed in your ship.</b>");
 	
 	clearMenu();
 	addButton(0, "Leave", move, rooms[currentLocation].northExit);
@@ -569,37 +587,44 @@ public function abortVRAfterVictoryRecompense():void {
 	clearOutput();
 	showNemo();
 	
-	output("<i>\"Now, I'm taking this thing back. You really don't want to use it anymore. Unless you want to be torn apart by glitched reality, of course. No? Thought so. Bifurcation point is left behind.\"</i> Well, if he is taking your favorite toy, he can give you something instead of it, right?");
+	//output("<i>\"Now, I'm taking this thing back. You really don't want to use it anymore. Unless you want to be torn apart by glitched reality, of course. No? Thought so. Bifurcation point is left behind.\"</i> Well, if he is taking your favorite toy, he can give you something instead of it, right?");
+	output("<i>\"Now, I'm taking this thing back. You really don't want to use it anymore. Unless you want to be torn apart by glitched reality, of course. No? Thought so.\"</i> Well, if he is taking your favorite toy, he can give you something instead of it, right?");
 	
-	output("\n\n<i>\"Not asking to get back? Good. There are things to leave behind. Can offer a trinket from my private collection as souvenir. Not from the showcase, you'll have more problems with those anyways. And not all of them are actually working, to be honest. And about collection... I'll offer you a real treasure. One of the old implants produced by Mechanist's Guild.\"</i>");
+	output("\n\n<i>\"Not asking to get it back? Good. There are things to leave behind. Can offer a trinket from my private collection as souvenir. Not from the showcase, you'll have more problems with those anyways. And not all of them are actually working, to be honest. And about collection... I'll offer you a real treasure. One of the old implants produced by Mechanist's Guild.\"</i>");
 	
 	output("\n\n<i>\"Stop there! Mechanist's Guild?\"</i> You snap vaguely familiar word. <i>\"You said that this is Guild embassy, and now this. Aren't it just an old, old myth?\"</i>");
 	
-	output("\n\nHe sighs and scowls. <i>\"Not myth. Legend. Old, old legend, from the times when Terra was the only known inhabited pebble in a sky. Legend about technological singularity...\"</i> for a moment his piercing gaze faded. <i>\"I've been alone for too long,\"</i> he mutters. <i>\"Let me drop this. Old and sad stories from long forgotten past are not relevant to current situation.\"</i> He braced himself, putting on presumptuous trickster's fasade back. <i>\"I can offer you one. It would help you improve one of your abilities. Not really top tier stuff, but still, quite good. I'll attune your nanosurgeons accordingly. Now, your choise...\"</i>");
+	output("\n\nHe sighs and scowls. <i>\"Not myth. Legend. Old, old legend, from the times when Terra was the only known inhabited pebble in a sky. Legend about technological singularity...\"</i> for a moment his piercing gaze faded. <i>\"I've been alone for too long,\"</i> he mutters. <i>\"Let me drop this. Old and sad stories from long forgotten past are not relevant to current situation.\"</i> He braced himself, putting on presumptuous trickster's fasade back. <i>\"I can offer you one. It would help you improve one of your abilities. Not really top tier stuff, to be honest, but still quite good. Better than anything on the legal market, that's for sure, and totally without side effects, no less! I'll attune your nanosurgeons to work with it seamlessly. Now, your choise...\"</i>");
 	
 	flags["COC.NEMO_VR_POD_TAKEN"] = -1;
 	
 	clearMenu();
-	addButton(0, "Intelligence", applyGuildImplant, "intelligence", "Intelligence", "Increases the effectiveness of your technology-based attacks, primarily those used by tech specialists. It is also useful any time you have to deal with sophisticated machinery.");
-	addButton(1, "Physique", applyGuildImplant, "physique", "Physique", "Increases your strength and endurance. It is especially useful for increasing the damage of any melee strikes you may land on an opponent.");
-	addButton(2, "Reflexes", applyGuildImplant, "reflexes", "Reflexes", "Increases your reaction time. It is a measurement of your piloting aptitude, but also comes in handy when having to avoid a surprise attack or trap.");
-	addButton(3, "Aim", applyGuildImplant, "aim", "Aim", "Increases your accuracy and how well you can aim both hand-held and ship-board ranged weaponry.");
-	addButton(4, "Willpower", applyGuildImplant, "willpower", "Willpower", "Increases your ability to counter sexual urges and addictions, resist psionics, and strengthen your own psionics, should a person of human descent somehow gain mind powers.");
+	addButton(0, "Intelligence", applyGuildImplant, "i", "Intelligence", "Grants an extra potential for Intelligence training.");
+	addButton(1, "Physique", applyGuildImplant, "p", "Physique", "Grants an extra potential for Physique training.");
+	addButton(2, "Reflexes", applyGuildImplant, "r", "Reflexes", "Grants an extra potential for Reflexes training.");
+	addButton(3, "Aim", applyGuildImplant, "a", "Aim", "Grants an extra potential for Aim training.");
+	addButton(4, "Willpower", applyGuildImplant, "w", "Willpower", "Grants an extra potential for Willpower training.");
+	//addButton(5, "Lust", applyGuildImplant, "l", "Lust", "Grants a bit of extra control over your sexual urges.");
 }
 
 public function applyGuildImplant(arg:String):void {
 	clearOutput();
 	showNemo();
 	
-	output("<i>\"This one? Your choise. Now...\"</i> Suddenly he appear right before your [pc.face], and you feel his paw-like palm on your forehead, soft and hot. Your vision hazes for a moment, then everything snaps back. That's all? You are not feeling any different, right? Seems your Codex feels you better than youself - it already reports about potential for 25% improvement in your " + arg + ".");
+	output("<i>\"This one? Your choise. Now...\"</i> Suddenly he appear right before your [pc.face], and you feel his paw-like palm on your forehead, soft and surprisingly hot. Your vision hazes for a moment, then everything snaps back, and you see him is on his usual place again. That's all? You are not feeling any different, right? Seems like your Codex knows you better than youself - it already reports about <b>potential for improvement in your " + arg + "</b>.");
 	
-	if (arg == "physique" && !pc.hasPerk("Implant: Iron Body")) pc.createPerk("Implant: Iron Body", 0, 0.25, 0, 0, "System of implants in your musculoskeletal system, which can significantly improve your physique.");
-	if (arg == "reflexes" && !pc.hasPerk("Implant: Wired Reflexes")) pc.createPerk("Implant: Wired Reflexes", 0, 0.25, 0, 0, "Partial electrical replacement for your nervous system, which can significantly improve your reflexes.");
-	if (arg == "aim" && !pc.hasPerk("Implant: Ballistic Computer")) pc.createPerk("Implant: Ballistic Computer", 0, 0.25, 0, 0, "Complex of retinal and neural implants, which can significantly improve your aim.");
-	if (arg == "intelligence" && !pc.hasPerk("Implant: Cognitive Coprocessor")) pc.createPerk("Implant: Cognitive Coprocessor", 0, 0.25, 0, 0, "Complex of neural implants, which can significantly improve your intellegence.");
-	if (arg == "willpower" && !pc.hasPerk("Implant: Mental Shield")) pc.createPerk("Implant: Mental Shield", 0, 0.25, 0, 0, "Complex of neural implants, which can significantly improve your willpower.");
+	// flat bonus of 5 and 1,25 per character level to chosen stat cap
+	if (arg == "p" && !pc.hasPerk("Implant: Iron Body"))				pc.createPerk("Implant: Iron Body",				5, 0.25, 0, 0, "Increases your physique.");
+	if (arg == "r" && !pc.hasPerk("Implant: Wired Reflexes"))			pc.createPerk("Implant: Wired Reflexes",		5, 0.25, 0, 0, "Increases your reflexes.");
+	if (arg == "a" && !pc.hasPerk("Implant: Ballistic Computer"))		pc.createPerk("Implant: Ballistic Computer",	5, 0.25, 0, 0, "Increases your aim.");
+	if (arg == "i" && !pc.hasPerk("Implant: Cognitive Coprocessor"))	pc.createPerk("Implant: Cognitive Coprocessor",	5, 0.25, 0, 0, "Increases your intellegence.");
+	if (arg == "w" && !pc.hasPerk("Implant: Mental Shield"))			pc.createPerk("Implant: Mental Shield",			5, 0.25, 0, 0, "Increases your willpower.");
+	// flat 35 to min and max lust
+	if (arg == "w" && !pc.hasPerk("Implant: Hormonal Controller"))		pc.createPerk("Implant: Hormonal Controller",	35,  35, 0, 0, "Grants a bit of extra control over your sexual urges.");
 	
 	output("\n\nFeeling suddenly empty inside, you turn to exit and leave without saying goodbye. It somehow feels right that way.");
+	
+	output("\n\n<b>You no longer have VR POD installed in your ship.</b>");
 	
 	updatePCStats();
 	clearMenu();

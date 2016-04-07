@@ -51,7 +51,12 @@ package classes.Characters
 				{
 					kGAMECLASS.oviliumEggBump(cumFrom, vagIndex);
 				}
-				if(cumflationEnabled() && !isPregnant(vagIndex)) cumflationHappens(cumFrom,vagIndex);
+				if (cumflationEnabled() && !isPregnant(vagIndex)) {
+					var holeToInflate:int = vagIndex;
+					if (!hasVagina()) holeToInflate = 3; // no vag? likely vagOrAss scene, use asss
+					else if (holeToInflate == -1) holeToInflate = 0; // vag index not specified, use first one
+					cumflationHappens(cumFrom, holeToInflate);
+				}
 				return this.tryKnockUp(cumFrom, vagIndex);
 			}
 			

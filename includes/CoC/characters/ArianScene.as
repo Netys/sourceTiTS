@@ -2381,7 +2381,7 @@ private function getPenetratedByArianAndHisHitlerMustache():void {
 		if (pc.hasTail() && pc.hasTailFlag(GLOBAL.FLAG_LONG)) output(", further encouraging [arian.em] to do so, by looping your [pc.tails] around [arian.eir] waist");
 		output(".  The lizan doesn't need much encouragement to comply, easily snuggling against you, breast to breast, and sighing softly.  \"<i>I'm sorry.  Sometimes I wonder why you bother doing something like this, with someone like me,</i>\" [arian.ey] says, a hint of sadness in [arian.eir] voice.");
 		
-		output("\n\nYou reply that you bother because Arian is cute and you happen to like [arian.em].  [arian.ey] should forget about [arian.eir] insecurities and give [arian.em]self some credit.  Still, you are horny, and judging by the prodding you feel on your [leg], so is Arian.  You don't bother saying anything more, gently reaching down to align [arian.eir] shaft with your [pc.vagina] and then pinch on the base of [arian.eir] tail.");
+		output("\n\nYou reply that you bother because Arian is cute and you happen to like [arian.em].  [arian.ey] should forget about [arian.eir] insecurities and give [arian.em]self some credit.  Still, you are horny, and judging by the prodding you feel on your [pc.leg], so is Arian.  You don't bother saying anything more, gently reaching down to align [arian.eir] shaft with your [pc.vagina] and then pinch on the base of [arian.eir] tail.");
 		
 		output("\n\nArian lets out a tiny squeak of shock at the pinching sensation, which instinctively makes [arian.em] thrust [arian.em]self forward, embedding [arian.em]self in you to the hilt.");
 		//(Enlargement/Virginity loss messages)

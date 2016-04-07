@@ -1,3 +1,4 @@
+import classes.Characters.PregnancyPlaceholder;
 import classes.GLOBAL;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
@@ -23,6 +24,18 @@ Requirements for initial sex: Tone over 60 and fat under 40. Also not a Centaur 
 genderless, since most of it would make no sense.
 Requirements for anal: ass 'a little loose'
 */
+
+public function get heckel():PregnancyPlaceholder
+{
+	var pp:PregnancyPlaceholder = new PregnancyPlaceholder();
+	if (!pp.hasCock()) pp.createCock();
+	pp.shiftCock(0, GLOBAL.TYPE_CANINE);
+	pp.cocks[0].knotMultiplier = 2.5;
+	pp.cocks[0].cLengthRaw = 16;
+	pp.ass.bonusCapacity = 15;
+	return pp;
+}
+
 //Intro:
 public function heckelAppearance():void {
 	if(flags["COC.MET_HECKEL"] != 1) output("\n\nYou can see a brown hyena running around an indoor track, her tongue lolling out of her mouth as she runs. She spares a glance towards you before returning to her workout, her legs a blur of motion beneath her.");
@@ -190,6 +203,7 @@ private function heckelOrallyFixated():void {
 		output("Heckel pulls herself slowly from your throat, her dick finally coming free with a loud POP.  You moan as its girth leaves you, your throat feeling strangely empty without it. A strand of semen drips from her tip as she stands above you, but you greedily move your head to catch it and swallow the salty treat down. Heckel snickers at this before falling down on the bench, looking you over appreciatively.\n\n");
 	
 		output("\"<i>By Marae, " + pc.short + ", you've got quite the mouth. I'm impressed, and that doesn't happen often.</i>\" She brings a paw to her chin as if thinking, before finally reaching it out and ruffling your hair. \"<i>You know, you aren't half bad to be around, and not just for the sex. Don't be a stranger around here, alright?</i>\" With that she stands and heads back into the showers, giving you time to clean up and head back to camp.");
+		pc.loadInMouth(heckel);
 		pc.orgasm();
 		//dynStats("sen", 4);
 		processTime(25);
@@ -209,6 +223,8 @@ private function heckelOralFixationII():void {
 	output("Before you can start thinking of a way out of the situation, she growls loudly above you.  Her hands grip the back of your head and pull you towards her, burying your face in wet fur and her knot in your mouth. You feel her lean over you as your vision goes dark, your entire face buried in the fur of her groin. Her entire cock seems to flex inside you as her hips thrust forward, and a moment later you feel a burning heat travelling down your throat. Your hands go to the ground to steady yourself as she pulls herself suddenly away, her dick pulling out of your gullet with a long slurp and giving you a chance to breathe clearly again. You barely get one breath in before you realize that she's still cumming, and a thick stream of jism lands across your face and into your open mouth as she paws herself off the rest of the way. Unable to do anything else at this point, you simply fall back onto your [pc.ass] and let her cum across your face two more times, her tongue lolling out of her mouth as she finishes.\n\n");
 
 	output("When she's finally emptied herself on your face, she falls down onto the bench in front of you. Before you can say anything, she extends a paw and ruffles your semen-streaked hair. \"<i>Heh, not bad fresh meat. If you can learn your place on the food chain here, we might have a beautiful partnership ahead of us. If you still think you can keep up, that is.</i>\" She winks at you as she stands again, tossing you her towel from earlier as she heads towards the showers.\n\n");
+	applyCumSoaked(pc);
+	pc.loadInMouth(heckel);
 	pc.slowStatGain("l", 1);
 	pc.lust(10 + pc.libido() / 5);
 	//dynStats("lib", 1, "sen", 4, "lus", (10+pc.lib/10+pc.sens/10));
@@ -267,11 +283,11 @@ private function heckelLovesAnal2():void {
 	output("Her legs bump against yours as she pulls herself up, the contact sending shivers through your sensitive body. \"<i>Even better than I thought,</i>\" she mumbles as you hear the sound of her stroking herself. Before the wetness around your ass can dry up, you feel something hard and slightly pointed poking the entrance of your [pc.asshole].\n\n");
 
 	output("You open your mouth to gasp as she slides into you, but no sounds come out. You can feel inch after inch penetrate you, your asshole slowly stretching to accommodate her increasing thickness. She pushes as much as she can into you before pulling back slightly, then humping lightly as she works the rest in little by little.");
-	pc.buttChange(28, true, true, false);
+	pc.buttChange(heckel.cockVolume() * 0.5, true, true, false);
 	output("\n\n");
 
 	output("As more and more doggie dick is pushed into your ass, you find your estimations of her size more and more ridiculous. There has to be an entire foot of cock in you already, but she's still going! When she does finally bottom out, your mind reels at the impossibility. Her dick must grow the longer she stays aroused, because she's at least 15 inches right now! The base of her dick stretches your ass painfully open, and she gives you a moment to adjust to it.");
-	pc.buttChange(35, true, true, false);
+	pc.buttChange(heckel.cockVolume() * 0.75, true, true, false);
 	output("\n\n");
 	
 	output("Just as the sting begins to fade, she draws herself out to the tip in one motion. You bite your lip in anticipation, but you still moan like a whore when she slams all 15 inches back into you. She draws back before pounding your [pc.asshole] again, making your [pc.ass] shake with the impact.\n\n");
@@ -296,7 +312,7 @@ private function heckelLovesAnal2():void {
 
 	output("Heckel suddenly freezes up and bites down on your shoulder, throwing her hips forward. Her knot pushes against your backdoor as she tries to force it in, but your ass just won't expand that much. She growls and pushes again, making you yelp as it spreads you even further. It feels like she's shoving a melon up there! She growls even louder and bites down harder, and you can feel her dick flare inside you as her knot pushes you further and further apart. You cry out as it passes the midway point, your ass sucking the knot up greedily and contracting around the other side.");
 	//<ASS BECOMES VERY LOOSE>
-	pc.buttChange(45, true, true, false);
+	pc.buttChange(heckel.cockVolume(), true, true, false);
 	output("\n\n");
 
 	//[<HERM PC>
@@ -313,6 +329,7 @@ private function heckelLovesAnal2():void {
 	output("You lay on the bench for a few moments as Heckel ruffles your hair again. \"<i>Not bad, partner. You're the best fuck I've had in years, you know that? Not to mention the best workout!</i>\"\n\n");
 	
 	output("She laughs as she stands and heads for the shower, letting you clean yourself up and head back to camp.");
+	pc.loadInAss(heckel);
 	pc.orgasm();
 	//dynStats("sen", 4);
 	clearMenu();
@@ -335,7 +352,7 @@ public function dominateHeckel():void {
 	output("\n\nHeckel retorts, \"<i>You gonna bet yours");
 	if(flags["COC.TIMES_LOST_HECKEL_DOM_CHALLENGE"] > 0) output(" again");
 	output("?</i>\"  Her tough finger-tip slams into your solar plexus for emphasis");
-	if(pc.WQ() < 60) output(", pushing you back a bit");
+	if(pc.willpower() < 30) output(", pushing you back a bit");
 	output(".");
 	output("\n\nOf course, with Heckel around you knew you'd be risking your ass, but at least now you're going to get a shot at hers.  You nod at the surprised hyena herm in acceptance of her wager and suggest the most obvious way to settle just who runs this gym - an arm wrestling contest.");
 	output("\n\nThe spotted muscle-girl snarls, \"<i>You're on!</i>\"  She knocks some water bottles off a nearby table and positions herself to one side, slamming her elbow down carelessly.  \"<i>This is going to make pounding your ass that much sweeter, [pc.name].</i>\"  Breathing heavily now, Heckel looks to you expectantly.  Her mighty she-cock, half-hidden by the table begins to strain upward, hardening with eager anticipation.");
@@ -366,7 +383,7 @@ public function dominateHeckel():void {
 //[Fuck Heckel]
 private function dominateHeckelConclusion():void {
 	clearOutput();
-	var x:int = pc.cockThatFits(70);
+	var x:int = pc.cockThatFits(heckel.analCapacity());
 	if(x < 0) x = pc.smallestCockIndex();
 	output("You casually rise and circle round the table.  Before she can react, you dexterously slip your hands down to Heckel's sculpted, furry backside and lift her high, easily flipping her up onto the wooden surface.  The muscle-herm grunts softly as she comes to rest upon the polished wood, her flopping dog-cock already starting to thicken with the telltale engorgement of oncoming arousal.  Smirking, you gently prod at the growing knot and tease her - she might be an avowed dom, but her dick seems excited by the prospect of sex on any terms.");
 	output("\n\nHeckel protests, \"<i>Please; just because my body is looking for a fuck doesn't mean I want to be your bottom bitch.</i>\"");
@@ -391,7 +408,7 @@ private function dominateHeckelConclusion():void {
 	else output("never-ending flow");
 	output(" of pre-cum onto the muscle-girl's tongue.  Her body wriggles happily in acceptance, twitching around your knuckles.  A nice, sticky puddle of her own pre has formed on her well-defined abdominals, still connected to its spigot by a web of glittering, translucent love-juice.  Whimpering, Heckel fairly hums with need, the vibrations of her hungry protests bouncing through your [pc.cock " + pc.biggestCockIndex() + "] pleasantly.");
 	output("\n\nPulling your fingers out of her oozing, cock-hungry snatch, you wipe her drippings off on one of her rigid, clenched thighs.  The fur makes her good for a towel, if nothing else.  Her whimpers rise in pitch and frequency, turning her lusty mouth into a snug, cock-sucking vibrator.  You cannot take such pleasure without giving into your own baser instincts.  Grabbing hold of the back of her head in a two-handed grip, you piston your [pc.hips] forward to jam ");
-	if(pc.biggestCockVolume() > 40) output("as much of it as possible");
+	if(pc.biggestCockVolume() > heckel.analCapacity()) output("as much of it as possible");
 	else output("it");
 	output(" down her throat.  Heckel's eyes bulge in disbelief, wildly looking left and right.  Her teeth come down, just barely pricking the skin of your [pc.cock " + pc.biggestCockIndex() + "] in warning.  You twist her nipple in a retaliatory strike, opening her throat up with a moaning shriek.");
 	output("\n\nYou savor the sensation a bit, but ultimately withdraw.  Your [pc.cock " + pc.biggestCockIndex() + "] glistens with spit and mucus, leaking heady flows of pre-cum on Heckel's exhausted muzzle.  She coughs and gasps, whimpering and moaning in between.  You make sure to wipe most of it off on her forehead, smearing the saliva and cock-juice to mark her as your bitch.");

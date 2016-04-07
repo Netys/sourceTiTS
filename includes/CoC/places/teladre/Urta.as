@@ -731,22 +731,22 @@ public function urtaFuckHer(afterBefriending:Boolean = false):void {
 
 		output("The horse-cock spreads you wide, filling you past the point of fullness as you sink further and further along its length.  Urta groans happily, her hips twitching involuntarily and forcing more of the monster-sized cock inside you.");
 		if(pc.hasVagina()) {
-			if(pc.vaginalCapacity() >= 60) {
+			if(pc.vaginalCapacity() >= urta.cockVolume()) {
 				output("  You sigh and sink down, taking it until the folds of her sheath are rubbing your entrance.");
 			}
 			else {
 				output("  You nearly cry out as you sink down, taking it until the folds of her sheath are rubbing your entrance, even though it hurts to accommodate it.");
 			}
-			pc.cuntChange(0, 60, true, true, false);
+			pc.cuntChange(0, urta.cockVolume(), true, true, false);
 		}
 		else {
-			if(pc.analCapacity() >= 60) {
+			if(pc.analCapacity() >= urta.cockVolume()) {
 				output("  You sigh and sink down, taking it until the folds of her sheath are rubbing your entrance.");
 			}
 			else {
 				output("  You nearly cry out as you sink down, taking it until the folds of her sheath are rubbing your entrance, even though it hurts to accommodate it.");
 			}
-			pc.buttChange(60, true, true, false);
+			pc.buttChange(urta.cockVolume(), true, true, false);
 		}
 		output("  Urta babbles, \"<i>Oh godsh yesh thank you so much-ohmigod it's SO HOT inside you.</i>\"\n\n");
 
@@ -755,8 +755,8 @@ public function urtaFuckHer(afterBefriending:Boolean = false):void {
 		else output("rectum");
 		output(", and Urta's tongue is lolling out from her muzzle, drooling down the side of her face as she loses herself in orgasm.\n\n");
 		
-		if (pc.hasVagina()) pc.loadInCunt();
-		else pc.loadInAss();
+		if (pc.hasVagina()) pc.loadInCunt(urta);
+		else pc.loadInAss(urta);
 		
 		output("The substantial flare forms a perfect plug inside you and your belly distends slightly as you're packed full of foxy-horse-cum.  Your own lusts keep your hips moving, grinding and squeezing the shaft inside you as it packs you full of Urta's seed.  Your orgasm explodes through your hips and your " + pc.legs() + " give out underneath you, dropping you down onto the fox-girl as the pair of you cum together.  Whiteness begins squirting out around her shaft as her prick begins softening inside you.  You sigh happily, content but too nerveless to stand for the moment.  Peeking over your shoulder and seeing Urta's satisfied expression, you guess she feels about the same.\n\n");
 
@@ -767,8 +767,8 @@ public function urtaFuckHer(afterBefriending:Boolean = false):void {
 		output("\"<i>Yes indeed,</i>\" you muse - the sooner the better.");
 	}
 	else {
-		var x:Number = pc.cockThatFits(urtaCapacity());
-		var y:Number = pc.cockThatFits2(urtaCapacity());
+		var x:Number = pc.cockThatFits(urta.vaginalCapacity());
+		var y:Number = pc.cockThatFits2(urta.analCapacity());
 		if (x < 0) x = 0;
 		//output(images.showImage("urta-behindbar-male-fuckurta"), false);
 		output("You come out of the shadows, shedding your [pc.gear].  ");
@@ -785,7 +785,7 @@ public function urtaFuckHer(afterBefriending:Boolean = false):void {
 		else if(pc.cockTotal() == 1) output("your [pc.cock] against her pussy.  ");
 		
 		//DOES IT FITZ
-		if(pc.cockVolume(x) < urtaCapacity()) {
+		if(pc.cockVolume(x) < urta.vaginalCapacity()) {
 			output("The wet entrance yields before you, accepting you like a velvet glove.  It grips you tightly, though the grip is meaningless with the flood of lubricant slipping over your shaft.  ");
 			if(y != -1) output("Her backdoor was rougher going – the tightly muscled entrance held you back for a moment until Urta relaxed completely, but now the tighter hole is nearly as easy to penetrate as her pussy.  ");
 			output("The fox is openly moaning and stroking her disproportional cock, dripping pre-cum everywhere as you do your level best to violate her ");

@@ -860,7 +860,7 @@ package classes.Characters.CoC
 			
 			
 			if (kGAMECLASS.flags["COC.SPELL_HEAL"] == 1) {
-				output("\n\nDrawing on your magic, you use the opportunity to mend your wounds..");
+				output("\n\nDrawing on your magic, you use the opportunity to mend your wounds.");
 				pc.HP((pc.level + pc.intelligence() / 1.5 + rand(pc.intelligence())) * 2);
 			}
 			

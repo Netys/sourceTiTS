@@ -252,3 +252,42 @@ public function DesertCaveSandMotherThrone():Boolean {
 public function DesertCaveCleared():Boolean {
 	return flags["COC.SAND_WITCHES_FRIENDLY"] > 0 || flags["COC.SAND_WITCHES_COWED"] > 0;
 }
+
+public function DesertCaveUpdateNotify():void {
+	if(DesertCaveCleared())
+	{
+		rooms["COC_DESERT_CAVE_ENTRACE"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_COMMONS"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_WEST_HALL_1"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_PLAY_ROOM"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_LUST_ROOM"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_WEST_HALL_2"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_NURSERY"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_PHARMACY"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_SLEEPING_CHAMBER"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_BATHROOM"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_EAST_HALL_2"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_CUM_WITCH_BEDROOM"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_CUM_WITCH_OFFICE"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_ALTAR"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_THRONE"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+	}
+	
+	rooms["COC_DESERT_CAVE_COMMONS"].removeFlags(GLOBAL.OBJECTIVE); // part 1 - witch mob
+	rooms["COC_DESERT_CAVE_PHARMACY"].removeFlags(GLOBAL.OBJECTIVE); // part 2 - hidden lever
+	rooms["COC_DESERT_CAVE_THRONE"].removeFlags(GLOBAL.OBJECTIVE); // part 3 - sand mother
+	if (flags["COC.SANDWITCH_MOB_DEFEATED"] == undefined) rooms["COC_DESERT_CAVE_COMMONS"].addFlag(GLOBAL.OBJECTIVE);
+	else if (flags["COC.SANDWITCH_THRONE_UNLOCKED"] != 1) rooms["COC_DESERT_CAVE_PHARMACY"].addFlag(GLOBAL.OBJECTIVE);
+	else if(!DesertCaveCleared()) rooms["COC_DESERT_CAVE_THRONE"].addFlag(GLOBAL.OBJECTIVE);
+	
+	rooms["COC_DESERT_CAVE_BATHROOM"].removeFlags(GLOBAL.NPC); // Milk slave
+	if(flags["COC.MILK_NAME"] == undefined) rooms["COC_DESERT_CAVE_BATHROOM"].addFlag(GLOBAL.NPC);
+	
+	rooms["COC_DESERT_CAVE_ENTRACE"].removeFlags(GLOBAL.NPC); // Sanura
+	if(flags["COC.SANURA_DISABLED"] == undefined) rooms["COC_DESERT_CAVE_ENTRACE"].addFlag(GLOBAL.NPC);
+	
+	rooms["COC_DESERT_CAVE_WEST_HALL_2"].removeFlags(GLOBAL.NPC); // Essy
+	if(flags["COC.ESSRAYLE_ESCAPED_DUNGEON"] == undefined && flags["COC.MET_ESSY"] != undefined) rooms["COC_DESERT_CAVE_WEST_HALL_2"].addFlag(GLOBAL.NPC);
+}
+private var DesertCaveUpdateNotifyHook: * = DesertCaveUpdateNotifyGrapple();
+private function DesertCaveUpdateNotifyGrapple():* { variableRoomUpdateListeners.push(DesertCaveUpdateNotify); }

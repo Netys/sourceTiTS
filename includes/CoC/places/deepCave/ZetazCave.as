@@ -1,4 +1,5 @@
 import classes.Characters.CoC.CoCZetaz;
+import classes.GameData.CombatManager;
 import classes.GLOBAL;
 import classes.Items.Apparel.CoCBondageStraps;
 import classes.Util.*;
@@ -210,3 +211,37 @@ public function ZetazCaveCleared():Boolean {
 		&& flags["COC.FREED_VALA"] != undefined
 		&& flags["COC.ZETAZ_FUNGUS_ROOM_DEFEATED"] != undefined;
 }
+
+public function ZetazCaveUpdateNotify():void {
+	if(flags["COC.DEFEATED_ZETAZ"] != undefined)
+	{
+		rooms["COC_ZETAZ_ENTRACE"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_ZETAZ_TUNNEL"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_ZETAZ_GATHERING_HALL"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_ZETAZ_TORTURE_ROOM"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_ZETAZ_SECRET_PASSAGE"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_ZETAZ_CHAMBER"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+	}
+	
+	rooms["COC_ZETAZ_GATHERING_HALL"].removeFlags(GLOBAL.OBJECTIVE);
+	rooms["COC_ZETAZ_CHAMBER"].removeFlags(GLOBAL.OBJECTIVE);
+	if (flags["COC.ZETAZ_IMP_HORDE_DEFEATED"] == undefined) rooms["COC_ZETAZ_GATHERING_HALL"].addFlag(GLOBAL.OBJECTIVE);
+	else if (flags["COC.DEFEATED_ZETAZ"] == undefined) rooms["COC_ZETAZ_CHAMBER"].addFlag(GLOBAL.OBJECTIVE);
+	
+	rooms["COC_ZETAZ_ENTRACE"].removeFlags(GLOBAL.NPC, GLOBAL.COMMERCE);
+	if (flags["COC.DEFEATED_ZETAZ"] != undefined) {
+		if (flags["COC.ZETAZ_LAIR_DEMON_VENDOR_PRESENT"] == undefined) rooms["COC_ZETAZ_ENTRACE"].addFlag(GLOBAL.NPC);
+		else if (flags["COC.ZETAZ_LAIR_DEMON_VENDOR_PRESENT"] == 1) rooms["COC_ZETAZ_ENTRACE"].addFlag(GLOBAL.COMMERCE);
+	}
+	
+	if (flags["COC.ZETAZ_FUNGUS_ROOM_DEFEATED"] == undefined) rooms["COC_ZETAZ_FUNGUS_CAVERN"].addFlag(GLOBAL.PLANT_BULB);
+	else {
+		rooms["COC_ZETAZ_FUNGUS_CAVERN"].removeFlags(GLOBAL.PLANT_BULB, GLOBAL.HAZARD);
+	}
+	
+	rooms["COC_ZETAZ_TORTURE_ROOM"].removeFlags(GLOBAL.NPC);
+	if (flags["COC.FREED_VALA"] == undefined) rooms["COC_ZETAZ_TORTURE_ROOM"].addFlag(GLOBAL.NPC);
+	
+}
+private var ZetazCaveUpdateNotifyHook: * = ZetazCaveUpdateNotifyGrapple();
+private function ZetazCaveUpdateNotifyGrapple():* { variableRoomUpdateListeners.push(ZetazCaveUpdateNotify); }

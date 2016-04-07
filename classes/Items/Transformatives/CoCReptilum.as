@@ -475,6 +475,9 @@ package classes.Items.Transformatives
 				pc.skinFlags = [];
 				changes++;
 			}
+			
+			if (pc.faceType == GLOBAL.TYPE_LIZAN && rand(3) == 0 && changes < changeLimit && Mutator.changeTongue(pc, GLOBAL.TYPE_LIZAN, [GLOBAL.FLAG_LONG, GLOBAL.FLAG_PREHENSILE], null, null, true)) changes++;
+			
 			//-Lizard-like face.
 			if (pc.faceType != GLOBAL.TYPE_LIZAN && pc.skinType == GLOBAL.SKIN_TYPE_SCALES && pc.earType == GLOBAL.TYPE_LIZAN && pc.hasTail(GLOBAL.TYPE_LIZAN) && pc.legType == GLOBAL.TYPE_LIZAN && changes < changeLimit && rand(5) == 0) {
 				output("\n\nTerrible agony wracks your [pc.face] as bones crack and shift.  Your jawbone rearranges while your cranium shortens.  The changes seem to last forever; once they've finished, no time seems to have passed.  Your fingers brush against your toothy snout as you get used to your new face.  It seems <b>you have a toothy, reptilian visage now.</b>");

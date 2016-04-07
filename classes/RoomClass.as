@@ -44,17 +44,27 @@
 
 		//Functions
 		public function hasFlag(arg:int):Boolean {
-			for(var x:int = 0; x <= roomFlags.length; x++) {
+			for(var x:int = 0; x < roomFlags.length; x++) {
 				if(roomFlags[x] == arg) return true;
 			}
 			return false;
+		}
+		public function addFlags(...arg:Array/*int*/):void {
+			for (var x:int = 0; x < arg.length; x++) {
+				addFlag(arg[x]);
+			}
 		}
 		public function addFlag(arg:int):void {
 			if(hasFlag(arg)) return;
 			roomFlags[roomFlags.length] = arg;
 		}
+		public function removeFlags(...arg:Array/*int*/):void {
+			for (var x:int = 0; x < arg.length; x++) {
+				removeFlag(arg[x]);
+			}
+		}
 		public function removeFlag(arg:int):void {
-			for(var x:int = 0; x <= roomFlags.length; x++) {
+			for(var x:int = 0; x < roomFlags.length; x++) {
 				if(arg == roomFlags[x]) roomFlags.splice(x,1);
 			}
 		}

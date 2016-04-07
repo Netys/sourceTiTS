@@ -1358,6 +1358,8 @@ public function variableRoomUpdateCheck():void
 	
 	// KQuest
 	kquest2RoomStateUpdater();
+	
+	notifyVariableRoomUpdateListenerss(); // for CoC rooms
 }
 
 public function processTime(arg:int):void {

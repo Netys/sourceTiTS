@@ -11,6 +11,12 @@ public function notifyTimeProcessListeners():void {
 	for each (var name:* in timeChangeListeners) name();
 }
 
+public var variableRoomUpdateListeners:/*Function*/Array = [];
+
+public function notifyVariableRoomUpdateListenerss():void {
+	for each (var name:* in variableRoomUpdateListeners) name();
+}
+
 include "events.as";
 include "masturbation.as";
 

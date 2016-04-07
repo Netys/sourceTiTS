@@ -74,7 +74,7 @@ package classes.Characters.CoC
 			
 			this.femininity = 10;
 			this.eyeType = GLOBAL.TYPE_SNAKE;
-			this.eyeColor = "red";
+			this.eyeColor = "yellow";
 			this.tallness = 86;
 			this.thickness = 40;
 			this.tone = 75;

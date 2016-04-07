@@ -785,96 +785,101 @@ public function customPCCheck(TF:Boolean = false):Boolean
 		case "":
 			
 			break;
+		/*Etis is a nine-tails kitsune cyborg, who got best of two worlds, bost as in being herm and as in being a bridge between CoC and TiTS worlds. Mostly pure white with azure accents. Done hell op for purpose of testing overleveled CoC encounters. And to feel badass. Just 'cause I had the mood for procrastination, it has ton of details and even notably different tauric version for start as Leithan.*/
 		case "etis":
-			pc.originalRace = pc.isTaur() ? "kitsune-taur" : "kitsune";
-			pc.tallness = pc.isTaur() ? 12 * 5 + 6 : 12 * 4 + 9;
-			pc.tone = 20;
-			pc.thickness = 10;
-			pc.buttRatingRaw = 2;
-			pc.hipRatingRaw = 2;
-			pc.hairLength = 0;
-			pc.femininity = 85;
-			pc.lipMod = -4;
+			pc.originalRace = pc.isTaur() ? "kitsune-taur" : "kitsune"; // You've always been a kitsune. Always, I said!
+			pc.tallness = pc.isTaur() ? 12 * 6 + 6 : 12 * 4 + 9; // small and dainty anthro foxes are adorable, but small taurs? taurs should be big!
+			pc.tone = pc.isTaur() ? 100 : 20;
+			pc.thickness = pc.isTaur() ? 70 : 10;
+			pc.buttRatingRaw = pc.isTaur() ? 8 : 2;
+			pc.hipRatingRaw = pc.isTaur() ? 8 : 2;
+			pc.hairLength = 0; // fur is just fine... had to fix appearance handling to not use word "bald", though
+			pc.femininity = 85; // Androgyny perk would change how it works
+			pc.lipMod = -4; // plump limps on fox muzzle? too cartoonish
 			pc.lipColor = "azure";
-			pc.exhibitionismRaw = 50;
-			pc.personality = 50;
+			pc.exhibitionismRaw = 50; // with all that fur being naked is not exactly possible, so why bother?
+			pc.personality = 50; // say "fox" mean "trickster"
 			pc.hairColor = "pure white";
 			pc.hairType = GLOBAL.HAIR_TYPE_REGULAR;
-			pc.furColor = "pure white";
-			pc.eyeColor = "luminous celeste";
+			pc.furColor = "pure white"; // fun fact: "arctic fox" in Russian is euphemism for obscene synonym of "disaster"
+			pc.eyeColor = "luminous celeste"; // unfathomable and serene, like clear summer sky...
 			pc.skinTone = "albino";
-			if (!pc.hasStatusEffect("Vanae Markings")) pc.createStatusEffect("Vanae Markings");
-			pc.skinAccent = "luminous azure";
-			pc.faceType = GLOBAL.TYPE_VULPINE;
+			if (!pc.hasStatusEffect("Vanae Markings")) pc.createStatusEffect("Vanae Markings"); // everyone loves them!
+			pc.skinAccent = "luminous azure"; // but with own flavor
+			pc.faceType = GLOBAL.TYPE_VULPINE; // and they called you crazy... and they were right...
 			pc.faceFlags = [GLOBAL.FLAG_MUZZLED];
-			pc.tongueType = GLOBAL.TYPE_DRACONIC;
+			pc.tongueType = GLOBAL.TYPE_DRACONIC; // 120 cm of strong, prehensile tongue? yes!
 			pc.tongueFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_PREHENSILE];
-			pc.wingType = GLOBAL.TYPE_DRACONIC;
-			pc.earType = GLOBAL.TYPE_VULPINE;
-			pc.armType = GLOBAL.TYPE_VULPINE;
+			pc.wingType = GLOBAL.TYPE_DRACONIC; // I believe I can fly...
+			pc.earType = GLOBAL.TYPE_VULPINE; // I can hear you!
+			pc.armType = GLOBAL.TYPE_VULPINE; // pads and claws? that will do
 			pc.armFlags = [GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS];
-			pc.legType = GLOBAL.TYPE_VULPINE;
+			pc.legType = GLOBAL.TYPE_VULPINE; // why digitigrade legs are so classy?
 			pc.legCount = pc.isTaur() ? 4 : 2;
 			pc.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS];
-			pc.skinType = GLOBAL.SKIN_TYPE_FUR;
+			pc.skinType = GLOBAL.SKIN_TYPE_FUR; // soft... warm... luxurious...
 			pc.skinFlags = [];
-			pc.tailType = GLOBAL.TYPE_VULPINE;
+			pc.tailType = GLOBAL.TYPE_VULPINE; // they are so fluffy, you want to touch them!
 			pc.tailCount = 9;
-			pc.tailGenitalColor = "azure";
+			pc.tailGenital = GLOBAL.TAIL_GENITAL_COCK; // but in soviet TiTS fluffy tails touch YOU!
 			pc.tailGenitalArg = GLOBAL.TYPE_VULPINE;
-			pc.tailGenital = GLOBAL.TAIL_GENITAL_COCK;
+			pc.tailGenitalColor = "azure";
 			pc.tailFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_FLUFFY, GLOBAL.FLAG_PREHENSILE, GLOBAL.FLAG_TAILCOCK, GLOBAL.FLAG_KNOTTED, GLOBAL.FLAG_TAPERED, GLOBAL.FLAG_SHEATHED];
-			if (!pc.hasCock()) pc.createCock();
-			pc.shiftCock(0, GLOBAL.TYPE_VULPINE);
+			if (!pc.hasCock()) pc.createCock(); // must have one here, since no one loves tail-mounted ones...
+			pc.shiftCock(0, GLOBAL.TYPE_VULPINE); // like canine, but better!
 			pc.cocks[0].cLengthRaw = pc.isTaur() ? 16 : 8;
 			pc.cocks[0].knotMultiplier = 1.5;
 			pc.cocks[0].cockColor = "azure";
-			pc.cumType = GLOBAL.FLUID_TYPE_VANAE_CUM;
-			if (!pc.hasVagina()) pc.createVagina();
-			pc.shiftVagina(0, GLOBAL.TYPE_CANINE);
+			pc.cumType = GLOBAL.FLUID_TYPE_VANAE_CUM; // glowing! tasty!
+			if (!pc.hasVagina()) pc.createVagina(); // why not? more possibilities are always good, right?
+			pc.shiftVagina(0, GLOBAL.TYPE_CANINE); // let's go to the wild side!
 			pc.vaginas[0].wetnessRaw = 1;
 			pc.vaginas[0].loosenessRaw = 1;
-			pc.vaginas[0].bonusCapacity = 9000;
+			pc.vaginas[0].bonusCapacity = 9000; // hammerspace, ho!
 			pc.vaginas[0].vaginaColor = "azure";
-			pc.girlCumType = GLOBAL.FLUID_TYPE_GIRLCUM;
+			pc.girlCumType = GLOBAL.FLUID_TYPE_GIRLCUM; // eeeh, no fancy options here... FLUID_TYPE_SPECIAL_GOO is sort of cool, but it is green by default... why I am so much of a perfectionist?
 			pc.ass.bonusCapacity = 500;
-			pc.elasticity = 4;
-			if (pc.breastRows[0].breastRatingRaw > 2) pc.breastRows[0].breastRatingRaw = 2;
+			pc.ass.wetnessRaw = 1;
+			pc.ass.loosenessRaw = 1;
+			pc.elasticity = 4; // bring it on!!!
+			pc.breastRows[0].breastRatingRaw = 1; // maleherms ain't cool, but breasts? meh...
 			pc.breastRows[0].nippleType = GLOBAL.NIPPLE_TYPE_INVERTED;
 			pc.nippleColor = "azure";
-			pc.milkType = GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK;
-			pc.milkStorageMultiplier = 4;
-			pc.balls = pc.isTaur() ? 4 : 0;
-			pc.ballSizeRaw = (pc.isTaur() ? 3 : 6) * Math.PI;
+			pc.milkType = GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK; // have no idea why
+			pc.milkStorageMultiplier = 4; // really no idea
+			pc.balls = pc.isTaur() ? 4 : 0; // futas with balls? better no, but in case of taurs I'm not sure...
+			pc.ballSizeRaw = (pc.isTaur() ? 3 : 6) * Math.PI; // high math, ho!
 			pc.refractoryRate = pc.balls > 0 ? 4 : 20;
 			pc.cumMultiplierRaw = 50;
 			pc.ballEfficiency = 50;
-			// This character is hell op. By design. What?
-			if (!pc.hasPerk("Enlightened Nine-tails")) pc.createPerk("Enlightened Nine-tails", 0, 0, 0, 0, "The mystical energy of the nine-tails surges through you, filling you with phenomenal cosmic power!");
-			if (!pc.hasPerk("Dragonfire")) pc.createPerk("Dragonfire", 0, 0, 0, 0, "You have much more dragon inside than outside.");
-			if (!pc.hasPerk("Androgyny")) pc.createPerk("Androgyny", 0, 0, 0, 0, "Your visage is always androgynous.");
-			if (!pc.hasPerk("Omnibus' Gift")) pc.createPerk("Omnibus' Gift", 0, 0, 0, 0, "Your desires are always burning bright.");
-			if (!pc.hasPerk("Hidden Loot")) pc.createPerk("Hidden Loot", 0, 0, 0, 0, "Two more inventory slots, granted by draconic greed.");
+			if (!pc.hasPerk("Enlightened Nine-tails")) pc.createPerk("Enlightened Nine-tails", 0, 0, 0, 0, "The mystical energy surges through you, filling you with cosmic power!");
+			if (!pc.hasPerk("Dragonfire")) pc.createPerk("Dragonfire", 0, 0, 0, 0, "You are much more dragon inside than outside."); // my hide is keeping explosion inside, not vice versa!
+			if (!pc.hasPerk("Androgyny")) pc.createPerk("Androgyny", 0, 0, 0, 0, "Your visage is always androgynous."); // not anthro enough for usual gender recognition patterns to really work
+			if (!pc.hasPerk("Hidden Loot")) pc.createPerk("Hidden Loot", 0, 0, 0, 0, "Two more inventory slots, granted by draconic greed."); // I know, class-specific perk descriptions would be overwritten
 			if (!pc.hasPerk("Leap Up")) pc.createPerk("Leap Up", 0, 0, 0, 0, "Who said that only cat will always land on its feet?");
 			if (!pc.hasPerk("Agility")) pc.createPerk("Agility", 0, 0, 0, 0, "Why take the blow, when you can sidestep it?");
 			if (!pc.hasPerk("Sharp Eyes")) pc.createPerk("Sharp Eyes", 0, 0, 0, 0, "You know too much about illusions to be easily deceived by them.");
 			if (!pc.hasPerk("Shield Booster")) pc.createPerk("Shield Booster", 0, 0, 0, 0, "You can channel your own energy through your shield generator.");
 			if (!pc.hasPerk("Attack Drone")) pc.createPerk("Attack Drone", 0, 0, 0, 0, "High-tech toys are so much fun!");
 			if (!pc.hasPerk("Bloodthirsty")) pc.createPerk("Bloodthirsty", 0, 0, 0, 0, "Whatever you are lacking in constitution, you can make up by enthusiasm!");
-			if (!pc.hasPerk("Implant: Iron Body"))             pc.createPerk("Implant: Iron Body",             10, 0.25, 0, 0, "System of implants in your musculoskeletal system, which can greatly improve your physique.");
-			if (!pc.hasPerk("Implant: Wired Reflexes"))        pc.createPerk("Implant: Wired Reflexes",        10, 0.25, 0, 0, "Partial electrical replacement for your nervous system, which can greatly improve your reflexes.");
-			if (!pc.hasPerk("Implant: Optical Analyzer"))      pc.createPerk("Implant: Optical Analyzer",      10, 0.25, 0, 0, "Complex of retinal and neural implants, which can greatly improve your aim.");
-			if (!pc.hasPerk("Implant: Cognitive Coprocessor")) pc.createPerk("Implant: Cognitive Coprocessor", 10, 0.25, 0, 0, "Complex of neural implants, which can greatly improve your intellegence.");
-			if (!pc.hasPerk("Implant: Mental Shield"))         pc.createPerk("Implant: Mental Shield",         10, 0.25, 0, 0, "Complex of neural implants, which can greatly improve your willpower.");
-			if (!pc.hasStatusEffect("Tolerance")) pc.createStatusEffect("Tolerance", 100, 0, 0, 0);
-			if (!pc.hasStatusEffect("Genital Slit")) pc.createStatusEffect("Genital Slit", 0, 0, 0, 0);
-			if (!pc.hasStatusEffect("Infertile")) pc.createStatusEffect("Infertile", 0, 0, 0, 0);
-			pc.unspentStatPoints = 999;
-			pc.armor = new IllusoryAttire();
+			if (!pc.hasPerk("Implant: Iron Body"))				pc.createPerk("Implant: Iron Body",				10, 0.25, 0, 0, "System of implants in your musculoskeletal system, which can greatly improve your physique.");
+			if (!pc.hasPerk("Implant: Wired Reflexes"))			pc.createPerk("Implant: Wired Reflexes",		10, 0.25, 0, 0, "Partial electrical replacement for your nervous system, which can greatly improve your reflexes.");
+			if (!pc.hasPerk("Implant: Optical Analyzer"))		pc.createPerk("Implant: Optical Analyzer",		10, 0.25, 0, 0, "Complex of retinal and neural implants, which can greatly improve your aim.");
+			if (!pc.hasPerk("Implant: Cognitive Coprocessor"))	pc.createPerk("Implant: Cognitive Coprocessor",	10, 0.25, 0, 0, "Complex of neural implants, which can greatly improve your intellegence.");
+			if (!pc.hasPerk("Implant: Mental Shield"))			pc.createPerk("Implant: Mental Shield",			10, 0.25, 0, 0, "Complex of neural implants, which can greatly improve your willpower.");
+			if (!pc.hasPerk("Implant: Hormonal Controller"))	pc.createPerk("Implant: Hormonal Controller",	30,   30, 0, 0, "Complex of implants for your hormonal system, which can significantly improve your control over your sexual urges.");
+			if (!pc.hasStatusEffect("Tolerance"))		pc.createStatusEffect("Tolerance", 100, 0, 0, 0); // too lazy to code real immunity
+			if (!pc.hasStatusEffect("Genital Slit"))	pc.createStatusEffect("Genital Slit", 0, 0, 0, 0); // dangling all the time bits are not classy
+			if (!pc.hasStatusEffect("Uniball"))			pc.createStatusEffect("Uniball", 0, 0, 0, 0);
+			if (!pc.hasStatusEffect("Infertile"))		pc.createStatusEffect("Infertile", 0, 0, 0, 0); // here to have fun, nothing more!
+			pc.unspentStatPoints = 999; // I saw all sorts of shit in my former lives
+			pc.armor = new IllusoryAttire(); // clothes? fur furevar!
 			pc.meleeWeapon = new CoCLethiceWhip();
 			pc.lowerUndergarment = new EmptySlot();
 			pc.upperUndergarment = new EmptySlot();
-			bonusTexts = "You are the only one who is aware of boundless potential hidden inside of your small and weird body... For now.";
+			NineTailsTimePassedNotify(); // validate the IllusoryAttire for kitsune
+			eventBuffer = ""; // suppress output from NineTailsTimePassedNotify
+			bonusTexts = "You are the only one who is aware of boundless potential hidden inside of your " + (pc.isTaur() ? "massive" : "small") + " and weird body... For now.";
 			break;
 		default:
 			if(!TF) return false;

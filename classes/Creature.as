@@ -3372,6 +3372,7 @@
 			if (hasStatusEffect("Uma's Massage") && statusEffectv1("Uma's Massage") == 0) currLib *= statusEffectv2("Uma's Massage");
 			if (hasStatusEffect("Uma's Massage") && statusEffectv1("Uma's Massage") == 1) currLib *= statusEffectv2("Uma's Massage");
 			if (hasStatusEffect("Mare Musk")) currLib += 10;
+			if (hasPerk("Implant: Hormonal Controller")) currLib += perkv3("Implant: Hormonal Controller");
 			
 			if (currLib > libidoMax())
 			{
@@ -3394,10 +3395,7 @@
 			if (hasPerk("Venom Slut") && hasStatusEffect("Red Myr Venom")) bonus += 35;
 			if (hasPerk("Bimbo Body") || hasPerk("Bro Body") || hasPerk("Futa Form")) bonus += 20;
 			if (hasPerk("Omnibus' Gift")) bonus += 15;
-			if (hasPerk("Implant: Hormonal Controller")) {
-				bonus += perkv1("Implant: Hormonal Controller");
-				bonus += level * 5 * perkv2("Implant: Hormonal Controller");
-			}
+			if (hasPerk("Implant: Hormonal Controller")) bonus += perkv2("Implant: Hormonal Controller");
 			if(hasStatusEffect("Perfect Simulant")) bonus += 50;
 			return (100 + bonus);
 		}
@@ -3405,6 +3403,7 @@
 			var bonus:int = 0;
 			if (hasPerk("Drug Fucked")) bonus += 10;
 			if (hasPerk("Black Latex")) bonus += 10;
+			if (hasPerk("Implant: Hormonal Controller")) bonus += perkv1("Implant: Hormonal Controller");
 			if (hasPerk("Bimbo Body") || hasPerk("Bro Body") || hasPerk("Futa Form")) {
 				if(bonus > 40) bonus += 10;
 				else if(bonus >= 20) bonus += 20;
@@ -3478,7 +3477,8 @@
 		}
 		public function libidoMax(): Number {
 			var bonuses:int = 0;
-			if(hasStatusEffect("Perfect Simulant")) bonuses += 50;
+			if (hasStatusEffect("Perfect Simulant")) bonuses += 50;
+			if (hasPerk("Implant: Hormonal Controller")) bonuses += perkv4("Implant: Hormonal Controller");
 			return 100 + bonuses;
 		}
 		public function libidoMin(): Number {
@@ -4240,6 +4240,9 @@
 					break;
 				case GLOBAL.TYPE_NAGA:
 					types.push("forked", "reptilian", "flitting", "snake-like");
+					break;
+				case GLOBAL.TYPE_LIZAN:
+					types.push("smooth", "reptilian", "thick");
 					break;
 				case GLOBAL.TYPE_DEMONIC:
 					types.push("slowly undulating", "retractable", "demonic");
@@ -6489,7 +6492,7 @@
 			}
 			return false;
 		}
-		public function cockVolume(cockNum: Number, effective: Boolean = true): Number {
+		public function cockVolume(cockNum: Number = 0, effective: Boolean = true): Number {
 			if (cockNum >= cocks.length || cockNum < 0) return 0;
 			if (effective) return (cocks[cockNum].effectiveVolume());
 			else return (cocks[cockNum].volume());

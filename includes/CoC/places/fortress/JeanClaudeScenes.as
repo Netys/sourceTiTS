@@ -142,7 +142,7 @@ private function challengeBasilisksGo():void
 	
 	output("\n\nIt’s a basilisk- but bigger, at least a foot taller than those that surround him, heavier built, and obviously simmering deep in corruption. Purple scales slather his shoulders and back like an imperial cloak, and he is clad in a military tunic and ornate brass cuirass. The former does absolutely nothing to disguise his two thick, purple pricks, which unlike those of his brethren swing freely and imposingly between his muscled legs. His long, tapering face gives him a toothy sneer of epic proportions, and his proud head is crowned with a helmet, resplendent with a long, black ponytail. His eyes... even you have to gather all your willpower. Leering, the basilisk rex steps closer to you, bathing you in his hungry glare. They are a seething yellow, pupil-less, two eternal, burning suns of depthless corruption.");
 	
-	output("You stare into the yellow, hypnotic eyes, seeing them as part of this being rather than the whole, see the arrogance that sits behind them.");
+	output("You stare into the yellow, hypnotic eyes, seeing them as part of this being rather than the whole, seeing the arrogance that sits behind them.");
 
 	output("\n\n“<i>Some king you are,</i>” you say. Jean-Claude draws back, looking slightly surprised, and you press on. “<i>Your servants did all the hard work- you just came out to claim all the credit at the end. Is that how it works for basilisks? You get the day-glo eyes for sucking demon dick, and then sit on your ass whilst everybody else does the thinking and fighting for you?</i>”");
 

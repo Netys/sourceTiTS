@@ -399,7 +399,7 @@ public function DemonFactoryRepairCloset():Boolean {
 public function DemonFactoryMainChamber():Boolean {
 	if(flags["COC.FACTORY_SHUTDOWN"] <= 0) {
 		output("This cavernous chamber is filled with a cacophony of sexual moans.  Rows of harnesses are spaced evenly throughout this room, nearly all of them filled with delirious-looking humans.  Each is over-endowed with huge breasts and a penis of elephantine proportions.  The source of their delirium hangs down from the ceiling - groups of hoses that end with needles buried deep into the poor 'girls' flesh, pumping them full of demonic chemicals.  Constant sucking and slurping noises emanate from nipple and cock pumps as they keep the victims in a state of near-constant orgasm.  ");
-		if(cor() < 50) output("You wish you could free them, but it would take the better part of a day to get them all free.  It'd be better to find the control room and shut down the infernal machinery.  ");
+		if(pc.cor() < 50) output("You wish you could free them, but it would take the better part of a day to get them all free.  It'd be better to find the control room and shut down the infernal machinery.  ");
 		else output("You wish you had some machinery like this for yourself.  It looks so fun!  Still, you suppose you should find the control panel to shut this down and free these people.  ");
 		output("There is a doorway to the east marked with an 'exit' sign above it.  Along the southern wall is a stairwell that leads up to some kind of foreman's office.  Perhaps the controls are in there?");
 	}
@@ -539,3 +539,32 @@ public function DemonFactoryCleared():Boolean {
 		&& flags["COC.FACTORY_SUCCUBUS_DEFEATED"] > 0 
 		&& flags["COC.FACTORY_INCUBUS_DEFEATED"] > 0;
 }
+
+public function FactoryRoomUpdateNotify():void {
+	if(DemonFactoryCleared())
+	{
+		rooms["COC_FACTORY_FOYER"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_FACTORY_BREAK_ROOM"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_FACTORY_PUMP_ROOM"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_FACTORY_FURNACE_ROOM"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_FACTORY_REPAIR_CLOSET"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_FACTORY_MAIN_CHAMBER"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_FACTORY_FOREMAN_OFFICE"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_FACTORY_CONTROL_ROOM"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_FACTORY_BATHROOM"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_FACTORY_PREMIUM_PRODUCTS"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+	}
+	
+	if (flags["COC.FACTORY_INCUBUS_DEFEATED"] != 1) rooms["COC_FACTORY_FURNACE_ROOM"].addFlag(GLOBAL.NPC); // not objective here
+	else rooms["COC_FACTORY_FURNACE_ROOM"].removeFlag(GLOBAL.NPC);
+	if (flags["COC.FACTORY_SUCCUBUS_DEFEATED"] != 1) rooms["COC_FACTORY_BREAK_ROOM"].addFlag(GLOBAL.OBJECTIVE);
+	else rooms["COC_FACTORY_BREAK_ROOM"].removeFlag(GLOBAL.OBJECTIVE);
+	if (flags["COC.FACTORY_OMNIBUS_DEFEATED"] != 1) rooms["COC_FACTORY_MAIN_CHAMBER"].addFlag(GLOBAL.OBJECTIVE); // technically it's COC_FACTORY_FOREMAN_OFFICE, but it is on other floor and you are there once you use ladder
+	else {
+		rooms["COC_FACTORY_MAIN_CHAMBER"].removeFlag(GLOBAL.OBJECTIVE)
+		rooms["COC_FACTORY_MAIN_CHAMBER"].addFlag(GLOBAL.NPC);
+	}
+	
+}
+private var FactoryRoomUpdateNotifyHook: * = FactoryRoomUpdateNotifyGrapple();
+private function FactoryRoomUpdateNotifyGrapple():* { variableRoomUpdateListeners.push(FactoryRoomUpdateNotify); }

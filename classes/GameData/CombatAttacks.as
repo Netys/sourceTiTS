@@ -664,7 +664,7 @@ package classes.GameData
 			AFL = new SingleCombatAttack();
 			AFL.ButtonName = "AFL";
 			AFL.ExtendedDisplayabilityCheck = function():Boolean {
-				return kGAMECLASS.pc.hasKeyItem("AFL");
+				return kGAMECLASS.pc.hasKeyItem("AFL") || kGAMECLASS.debug;
 			}
 			AFL.TooltipTitle = "AFL";
 			AFL.TooltipBody = "Bring out your final argument.";
