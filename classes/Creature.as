@@ -3373,6 +3373,7 @@
 			if (hasStatusEffect("Uma's Massage") && statusEffectv1("Uma's Massage") == 1) currLib *= statusEffectv2("Uma's Massage");
 			if (hasStatusEffect("Mare Musk")) currLib += 10;
 			if (hasPerk("Implant: Hormonal Controller")) currLib += perkv3("Implant: Hormonal Controller");
+			if (hasPerk("Slut Stamp") && hasGenitals() && isCrotchGarbed()) currLib += perkv1("Slut Stamp");
 			
 			if (currLib > libidoMax())
 			{
@@ -3403,6 +3404,7 @@
 			var bonus:int = 0;
 			if (hasPerk("Drug Fucked")) bonus += 10;
 			if (hasPerk("Black Latex")) bonus += 10;
+			if (hasStatusEffect("Sexy Costume")) bonus += statusEffectv1("Sexy Costume");
 			if (hasPerk("Implant: Hormonal Controller")) bonus += perkv1("Implant: Hormonal Controller");
 			if (hasPerk("Bimbo Body") || hasPerk("Bro Body") || hasPerk("Futa Form")) {
 				if(bonus > 40) bonus += 10;
@@ -3479,11 +3481,13 @@
 			var bonuses:int = 0;
 			if (hasStatusEffect("Perfect Simulant")) bonuses += 50;
 			if (hasPerk("Implant: Hormonal Controller")) bonuses += perkv4("Implant: Hormonal Controller");
+			if(hasPerk("Slut Stamp")) bonuses += perkv3("Slut Stamp");
 			return 100 + bonuses;
 		}
 		public function libidoMin(): Number {
 			var bonus:int = 0;
 			if(hasPerk("Drug Fucked")) bonus += 40;
+			if(hasPerk("Slut Stamp")) bonus += perkv2("Slut Stamp");
 			// Slave collar increases minimum by set level.
 			if(hasStatusEffect("Psy Slave Collar")) bonus += statusEffectv3("Psy Slave Collar");
 			return (0 + bonus);
@@ -5876,6 +5880,19 @@
 			trace("ERROR: Looking for status '" + storageName + "' to change tooltip but couldn't find it.");
 			return;
 		}
+		public function getStatusTooltip(storageName: String):String
+		{
+			if (statusEffects.length <= 0) return "";
+			for(var i:int = 0; i < statusEffects.length; i++)
+			{
+				if (statusEffects[i].storageName == storageName)
+				{
+					return statusEffects[i].tooltip;
+				}
+			}
+			trace("ERROR: Unable to find '" + storageName + "' to update icon shade.");
+			return "<b>ERROR: Unable to find '" + storageName + "' to display its tooltip.</b>";
+		}
 		
 		public function setStatusIconShade(storageName:String, iconShade:uint):void
 		{
@@ -6661,41 +6678,42 @@
 			}
 			return cocks[arg].cLengthFlaccid();
 		}
-		public function thickestCock(): Number {
+		public function thickestCock():int {
 			if (cocks.length == 0) return 0;
-			var counter: Number = cocks.length;
-			var index: Number = 0;
+			var counter: int = cocks.length;
+			var index: int = 0;
 			while (counter > 0) {
 				counter--;
 				if (cocks[index].thickness() < cocks[counter].thickness()) index = counter;
 			}
 			return index;
 		}
-		public function thinnestCock():Number {
-			if (cocks.length == 0) return -1;
+		public function thinnestCock():int {
+			if (cocks.length <= 0) return -1;
 			if (cocks.length == 1) return 0;
 			
 			var foundCock:int = 0;
 			
 			for (var i:int = 0; i < cocks.length; i++)
 			{
-				if ((cocks[i] as CockClass).thickness() < (cocks[foundCock] as CockClass).thickness())
+				if (cocks[i].thickness() < cocks[foundCock].thickness())
 				{
 					foundCock = i;
 				}
 			}
 			
-			return i;
+			return foundCock;
 		}
 		public function thinnestCockThickness():Number {
+			if (cocks.length <= 0) return -1;
+			
 			var foundCock:int = thinnestCock();
 			
-			if (foundCock >= 0) return (cocks[foundCock] as CockClass).thickness();
-			return -1;
+			return cocks[foundCock].thickness();
 		}
 		public function totalGirth(): Number {
 			if (cocks.length == 0) return 0;
-			var counter: int = 0;
+			var counter: Number = 0;
 			for (var x: int = 0; x < cocks.length; x++) {
 				counter += cocks[x].cLength();
 			}
@@ -7863,6 +7881,14 @@
 		{
 			return (hasCock() && hasVagina());
 		}
+		public function totalGenitals():Number
+		{
+			return (cockTotal() + totalVaginas());
+		}
+		public function genitalCount():Number
+		{
+			return totalGenitals();
+		}
 		public function hasTail(tType:Number = 0): Boolean
 		{
 			if (tailCount > 0 && tailType != GLOBAL.TYPE_HUMAN)
@@ -8615,9 +8641,11 @@
 			if (femininity < 40)
 			{
 				if (hasCock() && hasVagina()) return "bull-futa";
-				if (hasCock() && !hasVagina() && femininity < 20) return "bull-man";
-				if (hasCock() && !hasVagina()) return "bull-boy";
+				if (hasCock() && !hasVagina() && beardLength == 0 && tallness < 63) return "bull-boy";
 				if (!hasCock() && hasVagina()) return "cow-boy";
+				if (hasCock() && !hasVagina()) return "bull-man";
+				
+				
 				return "bull-morph";
 			}
 			return "part bovine-morph";
@@ -10320,7 +10348,11 @@
 			
 			return areolasize;
 		}
-
+		
+		public function canStyleHairType():Boolean {
+			if(InCollection(hairType, [GLOBAL.HAIR_TYPE_TENTACLES, GLOBAL.HAIR_TYPE_FEATHERS])) return false;
+			return true;
+		}
 		public function hairDescript(forceLength: Boolean = false, forceColor: Boolean = false): String {
 			var descript: String = "";
 			var descripted: Number = 0;

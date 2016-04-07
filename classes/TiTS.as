@@ -128,6 +128,7 @@
 		include "../includes/follower.celiseGiga.as";
 		
 		//Sidequest shit
+		include "../includes/events/seraSexParty.as";
 
 		//Misc content
 		include "../includes/rivalEncounters.as";
@@ -275,7 +276,10 @@
 		include "../includes/events/karaquest2/content.as";
 		include "../includes/events/karaquest2/rooms.as";
 		include "../includes/events/karaquest2/roomFunctions.as";
-				public var chars:Object;
+		
+		include "../includes/chargendata.as";
+		
+		public var chars:Object;
 		public var foes:/*Creature*/Array;
 		// This needs to ideally be moved somewhere else, I'm just stopping the GUI code from being used to store game-data models
 		public var days:int;
@@ -375,7 +379,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.44";
+			version = "0.6.45";
 
 			//temporary nonsense variables.
 			temp = 0;
