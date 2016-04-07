@@ -12,6 +12,9 @@ package classes.Engine.Combat
 	{
 		if (overrideAttack == -1) overrideAttack = attacker.meleeWeapon.attack;
 		
+		//Immune!
+		if (target.hasPerk("Melee Immune")) return true;
+		
 		if(rand(100) + attacker.physique()/5 + overrideAttack - target.reflexes()/5 < 10 * missModifier && !target.isImmobilized()) 
 		{
 			return true;

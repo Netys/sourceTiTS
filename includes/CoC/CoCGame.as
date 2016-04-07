@@ -81,6 +81,7 @@ include "places/deepCave/ZetazCave.as";
 include "places/desertCave/DesertCave.as";
 include "places/factory/factory.as";
 include "places/farm/Farm.as";
+include "places/fortress/fortress.as";
 include "places/owca/owca.as";
 include "places/teladre/TelAdre.as";
 
@@ -205,7 +206,7 @@ public function takeDamage(arg:Number):void {
 public function getKnownFireMagic():String {
 	if (pc.hasPerk("Enlightened Nine-tails")) return "ethereal fire";
 	if (pc.hasPerk("Corrupted Nine-tails")) return "ghostly flame";
-	if (flags["COC.SPELL_WHITEFIRE"] != undefined) return "whitefire";
+	if (flags["COC.SPELL_WHITEFIRE"] == 1) return "whitefire";
 	if (pc.hasPerk("Fire Lord")) return "terrestreal fire";
 	if (pc.hasPerk("Hellfire")) return "hellfire";
 	return null;

@@ -1,5 +1,8 @@
 import classes.RoomClass;
 import classes.GLOBAL;
+import classes.Util.*;
+import classes.Engine.Interfaces.*;
+import classes.Engine.Utility.*;
 
 //public static const INDOOR:int                                 = 0;
 //public static const OUTDOOR:int                                = 1;
@@ -476,3 +479,273 @@ rooms["COC_ZETAZ_CHAMBER"].addFlag(GLOBAL.HAZARD);
 rooms["COC_ZETAZ_CHAMBER"].addFlag(GLOBAL.NOFAP);
 rooms["COC_ZETAZ_CHAMBER"].addFlag(GLOBAL.CAVE);
 rooms["COC_ZETAZ_CHAMBER"].runOnEnter = ZetazCaveZetazChamber;
+
+// LETHICE FORTRESS
+
+rooms["COC FORTRESS ENTRACE"] = new RoomClass(this);
+rooms["COC FORTRESS ENTRACE"].description = "The inside of this cave is damp and dark, but it bears signs of frequent use. The map you got from Zetaz matches the curves of this winding passage exactly. There can be no doubt that this is the place, even though his map ends a short distance into the tunnel. Either he knew it would be a linear path or was so familiar with the territory that he didn’t think it was worth writing down. You can go east, deeper into the mountain towards Lethice’s fortress, or leave to the west.";
+rooms["COC FORTRESS ENTRACE"].moveMinutes = 3;
+rooms["COC FORTRESS ENTRACE"].roomName = "FORTRESS\nENTRACE";
+rooms["COC FORTRESS ENTRACE"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS ENTRACE"].system = "PLANET: MARETH";
+rooms["COC FORTRESS ENTRACE"].eastExit = "COC FORTRESS TUNNEL 1";
+rooms["COC FORTRESS ENTRACE"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS ENTRACE"].addFlag(GLOBAL.CAVE);
+rooms["COC FORTRESS ENTRACE"].runOnEnter = LethiceFortressEntranceRoomFunc;
+
+rooms["COC FORTRESS TUNNEL 1"] = new RoomClass(this);
+rooms["COC FORTRESS TUNNEL 1"].description = "Winding back and forth, the tunnel gradually arcs west and north from here, sloping steeply upward in the latter direction. The upward sloping side must lead to Lethice’s fortress, supposedly at the top of the mountain. You’ll have to be careful down here. You doubt that such an entrance would be completely unguarded. As a matter of fact... you think you can see signs of worked stone to the north. You’re getting close to something.";
+rooms["COC FORTRESS TUNNEL 1"].moveMinutes = 3;
+rooms["COC FORTRESS TUNNEL 1"].roomName = "FORTRESS\nTUNNEL";
+rooms["COC FORTRESS TUNNEL 1"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS TUNNEL 1"].system = "PLANET: MARETH";
+rooms["COC FORTRESS TUNNEL 1"].westExit = "COC FORTRESS ENTRACE";
+rooms["COC FORTRESS TUNNEL 1"].northExit = "COC FORTRESS ANTECHAMBER";
+rooms["COC FORTRESS TUNNEL 1"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS TUNNEL 1"].addFlag(GLOBAL.CAVE);
+rooms["COC FORTRESS TUNNEL 1"].addFlag(GLOBAL.HAZARD);
+
+rooms["COC FORTRESS ANTECHAMBER"] = new RoomClass(this);
+rooms["COC FORTRESS ANTECHAMBER"].description = "You are standing in a large, gloomy lobby, lit by the drear yellow pulse of gas lamps. The walls, floor and distant ceiling are uniformly built from a dark, aged stone which serves to make the vault-like space shadowy and oppressive, despite its size. The floor has been polished a dull bronze by years of use and the distant sound of activity permeates the air; it has the atmosphere of a place which is thronged with people during rush hour but is for now as deserted as a school corridor during class hours. Something to be grateful for perhaps, but you should get a move on.\n\nAhead is a large archway. Through it you can see some sort of dark screen set into a wall. On the right is a much smaller metal door, which looks like it might be a storage room.";
+rooms["COC FORTRESS ANTECHAMBER"].moveMinutes = 3;
+rooms["COC FORTRESS ANTECHAMBER"].roomName = "FORTRESS\nANTECHAMBER";
+rooms["COC FORTRESS ANTECHAMBER"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS ANTECHAMBER"].system = "PLANET: MARETH";
+rooms["COC FORTRESS ANTECHAMBER"].northExit = "COC FORTRESS MAGPIE HALL S";
+rooms["COC FORTRESS ANTECHAMBER"].eastExit = "COC FORTRESS MIRRORS";
+rooms["COC FORTRESS ANTECHAMBER"].southExit = "COC FORTRESS TUNNEL 1";
+rooms["COC FORTRESS ANTECHAMBER"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS ANTECHAMBER"].addFlag(GLOBAL.HAZARD);
+
+rooms["COC FORTRESS MIRRORS"] = new RoomClass(this);
+rooms["COC FORTRESS MIRRORS"].moveMinutes = 3;
+rooms["COC FORTRESS MIRRORS"].roomName = "FORTRESS\nMIRRORS ROOM";
+rooms["COC FORTRESS MIRRORS"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS MIRRORS"].system = "PLANET: MARETH";
+rooms["COC FORTRESS MIRRORS"].westExit = "COC FORTRESS ANTECHAMBER";
+rooms["COC FORTRESS MIRRORS"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS MIRRORS"].addFlag(GLOBAL.HAZARD);
+rooms["COC FORTRESS MIRRORS"].runOnEnter = LethiceFortressMirrorsRoomFunc;
+
+rooms["COC FORTRESS MAGPIE HALL S"] = new RoomClass(this);
+rooms["COC FORTRESS MAGPIE HALL S"].moveMinutes = 3;
+rooms["COC FORTRESS MAGPIE HALL S"].roomName = "FORTRESS\nMAGPIE HALL S";
+rooms["COC FORTRESS MAGPIE HALL S"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS MAGPIE HALL S"].system = "PLANET: MARETH";
+rooms["COC FORTRESS MAGPIE HALL S"].northExit = "COC FORTRESS MAGPIE HALL N";
+rooms["COC FORTRESS MAGPIE HALL S"].southExit = "COC FORTRESS ANTECHAMBER";
+rooms["COC FORTRESS MAGPIE HALL S"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS MAGPIE HALL S"].addFlag(GLOBAL.HAZARD);
+rooms["COC FORTRESS MAGPIE HALL S"].runOnEnter = LethiceFortressMagpieHallSRoomFunc;
+
+rooms["COC FORTRESS MAGPIE HALL N"] = new RoomClass(this);
+rooms["COC FORTRESS MAGPIE HALL N"].moveMinutes = 3;
+rooms["COC FORTRESS MAGPIE HALL N"].roomName = "FORTRESS\nMAGPIE HALL N";
+rooms["COC FORTRESS MAGPIE HALL N"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS MAGPIE HALL N"].system = "PLANET: MARETH";
+rooms["COC FORTRESS MAGPIE HALL N"].northExit = "COC FORTRESS TUNNEL 2";
+rooms["COC FORTRESS MAGPIE HALL N"].southExit = "COC FORTRESS MAGPIE HALL S";
+rooms["COC FORTRESS MAGPIE HALL N"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS MAGPIE HALL N"].addFlag(GLOBAL.HAZARD);
+rooms["COC FORTRESS MAGPIE HALL N"].runOnEnter = LethiceFortressMagpieHallNRoomFunc;
+
+rooms["COC FORTRESS TUNNEL 2"] = new RoomClass(this);
+rooms["COC FORTRESS TUNNEL 2"].description = "Light trickles in from the east. After all the trekking through these subterranean holes, you’ve got to be close to the mountain’s summit. You know that down the steeply sloped passage will take you back through the basilisks’ chamber if you want to leave the way you came, but a second trip through that crowded hall might be ill-advised. It’d be best to move forward into the sun.";
+rooms["COC FORTRESS TUNNEL 2"].moveMinutes = 3;
+rooms["COC FORTRESS TUNNEL 2"].roomName = "FORTRESS\nTUNNEL";
+rooms["COC FORTRESS TUNNEL 2"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS TUNNEL 2"].system = "PLANET: MARETH";
+rooms["COC FORTRESS TUNNEL 2"].northExit = "COC FORTRESS EDGE";
+rooms["COC FORTRESS TUNNEL 2"].southExit = "COC FORTRESS MAGPIE HALL N";
+rooms["COC FORTRESS TUNNEL 2"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS TUNNEL 2"].addFlag(GLOBAL.HAZARD);
+
+rooms["COC FORTRESS EDGE"] = new RoomClass(this);
+rooms["COC FORTRESS EDGE"].description = "Standing on the edge of the mountain's summit, you can see Mareth for miles in all direction. It's fairly disconcerting to focus on long with the constant shifting and twisting of the wasted areas, but here and there you can pick out islands of stability in the ephemeral terrain. You blink your eyes to clear the nauseating landscape from your view and turn back to the way ahead. Lethice's fortress lies a short distance to the north, its walls tall and stout. The gates themselves hang open. Likely she didn't expect anyone to make it this far.";
+rooms["COC FORTRESS EDGE"].moveMinutes = 3;
+rooms["COC FORTRESS EDGE"].roomName = "FORTRESS\nEDGE";
+rooms["COC FORTRESS EDGE"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS EDGE"].system = "PLANET: MARETH";
+rooms["COC FORTRESS EDGE"].northExit = "COC FORTRESS NORTH ENTRY";
+rooms["COC FORTRESS EDGE"].southExit = "COC FORTRESS TUNNEL 2";
+rooms["COC FORTRESS EDGE"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS EDGE"].addFlag(GLOBAL.HAZARD);
+
+rooms["COC FORTRESS NORTH ENTRY"] = new RoomClass(this);
+rooms["COC FORTRESS NORTH ENTRY"].description = "You now stand in the archway that is the southern entrance to Lethice's headquarters. The place is built like a castle. You can't see too much from your shaded position, but the bricks that surround you are individual as big as horses. The gates themselves are crafted of wood that looks at least a century old, reinforced with bands of gleaming metal that you doubt will ever rust. A barren cliffside can be seen to the south, the demon queen's lair to the north.";
+rooms["COC FORTRESS NORTH ENTRY"].moveMinutes = 3;
+rooms["COC FORTRESS NORTH ENTRY"].roomName = "FORTRESS\nNORTH ENTRY";
+rooms["COC FORTRESS NORTH ENTRY"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS NORTH ENTRY"].system = "PLANET: MARETH";
+rooms["COC FORTRESS NORTH ENTRY"].northExit = "COC FORTRESS SOUTH COURTYARD";
+rooms["COC FORTRESS NORTH ENTRY"].southExit = "COC FORTRESS EDGE";
+rooms["COC FORTRESS NORTH ENTRY"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS NORTH ENTRY"].addFlag(GLOBAL.HAZARD);
+
+rooms["COC FORTRESS SOUTH COURTYARD"] = new RoomClass(this);
+rooms["COC FORTRESS SOUTH COURTYARD"].description = "Lethice's courtyard is surprisingly well-groomed for a place that's supposedly home to neverending debauchery and depravity. The paths are laid with interconnecting sandstone bricks that reflect the sun to give the place a gentle, amber glow, and lush, green grass lines the sides along with well-trimmed hedges. You could almost mistake this place for a churchyard if it wasn't for the faint sound of moans on the wind. The courtyard paths lead away east and west, while the gateway out hangs open to the south.";
+rooms["COC FORTRESS SOUTH COURTYARD"].moveMinutes = 3;
+rooms["COC FORTRESS SOUTH COURTYARD"].roomName = "FORTRESS\nCOURTYARD S";
+rooms["COC FORTRESS SOUTH COURTYARD"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS SOUTH COURTYARD"].system = "PLANET: MARETH";
+rooms["COC FORTRESS SOUTH COURTYARD"].eastExit = "COC FORTRESS SOUTHEAST COURTYARD";
+rooms["COC FORTRESS SOUTH COURTYARD"].westExit = "COC FORTRESS SOUTHWEST COURTYARD";
+rooms["COC FORTRESS SOUTH COURTYARD"].southExit = "COC FORTRESS NORTH ENTRY";
+rooms["COC FORTRESS SOUTH COURTYARD"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS SOUTH COURTYARD"].addFlag(GLOBAL.HAZARD);
+
+rooms["COC FORTRESS SOUTHWEST COURTYARD"] = new RoomClass(this);
+rooms["COC FORTRESS SOUTHWEST COURTYARD"].description = "Some of the nearby bushes are blooming, filling the air with their sweet scent, unlike any flowers you’ve encounter before. Their petals are a multitude of colors, and their scents, though laced with corruption, are as sweet and pleasant as anything you've had the pleasure of smelling. The path you're treading upon curves north and east from here along the thick, red walls. Vines seem to crowd the way to the north. There are no signs of any ramps or ladders to get to the battlements, but there is a doorway to the west marked as 'Forge Wing'. A notice declares it closed for repairs.";
+rooms["COC FORTRESS SOUTHWEST COURTYARD"].moveMinutes = 3;
+rooms["COC FORTRESS SOUTHWEST COURTYARD"].roomName = "FORTRESS\nCOURTYARD SW";
+rooms["COC FORTRESS SOUTHWEST COURTYARD"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS SOUTHWEST COURTYARD"].system = "PLANET: MARETH";
+rooms["COC FORTRESS SOUTHWEST COURTYARD"].eastExit = "COC FORTRESS SOUTH COURTYARD";
+rooms["COC FORTRESS SOUTHWEST COURTYARD"].northExit = "COC FORTRESS SOUTHWEST WALK";
+rooms["COC FORTRESS SOUTHWEST COURTYARD"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS SOUTHWEST COURTYARD"].addFlag(GLOBAL.HAZARD);
+
+rooms["COC FORTRESS SOUTHWEST WALK"] = new RoomClass(this);
+rooms["COC FORTRESS SOUTHWEST WALK"].moveMinutes = 3;
+rooms["COC FORTRESS SOUTHWEST WALK"].roomName = "FORTRESS\nSW WALK";
+rooms["COC FORTRESS SOUTHWEST WALK"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS SOUTHWEST WALK"].system = "PLANET: MARETH";
+rooms["COC FORTRESS SOUTHWEST WALK"].northExit = "COC FORTRESS WEST WALK";
+rooms["COC FORTRESS SOUTHWEST WALK"].southExit = "COC FORTRESS SOUTHWEST COURTYARD";
+rooms["COC FORTRESS SOUTHWEST WALK"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS SOUTHWEST WALK"].addFlag(GLOBAL.HAZARD);
+rooms["COC FORTRESS SOUTHWEST WALK"].runOnEnter = LethiceFortressSouthWestWalkRoomFunc;
+
+rooms["COC FORTRESS WEST WALK"] = new RoomClass(this);
+rooms["COC FORTRESS WEST WALK"].moveMinutes = 3;
+rooms["COC FORTRESS WEST WALK"].roomName = "FORTRESS\nW WALK";
+rooms["COC FORTRESS WEST WALK"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS WEST WALK"].system = "PLANET: MARETH";
+rooms["COC FORTRESS WEST WALK"].northExit = "COC FORTRESS NORTHWEST WALK";
+rooms["COC FORTRESS WEST WALK"].southExit = "COC FORTRESS SOUTHWEST WALK";
+rooms["COC FORTRESS WEST WALK"].eastExit = "COC FORTRESS COURTYARD SQUARE";
+rooms["COC FORTRESS WEST WALK"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS WEST WALK"].addFlag(GLOBAL.HAZARD);
+rooms["COC FORTRESS WEST WALK"].runOnEnter = LethiceFortressWestWalkRoomFunc;
+
+rooms["COC FORTRESS NORTHWEST WALK"] = new RoomClass(this);
+rooms["COC FORTRESS NORTHWEST WALK"].description = "A narrow path splits from the sandstone thoroughfare towards a pair of double doors to the west. The craftsmanship of the carpenter who made them is on full display; intricate designs of dragons engaged in sexual positions of all kinds are carved around the outer edges of the frame while more mundane, eye-pleasing patterns decorate the center panels. Above, a sign designates this area as the library. Unfortunately the doors are sealed closed. Perhaps the library is not yet written. You smirk at your own joke.\n\nThe courtyard itself continues much as it has elsewhere. The bushes to the south appear more unruly than elsewhere, but to the north there appears to be nothing but pleasant walking through this botanical paradise.";
+rooms["COC FORTRESS NORTHWEST WALK"].moveMinutes = 3;
+rooms["COC FORTRESS NORTHWEST WALK"].roomName = "FORTRESS\nNW WALK";
+rooms["COC FORTRESS NORTHWEST WALK"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS NORTHWEST WALK"].system = "PLANET: MARETH";
+rooms["COC FORTRESS NORTHWEST WALK"].northExit = "COC FORTRESS NORTHWEST COURTYARD";
+rooms["COC FORTRESS NORTHWEST WALK"].southExit = "COC FORTRESS WEST WALK";
+rooms["COC FORTRESS NORTHWEST WALK"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS NORTHWEST WALK"].addFlag(GLOBAL.HAZARD);
+
+rooms["COC FORTRESS NORTHWEST COURTYARD"] = new RoomClass(this);
+rooms["COC FORTRESS NORTHWEST COURTYARD"].description = "The courtyard comes to an abrupt end here, hemmed in by a impressively high stone wall to the north, high enough to shame the walls in the other cardinal directions. The path is also bounded in by stonework to the west, forcing it to curve to the east and south around a bush that has been tastelessly shaped to resemble a turgid prick. The demons even went so far as to trim ivory flowers into a contiguous path along one side, very much looking like a stream of arboreal spunk.";
+rooms["COC FORTRESS NORTHWEST COURTYARD"].moveMinutes = 3;
+rooms["COC FORTRESS NORTHWEST COURTYARD"].roomName = "FORTRESS\nCOURTYARD NW";
+rooms["COC FORTRESS NORTHWEST COURTYARD"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS NORTHWEST COURTYARD"].system = "PLANET: MARETH";
+rooms["COC FORTRESS NORTHWEST COURTYARD"].eastExit = "COC FORTRESS NORTH COURTYARD";
+rooms["COC FORTRESS NORTHWEST COURTYARD"].southExit = "COC FORTRESS NORTHWEST WALK";
+rooms["COC FORTRESS NORTHWEST COURTYARD"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS NORTHWEST COURTYARD"].addFlag(GLOBAL.HAZARD);
+
+rooms["COC FORTRESS NORTH COURTYARD"] = new RoomClass(this);
+rooms["COC FORTRESS NORTH COURTYARD"].moveMinutes = 3;
+rooms["COC FORTRESS NORTH COURTYARD"].roomName = "FORTRESS\nCOURTYARD N";
+rooms["COC FORTRESS NORTH COURTYARD"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS NORTH COURTYARD"].system = "PLANET: MARETH";
+rooms["COC FORTRESS NORTH COURTYARD"].eastExit = "COC FORTRESS NORTHEAST COURTYARD";
+rooms["COC FORTRESS NORTH COURTYARD"].westExit = "COC FORTRESS NORTHWEST COURTYARD";
+rooms["COC FORTRESS NORTH COURTYARD"].northExit = "COC FORTRESS THRONE ROOM";
+rooms["COC FORTRESS NORTH COURTYARD"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS NORTH COURTYARD"].addFlag(GLOBAL.HAZARD);
+rooms["COC FORTRESS NORTH COURTYARD"].runOnEnter = LethiceFortressNorthCourtyardRoomFunc;
+
+rooms["COC FORTRESS NORTHEAST COURTYARD"] = new RoomClass(this);
+rooms["COC FORTRESS NORTHEAST COURTYARD"].moveMinutes = 3;
+rooms["COC FORTRESS NORTHEAST COURTYARD"].roomName = "FORTRESS\nCOURTYARD NE";
+rooms["COC FORTRESS NORTHEAST COURTYARD"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS NORTHEAST COURTYARD"].system = "PLANET: MARETH";
+rooms["COC FORTRESS NORTHEAST COURTYARD"].westExit = "COC FORTRESS NORTH COURTYARD";
+rooms["COC FORTRESS NORTHEAST COURTYARD"].southExit = "COC FORTRESS NORTHEAST WALK";
+rooms["COC FORTRESS NORTHEAST COURTYARD"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS NORTHEAST COURTYARD"].addFlag(GLOBAL.HAZARD);
+rooms["COC FORTRESS NORTHEAST COURTYARD"].runOnEnter = LethiceFortressNorthEastCourtyardRoomFunc;
+
+rooms["COC FORTRESS NORTHEAST WALK"] = new RoomClass(this);
+rooms["COC FORTRESS NORTHEAST WALK"].description = "The air is pleasant and free here. Not even the corrupt nature of this place can stop you from enjoying this moment in the demon queen’s garden. Still, there is an aura of lingering danger here. The flowers smell pleasant but somehow off, and every now and again the breezes carry the sounds of whorish moans. An entryway in the east wall leads towards the barracks and mess, identified by a simple sign to the left of the imposing iron door frame. Fortunately, the door is barred and sealed. It seems you’ve come at a time when Lethice’s fortress is near empy. How fortunate for you.";
+rooms["COC FORTRESS NORTHEAST WALK"].moveMinutes = 3;
+rooms["COC FORTRESS NORTHEAST WALK"].roomName = "FORTRESS\nNE WALK";
+rooms["COC FORTRESS NORTHEAST WALK"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS NORTHEAST WALK"].system = "PLANET: MARETH";
+rooms["COC FORTRESS NORTHEAST WALK"].northExit = "COC FORTRESS NORTHEAST COURTYARD";
+rooms["COC FORTRESS NORTHEAST WALK"].southExit = "COC FORTRESS EAST WALK";
+rooms["COC FORTRESS NORTHEAST WALK"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS NORTHEAST WALK"].addFlag(GLOBAL.HAZARD);
+
+rooms["COC FORTRESS EAST WALK"] = new RoomClass(this);
+rooms["COC FORTRESS EAST WALK"].moveMinutes = 3;
+rooms["COC FORTRESS EAST WALK"].roomName = "FORTRESS\nW WALK";
+rooms["COC FORTRESS EAST WALK"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS EAST WALK"].system = "PLANET: MARETH";
+rooms["COC FORTRESS EAST WALK"].northExit = "COC FORTRESS NORTHEAST WALK";
+rooms["COC FORTRESS EAST WALK"].southExit = "COC FORTRESS SOUTHEAST WALK";
+rooms["COC FORTRESS EAST WALK"].westExit = "COC FORTRESS COURTYARD SQUARE";
+rooms["COC FORTRESS EAST WALK"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS EAST WALK"].addFlag(GLOBAL.HAZARD);
+rooms["COC FORTRESS EAST WALK"].runOnEnter = LethiceFortressEastWalkRoomFunc;
+
+rooms["COC FORTRESS SOUTHEAST WALK"] = new RoomClass(this);
+rooms["COC FORTRESS SOUTHEAST WALK"].description = "Swarms of butterflies congregate on the flowering bushes here. At first, the sight seems beautiful, almost pristine. Then, you spot the endemic corruption that Lethice has spread through the lands. They aren’t just swarms of butterflies - they’re swarms of mating butterflies, crawling all over each other in a swarm of sweet-smelling pollen and fluttering wings. You had best move on. The path leads north and south.";
+rooms["COC FORTRESS SOUTHEAST WALK"].moveMinutes = 3;
+rooms["COC FORTRESS SOUTHEAST WALK"].roomName = "FORTRESS\nSE WALK";
+rooms["COC FORTRESS SOUTHEAST WALK"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS SOUTHEAST WALK"].system = "PLANET: MARETH";
+rooms["COC FORTRESS SOUTHEAST WALK"].northExit = "COC FORTRESS EAST WALK";
+rooms["COC FORTRESS SOUTHEAST WALK"].southExit = "COC FORTRESS SOUTHEAST COURTYARD";
+rooms["COC FORTRESS SOUTHEAST WALK"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS SOUTHEAST WALK"].addFlag(GLOBAL.HAZARD);
+
+rooms["COC FORTRESS SOUTHEAST COURTYARD"] = new RoomClass(this);
+rooms["COC FORTRESS SOUTHEAST COURTYARD"].description = "Walking along the sandstone path, you're treated to a remarkably peaceful view. Up here, above the clouds the ring the mountain, it's almost too easy to let your guard down. A small hole in the southern wall of Lethice's fortress appears to the south. Peeking through, you can see machinery and some kind of lift suspended over the cliffside. That must be how the demons can come and go safely. You can continue to walk among the bushes to the north and west. An iron door to the east bears lettering denoting it as 'recreation'. A small placard explains that it's currently off limits due to renovations. Graffiti below complains about some contractor named Fenoxo delivering on his promised work schedule.";
+rooms["COC FORTRESS SOUTHEAST COURTYARD"].moveMinutes = 3;
+rooms["COC FORTRESS SOUTHEAST COURTYARD"].roomName = "FORTRESS\nCOURTYARD SE";
+rooms["COC FORTRESS SOUTHEAST COURTYARD"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS SOUTHEAST COURTYARD"].system = "PLANET: MARETH";
+rooms["COC FORTRESS SOUTHEAST COURTYARD"].northExit = "COC FORTRESS SOUTHEAST WALK";
+rooms["COC FORTRESS SOUTHEAST COURTYARD"].westExit = "COC FORTRESS SOUTH COURTYARD";
+rooms["COC FORTRESS SOUTHEAST COURTYARD"].southExit = "COC FORTRESS GREAT LIFT";
+rooms["COC FORTRESS SOUTHEAST COURTYARD"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS SOUTHEAST COURTYARD"].addFlag(GLOBAL.HAZARD);
+
+rooms["COC FORTRESS COURTYARD SQUARE"] = new RoomClass(this);
+rooms["COC FORTRESS COURTYARD SQUARE"].moveMinutes = 3;
+rooms["COC FORTRESS COURTYARD SQUARE"].roomName = "FORTRESS\nSQUARE";
+rooms["COC FORTRESS COURTYARD SQUARE"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS COURTYARD SQUARE"].system = "PLANET: MARETH";
+rooms["COC FORTRESS COURTYARD SQUARE"].eastExit = "COC FORTRESS EAST WALK";
+rooms["COC FORTRESS COURTYARD SQUARE"].westExit = "COC FORTRESS WEST WALK";
+rooms["COC FORTRESS COURTYARD SQUARE"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS COURTYARD SQUARE"].addFlag(GLOBAL.HAZARD);
+rooms["COC FORTRESS COURTYARD SQUARE"].runOnEnter = LethiceFortressCourtyardSquareRoomFunc;
+
+rooms["COC FORTRESS GREAT LIFT"] = new RoomClass(this);
+rooms["COC FORTRESS GREAT LIFT"].moveMinutes = 3;
+rooms["COC FORTRESS GREAT LIFT"].roomName = "FORTRESS\nSQUARE";
+rooms["COC FORTRESS GREAT LIFT"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS GREAT LIFT"].system = "PLANET: MARETH";
+rooms["COC FORTRESS GREAT LIFT"].northExit = "COC FORTRESS SOUTHEAST COURTYARD";
+rooms["COC FORTRESS GREAT LIFT"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS GREAT LIFT"].addFlag(GLOBAL.HAZARD);
+rooms["COC FORTRESS GREAT LIFT"].runOnEnter = LethiceFortressGreatLiftRoomFunc;
+
+rooms["COC FORTRESS THRONE ROOM"] = new RoomClass(this);
+rooms["COC FORTRESS THRONE ROOM"].moveMinutes = 3;
+rooms["COC FORTRESS THRONE ROOM"].roomName = "FORTRESS\nTHRONE ROOM";
+rooms["COC FORTRESS THRONE ROOM"].planet = "LETHICE FORTRESS";
+rooms["COC FORTRESS THRONE ROOM"].system = "PLANET: MARETH";
+rooms["COC FORTRESS THRONE ROOM"].southExit = "COC FORTRESS NORTH COURTYARD";
+rooms["COC FORTRESS THRONE ROOM"].addFlag(GLOBAL.INDOOR);
+rooms["COC FORTRESS THRONE ROOM"].addFlag(GLOBAL.HAZARD);
+rooms["COC FORTRESS THRONE ROOM"].runOnEnter = LethiceFortressThroneRoomFunc;

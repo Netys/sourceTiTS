@@ -188,7 +188,7 @@ public function telAdreMenuShow():void { //Just displays the normal Tel'Adre men
 	addButton(3, "Gym", TelAdreGymDesc, undefined, "Gym", "Visit gym.");
 	addButton(4, "Homes", TelAdreHouses, undefined, "Homes", "If you have friends here, you can visit them.");
 	addDisabledButton(5, "Park", "Park", "You have nothing to do in park.");
-	if (Flag("COC.ARIAN_PARK") > 0 && Flag("COC.ARIAN_PARK") < 4 && Flag("COC.ARIAN_PARK_VISITED_TODAY") != days) addButton(5, "Park", arianSceneVisitThePark, "Arian is likely there, why not visit him?");
+	if (Flag("COC.ARIAN_PARK") > 0 && Flag("COC.ARIAN_PARK") < 4 && Flag("COC.ARIAN_PARK_VISITED_TODAY") != days) addButton(5, "Park", arianSceneVisitThePark, undefined, "Park", "Arian is likely there, why not visit him?");
 	addButton(6, "Pawn", oswaldPawn, undefined, "Gym", "You can always get rid of some junk here.");
 	addButton(7, "Tower", visitZeMagesTower, undefined, "Tower", "Mages tower is main landmark of Tel'Adre. Maybe you can find something useful there?");
 	addButton(14, "Leave", function():*{ processTime(15 + rand(5)); mainGameMenu(); }, undefined, "Leave", "Return to camp.");

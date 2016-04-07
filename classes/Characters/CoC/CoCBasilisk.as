@@ -70,9 +70,9 @@ package classes.Characters.CoC
 			this.libidoRaw = 50;
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
-			this.lustRaw = 30;	
+			this.lustRaw = 30;
 			
-			this.femininity = 75;
+			this.femininity = 10;
 			this.eyeType = GLOBAL.TYPE_SNAKE;
 			this.eyeColor = "red";
 			this.tallness = 6 * 12 + 2;
@@ -206,8 +206,9 @@ package classes.Characters.CoC
 			}
 		}
 		
-		public static function canLookIntoEyes():Boolean {
+		public static function canLookIntoEyes(allowGlasses:Boolean = true):Boolean {
 			return kGAMECLASS.pc.hasPerk("Basilisk Resistance")
+				|| kGAMECLASS.pc.hasKeyItem("Laybans")
 				|| kGAMECLASS.pc.hasPerk("Enlightened Nine-tails") && InCollection(kGAMECLASS.pc.eyeColor, kGAMECLASS.elderKitsuneEyeColors)
 				|| kGAMECLASS.pc.hasPerk("Corrupted Nine-tails") && InCollection(kGAMECLASS.pc.eyeColor, kGAMECLASS.corruptKitsuneEyeColors)
 				|| InCollection(kGAMECLASS.pc.eyeType, GLOBAL.TYPE_MYR, GLOBAL.TYPE_GABILANI, GLOBAL.TYPE_SYNTHETIC);
@@ -221,7 +222,7 @@ package classes.Characters.CoC
 			// few special eyes can even turn the tables... though this requires enormous willpower
 			if (target.hasPerk("Enlightened Nine-tails") && InCollection(target.eyeColor, kGAMECLASS.elderKitsuneEyeColors)) {
 				output("You are looking directly into Basilisk eyes, and he is looking into yours...  However, no matter how much you look into the eyes, you do not see anything wrong. All you can see is the basilisk. And basilisk for his part see only unfathomable serenity of clear summer sky...  ");
-				if (rand(target.willpower()) > willpower()) {
+				if (rand(target.willpower()) > willpower()) { // chance is really slim even on high levels, but why not to try?
 					createStatusEffect("Blinded", 3, 0, 0, 0, false, "Blinded", "Basilisk is dazzled under your gaze!", true, 0);
 					output("Losing the clash of wills, basilisk is dazzled under your gaze!");
 				} else output("The basilisk curses as he finds out that your gaze can be as dangerous as his own!");
@@ -229,7 +230,7 @@ package classes.Characters.CoC
 			}
 			else if (target.hasPerk("Corrupted Nine-tails") && InCollection(target.eyeColor, kGAMECLASS.corruptKitsuneEyeColors)) {
 				output("You are looking directly into Basilisk eyes, and he is looking into yours...  However, no matter how much you look into the eyes, you do not see anything wrong. All you can see is the basilisk. And basilisk for his part see only cold gleam of dull winter sky...  ");
-				if (rand(target.willpower()) > willpower()) {
+				if (rand(target.willpower()) > willpower()) { // chance is really slim even on high levels, but why not to try?
 					createStatusEffect("Blinded", 3, 0, 0, 0, false, "Blinded", "Basilisk is dazzled under your gaze!", true, 0);
 					output("Losing the clash of wills, basilisk is dazzled under your gaze!");
 				} else output("The basilisk curses as he finds out that your gaze can be as dangerous as his own!");
@@ -245,8 +246,13 @@ package classes.Characters.CoC
 				output("You are looking directly into Basilisk eyes, and he is looking into yours...  However, no matter how much you look into the eyes, you do not see anything wrong. All you can see is the basilisk.  The basilisk curses as he finds out that he can't catch your eye!");
 				target.createStatusEffect("Basilisk Compulsion", 0, 0, 0, 0, true, "", "", true, 0); // will not try again
 			}
+			//Immune to Basilisk?
+			else if (target.hasKeyItem("Laybans")) {
+				output("Good thing you have protective glasses! The basilisk curses as he finds out that you're immune!");
+				target.createStatusEffect("Basilisk Compulsion", 0, 0, 0, 0, true, "", "", true, 0); // will not try again
+			}
 			//Failure:
-			else if (target.WQ() / 5 + rand(20) < 24) {
+			else if (target.willpower() / 3 + rand(20) < 24) {
 				output("You concentrate, focus your mind and resist the basilisk's psychic compulsion."); // WILL try again
 			}
 			//Success:

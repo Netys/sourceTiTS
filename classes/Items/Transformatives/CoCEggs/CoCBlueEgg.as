@@ -140,7 +140,7 @@ package classes.Items.Transformatives.CoCEggs
 						temp = pc.cocks.length;
 						while (temp > 0) {
 							temp--;
-							temp2 = pc.increaseCock(temp, rand(3) + 5);
+							temp2 = pc.increaseCock(rand(3) + 5, temp);
 						}
 						Mutator.lengthChange(pc, temp2, pc.cocks.length);
 						pc.libido(1);
@@ -150,7 +150,7 @@ package classes.Items.Transformatives.CoCEggs
 					//SINGLEZ
 					if (pc.cocks.length == 1) {
 						output("\n\nYour [pc.cocksLight] fills to its normal size... and begins growing...");
-						temp2 = pc.increaseCock(0, rand(3) + 5);
+						temp2 = pc.increaseCock(rand(3) + 5, 0);
 						Mutator.lengthChange(pc, temp2, 1);
 						pc.libido(1);
 						pc.lust(20);

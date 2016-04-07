@@ -121,7 +121,7 @@ public function dungeonsKnown():int {
 	if (flags["COC.ZETAZ_CAVE_FOUND"] > 0) dungeons;
 	if (flags["COC.FACTORY_FOUND"] > 0) dungeons++;
 	if (flags["COC.DISCOVERED_WITCH_DUNGEON"] > 0) dungeons++;
-	//if (flags[kFLAGS.D3_DISCOVERED] > 0) return true;
+	if (flags["COC.D3_DISCOVERED"] > 0) dungeons++;
 	//if (kGAMECLASS.dungeons.checkPhoenixTowerClear()) return true;
 	return dungeons;
 }
@@ -165,7 +165,7 @@ public function showDungeonsMenu():Boolean {
 		addButton(1, "Deep Cave", ZetazCaveEnter, null, "Deep Cave", "Visit the cave you've found in the Deepwoods." + (flags["COC.DEFEATED_ZETAZ"] > 0 ? "\n\nYou've defeated Zetaz, your old rival." : "") + (ZetazCaveCleared() ? "\n\nCLEARED!" : ""));
 	
 	//Turn on dungeon 3
-	//if (flags[kFLAGS.D3_DISCOVERED] > 0) addButton(2, "Stronghold", kGAMECLASS.d3.enterD3, null, null, null, "Visit the stronghold in the high mountains that belongs to Lethice, the demon queen." + (flags[kFLAGS.LETHICE_DEFEATED] > 0 ? "\n\nYou have slain Lethice and put an end to the demonic threats. Congratulations, you've beaten the main story!" : "") + (kGAMECLASS.dungeons.checkLethiceStrongholdClear() ? "\n\nCLEARED!" : ""));
+	if (flags["COC.D3_DISCOVERED"] > 0) addButton(2, "Stronghold", TravelToLethiceFortress, null, "Stronghold", "Visit the stronghold in the high mountains that belongs to Lethice, the demon queen." + (flags["COC.LETHICE_DEFEATED"] > 0 ? "\n\nYou have put an end to the demonic threats. Congratulations, you've beaten the main story!" : "") + (checkLethiceStrongholdClear() ? "\n\nCLEARED!" : ""));
 	//Side dungeons
 	
 	if (flags["COC.DISCOVERED_WITCH_DUNGEON"] > 0) addButton(5, "Desert Cave", TravelToDesertCave, null, "Desert Cave", "Visit the cave you've found in the desert." + (flags["COC.SAND_WITCHES_COWED"] + flags["COC.SAND_WITCHES_FRIENDLY"] > 0 ? "\n\nFrom what you've known, this is the source of the Sand Witches." : "") + (DesertCaveCleared() ? "\n\nCLEARED!" : ""));

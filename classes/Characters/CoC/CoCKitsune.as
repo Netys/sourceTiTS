@@ -199,7 +199,6 @@ package classes.Characters.CoC
 			this._isLoading = false;
 		}
 		
-		// TODO: implement AI
 		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void
 		{
 			var target:Creature = selectTarget(hostileCreatures);

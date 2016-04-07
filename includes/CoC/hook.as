@@ -112,15 +112,23 @@ public function EnterVRIAmYourBloodyChampionYouVapidCunt():void {
 
 public function showNemo():void {
 	author("Etis");
-	showName("\n{ nemo }");
+	if(flags["COC.PLOT_END"] == 1) showName("\nnemo");
+	else showName("\n{ nemo }");
 	showBust("NEMO");
 }
 
 // note: he totally can talk normally, he just having some fun
 public function guildEmbassyBonusFunction():Boolean {
 	author("Etis");
-	showName("{ STELLAR		\nFURNACE }");
 	
+	if (flags["COC.PLOT_END"] == 1)
+	{
+		showName("STELLAR\nFURNACE");
+		output("Seems like nemo is still here, and still seemingly doing nothing. Somehow his presence is not pressing on you anymore. You can only guess why and what is really going on here. He only greeted you with a flick of a tail, not even bothering to look at you. Seems like you have no subject for conversation.");
+		return false;
+	}
+	
+	showName("{ STELLAR		\nFURNACE }");
 	if (flags["COC.NEMO_INTRODUCED"] == undefined)
 	{
 		flags["COC.NEMO_INTRODUCED"] = 1;
@@ -134,6 +142,8 @@ public function guildEmbassyBonusFunction():Boolean {
 		output("{ output to nemo; greeting; this name '[pc.fullName]'; request { protocol; shop state extended; embassy faction; nemo race } }\n\n");
 		output("{ input from nemo: protocol 'mind connection, limited'; shop state 'trading license pending, expected time over 100 years'; embassy faction { name undefined; id { guild, 'stellar furnace' } one of }; this race { kitsune; action 'jumps over counter to show nine fluffy tails' }; request response }\n\n");
 		processTime(6);
+		clearMenu();
+		addButton(0, "{ next }", approachNemo);
 	}
 	else
 	{
@@ -141,9 +151,9 @@ public function guildEmbassyBonusFunction():Boolean {
 		output("{ location: name 'Stellar Furnace'; function embassy }\n\n");
 		output("{ interactions: nemo; exit }\n\n");
 		processTime(1);
+		clearMenu();
+		addButton(0, "{ next }", approachNemo);
 	}
-	clearMenu();
-	addButton(0, "{ next }", approachNemo);
 	return true;
 }
 
@@ -496,4 +506,102 @@ public function nemoTakeVRPod():void {
 	flags["COC.NEMO_VR_POD_TAKEN"] = 1;
 	flags["COC.VR_POD_INSTALLED"] = 1;
 	addButton(0, "{ next }", nemoTalk);
+}
+
+public function abortVRAfterVictory():void {
+	author("Etis");
+	clearOutput();
+	
+	output("Wait, what? Portal? World? You are [pc.fullName], not some Champion! With all possible speed you rush to your camp. To your relief, portal is still faintly glowing...");
+	
+	processTime(3 * 24 * 60 + rand(24 * 60));
+	clearMenu();
+	addButton(0, "Next", abortVRAfterVictoryII);
+}
+
+public function abortVRAfterVictoryII():void {
+	updatePCStats();
+	author("Etis");
+	showName("\nVR POD");
+	clearOutput();
+	
+	output("SYSTEM FAILURE, PLEASE LEAVE IMMEDIATELY.");
+	output("\n\nPod lid is opened, and you are free to get out.");
+	
+	processTime(5);
+	clearMenu();
+	addButton(0, "Next", abortVRAfterVictoryIII);
+}
+
+public function abortVRAfterVictoryIII():void {
+	showNemo();
+	shipLocation = "TAVROS HANGAR";
+	currentLocation = "GUILD EMBASSY"; // not using move to prevent events
+	generateMap();
+	showLocationName();
+	clearOutput();
+	
+	output("<i>\"Look who has honored us with a visit!\"</i>. Familiar place, almost familiar voice, though you've previously only heard it with your mind rather than ears. And you are pretty sure that your entry point was in other place. <i>\"Don't look at me that way. Yes, I know, you think that I owe you few answers. Problem is... I don't think so. I've already done too much for you.\"</i>");
+	
+	output("\n\nLooks like he is not really in mood for a talk. But this could be your chance to actually inquire something. Or you could ask for something...");
+	
+	clearMenu();
+	addButton(0, "Fix VR", abortVRAfterVictoryFixIt, undefined, "Fix VR", "It is just a piece of tech, anyways.");
+	addButton(1, "Recompense", abortVRAfterVictoryRecompense, undefined, "Recompense", "You feel that even if fixed, it would never be the same. Time to move on.");
+}
+
+public function abortVRAfterVictoryFixIt():void {
+	clearOutput();
+	showNemo();
+	
+	output("You make your choice and ask him to fix the pod.");
+	
+	//output("\n\n<i>\"So, no way back?\"</i> you ask in confusion. <i>\"Not in this reality branch. And I'm not going to fiddle with such matters without some really good reason.\"</i>");
+	output("\n\n<i>\"You said fix? Fix? This? You... Fine. If you are asking for it you either know what you are asking for and ready for it or have no idea and that is only your problem, not mine. Fine. I'll do my best. Just go. You'll find your ship on it's usual place.\"</i>");
+	
+	output("\n\nLooks like you are dismissed...");
+	
+	clearMenu();
+	addButton(0, "Leave", move, rooms[currentLocation].northExit);
+}
+
+public function abortVRAfterVictoryRecompense():void {
+	clearOutput();
+	showNemo();
+	
+	output("<i>\"Now, I'm taking this thing back. You really don't want to use it anymore. Unless you want to be torn apart by glitched reality, of course. No? Thought so. Bifurcation point is left behind.\"</i> Well, if he is taking your favorite toy, he can give you something instead of it, right?");
+	
+	output("\n\n<i>\"Not asking to get back? Good. There are things to leave behind. Can offer a trinket from my private collection as souvenir. Not from the showcase, you'll have more problems with those anyways. And not all of them are actually working, to be honest. And about collection... I'll offer you a real treasure. One of the old implants produced by Mechanist's Guild.\"</i>");
+	
+	output("\n\n<i>\"Stop there! Mechanist's Guild?\"</i> You snap vaguely familiar word. <i>\"You said that this is Guild embassy, and now this. Aren't it just an old, old myth?\"</i>");
+	
+	output("\n\nHe sighs and scowls. <i>\"Not myth. Legend. Old, old legend, from the times when Terra was the only known inhabited pebble in a sky. Legend about technological singularity...\"</i> for a moment his piercing gaze faded. <i>\"I've been alone for too long,\"</i> he mutters. <i>\"Let me drop this. Old and sad stories from long forgotten past are not relevant to current situation.\"</i> He braced himself, putting on presumptuous trickster's fasade back. <i>\"I can offer you one. It would help you improve one of your abilities. Not really top tier stuff, but still, quite good. I'll attune your nanosurgeons accordingly. Now, your choise...\"</i>");
+	
+	flags["COC.NEMO_VR_POD_TAKEN"] = -1;
+	
+	clearMenu();
+	addButton(0, "Intelligence", applyGuildImplant, "intelligence", "Intelligence", "Increases the effectiveness of your technology-based attacks, primarily those used by tech specialists. It is also useful any time you have to deal with sophisticated machinery.");
+	addButton(1, "Physique", applyGuildImplant, "physique", "Physique", "Increases your strength and endurance. It is especially useful for increasing the damage of any melee strikes you may land on an opponent.");
+	addButton(2, "Reflexes", applyGuildImplant, "reflexes", "Reflexes", "Increases your reaction time. It is a measurement of your piloting aptitude, but also comes in handy when having to avoid a surprise attack or trap.");
+	addButton(3, "Aim", applyGuildImplant, "aim", "Aim", "Increases your accuracy and how well you can aim both hand-held and ship-board ranged weaponry.");
+	addButton(4, "Willpower", applyGuildImplant, "willpower", "Willpower", "Increases your ability to counter sexual urges and addictions, resist psionics, and strengthen your own psionics, should a person of human descent somehow gain mind powers.");
+}
+
+public function applyGuildImplant(arg:String):void {
+	clearOutput();
+	showNemo();
+	
+	output("<i>\"This one? Your choise. Now...\"</i> Suddenly he appear right before your [pc.face], and you feel his paw-like palm on your forehead, soft and hot. Your vision hazes for a moment, then everything snaps back. That's all? You are not feeling any different, right? Seems your Codex feels you better than youself - it already reports about potential for 25% improvement in your " + arg + ".");
+	
+	if (arg == "physique" && !pc.hasPerk("Implant: Iron Body")) pc.createPerk("Implant: Iron Body", 0, 0.25, 0, 0, "System of implants in your musculoskeletal system, which can significantly improve your physique.");
+	if (arg == "reflexes" && !pc.hasPerk("Implant: Wired Reflexes")) pc.createPerk("Implant: Wired Reflexes", 0, 0.25, 0, 0, "Partial electrical replacement for your nervous system, which can significantly improve your reflexes.");
+	if (arg == "aim" && !pc.hasPerk("Implant: Ballistic Computer")) pc.createPerk("Implant: Ballistic Computer", 0, 0.25, 0, 0, "Complex of retinal and neural implants, which can significantly improve your aim.");
+	if (arg == "intelligence" && !pc.hasPerk("Implant: Cognitive Coprocessor")) pc.createPerk("Implant: Cognitive Coprocessor", 0, 0.25, 0, 0, "Complex of neural implants, which can significantly improve your intellegence.");
+	if (arg == "willpower" && !pc.hasPerk("Implant: Mental Shield")) pc.createPerk("Implant: Mental Shield", 0, 0.25, 0, 0, "Complex of neural implants, which can significantly improve your willpower.");
+	
+	output("\n\nFeeling suddenly empty inside, you turn to exit and leave without saying goodbye. It somehow feels right that way.");
+	
+	updatePCStats();
+	clearMenu();
+	addButton(0, "Leave", move, rooms[currentLocation].northExit);
 }

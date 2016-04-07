@@ -32,10 +32,8 @@ public function exploreHighMountain():void {
 		//return;
 	//}
 
-	//if (kGAMECLASS.d3.discoverD3() == true)
-	//{
-		//return;
-	//}
+	if (discoverD3())
+		return;
 	
 	//25% minotaur sons!
 	//if (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00326] >= 3 && rand(4) == 0 && pc.hasVagina()) {

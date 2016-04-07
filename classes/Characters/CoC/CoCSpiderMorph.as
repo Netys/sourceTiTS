@@ -52,6 +52,8 @@ package classes.Characters.CoC
 		public function CleansingFlame():void {
 			clearOutput();
 			kGAMECLASS.pc.energy( -5);
+			IncrementFlag("COC.SPELLS_CAST");
+			
 			output("In desperate attempt to get rid of your restrains, you are brought to setting them ablaze!  ");
 			var damage:Number = 0;
 			if (kGAMECLASS.pc.hasPerk("Enlightened Nine-tails")) {
@@ -96,8 +98,9 @@ package classes.Characters.CoC
 		/**
 		 * -Web - lowers speed by 25 each application and disables
 		 * flight once hit.*/
-		public function spiderMorphWebAttack(target:Creature):void
+		public function spiderMorphWebAttack(target:Creature = null):void
 		{
+			if (target == null) target = kGAMECLASS.pc;
 			output("Turning to the side, " + a + short + " raises " + mf("his", "her") + " abdomen and unleashes a spray of webbing in your direction!  ");
 			//Blind dodge change
 			if (hasStatusEffect("Blinded") && rand(3) < 2) {

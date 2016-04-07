@@ -4,6 +4,7 @@ import classes.Items.Apparel.CoCBondageStraps;
 import classes.Items.Apparel.CoCNurseOutfit;
 import classes.Items.Apparel.CoCSluttySwimwear;
 import classes.Items.Apparel.CoCWizardRobes;
+import classes.Items.Drinks.CoCGodMead;
 import classes.Items.Guns.CoCFlintlockPistol;
 import classes.Items.Miscellaneous.*;
 import classes.Items.Transformatives.*;
@@ -357,7 +358,7 @@ private function benoitSellMenu():void {
 //All slots are reset each day.  Benoit buys items at 66% the rate Oswald does.  
 public function updateBenoitInventory():void {
 	//Slot 1 Any one of the following: Incubus Draft, Minotaur Blood, Minotaur Cum, Equinuum, Black Pepper, Vitalitea, Scholar's Tea, Double Pepper
-	var item:Class = RandomInCollection(CoCIncubiD, CoCMinotaurBlood, CoCMinotaurCum, CoCEquinum, CoCCaninePepperBlack, CoCScholarsTea, CoCVitalityTincture, CoCCaninePepperDouble, CoCBeeHoney); // TODO: God Mead
+	var item:Class = RandomInCollection(CoCIncubiD, CoCMinotaurBlood, CoCMinotaurCum, CoCEquinum, CoCCaninePepperBlack, CoCScholarsTea, CoCVitalityTincture, CoCCaninePepperDouble, CoCBeeHoney, CoCGodMead);
 	if (item == CoCBeeHoney && rand(3) == 0) item = CoCBeeHoneyPure;
 	
 	flags["COC.BENOIT_1"] = getQualifiedClassName(item);

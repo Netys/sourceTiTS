@@ -947,7 +947,12 @@ package classes.GameData
 			}
 			else
 			{
-				addButton(14, "Run", runAway, undefined, "Run", "Attempt to run away from your enemy. Success is greatly dependant on reflexes. Immobilizing your enemy before attempting to run will increase the odds of success.");
+				if (isFleeDisabled())
+					addDisabledButton(14, "Run", "Run", "You cannot escape from this fight!");
+				else if(pc.isImmobilized())
+					addDisabledButton(14, "Run", "Run", "You cannot run while you are immobilized!");
+				else
+					addButton(14, "Run", runAway, undefined, "Run", "Attempt to run away from your enemy. Success is greatly dependant on reflexes. Immobilizing your enemy before attempting to run will increase the odds of success.");
 			}
 			
 			// Hook in any additional menu entries -- allowing the hooks to override
@@ -2650,6 +2655,7 @@ package classes.GameData
 				{
 					output("\n\n<i>“An attempt to confuse and overwhelm an enemy with an overt display of sexual dominance,”</i> says So. She sounds genuinely interested. <i>“An unorthodox but effective strategy in many known organic cultures’ approach to war. I was unaware sentients of a human upbringing had any experience of such a thing, however. Perhaps that explains why you are attempting it against a foe that cannot in any way feel desire.”</i>");
 				}
+				else if (target.hasOwnProperty("teaseReactionsFail")) target["teaseReactionsFail"]();
 				else if(target.isLustImmune == true) 
 				{
 					msg = "\n\n<b>" + target.capitalA + target.uniqueName;
@@ -2723,7 +2729,11 @@ package classes.GameData
 					else output(possessive(target.capitalA + target.uniqueName) + " face looks rather flush as " + target.mfn("he","she","it") + " quickly wipes your [pc.cum] off. ");
 					if(kGAMECLASS.silly) output(" Ha! GOT ‘EM! ");
 				}
-				else output(teaseReactions(damage,target));
+				else {
+					var reaction:String = teaseReactions(damage, target);
+					if (reaction == "ABORT") return;
+					output(reaction);
+				}
 				target.lust(damage);
 				
 				var damageResult:DamageResult = new DamageResult();
@@ -2759,7 +2769,8 @@ package classes.GameData
 			
 			var buffer:String = "";
 			var textRands:Array = [];
-			if (target is PlayerCharacter)
+			if (target.hasOwnProperty("teaseReactions")) buffer = target["teaseReactions"](damage);
+			else if (target is PlayerCharacter)
 			{
 				if (damage == 0) buffer = "You seem unimpressed.";
 				else if (damage < 4) buffer = "You look a little intrigued by what you see.";
@@ -2802,7 +2813,6 @@ package classes.GameData
 				else if (damage < 20) buffer = "The young alien huntress places a hand over her loins and rubs her thighs together. She’s desperately trying to hide her rather obvious arousal. The sweet scent of her arousal fills the air.";
 				else buffer = "The wispy amazon parts her thighs and begins to stroke her twin clits to your lewd display, unable to stop herself. A few seconds later she jerks her webbed back, flushing wildly.";
 			}
-			else if (target.hasOwnProperty("teaseReactions")) buffer = target["teaseReactions"](damage);
 			else if (target.isPlural) {
 				if (damage == 0) buffer = target.capitalA + target.uniqueName  + " seem unimpressed.";
 				else if (damage < 4) buffer = target.capitalA + target.uniqueName + " look intrigued by what they see.";

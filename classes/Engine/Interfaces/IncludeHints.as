@@ -21,6 +21,11 @@ package classes.Engine.Interfaces
 	{
 		return kGAMECLASS.chars;
 	}
+	import classes.RoomClass;
+	public function get rooms():/*RoomClass*/Array
+	{
+		return kGAMECLASS.rooms;
+	}
 	
 	public function get enemy():Creature {
 		return kGAMECLASS.enemy; }

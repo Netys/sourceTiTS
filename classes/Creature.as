@@ -2950,7 +2950,7 @@
 				if(exhibitionismRaw < 0) exhibitionismRaw = 0;
 			}
 			trace("Final reported exhibition level: " + exhibitionismRaw);
-			return exhibitionismRaw; // return corruption value, if higher?
+			return exhibitionismRaw; // FIXME: return corruption value, if higher? make use of fetish from Ceraph?
 		}
 		
 		public static const DEPENDANT_ANY:uint = 0;
@@ -3218,9 +3218,9 @@
 			
 			if (hasStatusEffect("Staggered")) currAim *= 0.8;
 			if (hasStatusEffect("Pitch Black")) currAim *= 0.66;
-			if (hasPerk("Implant: Tactical Analyzer")) {
-				currAim += perkv3("Implant: Tactical Analyzer");
-				currAim += level * 5 * perkv4("Implant: Tactical Analyzer");
+			if (hasPerk("Implant: Optical Analyzer")) {
+				currAim += perkv3("Implant: Optical Analyzer");
+				currAim += level * 5 * perkv4("Implant: Optical Analyzer");
 			}
 			
 			if (currAim > aimMax())
@@ -3451,9 +3451,9 @@
 		public function aimMax(): Number {
 			var bonuses:int = 0;
 			if (hasStatusEffect("Perfect Simulant")) bonuses += 3;
-			if (hasPerk("Implant: Tactical Analyzer")) {
-				bonuses += perkv1("Implant: Tactical Analyzer");
-				bonuses += level * 5 * perkv2("Implant: Tactical Analyzer");
+			if (hasPerk("Implant: Optical Analyzer")) {
+				bonuses += perkv1("Implant: Optical Analyzer");
+				bonuses += level * 5 * perkv2("Implant: Optical Analyzer");
 			}
 			return level * 5 + bonuses;
 		}

@@ -134,11 +134,11 @@ package classes.Characters.CoC
 			this.cocks[0].cLengthRaw = 12;
 			//balls
 			this.balls = 2;
-			this.cumMultiplierRaw = 30;
+			this.cumMultiplierRaw = 50;
 			//Multiplicative value used for impregnation odds. 0 is infertile. Higher is better.
 			this.cumQualityRaw = 1;
 			this.cumType = GLOBAL.FLUID_TYPE_CUM;
-			this.ballSizeRaw = 2;
+			this.ballSizeRaw = 3 * Math.PI;
 			this.ballFullness = 100;
 			//How many "normal" orgams worth of jizz your balls can hold.
 			this.ballEfficiency = 90;

@@ -178,7 +178,7 @@ package classes.Engine.Combat.DamageTypes
 			return uint.MAX_VALUE;
 		}
 		
-		public function multiply(m:*):void
+		public function multiply(m:*):TypeCollection
 		{
 			if (m is Number || m is int || m is uint)
 			{
@@ -195,9 +195,10 @@ package classes.Engine.Combat.DamageTypes
 					if (typeCollection[i].damageValue > 0) typeCollection[i].damageValue *= tc.getType(i).damageValue;
 				}
 			}
+			return this;
 		}
 		
-		public function add(a:*):void
+		public function add(a:*):TypeCollection
 		{	
 			if (a is TypeCollection)
 			{
@@ -262,10 +263,11 @@ package classes.Engine.Combat.DamageTypes
 					}
 				}
 			}
+			return this;
 		}
 		
 		/* Treat this instance of a TypeCollection as Damage, and modify it by the values in the argument */
-		public function applyResistances(resistances:TypeCollection):void
+		public function applyResistances(resistances:TypeCollection):TypeCollection
 		{
 			if (resistances.hasFlag(DamageFlag.EASY))
 			{
@@ -313,9 +315,10 @@ package classes.Engine.Combat.DamageTypes
 					}
 				}
 			}
+			return this;
 		}
 		
-		public function combineResistances(resistance:TypeCollection):void
+		public function combineResistances(resistance:TypeCollection):TypeCollection
 		{
 			// Simply add and cap to +100
 			add(resistance);
@@ -324,6 +327,7 @@ package classes.Engine.Combat.DamageTypes
 			{
 				if (typeCollection[i].resistanceValue > 100) typeCollection[i].resistanceValue = 100;
 			}
+			return this;
 		}
 		
 		public function getTotal():Number

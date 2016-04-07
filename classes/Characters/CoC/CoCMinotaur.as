@@ -62,10 +62,10 @@ package classes.Characters.CoC
 
 			this.femininity = 15;
 			this.eyeType = GLOBAL.TYPE_DEMONIC;
-			this.eyeColor = "glowing amber";
+			this.eyeColor = "amber";
 			this.tallness = rand(37) + 84;
-			this.thickness = 21;
-			this.tone = 40;
+			this.thickness = 70;
+			this.tone = 100;
 			this.hairColor = "brown";
 			this.scaleColor = "";
 			this.furColor = "brown";
@@ -134,12 +134,11 @@ package classes.Characters.CoC
 			this.buttRatingRaw = 4;
 			//No dicks here!
 			this.cocks = new Array();
-			this.createCock(rand(13) + 24);
+			this.createCock(rand(5) + 16);
 			this.shiftCock(0, GLOBAL.TYPE_EQUINE);
 			//Multiplicative value used for impregnation odds. 0 is infertile. Higher is better.
 			this.cumQualityRaw = 1;
 			this.cumType = GLOBAL.FLUID_TYPE_CUM;
-			this.ballSizeRaw = 2;
 			this.ballFullness = 100;
 			//How many "normal" orgams worth of jizz your balls can hold.
 			this.ballEfficiency = 90;

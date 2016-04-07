@@ -659,6 +659,17 @@ package classes.GameData
 			KitsuneTerror.Implementor = KitsuneTerrorImpl;
 			KitsuneTerror.RequiresTarget = true;
 			a.push(KitsuneTerror);
+			
+			// debug instakill weapon
+			AFL = new SingleCombatAttack();
+			AFL.ButtonName = "AFL";
+			AFL.ExtendedDisplayabilityCheck = function():Boolean {
+				return kGAMECLASS.pc.hasKeyItem("AFL");
+			}
+			AFL.TooltipTitle = "AFL";
+			AFL.TooltipBody = "Bring out your final argument.";
+			AFL.Implementor = AFLImpl;
+			a.push(AFL);
 		}
 		
 		/**
@@ -1949,7 +1960,7 @@ package classes.GameData
 			}
 			else output(attacker.capitalA + attacker.uniqueName + " utters words of power, summoning an electrical charge around " + target.mfn("his", "her", "its") + " " + weapon + ".");
 			
-			attacker.createStatusEffect("Charge Weapon", attacker.intelligence() / 2 + 20, 0, 0, 0, false, "OffenseUp", "Infused with power of lightning!", true);
+			attacker.createStatusEffect("Charge Weapon", attacker.intelligence() / 1.5 + 20, 0, 0, 0, false, "OffenseUp", "Infused with power of lightning!", true, 0, 0xFFFF00);
 		}
 		
 		public static var Blind:SingleCombatAttack;
@@ -1974,7 +1985,7 @@ package classes.GameData
 				}
 				else if(attacker.intelligence() / 2 + rand(20) + 6 >= cTarget.reflexes() / 2 + 10)
 				{
-					cTarget.createStatusEffect("Blinded", 3, 0, 0, 0, false, "Blind", "Accuracy is reduced, and ranged attacks are far more likely to miss.", true, 0);
+					cTarget.createStatusEffect("Blinded", 3, 0, 0, 0, false, "Blind", "Accuracy is reduced, and ranged attacks are far more likely to miss.", true, 0, 0xFF0000);
 					
 					if (cTarget is PlayerCharacter) output("\n<b>You're blinded by the luminous flash.</b>");
 					else output("\n<b>" + cTarget.capitalA + cTarget.uniqueName + " is blinded by the luminous flash.</b>");
@@ -2029,7 +2040,9 @@ package classes.GameData
 			damage = new TypeCollection( { psionic : lustDmg } );
 			damageResult = applyDamage(damage, attacker, target, "suppress");
 			output("\n");
-			output(CombatContainer.teaseReactions(damageResult.lustDamage, target));
+			var reaction:String = CombatContainer.teaseReactions(damageResult.lustDamage, target);
+			if (reaction == "ABORT") return;
+			output(reaction);
 			
 			outputDamage(damageResult);
 		}
@@ -2100,7 +2113,7 @@ package classes.GameData
 				if (attacker is PlayerCharacter) output("The rush of success and power flows through your body.  You feel like you can do anything!");
 				else output(attacker.capitalA + attacker.uniqueName + " is now stronger!  ");
 				// +physique, +HP
-				attacker.createStatusEffect("Might", Math.max(attacker.intelligence() / 2, 10), Math.max(attacker.intelligence(), 20), 0, 0, false, "OffenseUp", "Infused with power of desire!", true);
+				attacker.createStatusEffect("Might", Math.max(attacker.intelligence() / 2, 10), Math.max(attacker.intelligence(), 20), 0, 0, false, "OffenseUp", "Infused with power of desire!", true, 0, 0x00FF00);
 				attacker.HP(Math.max(attacker.intelligence(), 20));
 			}
 		}
@@ -2143,7 +2156,7 @@ package classes.GameData
 			
 			if(!target.hasStatusEffect("Stun Immune")) {
 				output("  The impact sends " + target.mfn("him", "her", "it") + " crashing to the ground, too dazed to strike back.  ");
-				target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Cannot take a turn.", true, 0);
+				target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Cannot take a turn.", true, 0, 0xFF0000);
 			}
 			
 			applyDamage(damage, attacker, target);
@@ -2170,7 +2183,7 @@ package classes.GameData
 				else output(target.capitalA + target.uniqueName + ", watching as its sudden fear petrifies " + target.uniqueName + ".");
 				
 				if (!target.hasStatusEffect("Stunned")) {
-					target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Cowed in horror and cannot act.", true, 0);
+					target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Cowed in horror and cannot act.", true, 0, 0xFF0000);
 				} else {
 					target.getStatusEffect("Stunned").tooltip = "Cowed in horror and cannot act.";
 					target.addStatusValue("Stunned", 1, 2);
@@ -2319,7 +2332,7 @@ package classes.GameData
 				{
 					if (!hGroup[x].hasStatusEffect("Blinded")) {
 						output("\n" + hGroup[x].capitalA + possessive(hGroup[x].uniqueName) + " mind blanketed in the thick fog of your illusions.");
-						hGroup[x].createStatusEffect("Blinded", 3, 0, 0, 0, false, "Blind", "Confused by illusions. Accuracy is reduced, and ranged attacks are far more likely to miss.", true, 0);
+						hGroup[x].createStatusEffect("Blinded", 3, 0, 0, 0, false, "Blind", "Confused by illusions. Accuracy is reduced, and ranged attacks are far more likely to miss.", true, 0, 0xFF0000);
 					} else {
 						output("\n" + hGroup[x].capitalA + hGroup[x].uniqueName + " stumble humorously to and fro, unable to keep pace with the shifting illusions.");
 						hGroup[x].getStatusEffect("Blinded").tooltip = "Unable to keep pace with the shifting illusions. Accuracy is reduced, and ranged attacks are far more likely to miss.";
@@ -2356,7 +2369,7 @@ package classes.GameData
 				else output(target.capitalA + target.uniqueName + " cower in horror as they succumb to illusion, believing themselves beset by eldritch horrors beyond their wildest nightmares.");
 				
 				if (!target.hasStatusEffect("Stunned")) {
-					target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Cowed in horror and cannot act.", true, 0);
+					target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Cowed in horror and cannot act.", true, 0, 0xFF0000);
 				} else {
 					target.getStatusEffect("Stunned").tooltip = "Cowed in horror and cannot act.";
 					target.addStatusValue("Stunned", 1, 2);
@@ -2366,6 +2379,26 @@ package classes.GameData
 			{
 				output(" The dark fog recedes as quickly as it rolled.");
 			}
+		}
+		
+		public static var AFL:SingleCombatAttack;
+		private static function AFLImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
+		{
+			output("Your pull out your AFL out of nowhere to finish it here and now. ");
+			
+			var totalDamage:DamageResult = new DamageResult();
+			
+			for (var i:int = 0; i < hGroup.length; i++)
+			{
+				var cTarget:Creature = hGroup[i];
+				if (cTarget.isDefeated()) continue;
+				
+				var damage:TypeCollection = new TypeCollection( { truedamage : 1000000 } );
+				
+				totalDamage.addResult(applyDamage(damage, attacker, cTarget, "suppress"));
+			}
+			
+			outputDamage(totalDamage);
 		}
 	}
 }
