@@ -1562,6 +1562,8 @@ public function processTime(arg:int):void {
 			}
 		}
 		
+		//Ovilium tracker removal
+		if(pc.hasStatusEffect("Ovilium")) oviliumEffectCheck();
 		//Clippex procs!
 		if(pc.hasStatusEffect("Clippex Gel"))
 		{
