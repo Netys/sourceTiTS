@@ -152,14 +152,19 @@ internal function oasisSexing():void {
 	//For manpartz
 	if(pc.hasCock()) {
 		output("You feel clawed hands grasp at [pc.oneCock] and begin to slide up and down before another demon pushes them out of the way and you ");
-		if (pc.biggestCockLength() > 25) output("feel your [pc.cock " +x + "] slide into a hell-girl's sloppy cunt. The demoness moans and pants in pleasure as your [pc.cockNoun " +x + "] bottoms out in her gaping pussy and she begins to ride you like the motionless whore you momentarily are, her gigantic breasts threatening to concuss you as she slides the huge distance up and down your cock in her thirst to fill her cavelike cunt.  ");
+		if (pc.biggestCockLength() > 25) {
+			output("feel your [pc.cock " +x + "] slide into a hell-girl's sloppy cunt. The demoness moans and pants in pleasure as your [pc.cockNoun " +x + "] bottoms out in her gaping pussy and she begins to ride you like the motionless whore you momentarily are, her gigantic breasts threatening to concuss you as she slides the huge distance up and down your cock in her thirst to fill her cavelike cunt.");
+			pc.cockChange(true, true);
+		}
 		else {
 			output("see a smaller and younger demon lowering her very tight pussy onto your [pc.cock " +x + "]. It's a tight fit, but her almost-virginal pussy is dripping wet. She bottoms her pussy out ");
 			if(pc.cocks[x].cLength() > 17) output("with hardly any of you inside her ");
 			else if(pc.cocks[x].cLength() > 12) output("about halfway down your [pc.cock] ");
 			else if(pc.cocks[x].cLength() > 6) output("with almost all of you inside of her ");
 			else if(pc.cocks[x].cLength() <= 6) output("as her pussy lips touch the base of your [pc.cock] ");
-			output("and begins to slide herself up and down your shaft in complete ecstasy, moaning like a cheap whore. She seems relatively uncorrupted for a denizen of this realm and is firm, tight and free of fur. Only a pair of horns betrays her taint. The thought that you are perhaps one of her first cocks sends tingles down your spine.  "); 
+			output("and begins to slide herself up and down your shaft in complete ecstasy, moaning like a cheap whore.");
+			pc.cockChange();
+			output(" She seems relatively uncorrupted for a denizen of this realm and is firm, tight and free of fur. Only a pair of horns betrays her taint. The thought that you are perhaps one of her first cocks sends tingles down your spine.  "); 
 			if(pc.cocks[x].cLength() > 6) {
 				output("The realisation that her pussy is slowly stretching over your [pc.cock] gives you a thrill that can only be described as positively evil.  ");
 				pc.cor(1);

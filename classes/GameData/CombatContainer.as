@@ -1447,6 +1447,7 @@ package classes.GameData
 					addDisabledButton(bOff, atk.ButtonName, atk.TooltipTitle, atk.TooltipBody);
 				}
 				bOff++;
+				if (bOff == 14) bOff++;
 			}
 			
 			// Special shits
@@ -1461,6 +1462,7 @@ package classes.GameData
 					addButton(bOff, "Recall Goo", kGAMECLASS.pcRecallGoo, undefined, "Recall Goo", "Call [goo.name] back to you, restoring your gooey armor.");
 				}
 				bOff++;
+				if (bOff == 14) bOff++;
 			}
 			
 			// TODO sort pages and shit

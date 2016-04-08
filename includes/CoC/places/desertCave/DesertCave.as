@@ -102,7 +102,7 @@ public function DesertCaveCommons():Boolean {
 		CombatManager.setHostileCharacters(new CoCSandWitchMob());
 		CombatManager.victoryScene(yoYouBeatUpSomeSandWitchesYOUMONSTER);
 		CombatManager.lossScene(loseToSammitchMob);
-		CombatManager.displayLocation("SAND\nWITCH MOB");
+		CombatManager.displayLocation("SAND WITCHES");
 
 		clearMenu();
 		addButton(0, "Next", CombatManager.beginCombat);
@@ -163,8 +163,11 @@ public function DesertCavePharmacy():Boolean {
 		null, "Pull the lever", "You suspect that it might open the door");
 	}
 	
-	addButton(0, "Brown Pill", takeBarrenPills, null, "Swallow the brown pill.", "You suspect that it might make you barren.");
-	addButton(1, "Pink Pill", takeFertilePills, null, "Swallow the pink pill.", "You suspect that it might make you fertile again.");
+	if (!pc.hasStatusEffect("Infertile")) addButton(0, "Brown Pill", takeBarrenPills, null, "Swallow the brown pill.", "You suspect that it might make you barren.");
+	else addDisabledButton(0, "Brown Pill", "Brown Pill", "You're already under the effects of contraceptives.  Taking one of the brown pills wouldn't do anything.");
+	
+	if (pc.hasStatusEffect("Infertile")) addButton(1, "Pink Pill", takeFertilePills, null, "Swallow the pink pill.", "You suspect that it might make you fertile again.");
+	else addDisabledButton(1, "Pink Pill", "Pink Pill", "You aren't under the effects of a contraceptive, so taking a pink pill would do nothing.");
 	return false;
 }
 public function DesertCaveBathroom():Boolean {
@@ -266,6 +269,7 @@ public function DesertCaveUpdateNotify():void {
 		rooms["COC_DESERT_CAVE_PHARMACY"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
 		rooms["COC_DESERT_CAVE_SLEEPING_CHAMBER"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
 		rooms["COC_DESERT_CAVE_BATHROOM"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
+		rooms["COC_DESERT_CAVE_EAST_HALL_1"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
 		rooms["COC_DESERT_CAVE_EAST_HALL_2"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
 		rooms["COC_DESERT_CAVE_CUM_WITCH_BEDROOM"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
 		rooms["COC_DESERT_CAVE_CUM_WITCH_OFFICE"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);

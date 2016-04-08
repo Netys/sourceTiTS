@@ -17,10 +17,10 @@ package classes.Items.Melee
 			this.type = GLOBAL.MELEE_WEAPON;
 			
 			//Used on inventory buttons
-			this.shortName = "L. Whip";
+			this.shortName = "F. Whip";
 			
 			//Regular name
-			this.longName = "Lethice's whip";
+			this.longName = "flaming whip";
 			
 			TooltipManager.addFullName(this.shortName, StringUtil.toTitleCase(this.longName));
 			

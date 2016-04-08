@@ -308,7 +308,7 @@ private function hasPussyFeedEssy(newPage:Boolean = true):void {
 	
 	output("\n\nIt takes you a while, but you extricate yourself and clean off the best you can, leaving her with a friendly kiss on the cheek before you head on your way once more.  With visitors like you, she hardly seems like she'll mind being trapped in the enchanted flower pot.");
 	pc.orgasm();
-	if(pc.fertility() < 1.5) pc.fertilityRaw+=0.01;
+	if (pc.fertility() < 1.5) pc.fertilityRaw += 0.01;
 	doNext(mainGameMenu);
 }
 

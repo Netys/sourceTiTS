@@ -240,7 +240,7 @@ public function ZetazCaveUpdateNotify():void {
 	}
 	
 	rooms["COC_ZETAZ_TORTURE_ROOM"].removeFlags(GLOBAL.NPC);
-	if (flags["COC.FREED_VALA"] == undefined) rooms["COC_ZETAZ_TORTURE_ROOM"].addFlag(GLOBAL.NPC);
+	if (flags["COC.FREED_VALA"] != 1) rooms["COC_ZETAZ_TORTURE_ROOM"].addFlag(GLOBAL.NPC);
 	
 }
 private var ZetazCaveUpdateNotifyHook: * = ZetazCaveUpdateNotifyGrapple();

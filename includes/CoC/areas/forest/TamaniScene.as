@@ -222,7 +222,9 @@ private function tamaniFirstTimeConsentual():void {
 		output("Tamani breaks the kiss and gives you a coy smile as she shimmies down your body, dropping her moist cunt onto your [pc.cock " + cockId + "]'s [pc.cockHead " + cockId + "].  She swings her hips in a little circle, teasing you with her moist entrance as your drug-enhanced pre-cum bubbles and drools around her lips, mixing with her own copious fluids as it flows down your length");
 		if(pc.balls > 0) output(" and drips from your [pc.balls]");
 		output(".  She stops and teases, \"<i>Ready to stuff me full of your cream?  I just KNOW I'll get pregnant from such a purrfect mate.</i>\"\n\n");
-		output("Tamani doesn't wait for an answer – she pauses until you're about to reply, then drops her weight down, fully impaling herself and turning the beginnings of your reply into a babbled moan.  She plants her feet on your thighs and her arms around your back and begins bouncing up and down rapidly, squeezing and contracting, milking your [pc.cock " + cockId + "] in her tight wet walls the entire time. Your inner abdominal muscles begin clenching and squeezing, sending a wave of heat through your groin as your baby-batter begins its journey towards the goblin's womb.\n\n");
+		output("Tamani doesn't wait for an answer – she pauses until you're about to reply, then drops her weight down, fully impaling herself and turning the beginnings of your reply into a babbled moan.");
+		pc.cockChange();
+		output("  She plants her feet on your thighs and her arms around your back and begins bouncing up and down rapidly, squeezing and contracting, milking your [pc.cock " + cockId + "] in her tight wet walls the entire time. Your inner abdominal muscles begin clenching and squeezing, sending a wave of heat through your groin as your baby-batter begins its journey towards the goblin's womb.\n\n");
 		output("You grab her with both hands and slam her down, taking her to the hilt");
 		if(pc.cockVolume(cockId) > 30) output(" and watching her belly bulge from your size");
 		output(".  She twists violently, practically thrashing in your arms as spunk begins pouring into her womb, making her belly start to bloat.  The goblin babbles incoherently with each blast of cum, stretching tighter and tighter around you as her pussy works to hold in every drop of spunk.  Her belly bloats a bit more, until the pressure is too much to bear and jism begins spurting around her opening, splattering into a puddle on the ground.\n\n");
@@ -598,12 +600,14 @@ internal function tamaniSexWon():void {
 		if(y != -1) output("each of ");
 		output("your girth");
 		if(y != -1) output("s");
-		output(".  She squeals happily, clearly getting what she desires.  For a moment you feel disappointed in yourself, but the sensations of her tight hole");
+		output(".");
+		pc.cockChange();
+		output("  She squeals happily, clearly getting what she desires.  For a moment you feel disappointed in yourself, but the sensations of her tight hole");
 		if(y != -1) output("s");
 		output(" clenching and squeezing around you quickly washes it away.\n\n");
 		
 		output("You rock back and forth methodically, treating Tamani like a tight cock-sleeve.  The goblin slut's hands rub her belly, not even attempting to pull her face out of the mud as she moans and giggles like a whore.  You keep working her cunt like a ");
-		if(!pc.isHerm()) output("man");
+		if(!pc.isHerm()) output("[pc.manWoman]");
 		else output("herm");
 		output(" possessed, sawing in and out with brutal efficiency, the wet squelches of the slut's juices driving you to piston back and forth with even greater force.  She gurgles happily, her ");
 		if(y == -1) output("pussy squeezing tightly as she cums hard.\n\n");
@@ -808,7 +812,9 @@ internal function getRapedByTamaniYouHypnoSlut():void {
 	if(primary >= 0) {
 		output("Tamani is completely right.  You grab her ass, feeling your fingers sink in to her supple flesh as you pull her back towards your ");
 		if(cocks > 0) output("main ");
-		output("[pc.cock " + primary + "].  Her warmth spreads over your [pc.cockHead " + primary + "] slowly, making you twitch and drip inside her, lubricating her already dripping channel with even more slick fluids.  With a mighty heave you push inside her, feeling yourself penetrating deep inside her, directly into her fertile womb.  Tamani rubs your [pc.legs] with her hands, giving you a massage as you bottom out against her, feeling her juices stain your ");
+		output("[pc.cock " + primary + "].  Her warmth spreads over your [pc.cockHead " + primary + "] slowly, making you twitch and drip inside her, lubricating her already dripping channel with even more slick fluids.  With a mighty heave you push inside her, feeling yourself penetrating deep inside her, directly into her fertile womb.");
+		pc.cockChange();
+		output("  Tamani rubs your [pc.legs] with her hands, giving you a massage as you bottom out against her, feeling her juices stain your ");
 		if(pc.hasSheath(primary)) output("sheath");
 		else output("crotch");
 		output("\n\n");
@@ -933,7 +939,9 @@ internal function tamaniAnalShits():void {
 
 	output("It's too tempting of a target to resist.  You open your [pc.gear] and allow your prick to flop free.  You're already hard from the enticing display, and unable to resist any longer, you grab her hips and pull her plump ass up towards you.  She gasps as she's dragged along the ground and tries to crane her neck to face you.  \"<i>H-hey stud,</i>\" Tamani stammers, suddenly nervous, \"<i>you aren't thinking of-</i>\" You pull her close and press the tip of your [pc.cock " + x + "] against her tight asshole.  \"<i>HEY!</i>\" she shouts back, glaring threateningly at you.  \"<i>You better not, I need that baby batter in my womb, not my ass!</i>\"\n\n");
 
-	output("Your menacing grin betrays no pity for the goblin, though.  You slowly press into her, her face contorting in pain as the tightness of her ass envelops you.  She grunts, hands clenched into tight fists as you bottom out in her.  \"<i>Please,</i>\" she begs, her eyes watering in pain and frustration, \"<i>I need you in my cunt! It... I don't want- oof!</i>\"  You start pumping your shaft forcefully in and out of her, slamming her full cheeks against you with every thrust.  You can tell from the way she feels around you that she's not very experienced with this way of doing things.\n\n");
+	output("Your menacing grin betrays no pity for the goblin, though.  You slowly press into her, her face contorting in pain as the tightness of her ass envelops you.  She grunts, hands clenched into tight fists as you bottom out in her.");
+	pc.cockChange();
+	output("  \"<i>Please,</i>\" she begs, her eyes watering in pain and frustration, \"<i>I need you in my cunt! It... I don't want- oof!</i>\"  You start pumping your shaft forcefully in and out of her, slamming her full cheeks against you with every thrust.  You can tell from the way she feels around you that she's not very experienced with this way of doing things.\n\n");
 
 	output("The more your [pc.cock " + x + "] stretches her tight anus, though, the more comfortable she seems to get with it.  She still protests weakly between grunts, but every once in a while a moan bursts from her, and the passion in them tells you that she's starting to like this.  Eventually she relaxes in your grip, resigning herself to letting you abuse her ass like it's a cheap toy.  One of her hands even sneaks up to her wet snatch and dips in.  Her hips start to move a bit without your influence, too, bouncing back and forth and you ram into her harder and harder.  Clearly she likes the feeling, even if she knows she won't get pregnant from it.\n\n");
 

@@ -47,7 +47,7 @@ public function introCorruptedGlade():void {
 		addButton(1, "Vines", tentacleFunCorruptedGlade, null, "Vines", "These vines look like cocks at their tips. Play with the vines.");
 		addButton(2, "Trees", treeBoobFunCorruptedGlade, null, "Trees", "The knots on the trees look a lot like breasts. Play with the trees and lick some sap.");
 		//addButton(3, "Destroy Them", destroyTheCorruptedGladesChoice, null, null, null, "Attempt to destroy the perverted glade.");
-		addButton(14, "Leave", returnToCampUseOneHour);
+		addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 	}
 	//Wallow in decadence reaction - UNFINISHED
 }
@@ -57,7 +57,9 @@ private function flowerFunCorruptedGlade():void {
 	//spriteSelect(92);
 	if (pc.hasCock()) { //Sex scenes for those with cawks
 		if (pc.cocks.length == 1) { //Single Cawk
-			output("You grin to yourself as you decide to see just how close to a pussy these perverted little flowers are.  The thick stem bends with ease as you grasp it and bend it towards your groin, your other hand fumbling to open your [pc.gear].  In seconds you free yourself and gingerly bring the folds closer, the musky scent that fills the air rapidly bringing you to a full, throbbing hardness.  The first touch of petals to your skin slicks you with the flower's silky secretions, allowing you to easily slip between the petals.  Though the flower looks fairly deep, you quickly feel yourself bottom out inside the petal's slippery grip.  Shrugging, you decide to make the best of it and begin thrusting into the plant, enjoying the unusual sensations along the front-most parts of your " + pc.cockDescript(0) + ".  As you pound away, you begin to notice a change in the rear of the flower.\n\n");
+			output("You grin to yourself as you decide to see just how close to a pussy these perverted little flowers are.  The thick stem bends with ease as you grasp it and bend it towards your groin, your other hand fumbling to open your [pc.gear].  In seconds you free yourself and gingerly bring the folds closer, the musky scent that fills the air rapidly bringing you to a full, throbbing hardness.  The first touch of petals to your skin slicks you with the flower's silky secretions, allowing you to easily slip between the petals.  Though the flower looks fairly deep, you quickly feel yourself bottom out inside the petal's slippery grip.");
+			pc.cockChange();
+			output("  Shrugging, you decide to make the best of it and begin thrusting into the plant, enjoying the unusual sensations along the front-most parts of your " + pc.cockDescript(0) + ".  As you pound away, you begin to notice a change in the rear of the flower.\n\n");
 
 			output("It feels as if something is opening up, and the tip of your cock begins slipping through a tight ring, bulging the plant's stem noticeably.  The sudden change worries you enough to pull back for a moment, your " + pc.cockDescript(0) + " nearly clearing the opening before dozens of tiny whip-like tendrils burst from the flower, wrapping your maleness with painful tightness.  They constrict further and with a burst of movement, slam the flower down onto your " + pc.cockDescript(0) + ", pulling you further and further into the stem with painful force.  You struggle briefly but the pain it causes your over-stimulated member is too much, so you just give up, letting the pussy-like plant draw the last of you inside its stem, the silken flowers cupping around your ");
 			if (pc.balls > 0)
@@ -87,6 +89,7 @@ private function flowerFunCorruptedGlade():void {
 			output("As you depart, you note the plants' stalks bulging obscenely, bits of your seed dripping from the flowers' opening.");
 		else output("As you depart, you note the plants' stalks bulging out obscenely, looking like overfull balloons.  They're stretched so thin as to be transparent, your cum sloshing about inside them as they attempt to digest their meals.  Steady streams of your jism leak from the flowers' lips, unable to keep it all inside.");
 		//Stat changes!
+		processTime(25 + rand(10));
 		pc.orgasm();
 		//dynStats("sen", 2);
 		var booster:int = 1;
@@ -106,11 +109,13 @@ private function flowerFunCorruptedGlade():void {
 		
 		output("You walk away, your lips and tongue feeling slightly puffy and sensitive, but none the worse for the wear.");
 		//pc.slimeFeed();
+		processTime(20 + rand(10));
 		pc.orgasm();
 		//dynStats("sen", 4, "cor", 1);
 		pc.cor(1);
 	}
-	doNext(returnToCampUseOneHour);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 private function tentacleFunCorruptedGlade():void {
@@ -168,6 +173,7 @@ private function tentacleFunCorruptedGlade():void {
 
 		output("An hour or two later, you wake feeling very sore, but satisfied.  The vine must have popped free at some point and the bulb now rests on your pussy lips.  You go to brush it off and nearly orgasm from touching your nether-lips, still sensitive and parted from the overlarge tentacle they so recently took.  A rush of white goop escapes from between your thighs as you stand, soaking back into the soil immediately.   A quick stretch later, you don your gear and head back to camp with a smile.\n\n");
 		//Normal stat changes
+		processTime(25 + rand(10));
 		pc.orgasm();
 		//dynStats("sen", 5, "cor", 2);
 		pc.cor(2);
@@ -178,7 +184,7 @@ private function tentacleFunCorruptedGlade():void {
 		}
 		if (rand(4) == 0 && pc.hipRating() <= 10) { //+hip up to 10
 			pc.hipRating(rand(2) + 1);
-			pc.fertilityRaw+=0.05;
+			pc.fertilityRaw += 0.05;
 			output("A strange shifting occurs below your waist, making your [pc.gear] feel tight.  <b>Your hips have grown larger</b>, becoming " + pc.hipDescript() + ".  ");
 		}
 	}
@@ -234,7 +240,8 @@ private function tentacleFunCorruptedGlade():void {
 		}
 	}
 	//pc.slimeFeed();
-	doNext(returnToCampUseOneHour);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 private function treeBoobFunCorruptedGlade():void {
@@ -270,7 +277,9 @@ private function treeBoobFunCorruptedGlade():void {
 			}
 		}
 	}
-	doNext(returnToCampUseOneHour);
+	processTime(25 + rand(10));
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 //DESTROY THE CORRUPTED GLADE!
@@ -402,7 +411,9 @@ private function corruptedGladeignoreSatyr():void {
 	output(", and silently leave him to his pleasures.", false);
 	//dynStats("lus", 5 + pc.lib / 20);
 	pc.lust(pc.libido() / 20);
-	doNext(returnToCampUseOneHour);
+	processTime(10 + rand(10));
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 //Player returns to camp
 private function corruptedGladerapeSatyr():void {
@@ -422,7 +433,9 @@ private function corruptedGladerapeSatyr():void {
 	if(pc.isNaga()) output("slither", false);
 	else output("sneak", false);
 
-	output(" towards the distracted satyr; stopping a few feet away, you stroke your [pc.cock " + x + "], urging it to full erection and coaxing a few beads of pre, which you smear along your [pc.cockHead " + x + "].  With no warning, you lunge forward, grabbing and pulling his hips towards your [pc.cock " + x + "] and shoving as much of yourself inside his tight ass as you can.\n\n", false);
+	output(" towards the distracted satyr; stopping a few feet away, you stroke your [pc.cock " + x + "], urging it to full erection and coaxing a few beads of pre, which you smear along your [pc.cockHead " + x + "].  With no warning, you lunge forward, grabbing and pulling his hips towards your [pc.cock " + x + "] and shoving as much of yourself inside his tight ass as you can.");
+	pc.cockChange();
+	output("\n\n", false);
 
 	output("The satyr lets out a startled yelp, struggling against you, but between his awkward position and the mutant flower ravenously sucking on his sizable cock, he's helpless.\n\n", false);
 
@@ -455,6 +468,7 @@ private function corruptedGladerapeSatyr():void {
 	output("You can't help but smile inwardly at the helpless goatman's eagerness, and decide to stick around and watch him a little longer.  It's not everyday you see a creature like him at your mercy.  Every once in awhile you egg him on with a fresh slapping of his butt. The satyr grumbles and huffs, but continues to thrust and rut mindlessly into the vegetative pussy feeding on his cock. You don't think it'll be long before he cums...\n\n", false);
 
 	output("As you watch the lewd display, you feel your arousal building and your [pc.cock " + x + "] growing back into full mast. Figuring you already have a willing slut readily available, you consider using him to relieve yourself once more... What do you do?", false);
+	processTime(15 + rand(10));
 	pc.orgasm();
 	//[Again][Leave]
 	clearMenu();
@@ -466,8 +480,10 @@ private function corruptedGladerapeSatyr():void {
 private function corruptedGladedontRepeatFuckSatyr():void {
 	clearOutput();
 	//spriteSelect(99);
-	output("You've had your fun, and you don't really want to fool around in the forest all day, so you grab your [pc.gear] and leave the rutting satyr behind.\n\n", false);
-	doNext(returnToCampUseOneHour);
+	output("You've had your fun, and you don't really want to fool around in the forest all day, so you grab your [pc.gear] and leave the rutting satyr behind.\n\n");
+	processTime(10 + rand(10));
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 //[=Again=]
 private function corruptedGladesecondSatyrFuck():void {
@@ -483,8 +499,10 @@ private function corruptedGladesecondSatyrFuck():void {
 	output("With a great, garbled cry, the satyr cums on his own, gurgling through the sap-tinted cum drooling from his mouth as he spews into the waiting opening of his rapacious plant lover.  It swells and bloats as it gorges itself on his thick, stinking seed, stretching its stem until it is almost spherical, finally releasing him to collapse on his knees, free at last of the plant's grip.  He moans and bleats softly, leaking cummy sap from his chin onto his hairy chest, too overwhelmed by the combined fucking of yourself and the flower and too poisoned by whatever aphrodisiac he's been slurping on to move.\n\n", false);
 
 	output("You give your sensitive member a few trembling, almost-painful strokes... maybe you overdid it a bit.  Shrugging, you gather your [pc.gear] and leave the passed-out satyr behind as you go back to your camp.", false);
+	processTime(20 + rand(10));
 	pc.orgasm();
 	//dynStats("lib", 1, "sen", -5);
-	pc.libido(1);
-	doNext(returnToCampUseOneHour);
+	pc.slowStatGain("l", 1);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }

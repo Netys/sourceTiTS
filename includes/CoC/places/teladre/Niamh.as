@@ -459,61 +459,76 @@ public function bimboChampagne(player:PlayerCharacter,clearScreen:Boolean,intro:
 		else output("You find yourself falling even further into the dense bimbo mindset.  You do feel, like, super-good and all, though!\n\nMoaning lewdly, you begin to sway your hips from side to side, putting on a show for anyone who might manage to see you.   You just feel so... sexy.  Too sexy to hide it.  Your body aches to show itself and feel the gaze of someone, anyone upon it.  Mmmm, it makes you so wet!  You sink your fingers into your sloppy cunt with a groan of satisfaction.  Somehow, you feel like you could fuck anyone right now!");
 	}
 	pc.imbibeAlcohol(50);
-	pc.createStatusEffect("Bimbo Champagne", 0, 0, 0, 0, false, "Icon_DizzyDrunk", "Somehow, you feel like you could fuck anyone right now!", false, 60 * 8);
-	// FIXME: do this if you want
-	//if(pc.findStatusAffect(StatusAffects.BimboChampagne) >= 0) {
-		//pc.addStatusValue(StatusAffects.BimboChampagne,1,4);
-		//dynStats("spe", -2, "lib", 1, "lus", 10);
-	//}
-	//else {
-		//pc.createStatusAffect(StatusAffects.BimboChampagne,8,0,0,0);
-		////(Player has breasts smaller than DD-cup:
-		//if(pc.breastRows[0].breastRating < 5) {
-			//output("\n\nYou feel this, like, totally sweet tingling in your boobies... And then your [pc.gear] gets, like, tighter; wow, it seems like Niamh's booze is making your boobies grow!  That's so awesome!  You giggle and gulp down as much as you can... Aw; your boobies are <b>kinda</b> big now, but, like, you wanted great big bouncy sloshy boobies like Niamh has.  That'd be so hot!");
-			//pc.changeStatusValue(StatusAffects.BimboChampagne,2,5-pc.biggestTitSize());
-			//pc.breastRows[0].breastRating = 5;
-		//}
-		////(Player does not have vagina:
-		//if(!pc.hasVagina()) {
-			//pc.createVagina();
-			//pc.genderCheck();
-			//output("\n\nYou can feel ");
-			//if(pc.hasCock()) output("the flesh under your cock[if (hasBalls = true)  and behind your [balls]]");
-			//else output("the blank expanse of flesh that is your crotch");
-			//output(" start to tingle and squirm... mmm... that feels nice!  There's a sensation you, like, can't describe, and then your crotch feels all wet... but in a good, sticky sorta way.  Oh, wow!  <b>You've, like, just grown a new virgin pussy!</b>  Awesome!");
-			//pc.changeStatusValue(StatusAffects.BimboChampagne,3,1);
-		//}
-		////(player ass smaller than bimbo:
-		//if(pc.buttRating < 12) {
-			//output("\n\nYour butt jiggles deliciously - it feels like the bubbles from the drink are pushing out your plump rump, filling it like bagged sparkling wine!  Your bubbly booty swells and inflates until it feels as airy as your head.  Like, this is soooo plush!");
-			//pc.changeStatusValue(StatusAffects.BimboChampagne,4,12-pc.buttRating);
-			//pc.buttRating = 12;
-			//if(pc.hipRating < 10) pc.hipRating = 10;
-		//}
-		//pc.genderCheck();
-		//dynStats("spe", -10, "lib", 1, "lus", 25);
-	//}
+
+	if(pc.hasStatusEffect("Bimbo Champagne")) {
+		pc.addStatusMinutes("Bimbo Champagne", 4 * 60);
+		pc.slowStatGain("l", 1);
+		pc.lust(10);
+	}
+	else {
+		pc.createStatusEffect("Bimbo Champagne", 0, 0, 0, 0, false, "Icon_DizzyDrunk", "Somehow, you feel like you could fuck anyone right now!", false, 60 * 8, 0xFFC8FF);
+		pc.createStatusEffect("BimboChampagneReverse", 0, 0, 0, 0); // params: breasts+, vag+, butt+, hips+
+		//(Player has breasts smaller than DD-cup:
+		if(pc.breastRows[0].breastRatingRaw < 5) {
+			output("\n\nYou feel this, like, totally sweet tingling in your boobies... And");
+			if(!pc.isChestExposed()) output(" then your [pc.gear] gets, like, tighter;");
+			output(" wow, it seems like Niamh's booze is making your boobies grow!  That's so awesome!  You giggle and gulp down as much as you can... Aw; your boobies are <b>kinda</b> big now, but, like, you wanted great big bouncy sloshy boobies like Niamh has.  That'd be so hot!");
+			pc.addStatusValue("BimboChampagneReverse", 1, 5 - pc.breastRows[0].breastRatingRaw);
+			pc.breastRows[0].breastRatingRaw = 5;
+		}
+		//(Player does not have vagina:
+		if(!pc.hasVagina()) {
+			pc.createVagina();
+			pc.shiftVagina(0, Mutator.guessVagType(pc));
+			output("\n\nYou can feel the flesh");
+			if (pc.hasCock()) output(" under your [pc.cocks]"); {
+				if (pc.balls > 0) output(" and");
+			}
+			if (pc.balls > 0)  output(" behind your [pc.balls]");
+			if (!pc.hasCock() && pc.balls == 0) output(" the blank expanse of flesh that is your crotch");
+			
+			output(" start to tingle and squirm... mmm... that feels nice!  There's a sensation you, like, can't describe, and then your crotch feels all wet... but in a good, sticky sorta way.  Oh, wow!  <b>You've, like, just grown a new virgin pussy!</b>  Awesome!");
+			pc.addStatusValue("BimboChampagneReverse", 2, 1);
+		}
+		//(player ass smaller than bimbo:
+		if(pc.buttRatingRaw < 12) {
+			output("\n\nYour butt jiggles deliciously - it feels like the bubbles from the drink are pushing out your plump rump, filling it like bagged sparkling wine!  Your bubbly booty swells and inflates until it feels as airy as your head.  Like, this is soooo plush!");
+			pc.addStatusValue("BimboChampagneReverse", 3, 12 - pc.buttRatingRaw);
+			pc.buttRatingRaw = 12;
+		}
+		if(pc.hipRatingRaw < 12) {
+			pc.addStatusValue("BimboChampagneReverse", 4, 10 - pc.hipRatingRaw);
+			pc.hipRatingRaw = 10;
+		}
+		pc.slowStatGain("l", 1);
+		pc.lust(25);
+	}
 }
 
-//public function removeBimboChampagne():void {
-	//output("\n<b>Whoah!  Your head is clearing up, and you feel like you can think clearly for the first time in forever.  Niamh sure is packing some potent stuff!  You shake the cobwebs out of your head, glad to once again be less dense than a goblin with a basilisk boyfriend.</b>");
-	//dynStats("spe", 10, "lib", -1);
-	//if(pc.statusAffectv2(StatusAffects.BimboChampagne) > 0) {
-		//pc.breastRows[0].breastRating -= pc.statusAffectv2(StatusAffects.BimboChampagne);
-		//output("  As the trecherous brew fades, your [pc.chest] loses some of its... bimboliciousness.  Your back feels so much lighter without the extra weight dragging down on it.");
-	//}
-	//if(pc.statusAffectv3(StatusAffects.BimboChampagne) > 0) {
-		//output("  At the same time, your [pc.vagina] slowly seals itself up, disappearing as quickly as it came.  Goodbye womanhood.");
-		//pc.removeVagina();
-	//}
-	//if(pc.statusAffectv4(StatusAffects.BimboChampagne) > 0) {
-		//pc.buttRating -= pc.statusAffectv4(StatusAffects.BimboChampagne);
-		//output("  Of course, the added junk in your trunk fades too, leaving you back to having a [pc.butt].");
-	//}
-	//pc.removeStatusAffect(StatusAffects.BimboChampagne);
-	//pc.genderCheck();
-	//output("\n");
-//}
+public function removeBimboChampagne():void {
+	if (pc.hasStatusEffect("Bimbo Champagne") || !pc.hasStatusEffect("BimboChampagneReverse")) return; // only fire when has status for reverse but champagne itself worn out.
+	
+	output("\n\nWhoah!  Your head is clearing up, and you feel like you can think clearly for the first time in forever.  Niamh sure is packing some potent stuff!  You shake the cobwebs out of your head, glad to once again be <b>less dense than a goblin with a basilisk boyfriend</b>.");
+	if(pc.statusEffectv1("BimboChampagneReverse") > 0) {
+		pc.breastRows[0].breastRatingRaw -= pc.statusEffectv1("BimboChampagneReverse");
+		output("  As the trecherous brew fades, your [pc.chest] loses some of its... bimboliciousness.  Your back feels so much lighter without the extra weight dragging down on it.");
+	}
+	if(pc.statusEffectv2("BimboChampagneReverse") > 0) {
+		output("  At the same time, your [pc.vagina] slowly seals itself up, disappearing as quickly as it came.  Goodbye womanhood.");
+		pc.removeVagina();
+	}
+	if(pc.statusEffectv3("BimboChampagneReverse") > 0) {
+		pc.buttRatingRaw -= pc.statusEffectv3("BimboChampagneReverse");
+		output("  Of course, the added junk in your trunk fades too, leaving you back to having a [pc.butt].");
+	}
+	if(pc.statusEffectv4("BimboChampagneReverse") > 0) {
+		pc.hipRatingRaw -= pc.statusEffectv4("BimboChampagneReverse");
+	}
+	pc.removeStatusEffect("BimboChampagneReverse");
+}
+
+private var removeBimboChampagneHook: * = removeBimboChampagneGrapple();
+private function removeBimboChampagneGrapple():* { timeChangeListeners.push(removeBimboChampagne); }
 
 public function bazaarNiamh():void {
 	clearOutput();

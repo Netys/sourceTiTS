@@ -7,6 +7,7 @@ package classes.Items.Transformatives
 	import classes.GameData.TooltipManager;
 	import classes.GLOBAL;
 	import classes.ItemSlotClass;
+	import classes.kGAMECLASS;
 	import classes.StringUtil;
 	import classes.Util.*;
 	
@@ -70,10 +71,12 @@ package classes.Items.Transformatives
 				//return false;
 			//}
 			
-			this.quantity--; // ugh... where are .consume function?
-			if (this.quantity <= 0 && target.inventory.indexOf(this) != -1)
-			{
-				target.inventory.splice(target.inventory.indexOf(this), 1);
+			if(!kGAMECLASS.infiniteItems()) {
+				this.quantity--; // ugh... where are .consume function?
+				if (this.quantity <= 0 && target.inventory.indexOf(this) != -1)
+				{
+					target.inventory.splice(target.inventory.indexOf(this), 1);
+				}
 			}
 			
 			BroBrewEffect(target);

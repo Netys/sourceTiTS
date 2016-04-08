@@ -357,7 +357,9 @@ private function sandwitchSex():void {
 	if(pc.cockTotal() > 1) output(num2Text(pc.cockTotal()), false);
 	else output("two", false);
 	output(" of them!  The sand witch appears frightened, but as you gently tease her lips with your fingers, she slowly starts to breathe faster, starting to moan as her legs spread themselves against her better judgment. Grinning in satisfaction, you bring your rigid " + pc.cockDescript(0) + " against her lips, and push slowly, gently.  ", false);
-	output("The sand witch cries out, her hands grabbing your arms, pressing hard against your " + pc.skinFurScales() + " as you slowly and teasingly ease your " + pc.cockDescript(0) + " into her tight depths. You almost feel like a virgin, your " + pc.cockDescript(0) + " throbbing, the need to cum almost beyond your ability to control.  ", false);
+	output("The sand witch cries out, her hands grabbing your arms, pressing hard against your " + pc.skinFurScales() + " as you slowly and teasingly ease your " + pc.cockDescript(0) + " into her tight depths.");
+	if (!pc.cockVirgin) output(" You almost feel like a virgin, your " + pc.cockDescript(0) + " throbbing, the need to cum almost beyond your ability to control.  ", false);
+	pc.cockChange();
 	output("You rest against her chest, her large breasts squirting milk against your own chest as your weight appears to excite her enough to make her lactate, if what you're doing already wasn't enough.  ", false);
 	output("You kiss the sand witch, getting accustomed to her unbelievable tightness. You hump backwards and forwards, grinning like a fool with his first girlfriend. Not even a succubus would be able to rival her lush depths.  ", false);
 	output("You finally get serious and ease yourself into fucking the sand witch, slowly gaining speed and depth as your groins slap together with such ferocity that a normal person would be bruised upon their next waking. You pound the sand witch, making her scream in ecstasy, her already tight depths turning vice-like as you grunt your lust, cumming and filling her depths. Your ", false);
@@ -516,7 +518,8 @@ private function SWCentaurMore(argument:Number):Boolean {
 			if(pc.cockTotal() == 2) output("After aligning your [pc.cocksLight] to her twin cunts, you push yourself deeply into her, ", false);
 			//[3+ cocks]
 			if(pc.cockTotal() >= 3) output("Lining up two of your cocks to her twin cunts and another to her anus, you thrust into her without pre-amble.  Her anal muscles try to keep you out, but they are no match for the strength of your legs.  You tear into her, ", false);
-			output("eliciting a scream as your hind quarters push her forcefully over the sand. ", false);
+			output("eliciting a scream as your hind quarters push her forcefully over the sand.", false);
+			pc.cockChange(true, true);
 			//[largest cock is wide] 
 			if(pc.cocks[0].cockThickness >= 3) {
 				output("It is hard to believe just how tight she is, though if her cries serve as any indication, she will not be after you are through with her.  Turned on even more, you thrust in with increasing vigor and try to widen her as much as possible. ", false);
@@ -631,7 +634,9 @@ private function SWCentaurMore(argument:Number):Boolean {
 private function knotSandwitch():void {
 	//spriteSelect(50);
 	clearOutput();
-	output("You press the tip of your " + pc.cockDescript(0) + " at the entrance of her fragent flower.  It slides in, thanks to the pre already dribbling from your cock, your eyes rolling back in your head from the touch of her slippery folds.  You can't help but suddenly stab the length of your " + pc.cockDescript(0) + " to the hilt within her, moaning as the tip pushes against her cervix.\n\n", false);
+	output("You press the tip of your " + pc.cockDescript(0) + " at the entrance of her fragent flower.  It slides in, thanks to the pre already dribbling from your cock, your eyes rolling back in your head from the touch of her slippery folds.  You can't help but suddenly stab the length of your " + pc.cockDescript(0) + " to the hilt within her, moaning as the tip pushes against her cervix.");
+	pc.cockChange();
+	output("\n\n", false);
 	output("As your " + pc.cockDescript(0) + " stirs within her, she begins to push back, her velvet walls gripping you tightly as you get a extra bit inside.  She pulls free and pounds in again, causing her to grunt from the force of your knot stretching her.  Your balls swing back and forth, slapping and bouncing against her ass in a delicious way.  You can feel the beginnings of the orgasm building within your loins, pulsing up through the tip of your " + pc.cockDescript(0) + ". As the pleasure increases, your body readies itself for the spill, and your knot begins to swell.  ", false);
    output("You begin to buck into her at a frenzied pace, your body's need to release your motivation.  At first, your knot swelling is an extra sensation, a tightness that squeezes deliciously as more and more blood is forced inside by sheer stimulation.\n\n", false);
 	output("Then it begins to get in the way, preventing your length from going all the way in, causing the pointed tip of your " + pc.cockDescript(0) + " to lust for the unattainable depths of her cunt.  You press in, and get the sensation of the knot being squeezed in, crushing you with warm wet pleasure within her spasming cunt, only to release as you pull free.  As it continues to swell, you can no longer get your dick all the way inside her, your sperm-swollen knot bloated beyond her capacity.  Your desire is almost at its peak; within your grasp, but without that vice-like tightness around your knot it will be hard to cum.  ", false);

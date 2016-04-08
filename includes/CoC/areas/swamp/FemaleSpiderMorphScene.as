@@ -66,6 +66,9 @@ private function runFromFSpiderMorph():void
 	// FIXME: runAway is private and can't be called in old way...
 	else if (rand(2) == 0) {
 		output("You manage to leave her behind you.")
+		
+		processTime(10 + rand(10));
+		addButton(0, "Next", mainGameMenu);
 	}
 	else {
 		output("Your attempt to run away failed!")

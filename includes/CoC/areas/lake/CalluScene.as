@@ -124,6 +124,7 @@ private function ottergirlLikesDongs():void
 	else if (pc.cocks[x].cLength() < 24) output("slowly devouring your entire cock, until she finally comes to rest on your lap");
 	else output("an excruciatingly long process as feet worth of hard cockmeat disappear into her snatch. There's a small moment of resistance, followed by a soft squelch and a sudden \"<i>Oooh</i>\" from Callu.  With no small amount of trepidation, you realize you've just penetrated into her womb.  You can't tell from the way she's facing, but you're certain her stomach has to be bulging outwards at this point");
 	output(".");
+	pc.cockChange();
 
 	output("\n\nWith your entire ");
 	if (pc.cocks[x].thickness() >= 3) output("impressive ");

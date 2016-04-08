@@ -1,6 +1,11 @@
 import classes.Characters.CoC.CoCFarmers;
+import classes.Characters.CoC.CoCTrader;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
+import classes.Items.Drinks.CoCSheepMilk;
+import classes.Items.Miscellaneous.CoCMinotaurCum;
+import classes.Items.Transformatives.CoCBroBrew;
+import classes.Items.Transformatives.CoCGoblinAle;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -269,28 +274,41 @@ public function owcaTavern():void {
 	output("The tavern is nice and cozy; there are a few tables and chairs scattered around in no ordered pattern, and most clients here appear to belong to the same species.  By the crude wooden bar, you see a list of all the current drinks on sale:\n<i>");
 	//SheepMk
 	//var milk:Function = createCallBackFunction(owcaBuySetup, consumables.SHEEPMK);
-	output("\nSheep Milk Bottle: " + (180 - flags["COC.OWCAS_ATTITUDE"]) + " gems");
+	output("\nSheep Milk");
 	//if((180 - flags["COC.OWCAS_ATTITUDE"]) > pc.gems) milk = null;
 	
 	//var goblin:Function = createCallBackFunction(owcaBuySetup,consumables.GOB_ALE);
-	output("\nGoblin Ale: " + (60 - Math.round(flags["COC.OWCAS_ATTITUDE"] / 2)) + " gems");
+	output("\nGoblin Ale");
 	//if((60 - Math.round(flags["COC.OWCAS_ATTITUDE"]/2)) > pc.gems) goblin = null;
 	
-	//var brew:Function = createCallBackFunction(owcaBuySetup,consumables.BROBREW);
-	if(rand(10) > flags["COC.OWCAS_ATTITUDE"]/10) {
-		output("\nBro Brew: 2000 gems");
-		//if((2000) > pc.gems) brew = null;
-	}
-	//else brew = null;
-	
 	//var cum:Function = createCallBackFunction(owcaBuySetup,consumables.MINOCUM);
-	output("\nMinotaur Cum: " + (300 - flags["COC.OWCAS_ATTITUDE"]) + " gems");
+	output("\nMinotaur Cum");
 	//if((300 - flags["COC.OWCAS_ATTITUDE"]) > pc.gems) cum = null;
+	
+	//var brew:Function = createCallBackFunction(owcaBuySetup,consumables.BROBREW);
+	//if(rand(10) > flags["COC.OWCAS_ATTITUDE"]/10) {
+		output("\nBro Brew");
+		//if((2000) > pc.gems) brew = null;
+	//}
+	//else brew = null;
 	output("</i>");
 	
 	processTime(3);
 	clearMenu();
+	addButton(0, "Buy", owcaTavernShop);
 	addButton(14, "Back", owcaMainScreenOn);
+}
+
+
+private function owcaTavernShop():void {
+	//spriteSelect(37);
+	shopkeep = new CoCTrader();
+	shopkeep.short = "Barkeep";
+	shopkeep.keeperBuy = "The tavern is nice and cozy; there are a few tables and chairs scattered around in no ordered pattern, and most clients here appear to belong to the same species.  By the crude wooden bar, you see a list of all the current drinks on sale:";
+	shopkeep.sellMarkup = 1.6 - flags["COC.OWCAS_ATTITUDE"] / 200.;
+	shopkeep.inventory = [new CoCSheepMilk(), new CoCGoblinAle(), new CoCMinotaurCum(), new CoCBroBrew()];
+	shopkeepBackFunctor = owcaTavern;
+	buyItem();
 }
 
 //Herds (Z)

@@ -1527,7 +1527,7 @@ public function wutwutindabuttbuttFap():void
 	output(" and move them behind you, your digits nestling themselves between your [pc.butts].");
 
 	//{pc.ass.looseness() <= 3
-	if (pc.ass.looseness() <= 2)
+	if (pc.ass.looseness() <= 2 && pc.analCapacity() < 100 && pc.ass.wetness() < 3)
 	{
 		output("\n\nOwing to your lack of");
 		if (silly) output(" butt-stuff");
@@ -1570,19 +1570,19 @@ public function wutwutindabuttbuttFap():void
 	}
 
 	output("\n\nYou've soon");
-	if (pc.ass.looseness() <= 2) output(" worked");
+	if (pc.ass.looseness() <= 2 && pc.analCapacity() < 100 && pc.ass.wetness() < 3) output(" worked");
 	else output(" slipped");
 	output(" your finger");
-	if (pc.ass.looseness() > 1) output("s");
+	if (pc.ass.looseness() > 2 || pc.analCapacity() >= 100 || pc.ass.wetness() >= 3) output("s");
 	output(" in all the way, the bulk of your palm now stopping any further progress as you start to wriggle the invading digit");
-	if (pc.ass.looseness() > 1) output("s");
+	if (pc.ass.looseness() > 2 || pc.analCapacity() >= 100 || pc.ass.wetness() >= 3) output("s");
 	output(" around inside your [pc.asshole]");
 	if (pc.hasCock())
 	{
 		output(", searching for the bump of your prostate. With a little stretch from");
-		if (pc.ass.looseness() > 1) output(" one of");
+		if (pc.ass.looseness() > 2 || pc.analCapacity() >= 100 || pc.ass.wetness() >= 3) output(" one of");
 		output(" your finger");
-		if (pc.ass.looseness() > 1) output("s");
+		if (pc.ass.looseness() > 2 || pc.analCapacity() >= 100 || pc.ass.wetness() >= 3) output("s");
 		output(", you find your target and tease out a fresh dollop of precum from the tip of [pc.eachCock]");
 	}
 	output(".");
@@ -1618,9 +1618,9 @@ public function wutwutindabuttbuttFap():void
 	output("\n\nYou moan");
 	if (pc.isLactating() && pc.milkQ() >= 500) output(", muffled as you are with a mouthful of your own tit,");
 	output(" as your pleasure builds. Your [pc.hips] involuntarily twist back and forth as you drive your finger");
-	if (pc.ass.looseness() > 3) output("s");
+	if (pc.ass.looseness() > 2 || pc.analCapacity() >= 100 || pc.ass.wetness() >= 3) output("s");
 	output(" with increasing fervor into your [pc.asshole], trying to inch");
-	if (pc.ass.looseness() > 3) output(" them");
+	if (pc.ass.looseness() > 2 || pc.analCapacity() >= 100 || pc.ass.wetness() >= 3) output(" them");
 	else output(" it");
 	output(" just a little bit deeper.");
 	if (pc.hasCock()) output(" Precum dribbles from [pc.eachCockHead], a stream that gets thicker every time you brush against the sensitive bulb of your prostate.");

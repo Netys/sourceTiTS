@@ -72,10 +72,12 @@ package classes.Items.Transformatives
 				return false;
 			}
 			
-			this.quantity--; // ugh... where are .consume function?
-			if (this.quantity <= 0 && target.inventory.indexOf(this) != -1)
-			{
-				target.inventory.splice(target.inventory.indexOf(this), 1);
+			if(!kGAMECLASS.infiniteItems()) {
+				this.quantity--; // ugh... where are .consume function?
+				if (this.quantity <= 0 && target.inventory.indexOf(this) != -1)
+				{
+					target.inventory.splice(target.inventory.indexOf(this), 1);
+				}
 			}
 			
 			
