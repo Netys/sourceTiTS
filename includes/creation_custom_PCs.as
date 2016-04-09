@@ -877,8 +877,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			pc.meleeWeapon = new CoCLethiceWhip();
 			pc.lowerUndergarment = new EmptySlot();
 			pc.upperUndergarment = new EmptySlot();
-			NineTailsTimePassedNotify(); // validate the IllusoryAttire for kitsune
-			eventBuffer = ""; // suppress output from NineTailsTimePassedNotify
+			IllusoryAttireTimePassedNotify(false); // validate the IllusoryAttire for kitsune
 			bonusTexts = "You are the only one who is aware of boundless potential hidden inside of your " + (pc.isTaur() ? "massive" : "small") + " and weird body... For now.";
 			break;
 		default:

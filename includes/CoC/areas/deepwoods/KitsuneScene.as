@@ -2721,15 +2721,18 @@ public function NineTailsTimePassedNotify():void {
 		//}
 		else pc.energy(0.25);
 	}
-	
+}
+
+public function IllusoryAttireTimePassedNotify(showOutput:Boolean = true):String {
+	var ret:String = "";
 	if (pc.armor is IllusoryAttire) {
 		if (pc.armor.hasRandomProperties && !isNineTails(pc) && !pc.isPsionic()) {
-			eventBuffer += "\n\nWithout your power flowing through your bands, they are little more than just decorations.";
+			ret += "\n\nWithout your power flowing through your bands, they are little more than just decorations.";
 			pc.armor = new IllusoryAttire(); // reset stats
 		}
 		else if (isNineTails(pc) || pc.isPsionic()) {
 			if(!pc.armor.hasRandomProperties) { // first time message
-				eventBuffer += "\n\nYou feel your power resonating with your bands... You are fully in tune with them! Enchantment is now powerful enough to provide some real protection from attacks as well, and glamour effect is more efective too.";
+				ret += "\n\nYou feel your power resonating with your bands... You are fully in tune with them! Enchantment is now powerful enough to provide some real protection from attacks as well, and glamour effect is more efective too.";
 			}
 			pc.armor.type = GLOBAL.ARMOR;
 			pc.armor.tooltip = IllusoryAttire.descBasic + (isNineTails(pc) ? IllusoryAttire.descNineTails : IllusoryAttire.descPsionic);
@@ -2742,6 +2745,11 @@ public function NineTailsTimePassedNotify():void {
 		}
 		TooltipManager.addTooltip(pc.armor.shortName, pc.armor.tooltip);
 	}
+	if(showOutput) eventBuffer += ret;
+	return ret;
 }
 private var NineTailsTimePassedNotifyHook: * = NineTailsTimePassedNotifyGrapple();
-private function NineTailsTimePassedNotifyGrapple():* { timeChangeListeners.push(NineTailsTimePassedNotify); }
+private function NineTailsTimePassedNotifyGrapple():* { 
+		timeChangeListeners.push(NineTailsTimePassedNotify);
+		timeChangeListeners.push(IllusoryAttireTimePassedNotify);
+	}
