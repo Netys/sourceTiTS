@@ -1040,8 +1040,8 @@ private function arianPlot5():void {
 	Flag("COC.ARIAN_S_DIALOGUE", 1, true);
 	//[Accept] [Deny]
 	clearMenu();
-	addButton(0, "Accept", acceptArianMovingIntoCamp);
-	addDisabledButton(0, "Accept", "Accept", "You can't invite [arian.em] when you have no idea how often you'll be there!");
+	if(allowFollowers()) addButton(0, "Accept", acceptArianMovingIntoCamp);
+	else addDisabledButton(0, "Accept", "Accept", "You can't invite [arian.em] when you have no idea how often you'll be there!");
 	addButton(1,"Deny",denyAriansMoveIn);
 }
 
@@ -1073,8 +1073,8 @@ private function talkToArianChoices():void {
 	if (Flag("COC.ARIAN_TIMES_SEXED") > 0) addButton(0,"Sexy Talk",arianSexingTalk);
 	if (Flag("COC.ARIAN_S_DIALOGUE") >= 3) addButton(1,"Teach Magic",arianMagicLessons);
 	if (!arianFollower() && Flag("COC.ARIAN_S_DIALOGUE") >= 6) {
-		addButton(4, "Invite2Camp", inviteArianToCamp);
-		addDisabledButton(4, "Invite2Camp", "Invite to camp", "You can't invite [arian.em] when you have no idea how often you'll be there!");
+		if(allowFollowers()) addButton(4, "Invite2Camp", inviteArianToCamp);
+		else addDisabledButton(4, "Invite2Camp", "Invite to camp", "You can't invite [arian.em] when you have no idea how often you'll be there!");
 	}
 	if (Flag("COC.ARIAN_TIMES_SEXED") == 0 && Flag("COC.ARIAN_S_DIALOGUE") < 3) output("\n\n<b>Arian doesn't have much to talk about right now.  Maybe you ought to just visit him from time to time or find him an item that would help combat [arian.eir] sickness.</b>");
 	addButton(14,"Back",arianHomeMenu);

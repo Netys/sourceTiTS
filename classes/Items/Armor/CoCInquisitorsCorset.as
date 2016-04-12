@@ -69,21 +69,42 @@ package classes.Items.Armor
 			output("Earlier suspicions about the skirt prove correct - it does not conceal in the slightest.  It covers some skin to the right side, mostly in the back, but your front is on full display to the world.  The skirt feels as though it should go on a dancing showgirl rather than an inquisitor, but you made the choice you did and the results <i>are</i> arousing.  Golden trim takes on the form of waving and twisting tentacles as the bottom of the skirt gets closer, looking as though it wants to burst from the fabric and molest its wearer.\n\n");
 
 			//[(if PC has human, demon, or bee feet)
-			if (targetCreature.isBiped() && targetCreature.hasLegFlag(GLOBAL.FLAG_PLANTIGRADE))
-				output("Finally you slide your legs into the boots.  The heel itself is hollow, to accommodate any natural spurs on the wearer's foot, and the rest of the boot seems surprisingly fitted to your dimensions.  To a certain extent it feels as though it is reshaping itself as you enter - parts that initially feel tight loosen up in minutes, as if the boots were breaking themselves in.  If what the note said is true, and the armor adapts to he who finds it, perhaps even hooves and paws could have fit, given enough magical power used in the creation.  Laces run up the side of each boot all the way to your thighs, resembling the corset they were paired with.  The front of them bear golden symbology, akin to the symbols  that sat on the front of the secret chamber.  Based on your previous decoding, they're halfway between a prayer and a exaltation of cock.  Standing up in them, you smile as your " + targetCreature.buttDescript() + " rises with their influence.");
-			// two is not exactly right amount
+			if (targetCreature.isBiped() && targetCreature.hasLegFlag(GLOBAL.FLAG_PLANTIGRADE)) {
+				output("Finally you slide your legs into the boots.  The heel itself is hollow, to accommodate any natural spurs on the wearer's foot, and the rest of the boot seems surprisingly fitted to your dimensions.");
+				output("  To a certain extent it feels as though it is reshaping itself as you enter - parts that initially feel tight loosen up in minutes, as if the boots were breaking themselves in.");
+				//output("  If what the note said is true, and the armor adapts to he who finds it, perhaps even hooves and paws could have fit, given enough magical power used in the creation.");
+				output("  Laces run up the side of each boot all the way to your thighs, resembling the corset they were paired with.  The front of them bear golden symbology, akin to the symbols  that sat on the front of the secret chamber.  Based on your previous decoding, they're halfway between a prayer and a exaltation of cock.  Standing up in them, you smile as your " + targetCreature.buttDescript() + " rises with their influence.");
+			}
+			// other than two is not exactly right amount
 			else if (!targetCreature.isBiped())
 				output("The final bit of the outfit is a pair of long-heeled lace-up boots, which, though decorated with gorgeous golden symbols spelling out what appears to be a hymn to sex, seem... relatively unusable in your current state.  You tuck them away someplace safe in case you ever become a biped again, then stand to your full height and assess yourself.");
 			// not plantigrade
 			// TODO: something for hooves/paws case, maybe something like hock greaves form
 			else
-				output("The final bit of the outfit is a pair of long-heeled lace-up boots, which, though decorated with gorgeous golden symbols spelling out what appears to be a hymn to sex, seem... relatively unusable in your current state.  You tuck them away someplace safe in case your " + targetCreature.legs(true) + " would ever change to more fitting form, then stand to your full height and assess yourself.");
+				output("The final bit of the outfit is a pair of long-heeled lace-up boots, which, though decorated with gorgeous golden symbols spelling out what appears to be a hymn to sex, seem... relatively unusable in your current state.  You tuck them away someplace safe in case your " + targetCreature.feet(true, true) + " would ever change to more fitting form, then stand to your full height and assess yourself.");
+			
+			if (targetCreature.isTaur()) {
+				output(" There are no way it could cover your [pc.lowerBody], but you have become accustomed to it already.");
+				this.addFlag(GLOBAL.ITEM_FLAG_EXPOSE_GROIN);
+				this.addFlag(GLOBAL.ITEM_FLAG_EXPOSE_ASS);
+				this.hasRandomProperties = true;
+			}
+			
 			output("\n\n");
 
 			output("You feel sexy... and pious.\n\n");
 			//output("You feel sexy... and pious.\n\n(<b>Perk Gained - Blood Mage</b>: Spells consume HP (minimum 5) instead of fatigue!)\n\n");
 			//+lust
 			targetCreature.lust(5);
+		}
+		
+		override public function onRemove(targetCreature:Creature):void
+		{
+			if(this.hasRandomProperties) {
+				this.deleteFlag(GLOBAL.ITEM_FLAG_EXPOSE_GROIN);
+				this.deleteFlag(GLOBAL.ITEM_FLAG_EXPOSE_ASS);
+				this.hasRandomProperties = false;
+			}
 		}
 	}
 }

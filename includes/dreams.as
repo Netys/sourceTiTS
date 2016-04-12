@@ -28,6 +28,9 @@ public function dreamChances():Boolean
 			dreams.push(angelDreamGo);
 		}
 	}
+	if (kidAXP() >= 40 && flags["COC.HAD_KID_A_DREAM"] == undefined && pc.hasGenitals() && rand(4) == 0 && currentLocation == "COC_CAMP") {
+		dreams.push(kidADreams);
+	}
 	if(dreams.length > 0) 
 	{
 		if(!dreamed) eventQueue.push(dreams[rand(dreams.length)]);

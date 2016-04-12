@@ -9,7 +9,6 @@ import classes.Engine.Utility.*;
 // Pony April 1st event
 // Helia monogamy encounter
 // latexGirl
-// Izma
 // dick-dragging
 public function exploreLake():void
 {
@@ -54,7 +53,7 @@ public function exploreLake():void
 	// semi-rare
 	if(flags["COC.EXPLORED_LAKE"] >= 5) { 
 		choice.push(calluSceneOttahGirl);
-		chance.push(4);
+		chance.push(3);
 	}
 	
 	//Slimes/Ooze = level >= 2
@@ -71,8 +70,11 @@ public function exploreLake():void
 	}		
 		
 	//Izma
-	//if (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00230] > 0 && (pc.exploredLake >= 10) && (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00233] == 0 || pc.findStatusAffect(StatusAffects.Infested) < 0) && flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00238] <= 0)
-		//kGAMECLASS.izmaScene.meetIzmaAtLake();
+	if (Flag("COC.EXPLORED_LAKE") >= 10 && (flags["COC.IZMA_WORMS_FLAG"] == undefined || !pc.hasStatusEffect("Infested")) && !izmaFollower()) {
+		choice.push(meetIzmaAtLake);
+		chance.push(1);
+	}
+	
 	//Rathazul
 	if (flags["COC.RATHAZUL_IN_CAMP"] != 1) {
 		choice.push(encounterRathazul);

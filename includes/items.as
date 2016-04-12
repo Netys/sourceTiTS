@@ -1193,7 +1193,8 @@ public function shipStorageMenuRoot():void
 	if ((kGAMECLASS.flags["COC.VR_POD_INSTALLED"] == 1) && !inMareth())
 	{
 		output("\n\nSmall closet containing only virtual reality pod is beyound next door.");
-		addButton(9, "VR Pod", enterCocVrPod, undefined, "VR Pod", "Use the VR Pod.");
+		if (pc.hasStatusEffect("Disarmed") && shipLocation == "500") addDisabledButton(9, "VR Pod", "VR Pod", "Your gear is still locked up in customs. You should go grab it before entering.");
+		else addButton(9, "VR Pod", enterCocVrPod, undefined, "VR Pod", "Use the VR Pod.");
 	}
 	
 	addButton(14, "Back", mainGameMenu);

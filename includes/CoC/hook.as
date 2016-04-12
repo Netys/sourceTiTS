@@ -599,12 +599,12 @@ public function abortVRAfterVictoryRecompense():void {
 	flags["COC.NEMO_VR_POD_TAKEN"] = -1;
 	
 	clearMenu();
-	addButton(0, "Intelligence", applyGuildImplant, "i", "Intelligence", "Grants an extra potential for Intelligence training.");
-	addButton(1, "Physique", applyGuildImplant, "p", "Physique", "Grants an extra potential for Physique training.");
-	addButton(2, "Reflexes", applyGuildImplant, "r", "Reflexes", "Grants an extra potential for Reflexes training.");
-	addButton(3, "Aim", applyGuildImplant, "a", "Aim", "Grants an extra potential for Aim training.");
-	addButton(4, "Willpower", applyGuildImplant, "w", "Willpower", "Grants an extra potential for Willpower training.");
-	//addButton(5, "Lust", applyGuildImplant, "l", "Lust", "Grants a bit of extra control over your sexual urges.");
+	addButton(0, "Intelligence", applyGuildImplant, "intelligence", "Intelligence", "Grants an extra potential for Intelligence training.");
+	addButton(1, "Physique", applyGuildImplant, "physique", "Physique", "Grants an extra potential for Physique training.");
+	addButton(2, "Reflexes", applyGuildImplant, "reflexes", "Reflexes", "Grants an extra potential for Reflexes training.");
+	addButton(3, "Aim", applyGuildImplant, "aim", "Aim", "Grants an extra potential for Aim training.");
+	addButton(4, "Willpower", applyGuildImplant, "willpower", "Willpower", "Grants an extra potential for Willpower training.");
+	//addButton(5, "Lust", applyGuildImplant, "lust", "Lust", "Grants a bit of extra control over your sexual urges.");
 }
 
 public function applyGuildImplant(arg:String):void {
@@ -613,14 +613,16 @@ public function applyGuildImplant(arg:String):void {
 	
 	output("<i>\"This one? Your choise. Now...\"</i> Suddenly he appear right before your [pc.face], and you feel his paw-like palm on your forehead, soft and surprisingly hot. Your vision hazes for a moment, then everything snaps back, and you see him is on his usual place again. That's all? You are not feeling any different, right? Seems like your Codex knows you better than youself - it already reports about <b>potential for improvement in your " + arg + "</b>.");
 	
+	flags["COC.NEMO_COMPENSATION"] = arg;
+	
 	// flat bonus of 5 and 1,25 per character level to chosen stat cap
-	if (arg == "p" && !pc.hasPerk("Implant: Iron Body"))				pc.createPerk("Implant: Iron Body",				5, 0.25, 0, 0, "Increases your physique.");
-	if (arg == "r" && !pc.hasPerk("Implant: Wired Reflexes"))			pc.createPerk("Implant: Wired Reflexes",		5, 0.25, 0, 0, "Increases your reflexes.");
-	if (arg == "a" && !pc.hasPerk("Implant: Ballistic Computer"))		pc.createPerk("Implant: Ballistic Computer",	5, 0.25, 0, 0, "Increases your aim.");
-	if (arg == "i" && !pc.hasPerk("Implant: Cognitive Coprocessor"))	pc.createPerk("Implant: Cognitive Coprocessor",	5, 0.25, 0, 0, "Increases your intellegence.");
-	if (arg == "w" && !pc.hasPerk("Implant: Mental Shield"))			pc.createPerk("Implant: Mental Shield",			5, 0.25, 0, 0, "Increases your willpower.");
+	if (arg == "physique" && !pc.hasPerk("Implant: Iron Body"))					pc.createPerk("Implant: Iron Body",				5, 0.25, 0, 0, "Increases your physique.");
+	if (arg == "reflexes" && !pc.hasPerk("Implant: Wired Reflexes"))			pc.createPerk("Implant: Wired Reflexes",		5, 0.25, 0, 0, "Increases your reflexes.");
+	if (arg == "aim" && !pc.hasPerk("Implant: Optical Analyzer"))				pc.createPerk("Implant: Optical Analyzer",		5, 0.25, 0, 0, "Increases your aim.");
+	if (arg == "intelligence" && !pc.hasPerk("Implant: Cognitive Coprocessor"))	pc.createPerk("Implant: Cognitive Coprocessor",	5, 0.25, 0, 0, "Increases your intellegence.");
+	if (arg == "willpower" && !pc.hasPerk("Implant: Mental Shield"))			pc.createPerk("Implant: Mental Shield",			5, 0.25, 0, 0, "Increases your willpower.");
 	// flat 35 to min and max lust
-	if (arg == "w" && !pc.hasPerk("Implant: Hormonal Controller"))		pc.createPerk("Implant: Hormonal Controller",	35,  35, 0, 0, "Grants a bit of extra control over your sexual urges.");
+	if (arg == "lust" && !pc.hasPerk("Implant: Hormonal Controller"))			pc.createPerk("Implant: Hormonal Controller",	35,  35, 0, 0, "Grants a bit of extra control over your sexual urges.");
 	
 	output("\n\nFeeling suddenly empty inside, you turn to exit and leave without saying goodbye. It somehow feels right that way.");
 	

@@ -19,10 +19,10 @@ public function explorePlains():void {
 	var chance:Array = [];
 	
 	//Dem Kangasluts!  Force Sheila relationship phase!
-	//if (flags["COC.SHEILA_DEMON"] != 1 && flags["COC.SHEILA_XP"] == 3 && hours == 20 && flags["COC.SHEILA_CLOCK"] >= 0) {
-		//sheilaXPThreeSexyTime();
-		//return;
-	//}
+	if (flags["COC.SHEILA_DEMON"] != 1 && flags["COC.SHEILA_XP"] == 3 && hours == 20 && (flags["COC.SHEILA_CLOCK"] == undefined || flags["COC.SHEILA_CLOCK"] < timeAsStamp)) {
+		sheilaXPThreeSexyTime();
+		return;
+	}
 	
 	//Add some holiday cheer
 	//if (isHolidays() && date.fullYear > flags["COC.CANDY_CANE_YEAR_MET"] && rand(5) == 0) {
@@ -41,7 +41,7 @@ public function explorePlains():void {
 		//return;
 	//}
 	//Find Niamh
-	if (flags["COC.NIAMH_MOVED_OUT_COUNTER"] < timeAsStamp - 24 * 60) {
+	if (flags["COC.NIAMH_MOVED_OUT_COUNTER"] < timeAsStamp - 24 * 60 && flags["COC.NIAMH_MOVED_OUT_COUNTER"] != -1) {
 		niamhPostTelAdreMoveOut();
 		return;
 	}
@@ -93,10 +93,10 @@ public function explorePlains():void {
 		chance.push(1);
 	//}
 	
-	//if (flags["COC.SHEILA_DISABLED"] != 1 && flags["COC.SHEILA_CLOCK"] >= 0) { //Aparently Sheila was supposed to be disabled after certain events - now fixed
-		//choice.push(sheilaEncounterRouter);
-		//chance.push(1);
-	//}	
+	if (flags["COC.SHEILA_DISABLED"] != 1 && !(flags["COC.SHEILA_CLOCK"] > timeAsStamp) && (hours >=4 || hours <= 21)) { //Aparently Sheila was supposed to be disabled after certain events - now fixed
+		choice.push(sheilaEncounterRouter);
+		chance.push(1);
+	}
 	
 	WeightedRandom(choice, chance, true)();
 }

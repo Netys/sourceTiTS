@@ -18,6 +18,7 @@ public function notifyVariableRoomUpdateListenerss():void {
 }
 
 include "events.as";
+include "gameStats.as";
 include "masturbation.as";
 
 // AREAS
@@ -96,9 +97,11 @@ include "places/teladre/TelAdre.as";
 include "characters/AnemoneScene.as";
 include "characters/ArianScene.as";
 include "characters/Hel.as";
+include "characters/IzmaScene.as";
 include "characters/JojoScene.as";
 include "characters/KihaScene.as";
 include "characters/Rathazul.as";
+include "characters/SheilaScene.as";
 include "characters/Sophie.as";
 
 public function initCoCJunk():void {
@@ -109,6 +112,9 @@ public function initCoCJunk():void {
 }
 public function inMareth():Boolean {
 	return rooms[currentLocation].system == "PLANET: MARETH";
+}
+public function allowFollowers():Boolean {
+	return false;
 }
 //public function gems(val:int = 0, force:Boolean = false):Boolean {
 	//return coc_gems(val, force);
@@ -190,6 +196,12 @@ public function isBeyondMoralHorizon():Boolean {
 
 public function get timeAsStamp():uint {
 	return GetGameTimestamp(); }
+
+public function timeUntil(target:int):uint {
+	var now:uint = hours * 60 + minutes;
+	if (now < target) return target - now;
+	return (24 * 60 - now) + target;
+}
 
 // legacy wrappers
 public function doNext(param:Function, arg:*=null):void {

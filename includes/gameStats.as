@@ -61,7 +61,7 @@ public function statisticsScreen(showID:String = "All"):void
 		else output2("Sexless");
 		if(pc.hasStatusEffect("Force Fem Gender")) output2("\n<b>* Gender Preference:</b> Female");
 		else if(pc.hasStatusEffect("Force Male Gender")) output2("\n<b>* Gender Preference:</b> Male");
-		else output2("\n<b>* Gender Alignment: </b>" + pc.mfn("Male","Female","Androgynous"));
+		else output2("\n<b>* Gender Alignment: </b>" + pc.mfn("Male","Female",pc.mf("Androgynous (Male Pronouns)","Androgynous (Female Pronouns)")));
 		output2("\n<b>* Femininity</b> <i>(Negative is Masculine)</i><b>: </b>" + Math.round((pc.femininity - 50) * 2) + " %");
 		output2("\n<b>* Personality Score: </b>" + Math.round(pc.personality));
 		if(pc.isNice()) output2(", Kind");
@@ -1138,6 +1138,12 @@ public function questLogMenu(currentFunc:Function):Boolean
 		if(showID == "Uveto") { output2(header("<u>Uveto VII</u>", false)); addDisabledGhostButton(7, "Uveto"); }
 		else addGhostButton(7, "Uveto", currentFunc, "Uveto");
 	}
+	// Mareth
+	if(flags["COC.NEMO_VR_POD_TAKEN"] != undefined)
+	{
+		if(showID == "Mareth") { output2(header("<u>Mareth</u>", false)); addDisabledGhostButton(10, "Mareth"); }
+		else addGhostButton(10, "Mareth", currentFunc, "Mareth");
+	}
 	// Other Info
 	if(showID == "Other") addDisabledGhostButton(12, "Other");
 	else addGhostButton(12, "Other", currentFunc, "Other", "Other Data", "Show the information not restricted to a location.");
@@ -1338,6 +1344,12 @@ public function displayQuestLog(showID:String = "All"):void
 			}
 			mainCount++;
 		}
+		
+		if(showID == "Mareth"/* || showID == "All"*/)
+		{
+			mainCount += displayQuestLogCoCMain();
+		}
+		
 		// Nothing recorded
 		if(mainCount == 0)
 		{
@@ -1989,7 +2001,12 @@ public function displayQuestLog(showID:String = "All"):void
 				sideCount++;
 			}
 		}
-
+		
+		if(showID == "Mareth"/* || showID == "All"*/)
+		{
+			sideCount += displayQuestLogCoCSide();
+		}
+		
 		// Nothing recorded
 		if(sideCount == 0)
 		{
@@ -4112,6 +4129,11 @@ public function displayEncounterLog(showID:String = "All"):void
 				}
 				variousCount++;
 			}
+		}
+		
+		if(showID == "Mareth"/* || showID == "All"*/)
+		{
+			variousCount += displayEncounterLogCoCVarious();
 		}
 		
 		// Nothing recorded

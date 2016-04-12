@@ -19,7 +19,7 @@ package classes.Items.Transformatives
             
             this.quantity = 1;
             this.stackSize = 10;
-            this.type = GLOBAL.POTION;
+            this.type = GLOBAL.PILL;
             //Used on inventory buttons
             this.shortName = "Shark.T";
             //Regular name
@@ -47,7 +47,7 @@ package classes.Items.Transformatives
 			return false;
 		}
 		
-		public function SharkTooth(type:Number, pc:Creature):void
+		public static function SharkTooth(type:Number, pc:Creature):void
 		{
 			clearOutput();
 			var changes:Number = 0;
@@ -63,15 +63,15 @@ package classes.Items.Transformatives
 			//STATS
 			//Increase strength 1-2 points (Up to 50) (60 for tiger)
 			if (((pc.PQ() < 60 && type == 1) || pc.PQ() < 50) && rand(3) == 0) {
-				pc.slowStatGain("p", (1 + rand(2)) / 3.);
-				output("\n\nA painful ripple passes through the muscles of your body.  It takes you a few moments, but you quickly realize you're a little bit stronger now.", false);
+				pc.slowStatGain("p", 1);
+				output("\n\nA painful ripple passes through the muscles of your body.  It takes you a few moments, but you quickly realize you're a little bit stronger now.");
 				changes++;
 			}
 			//Increase Speed 1-3 points (Up to 75) (100 for tigers)
 			if (((pc.RQ() < 100 && type == 1) || pc.RQ() < 75) && rand(3) == 0) {
-				pc.slowStatGain("r", (1 + rand(2)) / 3.);
+				pc.slowStatGain("r", 1);
 				changes++;
-				output("\n\nShivering without warning, you nearly trip over yourself as you walk.  A few tries later you realize your muscles have become faster.", false);
+				output("\n\nShivering without warning, you nearly trip over yourself as you walk.  A few tries later you realize your muscles have become faster.");
 			}
 			//Reduce sensitivity 1-3 Points (Down to 25 points)
 			//if (pc.sens > 25 && rand(1.5) == 0 && changes < changeLimit) {
@@ -81,126 +81,193 @@ package classes.Items.Transformatives
 			//}
 			//Increase Libido 2-4 points (Up to 75 points) (100 for tigers)
 			if (((pc.lustQ() < 100 && type == 1) || pc.lustQ() < 75) && rand(3) == 0 && changes < changeLimit) {
-				pc.slowStatGain("l", 1 + rand(2));
+				pc.slowStatGain("l", 1);
 				changes++;
-				output("\n\nA blush of red works its way across your skin as your sex drive kicks up a notch.", false);
+				output("\n\nA blush of red works its way across your skin as your sex drive kicks up a notch.");
 			}
 			//Decrease intellect 1-3 points (Down to 40 points)
 			if (pc.IQ() > 40 && rand(3) == 0 && changes < changeLimit) {
 				pc.intelligence( - 1);
 				changes++;
-				output("\n\nYou shake your head and struggle to gather your thoughts, feeling a bit slow.", false);
+				output("\n\nYou shake your head and struggle to gather your thoughts, feeling a bit slow.");
 			}
 			//Smexual stuff!
 			//-TIGGERSHARK ONLY: Grow a cunt (guaranteed if no gender)
 			if (type == 1 && (!pc.hasGenitals() || (!pc.hasVagina() && changes < changeLimit && rand(3) == 0))) {
-				changes++;
-				//(balls)
-				if (pc.balls > 0) output("\n\nAn itch starts behind your [pc.balls], but before you can reach under to scratch it, the discomfort fades. A moment later a warm, wet feeling brushes your " + pc.sackDescript() + ", and curious about the sensation, <b>you lift up your balls to reveal your new vagina.</b>", false);
-				//(dick)
-				else if (pc.hasCock()) output("\n\nAn itch starts on your groin, just below your [pc.cocksLight]. You pull the manhood aside to give you a better view, and you're able to watch as <b>your skin splits to give you a new vagina, complete with a tiny clit.</b>", false);
-				//(neither)
-				else output("\n\nAn itch starts on your groin and fades before you can take action. Curious about the intermittent sensation, <b>you peek under your [pc.gear] to discover your brand new vagina, complete with pussy lips and a tiny clit.</b>", false);
-				pc.createVagina();
-				//dynStats("sen", 10);
-			}
-			//WANG GROWTH - TIGGERSHARK ONLY
-			if (type == 1 && (!pc.hasCock()) && changes < changeLimit && rand(3) == 0) {
-				//Genderless:
-				if (!pc.hasVagina()) output("\n\nYou feel a sudden stabbing pain in your featureless crotch and bend over, moaning in agony. Your hands clasp protectively over the surface - which is swelling in an alarming fashion under your fingers! Stripping off your clothes, you are presented with the shocking site of once-smooth flesh swelling and flowing like self-animate clay, resculpting itself into the form of male genitalia! When the pain dies down, you are the proud owner of a new human-shaped penis", false);
-				//Female:
-				else output("\n\nYou feel a sudden stabbing pain just above your " + pc.vaginaDescript() + " and bend over, moaning in agony. Your hands clasp protectively over the surface - which is swelling in an alarming fashion under your fingers! Stripping off your clothes, you are presented with the shocking site of once-smooth flesh swelling and flowing like self-animate clay, resculpting itself into the form of male genitalia! When the pain dies down, you are the proud owner of not only a " + pc.vaginaDescript() + ", but a new human-shaped penis", false);
-				if (pc.balls == 0) {
-					output(" and a pair of balls", false);
-					pc.balls = 2;
-					pc.ballSizeRaw = 2;
-				}
-				output("!", false);
-				pc.createCock(7);
-				//dynStats("lib", 4, "sen", 5, "lus", 20);
-				pc.libido(4);
-				pc.lust(20);
-				changes++;
-			}
-			//(Requires the player having two testicles)
-			if (type == 1 && (pc.balls < 4) && pc.hasCock() && changes < changeLimit && rand(3) == 0) {
-				if (pc.balls == 0) {
-					output("\n\nYou gasp in shock as a sudden pain racks your abdomen. Within seconds, two balls drop down into a new sack, your skin stretching out to accommodate them. Once the pain clears, you examine <b>your new pair of testes.</b>", false);
-					pc.balls = 2;
-					pc.ballSizeRaw = 2;
+				if (pc.createVaginaUnlocked())
+				{
+					changes++;
+					//(balls)
+					if (pc.balls > 0) output("\n\nAn itch starts behind your [pc.balls], but before you can reach under to scratch it, the discomfort fades. A moment later a warm, wet feeling brushes your " + pc.sackDescript() + ", and curious about the sensation, <b>you lift up your balls to reveal your new vagina.</b>");
+					//(dick)
+					else if (pc.hasCock()) output("\n\nAn itch starts on your groin, just below your [pc.cocksLight]. You pull the manhood aside to give you a better view, and you're able to watch as <b>your skin splits to give you a new vagina, complete with a tiny clit.</b>");
+					//(neither)
+					else output("\n\nAn itch starts on your groin and fades before you can take action. Curious about the intermittent sensation, <b>you peek under your [pc.gear] to discover your brand new vagina, complete with pussy lips and a tiny clit.</b>");
+					pc.createVagina();
+					//pc.shiftVagina(0, GLOBAL.TYPE_SHARK);
+					//dynStats("sen", 10);
 				}
 				else
 				{
-					output("\n\nYou gasp in shock as a sudden pain racks your abdomen. Within seconds, two more testes drop down into your [pc.sack], your skin stretching out to accommodate them. Once the pain clears, you examine <b>your new quartet of testes.</b>", false);
-					pc.balls = 4;
+					output("\n\n" + pc.createVaginaLockedMessage());
 				}
-				//dynStats("lib", 2, "sen", 3, "lus", 10);
-				pc.libido(2);
-				pc.lust(10);
-				changes++;
+			}
+			//WANG GROWTH - TIGGERSHARK ONLY
+			if (type == 1 && (!pc.hasCock()) && changes < changeLimit && rand(3) == 0) {
+				if (pc.createCockUnlocked())
+				{
+					//Genderless:
+					if (!pc.hasVagina()) output("\n\nYou feel a sudden stabbing pain in your featureless crotch and bend over, moaning in agony. Your hands clasp protectively over the surface - which is swelling in an alarming fashion under your fingers! Stripping off your clothes, you are presented with the shocking site of once-smooth flesh swelling and flowing like self-animate clay, resculpting itself into the form of male genitalia! When the pain dies down, you are the proud owner of a new human-shaped penis");
+					//Female:
+					else output("\n\nYou feel a sudden stabbing pain just above your " + pc.vaginaDescript() + " and bend over, moaning in agony. Your hands clasp protectively over the surface - which is swelling in an alarming fashion under your fingers! Stripping off your clothes, you are presented with the shocking site of once-smooth flesh swelling and flowing like self-animate clay, resculpting itself into the form of male genitalia! When the pain dies down, you are the proud owner of not only a " + pc.vaginaDescript() + ", but a new human-shaped penis");
+					if (pc.balls == 0) {
+						output(" and a pair of balls");
+						pc.balls = 2;
+						pc.ballSizeRaw = 2 * Math.PI;
+					}
+					output("!");
+					pc.createCock(7);
+					//dynStats("lib", 4, "sen", 5, "lus", 20);
+					pc.libido(4);
+					pc.lust(20);
+					changes++;
+				}
+				else
+				{
+					output("\n\n" + pc.createCockLockedMessage());
+				}
+			}
+			//(Requires the player having two testicles)
+			if (type == 1 && (pc.balls < 4) && pc.hasCock() && changes < changeLimit && rand(3) == 0) {
+				if (pc.ballsUnlocked(4))
+				{
+					if (pc.balls == 0) {
+						output("\n\nYou gasp in shock as a sudden pain racks your abdomen. Within seconds, two balls drop down into a new sack, your skin stretching out to accommodate them. Once the pain clears, you examine <b>your new pair of testes.</b>");
+						pc.balls = 2;
+						pc.ballSizeRaw = 2;
+					}
+					else
+					{
+						output("\n\nYou gasp in shock as a sudden pain racks your abdomen. Within seconds, " + num2Text(4 - pc.balls) + " more testes drop down into your [pc.sack], your skin stretching out to accommodate them. Once the pain clears, you examine <b>your new quartet of testes.</b>");
+						pc.balls = 4;
+					}
+					//dynStats("lib", 2, "sen", 3, "lus", 10);
+					pc.libido(2);
+					pc.lust(10);
+					changes++;
+				}
+				else
+				{
+					output("\n\n" + pc.ballsLockedMessage());
+				}
 			}
 			//Transformations:
 			//Mouth TF
 			if (pc.faceType != GLOBAL.TYPE_SHARK && rand(3) == 0 && changes < changeLimit) {
-				output("\n\n", false);
-				if (pc.hasFaceFlag(GLOBAL.FLAG_MUZZLED)) output("Your " + pc.face() + " explodes with agony, reshaping into a more human-like visage.  ", false);
-				pc.faceType = GLOBAL.TYPE_SHARK;
-				pc.faceFlags = [GLOBAL.FLAG_ANGULAR];
-				output("You firmly grasp your mouth, an intense pain racking your oral cavity. Your gums shift around and the bones in your jaw reset. You blink a few times wondering what just happened. You move over to a puddle to catch sight of your reflection, and you are thoroughly surprised by what you see. A set of retractable shark fangs have grown in front of your normal teeth, and your face has elongated slightly to accommodate them!  They even scare you a little.", false);
-				// \n(Gain: 'Bite' special attack)
-				changes++;
+				if (pc.faceTypeUnlocked(GLOBAL.TYPE_SHARK))
+				{
+					output("\n\n");
+					if (pc.hasFaceFlag(GLOBAL.FLAG_MUZZLED)) output("Your " + pc.face() + " explodes with agony, reshaping into a more human-like visage.  ");
+					pc.faceType = GLOBAL.TYPE_SHARK;
+					pc.faceFlags = [GLOBAL.FLAG_ANGULAR];
+					output("You firmly grasp your mouth, an intense pain racking your oral cavity. Your gums shift around and the bones in your jaw reset. You blink a few times wondering what just happened. You move over to a puddle to catch sight of your reflection, and you are thoroughly surprised by what you see. A set of retractable shark fangs have grown in front of your normal teeth, and your face has elongated slightly to accommodate them!  They even scare you a little.");
+					// \n(Gain: 'Bite' special attack)
+					changes++;
+				}
+				else
+				{
+					output("\n\n" + pc.faceTypeLockedMessage());
+				}
 			}
 			//Remove odd eyes
 			if (changes < changeLimit && rand(5) == 0 && pc.eyeType != GLOBAL.TYPE_HUMAN) {
-				output("\n\nYou blink and stumble, a wave of vertigo threatening to pull your " + pc.feet() + " from under you.  As you steady and open your eyes, you realize something seems different.  Your vision is changed somehow.", false);
-				//if (pc.eyeType == EYES_FOUR_SPIDER_EYES) output("  Your multiple, arachnid eyes are gone!</b>", false);
-				output("  <b>You have normal, humanoid eyes again.</b>", false);
-				pc.eyeType = GLOBAL.TYPE_HUMAN;
-				changes++;
+				if (pc.eyeTypeUnlocked(GLOBAL.TYPE_HUMAN))
+				{
+					output("\n\nYou blink and stumble, a wave of vertigo threatening to pull your " + pc.feet() + " from under you.  As you steady and open your eyes, you realize something seems different.  Your vision is changed somehow.");
+					//if (pc.eyeType == EYES_FOUR_SPIDER_EYES) output("  Your multiple, arachnid eyes are gone!</b>", false);
+					output("  <b>You have normal, humanoid eyes again.</b>");
+					pc.eyeType = GLOBAL.TYPE_HUMAN;
+					changes++;
+				}
+				else
+				{
+					output("\n\n" + pc.eyeTypeLockedMessage());
+				}
 			}
 			//Tail TF
 			if (!pc.hasTail(GLOBAL.TYPE_SHARK) && rand(3) == 0 && changes < changeLimit) {
-				changes++;
-				if (!pc.hasTail()) output("\n\nJets of pain shoot down your spine, causing you to gasp in surprise and fall to your hands and knees. Feeling a bulging at the end of your back, you lower your [pc.gear] down just in time for a fully formed shark tail to burst through. You swish it around a few times, surprised by how flexible it is. After some modifications to your clothing, you're ready to go with your brand new shark tail.", false);
-				else output("\n\nJets of pain shoot down your spine into your tail.  You feel the tail bulging out until it explodes into a large and flexible shark-tail.  You swish it about experimentally, and find it quite easy to control.", false);
-				pc.tailType = GLOBAL.TYPE_SHARK;
-				pc.tailCount = 1;
-				pc.tailFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_THICK];
+				if (pc.tailTypeUnlocked(GLOBAL.TYPE_SHARK) && pc.tailCountUnlocked(1))
+				{
+					changes++;
+					if (!pc.hasTail()) output("\n\nJets of pain shoot down your spine, causing you to gasp in surprise and fall to your hands and knees. Feeling a bulging at the end of your back, you lower your [pc.gear] down just in time for a fully formed shark tail to burst through. You swish it around a few times, surprised by how flexible it is. After some modifications to your clothing, you're ready to go with your brand new shark tail.");
+					else output("\n\nJets of pain shoot down your spine into your tail.  You feel the tail bulging out until it explodes into a large and flexible shark-tail.  You swish it about experimentally, and find it quite easy to control.");
+					pc.tailType = GLOBAL.TYPE_SHARK;
+					pc.tailCount = 1;
+					pc.tailFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_THICK];
+				}
+				else
+				{
+					if (!pc.tailTypeUnlocked(GLOBAL.TYPE_SHARK)) output("\n\n" + pc.tailTypeLockedMessage());
+					else if (!pc.tailCountUnlocked(1)) output("\n\n" + pc.tailCountLockedMessage());
+				}
 			}
 			//Hair
 			if (pc.hairColor != "silver" && rand(4) == 0 && changes < changeLimit) {
-				changes++;
-				output("\n\nYou feel a tingling in your scalp and reach up to your head to investigate. To your surprise, your hair color has changed into a silvery color, just like that of a shark girl!", false);
-				pc.hairColor = "silver";
+				if (pc.hairColorUnlocked("silver"))
+				{
+					changes++;
+					output("\n\nYou feel a tingling in your scalp and reach up to your head to investigate. To your surprise, your hair color has changed into a silvery color, just like that of a shark girl!");
+					pc.hairColor = "silver";
+				}
+				else
+				{
+					output("\n\n" + pc.hairColorLockedMessage());
+				}
 			}
 			//Skin
-			if (((pc.skinTone != "rough gray" && pc.skinTone != "orange and black striped") || pc.skinType != GLOBAL.SKIN_TYPE_SKIN) && rand(7) == 0 && changes < changeLimit) {
-				output("\n\n", false);
-				if (pc.skinType == GLOBAL.SKIN_TYPE_FUR || pc.skinType == GLOBAL.SKIN_TYPE_SCALES) output("Your [pc.skinFurScales] falls out, collecting on the floor and exposing your supple skin underneath.  ", false);
-				else if (pc.skinType == GLOBAL.SKIN_TYPE_GOO) output("Your gooey skin solidifies, thickening up as your body starts to solidy into a more normal form. ", false);
-				else output("Your [pc.skin] itches and tingles becoming slightly rougher and turning gray.  ", false);
-				if (type == 0) {
-					output("You abruptly stop moving and gasp sharply as a shudder goes up your entire frame. Your skin begins to shift and morph, growing slightly thicker and changing into a shiny grey color. Your skin now feels oddly rough too, comparable to that of a marine mammal. You smile and run your hands across your new shark skin.", false);
-					pc.skinTone = "rough gray";
+			var newTone:String = type == 0 ? "rough gray" : "orange and black striped";
+			if ((pc.skinTone != newTone || pc.skinType != GLOBAL.SKIN_TYPE_SKIN) && rand(7) == 0 && changes < changeLimit) {
+				if ((pc.skinToneUnlocked(newTone) || pc.skinTone == newTone) && (pc.skinTypeUnlocked(GLOBAL.SKIN_TYPE_SKIN) || pc.skinType == GLOBAL.SKIN_TYPE_SKIN))
+				{
+					output("\n\n");
+					if (pc.skinType == GLOBAL.SKIN_TYPE_FUR || pc.skinType == GLOBAL.SKIN_TYPE_SCALES) output("Your [pc.skinFurScales] falls out, collecting on the floor and exposing your supple skin underneath.  ");
+					else if (pc.skinType == GLOBAL.SKIN_TYPE_GOO) output("Your gooey skin solidifies, thickening up as your body starts to solidy into a more normal form. ");
+					else output("Your [pc.skin] itches and tingles becoming slightly rougher and turning gray. ");
+					if (type == 0) {
+						output("You abruptly stop moving and gasp sharply as a shudder goes up your entire frame. Your skin begins to shift and morph, growing slightly thicker and changing into a shiny grey color. Your skin now feels oddly rough too, comparable to that of a marine mammal. You smile and run your hands across your new shark skin.");
+						pc.skinTone = "rough gray";
+					}
+					else {
+						output("Your skin begins to tingle and itch, before rapidly shifting to a shiny orange color, marked by random black stripes. Your skin has morphed in appearance and texture to become more like a tigershark!");
+						pc.skinTone = "orange and black striped";
+					}
+					pc.skinType = GLOBAL.SKIN_TYPE_SKIN;
+					pc.skinFlags = [GLOBAL.FLAG_THICK];
+					changes++;
 				}
-				else {
-					output("Your skin begins to tingle and itch, before rapidly shifting to a shiny orange color, marked by random black stripes. Your skin has morphed in appearance and texture to become more like a tigershark!", false);
-					pc.skinTone = "orange and black striped";
+				else
+				{
+					if (!(pc.skinToneUnlocked(newTone) || pc.skinTone == newTone)) output("\n\n" + pc.skinToneLockedMessage());
+					else if (!(pc.skinTypeUnlocked(GLOBAL.SKIN_TYPE_SKIN) || pc.skinType == GLOBAL.SKIN_TYPE_SKIN)) output("\n\n" + pc.skinTypeLockedMessage());
 				}
-				pc.skinType = GLOBAL.SKIN_TYPE_SKIN;
-				pc.skinFlags = [GLOBAL.FLAG_THICK];
-				changes++;
 			}
 			//FINZ R WINGS
 			if (pc.wingType != GLOBAL.TYPE_SHARK && changes < changeLimit && rand(3) == 0) {
-				output("\n\n", false);
-				if (pc.hasWings()) output("Your wings fold into themselves, merging together with your back.  ", false);
-				output("You groan and slump down in pain, almost instantly regretting eating the tooth. You start sweating profusely and panting loudly, feeling the space between your shoulder blades shifting about. You hastily remove your [pc.gear] just in time before a strange fin-like structure bursts from in-between your shoulders. You examine it carefully and make a few modifications to your [pc.gear] to accommodate your new fin.", false);
-				pc.wingType = GLOBAL.TYPE_SHARK;
-				changes++;
+				if (pc.wingTypeUnlocked(GLOBAL.TYPE_SHARK))
+				{
+					output("\n\n");
+					if (pc.hasWings()) output("Your wings fold into themselves, merging together with your back.  ");
+					output("You groan and slump down in pain, almost instantly regretting eating the tooth. You start sweating profusely and panting loudly, feeling the space between your shoulder blades shifting about. You hastily remove your [pc.gear] just in time before a strange fin-like structure bursts from in-between your shoulders. You examine it carefully and make a few modifications to your [pc.gear] to accommodate your new fin.");
+					pc.wingType = GLOBAL.TYPE_SHARK;
+					changes++;
+				}
+				else
+				{
+					output("\n\n" + pc.wingTypeLockedMessage());
+				}
 			}
 			if (changes == 0) {
-				output("\n\nNothing happened.  Weird.", false);
+				output("\n\nNothing happened.  Weird.");
 			}
 			//pc.refillHunger(5);
 			IncrementFlag("COC.TIMES_TRANSFORMED");

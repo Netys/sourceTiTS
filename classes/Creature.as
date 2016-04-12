@@ -8551,6 +8551,7 @@
 				if(isDrider()) race = "drider";
 				else race = "spider-" + mf("boy", "girl");
 			}
+			if (sharkScore() >= 3) race = "shark-morph";
 			if (dragonScore() >= 5) race = faceType == GLOBAL.TYPE_DRACONIC ? "dragon-morph" : mf("dragon-man", "dragon-girl");
 			if (foxScore() >= 4) race = faceType == GLOBAL.TYPE_VULPINE ? "fox-morph" : mf("fox-man", "fox-girl");
 			if (kitsuneScore() >= 5 && (race.indexOf("fox") == -1 || tailCount > 1)) race = "kitsune";
@@ -8850,7 +8851,20 @@
 			if (skinType != GLOBAL.SKIN_TYPE_SKIN && score > 0) score--;
 			return score;
 		}
-		//Determine Dragon Rating
+		public function sharkScore():Number
+		{
+			var sharkCounter:Number = 0;
+			if (faceType == GLOBAL.TYPE_SHARK)
+				sharkCounter++;
+			if (wingType == GLOBAL.TYPE_SHARK)
+				sharkCounter++;
+			if (hasTail(GLOBAL.TYPE_SHARK))
+				sharkCounter++;
+			//skin counting only if PC got any other shark traits
+			if (skinType == GLOBAL.SKIN_TYPE_SKIN && sharkCounter > 0)
+				sharkCounter++;
+			return sharkCounter;
+		}
 		public function dragonScore():Number
 		{
 			var dragonCounter:Number = 0;

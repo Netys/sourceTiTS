@@ -6,7 +6,6 @@ import classes.Engine.Utility.*;
 
 // TODO:
 // Hel hook (meh... she is everywhere... who were complaining about creepy Arian?)
-// Letice fortress exploration (not before final CoC update)
 // xmas event (rly?)
 // Minotaur sons (IF pregs done)
 // Mino addict scene (IF addiction done)

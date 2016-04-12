@@ -1,5 +1,7 @@
 package classes.Items.Armor 
 {
+	import classes.Creature;
+	import classes.Engine.Interfaces.output;
 	import classes.ItemSlotClass;
 	import classes.GLOBAL;
 	import classes.StringUtil;
@@ -39,6 +41,25 @@ package classes.Items.Armor
 			this.fortification = 0;
 			
 			this.version = this._latestVersion;
-		}		
+		}
+		
+		override public function onEquip(targetCreature:Creature):void
+		{
+			if (targetCreature.isTaur()) {
+				output(" There are no way it could cover your [pc.lowerBody], though.");
+				this.addFlag(GLOBAL.ITEM_FLAG_EXPOSE_GROIN);
+				this.addFlag(GLOBAL.ITEM_FLAG_EXPOSE_ASS);
+				this.hasRandomProperties = true;
+			}
+		}
+		
+		override public function onRemove(targetCreature:Creature):void
+		{
+			if(this.hasRandomProperties) {
+				this.deleteFlag(GLOBAL.ITEM_FLAG_EXPOSE_GROIN);
+				this.deleteFlag(GLOBAL.ITEM_FLAG_EXPOSE_ASS);
+				this.hasRandomProperties = false;
+			}
+		}
 	}
 }

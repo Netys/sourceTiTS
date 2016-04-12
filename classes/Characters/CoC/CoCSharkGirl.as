@@ -39,21 +39,9 @@ package classes.Characters.CoC
 			this.meleeWeapon.baseDamage.kinetic.damageValue = 3;
 			this.meleeWeapon.hasRandomProperties = true;
 			
-			this.armor.longName = "tough skin";
-			this.armor.defense = 5;
-			this.armor.hasRandomProperties = true;
+			this.armor = new CoCSluttySwimwear();
 			
 			this.rangedWeapon = new EmptySlot();
-			
-			this.physiqueRaw = 40/20;
-			this.reflexesRaw = 55/20;
-			this.aimRaw = 55/20;
-			this.intelligenceRaw = 42/20;
-			this.willpowerRaw = 42/20;
-			this.libidoRaw = 45;
-			this.shieldsRaw = 0;
-			this.energyRaw = 100;
-			this.lustRaw = 40;
 			
 			this.XPRaw = 150;
 			this.level = 4;
@@ -62,6 +50,15 @@ package classes.Characters.CoC
 			this.shieldsRaw = this.shieldsMax();
 			this.HPRaw = this.HPMax();
 			
+			this.physiqueRaw = 40 / 20 * this.level;
+			this.reflexesRaw = 55 / 20 * this.level;
+			this.aimRaw = 55 / 20 * this.level;
+			this.intelligenceRaw = 42 / 20 * this.level;
+			this.willpowerRaw = 42 / 20 * this.level;
+			this.libidoRaw = 45;
+			this.shieldsRaw = 0;
+			this.energyRaw = 100;
+			this.lustRaw = 40;
 			
 			this.femininity = 75;
 			this.eyeType = GLOBAL.TYPE_SHARK;

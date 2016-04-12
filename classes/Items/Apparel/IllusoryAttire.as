@@ -72,7 +72,7 @@ package classes.Items.Apparel
 		
 		override public function onEquip(targetCreature:Creature):void
 		{
-			var validate:String = IllusoryAttireTimePassedNotify(false);
+			var validate:String = kGAMECLASS.IllusoryAttireTimePassedNotify(false);
 			if (targetCreature.isExposed()) {
 				if (isActive(targetCreature)) {
 					output(" While not covering anything, this bands still somehow give you decent appearance.");

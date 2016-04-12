@@ -32,7 +32,7 @@ package classes.Characters.CoC
 			this.originalRace = "basilisk";
 			this.a = "the ";
 			this.capitalA = "The ";
-			this.long = "You are fighting a basilisk!  From what you can tell while not looking directly at it, the basilisk is a male reptilian biped standing a bit over 6' tall.  He has a thin but ropy build, his tightly muscled yellow underbelly the only part of his frame not covered in those deceptive, camouflaging grey-green scales.  A long, whip-like tail flits restlessly through the dirt behind his skinny legs, and sharp sickle-shaped index claws decorate each hand and foot.  You don't dare to look at his face, but you have the impression of a cruel jaw, a blunt lizard snout and a crown of dull spines.";
+			this.long = "OVERRIDE";
 			this.customDodge = "";
 			this.customBlock = "";
 			
@@ -179,6 +179,18 @@ package classes.Characters.CoC
 			this._isLoading = false;
 		}
 		
+		override public function get long():String
+		{
+			var str:String = "You are fighting a basilisk! ";
+			
+			str += canLookIntoEyes() ? "T" : "From what you can tell while not looking directly at it, t";
+			str += "he basilisk is a male reptilian biped standing a bit over 6' tall.  He has a thin but ropy build, his tightly muscled yellow underbelly the only part of his frame not covered in those deceptive, camouflaging grey-green scales.  A long, whip-like tail flits restlessly through the dirt behind his skinny legs, and sharp sickle-shaped index claws decorate each hand and foot. ";
+			
+			str += canLookIntoEyes() ? "His face has" : "You don't dare to look at his face, but you have the impression of";
+			str += " a cruel jaw, a blunt lizard snout and a crown of dull spines.";
+			return str;
+		}
+		
 		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void
 		{
 			var target:Creature = selectTarget(hostileCreatures);
@@ -193,6 +205,10 @@ package classes.Characters.CoC
 			if (kGAMECLASS.pc.hasStatusEffect("Basilisk Slow")) {
 				kGAMECLASS.pc.reflexes(kGAMECLASS.pc.statusEffectv1("Basilisk Slow"));
 				kGAMECLASS.pc.removeStatusEffect("Basilisk Slow");
+			}
+			if (kGAMECLASS.pc.hasStatusEffect("Blinded") && kGAMECLASS.pc.hasStatusEffect("NotLooking")) {
+				kGAMECLASS.pc.removeStatusEffect("Blinded");
+				kGAMECLASS.pc.removeStatusEffect("NotLooking");
 			}
 		}
 		

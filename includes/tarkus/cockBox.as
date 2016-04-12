@@ -434,24 +434,10 @@ public function cockBoxDickDoublingHijinx(args:Array):void
 	output("\n\n<i>“Thanks again for using Tamani-brand products in your INVALID FACILITY TYPE!”</i> The purple-haired harlot winks and blows a kiss down at you from above. <i>“Cum back soon!”</i> She flickers out of existence with a saucy, satisfied smile.");
 	output("\n\nIt’s hard to be mad at her after getting off like that, even when you pull out and find that <b>the dick you put into the machine has divided its mass into two smaller penises.</b> You could probably find someone on Novahome to help you get rid of the extra if you wanted.");
 
-	var cloneDick:CockClass = new CockClass;
-
-	var newLength:Number = Math.round(Math.pow((pc.cocks[args[0]].cLengthRaw * pc.cocks[args[0]].cLengthRaw * pc.cocks[args[0]].cLengthRaw / 2), 1/3)*10)/10;
-
+	var newLength:Number = Math.round(Math.pow((pc.cocks[args[0]].cLengthRaw * pc.cocks[args[0]].cLengthRaw * pc.cocks[args[0]].cLengthRaw / 2), 1 / 3) * 10) / 10;
 	pc.cocks[args[0]].cLengthRaw = newLength;
-
-	cloneDick.cLengthRaw = pc.cocks[args[0]].cLengthRaw;
-	cloneDick.cThicknessRatioRaw = pc.cocks[args[0]].cThicknessRatioRaw;
-	cloneDick.cType = pc.cocks[args[0]].cType;
-	cloneDick.cockColor = pc.cocks[args[0]].cockColor;
-	cloneDick.knotMultiplier = pc.cocks[args[0]].knotMultiplier;
-	cloneDick.flaccidMultiplier = pc.cocks[args[0]].flaccidMultiplier;
-	for(var x:int = 0; x < pc.cocks[args[0]].cockFlags.length; x++)
-	{
-		cloneDick.cockFlags.push(pc.cocks[args[0]].cockFlags[x]);
-	}
 	
-	pc.cocks.splice(args[0],0,cloneDick);
+	pc.cocks.splice(args[0],0,pc.cocks[args[0]].makeCopy());
 	processTime(7);
 	pc.orgasm();
 	flags["DONG_DESIGNER_MALFUNCTIONED"] = 1;

@@ -54,7 +54,12 @@ public function basiliskGreeting():void {
 		if(pc.hasKeyItem("Laybans")) output(" hastily reaching your Laybans,");
 		output(" and ready yourself to fight as the basilisk slides from his hiding place and advances upon you, his deadly eyes and sharp claws glinting coldly in the sunlight.\n\n");
 	}
-
+	
+	if(!pc.hasStatusEffect("Blinded") && !CoCBasilisk.canLookIntoEyes()) {
+		pc.createStatusEffect("Blinded", 1000, 0, 0, 0, false, "Blinded", "You don't dare to look at him too much! Your aim is greatly decreased.");
+		pc.createStatusEffect("NotLooking");
+	}
+	
 	clearMenu();
 	addButton(0, "Next", CombatManager.beginCombat);
 }

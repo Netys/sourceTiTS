@@ -14,7 +14,7 @@ public function followerCampMenuBlurbJojo(showInteractButton:Boolean):void {
 		//if (!(hours > 4 && hours < 23)) outputText(" and the mouse is sleeping on it right now.\n\n");
 		//else 
 			output(", though the mouse is probably hanging around the camp's perimeter.\n\n");
-		if (showInteractButton) addButton(2, "Jojo", function():* { processTime(5); jojoCamp() } , null, "Talk", "Go find Jojo around the edges of your camp and meditate with him or talk about watch duty.");
+		if (showInteractButton) addButton(followerBtnNum++, "Jojo", function():* { processTime(5); jojoCamp() } , null, "Talk", "Go find Jojo around the edges of your camp and meditate with him or talk about watch duty.");
 	}
 }
 

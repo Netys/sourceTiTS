@@ -122,45 +122,46 @@ public function wormEncounter():void {
 		//cor() = 25;
 	//}
 	//trace("GET INFESTED HERE");
-	//if(pc.findStatusAffect(StatusAffects.Infested) >= 0) {trace("BWUH?");}
+	//if(pc.findStatusAffect("Infested") >= 0) {trace("BWUH?");}
 	//else {
 		//if(flags[kFLAGS.EVER_INFESTED] == 0) flags[kFLAGS.EVER_INFESTED] = 1;
-		//pc.createStatusAffect(StatusAffects.Infested,0,0,0,0);
+		//pc.createStatusAffect("Infested",0,0,0,0);
 		//dynStats("cor", 0);
 	//}
 	//cleanupAfterCombat();
 //}
-//
-////spontaneous orgasm - chance to avoid being raped by monsters who would care.
-//public function infestOrgasm():void {
+
+//spontaneous orgasm - chance to avoid being raped by monsters who would care.
+public function infestOrgasm():void {
 	//spriteSelect(76);
-	//output("The ceaseless squirming of your uninvited guests send your body into paroxysms. Collapsing to your knees, you immediately begin pushing gouts of dick milk out of your body. You feel tremendous pressure in your pelvis and in your cock as you realize that you are pushing worms out with each torrent of cum! Stream upon stream of cum breaks free from the prison of your body, carrying some of the worms inside you with it. Once the orgasm passes, you collapse to the ground, totally spent. Before you pass out, you feel the unfortunate presence of the fat worm still in your body.", true);
-	//pc.orgasm();
-	////Check infestation and update it
-	//if(pc.findStatusAffect(StatusAffects.Infested) >= 0) {
-		////Increment infestation number
-		//if(pc.statusAffectv1(StatusAffects.Infested) < 5) {
-			//pc.addStatusValue(StatusAffects.Infested,1,1);
-			//pc.cumMultiplier+=0.5;
-			////fifth time is the charm!
-			//if(pc.statusAffectv1(StatusAffects.Infested) == 5) {
-				////Futaz
-				//if(pc.balls == 0) {
-					//output("\n\nAfter you empty yourself, you feel your body shift. The presence of the large worm is no longer discomforting. It is as if your seminal bladder has enlarged to accommodate the new thing inside you. Likewise, your ejaculations have become truly monstrous and the amount of worms you expel has also increased. You realize that the large worm has become a part of you and you can now <b>infest</b> your enemies much in the same manner as you have been infested, yourself. All you need now is some poor fool to overwhelm with your new 'pets'.", false);
-				//}
-				////non-ball-less
-				//else {
-					//output("\n\nYou feel an awkward sensation in your prostate.  You sense the fat worm squirming wildly triggering multiple, sloppy orgasms, leaving you spraying semen everywhere.  After a moment, the orgasms and the worm's twitching stop.  You feel " + num2Text(pc.balls) + " separate sensations in your prostate and feel the sensation of pressure pushing on both sides of your body.  The reality hits you.  The fat worm has divided into " + num2Text(pc.balls) + " smaller worms!  Each worm has found its way into your vesicles and is pushing down the vas deferens on each side.  You feel each worm push its way into your testicles and they immediately begin to swell to an impressive size.  Your pelvic muscles begin their familiar rhythmic squeezes and you see your sac bob in its tell-tale fashion of an impending orgasm.  Your muscles seize up and your now-massive scrotum tightens up in a vice-like grip around your fat, infested nuts as a huge solid stream of cum rockets from your cock.  You are utterly speechless as you literally shoot cum for five minutes straight!  When the orgasm subsides, you see a small colony of worms in the massive puddle of spunk you made, which quickly creeps off.  You realize that the creature is now a part of you and that you can use this to your advantage in a fight if you learn to control your ejaculations.", false);
-					//pc.ballSize+=2;
-					//pc.cumMultiplier++;
-				//}
-			//}
-		//}
-	//}
-	//doNext(camp.returnToCampUseTwoHours);
-	//
-//}
-//
+	output("The ceaseless squirming of your uninvited guests send your body into paroxysms. Collapsing to your knees, you immediately begin pushing gouts of dick milk out of your body. You feel tremendous pressure in your pelvis and in your cock as you realize that you are pushing worms out with each torrent of cum! Stream upon stream of cum breaks free from the prison of your body, carrying some of the worms inside you with it. Once the orgasm passes, you collapse to the ground, totally spent. Before you pass out, you feel the unfortunate presence of the fat worm still in your body.");
+	pc.orgasm();
+	//Check infestation and update it
+	if(pc.hasStatusEffect("Infested")) {
+		//Increment infestation number
+		if(pc.statusEffectv1("Infested") < 5) {
+			pc.addStatusValue("Infested", 1, 1);
+			pc.cumMultiplierRaw += 1;
+			//fifth time is the charm!
+			if(pc.statusEffectv1("Infested") == 5) {
+				//Futaz
+				if(pc.balls == 0) {
+					output("\n\nAfter you empty yourself, you feel your body shift. The presence of the large worm is no longer discomforting. It is as if your seminal bladder has enlarged to accommodate the new thing inside you. Likewise, your ejaculations have become truly monstrous and the amount of worms you expel has also increased. You realize that the large worm has become a part of you and you can now <b>infest</b> your enemies much in the same manner as you have been infested, yourself. All you need now is some poor fool to overwhelm with your new 'pets'.");
+				}
+				//non-ball-less
+				else {
+					output("\n\nYou feel an awkward sensation in your prostate.  You sense the fat worm squirming wildly triggering multiple, sloppy orgasms, leaving you spraying semen everywhere.  After a moment, the orgasms and the worm's twitching stop.  You feel " + num2Text(pc.balls) + " separate sensations in your prostate and feel the sensation of pressure pushing on both sides of your body.  The reality hits you.  The fat worm has divided into " + num2Text(pc.balls) + " smaller worms!  Each worm has found its way into your vesicles and is pushing down the vas deferens on each side.  You feel each worm push its way into your testicles and they immediately begin to swell to an impressive size.  Your pelvic muscles begin their familiar rhythmic squeezes and you see your sac bob in its tell-tale fashion of an impending orgasm.  Your muscles seize up and your now-massive scrotum tightens up in a vice-like grip around your fat, infested nuts as a huge solid stream of cum rockets from your cock.  You are utterly speechless as you literally shoot cum for five minutes straight!  When the orgasm subsides, you see a small colony of worms in the massive puddle of spunk you made, which quickly creeps off.  You realize that the creature is now a part of you and that you can use this to your advantage in a fight if you learn to control your ejaculations.");
+					
+					pc.ballSizeRaw += 2;
+					pc.cumMultiplierRaw += 2;
+				}
+			}
+		}
+	}
+	clearMenu();
+	addButton(0, "Next", function():*{ processTime(100 + rand(40)); mainGameMenu(); } );
+}
+
 //public function playerInfest():void {
 	//spriteSelect(76);
 	////Keep logic sane if this attack brings victory
@@ -272,9 +273,9 @@ public function wormEncounter():void {
 	//output("\n\nYou relax in the afterglow, pondering just how you'll handle living with the constant desire, barely noticing the colony slinking off, freshly lubricated by your sexual fluids.  You drink into a lusty slumber, absently fingering [oneCock].");
 	//output("\n\n<b>You are infested, again!</b>");
 	////Reinfest
-	//if(pc.findStatusAffect(StatusAffects.Infested) >= 0) {trace("BWUH?");}
+	//if(pc.findStatusAffect("Infested") >= 0) {trace("BWUH?");}
 	//else {
-		//pc.createStatusAffect(StatusAffects.Infested,0,0,0,0);
+		//pc.createStatusAffect("Infested",0,0,0,0);
 		//dynStats("cor", 0);
 	//}
 	//if(cor() < 25) {

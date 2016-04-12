@@ -2709,16 +2709,16 @@ public function NineTailsTimePassedNotify():void {
 			pc.removePerk("Enlightened Nine-tails");
 			pc.removePerk("Corrupted Nine-tails");
 		}
-		//else if (pc.isBimbo() || pc.isBro() || pc.IQ() < 10 || pc.WQ() < 10) {
-			//pc.tailCount = Math.max(Math.min(8, pc.IQ() / 10), 1);
-			//
-			//eventBuffer += "\n\n<b>Your crumbling mind is not able to maintain enlightened state anymore!</b>";
-			//eventBuffer += "\n\nYou have lost ";
-			//eventBuffer += num2Text(9 - pc.tailCount);
-			//eventBuffer += " of your Kitsune tails, and your boundless energy is gone.";
-			//pc.removePerk("Enlightened Nine-tails");
-			//pc.removePerk("Corrupted Nine-tails");
-		//}
+		else if (pc.isBimbo() || pc.isBro() || pc.IQ() < 10 || pc.WQ() < 10) {
+			pc.tailCount = Math.max(Math.min(8, pc.IQ() / 10), 1);
+			
+			eventBuffer += "\n\n<b>Your crumbling mind is not able to maintain enlightened state anymore!</b>";
+			eventBuffer += "\n\nYou have lost ";
+			eventBuffer += num2Text(9 - pc.tailCount);
+			eventBuffer += " of your Kitsune tails, and your boundless energy is gone.";
+			pc.removePerk("Enlightened Nine-tails");
+			pc.removePerk("Corrupted Nine-tails");
+		}
 		else pc.energy(0.25);
 	}
 }

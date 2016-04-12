@@ -71,8 +71,24 @@ package classes.Items.Armor
 			
 			output("To finish the look, you take the two fingerless alchemical gloves and slide them over your hands.  What seems to be a prayer is embroidered in gold on their back.\n\n");
 			
+			if (targetCreature.isTaur()) {
+				output("There are no way it could cover your [pc.lowerBody], but you have become accustomed to it already.\n\n");
+				this.addFlag(GLOBAL.ITEM_FLAG_EXPOSE_GROIN);
+				this.addFlag(GLOBAL.ITEM_FLAG_EXPOSE_ASS);
+				this.hasRandomProperties = true;
+			}
+			
 			output("You feel pious.\n\n");
 			//output("You feel pious.\n\n(<b>Perk Gained - Blood Mage</b>: Spells consume HP (minimum 5) instead of fatigue!)\n\n");
+		}
+		
+		override public function onRemove(targetCreature:Creature):void
+		{
+			if(this.hasRandomProperties) {
+				this.deleteFlag(GLOBAL.ITEM_FLAG_EXPOSE_GROIN);
+				this.deleteFlag(GLOBAL.ITEM_FLAG_EXPOSE_ASS);
+				this.hasRandomProperties = false;
+			}
 		}
 	}
 }

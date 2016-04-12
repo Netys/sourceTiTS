@@ -680,7 +680,7 @@ public function orderSumtinFrumEmbrah():void
 		else addButton(1,"Ausar Chaser",buyADrinkFromCandice,"Ausar Chaser","Ausar Chaser","Bartender's favorite! An energy drink mixed with vodka, the ausar chaser will get you revved up and ready for action - or drunk enough to go chasing your tail after a couple shots.\n\n15 Credits");
 	}
 	else addDisabledButton(1,"Ausar Chaser","Ausar Chaser","You can't afford this drink.");
-	if(pc.credits >= 25) addButton(2,"Mini Rahn",buyADrinkFromCandice,"Miniature Rahn","Miniature Rahn","A jello shot! No gel or goo creatures were harmed making this delicious, sweet drink. Though the bartender might have gone down on one beforehand to make it!\n\n25 Credits");
+	if(pc.credits >= 25) addButton(2,"Mini Rahn",buyADrinkFromCandice,"Miniature Rahn","Miniature Rahn","A jello shot! No gel or goo creatures were harmed making this delicious, sweet, alcohol-free drink. Though the bartender might have gone down on one beforehand to make it!\n\n25 Credits");
 	else addDisabledButton(2,"Mini Rahn","Miniature Rahn","You can't afford this drink.");
 	if(pc.credits >= 34) addButton(3,"Nyrean Knot",buyADrinkFromCandice,"Nyrean Knot","Nyrean Knot","Guaranteed to keep you in your place for a few hours: drop dead drunk on the bar's floor. Powerful, kicks like a mule, and stings like barbs going down. Only recommended for creatures with high alcohol tolerance or nothing to do tomorrow.\n\n34 Credits");
 	else addDisabledButton(3,"Nyrean Knot","Nyrean Knot","You can't afford this drink.");

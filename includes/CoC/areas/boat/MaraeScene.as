@@ -159,7 +159,7 @@ public function initiateFightMarae():void {
 	if (flags["COC.CORRUPT_MARAE_FOLLOWUP_ENCOUNTER_STATE"] == 2) {
 		output("Your mind finally made up, she must pay for forcibly giving you her 'gift'.\n\n");
 	}
-	if (flags["COC..FACTORY_SHUTDOWN"] == 2) {
+	if (flags["COC.FACTORY_SHUTDOWN"] == 2) {
 		output("You [pc.readyWeapon] and assume a combat stance! \"<i>Pity. You're dealing with a goddess,</i>\" she coos.");
 		output("\n\nTentacles come up to keep your boat in place so you can't flee.");
 	}

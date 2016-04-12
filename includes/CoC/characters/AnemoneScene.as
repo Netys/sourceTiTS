@@ -1,10 +1,13 @@
 import classes.Characters.CoC.CoCAnemone;
+import classes.Characters.CoC.CoCKidA;
+import classes.Engine.Combat.applyDamage;
+import classes.Engine.Combat.DamageTypes.TypeCollection;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
 import classes.Items.Apparel.CoCSluttySwimwear;
 import classes.Items.Drinks.CoCLustDraft;
-import classes.Items.Melee.CoCLustDagger;
-import classes.Items.Melee.CoCMinotaurAxe;
+import classes.Items.Guns.CoCWingstick;
+import classes.Items.Melee.*;
 import classes.Items.Miscellaneous.*;
 import classes.Items.Transformatives.*;
 import classes.ItemSlotClass;
@@ -86,6 +89,21 @@ public function AnemoneSceneTimeChange():void
 	//}
 }
 
+public function showKidA():void {
+	if(flags["COC.ANEMONE_KID"] != 1) userInterface.showName("\nANEMONE");
+	else userInterface.showName("\nKID A");
+}
+
+public function showAnemone():void {
+	userInterface.showName("\nANEMONE");
+}
+
+public function get kida():CoCKidA {
+	var _kidA:CoCKidA = new CoCKidA();
+	_kidA.meleeWeapon = new (getKidAWeaponClass())();
+	return _kidA; // no reason to actually store it
+}
+
 public function kidAXP(diff:Number = 0):Number
 {
 	if (diff == 0) return flags["COC.KID_A_XP"];
@@ -98,7 +116,7 @@ public function kidAXP(diff:Number = 0):Number
 
 public function mortalAnemoneeeeee():void
 {
-	//spriteSelect(4);
+	showAnemone();
 	clearOutput();
 	clearMenu();
 	if (flags["COC.TIMES_MET_ANEMONE"] == undefined /*|| pc.hasItem(consumables.MINOCUM)*/) {
@@ -107,10 +125,10 @@ public function mortalAnemoneeeeee():void
 
 		output("The anemone girl smiles at you flirtatiously as she bobs up to the surface.  More out of politeness than anything you smile back, not sure of what to make of her and unused to such unaggressive approaches by the denizens of this place.  A bloom of vibrant color offset by the blue outline of her body causes you to lean farther out as your attention refocuses below her waist, where you perceive a smaller ring of tentacles waving at you from behind the head of a hardening penis!  Turned on by the attention, the anemone grabs onto the saxboard in an attempt to pull herself up to you, but her added weight on the side overbalances you and pitches you overboard into her waiting tentacles!\n\n", false);
 
-		//if (pc.hasItem(consumables.MINOCUM)) {
-			//minoCumForAnemonieeeeez();
-			//return;
-		//}
+		if (pc.hasItemByType(CoCMinotaurCum)) {
+			minoCumForAnemonieeeeez();
+			return;
+		}
 		output("The initial surprise subsides to wooly-headedness and a feeling of mild arousal as the stingers in her tentacles find exposed flesh.  In panic of drowning you pull free of the ropy mass and backpaddle away from the girl until your " + pc.feet() + " reassuringly touch the shallows of the lakebed once again and you're far enough above water to be able to fight.\n\n", false);
 	} else {
 		flags["COC.TIMES_MET_ANEMONE"]++;
@@ -182,7 +200,7 @@ public function defeatAnemone():void
 //anal: -requires butthole
 private function victoryButtholeRape():void
 {
-	//spriteSelect(4);
+	showAnemone();
 	clearOutput();
 	//output(images.showImage("anemone-getanal"), false);
 	output("You look over the anemone in front of you.  Your attention focuses on her blue shaft; those smaller tentacles should have plenty of pleasing venom in them as well.  Stripping off your [pc.gear], you approach her and push her backwards.  Her gills slide off her breasts and float at her sides. revealing a pair of cute nipples.  You take the opportunity to stroke the shaft of her penis and rub her vagina a bit, soaking up some venom and making your hands tingle.\n\n", false);
@@ -229,7 +247,7 @@ private function victoryButtholeRape():void
 
 private function rapeAnemoneWithDick():void
 {
-	//spriteSelect(4);
+	showAnemone();
 	clearOutput();
 	//output(images.showImage("anemone-male-fuck"), false);
 	if (pc.cockThatFits(36) >= 0) {
@@ -336,7 +354,7 @@ private function rapeAnemoneWithDick():void
 //using pussy:
 private function rapeAnemoneWithPussy():void
 {
-	//spriteSelect(4);
+	showAnemone();
 	clearOutput();
 	//output(images.showImage("anemone-female-fuck"), false);
 	output("As you review your handiwork, the stirrings in your feminine side focus your attention on the anemone's penis.  Those smaller tentacles on it should have plenty of pleasing venom in them as well.  You make up your mind to put them to use for you.\n\n", false);
@@ -412,7 +430,7 @@ public function loseToAnemone():void
 	//pc.reflexesRaw += pc.statusEffectv2("Anemone Venom");
 	pc.removeStatusEffect("Anemone Venom");
 	
-	//spriteSelect(4);
+	showAnemone();
 	var x:Number = pc.cockThatFits(36);
 	clearOutput();
 	//loss via hp (only possible if PC engages her while already being at zero or kills himself with Akbal powers):
@@ -632,40 +650,38 @@ public function loseToAnemone():void
 
 //Minotaur Cum combat circumvention:
 //(if PC has 1 or more Mino Cum, replaces last paragraph of initial encounter)
-//private function minoCumForAnemonieeeeez():void
-//{
-	////spriteSelect(4);
-	//output("The initial surprise subsides to wooly-headedness and a feeling of mild arousal as the stingers in her tentacles find exposed flesh.  In panic of drowning you pull free of the ropy mass and backpaddle away from the girl until your " + pc.feet() + " reassuringly touch the shallows of the lakebed.  As you shake your head to clear the haze, you notice a few of your items have fallen out of your pouches and are floating in the water.  The anemone has picked one in particular up and is examining it; a bottle of minotaur cum.  Her eyes light up in recognition as the fluid sloshes back and forth and she looks beseechingly at you, cradling it next to her cheek.  \"<i>Gimme?</i>\" she asks, trying to look as sweet as possible.\n\n", false);
-//
-	////[(PC not addicted)
-	//if (flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] == 0) {
-		//output("Do you want to make a present of the bottle?", false);
-	//}
-	////(PC addicted but sated)
-	//else if (flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] == 1) {
-		//output("You're still riding high from your last dose; do you want to share your buzz with the girl? It might lead to something fun...", false);
-	//}
-	////(PC addicted but in withdrawal)
-	//else {
-		//output("Oh hell no, you're not going to give that bottle away when you haven't even gotten your own fix yet! You raise your " + pc.weaponName + " and advance on the girl with a wild look in your eyes. She shivers a bit at your expression and drops the bottle with a splash, then recovers her composure and backs up a few steps. You grab the floating bottle, and the rest of your stuff, quickly.", false);
-		////(gain lust, temp lose spd/str; if in withdrawal then proceed to fight, otherwise present choices 'Give' and 'Don't Give')
-		//var anemone:Anemone = new Anemone();
-		//startCombat(anemone);
-		////(gain lust, temp lose spd/str)
-		//dynStats("lus", 4);
-		//anemone.applyVenom(1);
-		//return;
-	//}
-	//simpleChoices("Give", giveMino, "Don't Give", dontGiveMino, "", null, "", null, "", null);
-//}
+private function minoCumForAnemonieeeeez():void
+{
+	showAnemone();
+	output("The initial surprise subsides to wooly-headedness and a feeling of mild arousal as the stingers in her tentacles find exposed flesh.  In panic of drowning you pull free of the ropy mass and backpaddle away from the girl until your " + pc.feet() + " reassuringly touch the shallows of the lakebed.  As you shake your head to clear the haze, you notice a few of your items have fallen out of your pouches and are floating in the water.  The anemone has picked one in particular up and is examining it; a bottle of minotaur cum.  Her eyes light up in recognition as the fluid sloshes back and forth and she looks beseechingly at you, cradling it next to her cheek.  \"<i>Gimme?</i>\" she asks, trying to look as sweet as possible.\n\n");
+
+	//[(PC not addicted)
+	if (flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] == 0 || flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] == undefined) {
+		output("Do you want to make a present of the bottle?");
+	}
+	//(PC addicted but sated)
+	else if (flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] == 1) {
+		output("You're still riding high from your last dose; do you want to share your buzz with the girl? It might lead to something fun...");
+	}
+	//(PC addicted but in withdrawal)
+	else {
+		output("Oh hell no, you're not going to give that bottle away when you haven't even gotten your own fix yet! You [pc.readyWeapon] and advance on the girl with a wild look in your eyes. She shivers a bit at your expression and drops the bottle with a splash, then recovers her composure and backs up a few steps. You grab the floating bottle, and the rest of your stuff, quickly.");
+		//(gain lust, temp lose spd/str; if in withdrawal then proceed to fight, otherwise present choices 'Give' and 'Don't Give')
+		AnemoneCombatStart();
+		return;
+	}
+	clearMenu();
+	addButton(0, "Give", giveMino);
+	addButton(1, "Don't Give", dontGiveMino);
+}
 
 //'Don't Give':
 private function dontGiveMino():void
 {
-	//spriteSelect(4);
+	showAnemone();
 	clearOutput();
 	clearMenu()
-	output("You look sternly at the blue girl and hold out your hand.  As she realizes you don't intend to let her have the bottle, her face changes to a half-pout, half-frown.  When you don't react, she throws the bottle at your feet and shouts, \"<i>Mean!</i>\"  You bend down to pick it, and the other items, up, and when you straighten back up, she looks quite angry and her tentacles are waving all over the place.  Uh-oh.  You raise your weapon as the anemone giggles sadistically and attacks!\n\n", false);
+	output("You look sternly at the blue girl and hold out your hand.  As she realizes you don't intend to let her have the bottle, her face changes to a half-pout, half-frown.  When you don't react, she throws the bottle at your feet and shouts, \"<i>Mean!</i>\"  You bend down to pick it, and the other items, up, and when you straighten back up, she looks quite angry and her tentacles are waving all over the place.  Uh-oh.  You [pc.readyWeapon] as the anemone giggles sadistically and attacks!\n\n");
 	//(proceed to combat)
 	pc.lust(4);
 	AnemoneCombatStart();
@@ -674,37 +690,37 @@ private function dontGiveMino():void
 //'Give':
 private function giveMino():void
 {
-	//spriteSelect(4);
+	showAnemone();
 	clearOutput();
 	clearMenu()
 	//pc.consumeItem(consumables.MINOCUM);
-	output("You nod at the girl and she smiles and responds with a very quiet \"<i>Yay.</i>\"  As you pick up the rest of your stuff, she takes the top off of the bottle and chugs it like a champ, without even stopping to breathe.  Her eyes widen a bit as the drug hits her system, then narrow into a heavy-lidded stare.  Dropping the bottle with a splash, she falls to her knees with another.  She looks at you and licks her lips as she begins playing with her nipples. Obviously, she's feelin' good.  ", false);
+	output("You nod at the girl and she smiles and responds with a very quiet \"<i>Yay.</i>\"  As you pick up the rest of your stuff, she takes the top off of the bottle and chugs it like a champ, without even stopping to breathe.  Her eyes widen a bit as the drug hits her system, then narrow into a heavy-lidded stare.  Dropping the bottle with a splash, she falls to her knees with another.  She looks at you and licks her lips as she begins playing with her nipples. Obviously, she's feelin' good.  ");
 	//[(lust<30)
 	if (pc.lust() < 30) {
-		output("Watching as her fondling devolves into outright masturbation, your own ", false);
-		if (pc.cockTotal() > 0) output(pc.cockDescript(0) + " becomes a little erect", false);
-		else if (pc.hasVagina()) output(pc.vaginaDescript(0) + " aches a bit with need", false);
-		else output(pc.assholeDescript() + " begins to tingle with want", false);
-		output(".  You shake off the feeling and head back to camp, leaving her to her fun.", false);
+		output("Watching as her fondling devolves into outright masturbation, your own ");
+		if (pc.cockTotal() > 0) output("[pc.multiCocks] becomes a little erect");
+		else if (pc.hasVagina()) output("[pc.vagina] aches a bit with need");
+		else output("[pc.asshole] begins to tingle with want");
+		output(".  You shake off the feeling and head back to camp, leaving her to her fun.");
 	}
 	//(lust>30)
 	else {
 		//(decrement MinoCum by 1, opens victory sex menu, uses win-by-lust context in ensuing scenes, increment corruption by 2 for getting a girl high just to fuck her)
-		output("As her fondling devolves into genuine masturbation you realize this would be a good opportunity to take care of your own lusts.  If you do, how will you do it?", false);
+		output("As her fondling devolves into genuine masturbation you realize this would be a good opportunity to take care of your own lusts.  If you do, how will you do it?");
 		
 		addButton(0, "Your Ass", victoryButtholeRape);
 		
-		//Normal male: -requires dick of area < 36		
+		//Normal male: -requires dick of area < 36
 		if (pc.cockTotal() > 0) addButton(1, "Your Cock", rapeAnemoneWithDick);
 		else addDisabledButton(1, "Your Cock");
 		
 		if (pc.hasVagina()) addButton(2, "Your Vagina", rapeAnemoneWithPussy);
 		else addDisabledButton(1, "Your Vagina");
 		
-		addButton(14, "Leave", returnToCampUseOneHour);
+		addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 		return;
 	}
-	doNext(returnToCampUseOneHour);
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
 //anal
@@ -718,8 +734,8 @@ private function anemoneButtPlugginz():void
 	if (enemy.lustQ() > 99) output(" as she plays with herself");
 	output(".  Nice, but not what you're looking for...  ");
 	if (!pc.isTaur()) {
-		output("Opening your [armor] a bit, you stroke ");
-		if (pc.hasCock()) output("[oneCock]");
+		output("Opening your [pc.armor] a bit, you stroke ");
+		if (pc.hasCock()) output("[pc.oneCock]");
 		else output("your " + pc.vaginaDescript(0));
 		output(" as y");
 	}
@@ -765,7 +781,7 @@ private function anemoneButtPlugginz():void
 	addButton(0, "FUCK IT", anemoneQuoteUnquoteAnal);
 	if (!pc.isTaur()) addButton(1, "Hotdog", hotdogTheAnemone);
 	else addDisabledButton(1, "Hotdog", "Hotdog", "You have too many legs.");
-	addButton(14, "Fuck Off", fuckingAssholelessAnemoneeeez);;
+	addButton(14, "Fuck Off", fuckingAssholelessAnemoneeeez);
 }
 
 //[FUCK IT] (if cock fit 48, use cock; else use clit scenes)
@@ -1166,7 +1182,7 @@ public function anemoneKidBirthPtII():void
 {
 	clearOutput();
 	clearMenu();
-	//spriteSelect(71);
+	showKidA();
 	output("You awake and look skyward to the sun for a hint at the time.  What greets you is more of an eclipse; a shape impedes your view.  As your eyes adjust to the light, it resolves into an upside-down blue-eyed, blue-skinned face wreathed with snubby, shoulder-length tentacles of purple and green hue.  The silence continues as you stare into it, until you move to push yourself off the hard ground.  At the first sign of activity, the head disappears into the water barrel with a sloshing sound.  You push yourself to your [pc.feet] and look back toward it; the eyes, now right side-up, peek over the rim bashfully atop a set of blue fingers.");
 	output("\n\n\"<i>Um... hi,</i>\" you venture.");
 	output("\n\nThe eyes raise up and a smile appears beneath.  \"<i>Um... hi!</i>\"");
@@ -1188,7 +1204,7 @@ public function anemoneKidBirthPtII():void
 private function getRidOfAnemone():void
 {
 	clearOutput();
-	//spriteSelect(71);
+	showKidA();
 	output("Enough of this.  Summoning your backbone, you grasp the anemone's upper arm and pull her to her feet; she's light as a decorative feather and twice as blue once she grasps your intention and her camouflage reflex takes over.  Putting one arm under her, you carry her legs out from underneath and lift her bodily out of the barrel, then set her down on the hard ground.  She turns a teary pout on you, but you look away.  Picking up the nearly-empty container and setting it atop your shoulder, you begin the walk to the stream.  The girl stumbles along behind you, unsteady on her feet.");
 	output("\n\nUpon reaching your destination, you dump the contents of the anemone's erstwhile apartment into the babbling brook, then point down-current toward the lake and set your jaw.  Glancing at your stony demeanor, the blue girl steps into the water, moistens her gills, and then begins the long trek to her ancestral home.");
 	//(set Kidswag to -1)
@@ -1200,7 +1216,7 @@ private function getRidOfAnemone():void
 private function keepAnemoneKid():void
 {
 	clearOutput();
-	//spriteSelect(71);
+	showKidA();
 	output("You frown as you stare into the opaque eyes.  You can't think of any way to get her out of the barrel, short of manhandling her into the wilderness where she'll flourish or expire depending on fate, and you haven't the heart for such endeavors.  Ah... she looks so happy sitting there with her head resting on her hands, too.  Well, worse things could happen - but probably not stranger.");
 	output("\n\n\"<i>So... what do I call you, then?</i>\" you ask; she looks at you quizzically.  You continue to muse, wondering aloud what you would even name a kid anemone.");
 	output("\n\n\"<i>Kid... ?</i>\" starts the girl, attempting to duplicate your speech.  You try to clarify, but, seeming not to hear, she continues to sound out the words and get the shape of them.");
@@ -1234,7 +1250,7 @@ public function anemoneBarrelDescription(showInteractButton:Boolean):void {
 		output("Kid A is peeking out of her barrel.  Whenever you make eye contact she breaks into a smile; otherwise she just stares off into the distance, relaxing.\n\n");
 	else output("Kid A is here, seated demurely on the rim of her barrel and looking somewhat more purple under the red moon.  She glances slyly at you from time to time.\n\n");
 	
-	if(showInteractButton) addButton(10, "Kid A", approachAnemoneBarrel);
+	if(showInteractButton) addButton(followerBtnNum++, "Kid A", approachAnemoneBarrel);
 }
 
 //[Barrel] button in [Stash] menu (appears whenever Kidswag flag >= 1)
@@ -1242,7 +1258,7 @@ public function approachAnemoneBarrel():void
 {
 	clearOutput();
 	clearMenu();
-	//spriteSelect(71);
+	showKidA();
 	
 	trace("Kia A XP: " + kidAXP());
 	
@@ -1299,7 +1315,7 @@ public function approachAnemoneBarrel():void
 private function getAnemoneItem():void
 {
 	clearOutput();
-	//spriteSelect(71);
+	showKidA();
 	var itype:ItemSlotClass;
 	output("You reach down and pick up her present.  Today, she's left you ");
 	if (kidAXP() == 0) itype = new CoCDryTent();
@@ -1325,7 +1341,7 @@ private function getAnemoneItem():void
 		else
 			itype = RandomInCollection(/*consumables.TSTOOTH*/new CoCSweetGossamer(), new CoCBlackGossamer(), new CoCReptilum());
 	}
-	output(itype.longName + ".");
+	output(itype.description + ".");
 	if (itype is CoCMinotaurAxe) output("  Holy... how did she drag this thing home!?");
 	output("\n\n");
 	flags["COC.KID_ITEM_FIND_HOURS"] = timeAsStamp;
@@ -1339,7 +1355,7 @@ private function getAnemoneItem():void
 //[Give Weapon]
 private function giveAnemoneWeapon():void {
 	clearOutput();
-	//spriteSelect(71);
+	showKidA();
 	output("What do you want to give her?");
 	function giveableToAnemone(item:ItemSlotClass):Boolean {
 		return !item.hasRandomProperties && item.type == GLOBAL.MELEE_WEAPON;
@@ -1360,7 +1376,7 @@ private function giveAnemoneWeapon():void {
 private function placeInAnemone(arg:ItemSlotClass):void {
 	clearOutput();
 	output("You leave the item by her barrel.");
-	//spriteSelect(71);
+	showKidA();
 	//(set Kidweapon to item name, remove from inventory)
 	flags["COC.ANEMONE_WEAPON_ID"] = getQualifiedClassName(arg);
 	pc.destroyItem(arg);
@@ -1371,7 +1387,7 @@ private function placeInAnemone(arg:ItemSlotClass):void {
 private function takeOutOfAnemone():void
 {
 	clearOutput();
-	//spriteSelect(71);
+	showKidA();
 	output("You take the " + getKidAWeaponName() + " back.  ");
 	if (flags["COC.ANEMONE_WATCH"] > 0) {
 		output("Your anemone daughter will not be able to guard you at night without a weapon.  If you want her to guard, you'll need to give her a new weapon and tell her to watch at night again.  ");
@@ -1392,7 +1408,7 @@ private function takeOutOfAnemone():void
 private function anemoneWatchToggle():void
 {
 	clearOutput();
-	//spriteSelect(71);
+	showKidA();
 	//toggles Kid A's night watch; unusuable unless she's armed
 	//if Kid A is unarmed when PC tries to turn on, output:
 	if (flags["COC.ANEMONE_WATCH"] > 0) {
@@ -1430,119 +1446,111 @@ private function tutorAnemoneKid():void
 
 	output("  You spend some time instructing Kid A in the finer points of the equipment you've provided her with, and then finish up with a practice duel.");
 
+	var wpn:Class = getKidAWeaponClass();
 	//duel effects by weapon, output in new PG
 	//[Pipe] or [Wizard Staff] or [Eldritch Staff]
-	//if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.PIPE.id ||
-			//flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.MACE.id ||
-			//flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.W_STAFF.id ||
-			//flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.E_STAFF.id ||
-			//flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.L_STAFF.id) {
-		//output("\n\nThough she acts like she's not serious and pulls her swings more often than not, the heft of the ");
-		//if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.PIPE.id) output("pipe");
-		//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.MACE.id) output("mace");
-		//else output("stick");
-		//if (flags[kFLAGS.ANEMONE_WEAPON_ID] != weapons.MACE.id) output(" is still enough to bruise you a bit.");
-		//else output(" manages to bruise you a lot.");
-		//HPChange(-5, false);
-		//if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.MACE.id) HPChange(-15, false);
-		//kidAXP(6);
-	//}
+	if (wpn == CoCPipe ||
+			wpn == CoCMace ||
+			//wpn == weapons.E_STAFF.id ||
+			//wpn == weapons.L_STAFF.id ||
+			wpn == CoCWizardStaff
+			) {
+		output("\n\nThough she acts like she's not serious and pulls her swings more often than not, the heft of the " + getKidAWeaponName() + " is still enough to bruise you a bit.");
+		applyDamage(new TypeCollection( { kinetic: 5 } ), kida, pc);
+		kidAXP(6);
+	}
 	////(HP - 5, KidXP + 1)
 	////[Riding Crop]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.RIDINGC.id) {
-		//output("\n\nShe seems to enjoy smacking you with the riding crop, making sultry eyes at you and pursing her lips whenever she lands a crack on your [butt] or [chest].  So much so, in fact, that her own penis is betraying her arousal, bobbing in time as she swishes the weapon around.  The humiliation ");
-		//if (pc.lib < 50) output("is");
-		//else output("isn't");
-		//output(" enough to keep you from thinking dirty thoughts about grabbing her naughty, teasing face and mashing it into your crotch.");
-		////(HP - 5, lust +5 if lib>=50, KidXP + 2)
-		//HPChange(-5, false);
-		//if (pc.lib >= 50) dynStats("lus", 5, "resisted", false);
-		//kidAXP(6);
-	//}
+	else if (wpn == CoCRidingCrop) {
+		output("\n\nShe seems to enjoy smacking you with the riding crop, making sultry eyes at you and pursing her lips whenever she lands a crack on your [pc.butt] or [pc.chest].  So much so, in fact, that her own penis is betraying her arousal, bobbing in time as she swishes the weapon around.  The humiliation ");
+		if (pc.slut() < 50) output("is");
+		else output("isn't");
+		output(" enough to keep you from thinking dirty thoughts about grabbing her naughty, teasing face and mashing it into your crotch.");
+		//(HP - 5, lust +5 if lib>=50, KidXP + 2)
+		applyDamage(new TypeCollection( { kinetic: 5, tease : 5 } ), kida, pc);
+		kidAXP(6);
+	}
 	////[Lust Dagger]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.L_DAGGR.id) {
-		//output("\n\nThe enchanted dagger is light enough for the anemone to use one-handed, and she makes a good practice of turning aside your mock blows with it while reaching in to stimulate you with her other hand.  For good measure, she nicks you with the blade itself whenever her caress elicits a distracted flush.");
-		////(HP -5, lust +10, KidXP + 3)
-		//HPChange(-5, false);
-		//dynStats("lus", 10, "resisted", false);
-		//kidAXP(5);
-	//}
+	else if (wpn == CoCLustDagger) {
+		output("\n\nThe enchanted dagger is light enough for the anemone to use one-handed, and she makes a good practice of turning aside your mock blows with it while reaching in to stimulate you with her other hand.  For good measure, she nicks you with the blade itself whenever her caress elicits a distracted flush.");
+		//(HP -5, lust +10, KidXP + 3)
+		applyDamage(new TypeCollection( { kinetic: 5, drug : 10 } ), kida, pc);
+		kidAXP(5);
+	}
 	////[Dagger]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.DAGGER.id) {
-		//output("\n\nThe dagger is light enough for the anemone to use one-handed, and she makes a good practice of turning aside your mock blows with it while reaching in to stimulate you with her other hand.  For good measure, she nicks you with the blade itself whenever her caress elicits a distracted flush.");
-		////(HP -5, lust +5, KidXP + 3)
-		//HPChange(-5, false);
-		//dynStats("lus", 5, "resisted", false);
-		//kidAXP(5);
-	//}
+	else if (wpn == CoCDagger) {
+		output("\n\nThe dagger is light enough for the anemone to use one-handed, and she makes a good practice of turning aside your mock blows with it while reaching in to stimulate you with her other hand.  For good measure, she nicks you with the blade itself whenever her caress elicits a distracted flush.");
+		//(HP -5, lust +5, KidXP + 3)
+		applyDamage(new TypeCollection( { kinetic: 5, drug : 5 } ), kida, pc);
+		kidAXP(5);
+	}
 	////[Beautiful Sword]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.B_SWORD.id) {
-		//output("\n\nThe sword seems to dance in the air, as though it were the perfect weight and balance for your daughter.  She delivers several playful thrusts at you and though you deflect all but the last, that one slips by your guard.  The girl's eyes widen as the point lunges at your breast, but it delivers barely a scratch before twisting away.");
-		//output("\n\nPerhaps anemones are a bit too corrupt to use the sword effectively?");
-		////(HP -1, KidXP - 2)
-		//HPChange(-1, false);
-		//kidAXP(-2);
-	//}
+	else if (wpn == CoCBeautifulSword) {
+		output("\n\nThe sword seems to dance in the air, as though it were the perfect weight and balance for your daughter.  She delivers several playful thrusts at you and though you deflect all but the last, that one slips by your guard.  The girl's eyes widen as the point lunges at your breast, but it delivers barely a scratch before twisting away.");
+		output("\n\nPerhaps anemones are a bit too corrupt to use the sword effectively?");
+		//(HP -1, KidXP - 2)
+		applyDamage(new TypeCollection( { kinetic: 1 } ), kida, pc);
+		kidAXP(-2);
+	}
 	////[Jeweled Rapier] or [Raphael's Rapier]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.RRAPIER.id ||
-			//flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.JRAPIER.id) {
-		//output("\n\nThe rapier is light enough for the girl, but it takes a multitude of reminders before she handles the slender blade with the care and style it deserves.  She seems to regard it as little more than a tool for thwacking you in the butt that, coincidentally, has a pointy end.");
-		////(no effect, señorita)
-	//}
+	else if (//wpn == weapons.RRAPIER.id ||
+			wpn == CoCJeweledRapier) {
+		output("\n\nThe rapier is light enough for the girl, but it takes a multitude of reminders before she handles the slender blade with the care and style it deserves.  She seems to regard it as little more than a tool for thwacking you in the butt that, coincidentally, has a pointy end.");
+		//(no effect, señorita)
+	}
 	////[Large Axe], [Large Hammer], [Large Claymore], or [Huge Warhammer]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.L__AXE.id ||
-			//flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.L_HAMMR.id ||
-			//flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.WARHAMR.id ||
-			//flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.L__AXE.id) {
-		//output("\n\nShe can barely lift the weapon you've given her, although for a while she does manage to support one end with the ground and tilt it by the haft to ward off your blows with cleverness.  Distracting her by way of a feint, you part her from it and advance with a smile full of playful menace... whereupon she shrieks and pushes you backwards, causing you to trip over the weapon and fall with a crash.");
-		////(HP - 5, KidXP - 4)
-		//kidAXP(-4);
-		//HPChange(-5, false);
-	//}
+	else if (wpn == CoCMinotaurAxe ||
+			wpn == CoCClaymore ||
+			wpn == CoCWarhammer) {
+		output("\n\nShe can barely lift the weapon you've given her, although for a while she does manage to support one end with the ground and tilt it by the haft to ward off your blows with cleverness.  Distracting her by way of a feint, you part her from it and advance with a smile full of playful menace... whereupon she shrieks and pushes you backwards, causing you to trip over the weapon and fall with a crash.");
+		//(HP - 5, KidXP - 4)
+		kidAXP(-4);
+		applyDamage(new TypeCollection( { kinetic: 5 } ), kida, pc);
+	}
 	////[Katana] or [Spellsword]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.KATANA.id ||
-			//flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.S_BLADE.id ||
-			//flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.SCIMITR.id ||
-			//flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.B_SCARB.id ) {
-		//output("\n\nThe light sword and the light anemone seem to be a good match, and she actually manages to make several deft moves with it after your instruction.  One is a bit too deft, as she fails to rein in her swing and delivers a long, drawing cut that connects with your [leg].");
-		////(HP - 20, KidXP + 2)
-		//kidAXP(4);
-		//HPChange(-20, false);
-	//}
+	else if (wpn == CoCKatana ||
+			//wpn == weapons.S_BLADE.id ||
+			//wpn == weapons.B_SCARB.id ||
+			wpn == CoCScimitar) {
+		output("\n\nThe light sword and the light anemone seem to be a good match, and she actually manages to make several deft moves with it after your instruction.  One is a bit too deft, as she fails to rein in her swing and delivers a long, drawing cut that connects with your [pc.leg].");
+		//(HP - 20, KidXP + 2)
+		kidAXP(4);
+		applyDamage(new TypeCollection( { kinetic: 20 } ), kida, pc);
+	}
 	////[Spear]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.SPEAR.id) {
-		//output("\n\nThe natural length of the spear and the anemone racial mindset to get close and communicate by touch don't mesh well; she chokes up well past halfway on the haft despite your repeated instruction and pokes at you from close range with very little force, the idle end of the weapon waggling through the air behind her.");
-		////(HP -5, KidXP - 1)
-		//kidAXP(-1);
-		//HPChange(-5, false);
-	//}
+	else if (wpn == CoCSpear) {
+		output("\n\nThe natural length of the spear and the anemone racial mindset to get close and communicate by touch don't mesh well; she chokes up well past halfway on the haft despite your repeated instruction and pokes at you from close range with very little force, the idle end of the weapon waggling through the air behind her.");
+		//(HP -5, KidXP - 1)
+		kidAXP(-1);
+		applyDamage(new TypeCollection( { kinetic: 5 } ), kida, pc);
+	}
 	////[Whip] or [Succubi's Whip]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.WHIP.id ||
-			//flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.SUCWHIP.id) {
-		//output("\n\nThe whip seems almost like an extension of her hand once she decides its purpose is to tangle things up as opposed to lashing and lacerating flesh.  One of her overzealous swings finds you <i>both</i> tied in its coils; her petite body presses against yours as she colors in embarrassment.  Her distracted struggles to loosen the bonds accomplish little except to rub her sensitive parts along yours.");
-		//if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.SUCWHIP.id) output("  The demonic enchantment chooses then to activate, and her color deepens as her lust peaks, as does your own.");
-		//output("  You feel a point digging into your groin as her prick hardens and her struggles cease; she begins to moan openly in arousal.  As she relaxes, the coils of the whip finally loosen enough for you to extricate yourself.");
-		////(HP -0, lust +10 if normal whip or +20 if succubus, KidXP + 3)
-		//dynStats("lus", 10, "resisted", false);
-		//if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.SUCWHIP.id) dynStats("lus", 10, "resisted", false);
-		//kidAXP(6);
-	//}
+	else if (wpn == CoCWhip ||
+			wpn == CoCSuccubusWhip) {
+		output("\n\nThe whip seems almost like an extension of her hand once she decides its purpose is to tangle things up as opposed to lashing and lacerating flesh.  One of her overzealous swings finds you <i>both</i> tied in its coils; her petite body presses against yours as she colors in embarrassment.  Her distracted struggles to loosen the bonds accomplish little except to rub her sensitive parts along yours.");
+		if (wpn == CoCSuccubusWhip) output("  The demonic enchantment chooses then to activate, and her color deepens as her lust peaks, as does your own.");
+		output("  You feel a point digging into your groin as her prick hardens and her struggles cease; she begins to moan openly in arousal.  As she relaxes, the coils of the whip finally loosen enough for you to extricate yourself.");
+		//(HP -0, lust +10 if normal whip or +20 if succubus, KidXP + 3)
+		if (wpn == CoCSuccubusWhip) applyDamage(new TypeCollection( { tease: 3, drug: 7, psionic: 10 } ), kida, pc);
+		else applyDamage(new TypeCollection( { tease: 3, drug: 7 } ), kida, pc);
+		kidAXP(6);
+	}
 	////[Spiked Gauntlets] or [Hooked Gauntlets]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.S_GAUNT.id ||
-			//flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.H_GAUNT.id) {
-		//output("\n\nThe anemone wears the gauntlets easily and comfortably, but doesn't seem to understand that to attack she needs to ball up her fists and swing them, no matter how many times you tell her.  The most she manages is to deflect a few of your mock lunges by batting them aside with the metal atop her knuckles.");
-		////(no tigereffect)
-	//}
+	else if (wpn == CoCSpikedGauntlet
+			//wpn == weapons.H_GAUNT.id
+			) {
+		output("\n\nThe anemone wears the gauntlets easily and comfortably, but doesn't seem to understand that to attack she needs to ball up her fists and swing them, no matter how many times you tell her.  The most she manages is to deflect a few of your mock lunges by batting them aside with the metal atop her knuckles.");
+		//(no tigereffect)
+	}
 	////[Wingstick]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == consumables.W_STICK.id) {
-		//output("\n\nThe girl stares at the stick, still uncomprehending how you intend her to use it.  One last time, you take the weapon from her and make a throwing motion, then return it.  She looks from it back to you once more, then tosses it at your head.  As it impacts with a clunk and your vision jars, she clutches her stomach in laughter.");
-		////(HP - 10, set Kidweapon to empty, KidXP + 1)
-		//HPChange(-10, false);
-		//flags[kFLAGS.ANEMONE_WEAPON_ID] = 0;
-		//kidAXP(5);
-	//}
+	else if (wpn == CoCWingstick) {
+		output("\n\nThe girl stares at the stick, still uncomprehending how you intend her to use it.  One last time, you take the weapon from her and make a throwing motion, then return it.  She looks from it back to you once more, then tosses it at your head.  As it impacts with a clunk and your vision jars, she clutches her stomach in laughter.");
+		//(HP - 10, set Kidweapon to empty, KidXP + 1)
+		applyDamage(new TypeCollection( { kinetic: 10 } ), kida, pc);
+		kidAXP(5);
+	}
 	////[Dragonshell Shield]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == shields.DRGNSHL.id) {
+	//else if (wpn == shields.DRGNSHL.id) {
 		//output("\n\nYour protégé takes to the shield quite well, hiding behind it like... well, like a portable water barrel.  Even the way she peeks over the top is reminiscent.  She makes effective use of her cover, pushing forward relentlessly and delivering soft headbutts to spread venom to unprotected areas.");
 		////(lust + 5, temp str/spd down, KidXP + 5)
 		////str/spd loss reverts after clicking Next button
@@ -1550,29 +1558,29 @@ private function tutorAnemoneKid():void
 		//dynStats("lus", 10, "resisted", false);
 	//}
 	////[White Book]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == consumables.W__BOOK.id) {
-		//output("\n\nPart literacy training and part magic instruction, your progress through the book is painstakingly slow.  After almost an hour of trying to get the anemone to concentrate on the words, she finally manages to cause a small flash of white light on the page in front of her - whereupon she shrieks and drops the book, covering her head with her arms and backing away.");
-		////(KidXP - 5)
-		//kidAXP(-5);
-	//}
+	else if (wpn == CoCBookWhite) {
+		output("\n\nPart literacy training and part magic instruction, your progress through the book is painstakingly slow.  After almost an hour of trying to get the anemone to concentrate on the words, she finally manages to cause a small flash of white light on the page in front of her - whereupon she shrieks and drops the book, covering her head with her arms and backing away.");
+		//(KidXP - 5)
+		kidAXP(-5);
+	}
 	////[Black Book]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == consumables.B__BOOK.id) {
-		//output("\n\nThe girl sits attentively with you, resting her head against your arm, as you teach her the words needed to evoke the formulae in the book.  When you suggest she try one out, however, she shakes her head with wide eyes.  Insisting, you stand apart from her and fold your arms.  Blushing a deep blue, the anemone resigns herself to focusing on your crotch as she mouths quiet syllables.  After a few moments, you actually feel a small glow of lust where she's staring.  The girl giggles nervously and looks away as you flush and your garments ");
-		//if (pc.hasCock()) output("tighten");
-		//else if (pc.hasVagina()) output("dampen");
-		//else output("become a hindrance");
-		//output("... though the part between her own legs is still pointed at you.");
-		////(lust + 10, KidXP + 2)
-		//dynStats("lus", 20);
-		//kidAXP(4);
-	//}
+	else if (wpn == CoCBookBlack) {
+		output("\n\nThe girl sits attentively with you, resting her head against your arm, as you teach her the words needed to evoke the formulae in the book.  When you suggest she try one out, however, she shakes her head with wide eyes.  Insisting, you stand apart from her and fold your arms.  Blushing a deep blue, the anemone resigns herself to focusing on your crotch as she mouths quiet syllables.  After a few moments, you actually feel a small glow of lust where she's staring.  The girl giggles nervously and looks away as you flush and your garments ");
+		if (pc.hasCock()) output("tighten");
+		else if (pc.hasVagina()) output("dampen");
+		else output("become a hindrance");
+		output("... though the part between her own legs is still pointed at you.");
+		//(lust + 10, KidXP + 2)
+		applyDamage(new TypeCollection( { psionic: 20 } ), kida, pc);
+		kidAXP(4);
+	}
 	////[Scarred Blade]
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.S_BLADE.id) {
+	//else if (wpn == weapons.S_BLADE.id) {
 		//output("\n\nThe anemone attempts to draw the bloodthirsty saber at your insistence, but as she pulls it free of the scabbard, it jerks from her hands, lashing across her thigh before clattering noisily to the ground and spinning away.  Her shock grows as thick, clear fluid seeps from the cut, and she covers her mouth with her hands, looking up at you with piteous, wet eyes.");
 		////[(if corr <=70)
 		////if (cor() <= 70) output("  The blade's edge flashes toward you as well, when you try to pick it up.  After a few frustrated attempts, it becomes clear that you'll have to abandon it for now.");
 		////empty Kidweapon, KidXP - 5; if corr <=70, set sheilacite = 5, else add Scarred Blade to inventory)
-		//flags[kFLAGS.ANEMONE_WEAPON_ID] = 0;
+		//wpn = 0;
 		//kidAXP(-5);
 		///*if (cor() <= 70) {
 			////9999
@@ -1583,7 +1591,7 @@ private function tutorAnemoneKid():void
 		//return;
 	//}
 	////[Flintlock Pistol] (Because guns are awesome.)
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.FLINTLK.id) {
+	//else if (wpn == weapons.FLINTLK.id) {
 		//output("\n\nAs if the anemone girl already knows how to use a gun, she easily pulls the trigger and fires rounds of ammunition towards you!  ");
 		//if (silly()) output("Pew pew pew!  ");
 		//if (pc.spe >= 70) {
@@ -1599,7 +1607,7 @@ private function tutorAnemoneKid():void
 		//}
 		//kidAXP(5);
 	//}
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.CROSSBW.id) {
+	//else if (wpn == weapons.CROSSBW.id) {
 		//output("\n\nAs if the anemone girl already knows how to use a crossbow, she easily pulls the lever mechanism and fires a bolt towards you!  She reloads the crossbow and fires again.  ");
 		//if (pc.spe >= 60) {
 			//output("You easily dodge the incoming bolts thanks to your speed!");
@@ -1614,19 +1622,17 @@ private function tutorAnemoneKid():void
 		//}
 		//kidAXP(5);
 	//}
-	//else if (flags[kFLAGS.ANEMONE_WEAPON_ID] == weapons.FLAIL.id) {
-		//output("\n\nThe girl holds up the flail with no problem and you teach her how to use the weapon.  However, after dozens of swings, she accidentally hits herself with the spiked ball and looks at you with a whimper.  You tell her to stop; maybe this isn't the right weapon for her?");
-		//HPChange(-10, false);
-		//kidAXP( -2);
-		//return;
-	//}
+	else if (wpn == CoCFlail) {
+		output("\n\nThe girl holds up the flail with no problem and you teach her how to use the weapon.  However, after dozens of swings, she accidentally hits herself with the spiked ball and looks at you with a whimper.  You tell her to stop; maybe this isn't the right weapon for her?");
+		applyDamage(new TypeCollection( { kinetic: 10 } ), kida, pc);
+		kidAXP( -2);
+		return;
+	}
 	////[Any new weapon added without text written for it, or any custom item name set by a save editor]
-	//else {
-		//output("\n\nFor the life of her, Kid A can't seem to grasp how to use the " + ItemType.lookupItem(flags[kFLAGS.ANEMONE_WEAPON_ID]).longName + " you've provided her with.  You have to interrupt the practice for explanations so many times that you don't actually get to do any sparring.");
-		////(no effect, but you can just save edit the values you want anyway)
-	//}
-	
-	kidAXP(5);
+	else {
+		output("\n\nFor the life of her, Kid A can't seem to grasp how to use the " + getKidAWeaponName() + " you've provided her with.  You have to interrupt the practice for explanations so many times that you don't actually get to do any sparring.");
+		//(no effect, but you can just save edit the values you want anyway)
+	}
 	
 	//if hp = 0 after tutor, override any other result and output new PG:
 	if (pc.HP() <= 1) {
@@ -1835,7 +1841,7 @@ private function evictANemone():void
 {
 	clearOutput();
 	output("Really evict the anemone?");
-	//spriteSelect(71);
+	showKidA();
 	//[Yes][No]
 	clearMenu();
 	addButton(0, "Yes", reallyEvictDaAnemone);
@@ -1846,7 +1852,7 @@ private function evictANemone():void
 private function reallyEvictDaAnemone():void
 {
 	clearOutput();
-	//spriteSelect(71);
+	showKidA();
 	output("Time to reclaim your barrel.  Gesturing to get her attention, you grab the anemone by her upper arm and lift her to her feet.  She looks at you in confusion, but you set your face and drag her along with you as you make your way to the lake.");
 	output("\n\nReaching the shore, you push Kid A into the water and point out toward the center of the lake as she falls to her knees in the surf.  She looks absolutely miserable... until a green and purple swirl bobs to the surface next to her.  The new arrival greets your former tenant with cheer, squeezing her waist from behind and eliciting a gasp of surprise.");
 	output("\n\nKid A turns her head to face the stranger.  \"<i>Um... hi?</i>\" she offers, hesitantly.");
@@ -1862,9 +1868,11 @@ private function reallyEvictDaAnemone():void
 //if KidXP drops below threshold for sex due to bad training, no more dreams and no more sex
 public function kidADreams():void
 {
-	output("\n<b><u>In the middle of the night...</u></b>");
+	clearOutput();
+	showKidA();
+	output("<b><u>In the middle of the night...</u></b>");
 	//if male:
-	if (pc.hasCock() && (!pc.hasVagina() || pc.femininity < 50)) {
+	if (pc.hasCock() && (!pc.hasVagina() || pc.isMasculine())) {
 		//output(images.showImage("anemone-kid-male-masti"), false);
 		output("\nThe church bell chimes overhead as you regard the figure opposite you.  Your family chose this woman and arranged this marriage, true, but it's not fair to say you're not at least a little interested in the svelte, veiled form inhabiting the wedding dress your mother handed down to her.");
 		output("\n\nThe pastor coughs politely.  \"<i>Well... do you?  Take this woman?</i>\"");
@@ -1893,10 +1901,11 @@ public function kidADreams():void
 		output("\n\nAs you draw up to the corner, you can hear his voice raised in soft, girlish gasps.  Peering around carefully, you find him sitting on the ground with his shoulder to the wall, turned away from you; over that shoulder, the little blue head of his cock is clearly visible above his clenched fist.  He continues jerking off, unaware of your presence, and as you look on, you marvel at how much thinner and more feminine this hunched figure compared to the dashing, popular boy from your memory.");
 		output("\n\n\"<i>[name]!</i>\" he peals suddenly, stroking with vigor at his thoughts of you.  Startled and perhaps a bit flattered, you take a half-step back, and the noise brings his attention around.  In surprise, he half-turns and half-falls to face you, wide opaque eyes looking out of an alarmingly blue face in shock as his little dick twitches and spurts a string of goo toward your lap.");
 		output("\n\nThe bizarre sight of your classmate turned sapphire wakes you, and you sit up suddenly.  Blinking twice, you look to your left to discover your anemone, weakly stroking her deflating cock and sighing in satisfaction.  As her eyes catch yours, she freezes up; a wet smell draws your attention downward to where a line of semen decorates your thigh.  The blue girl blushes furiously");
-		if (cor() >= 66) output(" and, with a sigh, you grab her head and force it down to the mess, compelling her to lick it up.");
+		if (pc.cor() >= 66) output(" and, with a sigh, you grab her head and force it down to the mess, compelling her to lick it up.");
 		else output(" and neither of you says a word as she backs away slowly on her knees.");
 		output("  Sighing, you turn over and attempt to return to sleep despite the pervading smell of semen.");
 	}
+	flags["COC.HAD_KID_A_DREAM"] = 1;
 	//dynStats("lus", 50 + pc.sens / 2, "resisted", false);
 	pc.lust(50 + pc.libido() / 2);
 	doNext(playerMenu);

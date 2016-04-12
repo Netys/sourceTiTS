@@ -30,7 +30,7 @@ public function followerCampMenuBlurbRathazul(showInteractButton:Boolean):void {
 		else output("The alchemist Rathazul looks to be hard at work with his chemicals, working on who knows what.");
 		output("\n\n");
 		//else  
-		if(showInteractButton) addButton(3, "Rathazul", campRathazul, true, "Rathazul", "Visit with Rathazul to see what alchemical supplies and services he has available at the moment.");
+		if(showInteractButton) addButton(followerBtnNum++, "Rathazul", campRathazul, true, "Rathazul", "Visit with Rathazul to see what alchemical supplies and services he has available at the moment.");
 	}
 	else
 	{
@@ -908,90 +908,6 @@ private function craftDragonscaleArmorForReal(type:int = 0):void {
 	//statScreenRefresh();
 	//doNext(returnToRathazulMenu);
 //}
-//
-////Turn several ingredients into a special potion/consumable.
-//private function rathazulMakesPureHoney():void {
-	//clearOutput();
-	//if (pc.gems < 25) {
-		//output("\"<i>I'm sorry but you don't have the gems for this service,</i>\" Rathazul says.");
-		//doNext(returnToRathazulMenu);
-		//return;
-	//}
-	//pc.destroyItem(consumables.BEEHONY, 1);
-	//pc.gems -= 25;
-	//statScreenRefresh();
-	//output("You hand over a vial of bee honey and the 25 gems.");
-	//output("\n\n\"<i>I'll see what I can do,</i>\" he says as he takes the bee honey and begin brewing something. ");
-	//output("\n\nA few minutes later, he comes back with the crystal vial that contains glittering liquid.  \"<i>It's ready. The honey should be pure now,</i>\" he says. He hands you over the vial of honey and goes back to working.  ");
-	//inventory.takeItem(consumables.PURHONY, returnToRathazulMenu);
-//}
-//
-//private function rathazulMakesMilkPotion():void {
-	//clearOutput();
-	//if (pc.gems < 250) {
-		//output("\"<i>I'm sorry but you don't have the gems for this service,</i>\" Rathazul says.");
-		//doNext(returnToRathazulMenu);
-		//return;
-	//}
-	//else if (!(pc.hasItem(consumables.LACTAID, 5) && pc.hasItem(consumables.P_LBOVA, 2))) {
-		//output("\"<i>I'm sorry but you don't have the materials I need. I need five bottles of Lactaid and two bottles of purified LaBova,</i>\" Rathazul says.");
-		//doNext(returnToRathazulMenu);
-		//return;
-	//}
-	//pc.destroyItem(consumables.LACTAID, 5);
-	//pc.destroyItem(consumables.P_LBOVA, 2);
-	//pc.gems -= 250;
-	//statScreenRefresh();
-	//output("You hand over the ingredients and 250 gems.");
-	//output("\n\n\"<i>I'll see what I can do,</i>\" he says as he takes the ingredients and begin brewing something. ");
-	//output("\n\nA few minutes later, he comes back with the potion.  \"<i>It's ready. If you have some issues with lactation or you want to produce milk forever, drink this. Keep in mind that it might be irreversible,</i>\" he says. He hands you over the potion and goes back to working.  ");
-	//inventory.takeItem(consumables.MILKPTN, returnToRathazulMenu);
-//}
-//
-//private function rathazulMakesTaurPotion():void {
-	//showRathazul();
-	//clearOutput();
-	//if (pc.gems < 100) {
-		//output("\"<i>I'm sorry but you don't have the gems for this service,</i>\" Rathazul says.");
-		//doNext(returnToRathazulMenu);
-		//return;
-	//}
-	//else if (!(pc.hasItem(consumables.EQUINUM, 2) && pc.hasItem(consumables.MINOBLO, 1))) {
-		//output("\"<i>I'm sorry but you don't have the materials I need. I need two vials of Equinum and one vial of minotaur blood,</i>\" Rathazul says.");
-		//doNext(returnToRathazulMenu);
-		//return;
-	//}
-	//pc.destroyItem(consumables.EQUINUM, 2);
-	//pc.destroyItem(consumables.MINOBLO, 1);
-	//pc.gems -= 100;
-	//statScreenRefresh();
-	//output("You hand over two vials of Equinum, one vial of Minotaur Blood and one hundred gems to Rathazul, which he gingerly takes them and proceeds to make a special potion for you.");
-	//output("\n\nAfter a while, the rat hands you a vial labeled \"Taurinum\" and nods.");
-	//pc.addStatusValue(StatusAffects.MetRathazul, 2, 1);
-	//inventory.takeItem(consumables.TAURICO, returnToRathazulMenu);
-//}
-
-private function buyReducto():void {
-	showRathazul();
-	clearOutput();
-	var cost:int = (flags["COC.AMILY_MET_RATHAZUL"] >= 2 ? 500 : 1000);
-	if (pc.credits >= cost) {
-		//output(images.showImage("rathazul-buy-reducto"));
-		output("Rathazul hands you the Reducto with a nod before returning to his work.\n\n");
-		pc.credits -= cost;
-		
-		IncrementFlag("COC.RATHAZUL_BOUGHT");
-		itemScreen = campRathazul;
-		lootScreen = campRathazul;
-		useItemFunction = campRathazul;
-		itemCollect([new CoCReducto()]);
-	}
-	else {
-		output("\"<i>I'm sorry, but you lack the gems I need to make the trade,</i>\" apologizes Rathazul.");
-		doNext(campRathazul, false);
-	}
-}
-
 //private function growLethiciteDefense():void {
 	//showRathazul();
 	//clearOutput();

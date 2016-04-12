@@ -62,11 +62,13 @@ public function campFollowersButton():void {
 }
 
 public var followerCampMenuBlurb:/*Function*/Array = []; // Container for self-declaring listeners. Functions here must accept showInteractButton:Boolean argument.
+public var followerBtnNum:int = 0;
 public function campFollowersMenu(descOnly:Boolean = false):void {
 	if (!descOnly) {
 		clearMenu();
 		clearOutput();
 	}
+	followerBtnNum = 0;
 	for each (var name:* in followerCampMenuBlurb) 
 		name(!descOnly);
 	addButton(14,"Back",mainGameMenu);
