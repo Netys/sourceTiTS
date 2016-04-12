@@ -5,7 +5,6 @@ public function showKellyName():void
 	if(flags["KELLY_MET"] == undefined) userInterface.showName("BUNNY\nGIRL");
 	else userInterface.showName("\nKELLY");
 }
-
 public function showKelly(nude:Boolean = false):void {
 	if(!nude) showBust("KELLY");
 	else showBust("KELLY_NUDE");

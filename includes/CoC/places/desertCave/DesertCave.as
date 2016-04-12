@@ -246,7 +246,7 @@ public function DesertCaveAltarRoom():Boolean {
 public function DesertCaveSandMotherThrone():Boolean {	
 	output("This chamber is lit by swirling vortexes of magical colors, each hue dancing around another in coordinated motions.  The walls are made of hewn sandstone inlaid with ivory engravings that appear to depict what must be flowing milk.  Ahead there is a huge, white throne, also made from ivory.  It is a magnificent piece of craftsmanship.  Clearly, you have found the leader's throne room.  There is a robed figure atop it.");
 	
-	foes = []; // dirty hack to ensure cleanup after other dirty hack
+	setEnemy(null); // dirty hack to ensure cleanup after other dirty hack
 	
 	addButton(0, "Approach", sandMotherStuffGOA, null, "Approach", "Approach the Sand Mother.");
 	return false;

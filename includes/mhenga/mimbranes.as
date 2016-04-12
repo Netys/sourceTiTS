@@ -4,7 +4,6 @@ import classes.Creature;
 import classes.Engine.Combat.DamageTypes.DamageResult;
 import classes.Engine.Combat.DamageTypes.TypeCollection;
 import classes.GameData.CombatAttacks;
-import classes.Util.InCollection;
 /*
 
 Removal and Body Part Change Denial
@@ -375,7 +374,7 @@ public function feedCost(effectName:String, feedCost:int):void
 public function mimbraneFeed(target:String = "regular", feedValue:int = 1):void
 {
 	var i:int;
-	//if (mimbraneDebug) trace("Feeding Mimbrane Group [" + target + "] " + feedValue + " time(s).");
+	if (mimbraneDebug) trace("Feeding Mimbrane Group [" + target + "] " + feedValue + " time(s).");
 
 	if (target == "all")
 	{
@@ -4158,7 +4157,8 @@ public function mimbraneMenu():void
 	output2("\n\n");
 
 	// Fap/feeding stuff
-	if (hasFeedableMimbranes() && mimbranePrivateLocation())	{
+	if (hasFeedableMimbranes() && mimbranePrivateLocation())
+	{
 		if (pc.lust() < 33)
 		{
 			// Gendered, not enough lust to fap
@@ -4197,7 +4197,8 @@ public function mimbraneMenu():void
 			else addDisabledGhostButton(1, "Vag Feed","Vag Feed","You don't have a vagina to use for this.");
 		}
 	}
-	else if (hasFeedableMimbranes() && !mimbranePrivateLocation())	{
+	else if (hasFeedableMimbranes() && !mimbranePrivateLocation())
+	{
 		output2("Maybe if you were somewhere a little more private, you could ensure your Mimbranes were properly fed....");
 		
 		addDisabledGhostButton(0, "Cock Feed","Cock Feed", publicNotice);

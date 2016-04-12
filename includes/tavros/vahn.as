@@ -608,8 +608,8 @@ public function vahnFucksYourButt():void
 	output(" up your poor butt. You’re wracked with sizzling white hot pleasure, losing all self control as your body goes into a spasmic shuddering fit! You cry out in pleasure and your");
 	if(pc.hasCock())
 	{
-		if(pc.cockTotal() == 1) output(" [pc.cocksNoun] jerks and shoot [pc.cum] all over the crate and your belly, jerking and jumping around with nothing to hold it down");
-		if(pc.cockTotal() > 1) output("[pc.cocksNoun] jerk and shoot [pc.cum] all over the crate and your belly, jerking and jumping around with nothing to hold them down");
+		if(pc.cockTotal() == 1) output(" [pc.cocksNounSimple] jerks and shoot [pc.cum] all over the crate and your belly, jerking and jumping around with nothing to hold it down");
+		if(pc.cockTotal() > 1) output("[pc.cocksNounSimple] jerk and shoot [pc.cum] all over the crate and your belly, jerking and jumping around with nothing to hold them down");
 		if(pc.isHerm()) output("At the same time, your");
 	}
 	if(pc.hasVagina()) output(" [pc.cunt] splatters with excitement, the coiled pleasure in your lower belly releasing all at once");

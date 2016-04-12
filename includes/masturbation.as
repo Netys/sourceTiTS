@@ -106,7 +106,8 @@ public function availableFaps(roundTwo:Boolean = false):/*FapCommandContainer*/A
 		faps.push(fap);
 	}
 	
-	if (hasFeedableMimbranes() && mimbranePrivateLocation())	{
+	if (hasFeedableMimbranes() && mimbranePrivateLocation())
+	{
 		if (pc.hasCock())
 		{
 			fap = new FapCommandContainer();
@@ -371,7 +372,6 @@ public function masturbateMenu(roundTwo:Boolean = false):void {
 		}
 		addButton(14, "Back", mainGameMenu);
 		
-	
 		// Get public available
 		var pub:/*FapCommandContainer*/Array = selectPublicSafeFapOptions(availableFaps(false)); // As long as we can rest, we should be able to meditate. And we can rest anywhere.
 		for each (var item:FapCommandContainer in pub) 

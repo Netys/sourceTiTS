@@ -239,7 +239,7 @@ package classes.Characters.CoC
 			if (target.hasPerk("Enlightened Nine-tails") && InCollection(target.eyeColor, kGAMECLASS.elderKitsuneEyeColors)) {
 				output("You are looking directly into Basilisk eyes, and he is looking into yours...  However, no matter how much you look into the eyes, you do not see anything wrong. All you can see is the basilisk. And basilisk for his part see only unfathomable serenity of clear summer sky...  ");
 				if (rand(target.willpower()) > willpower()) { // chance is really slim even on high levels, but why not to try?
-					createStatusEffect("Blinded", 3, 0, 0, 0, false, "Blinded", "Basilisk is dazzled under your gaze!", true, 0);
+					createStatusEffect("Blinded", 3, 0, 0, 0, false, "Blind", "Basilisk is dazzled under your gaze!", true, 0, 0xFF0000);
 					output("Losing the clash of wills, basilisk is dazzled under your gaze!");
 				} else output("The basilisk curses as he finds out that your gaze can be as dangerous as his own!");
 				target.createStatusEffect("Basilisk Compulsion", 0, 0, 0, 0, true, "", "", true, 0); // will not try again

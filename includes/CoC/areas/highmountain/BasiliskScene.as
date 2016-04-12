@@ -56,7 +56,7 @@ public function basiliskGreeting():void {
 	}
 	
 	if(!pc.hasStatusEffect("Blinded") && !CoCBasilisk.canLookIntoEyes()) {
-		pc.createStatusEffect("Blinded", 1000, 0, 0, 0, false, "Blinded", "You don't dare to look at him too much! Your aim is greatly decreased.");
+		pc.createStatusEffect("Blinded", 1000, 0, 0, 0, false, "Blind", "You don't dare to look at him too much! Your aim is greatly decreased.", true, 0, 0xFF0000);
 		pc.createStatusEffect("NotLooking");
 	}
 	

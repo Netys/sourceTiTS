@@ -1,7 +1,6 @@
 ﻿import classes.BreastRowClass;
 import classes.Characters.Bess;
 import classes.Characters.PlayerCharacter;
-import classes.CockClass;
 import classes.Creature;
 import classes.ItemSlotClass;
 /* TODOS:
@@ -3198,7 +3197,7 @@ public function setBessCockType(newType:int):void
 		if (newType == -1)
 		{
 			output(" without a cock");
-			if (bess.hasCock()) bess.cocks = new Vector.<CockClass>();
+			if (bess.hasCock()) bess.cocks = [];
 			bess.balls = 0;
 			bess.ballSizeRaw = 0;
 		}
