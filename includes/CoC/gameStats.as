@@ -60,7 +60,48 @@ public function displayQuestLogCoCSide():int {
 
 public function displayEncounterLogCoCVarious():int
 {
-	var variousCount:int = 0;
+	var variousCount:int = 1;
+	
+	//=====GENERAL STATS=====//
+	output2("\n\n" + blockHeader("General Statistics", false));
+	// Crew
+	output2("\n<b><u>Camp</u></b>");
+	output2("\n<b>* Companions: </b>" + companionsCount());
+	
+	var totalOffspring:Number = StatTracking.getStat("coc/pregnancy/total births");
+	var totalProduce:Number = 0;
+	totalProduce += StatTracking.getStat("coc/pregnancy/unfertilized eggs");
+	variousCount += (totalOffspring + totalProduce);
+	if((totalOffspring + totalProduce) > 0)
+	{
+		output2("\n\n" + blockHeader("Reproduction Statistics", false));
+		if(totalOffspring)
+		{
+			output2("\n<b><u>Offspring</u></b>");
+			output2("\n<b>* Total: </b>" + totalOffspring);
+			// Mother
+			if(StatTracking.getStat("coc/pregnancy/imps birthed") > 0)
+				output2("\n<b>* Births, Imps: </b>" + StatTracking.getStat("coc/pregnancy/imps birthed"));
+			if(StatTracking.getStat("coc/pregnancy/anemones birthed") > 0)
+				output2("\n<b>* Births, Anemone: </b>" + StatTracking.getStat("coc/pregnancy/anemones birthed"));
+			// Father
+			if(StatTracking.getStat("coc/pregnancy/imps sired") > 0)
+				output2("\n<b>* Fathered, Imps (Total): </b>" + StatTracking.getStat("coc/pregnancy/imps sired"));
+			if(StatTracking.getStat("coc/pregnancy/tamani daughters") > 0)
+				output2("\n<b>* Fathered, Tamani Daughters: </b>" + StatTracking.getStat("coc/pregnancy/tamani daughters"));
+			if(StatTracking.getStat("coc/pregnancy/sheila joeys") > 0)
+				output2("\n<b>* Fathered, Sheila Joeys: </b>" + StatTracking.getStat("coc/pregnancy/sheila joeys"));
+			if(StatTracking.getStat("coc/pregnancy/sheila imps") > 0)
+				output2("\n<b>* Fathered, Sheila Imps: </b>" + StatTracking.getStat("coc/pregnancy/sheila imps"));
+		}
+		if(totalProduce)
+		{
+			output2("\n<b><u>Produce</u></b>");
+			output2("\n<b>* Total: </b>" + totalProduce);
+			if(StatTracking.getStat("coc/pregnancy/unfertilized eggs") > 0)
+				output2("\n<b>* Births, Oviposition Eggs, Total: </b>" + StatTracking.getStat("coc/pregnancy/unfertilized eggs"));
+		}
+	}
 	
 	return variousCount;
 }

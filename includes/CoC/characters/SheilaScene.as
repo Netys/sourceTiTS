@@ -3197,7 +3197,6 @@ private function sheilaForcedOralGeneric():void {
 //output at next sheila encounter if conditions are met, suppressing any normal output (this also includes the sheila xp = -2 or -1 apology outputs)
 //set sheilapreg = 0
 private function normalSheilaPregNotifNumberOne():void {
-	flags["COC.INCUBATION_SHIELA"] = undefined;
 	clearOutput();
 	output("Traipsing through the grass, you can see Sheila sitting under the shade of a low tree from a long way off.  The reverse is also true, as she waves to you from her seat, beckoning you over.  You make your way to her curiously.");
 	output("\n\n\"<i>G'day, [pc.name],</i>\" she opens, slightly nervous.  \"<i>I needta tell you something.  Sit down?</i>\"");
@@ -3210,6 +3209,11 @@ private function normalSheilaPregNotifNumberOne():void {
 	output("\n\nMan, what?!  Your expression speaks volumes, and she launches into a hurried explanation without a word from you.");
 	
 	output("\n\n\"<i>It doesn't take long for us,</i>\" she says, blushing a bit.  \"<i>So you didn't see anything much on me... but I pushed out a little [pc.name] last night.  Baby's nursing well and is fit as a bull.  I left the nipper with the creche for the day when I came out to hunt; one of the wet nurses probably has it in a snuggy pouch right now, waiting for mom to come home.  Should be able to tell the sex in a week after it's grown a bit.  Er... is this gonna be an issue between us, going forward?</i>\"  The woman looks hopefully at you, clearly eager for reassurance.");
+	
+	flags["COC.INCUBATION_SHIELA"] = undefined;
+	StatTracking.track("coc/pregnancy/sheila joeys");
+	StatTracking.track("coc/pregnancy/total offsprings");
+	
 	//[Yep, Issue][Nah]
 	processTime(4);
 	clearMenu();
@@ -3226,7 +3230,6 @@ private function normalSheilaPregNotifNumberOneYepIssue():void {
 	output("\n\nShe stands up suddenly and starts walking away.  \"<i>Nice knowing you, mate.  You won't see me again - I'll make sure of that.</i>\"  Within seconds of speaking, she's broken into a fast, bounding run, beyond any hope of catching.");
 	//set sheilapreg = -1, and set joeycount + 1 if you plan to track that stat even after Sheila's disabled
 	flags["COC.SHEILA_DISABLED"] = 2;
-	Flag("COC.SHEILA_JOEYS", 1, true);
 	clearMenu();
 	addButton(0, "Next", function():*{ processTime(15 + rand(10)); mainGameMenu(); } );
 }
@@ -3251,7 +3254,6 @@ private function normalSheilaPregNotifNumberOneCoolDeal():void {
 		output("\n\n\"<i>Randy " + pc.mf("bloke","sheila") + ",</i>\" she answers, \"<i>as much fun as that would be, I'm feeling clucky and I need to go check on your baby.  I don't want to be one of those mums that leave their nippers with the help and never see them.</i>\"  She kisses you, and then stands up to walk away - though when she glances over her shoulder at you, it's obvious by the fond look in her eyes she's eager for the next meeting.");
 	}
 	if (flags["COC.SHEILA_XP"] < 4) flags["COC.SHEILA_XP"] = 4;
-	Flag("COC.SHEILA_JOEYS", 1, true);
 	clearMenu();
 	addButton(0, "Next", function():*{ processTime(15 + rand(10)); mainGameMenu(); } );
 	//if sheila xp < 4, set sheila xp = 4; increment joeycount + 1
@@ -3274,7 +3276,9 @@ private function normalSheilaPregNotifREPEATEDED():void {
 	output(".  \"<i>I just wanted to tell you about your baby.  Can't stay... have to catch up to quota still.</i>\"  She drags to her feet and turns to go, tail listlessly hanging.  Even her ears are drooping; this girl is tired.");
 	
 	flags["COC.INCUBATION_SHIELA"] = undefined;
-	Flag("COC.SHEILA_JOEYS", 1, true);
+	StatTracking.track("coc/pregnancy/sheila joeys");
+	StatTracking.track("coc/pregnancy/total offsprings");
+	
 	if (sheilaCorruption() > 80) flags["COC.SHEILA_CORRUPTION"] = 80;
 	clearMenu();
 	//[Help(requires >80 speed, centaur >= 5', naga, or big wings and archery)][Walk With Her][Let Her Go]
@@ -4024,7 +4028,9 @@ private function demonImpChildren():void {
 		 applyDamage(new TypeCollection( { tease : 10 + target.libido() / 10 } ), sheila, pc);
 	}
 	flags["COC.INCUBATION_SHIELA"] = undefined;
-	Flag("COC.SHEILA_IMPS", 1, true);
+	StatTracking.track("coc/pregnancy/imps sired");
+	StatTracking.track("coc/pregnancy/sheila imps");
+	StatTracking.track("coc/pregnancy/total offsprings");
 	//[Other Sex][Knock Up(cock only)][Leave]
 	clearMenu();
 	addDisabledButton(0, "Other Sex", "Other Sex", "This option requires you to have genitals.");

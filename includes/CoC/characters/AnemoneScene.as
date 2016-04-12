@@ -90,7 +90,7 @@ public function AnemoneSceneTimeChange():void
 }
 
 public function showKidA():void {
-	if(flags["COC.ANEMONE_KID"] != 1) userInterface.showName("\nANEMONE");
+	if(!(flags["COC.ANEMONE_KID"] > 0)) userInterface.showName("\nANEMONE");
 	else userInterface.showName("\nKID A");
 }
 

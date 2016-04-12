@@ -4,6 +4,7 @@ package classes.GameData.Pregnancy.Handlers
 	import classes.Engine.Utility.num2Text;
 	import classes.GameData.Pregnancy.PregnancyManager;
 	import classes.GameData.Pregnancy.BasePregnancyHandler;
+	import classes.GameData.StatTracking;
 	import classes.Items.Transformatives.CoCEggs.*;
 	import classes.ItemSlotClass;
 	import classes.kGAMECLASS;
@@ -136,6 +137,7 @@ package classes.GameData.Pregnancy.Handlers
 				kGAMECLASS.output("\n\nYou gaze down at the mess, counting " + descript + ".");
 				kGAMECLASS.pc.orgasm();
 			}
+			StatTracking.track("coc/pregnancy/unfertilized eggs", pData.pregnancyQuantity);
 			kGAMECLASS.output("\n\n<b>You feel compelled to leave the eggs behind, ");
 			if(kGAMECLASS.flags["COC.ATE_COLORED_EGG"] != undefined) kGAMECLASS.output("but you remember the effects of the last one you ate.\n</b>");
 			else kGAMECLASS.output("but your body's intuition reminds you they shouldn't be fertile, and your belly rumbles with barely contained hunger.\n</b>");
