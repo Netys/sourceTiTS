@@ -50,7 +50,7 @@ public function followersCount():int {
 	//if(flags[kFLAGS.VALARIA_AT_CAMP] == 1) counter++;
 	if(flags["COC.JOJO_IN_CAMP"] == 1) counter++;
 	if(flags["COC.RATHAZUL_IN_CAMP"] == 1) counter++;
-	if(flags["COC.ANEMONE_KID"] == 1) counter++;
+	if(flags["COC.ANEMONE_KID"] > 0) counter++;
 	//if(followerShouldra()) counter++;
 	//if(sophieFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] == 0) counter++;
 	//if(helspawnFollower()) counter++;

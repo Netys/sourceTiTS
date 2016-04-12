@@ -81,12 +81,12 @@ public function displayEncounterLogCoCVarious():int
 			output2("\n<b>* Total: </b>" + totalOffspring);
 			// Mother
 			if(StatTracking.getStat("coc/pregnancy/imps birthed") > 0)
-				output2("\n<b>* Births, Imps: </b>" + StatTracking.getStat("coc/pregnancy/imps birthed"));
+				output2("\n<b>* Births, Imp Litters: </b>" + StatTracking.getStat("coc/pregnancy/imps birthed"));
 			if(StatTracking.getStat("coc/pregnancy/anemones birthed") > 0)
 				output2("\n<b>* Births, Anemone: </b>" + StatTracking.getStat("coc/pregnancy/anemones birthed"));
 			// Father
 			if(StatTracking.getStat("coc/pregnancy/imps sired") > 0)
-				output2("\n<b>* Fathered, Imps (Total): </b>" + StatTracking.getStat("coc/pregnancy/imps sired"));
+				output2("\n<b>* Fathered, Imp Litters (Total): </b>" + StatTracking.getStat("coc/pregnancy/imps sired"));
 			if(StatTracking.getStat("coc/pregnancy/tamani daughters") > 0)
 				output2("\n<b>* Fathered, Tamani Daughters: </b>" + StatTracking.getStat("coc/pregnancy/tamani daughters"));
 			if(StatTracking.getStat("coc/pregnancy/sheila joeys") > 0)
