@@ -80,10 +80,10 @@ public function tryDiscover():void
 	// kGAMECLASS.goblinAssassinScene.goblinAssassinEncounter();
 	// return;
 	
-	//if (flags["COC.CATHEDRAL_FOUND"] == undefined) {
-		//events.push(gargoylesTheShowNowOnWBNetwork);
-		//chance.push(6);
-	//}
+	if (flags["COC.CATHEDRAL_FOUND"] == undefined) {
+		events.push(gargoylesTheShowNowOnWBNetwork);
+		chance.push(6);
+	}
 	
 	WeightedRandom(events, chance, true)();
 	
@@ -105,7 +105,7 @@ public function placesCount():int {
 	var places:int = dungeonsKnown();
 	if (flags["COC.BAZAAR_ENTERED"] == 1) places++;
 	if (flags["COC.BOAT_DISCOVERED"] == 1) places++;
-	//if (flags[kFLAGS.FOUND_CATHEDRAL] > 0) places++;
+	if (flags["COC.FOUND_CATHEDRAL"] > 0) places++;
 	if (flags["COC.WHITNEY_MET"] >= 3) places++; 
 	if (flags["COC.OWCA_UNLOCKED"] == 1) places++;
 	if (flags["COC.GOBLIN_SALON_FOUND"] > 0) places++;
@@ -135,11 +135,11 @@ public function showPlacesMenu():Boolean {
 	
 	if (flags["COC.BAZAAR_ENTERED"] == 1) addButton(0, "Bazaar", enterTheBazaar, null, "Bazaar", "Visit the Bizarre Bazaar where the demons and corrupted beings hang out.");
 	if (flags["COC.BOAT_DISCOVERED"] == 1) addButton(1, "Boat", boatExplore, null, "Boat", "Get on the boat and explore the lake. \n\nRecommended level: 4\n\nTimes explored: " + flags["COC.EXPLORED_BOAT"]);
-	//if (flags[kFLAGS.FOUND_CATHEDRAL] > 0) 
-	//{
-		//if (flags[kFLAGS.GAR_NAME] == 0) addButton(2, "Cathedral", kGAMECLASS.gargoyle.gargoylesTheShowNowOnWBNetwork, null, null, null, "Visit the ruined cathedral you've recently discovered.");
-		//else addButton(2, "Cathedral", kGAMECLASS.gargoyle.returnToCathedral, null, null, null, "Visit the ruined cathedral where " + flags[kFLAGS.GAR_NAME] + " resides.");
-	//}
+	if (flags["COC.FOUND_CATHEDRAL"] == 1) 
+	{
+		if (flags["COC.GAR_NAME"] == undefined) addButton(2, "Cathedral", gargoylesTheShowNowOnWBNetwork, null, "Cathedral", "Visit the ruined cathedral you've recently discovered.");
+		else addButton(2, "Cathedral", returnToCathedral, null, "Cathedral", "Visit the ruined cathedral where " + flags["COC.GAR_NAME"] + " resides.");
+	}
 	if (dungeonsKnown() > 0) addButton(4, "Dungeons", showDungeonsMenu, null, "Dungeons", "Delve into dungeons.");
 	if (flags["COC.WHITNEY_MET"] >= 3) addButton(5, "Farm", farmExploreEncounter, null, "Farm", "Visit Whitney's farm.");
 	if (flags["COC.OWCA_UNLOCKED"] == 1) addButton(6, "Owca", gangbangVillageStuff, null, "Owca", "Visit the sheep village of Owca, known for its pit where a person is hung on the pole weekly to be gang-raped by the demons.");

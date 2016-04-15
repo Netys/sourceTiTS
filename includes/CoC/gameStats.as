@@ -99,11 +99,11 @@ public function displayEncounterLogCoCVarious():int
 			output2("\n<b><u>Produce</u></b>");
 			output2("\n<b>* Total: </b>" + totalProduce);
 			if(StatTracking.getStat("coc/pregnancy/unfertilized eggs") > 0)
-				output2("\n<b>* Births, Oviposition Eggs, Total: </b>" + StatTracking.getStat("coc/pregnancy/unfertilized eggs"));
+				output2("\n<b>* Births, Unfertilized Eggs, Total: </b>" + StatTracking.getStat("coc/pregnancy/unfertilized eggs"));
 		}
 	}
 	
-	output2("\n\n" + blockHeader("Encounters", false));
+	output2("\n\n" + blockHeader("Encounters: Plains", false));
 	if(flags["COC.HEL_TIMES_ENCOUNTERED"] > 0) {
 		output2("\n<b><u>Helia</u></b>");
 		output2("\n<b>* Times met: </b>" + flags["COC.HEL_TIMES_ENCOUNTERED"]);
