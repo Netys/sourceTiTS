@@ -93,10 +93,10 @@ public function barTelAdre():void {
 	//trace("HEL FOLLOWER LEVEL: " + flags[kFLAGS.HEL_FOLLOWER_LEVEL] + " HEL FUCKBUDDY: " + flags[kFLAGS.HEL_FUCKBUDDY] + " HARPY QUEEN DEFEATED: " + flags[kFLAGS.HEL_HARPY_QUEEN_DEFEATED]);
 	//trace("REDUCED ENCOUNTER RATE (DISPLINED): " + flags[kFLAGS.HEL_REDUCED_ENCOUNTER_RATE]);
 	//HELIA
-	//if(player.gender > 0 && model.time.hours >= 14 && rand(2) == 0 && model.time.hours < 20 && flags[kFLAGS.HEL_FUCKBUDDY] == 1 && (!kGAMECLASS.helFollower.followerHel() || flags[kFLAGS.HEL_HARPY_QUEEN_DEFEATED] == 1)) {
-		//edryn.helAppearance();
-		//hel = edryn.approachHelAtZeBitch;
-	//}
+	if(pc.hasGenitals() && hours >= 14 && rand(2) == 0 && hours < 20 && flags["COC.HEL_FUCKBUDDY"] == 1 && (!followerHel() || flags["COC.HEL_HARPY_QUEEN_DEFEATED"] == 1)) {
+		helAppearance();
+		addButton(counter++, "Helia", approachHelAtZeBitch);
+	}
 	//NANCY
 	if (auntNancy(false)) {
 		auntNancy(true);

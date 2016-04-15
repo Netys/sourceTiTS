@@ -151,7 +151,7 @@ package classes.Characters.CoC
 			
 			this.ass.wetnessRaw = 0;
 			this.ass.loosenessRaw = 1;
-			this.ass.bonusCapacity = 30;
+			this.ass.bonusCapacity = 20;
 			
 			this.createStatusEffect("Disarm Immune");
 			

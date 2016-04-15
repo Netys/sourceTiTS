@@ -83,7 +83,7 @@ public function exploreDesert():void
 
 	//Encounter Marcus
 	choice.push(wandererRouter);
-	chance.push(1);
+	chance.push(2);
 
 	choice.push(walkingDesertStatBoost);
 	chance.push(1);

@@ -126,8 +126,6 @@ public function EventsAdopterHellNotify():void {
 	if (pc.hasPerk("Oviposition") && pc.hasVagina() && pc.fertility() > 0 && (days % 30 == 0 || pc.fertility() >= 2 && days % (30 / int(pc.fertility())) == 0) && !pc.isPregnant()) {
 		if (PregnancyManager.findHandler("CoCOviElixEggs").tryKnockUp(pc, pc, 0)) {
 			eventBuffer += "\n\n<b>Somehow you know that eggs have begun to form inside you.  You wonder how long it will be before they start to show?</b>";
-			pc.createStatusEffect("MagicColorfulEggs", rand(5), 0, 0, 0);
-			if (pc.hasPerk("Harpy Womb") && pc.legType == GLOBAL.TYPE_AVIAN && pc.hasTail(GLOBAL.TYPE_AVIAN)) pc.setStatusValue("MagicColorfulEggs", 2, 1);
 			pc.addPerkValue("Oviposition", 1, 1); //Count times eggpregged this way in perk.
 		}
 	}

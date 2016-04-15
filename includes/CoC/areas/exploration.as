@@ -122,7 +122,7 @@ public function dungeonsKnown():int {
 	if (flags["COC.FACTORY_FOUND"] > 0) dungeons++;
 	if (flags["COC.DISCOVERED_WITCH_DUNGEON"] > 0) dungeons++;
 	if (flags["COC.D3_DISCOVERED"] > 0) dungeons++;
-	//if (kGAMECLASS.dungeons.checkPhoenixTowerClear()) return true;
+	if (flags["COC.CLEARED_HEL_TOWER"] != undefined) dungeons++;
 	return dungeons;
 }
 
@@ -170,7 +170,7 @@ public function showDungeonsMenu():Boolean {
 	
 	if (flags["COC.DISCOVERED_WITCH_DUNGEON"] > 0) addButton(5, "Desert Cave", TravelToDesertCave, null, "Desert Cave", "Visit the cave you've found in the desert." + (flags["COC.SAND_WITCHES_COWED"] + flags["COC.SAND_WITCHES_FRIENDLY"] > 0 ? "\n\nFrom what you've known, this is the source of the Sand Witches." : "") + (DesertCaveCleared() ? "\n\nCLEARED!" : ""));
 	
-	//if (kGAMECLASS.dungeons.checkPhoenixTowerClear()) addButton(6, "Phoenix Tower", dungeonH.returnToHeliaDungeon, null, null, null, "Re-visit the tower you went there as part of Helia's quest." + (kGAMECLASS.dungeons.checkPhoenixTowerClear() ? "\n\nYou've helped Helia in the quest and resolved the problems. \n\nCLEARED!" : ""));
+	if (flags["COC.CLEARED_HEL_TOWER"] != undefined) addButton(6, "PhoenixTwr", TravelToPhoenixTower, null, "Phoenix Tower", "Re-visit the tower you went there as part of Helia's quest.\n\nYou've helped Helia in the quest and resolved the problems. \n\nCLEARED!");
 	
 	addButton(14, "Back", playerMenu);
 	return true;

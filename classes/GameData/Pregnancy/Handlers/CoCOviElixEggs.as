@@ -2,6 +2,7 @@ package classes.GameData.Pregnancy.Handlers
 {
 	import classes.Creature;
 	import classes.Engine.Utility.num2Text;
+	import classes.Engine.Utility.rand;
 	import classes.GameData.Pregnancy.PregnancyManager;
 	import classes.GameData.Pregnancy.BasePregnancyHandler;
 	import classes.GameData.StatTracking;
@@ -18,11 +19,11 @@ package classes.GameData.Pregnancy.Handlers
 		{
 			_handlesType = "CoCOviElixEggs";
 			_basePregnancyIncubationTime = 50 * 60;
-			_basePregnancyChance = 1;
-			_alwaysImpregnate = true;
-			_ignoreInfertility = true;
-			_ignoreMotherInfertility = true;
-			_ignoreFatherInfertility = true;
+			_basePregnancyChance = 0.25;
+			_alwaysImpregnate = false;
+			_ignoreInfertility = false;
+			_ignoreMotherInfertility = false;
+			_ignoreFatherInfertility = false;
 			_allowMultiplePregnancies = true;
 			_canImpregnateButt = false;
 			_canImpregnateVagina = true;
@@ -56,15 +57,44 @@ package classes.GameData.Pregnancy.Handlers
 		
 		public static function oviOnTry(father:Creature, mother:Creature, pregSlot:int, thisPtr:BasePregnancyHandler):Boolean
 		{
-			return true; // handled in elexir itself
+			return father == mother || defaultOnTryImpregnate(father, mother, pregSlot, thisPtr); // handled in elexir itself
 		}
 		public static function oviOnSuccessfulImpregnantion(father:Creature, mother:Creature, pregSlot:int, thisPtr:BasePregnancyHandler):void
 		{
+			// Check if we have a valid pregnancy slot defined
+			if (pregSlot == -1)
+			{
+				// Find the first available pregnancy slot on the mother, else return a failure
+				var slotType:uint;
+				
+				if (thisPtr.canImpregnateButt && thisPtr.canImpregnateVagina) slotType = Creature.PREGSLOT_ANY;
+				else if (!thisPtr.canImpregnateButt) Creature.PREGSLOT_VAG;
+				else if (!thisPtr.canImpregnateVagina) Creature.PREGSLOT_ASS;
+				
+				pregSlot = mother.findEmptyPregnancySlot(slotType);
+				
+				if (pregSlot == -1)
+				{
+					if (thisPtr.debugTrace) trace("No valid pregnancy slots available, aborting.");
+					return;
+				}
+				
+				if (thisPtr.debugTrace) trace("Autosetting pregnancy to slot " + pregSlot);
+			}
+			
+			// Fail if the targetted hole is already pregnant
+			if ((mother.pregnancyData[pregSlot] as PregnancyData).pregnancyType != "")
+			{
+				return;
+			}
+			
 			BasePregnancyHandler.defaultOnSuccessfulImpregnation(father, mother, pregSlot, thisPtr);
 			
 			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
 			pData.pregnancyBellyRatingContribution += 2 * pData.pregnancyQuantity;
 			mother.bellyRatingMod += 2 * pData.pregnancyQuantity;
+			if (!mother.hasStatusEffect("MagicColorfulEggs")) mother.createStatusEffect("MagicColorfulEggs", rand(6), 0, 0, 0);
+			if (mother.hasPerk("Harpy Womb") && mother.legType == GLOBAL.TYPE_AVIAN && mother.hasTail(GLOBAL.TYPE_AVIAN)) mother.setStatusValue("MagicColorfulEggs", 2, 1);
 		}
 		
 		public static function oviOnDurationEnd(mother:Creature, pregSlot:int, thisPtr:BasePregnancyHandler):void

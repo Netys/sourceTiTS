@@ -44,8 +44,8 @@ package classes.Characters.CoC
 			this.energyRaw = 100;
 			this.lustRaw = 20;
 			
-			this.vaginas[0].bonusCapacity = 55;
-			this.ass.bonusCapacity = 40;
+			this.vaginas[0].bonusCapacity = 40;
+			this.ass.bonusCapacity = 20;
 			
 			inventory = []; // subclass of goblin, gonna clean up generic loot
 			inventory.push(kGAMECLASS.WeightedRandom(

@@ -57,11 +57,6 @@ package classes.Items.Transformatives
 				kGAMECLASS.output("\n\nThis is way more pleasurable than any normal masturbation! You don't really recall being able to take such long strokes along your length or having it fill your hand so powerfully, throbbing just like the drug's namesake. Looking down, you gasp. Your [pc.cock " + arg + "] is at least two inches longer and still growing! You tug it to help it on its way, moaning as it slops big ropes of pre onto your knuckles. <b>You've gained " + kGAMECLASS.num2Text(temp) + " inches of length!</b>");
 			}
 			
-			kGAMECLASS.output("\n\nInhuman vitality spreads through your body, invigorating you!\n");
-			pc.HP(30 + pc.HPMax() / 3);
-			pc.lust(3);
-			pc.cor(1);
-			
 			//Shrinkage!
 			if (rand(2) == 0 && pc.tallness > 42) {
 				kGAMECLASS.output("\n\nYour skin crawls, making you close your eyes and shiver.  When you open them again the world seems... different.  After a bit of investigation, you realize you've become shorter!\n");
@@ -75,6 +70,12 @@ package classes.Items.Transformatives
 				else pc.skinTone = "orange";
 				kGAMECLASS.output(" begins to lose its color, fading until you're as white as an albino.  Then, starting at the crown of your head, a reddish hue rolls down your body in a wave, turning you completely [pc.skinColor].");
 			}
+			
+			kGAMECLASS.output("\n\nInhuman vitality spreads through your body, invigorating you!\n");
+			pc.HP(30 + pc.HPMax() / 3);
+			pc.lust(3);
+			pc.cor(1);
+			
 			return false;
 		}
 	}	

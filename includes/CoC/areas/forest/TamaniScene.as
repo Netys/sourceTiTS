@@ -2,6 +2,7 @@ import classes.Characters.CoC.CoCTamani;
 import classes.Engine.Combat.applyDamage;
 import classes.Engine.Combat.DamageTypes.TypeCollection;
 import classes.GameData.CombatManager;
+import classes.GameData.StatTracking;
 import classes.GLOBAL;
 import classes.kGAMECLASS;
 import classes.Util.*;
@@ -98,7 +99,7 @@ private function tamaniGivesBirth():void {
 
 internal function tamaniChest():String {
 	var descript:String = "";
-	switch (Flag("COC.TAMANI_TIMES_IMPREGNATED")) {
+	switch (StatTracking.getStat("coc/pregnancy/tamani impregnated")) {
 		case -1:
 		case  0: descript = (rand(2) == 0 ? "ample " : "handful of "); break;
 		case  1:
@@ -691,7 +692,7 @@ private function tamaniPregnantFuck():void {
 	output("Tamani's eyes light up and she pounces you, somehow managing to jump up and latch onto your chest despite the weight of her burgeoning pregnancy.  The two of you overbalance as her weight carries you to the ground, flat on your back.   Your [pc.ass] hurts a little from the impact but it's the last thing on your mind.  More important are the milk-dribbling twin mounds pressing tightly against your [pc.chest].\n\n");
 	output("You grab her under the arms and lift her up, examining her milk-laden nipples.  They shine with moisture, practically begging to be sucked.  You nuzzle them, gently sucking one into your mouth and drinking down the nutritious beverage.  Tamani grinds her hips against one of your [pc.nipples] as she moans softly into your ear, practically cumming on you from the suckling alone.  You take a break when her milk-flow slows and take the other into your mouth, squeezing both her " + tamaniChest() + ", enjoying the enhanced fullness her pregnancy has brought.");
 	//(Very large: 
-	if (flags["COC.TAMANI_TIMES_IMPREGNATED"] > 6) output("  They're almost too big for you to handle; they probably make it hard for the poor girl to walk.");
+	if (StatTracking.getStat("coc/pregnancy/tamani impregnated") > 6) output("  They're almost too big for you to handle; they probably make it hard for the poor girl to walk.");
 	output("\n\n");
 	
 	output("Tired of the teasing, Tamani yanks her nipples free of your mouth and kisses you fiercely.  Her lips are hot, almost feverish, and taste of sweet cherries.  Fiery warmth races through your body, collecting at your groin as her tongue curls around yours.  She sucks on your lower lip before pulling back and giving you an all-too-knowing smile.  Your [pc.cock] is just getting harder and harder, so tight it almost hurts.  You whine softly as Tamani wraps her feet around it, stroking it with her bare soles as she pulls herself down.\n\n");

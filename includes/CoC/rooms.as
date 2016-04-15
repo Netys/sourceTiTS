@@ -778,3 +778,5 @@ rooms["COC FORTRESS THRONE ROOM"].southExit = "COC FORTRESS NORTH COURTYARD";
 rooms["COC FORTRESS THRONE ROOM"].addFlag(GLOBAL.INDOOR);
 rooms["COC FORTRESS THRONE ROOM"].addFlag(GLOBAL.HAZARD);
 rooms["COC FORTRESS THRONE ROOM"].runOnEnter = LethiceFortressThroneRoomFunc;
+
+include "places/phoenixTower/rooms.as";

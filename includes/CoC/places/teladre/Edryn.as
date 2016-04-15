@@ -1,3 +1,4 @@
+import classes.Characters.PregnancyPlaceholder;
 import classes.GLOBAL;
 import classes.Items.Transformatives.CoCGroPlus;
 import classes.Items.Transformatives.CoCIncubiD;
@@ -8,6 +9,18 @@ import classes.ItemSlotClass;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
+
+public function get edryn():PregnancyPlaceholder // since there are no TFs... screw making actual character
+{
+	var pp:PregnancyPlaceholder = new PregnancyPlaceholder();
+	pp.legType = GLOBAL.TYPE_EQUINE;
+	pp.legCount = 4;
+	if (!pp.hasVagina()) pp.createVagina();
+	pp.vaginas[0].loosenessRaw = 3;
+	pp.vaginas[0].wetnessRaw = 4;
+	pp.ass.wetnessRaw = 1;
+	return pp;
+}
 
 public function showEdryn():void {
 	//spriteSelect(14);
@@ -59,7 +72,7 @@ public function edrynBarTalk():void {
 	//output(images.showImage("edryn-bar-chat"));
 	
 	//Used for finding what cock to use!
-	var x:Number = pc.cockThatFits(300);
+	var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
 	//If no cocks fit, set to primary
 	if(x < 0) x = 0;
 
@@ -120,7 +133,7 @@ public function edrynBarTalk():void {
 			return;
 		}
 		//(WANG FITS)
-		if(pc.cockVolume(x) < 300 && pc.cockVolume(x) > 24) {
+		if(pc.cockVolume(x) < edryn.vaginalCapacity() && pc.cockVolume(x) > 24) {
 			output("She winks at you as she gets up and trots off, giving her butt a sensual sway to draw your eyes.  Her potent scent hangs in the air, and your body reacts immediately and intensely, flooding you with arousal.  ");
 			output("You look down at your [pc.cocksLight] and curse, irritated at how easily she can affect you.  There's no way you'll be turning her down this time.  You get up and follow her back to her room, intent on taking care of the need between your legs.\n\n");
 			processTime(5);
@@ -279,7 +292,7 @@ private function edrynOffer():void {
 			break;
 	}
 	//Pick most appropriate cock
-	var x:Number = pc.cockThatFits(300);
+	var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
 	//If no cocks fit, set to main.
 	if(x < 0) x = 0;
 
@@ -295,7 +308,7 @@ private function edrynOffer():void {
 			return;
 		}
 		//Too big
-		if(pc.cockVolume(x) > 300) {
+		if(pc.cockVolume(x) > edryn.vaginalCapacity()) {
 			output("Oh wow, you're a little bit too big even for me to handle, love.  Maybe you should try to find something to shrink that down a little, not too much, and trot back here so I can help you out, ok?</i>\"\n\n");
 			output("You're a bit disappointed with the outcome. It doesn't look like you'll be getting any centaur tail tonight.");
 			processTime(5);
@@ -321,7 +334,7 @@ private function edrynOffer():void {
 		//(HORSE CONT)
 		if(pc.cockTotal(GLOBAL.TYPE_EQUINE) > 0) {
 			//Too bigsies
-			if(pc.cockVolume(x) > 300) {
+			if(pc.cockVolume(x) > edryn.vaginalCapacity()) {
 				output("\"<i>Wow, that's huge!  Sweetheart, you'll need to be a bit smaller if you want to play with me.  Why not go out and find something to shrink it down to something a horse like me can handle, then maybe we can play, ok?</i>\"\n\n", false);
 				output("You're a bit disappointed with the outcome. It doesn't look like you'll be getting any centaur tail tonight.");
 				processTime(5);
@@ -358,7 +371,7 @@ private function edrynOffer():void {
 		//Normal Wingdangdoodle
 		else {
 			//Too bigsies
-			if(pc.cockVolume(x) > 300) {
+			if(pc.cockVolume(x) > edryn.vaginalCapacity()) {
 				output("\"<i>Wow, that's huge!  Sweetheart, you'll need to be a bit smaller if you want to play with me.  Why not go out and find something to shrink it down to something a horse like me can handle, then maybe we can play, ok?</i>\"\n\n");
 				output("You're a bit disappointed with the outcome. It doesn't look like you'll be getting any centaur tail tonight.");
 				processTime(5);
@@ -429,7 +442,7 @@ private function fuckEdrynTaur():void {
 	clearOutput();
 
 	//output(images.showImage("edryn-fuck-as-taur"));
-	var x:Number = pc.cockThatFits(300);
+	var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
 	if(x < 0) x = 0;
 	output("Your " + (pc.isCentaur() ? "equine" : "tauric") + " body lurches forwards on its own, rearing up on your hind legs and lunging forwards.  Edryn whinnies as she is violently penetrated and forced to support most of your weight.  Her equine pussy is a wonder, able to stretch to a degree that would shame the raunchiest of human and demon sluts.  The velvet walls of her massive equine cunny clench tightly around you, trapping you completely inside her juicy depths.  She wiggles slightly, bending her body, teasing your [pc.cock " + x + "] inside her.\n\n");
 
@@ -474,7 +487,7 @@ private function fuckEdrynNonTaur():void {
 	showEdryn();
 	clearOutput();
 	//output(images.showImage("edryn-fuck-as-non-taur"));
-	var x:Number = pc.cockThatFits(300);
+	var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
 	if(x < 0) x = 0;
 	output("She wiggles her more than ample backside towards you, squelching wetly against your ");
 	if(pc.tallness < 48) output("[pc.face]");
@@ -574,7 +587,7 @@ public function approachHelAtZeBitch():void {
 	clearMenu();
 	//output(images.showImage("hel-chat-at-bar"));
 
-	if(edrynBar() && pc.cockThatFits(300) >= 0 && Flag("COC.EDRYN_AFFECTION") >= 4 && flags["COC.HEL_EDRYN_OFFER"] == undefined) {
+	if(edrynBar() && pc.cockThatFits(edryn.vaginalCapacity()) >= 0 && Flag("COC.EDRYN_AFFECTION") >= 4 && flags["COC.HEL_EDRYN_OFFER"] == undefined) {
 		output("\"<i>Hey there, lover mine,</i>\" Helia says with a coy grin as you take a seat across from her.  The two fox-girls giggle drunkenly, prompting Hel to give them each a playful slap on the ass and send them on their way.  \"<i>Well, fancy meeting you here, " + pc.mf("handsome", "beautiful") + ".  In town for business... or pleasure?</i>\" she purrs with a little wink.\n\n");
 
 		output("You spend a few minutes talking with the salamander, brushing off her question to ask her what she's doing in Tel'Adre.  With a little laugh, she says \"<i>Just found the place a couple of days ago.  How the hell did I not know there was an entire town of people out here?  Anyway, so I get here and this smoking hot centauress starts waving this gem all over me, and--</i>\"\n\n");
@@ -585,7 +598,6 @@ public function approachHelAtZeBitch():void {
 
 		output("Sitting with the salamander, you notice across the crowded bar that Edryn is sitting at her table, sipping a little glass of wine.  Catching your eye, the centauress gives you a sultry wink.  An idea forms in your mind: you could easily introduce the two girls.  Do you?");
 		IncrementFlag("COC.HEL_EDRYN_OFFER");
-		
 	}
 	else {
 		output("\"<i>Hey there, lover mine,</i>\" Helia says with a coy grin as you take a seat across from her.  The two fox-girls giggle drunkenly, prompting Hel to give them each a playful slap on the ass and send them on their way before swinging over and taking her place on your lap.  \"<i>Well, fancy meeting you here, " + pc.mf("handsome", "beautiful") + ".  In town for business... or pleasure?</i>\" she purrs with a little wink.\n\n");
@@ -595,7 +607,7 @@ public function approachHelAtZeBitch():void {
 		output("  Eventually, though, Hel gives you a sultry look and asks if you're up for a little group activity.  Are you?\n\n");
 	}
 	//(Display Options: [Threesome] [Leave]
-	if (edrynBar() && pc.cockThatFits(300) >= 0 && Flag("COC.EDRYN_AFFECTION") >= 4 && flags["COC.HEL_EDRYN_OFFER"] == 1)
+	if (edrynBar() && pc.cockThatFits(edryn.vaginalCapacity()) >= 0 && Flag("COC.EDRYN_AFFECTION") >= 4 && flags["COC.HEL_EDRYN_OFFER"] == 1)
 		addButton(0, "Edryn3Some", helEdrynThreeSomeStartYerEngines);
 	addButton(1, "Fox Girls", heliaPlusFoxyFluffs);
 	addButton(14, "Leave", leaveHelInZeBitch);
@@ -650,7 +662,7 @@ public function helEdrynThreeSomeStartYerEngines():void {
 private function threesomeEdrynAndHel():void {
 	clearOutput();
 	//output(images.showImage("edryn-hel-threesome"));
-	var x:Number = pc.cockThatFits(300);
+	var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
 	IncrementFlag("COC.EDRYN_TIMES_HEL_THREESOMED");
 	output("You arrive in Edryn's private room, a small dark alcove in the bar with a healthy layer of pillows covering the floor.  You start to disrobe, watching as Hel is nearly crushed up against a wall by a sudden butt-bump from Edryn: \"<i>You better start warming me up with that long lizard tongue, cutie,</i>\" she says, herself yanking off her loose shirt.\n\n");
 
@@ -822,10 +834,10 @@ private function threesomeEdrynAndHel():void {
 		//return;
 	//}
 	////(MEETS SIZE REQUIREMENTS)
-	//var x:Number = pc.cockThatFits(300);
+	//var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
 	////-1 = none fit.  Set x to 0 for big boys.
 	//if(x < 0) x = 0;
-	//if(pc.cockVolume(x) >= 24 && pc.cockVolume(x) < 300) {
+	//if(pc.cockVolume(x) >= 24 && pc.cockVolume(x) < edryn.vaginalCapacity()) {
 		//output("Edryn is smiling radiantly as she continues to caress you under the table.  She asks, \"<i>", false);
 		//if(flags["COC.EDRYN_NUMBER_OF_KIDS"] == 0) output("Does my scent have an even stronger effect on you now", false);
 		//else output("Are you going to cum just from sniffing at my cunt", false);
@@ -839,7 +851,7 @@ private function threesomeEdrynAndHel():void {
 		//clearMenu();
 		//output("You could have some great, pregnant taur sex.");
 		//addButton(0,"Preg. Fuck", fuckPregEdryn);
-		//if(pc.biggestCockArea() >= 300) {
+		//if(pc.biggestCockArea() >= edryn.vaginalCapacity()) {
 			//output("  Since at least part of you isn't acceptable to her, you could eat her out until you get off from her pheromones alone.");
 			//addButton(1,"NoFitEating", jizzFromEatingPregdrynOut);
 		//}
@@ -848,7 +860,7 @@ private function threesomeEdrynAndHel():void {
 		//return;
 	//}
 	////(PC TOO BIG)
-	//else if(pc.cockVolume(x) > 300) {
+	//else if(pc.cockVolume(x) > edryn.vaginalCapacity()) {
 		//output("Edryn brushes her hand over ALL of your [pc.cock] then jerks it back, startled.  She sighs, \"<i>Dear, that thing is a BEAST.  I mean, there's no doubt I'd love to get it inside me, but I promise it won't fit me.</i>\"\n\n", false);
 //
 		//output("She looks at you pleadingly and practically begs, \"<i>Please, find a way to fit me.</i>\"  Edryn grabs you by the shoulders and whispers in your ear, \"<i>Being pregnant makes me so turned on ALL THE TIME.  I need you inside me.</i>\"\n\n", false);
@@ -881,7 +893,7 @@ private function threesomeEdrynAndHel():void {
 	//clearOutput();
 	//showEdryn();
 	//output(images.showImage("edryn-preggo-fuck"));
-	//var x:Number = pc.cockThatFits(300);
+	//var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
 	//if(x < 0) x = 0;
 	//clearOutput();
 	////NONTAUR
@@ -946,7 +958,7 @@ private function threesomeEdrynAndHel():void {
 		//if(!pc.hasSheath()) output("base", false);
 		//else output("sheath", false);
 		//output(" to [pc.cockHead " + x + "], culminating in a tight squeeze at the tip. Then it releases and starts all over again.  Instinctively, you whinny and explode inside the warm, soaking wet tunnel.  The french-kiss turns into a feverish slobber-fest while the two of you mate, lost to orgasm.", false);
-		//if(pc.cumQ() < 300) {}
+		//if(pc.cumQ() < edryn.vaginalCapacity()) {}
 		//else if(pc.cumQ() < 1000) output("Your prodigious jism output soaks her sloppy tunnel and drips from the entrance with the centauress' girlcum.", false);
 		//else {
 			//output("Your body's cum-production easily fills her channel to capacity.  Each successive spurt blasts a wave of fluid out from her overstuffed cunt, soaking the pillows, Edryn's ass, and your crotch.", false);
@@ -969,7 +981,7 @@ private function threesomeEdrynAndHel():void {
 //private function jizzFromEatingPregdrynOut():void {
 	//showEdryn();
 	//clearOutput();
-	//var x:Number = pc.cockThatFits(300);
+	//var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
 	//if(x < 0) x = 0;
 //
 	//output("You shut the door behind you and rub your eyes, trying to adjust to the darkness in the room.  All the lights are out, save for a single candle on the far wall.  You peer about uselessly for a few seconds until inspiration strikes.  Her potent scent will lead you to her!  You lean down and start turning from side to side, sniffing about.  You hear a feminine giggle, though with the unfamiliar room you can't tell where it's originating from.  It's fairly easy to scent out your 'prey', and you've already determined from the strength of pussy-musk which corner of the room Edryn's in.\n\n", false);
@@ -1079,7 +1091,7 @@ private function edrynFucktroduction():void {
 	clearOutput();
 	showEdryn();
 	clearOutput();
-	var x:Number = pc.cockThatFits(300);
+	var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
 	if(x < 0) x = 0;
 	var cost:Number = 0;
 	switch(Flag("COC.EDRYN_AFFECTION")) {
@@ -1129,9 +1141,9 @@ private function edrynFucktroduction():void {
 public function eatEdrynPussyLikeABawss():void {
 	clearOutput();
 	//output(images.showImage("edryn-eat-her-out"));
-	var x:int = pc.cockThatFits(300);
+	var x:int = pc.cockThatFits(edryn.vaginalCapacity());
 	if (x < 0) x = pc.smallestCockIndex();
-	var y:int = pc.cockThatFits2(300);
+	var y:int = pc.cockThatFits2(edryn.analCapacity());
 	output("Edryn starts to say something, but you strip out of your [pc.gear] before she gets more than a half-dozen words out, your [pc.cocksLight] jutting proud and erect, leaking clear streams of pre-cum down ");
 	if(pc.cockTotal() == 1) output("its underside");
 	else output("their underside");

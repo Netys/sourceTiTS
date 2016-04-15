@@ -88,10 +88,11 @@ public function explorePlains():void {
 		//choices[choices.length] = kGAMECLASS.isabellaScene.isabellaGreeting;
 		//choices[choices.length] = kGAMECLASS.isabellaScene.isabellaGreeting;
 	//}
-	//if (!kGAMECLASS.helScene.followerHel() && (flags["COC.HEL_REDUCED_ENCOUNTER_RATE"] == 0 || rand(2) == 0)) {
+	
+	if (!followerHel()) {
 		choice.push(encounterAJerkInThePlains);
-		chance.push(1);
-	//}
+		chance.push(flags["COC.HEL_REDUCED_ENCOUNTER_RATE"] == undefined ? 1 : 2);
+	}
 	
 	if (flags["COC.SHEILA_DISABLED"] != 1 && !(flags["COC.SHEILA_CLOCK"] > timeAsStamp) && (hours >=4 || hours <= 21)) { //Aparently Sheila was supposed to be disabled after certain events - now fixed
 		choice.push(sheilaEncounterRouter);

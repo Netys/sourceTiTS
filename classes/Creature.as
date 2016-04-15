@@ -11995,9 +11995,9 @@
 				}
 			}
 			//Hornyness 1/2
-			else if (lust() > 75 && rand(2) == 0) {
+			else if (lustQ() > 75 && rand(2) == 0) {
 				//Uber horny like a baws!
-				if (lust() > 90) {
+				if (lustQ() > 90) {
 					//Weak as shit cum
 					if (cumQ() < 50) {
 						if (rand(2) == 0) descript += "throbbing";
@@ -12021,7 +12021,7 @@
 					}
 				}
 				//A little less lusty, but still lusty.
-				else if (lust() > 75) {
+				else if (lustQ() > 75) {
 					if (cumQ() < 50) {
 						rando = rand(5);
 						if (rando == 0) descript += "turgid";
@@ -12206,9 +12206,9 @@
 				}
 			}
 			//Hornyness 1/2
-			else if (lust() > 75 && rand(2) == 0) {
+			else if (lustQ() > 75 && rand(2) == 0) {
 				//Uber horny like a baws!
-				if (lust() > 90) {
+				if (lustQ() > 90) {
 					//Weak as shit cum
 					if (cumQ() < 50) {
 						if (rand(2) == 0) descript += "throbbing";
@@ -12232,7 +12232,7 @@
 					}
 				}
 				//A little less lusty, but still lusty.
-				else if (lust() > 75) {
+				else if (lustQ() > 75) {
 					if (cumQ() < 50) {
 						rando = rand(5);
 						if (rando == 0) descript += "turgid";
@@ -13151,7 +13151,7 @@
 		 * Check the PlayerCharacter class to see what I mean.
 		 */
 		
-		public function loadInCunt(cumFrom:Creature = null, vagIndex:int = -1):Boolean
+		public function loadInCunt(cumFrom:Creature = null, vagIndex:int = 0):Boolean
 		{
 			// Only run the knockup shit if the creature actually gets saved
 			if (neverSerialize == false && cumFrom != null)

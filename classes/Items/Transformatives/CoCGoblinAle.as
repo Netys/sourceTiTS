@@ -72,6 +72,7 @@ package classes.Items.Transformatives
 				if (pc.tallnessUnlocked(pc.tallness - nShrink))
 				{
 					output("\n\nThe world spins, and not just from the strength of the drink!  Your viewpoint is closer to the ground.  How fun!");
+					pc.tallness -= nShrink;
 					changes++;
 				} else output("\n\n" + pc.tallnessLockedMessage());
 			}
@@ -94,13 +95,13 @@ package classes.Items.Transformatives
 				changes++;
 			}
 			//Boost vaginal capacity without gaping
-			if (changes < changeLimit && rand(3) == 0 && pc.hasVagina() && pc.vaginas[0].bonusCapacity < 40) {
-				pc.vaginas[0].bonusCapacity += 10;
+			if (changes < changeLimit && rand(3) == 0 && pc.hasVagina() && pc.vaginas[0].bonusCapacity < 100) {
+				pc.vaginas[0].bonusCapacity += 20;
 				output("\n\nThere is a sudden... emptiness within your [pc.vagina].  Somehow you know you could accommodate even larger... insertions.");
 				changes++;
 			}
 			//Boost fertility
-			if (changes < changeLimit && rand(4) == 0 && pc.fertility() < 2 && pc.hasVagina()) {
+			if (changes < changeLimit && rand(4) == 0 && pc.fertilityRaw < 2 && pc.hasVagina()) {
 				pc.fertilityRaw += 0.1;
 				changes++;
 				output("\n\nYou feel strange.  Fertile... somehow.  You don't know how else to think of it, but you're ready to be a mother.");

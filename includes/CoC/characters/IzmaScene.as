@@ -117,7 +117,7 @@ public function meetIzmaAtLake():void {
 		addButton(14, "Leave", leaveSumSharkPussyOnTheBeach);
 	}
 	//(Izmacounter= 1)
-	else if (flags["COC.IZMA_ENCOUNTER_STATUS"] == 0) {
+	else if (flags["COC.IZMA_ENCOUNTER_STATUS"] == undefined) {
 		output("The sight of a figure on the horizon brings your lake stroll to a sudden stop. Something or someone is there, sitting on a rock.  You cautiously move towards the figure, silently creeping up behind the stranger.  As you draw closer, you see she bears a resemblance to the shark girls of the lake, but with a few noteworthy differences.  She must be around 6' tall; her skin is a strange mixture of orange and grey, with several stripes along the orange parts.  She has semi-lustrous white hair flowing past her shoulders, with a few droplets of water still suspended in it.  She's wearing a black bikini top, and has a well-crafted grass skirt reaching down to her knees.  She hasn't noticed your presence yet as she's busily reading a book; a small chest sits on the rocks beside her.  Now that you get a good look at her, you also notice she has a cute little pair of spectacles on the bridge of her nose.\n\n");
 		
 		output("You hesitate a few moments before saying, \"<i>Er... hello?</i>\"\n\n");

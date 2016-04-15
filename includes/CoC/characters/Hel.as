@@ -8,10 +8,11 @@ import classes.Engine.Utility.*;
 
 // NO VAI.
 public function followerHel():Boolean {
-	//if(flags["COC.HEL_FOLLOWER_LEVEL"] == 2) return true;
-	////This is a temporary fix
-	//if(flags["COC.HEL_HARPY_QUEEN_DEFEATED"] == 1) return false;
-	//if(flags["COC.HEL_FOLLOWER_LEVEL"] > 0) return true;
+	if(flags["COC.HEL_FOLLOWER_LEVEL"] == 2) return true;
+	//This is a temporary fix
+	// It would be FOREVER. @Etis
+	if(flags["COC.HEL_HARPY_QUEEN_DEFEATED"] != undefined) return false;
+	if(flags["COC.HEL_FOLLOWER_LEVEL"] == 1) return true;
 	return false;
 }
 
@@ -55,6 +56,14 @@ public function encounterAJerkInThePlains():void {
 		greetHelAsFuckbuddies();
 		return;
 	}
+	
+	if (hours >= 21 && flags["COC.HEL_AFFECTION"] >= 70 && flags["COC.HEL_REDUCED_ENCOUNTER_RATE"] != 1 && !(flags["COC.HEL_FOLLOWER_LEVEL"] > 0)) {
+		output("You walk through the plains for an hour, finding nothing.\n\n");
+		processTime(30 + rand(10));
+		heliaDiscovery();
+		return;
+	}
+	
 	//First time greeting
 	if (flags["COC.HEL_TIMES_ENCOUNTERED"] == 1) {
 		flags["COC.HEL_FUCKBUDDY"] = 0;
@@ -1888,4 +1897,16 @@ private function pussyOutOfHelSexAmbush():void {
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 	//helFollower.helAffection(-20);
+}
+
+public function followerCampMenuBlurbHelia(showInteractButton:Boolean):void {
+	if (followerHel() && flags["COC.HEL_FOLLOWER_LEVEL"] == 1) {
+		output("Helia is sticking around, should you decide to assault Phoenix Tower.\n\n");
+		if (showInteractButton) addButton(followerBtnNum++, "Helia", function():* { processTime(10); heliaTempFollowerMenu() } , null, "Talk", "Go find Helia to talk about her quest.");
+	}
+}
+
+private var followerCampMenuBlurbHeliaHook: * = followerCampMenuBlurbHeliaGrapple();
+private function followerCampMenuBlurbHeliaGrapple():* {
+	followerCampMenuBlurb.push(followerCampMenuBlurbHelia);
 }

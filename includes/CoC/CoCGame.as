@@ -90,6 +90,7 @@ include "places/factory/factory.as";
 include "places/farm/Farm.as";
 include "places/fortress/fortress.as";
 include "places/owca/owca.as";
+include "places/phoenixTower/phoenixTower.as";
 include "places/teladre/TelAdre.as";
 
 // FOLLOWERS

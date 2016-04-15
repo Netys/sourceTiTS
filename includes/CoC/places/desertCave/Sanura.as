@@ -48,7 +48,7 @@ public function answerCorrectSmartAss(riddles:Array):void {
 		//(Display Options: [Fuck Her] [Door] [Leave])
 		clearMenu();
 		addButton(0, "Fuck Her", fuckDatSphinx, null, "Fuck Her", "Use Sanura to get off.");
-		addButton(1, "Leave", mainGameMenu);		
+		addButton(1, "Leave", mainGameMenu);
 	}
 }
 
@@ -61,7 +61,7 @@ public function answerWrongYouStupid():void {
 	//(Submit goes to appropriate loss scene)
 	clearMenu();
 	addButton(0, "Submit", sphinxSubmissionOptions, null, "Submit", "Submit to the sphinx. A deal is definitely a deal, after all.");
-	addButton(1, "Uh, ATTACK!", fuckItAttackSphinx, null, "Attack", "Screw this! You may have lost the riddle but you'll NOT let Sanura have her way with you.");
+	if(flags["COC.BEATEN_SANURA_COUNT"] == 0) addButton(1, "Uh, ATTACK!", fuckItAttackSphinx, null, "Attack", "Screw this! You may have lost the riddle but you'll NOT let Sanura have her way with you.");
 }
 
 
@@ -74,8 +74,8 @@ public function SphinxRiddle1(riddles:Array):void {
 	addButton(0, "A Sphinx", riddleOneSphinx);
 	addButton(1, "A Centaur", answerWrongYouStupid);
 	addButton(2, "A Man", answerCorrectSmartAss, riddles);
-	if (pc.IQ() < 35) addButton(3, "Stilts", answerWrongYouStupid);
-	addButton(4, "Uh, ATTACK!", fuckItAttackSphinx);
+	if (pc.intelligence() < 15) addButton(3, "Stilts", answerWrongYouStupid);
+	if(flags["COC.BEATEN_SANURA_COUNT"] == 0) addButton(4, "Uh, ATTACK!", fuckItAttackSphinx);
 }
 
 //Special Occurrence: Pick [A Sphinx]
@@ -94,9 +94,9 @@ public function SphinxRiddle2(riddles:Array):void {
 	clearMenu();
 	addButton(0, "A River", answerCorrectSmartAss, riddles);
 	addButton(1, "A Whisper", answerWrongYouStupid);
-	if (pc.IQ() < 50) addButton(2, "A Nail", answerWrongYouStupid);
-	if (pc.IQ() < 35) addButton(3, "A Bunny-Girl", answerWrongYouStupid);
-	addButton(4, "Uh, ATTACK!", fuckItAttackSphinx);
+	if (pc.intelligence() < 25) addButton(2, "A Nail", answerWrongYouStupid);
+	if (pc.intelligence() < 15) addButton(3, "A Bunny-Girl", answerWrongYouStupid);
+	if(flags["COC.BEATEN_SANURA_COUNT"] == 0) addButton(4, "Uh, ATTACK!", fuckItAttackSphinx);
 }
 
 //RIDDLE 3
@@ -106,10 +106,10 @@ public function SphinxRiddle3(riddles:Array):void {
 	clearMenu();
 	//[Poison] (if PC int < 50 add this: [A Condom]) (if PC int < 35 add this: [Arrows]) [A Coffin] [Fuck it, Attack]
 	addButton(0, "Poison", answerWrongYouStupid);
-	if (pc.IQ() < 50) addButton(1, "A Condom", answerWrongYouStupid);
-	if (pc.IQ() < 35) addButton(2, "Arrows", answerWrongYouStupid);
+	if (pc.intelligence() < 25) addButton(1, "A Condom", answerWrongYouStupid);
+	if (pc.intelligence() < 15) addButton(2, "Arrows", answerWrongYouStupid);
 	addButton(3, "A Coffin", answerCorrectSmartAss, riddles);
-	addButton(4, "Uh, ATTACK!", fuckItAttackSphinx);
+	if(flags["COC.BEATEN_SANURA_COUNT"] == 0) addButton(4, "Uh, ATTACK!", fuckItAttackSphinx);
 }
 
 //RIDDLE 4
@@ -118,11 +118,11 @@ public function SphinxRiddle4(riddles:Array):void {
 	output("\"<i>Here's a classic for you: 'I'm always hungry, and must be fed always, lest I flicker away.  Yet I will always bite the hand that feeds me, if it touches me.  What am I?'</i>\"");
 	clearMenu();
 	//(if PC int < 35 add this: [A Fairy]) [Fire] [A Dog] (if PC int < 50 add this: [Disease]) [Fuck it, Attack]
-	if (pc.IQ() < 35) addButton(0, "A Fairy", answerWrongYouStupid);
+	if (pc.intelligence() < 15) addButton(0, "A Fairy", answerWrongYouStupid);
 	addButton(1, "Fire", answerCorrectSmartAss, riddles);
 	addButton(2, "A Dog", answerWrongYouStupid);
-	if (pc.IQ() < 50) addButton(3, "Disease", answerWrongYouStupid);
-	addButton(4, "Uh, ATTACK!", fuckItAttackSphinx);
+	if (pc.intelligence() < 25) addButton(3, "Disease", answerWrongYouStupid);
+	if(flags["COC.BEATEN_SANURA_COUNT"] == 0) addButton(4, "Uh, ATTACK!", fuckItAttackSphinx);
 }
 
 //RIDDLE 5
@@ -131,11 +131,11 @@ public function SphinxRiddle5(riddles:Array):void {
 	output("\"<i>A favorite of my dear Goblin friends: 'When young, I am sweet in the sun; in middle age, I make you gay; but when I'm old, I'm more valuable than gold.  What am I?'</i>\"");
 	clearMenu();
 	//(if PC int < 50 add this: [Men]) (if PC int < 35 add this: [Women]) [Wine] [Cheese] [Fuck it, Attack]
-	if (pc.IQ() < 50) addButton(0, "Men", answerWrongYouStupid);
-	if (pc.IQ() < 35) addButton(1, "Women", answerWrongYouStupid);
+	if (pc.intelligence() < 25) addButton(0, "Men", answerWrongYouStupid);
+	if (pc.intelligence() < 15) addButton(1, "Women", answerWrongYouStupid);
 	addButton(2, "Wine", answerCorrectSmartAss, riddles);
 	addButton(3, "Cheese", answerWrongYouStupid);
-	addButton(4, "Uh, ATTACK!", fuckItAttackSphinx);
+	if(flags["COC.BEATEN_SANURA_COUNT"] == 0) addButton(4, "Uh, ATTACK!", fuckItAttackSphinx);
 }
 //RIDDLE 6
 public function SphinxRiddle6(riddles:Array):void {
@@ -144,11 +144,11 @@ public function SphinxRiddle6(riddles:Array):void {
 	
 	//(if PC int < 35 add this: [A Goblin]) [A Candle] (if PC int < 50 add this: [A Boat]) [An Arrow] [Fuck it, Attack]
 	clearMenu();
-	if (pc.IQ() < 35) addButton(0, "A Goblin", answerWrongYouStupid);
+	if (pc.intelligence() < 15) addButton(0, "A Goblin", answerWrongYouStupid);
 	addButton(1, "A Candle", answerCorrectSmartAss, riddles);
-	if (pc.IQ() < 50) addButton(2, "A Boat", answerWrongYouStupid);
+	if (pc.intelligence() < 25) addButton(2, "A Boat", answerWrongYouStupid);
 	addButton(3, "An Arrow", answerWrongYouStupid);
-	addButton(4, "Uh, ATTACK!", fuckItAttackSphinx);
+	if(flags["COC.BEATEN_SANURA_COUNT"] == 0) addButton(4, "Uh, ATTACK!", fuckItAttackSphinx);
 }
 
 //RIDDLE 7
@@ -160,9 +160,9 @@ public function SphinxRiddle7(riddles:Array):void {
 	clearMenu();
 	addButton(0,"A Shadow",answerCorrectSmartAss, riddles);
 	addButton(1,"A Dog",answerWrongYouStupid);
-	if(pc.IQ() < 35) addButton(2,"Water",answerWrongYouStupid);
-	if(pc.IQ() < 50) addButton(3,"The Breeze",answerWrongYouStupid);
-	addButton(4,"Uh, ATTACK!",fuckItAttackSphinx);
+	if(pc.intelligence() < 15) addButton(2,"Water",answerWrongYouStupid);
+	if(pc.intelligence() < 25) addButton(3,"The Breeze",answerWrongYouStupid);
+	if(flags["COC.BEATEN_SANURA_COUNT"] == 0) addButton(4,"Uh, ATTACK!",fuckItAttackSphinx);
 }
 
 //RIDDLE 8
@@ -171,11 +171,11 @@ public function SphinxRiddle8(riddles:Array):void {
 	output("\"<i>Tsk, a sad tale this, fleeting as a melody on the breeze: 'You've heard me before, and will again, till fast I die - then you'll but summon me again.  What am I?'</i>\"");
 	//(if PC int < 35 add this: [A Demon]) (if PC int < 50 add this: [Religion]) [An Idea] [An Echo] [Fuck it, Attack]
 	clearMenu();
-	if(pc.IQ() < 35) addButton(0,"A Demon",answerWrongYouStupid);
-	if(pc.IQ() < 50) addButton(1,"Religion",answerWrongYouStupid);
+	if(pc.intelligence() < 15) addButton(0,"A Demon",answerWrongYouStupid);
+	if(pc.intelligence() < 25) addButton(1,"Religion",answerWrongYouStupid);
 	addButton(2,"An Idea",answerWrongYouStupid);
 	addButton(3,"An Echo",answerCorrectSmartAss, riddles);
-	addButton(4,"Uh, ATTACK!",fuckItAttackSphinx);
+	if(flags["COC.BEATEN_SANURA_COUNT"] == 0) addButton(4,"Uh, ATTACK!",fuckItAttackSphinx);
 }
 
 //RIDDLE 9
@@ -185,11 +185,11 @@ public function SphinxRiddle9(riddles:Array):void {
 	
 	clearMenu();
 	//(if PC int < 35 add this: [A Dick]) [Water] [A Voice] (if PC int < 50 add this: [Faith]) [Fuck it, Attack]
-	if(pc.IQ() < 35) addButton(0,"A Dick",answerWrongYouStupid);
+	if(pc.intelligence() < 15) addButton(0,"A Dick",answerWrongYouStupid);
 	addButton(1,"Water",answerCorrectSmartAss, riddles);
 	addButton(2,"A Voice",answerWrongYouStupid);
-	if(pc.IQ() < 50) addButton(3,"Faith",answerWrongYouStupid);
-	addButton(4,"Uh, ATTACK!",fuckItAttackSphinx);
+	if(pc.intelligence() < 25) addButton(3,"Faith",answerWrongYouStupid);
+	if(flags["COC.BEATEN_SANURA_COUNT"] == 0) addButton(4,"Uh, ATTACK!",fuckItAttackSphinx);
 }
 
 //RIDDLE 10
@@ -201,9 +201,9 @@ public function SphinxRiddle10(riddles:Array):void {
 	clearMenu();
 	addButton(0,"Disease",answerWrongYouStupid);
 	addButton(1,"Counterfeits",answerCorrectSmartAss, riddles);
-	if(pc.IQ() < 35) addButton(2,"Piss In A River",answerWrongYouStupid);
-	if(pc.IQ() < 50) addButton(3,"Tattered Scrolls",answerWrongYouStupid);
-	addButton(4,"Uh, ATTACK!",fuckItAttackSphinx);
+	if(pc.intelligence() < 15) addButton(2,"Piss In A River",answerWrongYouStupid);
+	if(pc.intelligence() < 25) addButton(3,"Tattered Scrolls",answerWrongYouStupid);
+	if(flags["COC.BEATEN_SANURA_COUNT"] == 0) addButton(4,"Uh, ATTACK!",fuckItAttackSphinx);
 }
 
 //RIDDLE 11
@@ -213,11 +213,11 @@ public function SphinxRiddle11(riddles:Array):void {
 	
 	//(if PC int < 35 add this: [A Treasure Chest]) (if PC int < 50 add this: [Pure Honey]) [Eggs] [Booze Bottles] [Fuck it, Attack]
 	clearMenu();
-	if(pc.IQ() < 35) addButton(0,"Teasure Chest",answerWrongYouStupid);
-	if(pc.IQ() < 50) addButton(1,"Pure Honey",answerWrongYouStupid);
+	if(pc.intelligence() < 15) addButton(0,"Teasure Chest",answerWrongYouStupid);
+	if(pc.intelligence() < 25) addButton(1,"Pure Honey",answerWrongYouStupid);
 	addButton(2,"Eggs",answerCorrectSmartAss, riddles);
 	addButton(3,"Booze Bottles",answerWrongYouStupid);
-	addButton(4,"Uh, ATTACK!",fuckItAttackSphinx);
+	if(flags["COC.BEATEN_SANURA_COUNT"] == 0) addButton(4,"Uh, ATTACK!",fuckItAttackSphinx);
 }
 
 //RIDDLE 12
@@ -227,11 +227,11 @@ public function SphinxRiddle12(riddles:Array):void {
 	
 	//(if PC int < 50 add this: [Fallen Stars]) (if PC int < 35 add this: [Angels]) [Sand] [Rain] [Fuck it, Attack]
 	clearMenu();
-	if(pc.IQ() < 50)addButton(0,"Fallen Stars",answerWrongYouStupid);
-	if(pc.IQ() < 35) addButton(1,"Angels",answerWrongYouStupid);
+	if(pc.intelligence() < 25)addButton(0,"Fallen Stars",answerWrongYouStupid);
+	if(pc.intelligence() < 15) addButton(1,"Angels",answerWrongYouStupid);
 	addButton(2,"Sand",answerCorrectSmartAss, riddles);
-	addButton(3,"Rain",answerWrongYouStupid);
-	addButton(4,"Uh, ATTACK!",fuckItAttackSphinx);
+	addButton(3, "Rain", answerWrongYouStupid);
+	if(flags["COC.BEATEN_SANURA_COUNT"] == 0) addButton(4,"Uh, ATTACK!",fuckItAttackSphinx);
 }
 
 //FUCK IT, ATTACK (First Time)
@@ -278,11 +278,11 @@ public function getBlownBySphinx(submit:Boolean = false):void {
 	
 	output("\n\n\"<i>Hold on just a little longer, my friend,</i>\" the sphinx says, words muffled around the cock in her mouth.  \"<i>We've only just started....</i>\"");
 	
-	output("\n\nYou start to question her meaning when she suddenly releases your prick, letting it bob stiffly in the air; spit and copious streams of pre dangle like flags from your pole.  A few strands still connect the two of you, trailing from your tip to Sanura's lips, painting her two full lines a milky white.  She grins up at you, even as her fingers begin to move in strange, arcane ways, weaving thin blue lines of magic in their wake as a spell takes shape.  In the blink of an eye, a pair of translucent hands appear just above Sanura's own, sparkling with eldritch light.  Your breath catches as the first of these magical hands brushes against your skin, a mind-numbing tingle rushing through your body from the point of contact.  Your mouth opens and closes wordlessly as your entire body seems to go slack, practically turning to liquid as the magical hands brush against your thighs and hips, tantalizingly far from your [pc.cocksLight], the tingling digits just out of reach of your most sensitive parts.");
+	output("\n\nYou start to question her meaning when she suddenly releases your prick, letting it bob stiffly in the air; spit and copious streams of pre dangle like flags from your pole.  A few strands still connect the two of you, trailing from your tip to Sanura's lips, painting her two full lines a [pc.cumColor].  She grins up at you, even as her fingers begin to move in strange, arcane ways, weaving thin blue lines of magic in their wake as a spell takes shape.  In the blink of an eye, a pair of translucent hands appear just above Sanura's own, sparkling with eldritch light.  Your breath catches as the first of these magical hands brushes against your skin, a mind-numbing tingle rushing through your body from the point of contact.  Your mouth opens and closes wordlessly as your entire body seems to go slack, practically turning to liquid as the magical hands brush against your thighs and hips, tantalizingly far from your [pc.cocksLight], the tingling digits just out of reach of your most sensitive parts.");
 	
-	output("\n\nA finger brushes against your [pc.cock " + pc.biggestCockIndex() + "], just for the briefest moment.  You throw your head back and scream, your entire body convulsing as a thick rope of cum spurts from your tip, smearing Sanura's face with your seed.  She releases you utterly, leaving you to writhe as your [pc.balls] empty out onto her eager face.  As you feel yourself winding down from the magically-induced orgasm, however, a strange blue sigil appears in the air, encircling [pc.eachCock].  \"<i>You do want to go again, yes?  I think I've got enough magic to keep that nice [pc.cock " + pc.biggestCockIndex() + "] hard for a little fun with my new hands....</i>\"");
+	output("\n\nA finger brushes against your [pc.cock " + pc.biggestCockIndex() + "], just for the briefest moment.  You throw your head back and scream, your entire body convulsing as a thick rope of [pc.cum] spurts from your tip, smearing Sanura's face with your seed.  She releases you utterly, leaving you to writhe as your [pc.balls] empty out onto her eager face.  As you feel yourself winding down from the magically-induced orgasm, however, a strange blue sigil appears in the air, encircling [pc.eachCock].  \"<i>You do want to go again, yes?  I think I've got enough magic to keep that nice [pc.cock " + pc.biggestCockIndex() + "] hard for a little fun with my new hands....</i>\"");
 	
-	output("\n\nYou nod, then shudder as the sphinx's sex-magic works through you, her arcane symbols reinvigorating your spent manhood.  In moments, you're far harder than you were before, and thick ropes of cum spill out of your [pc.eachCockHead] - the salty liquid flows freely onto the desert sands from Sanura's open mouth as your [pc.balls] churns out a seemingly endless supply of seed.  Your breath comes ragged as more and more spills out of you, your newly-potent manhood making you feel lightheaded as it expels an endless tide of cum.  Slowly, gently, Sanura leans in, wrapping her lips around the tip of your [pc.cock " + pc.biggestCockIndex() + "], lapping up the river of semen that pours into her mouth.");
+	output("\n\nYou nod, then shudder as the sphinx's sex-magic works through you, her arcane symbols reinvigorating your spent manhood.  In moments, you're far harder than you were before, and thick ropes of [pc.cumNoun] spill out of your [pc.eachCockHead] - the [pc.cumFlavor] liquid flows freely onto the desert sands from Sanura's open mouth as your [pc.balls] churns out a seemingly endless supply of seed.  Your breath comes ragged as more and more spills out of you, your newly-potent manhood making you feel lightheaded as it expels an endless tide of [pc.cum].  Slowly, gently, Sanura leans in, wrapping her lips around the tip of your [pc.cock " + pc.biggestCockIndex() + "], lapping up the river of semen that pours into her mouth.");
 	
 	//If Multi-cock = 3
 	if(pc.cockTotal() >= 3) {
@@ -296,9 +296,9 @@ public function getBlownBySphinx(submit:Boolean = false):void {
 	
 	output("\n\nAfter a few moments of her mouth and hands working wonders around your flesh, the sphinx-girl begins to pick up pace; in the span of a minute she ramps up from a gentle blowjob to a full-on face-fuck, going faster and faster with every beat of your heart and spurt of seed flowing from your magically stimulated [pc.balls].  Despite the sea of sperm you're creating, you can feel another orgasm approaching, rushing on despite the lingering aftershocks of the first.");
 	
-	output("\n\nWhen it hits, you almost lose consciousness, the sheer pleasure of the second orgasm throwing you onto your back in a writhing heap as your body convulses wildly with ecstasy.  You shudder and groan, your [pc.multiCocks] geysering into the air, raining back down in a pool around you and the now cum-covered sphinx.");
+	output("\n\nWhen it hits, you almost lose consciousness, the sheer pleasure of the second orgasm throwing you onto your back in a writhing heap as your body convulses wildly with ecstasy.  You shudder and groan, your [pc.multiCocks] geysering into the air, raining back down in a pool around you and the now [pc.cumNoun]-covered sphinx.");
 	
-	output("\n\n\"<i>Enjoy yourself?</i>\" the milk-white leonine girl asks, dropping to her knees beside you, a hand resting on your heaving chest.  You give her a weak thumbs-up, and stagger to your [pc.feet].");
+	output("\n\n\"<i>Enjoy yourself?</i>\" the [pc.cumColor] leonine girl asks, dropping to her knees beside you, a hand resting on your heaving chest.  You give her a weak thumbs-up, and stagger to your [pc.feet].");
 	pc.orgasm();
 	processTime(25 + rand(10));
 	clearMenu();
