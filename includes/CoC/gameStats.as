@@ -103,5 +103,19 @@ public function displayEncounterLogCoCVarious():int
 		}
 	}
 	
+	output2("\n\n" + blockHeader("Encounters", false));
+	if(flags["COC.HEL_TIMES_ENCOUNTERED"] > 0) {
+		output2("\n<b><u>Helia</u></b>");
+		output2("\n<b>* Times met: </b>" + flags["COC.HEL_TIMES_ENCOUNTERED"]);
+		output2("\n<b>* Times sexed: </b>" + flags["COC.HEL_FUCK_COUNTER"]);
+		output2("\n<b>* Affection: </b>" + helAffection());
+		output2("\n<b>* Attitude: </b>");
+		if (flags["COC.HEL_REDUCED_ENCOUNTER_RATE"] == 1) output2(" Upset");
+		else if (flags["COC.HEL_FUCKBUDDY"] == 1 && flags["COC.PC_PROMISED_HEL_MONOGAMY_FUCKS"] == 1) output2(" Stalker");
+		else if (flags["COC.HEL_FUCKBUDDY"] == 1) output2(" Fuckbuddy");
+		else if (followerHel() && flags["COC.HEL_FOLLOWER_LEVEL"] == 2) output2(" Lover");
+		else  output2(" Undecided");
+	}
+	
 	return variousCount;
 }

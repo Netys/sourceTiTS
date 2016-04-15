@@ -1,10 +1,23 @@
 import classes.Characters.CoC.CoCHel;
+import classes.CockClass;
 import classes.Creature;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
+
+public function get helia():CoCHel {
+	return new CoCHel();
+}
+
+public function heliaTailVolume():Number {
+	var tail:CockClass = new CockClass();
+	tail.addFlag(GLOBAL.FLAG_TAPERED);
+	tail.cLengthRaw = 18;
+	tail.cThicknessRatioRaw = 2;
+	return tail.effectiveVolume();
+}
 
 // NO VAI.
 public function followerHel():Boolean {
@@ -46,21 +59,22 @@ public function encounterAJerkInThePlains():void {
 	clearOutput();
 	//spriteSelect(68);
 	IncrementFlag("COC.HEL_TIMES_ENCOUNTERED");
+	
+	if (hours >= 21 && helAffection() >= 70 && flags["COC.HEL_REDUCED_ENCOUNTER_RATE"] != 1 && !(flags["COC.HEL_FOLLOWER_LEVEL"] > 0)) {
+		output("You walk through the plains for an hour, finding nothing.\n\n");
+		processTime(30 + rand(10));
+		heliaDiscovery();
+		return;
+	}
+	
 	//Mino threesome proc
-	if(flags["COC.HEL_AFFECTION"] > 0 && flags["COC.HEL_AFFECTION"] % 5 == 0 && flags["COC.PC_PROMISED_HEL_MONOGAMY_FUCKS"] == 0) {
+	if(flags["COC.HEL_AFFECTION"] > 0 && flags["COC.HEL_AFFECTION"] % 5 == 0 && flags["COC.PC_PROMISED_HEL_MONOGAMY_FUCKS"] != 1) {
 		helMinotaurThreesome();
 		return;
 	}
 	//Fuckbuddies get alt greating.
 	if(fuckBuddyHel()) {
 		greetHelAsFuckbuddies();
-		return;
-	}
-	
-	if (hours >= 21 && flags["COC.HEL_AFFECTION"] >= 70 && flags["COC.HEL_REDUCED_ENCOUNTER_RATE"] != 1 && !(flags["COC.HEL_FOLLOWER_LEVEL"] > 0)) {
-		output("You walk through the plains for an hour, finding nothing.\n\n");
-		processTime(30 + rand(10));
-		heliaDiscovery();
 		return;
 	}
 	
@@ -164,8 +178,8 @@ internal function loseToSalamander():void {
 	}
 	//TO ZE RAPES!
 	//Player Loss – Rape – Male =< 85 cockarea
-	if(pc.hasCock() && (!pc.hasVagina() || rand(4) < 3) && pc.cockThatFits(85) >= 0) {
-		x = pc.cockThatFits(85);
+	if(pc.hasCock() && (!pc.hasVagina() || rand(4) < 3) && pc.cockThatFits(helia.vaginalCapacity()) >= 0) {
+		x = pc.cockThatFits(helia.vaginalCapacity());
 		output("The salamander pulls off your [pc.gear] with practiced speed, ");
 		if(pc.isHerm()) output("revealing your [pc.vagina] and ");
 		output("letting your [pc.cock " + x + "] flop free, already hardened and ready for action.  She kneels down, straddling you, and grasps your [pc.cock " + x + "] firmly in both of her smoothly scaled, clawed hands.  You're nervous for a moment, eyes flickering to her long, sharp nails.  Seeing the concern in your eye, she laughs amicably.  \"<i>Hey, don't worry, lover.  I wouldn't ruin a perfectly good cock like this...  At least, not without getting a sample first...</i>\" she says, grinning.  For emphasis, she leans down and gives your [pc.cock " + x + "] a slow, sensuous lick with her long, forked tongue.\n\n");
@@ -233,8 +247,9 @@ internal function loseToSalamander():void {
 	//dynStats("sen", 1);
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
+	helAffection(5);
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(40 + rand(10));
 	CombatManager.genericLoss();
 }
@@ -266,7 +281,7 @@ private function helDefeatedCorrupt():void {
 	if (pc.lust() < 33) output("You aren't turned on enough to fuck her right now.\n\n");
 	else
 	{
-		if (pc.hasCock() && pc.cockThatFits(85) >= 0)
+		if (pc.hasCock() && pc.cockThatFits(helia.vaginalCapacity()) >= 0)
 			addButton(0, "Rape Ass", rapingHelsAssMeansYourCorruptCauseAnalIsEvil);
 		
 		addButton(1, "Get Rimjob", receiveCorruptRimjobsFromHel);
@@ -325,27 +340,27 @@ private function helFuckMenu(isAmbush:Boolean = false):void {
 	
 	if (pc.hasVagina())
 		addButton(0, "Get Licked", getLickedByHel);
-	if (pc.cockThatFits(85) >= 0)
+	if (pc.cockThatFits(helia.vaginalCapacity()) >= 0)
 		addButton(1, "FuckHerVag", beatUpHelAndStealHerWalletFromHerVagina);
-	if (pc.cockThatFits(85) >= 0)
+	if (pc.cockThatFits(helia.vaginalCapacity()) >= 0)
 		addButton(2, "FuckHerAss", fuckHelsAss);
 		addButton(3, "GetTailPeg", helTailPegging);
 	if (pc.hasCock())
 		addButton(4, "Tail Wank", helTailWanksYourDickBecauseSheLovesYouDesuDesuHoraHora);
-	if (pc.cockTotal() > 1 && pc.cockThatFits(85) >= 0 && pc.cockThatFits2(85) >= 0)
+	if (pc.cockTotal() > 1 && pc.cockThatFits(helia.vaginalCapacity()) >= 0 && pc.cockThatFits2(helia.analCapacity()) >= 0)
 		addButton(5, "DoublePen", dpHel);
 	if (pc.hasCock())
 		addButton(6, "Get Blown", helBlowsYou);
 	
 	if(pc.isNaga()) {
-		if (pc.hasCock() && pc.cockThatFits(85) >= 0)
+		if (pc.hasCock() && pc.cockThatFits(helia.vaginalCapacity()) >= 0)
 			addButton(7, "CoilFuck", nagaCoilsUpHel);
 		else
 			addButton(8, "TailsInButts", nagaCoilsUpAnalNaga);
 	}
 	
 	if(pc.isTaur()) {
-		if (pc.hasCock() && pc.cockThatFits(85) >= 0)
+		if (pc.hasCock() && pc.cockThatFits(helia.vaginalCapacity()) >= 0)
 			addButton(7, "Mount Her", mountHel);
 		if (pc.hasVagina())
 			addButton(8, "Hanging69", helVaginaTaur69);
@@ -365,7 +380,7 @@ private function declineHelSexings():void {
 	output("\"<i>Catch you next time, friend – and maybe we can have some fun, then!</i>\" she calls over her shoulder with a wave.\n\n");
 
 	output("You nod, and return the wave before heading back to your camp.\n\n");
-	//helFollower.helAffection(1);
+	helAffection(1);
 	processTime(20 + rand(10));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
@@ -378,7 +393,7 @@ internal function beatUpHelAndStealHerWalletFromHerVagina():void {
 	clearOutput();
 	//output(images.showImage("helia-vagfuck"));
 	//var x:Number = pc.cockThatFits(helFollower.heliaCapacity());
-	var x:Number = pc.cockThatFits(85);
+	var x:Number = pc.cockThatFits(helia.vaginalCapacity());
 	output("You tell her that, sure, you could blow off some steam.  Still grinning, she tosses off her skimpy scale bikini and flops down on her back, already starting to finger her cunt.  You follow suit, stripping off your [pc.gear] and straddling her hips.  She reaches forward and grasps your [pc.cock " + x + "] in her scaly, clawed hands, causing you to miss a heartbeat before, smiling, she starts to pump it.  Her other hand continues to finger her cunt, preparing it for your [pc.cock " + x + "]'s penetration.  Content to let her lead for the moment, you grasp her wide hips just above where the crimson scales turn to soft flesh, tensing up as she begins to guide you into her slit.\n\n");
 
 	output("The tip of your cock brushes against the lips of her cunt – it's burning hot, making you recoil a bit in her grasp.  But the salamander doesn't let up, instead guiding your cock head into her burning cunt, and then grasping your [pc.ass] and pushing you the rest of the way in with one mighty pull!  You gasp as the explosive heat of her innermost depths overwhelms you, numbing your mind to any sensation but her burning cunt and the muscles contracting over your cock, already starting to milk you.\n\n");
@@ -398,7 +413,7 @@ internal function beatUpHelAndStealHerWalletFromHerVagina():void {
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
 	else addButton(0, "Next", postHelFuckBuddyFollowup);
@@ -411,7 +426,7 @@ internal function fuckHelsAss():void {
 	clearOutput();
 	//output(images.showImage("helia-buttfuck"));
 	//var x:Number = pc.cockThatFits(helFollower.heliaAnalCapacity());
-	var x:Number = pc.cockThatFits(85);
+	var x:Number = pc.cockThatFits(helia.vaginalCapacity());
 	output("You tell her that, yes, you want to blow off some steam, and motion for her to get on hands and knees.\n\n");
 
 	output("\"<i>Oh, I think I know what we both want,</i>\" she says, grinning wolfishly as she strips out of her skimpy bikini and gets down on her hands and knees, turning so that her muscular ass is facing you.  Seductively, she lifts her tail in the air and waggles it in a 'come hither' motion before getting it out of your way, revealing your prize beneath it – her tight little pucker.\n\n");
@@ -436,7 +451,7 @@ internal function fuckHelsAss():void {
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
@@ -467,7 +482,7 @@ internal function helBlowsYou():void {
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
@@ -479,8 +494,8 @@ internal function dpHel():void {
 	//spriteSelect(68);
 	//var x:Number = pc.cockThatFits(helFollower.heliaCapacity());
 	//var y:Number = pc.cockThatFits2(helFollower.heliaCapacity());
-	var x:Number = pc.cockThatFits(85);
-	var y:Number = pc.cockThatFits2(85);
+	var x:Number = pc.cockThatFits(helia.vaginalCapacity());
+	var y:Number = pc.cockThatFits2(helia.analCapacity());
 	clearOutput();
 	//output(images.showImage("helia-doublepenetration"));
 	output("You tell her that, yes, you want to blow off some steam.  You start to undo your [pc.gear], and quickly her eyes go wide.  \"<i>You've got something extra, don't ya!</i>\" she laughs, looking mighty impressed.  \"<i>Well, I think we can take care of that " + pc.cockDescript(y) + ", too. Just sit back and relax, lover!</i>\"\n\n");
@@ -504,7 +519,7 @@ internal function dpHel():void {
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
@@ -535,7 +550,7 @@ internal function getLickedByHel():void {
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
@@ -566,7 +581,7 @@ internal function helTailWanksYourDickBecauseSheLovesYouDesuDesuHoraHora():void 
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
@@ -583,7 +598,7 @@ internal function helTailPegging(loss:Boolean = false):void {
 	output("You do as she asks, getting on all fours and giving her a good views of your vulnerable [pc.ass].  Looking over your shoulder, you can see her smile wolfishly as she brings her tail to bear, now doused of its previous flames, and gives its tip a little suckle, moistening it up as she straddles your hips to fuck you doggy style.  Her tail slips down from her mouth and winds between her legs like a cock as she lines herself up with your [pc.asshole].\n\n");
 
 	output("You grit your teeth and clench your fists in preparation for the coming fucking.  Soon, you feel the tip of her tail pressing against your backdoor, looking for entrance.  You do your best to relax yourself, but she only needs a second to force herself inside you, eliciting a gasp of pain and pleasure from you as inches of her tail sink in, widening and stretching your hole.");
-	pc.buttChange(40,true,true,false);
+	pc.buttChange(heliaTailVolume(), true, true, false);
 	output("\n\n");
 	
 	output("Firmly within your depths, she plants her smooth, scaled hands on your [pc.ass] and starts to hammer your ass, quickly thrusting her tail in and out.  You gasp and moan like a whore, barely able to support your own weight as she fucks your ass hard and fast, threatening to tear your tender insides up with her rough fucking.\n\n");
@@ -606,7 +621,7 @@ internal function helTailPegging(loss:Boolean = false):void {
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) {
@@ -621,8 +636,8 @@ private function nagaCoilsUpHel():void {
 	//spriteSelect(68);
 	clearOutput();
 	//output(images.showImage("helia-nagacoil"));
-	var x:Number = pc.cockThatFits(85);
-	var y:Number = pc.cockThatFits2(85);
+	var x:Number = pc.cockThatFits(helia.vaginalCapacity());
+	var y:Number = pc.cockThatFits2(helia.analCapacity());
 	output("You slither closer to the salamander and tell her that, yeah, you could stand to work off some steam.  She grins at that and closes the distance between you, reaching out to caress your serpentine half.  \"<i>Mmm.  Sexy tail, lover,</i>\" she says, reaching around and giving your [pc.ass] a squeeze in her smooth, scaled hands.  \"<i>It'd be a real shame for such beautiful coils to go unused, you know...</i>\" she adds, giving you a little wink.\n\n");
 
 	output("You get the idea in a hurry, and discard your [pc.gear] as she disrobes, giving you a good view of her smooth snatch and her big, soft breasts.  The sight of her nude form causes your [pc.cock " + x + "] to quickly slip out of its hidey-hole in your reptilian half; she grabs it and starts to stroke it, bringing it to full hardness as you coil your tail around her feet.  She gasps from the sudden tightness around her belly as you make a full loop around her, binding her arms to her side and pulling her up off the ground with your strong tail.\n\n");
@@ -653,7 +668,7 @@ private function nagaCoilsUpHel():void {
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
@@ -671,7 +686,7 @@ private function nagaCoilsUpAnalNaga():void {
 	output("You get an idea in a hurry, and quickly discard your [pc.gear] as she does the same.  She drops to her hands and knees before you, and like a child, snatches at your tail.  Once in hand, she eagerly puts her mouth to it, sucking your tail's tip like a cock.  You shudder at the odd sensation, but when she raises her tail up toward you, you reciprocate the gesture, taking her extinguished tip into your mouth and slathering it with spittle.\n\n");
 
 	output("Once both your tails are sufficiently lubricated, the salamander crawls behind you, and presses her back tightly to yours.  In an odd show of kindness, she even takes your hands in hers as her tail slithers between the cheeks of your [pc.ass].  You return the favor, soon pressing the tip of your tail to her tight but relaxed asshole as hers begins to slip into your [pc.asshole].  You gasp with the sensation of the hot, writhing tail-cock pushing inside you, fighting every inch to wring sensation out of it even as you push yours deep inside her, hard enough to make her take a sharp breath and knock her knees.");
-	pc.buttChange(40,true,true,false);
+	pc.buttChange(heliaTailVolume(), true, true, false);
 	output("\n\n");
 	
 	output("She continues to force her way into you, wriggling her thickening tail further into your [pc.asshole], stretching it wide as her tail gains in thickness.  Finally, though, she can get no more of herself into you, nor you into her.  \"<i>Ready for a wild ride, lover?</i>\" she asks, twisting her head so that she can plant a tender kiss on your shoulder.  You nod eagerly, and start to bounce.\n\n");
@@ -686,7 +701,7 @@ private function nagaCoilsUpAnalNaga():void {
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
@@ -696,7 +711,7 @@ private function nagaCoilsUpAnalNaga():void {
 //Player Win – Mount Her (Wangbearing Centaurs of height >= 60</i>\") (edited)
 private function mountHel():void {
 	//spriteSelect(68);
-	var x:Number = pc.cockThatFits(85);
+	var x:Number = pc.cockThatFits(helia.vaginalCapacity());
 	//if(x < 0) x = pc.smallestCockIndex();
 	clearOutput();
 	//output(images.showImage("helia-mount"));
@@ -737,7 +752,7 @@ private function mountHel():void {
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
@@ -761,7 +776,7 @@ private function helVaginaTaur69():void {
 	output("After a moment, she settles, and is still.  All you can feel is her hot breath on your underside and the strain of her weight on your back.  It isn't long, however, before the salamander reaches out with one of her clawed, scaled hands, tracing a finger up your sensitive inner thighs and making you shudder with anticipation.  Eventually, it snakes up to your wet, waiting [pc.vagina], brushing a knuckle against your anxious lips.\n\n");
 
 	output("You're hardly prepared for what comes next.  Without warning, the salamander slams her arm into your cunt, punching hard into your cervix.");
-	pc.cuntChange(0, 50, true, true, false);
+	pc.cuntChange(0, heliaTailVolume(), true, true, false);
 	output("  You scream and buck, nearly throwing her from her harness.  Laughing maniacally, she forces more of her arm into your unsuspecting depths until she's up past her elbow in " + (pc.legType == GLOBAL.TYPE_EQUINE ? "centaur" : "taur") + " cunt.  You gasp and buck and whinny, but anything that serves to dislodge her arm from your [pc.vagina] only gives her ample opportunity to jam it right back in.\n\n");
 
 	output("She hammers your cervix, fist-fucking you like a massive knotted cock.  It takes a minute to reconcile yourself to the enormous penetration, but soon you're shaking your hips and whinnying with pleasure.  ");
@@ -790,7 +805,7 @@ private function helVaginaTaur69():void {
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
@@ -849,7 +864,7 @@ private function helPossessionShitPoopCock():void {
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
@@ -860,8 +875,8 @@ private function helPossessionShitPoopCock():void {
 //Player Win – Corrupt Rape – Rape her Ass (wangers and mash) (edited)
 private function rapingHelsAssMeansYourCorruptCauseAnalIsEvil():void {
 	//spriteSelect(68);
-	var x:Number = pc.cockThatFits(85);
-	var y:Number = pc.cockThatFits2(85);
+	var x:Number = pc.cockThatFits(helia.analCapacity());
+	var y:Number = pc.cockThatFits2(helia.vaginalCapacity());
 	clearOutput();
 	
 	output("Already getting hard in your [pc.gear], you circle around the downed salamander and give her a rough kick in the scaly back.  She yelps and takes a face-plant, leaving her muscular ass and long, hot tail waggling invitingly in the air.  Grinning, you hastily toss your [pc.gear] aside and tear her bikini bottom off, revealing the gash of her pussy, as well as your real prize – her tight little pucker, nearly hidden in the shadow of her tail.  As you get ready to claim the spoils of your victory, the still defiant salamander lashes out with that same tail!\n\n");
@@ -888,7 +903,7 @@ private function rapingHelsAssMeansYourCorruptCauseAnalIsEvil():void {
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	flags["COC.HEL_AFFECTION"]--;
 	//Bump down follower tracking affection too
-	//helFollower.helAffection(-15);
+	helAffection(-15);
 	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
@@ -919,7 +934,7 @@ private function receiveCorruptRimjobsFromHel():void {
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	flags["COC.HEL_AFFECTION"]--;
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(-15);
+	helAffection(-15);
 	processTime(60 + rand(20));
 	clearMenu();
 	if (CombatManager.inCombat) CombatManager.genericVictory();
@@ -955,7 +970,7 @@ private function helMinotaurThreesome():void {
 	
 	addDisabledButton(0, "FuckHerAss", "Fuck Her Ass", "This scene requires you to have fitting cock.");
 	
-	if (pc.hasCock() && pc.cockThatFits(85) >= 0)
+	if (pc.hasCock() && pc.cockThatFits(helia.vaginalCapacity()) >= 0)
 		addButton(0, "FuckHerAss", fuckHerAss);
 	
 	addButton(1, "Mino Lick", helMinoThreeSomeLickItsDick);
@@ -977,7 +992,7 @@ private function fuckHerAss():void {
 	//spriteSelect(68);
 	clearOutput();
 	//output(images.showImage("helia-threesome-minotaur-buttfuck"));
-	var x:Number = pc.cockThatFits(85);
+	var x:Number = pc.cockThatFits(helia.analCapacity());
 	if(x < 0) x = 0;
 	output("Well, damned if you're going to let a chance to fuck her good, hot ass slip by.  You quickly strip out of your [pc.gear] and grab your [pc.cock " + x + "], stroking it to hardness as you approach the salamander and her Minotaur.  You drop to your knees behind the salamander and push her tail out of the way (not an easy task as she bounces happily atop the 'taur) to reveal her other hole.  You slip your cockhead in, meeting more than a little resistance, as your lover has trouble relaxing her muscles mid-fuck, but eventually force your way inside her, eliciting a deep, lusty moan from her lips.\n\n");
 
@@ -997,7 +1012,7 @@ private function fuckHerAss():void {
 	//dynStats("sen", -2);
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	//POST THREESOME RESULT
 	clearMenu();
@@ -1031,7 +1046,7 @@ private function helMinoThreeSomeLickItsDick():void {
 	//dynStats("sen", -2);
 	IncrementFlag("COC.HEL_AFFECTION");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	IncrementFlag("COC.HEL_FUCK_COUNTER");
 	//POST THREESOME RESULT
 	clearMenu();
@@ -1277,7 +1292,7 @@ private function salamanderXIsabellaDiplomacy2():void {
 	//(Return PC to camp, advance time 1 hour)
 	//(Increase Isabella's affection)
 	//isabellaFollowerScene.isabellaAffection(5);
-	//helFollower.helAffection(5);
+	helAffection(5);
 	flags["COC.HEL_ISABELLA_THREESOME_ENABLED"] = 1;
 	processTime(20 + rand(10));
 	clearMenu();
@@ -1460,7 +1475,7 @@ private function nomOnIzzyTitWithSallyMancer():void {
 	addDisabledButton(0, "Dick", "Dick", "This scene requires you to have fitting cock.");
 	addDisabledButton(1, "Vagina", "Vagina", "This scene requires you to have vagina.");
 	
-	if (pc.cockThatFits(85) >= 0) addButton(0, "Dick", stuffIzzyAndSalamanderWithDicks);
+	if (pc.cockThatFits(helia.vaginalCapacity()) >= 0) addButton(0, "Dick", stuffIzzyAndSalamanderWithDicks);
 	if (pc.hasVagina()) addButton(1, "Vagina", izzySallyThreeSomeVagoozlaz);
 	
 	addButton(14, "Leave", noThreesomeSexWithSallyAndIssyLastMinute);
@@ -1593,7 +1608,7 @@ private function stuffIzzyAndSalamanderWithDicks():void {
 	//dynStats("sen", -3);
 	//(Scene End)
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(120 + rand(10));
 	clearMenu();
 	addButton(0, "Next", izzySallyThreeSomeFollowup);
@@ -1657,7 +1672,7 @@ private function izzySallyThreeSomeVagoozlaz():void {
 	//dynStats("sen", -3);
 	//Bump up follower tracking affection too
 	//isabellaFollowerScene.isabellaAffection(4);
-	//helFollower.helAffection(5);
+	helAffection(5);
 	//if(model.time.hours < 6) doNext(playerMenu);
 	//else doNext(camp.returnToCampUseFourHours);
 	processTime(120 + rand(20));
@@ -1727,7 +1742,7 @@ internal function foxyFluffsFoursomeAsMale():void {
 	//spriteSelect(68);
 	clearOutput();
 	//output(images.showImage("helia-fox-foursome-male"));
-	var x:Number = pc.cockThatFits(85);
+	var x:Number = pc.cockThatFits(helia.vaginalCapacity());
 	if(x < 0) x = pc.smallestCockIndex();
 	output("You strip out of your [pc.gear] and grab your [pc.cock " + x + "].  Giggling drunkenly, Miko flops onto her back on the bed and begins to stroke her knotty cock as Helia and Mai get on their knees, Hel burying herself between Miko's spread legs as her sister wraps her soft hands around your [pc.cock " + x + "] and guides it into her mouth.  You run your hands through Mai's silver hair as she sucks you off, jerking off the base of your cock and flicking her wet tongue across the head and shaft, her full lips wrapped around your girth in a cute little \"<i>O.</i>\" She carries on for another minute, letting you guide the speed and force of her blowjob with your hands planted on her head.\n\n");
 
@@ -1797,7 +1812,7 @@ private function foxyFluffOutro():void {
 
 	output("You awake to find yourself tucked into the bed, your clothes folded neatly next to you.  It looks like someone cleaned you up and tucked you in after your little orgy.  When you hear a loud snore beside you, you don't even need to guess who it was that took care of you.  You pull up the covers, and of course find Helia curled up beside you, her warm tail acting like a pillow for the two of you.  You smile, give her a long kiss, and collect your things.  You leave the salamander to sleep it off, and head back to camp.");
 	//Bump up follower tracking affection too
-	//helFollower.helAffection(5);
+	helAffection(5);
 	processTime(3 * 60 + rand(60));
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
@@ -1896,7 +1911,27 @@ private function pussyOutOfHelSexAmbush():void {
 	processTime(10 + rand(10));
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
-	//helFollower.helAffection(-20);
+	helAffection(-20);
+}
+
+public function helAffection(diff:Number = 0):Number {
+	if (flags["COC.HEL_AFFECTION_FOLLOWER"] == undefined) flags["COC.HEL_AFFECTION_FOLLOWER"] = 0;
+	if (flags["COC.HEL_BONUS_POINTS"] == undefined) flags["COC.HEL_BONUS_POINTS"] = 0;
+	
+	if (flags["COC.HEL_AFFECTION_FOLLOWER"] > 70 && flags["COC.HEL_HARPY_QUEEN_DEFEATED"] == undefined) flags["COC.HEL_AFFECTION_FOLLOWER"] = 70;
+	if (flags["COC.HEL_AFFECTION_FOLLOWER"] < 100 || (flags["COC.HEL_BONUS_POINTS"] == undefined && diff < 0)) {
+		flags["COC.HEL_AFFECTION_FOLLOWER"] += diff;
+		if (flags["COC.HEL_AFFECTION_FOLLOWER"] >= 100) flags["COC.HEL_AFFECTION_FOLLOWER"] = 100;
+		if (flags["COC.HEL_AFFECTION_FOLLOWER"] < 0) flags["COC.HEL_AFFECTION_FOLLOWER"] = 0;
+	}
+	else if (followerHel()) {
+		flags["COC.HEL_AFFECTION_FOLLOWER"] = 100;
+		flags["COC.HEL_BONUS_POINTS"] += diff * 3;
+		if (diff > 0) if (flags["COC.HEL_BONUS_POINTS"] > 150) flags["COC.HEL_BONUS_POINTS"] = 150;
+		else if (diff < 0) if (flags["COC.HEL_BONUS_POINTS"] < 0) flags["COC.HEL_BONUS_POINTS"] = 0;
+	}
+	return flags["COC.HEL_AFFECTION_FOLLOWER"];
+	trace("HEL AFFECTION" + flags["COC.HEL_AFFECTION_FOLLOWER"]);
 }
 
 public function followerCampMenuBlurbHelia(showInteractButton:Boolean):void {
