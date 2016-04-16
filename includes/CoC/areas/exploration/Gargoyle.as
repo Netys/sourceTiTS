@@ -325,7 +325,7 @@ private function gargoyleSexMenu():void {
 //[b]Anal[/b]
 private function gargoyleAnal():void {
 	clearOutput();
-	var x = pc.biggestCockIndex();
+	var x:int = pc.biggestCockIndex();
 	output("You tell her to get on all fours as you shed your [pc.gear], unleashing your already-hardening [pc.multiCocks].  Nervously, the gargoyle does as you command, quickly finding a clear bit of floor and getting on her hands and knees.  You kneel down behind her, peeling her taut ass-cheeks apart to reveal her tight slit and the marble ring of her tiny asshole.  Grinning, you slather up your forefinger with your tongue, lubing it up as best you can before pressing it to her backdoor.");
 	
 	output("\n\n[gargoyle.name] makes a sharp little gasp as you push your finger into her.  You slide into her with surprising ease, reveling in how <i>cold</i> her interior is.  She's like ice inside!  You start thrusting your finger faster, trying to get her warmed up a little as your prepare her anus.  [gargoyle.name] squirms and moans softly as you finger-fuck her bum, slowly changing from moans of discomfort to little gasps of pleasure.");

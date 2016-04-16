@@ -1,4 +1,6 @@
 import classes.Characters.CoC.CoCGoblin;
+import classes.Engine.Combat.applyDamage;
+import classes.Engine.Combat.damageRand;
 import classes.Engine.Combat.DamageTypes.TypeCollection;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
@@ -7,22 +9,21 @@ import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
 public function encounterGoblin():void
-{		
-	//var goblinChooser:int = rand(100);
-	////Level modifier
-	//if (player.level < 20) goblinChooser += player.level;
-	//else goblinChooser += 20;
-	////Limit chooser range
-	//if (goblinChooser > 100) goblinChooser = 100;
-	//if (player.level < 10 && goblinChooser >= 20) goblinChooser = 29;
-	//else if (player.level < 12 && goblinChooser >= 60) goblinChooser = 49;
-	//else if (player.level < 16 && goblinChooser >= 80) goblinChooser = 79;
-	////Goblin assassin!
-	//if (goblinChooser >= 30 && goblinChooser < 50) {
-		//kGAMECLASS.goblinAssassinScene.goblinAssassinEncounter();
+{
+	var goblinChooser:int = rand(100);
+	//Level modifier
+	goblinChooser += Math.min(pc.level, 20);
+	//Limit chooser range
+	goblinChooser = Math.min(100, goblinChooser);
+	if (pc.level < 8 && goblinChooser >= 20) goblinChooser = 29;
+	else if (pc.level < 12 && goblinChooser >= 60) goblinChooser = 49;
+	else if (pc.level < 16 && goblinChooser >= 80) goblinChooser = 79;
+	//Goblin assassin!
+	if (goblinChooser >= 30 && goblinChooser < 50) {
+		goblinAssassinEncounter();
 		//spriteSelect(24);
-		//return;
-	//}
+		return;
+	}
 	////Goblin warrior! (Equal chance with Goblin Shaman)
 	//else if (goblinChooser >= 50 && goblinChooser < 65) {
 		//kGAMECLASS.goblinWarriorScene.goblinWarriorEncounter();
@@ -253,88 +254,66 @@ public function CoCGoblinPCVictory():void
 	//[Lust Intro]
 	else {
 		output("The goblin groans and drops onto her back.  Her legs spread wide, displaying amazing flexibility as one hand dives into her cunt and the other begins twisting her pierced nipples, one at a time.  The display manages to stir your loins.\n\n");
-		pc.lust(20);
+		applyDamage(damageRand(new TypeCollection( { tease : 10 + pc.libido() / 10 } ), 15), enemy, target);
 	}
-	
-	addButton(14, "Leave", function():*{ processTime(15 + rand(10)); CombatManager.genericVictory(); } );
 	
 	addDisabledButton(0, "Dick Fuck", "Dick Fuck", "This scene requires you to have fitting cock.");
-	addDisabledButton(1, "DickTooBig", "Dick Too Big", "This scene requires you to have too big cock.");
-	addDisabledButton(2, "CorruptDick", "Corrupt Dick", "This scene requires you to have too big cock and high corruption.");
-	addDisabledButton(3, "Dick In Ass", "Dick In Ass", "This scene requires you to have fitting cock and high corruption.");
+	addDisabledButton(1, "DickTooBig", "Dick Too Big", "This scene requires you to have overly large cock.");
+	addDisabledButton(2, "CorruptDick", "Corrupt Big", "This scene requires you to have overly large cock and high corruption.");
+	addDisabledButton(3, "Dick In Ass", "Dick In Ass", "This scene requires you to have cock and high corruption.");
 	addDisabledButton(4, "Jog Fuck", "Jog Fuck", "This scene requires you to have fitting cock.");
+	addDisabledButton(5, "Breastfeed", "Breastfeed", "This scene requires you to have enough milk.");
+	addDisabledButton(6, "Web Condom", "Web Condom", "This scene requires you to have spider abdomen and fitting cock.");
 	addDisabledButton(7, "Pussies", "Pussies", "This scene requires you to have vagina.");
-	
-	if (pc.lust() < 33) {
-		return;
-	}
+	//addDisabledButton(8, "Lay Eggs", "Lay Eggs", "This scene requires you to have ovipositor.");
 	
 	//if (pc.canOvipositSpider()) {
 		//eggs = laySomeDriderEggsInGobboTwat;
 	//}
 	//cunt stuff
-	if (pc.hasVagina())
-		addButton(7, "Pussies", gobboGetsRapedFem);
-	
+	if (pc.hasVagina() && pc.lust() >= 33) addButton(7, "Pussies", gobboGetsRapedFem);
 	//Dick stuff:
-	//Corrupt too big scene
-	if (pc.hasCock() && pc.cockThatFits(enemy.vaginalCapacity()) == -1 && pc.cor() > 80)
-		addButton(2, "CorruptDick", rapeAGoblinCorruptTooBig);
-	
-	//Regular too big scene
-	if (pc.hasCock() && pc.cockThatFits(enemy.vaginalCapacity()) == -1)
-		addButton(1, "DickTooBig", manRapesGoblinTooBig);
-	
-	//It fits!
-	if (pc.hasCock() && pc.cockThatFits(enemy.vaginalCapacity()) >= 0) {
-		addButton(0, "Dick Fuck", gatsGoblinBoners);
-		addButton(4, "Jog Fuck", gobboGetsRapedMaleFits);
+	if (pc.hasCock() && pc.lust() >= 33) {
+		//Corrupt too big scene
+		if (pc.cockVolume(pc.biggestCockIndex()) > enemy.vaginalCapacity() && pc.cor() > 80)
+			addButton(2, "CorruptDick", manRapesGoblinTooBig);
+		//Regular too big scene
+		if (pc.cockVolume(pc.biggestCockIndex()) > enemy.vaginalCapacity())
+			addButton(1, "DickTooBig", manRapesGoblinTooBig);
+		//It fits!
+		if (pc.cockThatFits(enemy.vaginalCapacity()) >= 0) {
+			addButton(0, "Dick Fuck", gatsGoblinBoners);
+			addButton(4, "Jog Fuck", gobboGetsRapedMaleFits);
+		}
+		//Buttsex toggle
+		if (pc.cockThatFits(enemy.analCapacity()) >= 0 && pc.cor() > 70) addButton(0, "Dick In Ass", gobboButtSecks);
+		//Spidercondom
+		if ((pc.hasTail(GLOBAL.TYPE_ARACHNID) || pc.hasTail(GLOBAL.TYPE_DRIDER)) && pc.cockThatFits(enemy.vaginalCapacity()) >= 0)
+			addButton(6, "Web Condom", goblinCondomed);
 	}
-	
-	//Buttsex toggle
-	if (pc.cockThatFits(enemy.analCapacity()) >= 0 && pc.cor() >= 66)
-		addButton(3, "Dick In Ass", gobboButtSecks);
-	
-	//Spidercondom
-	//if (pc.tailType == TAIL_TYPE_SPIDER_ADBOMEN && pc.cockThatFits(enemy.vaginalCapacity()) >= 0)
-		//spiderCondom = goblinCondomed;
-	//}
 	//Breastfeed adds an option
-	//if (pc.findStatusAffect(StatusAffects.Feeder) >= 0) {
-		//feeder = giveGoblinAMilkMustache;
-	//}
-	//if (pc.lust >= 33 && pc.gender > 0 && (fitsFuck != null || cuntFuck != null || tooBig != null ||
-			//corruptTooBig != null || buttseks != null || feeder != null || spiderCondom != null || eggs != null) && flags[kFLAGS.SFW_MODE] <= 0) {
-		//outputText("\n\n<b>What do you do to her, and if anything, which of your body parts do you use?</b>", false);
-		//choices("Dick Fuck", fitsFuck, "DickTooBig", tooBig, "CorruptDick", corruptTooBig, "Dick In Ass", buttseks, "Jog Fuck", jog, "Breastfeed", feeder, "Web Condom", spiderCondom, "Pussies", cuntFuck, "Lay Eggs", eggs, "Leave", cleanupAfterCombat);
-		//if (pc.hasItem(useables.CONDOM) && pc.cockThatFits(enemy.vaginalCapacity()) >= 0) {
-			//addButton(6, "Use Condom", goblinCondomed, 1);
-		//}
-	//}
-	//else if (feeder!=null || eggs!=null) {
-		//outputText("\n\n<b>You aren't horny enough to rape her, but ");
-		//if (feeder!=null) outputText("your nipples ache with the desire to feed her your milk.  Do you feed her milk or leave?</b>", false);
-		//else outputText("your abdomen aches with the desire to impregnate her full of insect eggs.  Do you?</b>");
-		//simpleChoices("Feed", feeder, "Lay Eggs", eggs, "", null, "", null, "Leave", cleanupAfterCombat);
-		////doYesNo(feeder,cleanupAfterCombat);
-	//}
-	//else cleanupAfterCombat();
+	if (pc.lactationQ() >= 500) addButton(7, "Breastfeed", giveGoblinAMilkMustache);
+	
+	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); CombatManager.genericVictory(); } );
 }
 
-//private function giveGoblinAMilkMustache():void {
-	//clearOutput();
-	//outputText("You slowly walk up to the downed goblin, gently telling her that everything will be all right now. She looks at you a bit incredulously and spreads her legs, obviously hoping that you will satisfy the urges that she has. You shake your head at her and instead cup your hands under your " + biggestBreastSizeDescript() + " and tell her that it's feeding time. The goblin looks at you annoyed and says, \"<i>I don't want your breasts! I want your naughty bits!</i>\" You laugh at her and grab her arms, pulling them behind her head.\n\n", false);
-//
-	//outputText("She struggles against your grip, trying to get something, anything inside her needy pussy while yelling \"<i>Come on " + pc.mf("slut","stud") + ", you know you want to - mmph!</i>\"  You cut her off by shoving her mouth onto your " + nippleDescript(0) + ". She gasps involuntarily, filling her mouth with your milk. In an instant she freezes, then slowly swallows the milk in her mouth. She relaxes in your arms a moment later, gently suckling at your nipple. Her old lust-filled self is gone, replaced with a pliant girl who now wants nothing but your milk. You slowly lower your hand and start rubbing at her still-slick pussy. In response, she puts her hand on your other " + nippleDescript(0) + ", playing with it and teasing you.\n\n", false);
-//
-	//outputText("After a while, you feel the goblin fall asleep in your arms. Even then, she still continues suckling gently on your " + nippleDescript(0) + ". You smile, satisfied, and gently lift the goblin off your chest. You pat her shoulder softly, and she stirs awake again. She gives you a bit of a dazed look before you give her a gentle push, and she starts walking away with a vacant, drooling stare.", false);
-	////set lust to 0, increase sensitivity slightly
-	//dynStats("lib", .2, "lus", -50);
-	////You've now been milked, reset the timer for that
-	//pc.addStatusValue(StatusAffects.Feeder,1,1);
-	//pc.changeStatusValue(StatusAffects.Feeder,2,0);
-	//cleanupAfterCombat();
-//}
+private function giveGoblinAMilkMustache():void {
+	clearOutput();
+	output("You slowly walk up to the downed goblin, gently telling her that everything will be all right now. She looks at you a bit incredulously and spreads her legs, obviously hoping that you will satisfy the urges that she has. You shake your head at her and instead cup your hands under your [pc.biggestBreastDescript] and tell her that it's feeding time. The goblin looks at you annoyed and says, \"<i>I don't want your breasts! I want your naughty bits!</i>\" You laugh at her and grab her arms, pulling them behind her head.\n\n");
+
+	output("She struggles against your grip, trying to get something, anything inside her needy pussy while yelling \"<i>Come on " + pc.mf("slut", "stud")  + ", you know you want to - mmph!</i>\"  You cut her off by shoving her mouth onto your [pc.nipple]. She gasps involuntarily, filling her mouth with your [pc.milk]. In an instant she freezes, then slowly swallows the [pc.milkNoun] in her mouth. She relaxes in your arms a moment later, gently suckling at your nipple. Her old lust-filled self is gone, replaced with a pliant girl who now wants nothing but your [pc.milkNoun]. You slowly lower your hand and start rubbing at her still-slick pussy. In response, she puts her hand on your other [pc.nipple], playing with it and teasing you.\n\n");
+
+	output("After a while, you feel the goblin fall asleep in your arms. Even then, she still continues suckling gently on your [pc.nipple]. You smile, satisfied, and gently lift the goblin off your chest. You pat her shoulder softly, and she stirs awake again. She gives you a bit of a dazed look before you give her a gentle push, and she starts walking away with a vacant, drooling stare.");
+	
+	//set lust to 0, increase sensitivity slightly
+	pc.slowStatGain("l", 0.2);
+	pc.lust( -50);
+	//You've now been milked, reset the timer for that
+	pc.milked();
+	output("\n\n");
+	processTime(15 + rand(5));
+	CombatManager.genericVictory();
+}
 
 private function gobboButtSecks():void
 {
@@ -667,52 +646,54 @@ private function gobboGetsRapedMaleFits():void
 
 
 //Spider goblin condom
-//private function goblinCondomed(mode:Number = 0):void
-//{
+private function goblinCondomed(mode:Number = 0):void
+{
 	//spriteSelect(24);
-	//var x:Number = pc.cockThatFits(enemy.vaginalCapacity());
-	//clearOutput();
+	var x:Number = pc.cockThatFits(enemy.vaginalCapacity());
+	clearOutput();
 	//outputText(images.showImage("goblin-win-male-goblincondomed"));
-	//outputText("Defeated, the goblin girl's knees give out and she sinks backward, lying on her back with her emerald ankles suspended above her head. \"Use me,\" she begs, \"humiliate, degrade, and debase me! Just, whatever you do, fill me!\" As you strip off your " + pc.armorName + ", she spreads her legs as wide as she can, the wanton girl presenting her drooling pussy to you, puffy green lips already dripping with beads of anxious sweat and eager lubrication. She wiggles in the dirt, gripping her plump rear with both hands and lifting her ass into the air for you, hopefully. You can practically feel the heat pouring off the small slut's cum-hungry cunt, her breeding-fever leaving her eyes glassy and unfocused. Standing over her, it's clear that the only things she's even aware of are the pulsing pussy between her legs and your burgeoning erection.\n\n", false);
-//
-	//outputText("Impatiently, she thrusts her legs out and hooks her toes around your lower body, trying to pull you closer while still keeping her needy hole accessible. Her olive feet clench around your flesh, her soles firm and muscular on your " + pc.skinFurScales() + " as she slides up and down the outsides of your " + hipDescript() + ". Dragging her heels across your thighs, the goblin pushes her feet together on either side of your [pc.cock " + x + "], the balls of her jade skin pressing against ", false);
-	//if (pc.balls > 0) outputText("your throbbing sack", false);
-	//else outputText("the base of your shaft", false);
-	//outputText(" while her digits curl around your member like thick fingers. Stroking you slowly at first, the lime-hued girl picks up her tempo and alternates to the soft embrace of the silken skin between her instep and her calf, using the firmness of her ankles to massage your dick to full-mast. Quivering between her feet, blobs of pre-cum begin to leak from your tip, nearly transparent globules rolling down your glans. The goblin uses her big toes to gather up the warm fluid reverently, letting it flow between each digit gleefully before spreading it back onto your shaft with firm caresses, kneading the seedless ejaculate into your flesh like oil, her feet glistening like sea-green beryl with your fluid.\n\n", false);
-//
-	//outputText("By now, a widening lake of over-stimulated honey has pooled under the lascivious girl. Moaning lewdly, her fingers still digging into her ass cheeks, you realize the goblin is cumming just from giving you a footjob. She needs your dick so badly that it's almost pathetic and a wicked idea crosses your mind.  Taking hold of her pre-cum slick feet, you run your fingers along her ejaculate-softened skin, tickling and rubbing her soles until the girl squeals in ecstasy, clenching her eyes shut as her panting desire becomes too much for her to keep her hands away from her cunt any longer. With a warm splash of overflowing honey, she digs the fingers of her right hand into her verdant slit, her left hand rubbing her jade clit in widening circles so quickly the vibrations jiggle her butt in the mud she's made of the forest floor. While she's distracted, ");
-	//if (mode == 0) { //Web condom (spinnerets)
-		//outputText("you work your spinnerets, the delicate organ weaving a long, thin sheath of finely meshed spider silk, taking care to leave the sticky strands between the inert layers of the flexible condom. Sliding it over your [pc.cock " + x + "], you marvel at how light it is! You can even feel the wind's breeze through the silken covering.");
-	//}
-	//else { //Latex condom (item)
+	output("Defeated, the goblin girl's knees give out and she sinks backward, lying on her back with her emerald ankles suspended above her head. \"Use me,\" she begs, \"humiliate, degrade, and debase me! Just, whatever you do, fill me!\" As you strip off your [pc.gear], she spreads her legs as wide as she can, the wanton girl presenting her drooling pussy to you, puffy green lips already dripping with beads of anxious sweat and eager lubrication. She wiggles in the dirt, gripping her plump rear with both hands and lifting her ass into the air for you, hopefully. You can practically feel the heat pouring off the small slut's cum-hungry cunt, her breeding-fever leaving her eyes glassy and unfocused. Standing over her, it's clear that the only things she's even aware of are the pulsing pussy between her legs and your burgeoning erection.\n\n");
+
+	output("Impatiently, she thrusts her legs out and hooks her toes around your lower body, trying to pull you closer while still keeping her needy hole accessible. Her olive feet clench around your flesh, her soles firm and muscular on your [pc.skinFurScales] as she slides up and down the outsides of your [pc.hip]. Dragging her heels across your thighs, the goblin pushes her feet together on either side of your [pc.cock " + x + "], the balls of her jade skin pressing against ");
+	if (pc.balls > 0) output("your throbbing sack");
+	else output("the base of your shaft");
+	output(" while her digits curl around your member like thick fingers. Stroking you slowly at first, the lime-hued girl picks up her tempo and alternates to the soft embrace of the silken skin between her instep and her calf, using the firmness of her ankles to massage your dick to full-mast. Quivering between her feet, blobs of pre-cum begin to leak from your tip, nearly transparent globules rolling down your glans. The goblin uses her big toes to gather up the warm fluid reverently, letting it flow between each digit gleefully before spreading it back onto your shaft with firm caresses, kneading the seedless ejaculate into your flesh like oil, her feet glistening like sea-green beryl with your fluid.\n\n");
+
+	output("By now, a widening lake of over-stimulated honey has pooled under the lascivious girl. Moaning lewdly, her fingers still digging into her ass cheeks, you realize the goblin is cumming just from giving you a footjob. She needs your dick so badly that it's almost pathetic and a wicked idea crosses your mind.  Taking hold of her pre-cum slick feet, you run your fingers along her ejaculate-softened skin, tickling and rubbing her soles until the girl squeals in ecstasy, clenching her eyes shut as her panting desire becomes too much for her to keep her hands away from her cunt any longer. With a warm splash of overflowing honey, she digs the fingers of her right hand into her verdant slit, her left hand rubbing her jade clit in widening circles so quickly the vibrations jiggle her butt in the mud she's made of the forest floor. While she's distracted, ");
+	if (mode == 0) { //Web condom (spinnerets)
+		output("you work your spinnerets, the delicate organ weaving a long, thin sheath of finely meshed spider silk, taking care to leave the sticky strands between the inert layers of the flexible condom. Sliding it over your [pc.cock " + x + "], you marvel at how light it is! You can even feel the wind's breeze through the silken covering.");
+	}
+	else { //Latex condom (item)
 		//pc.destroyItems(useables.CONDOM, 1);
-		//outputText("you tear open the packet and slide the latex condom over your [pc.cock " + x + "], marveling at how transparent and shiny it is. You don't think the goblin will be able to notice that until it's too late!", false);
-	//}
-	//outputText(" Time to give the goblin what she asked for, if not what she wanted.\n\n", false);
-//
-	//outputText("Still holding her wriggling feet, you bend down and pull her legs apart as far as you can, muscles stretching almost wider and wider as her inner thighs clench against the tugging. The added pressure along with her own frantic jilling crests the girl into another orgasm, this time her gushing lube squirting upwards in crystal streams of depraved lust that patter against your abdomen warmly. Her arms fall at her sides, palms up and fingers twitching, clearing the path for your [pc.cock " + x + "] to the quivering green pussy she has so kindly prepared for you. Pushing against her engorged lips, you find she's so wet that you practically slip right in, her climax-racked muscles spasming irregularly as you fill her with your stiff manhood. \"Oh yesss, you finally found your cock\" she pants, drool bubbling in her mouth. \"Pump me like you hate me, you fucker\" she demands and you haul her upward by the ankles, pulling her further onto your pulsing dick, her dribbling cunny sucking at your shaft as her deep green inner folds part before your thrusting length. \"I'm not a glass doll, you pussy, just fucking jam it in!\" she screams, fingers clawing at the ground as she bucks upward to get more of you inside her.\n\n", false);
-//
-	//outputText("The mouthy bitch apparently forgot who lost the fight, it seems, so you decide to remind her. Using her legs like a lever, you twist her around on your dick, spinning her 180 degrees, leaving her lying on her tits, her ass jutting up as you slam your cock the rest of the way into the olive-skinned nympho. She grunts and starts to say something else, but you push forward and grind her face into the mud before she can get it out, her mouth filling with her own lubrication-soaked dirt with an ecstatic gurgle. Her legs fight against your grip, jerking this way and that, her slick feet nearly slipping out of your hands. You grit your teeth and begin screwing her slavering twat as hard as you can, eager to tame the thrashing cunt of a girl. Slamming her sweat-soaked thighs against your " + hipDescript() + ", your thrusts become almost savage, bringing a deep flush to her backside as you slap her snatch against your groin, the secret condom working perfectly, as thin as skin on your [pc.cock " + x + "].\n\n", false);
-//
-	//outputText("As you feel the tickling heat of your orgasm worming its way into your veins, you lean down, putting your weight into every uterus-filling movement while the goblin sputters and screeches her approval, toes curling in your hands. You release her legs to grab the goblin slut's thin waist with both hands and slam against her jutting ass one last time before liquid heat pours from your [pc.cock " + x + "] in thick streams of potent seed. At the cresting grunt, she wraps her legs around your " + buttDescript() + ", locking her ankles and using her sore legs to pull your gushing prick as deeply into her fertile loins as possible and keep you there. Rocking against her, you rub her head and breasts through the mud one last time as your loads fill her tummy with the ejaculate she so craved, her narrow belly bulging at the weight of your jizz. You take a moment longer to enjoy the clenching, pulsing depths of the cum dumpster before sliding out an inch and taking hold of the ");
-	//if (mode == 0) {
-		//outputText("loose strand you left in your secret cock-shawl. Pulling carefully, you unravel the delicate outer layer, leaving only the sticky strands covering the inner, juice-filled sheath. With a short bark of laughter, you pull out of the whorish girl, the spider silk condom sealing as your tip slides out. ");
-	//}
-	//else {
-		//outputText("rim of your latex cock-sheath. Pulling carefully, you slowly remove your used condom and tie the open end shut. You look at it and you can see your cum inside the condom. ");
-	//}
-	//outputText("Then, wresting her feet apart, you unceremoniously dump her to the ground.\n\n", false);
-//
-	//outputText("Squirming right-side up, covered in sweat and mud, the emerald girl's face screws into an expression of confusion as she pokes at the bulge of her abdomen. \"What... that doesn't feel right,\" she mumbles, pushing at her skin with both hands. Checking her cunny with a long, middle finger, she pulls it out clean, devoid of the ivory cream she expected. \"The fuck? A condom?\" she screeches. \"You bastard!\" Pushing at her belly with increasingly frantic motions, her mouth gapes when the seed-loaded balloon bounces right back, still intact. \"Why won't it burst?\" she demands. ");
-	//if (mode == 0) {
-		//outputText("You politely inform her that spider silk is terribly strong and oh so sticky. Reaching her fingers into her slit, she tries to pull it out and gasps at the feeling of her inner walls being pulled by the clinging webbing. Despite her best effort, the silk bubble stays right where you left it, snugly glued in place by your binding webbing. You laugh and wish her luck trying to get it out as you gather your clothes and walk away. So full of cum and yet unable to get any of it into her womb, the goblin girl moans helplessly, fingering herself in desperation, as if her orgasm could dislodge the treasure you've left inside of her.", false);
-	//}
-	//else {
-		//outputText("You politely inform her that latex is strong and effective at preventing pregnancy. You laugh and wish her luck trying to get it out as you gather your clothes and walk away. So full of cum and yet unable to get any of it into her womb, the goblin girl moans helplessly, fingering herself in desperation, as if her orgasm could dislodge the treasure you've left inside of her.", false);				
-	//}
-	//pc.orgasm();
-	//cleanupAfterCombat();
-//}
+		output("you tear open the packet and slide the latex condom over your [pc.cock " + x + "], marveling at how transparent and shiny it is. You don't think the goblin will be able to notice that until it's too late!");
+	}
+	output(" Time to give the goblin what she asked for, if not what she wanted.\n\n");
+
+	output("Still holding her wriggling feet, you bend down and pull her legs apart as far as you can, muscles stretching almost wider and wider as her inner thighs clench against the tugging. The added pressure along with her own frantic jilling crests the girl into another orgasm, this time her gushing lube squirting upwards in crystal streams of depraved lust that patter against your abdomen warmly. Her arms fall at her sides, palms up and fingers twitching, clearing the path for your [pc.cock " + x + "] to the quivering green pussy she has so kindly prepared for you. Pushing against her engorged lips, you find she's so wet that you practically slip right in, her climax-racked muscles spasming irregularly as you fill her with your stiff manhood. \"Oh yesss, you finally found your cock\" she pants, drool bubbling in her mouth. \"Pump me like you hate me, you fucker\" she demands and you haul her upward by the ankles, pulling her further onto your pulsing dick, her dribbling cunny sucking at your shaft as her deep green inner folds part before your thrusting length. \"I'm not a glass doll, you pussy, just fucking jam it in!\" she screams, fingers clawing at the ground as she bucks upward to get more of you inside her.\n\n", false);
+
+	output("The mouthy bitch apparently forgot who lost the fight, it seems, so you decide to remind her. Using her legs like a lever, you twist her around on your dick, spinning her 180 degrees, leaving her lying on her tits, her ass jutting up as you slam your cock the rest of the way into the olive-skinned nympho. She grunts and starts to say something else, but you push forward and grind her face into the mud before she can get it out, her mouth filling with her own lubrication-soaked dirt with an ecstatic gurgle. Her legs fight against your grip, jerking this way and that, her slick feet nearly slipping out of your hands. You grit your teeth and begin screwing her slavering twat as hard as you can, eager to tame the thrashing cunt of a girl. Slamming her sweat-soaked thighs against your [pc.hip], your thrusts become almost savage, bringing a deep flush to her backside as you slap her snatch against your groin, the secret condom working perfectly, as thin as skin on your [pc.cock " + x + "].\n\n");
+
+	output("As you feel the tickling heat of your orgasm worming its way into your veins, you lean down, putting your weight into every uterus-filling movement while the goblin sputters and screeches her approval, toes curling in your hands. You release her legs to grab the goblin slut's thin waist with both hands and slam against her jutting ass one last time before liquid heat pours from your [pc.cock " + x + "] in thick streams of potent seed. At the cresting grunt, she wraps her legs around your [pc.ass], locking her ankles and using her sore legs to pull your gushing prick as deeply into her fertile loins as possible and keep you there. Rocking against her, you rub her head and breasts through the mud one last time as your loads fill her tummy with the ejaculate she so craved, her narrow belly bulging at the weight of your jizz. You take a moment longer to enjoy the clenching, pulsing depths of the cum dumpster before sliding out an inch and taking hold of the ");
+	if (mode == 0) {
+		output("loose strand you left in your secret cock-shawl. Pulling carefully, you unravel the delicate outer layer, leaving only the sticky strands covering the inner, juice-filled sheath. With a short bark of laughter, you pull out of the whorish girl, the spider silk condom sealing as your tip slides out. ");
+	}
+	else {
+		output("rim of your latex cock-sheath. Pulling carefully, you slowly remove your used condom and tie the open end shut. You look at it and you can see your [pc.cum] inside the condom. ");
+	}
+	output("Then, wresting her feet apart, you unceremoniously dump her to the ground.\n\n");
+
+	output("Squirming right-side up, covered in sweat and mud, the emerald girl's face screws into an expression of confusion as she pokes at the bulge of her abdomen. \"What... that doesn't feel right,\" she mumbles, pushing at her skin with both hands. Checking her cunny with a long, middle finger, she pulls it out clean, devoid of the ivory cream she expected. \"The fuck? A condom?\" she screeches. \"You bastard!\" Pushing at her belly with increasingly frantic motions, her mouth gapes when the seed-loaded balloon bounces right back, still intact. \"Why won't it burst?\" she demands. ");
+	if (mode == 0) {
+		output("You politely inform her that spider silk is terribly strong and oh so sticky. Reaching her fingers into her slit, she tries to pull it out and gasps at the feeling of her inner walls being pulled by the clinging webbing. Despite her best effort, the silk bubble stays right where you left it, snugly glued in place by your binding webbing. You laugh and wish her luck trying to get it out as you gather your clothes and walk away. So full of cum and yet unable to get any of it into her womb, the goblin girl moans helplessly, fingering herself in desperation, as if her orgasm could dislodge the treasure you've left inside of her.");
+	}
+	else {
+		output("You politely inform her that latex is strong and effective at preventing pregnancy. You laugh and wish her luck trying to get it out as you gather your clothes and walk away. So full of cum and yet unable to get any of it into her womb, the goblin girl moans helplessly, fingering herself in desperation, as if her orgasm could dislodge the treasure you've left inside of her.");
+	}
+	processTime(15 + rand(5));
+	pc.orgasm();
+	output("\n\n");
+	CombatManager.genericVictory();
+}
 
 //REQUIRES: AT LEAST ONE DICK AND A COPY OF ATLAS SHRUGGED - MUST NOT BE MONSTROUSLY HUGE
 private function gatsGoblinBoners():void

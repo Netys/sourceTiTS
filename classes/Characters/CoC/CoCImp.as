@@ -33,7 +33,7 @@ package classes.Characters.CoC
 			this.meleeWeapon.attackVerb = "swipe";
 			this.meleeWeapon.attackNoun = "claw";
 			this.meleeWeapon.longName = "claws";
-			this.meleeWeapon.baseDamage.kinetic.damageValue = 1;
+			this.meleeWeapon.baseDamage.kinetic.damageValue = 3;
 			this.meleeWeapon.baseDamage.addFlag(DamageFlag.PENETRATING);
 			this.meleeWeapon.hasRandomProperties = true;
 			
@@ -129,7 +129,7 @@ package classes.Characters.CoC
 			this.cocks = new Array();
 			this.createCock();
 			this.shiftCock(0, weightedRand( { v: GLOBAL.TYPE_DEMONIC, w: 10 }, { v: GLOBAL.TYPE_CANINE, w: 3 }, { v: GLOBAL.TYPE_FELINE, w: 3 }, { v: GLOBAL.TYPE_EQUINE, w: 3 }, { v: GLOBAL.TYPE_TENTACLE, w: 1 }, { v: GLOBAL.TYPE_SNAKE, w: 1 } ));
-			this.cocks[0].cLengthRaw = rand(2) + 11;
+			this.cocks[0].cLengthRaw = rand(5) + 10;
 			this.cocks[0].cThicknessRatioRaw = 1.75;
 			this.cocks[0].cockColor = "red";
 			//balls
@@ -138,10 +138,10 @@ package classes.Characters.CoC
 			//Multiplicative value used for impregnation odds. 0 is infertile. Higher is better.
 			this.cumQualityRaw = 1;
 			this.cumType = GLOBAL.FLUID_TYPE_CUM;
-			this.ballSizeRaw = 1;
-			this.ballFullness = 1;
+			this.ballSizeRaw = 3 * Math.PI;
+			this.ballFullness = 100;
 			//How many "normal" orgams worth of jizz your balls can hold.
-			this.ballEfficiency = 10;
+			this.ballEfficiency = 20;
 			//Scales from 0 (never produce more) to infinity.
 			this.refractoryRate = 6;
 			this.minutesSinceCum = 3650;

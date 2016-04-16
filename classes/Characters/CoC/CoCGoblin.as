@@ -2,6 +2,7 @@ package classes.Characters.CoC
 {
 	import classes.Creature;
 	import classes.Engine.Combat.applyDamage;
+	import classes.Engine.Combat.damageRand;
 	import classes.Engine.Combat.DamageTypes.TypeCollection;
 	import classes.Engine.Combat.rangedCombatMiss;
 	import classes.GameData.CombatAttacks;
@@ -214,37 +215,36 @@ package classes.Characters.CoC
 		protected function goblinDrugAttack(target:Creature):void {
 			var temp2:Number = rand(2);
 			var multiplier:Number = 1; //Higher tier goblins have powerful potions.
-			//if (short == "goblin assassin") multiplier += 0.2;
-			//if (short == "goblin shaman") multiplier += 0.4;
-			//if (short == "goblin warrior") multiplier += 0.5;
-			//if (short == "goblin elder") multiplier += 1;
+			if (short == "goblin assassin") multiplier += 0.2;
+			if (short == "goblin shaman") multiplier += 0.4;
+			if (short == "goblin warrior") multiplier += 0.5;
+			if (short == "goblin elder") multiplier += 1;
 			//multiplier += pc.newGamePlusMod() * 0.5;
 			if(this is CoCTamani) temp2 = rand(5);
-			//if(monster.short == "Tamani's daughters") temp2 = rand(5);
+			if(short == "Tamani's daughters") temp2 = rand(5);
 			var color:String = "red";
 			if(temp2 == 0) color = "red";
 			if(temp2 == 1 && HP() < HPMax()) color = "blue";
-			//if(temp2 == 2) color = "green";
-			//if(temp2 == 3) color = "white";
-			//if(temp2 == 4) color = "black";
+			if(temp2 == 2) color = "green";
+			if(temp2 == 3) color = "white";
+			if(temp2 == 4) color = "black";
 			//Throw offensive potions at the pc
 			if(color != "blue") {
-				//if(monster.short == "Tamani's daughters") output("Tamani uncorks a glass bottle full of " + color + " fluid and swings her arm, flinging a wave of fluid at you.");
-				//else 
-				output(capitalA + short + " uncorks a glass bottle full of " + color + " fluid and swings her arm, flinging a wave of fluid at you.");
+				if(short == "Tamani's daughters") output("Tamani uncorks a glass bottle full of " + color + " fluid and swings her arm, flinging a wave of fluid at you.");
+				else output(capitalA + short + " uncorks a glass bottle full of " + color + " fluid and swings her arm, flinging a wave of fluid at you.");
 			}
 			//Drink blue pots
 			else {
-				//if(monster.short == "Tamani's daughters") {
-					//output("Tamani pulls out a blue vial and uncaps it, then douses the mob with the contents.");
-					//if(monster.HP() < monster.HPMax()) {
-						//output("  Though less effective than ingesting it, the potion looks to have helped the goblins recover from their wounds!\n");
-						//monster.HP(80 * multiplier);
-					//}
-					//else output("  There doesn't seem to be any effect.\n");			
-					//output("\n");
-				//}
-				//else {
+				if(short == "Tamani's daughters") {
+					output("Tamani pulls out a blue vial and uncaps it, then douses the mob with the contents.");
+					if(HP() < HPMax()) {
+						output("  Though less effective than ingesting it, the potion looks to have helped the goblins recover from their wounds!\n");
+						HP(80 * multiplier);
+					}
+					else output("  There doesn't seem to be any effect.\n");
+					output("\n");
+				}
+				else {
 					output(capitalA + short + " pulls out a blue vial and uncaps it, swiftly downing its contents.");
 					if(HP() < HPMax()) {
 						output("  She looks to have recovered from some of her wounds!\n");
@@ -252,11 +252,11 @@ package classes.Characters.CoC
 						if (this is CoCTamani) HP((HPMax() / 4) * multiplier);
 					}
 					else output("  There doesn't seem to be any effect.\n");
-				//}
+				}
 				return;
 			}
 			//Dodge chance!
-			if(rangedCombatMiss(this, target)) {
+			if (rangedCombatMiss(this, target, -1, 1.33)) {
 				output("\nYou narrowly avoid the gush of alchemic fluids!\n");
 			}
 			else {
@@ -265,23 +265,24 @@ package classes.Characters.CoC
 					//Temporary heat
 					output("\nThe red fluids hit you and instantly soak into your skin, disappearing.  Your skin flushes and you feel warm.  Oh no...\n");
 					//if (pc.findStatusAffect(StatusAffects.TemporaryHeat) < 0) pc.createStatusAffect(StatusAffects.TemporaryHeat, 0, multiplier, 0, 0);
-					applyDamage(new TypeCollection( { drug: target.libido() / 10 + target.cor() / 10 + 10 } ), this, target);
+					applyDamage(new TypeCollection( { drug : target.libido() / 10 + target.cor() / 10 + 10 } ), this, target);
 				}
-				//else if (color == "green") {
-					////Green poison
-					//outputText("\nThe greenish fluids splash over you, making you feel slimy and gross.  Nausea plagues you immediately - you have been poisoned!\n", false);
-					//if (pc.findStatusAffect(StatusAffects.Poison) < 0) pc.createStatusAffect(StatusAffects.Poison, 0, multiplier, 0, 0);
-				//}
-				//else if (color == "white") {
-					////sticky flee prevention
-					//outputText("\nYou try to avoid it, but it splatters the ground around you with very sticky white fluid, making it difficult to run.  You'll have a hard time escaping now!\n", false);
-					//if (pc.findStatusAffect(StatusAffects.NoFlee) < 0) pc.createStatusAffect(StatusAffects.NoFlee, 0, 0, 0, 0);
-				//}
-				//else if (color == "black") {
-					////Increase fatigue
-					//outputText("\nThe black fluid splashes all over you and wicks into your skin near-instantly.  It makes you feel tired and drowsy.\n", false);
-					//game.fatigue(10 + rand(25) * multiplier);
-				//}
+				//Green poison
+				if (color == "green") {
+					output("\nThe greenish fluids splash over you, making you feel slimy and gross.  Nausea plagues you immediately - you have been poisoned!\n");
+					//if (pc.findStatusEffect(StatusEffects.Poison) < 0) pc.createStatusEffect(StatusEffects.Poison,0,0,0,0);
+					applyDamage(new TypeCollection( { poison : damageRand(this.rangedDamage().multiply(1.5), 15).getTotal() } ), this, target);
+				}
+				//sticky flee prevention
+				if (color == "white") {
+					output("\nYou try to avoid it, but it splatters the ground around you with very sticky white fluid, making it difficult to run.  You'll have a hard time escaping now!\n");
+					target.createStatusEffect("Flee Disabled", 0, 0, 0, 0, false, "Icon_Splatter", "You are all sticky and can't run away!", true, 0);
+				}
+				//Increase fatigue
+				if (color == "black") {
+					output("\nThe black fluid splashes all over you and wicks into your skin near-instantly.  It makes you feel tired and drowsy.\n");
+					target.energy(-(10 + rand(25)));
+				}
 			}
 		}
 			
@@ -296,27 +297,27 @@ package classes.Characters.CoC
 				if (det == 1) output(capitalA + short + " grabs her heel and lifts it to her head in an amazing display of flexibility.  She caresses her snatch and gives you a come hither look.");
 				if (det == 2) output(capitalA + short + " bends over, putting on a show and jiggling her heart-shaped ass at you.  She looks over her shoulder and sucks on her finger, batting her eyelashes.");
 			}
-			//else if (short == "goblin warrior") {
-				//if (det == 0) outputText(capitalA + short + " runs her hands along her metal-clad body and blows you a kiss. \"<i>Why not walk on the wild side?</i>\" she asks.", false);
-				//if (det == 1) outputText(capitalA + short + " grabs her heel and lifts it to her head in an amazing display of flexibility despite the armor she's wearing.  She caresses her snatch and gives you a come hither look.", false);
-				//if (det == 2) outputText(capitalA + short + " bends over, putting on a show and jiggling her heart-shaped ass at you.  She looks over her shoulder and sucks on her finger, batting her eyelashes.", false);
-			//}
-			//else if (short == "goblin shaman") {
-				//if (det == 0) outputText(capitalA + short + " runs her hands along her leather-clad body and blows you a kiss. \"<i>Why not walk on the wild side?</i>\" she asks.", false);
-				//if (det == 1) outputText(capitalA + short + " grabs her heel and lifts it to her head in an amazing display of flexibility.  She lifts her loincloth and caresses her snatch and gives you a come hither look.", false);
-				//if (det == 2) outputText(capitalA + short + " bends over, putting on a show and jiggling her heart-shaped ass at you.  She looks over her shoulder and sucks on her finger, batting her eyelashes.", false);
-			//}
-			//else if (short == "goblin elder") {
-				//if (det == 0) outputText(capitalA + short + " runs her hands along her bone-clad body and blows you a kiss. \"<i>Why not walk on the wild side?</i>\" she asks.", false);
-				//if (det == 1) outputText(capitalA + short + " grabs her heel and lifts it to her head in an amazing display of flexibility.  She lifts her loincloth and caresses her snatch and gives you a come hither look.", false);
-				//if (det == 2) outputText(capitalA + short + " bends over, putting on a show and jiggling her heart-shaped ass at you.  She looks over her shoulder and sucks on her finger, batting her eyelashes.", false);
-			//}
+			else if (short == "goblin warrior") {
+				if (det == 0) output(capitalA + short + " runs her hands along her metal-clad body and blows you a kiss. \"<i>Why not walk on the wild side?</i>\" she asks.");
+				if (det == 1) output(capitalA + short + " grabs her heel and lifts it to her head in an amazing display of flexibility despite the armor she's wearing.  She caresses her snatch and gives you a come hither look.");
+				if (det == 2) output(capitalA + short + " bends over, putting on a show and jiggling her heart-shaped ass at you.  She looks over her shoulder and sucks on her finger, batting her eyelashes.");
+			}
+			else if (short == "goblin shaman") {
+				if (det == 0) output(capitalA + short + " runs her hands along her leather-clad body and blows you a kiss. \"<i>Why not walk on the wild side?</i>\" she asks.");
+				if (det == 1) output(capitalA + short + " grabs her heel and lifts it to her head in an amazing display of flexibility.  She lifts her loincloth and caresses her snatch and gives you a come hither look.");
+				if (det == 2) output(capitalA + short + " bends over, putting on a show and jiggling her heart-shaped ass at you.  She looks over her shoulder and sucks on her finger, batting her eyelashes.");
+			}
+			else if (short == "goblin elder") {
+				if (det == 0) output(capitalA + short + " runs her hands along her bone-clad body and blows you a kiss. \"<i>Why not walk on the wild side?</i>\" she asks.");
+				if (det == 1) output(capitalA + short + " grabs her heel and lifts it to her head in an amazing display of flexibility.  She lifts her loincloth and caresses her snatch and gives you a come hither look.");
+				if (det == 2) output(capitalA + short + " bends over, putting on a show and jiggling her heart-shaped ass at you.  She looks over her shoulder and sucks on her finger, batting her eyelashes.");
+			}
 			var lustDmg:int = rand(target.libido() / 10) + 8;
-			//if (monster.short == "goblin assassin") lustDmg *= 1.4;
-			//if (monster.short == "goblin warrior") lustDmg *= 1.6;
-			//if (monster.short == "goblin shaman") lustDmg *= 1.6;
-			//if (monster.short == "goblin elder") lustDmg *= 2;
-			applyDamage(new TypeCollection( { tease: lustDmg }), this, target);
+			if (short == "goblin assassin") lustDmg *= 1.4;
+			if (short == "goblin warrior") lustDmg *= 1.6;
+			if (short == "goblin shaman") lustDmg *= 1.6;
+			if (short == "goblin elder") lustDmg *= 2;
+			applyDamage(new TypeCollection( { tease: lustDmg } ), this, target);
 			output("  The display distracts you long enough to prevent you from taking advantage of her awkward pose, leaving you more than a little flushed.\n\n");
 		}
 	}
