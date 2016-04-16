@@ -4,9 +4,10 @@ import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
 // TODO:
-// Hel hook
 // xmas event
 public function exploreMountain():void { 
+	if (helSexualAmbush()) return;
+	
 	showName("\nMOUNTAIN");
 	IncrementFlag("COC.EXPLORED_MOUNTAIN");
 	var chooser:Number = rand(4);
@@ -16,12 +17,6 @@ public function exploreMountain():void {
 	////BUILD LIST OF CHOICES
 	var choice:Array = [];
 	var chance:Array = [];
-	
-	//Helia monogamy fucks
-	//if (flags[kFLAGS.PC_PROMISED_HEL_MONOGAMY_FUCKS] == 1 && flags[kFLAGS.HEL_RAPED_TODAY] == 0 && rand(10) == 0 && pc.gender > 0 && !kGAMECLASS.helScene.followerHel()) {
-		//kGAMECLASS.helScene.helSexualAmbush();
-		//return;
-	//}
 	
 	//Discover 'high mountain' at level 5 or 40 explores of mountain
 	if ((pc.level >= 5 && rand(6) == 0 || flags["COC.EXPLORED_MOUNTAIN"] >= 40 && rand(2) == 0) && flags["COC.EXPLORED_HIGH_MOUNTAIN"] == undefined) {

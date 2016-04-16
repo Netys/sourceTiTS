@@ -3,23 +3,17 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-
 // TODO:
-// Helia monogamy encounter
 // Izma lost kids
 public function boatExplore():void
 {
+	if (helSexualAmbush()) return;
+	
 	userInterface.setLocation("\nLAKE", "EXPLORATION", "PLANET: MARETH");
 	
 	IncrementFlag("COC.EXPLORED_BOAT");
 	
 	processTime(20 + rand(20)); // take your time looking for trouble!
-	
-	//Helia monogamy fucks
-	//if (flags[kFLAGS.PC_PROMISED_HEL_MONOGAMY_FUCKS] == 1 && flags[kFLAGS.HEL_RAPED_TODAY] == 0 && rand(10) == 0 && pc.gender > 0 && !kGAMECLASS.helScene.followerHel()) {
-		//kGAMECLASS.helScene.helSexualAmbush();
-		//return;
-	//}
 	
 	//3% chance of finding lost daughters
 	//if (rand(100) <= 3 && flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00412] > 0 && kGAMECLASS.izmaScene.izmaFollower()) {

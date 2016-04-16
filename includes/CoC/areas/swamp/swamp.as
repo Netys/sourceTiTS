@@ -4,9 +4,10 @@ import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
 // TODO:
-// (sigh) Hel encounter...
 // Ember? It's a follower, so big maybe
 public function exploreSwamp():void {
+	if (helSexualAmbush()) return;
+	
 	showName("\nSWAMP");
 	IncrementFlag("COC.EXPLORED_SWAMP");
 	
@@ -27,11 +28,6 @@ public function exploreSwamp():void {
 	//KIHA X HEL THREESOME!
 	//if (!kGAMECLASS.kihaFollower.followerKiha() && cor() < 60 && flags[kFLAGS.KIHA_AFFECTION_LEVEL] >= 1 && flags[kFLAGS.HEL_FUCKBUDDY] > 0 && pc.hasCock() && flags[kFLAGS.KIHA_AND_HEL_WHOOPIE] == 0) {
 		//kGAMECLASS.kihaFollower.kihaXSalamander();
-		//return;
-	//}
-	//Helia monogamy fucks
-	//if (flags[kFLAGS.PC_PROMISED_HEL_MONOGAMY_FUCKS] == 1 && flags[kFLAGS.HEL_RAPED_TODAY] == 0 && rand(10) == 0 && pc.gender > 0 && !kGAMECLASS.helFollower.followerHel()) {
-		//kGAMECLASS.helScene.helSexualAmbush();
 		//return;
 	//}
 	//if (flags[kFLAGS.TOOK_EMBER_EGG] == 0 && flags[kFLAGS.EGG_BROKEN] == 0 && flags[kFLAGS.TIMES_EXPLORED_SWAMP] > 0 && (flags[kFLAGS.TIMES_EXPLORED_SWAMP] % 40 == 0)) {

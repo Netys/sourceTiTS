@@ -6,12 +6,13 @@ import classes.Engine.Utility.*;
 
 // TODO:
 // exgartuan
-// Helia encounter
 // camp chest
 // bigJunkDesertScene
 // Phylla
 public function exploreDesert():void
 {
+	if (helSexualAmbush()) return;
+	
 	showName("\nDESERT");
 	IncrementFlag("COC.EXPLORED_DESERT");
 	
@@ -20,12 +21,6 @@ public function exploreDesert():void
 	////BUILD LIST OF CHOICES
 	var choice:Array = [];
 	var chance:Array = [];
-	
-	//Helia monogamy fucks
-	//if (flags["COC.PC_PROMISED_HEL_MONOGAMY_FUCKS"] == 1 && flags[kFLAGS.HEL_RAPED_TODAY] == 0 && rand(10) == 0 && pc.gender > 0 && !kGAMECLASS.helScene.followerHel()) {
-		//kGAMECLASS.helScene.helSexualAmbush();
-		//return;
-	//}
 	
 	if(flags["COC.EXPLORED_DESERT"] % 20 == 0 && (flags["COC.TEL_ADRE_KNOWN"] == undefined || flags["COC.TEL_ADRE_KNOWN"] == 0))
 	{

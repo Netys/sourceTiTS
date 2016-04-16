@@ -54,10 +54,8 @@ public function doExplore():void
 //Try to find a new location - called from doExplore once the first location is found
 public function tryDiscover():void
 {
-	//if (flags[kFLAGS.PC_PROMISED_HEL_MONOGAMY_FUCKS] == 1 && flags[kFLAGS.HEL_RAPED_TODAY] == 0 && rand(10) == 0 && player.gender > 0 && !kGAMECLASS.helFollower.followerHel()) {
-		//kGAMECLASS.helScene.helSexualAmbush();
-		//return;
-	//}
+	if (helSexualAmbush()) return;
+	
 	showName("SHIFTING\nLANDS");
 	IncrementFlag("COC.EXPLORED");
 	
@@ -189,8 +187,8 @@ public function canExplore():Boolean {
 		}
 		//canExplore = false;
 	} else {
-		if (hours == 19) outputText("The sun is close to the horizon, getting ready to set. ");
-		if (hours == 20) outputText("The sun has already set below the horizon. The sky glows orange. ");
+		if (hours == 19) output("The sun is close to the horizon, getting ready to set. ");
+		if (hours == 20) output("The sun has already set below the horizon. The sky glows orange. ");
 		output("It's light outside, a good time to explore and forage for supplies with which to fortify your camp.\n\n");
 	}
 	return canExplore;
@@ -296,9 +294,9 @@ public function cocGeneralAreasExplore():Boolean {
 public function genericGobImpEncounters(even:Boolean = false):void {
 	var impGob:Number = 5;
 	if (!even) {
-		if (pc.totalCocks() > 0) impGob--;
+		if (pc.hasCock()) impGob--;
 		if (pc.hasVagina()) impGob++;
-		if (pc.fertility() >= 30) impGob++;
+		if (pc.fertility() >= 2) impGob++;
 		if (pc.cumQ() >= 200) impGob--;
 		//if (pc.findPerk(PerkLib.PiercedLethite) >= 0) {
 			//if (impGob <= 3) impGob += 2;

@@ -10,6 +10,8 @@ import classes.Engine.Utility.*;
 // Isabella encounter
 // Isabella/Hel interactions
 public function explorePlains():void { 
+	if (helSexualAmbush()) return;
+	
 	showName("\nPLAINS");
 	IncrementFlag("COC.EXPLORED_PLAINS");
 	
@@ -35,11 +37,6 @@ public function explorePlains():void {
 		//return;
 	//}
 	
-	//Helia monogamy fucks
-	//if (flags["COC.PC_PROMISED_HEL_MONOGAMY_FUCKS"] == 1 && flags["COC.HEL_RAPED_TODAY"] == 0 && rand(10) == 0 && pc.gender > 0 && !kGAMECLASS.helScene.followerHel()) {
-		//kGAMECLASS.helScene.helSexualAmbush();
-		//return;
-	//}
 	//Find Niamh
 	if (flags["COC.NIAMH_MOVED_OUT_COUNTER"] < timeAsStamp - 24 * 60 && flags["COC.NIAMH_MOVED_OUT_COUNTER"] != -1) {
 		niamhPostTelAdreMoveOut();

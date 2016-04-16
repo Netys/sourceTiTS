@@ -1150,7 +1150,7 @@ private function helChatMenu():void {
 		if (flags["COC.HEL_TALKED_ABOUT_BERSERKING"] != 1) addButton(1, "Berserking?", berserkMode);
 		if (flags["COC.HEL_TALKED_ABOUT_ATTACKING_YOU"] != 1) addButton(2, "Y Attack Me", askHelAboutAttackingYou);
 		addButton(3, "Seconds", askMommaHelForSecondsAfterDinner);
-		//addButton(4, "MinosRBad", telHelToGetOffTheMInoCock);
+		addButton(4, "MinosRBad", telHelToGetOffTheMInoCock);
 		addButton(14, "Leave", leaveHelAfterMinoThreeSomeChat);
 	}
 }
@@ -1858,7 +1858,7 @@ private function satisfyHelSoSheStopsMinoFucking():void {
 	
 	output("\n\n\"<i>Well, that's a hell of an offer,</i>\" she laughs, rolling over to straddle your [pc.hips].  \"<i>Careful you don't make a promise you can't keep, lover mine...  We salamanders have incredible libidos.  Would be a shame if you couldn't keep up...</i>\"");
 	//{If PC has high libido}
-	if(pc.libido() >= 50) {
+	if(pc.libido() >= 50 || pc.lustMin() >= 33) {
 		output("\n\nYou grab Hel's shoulders and throw her onto the ground, your ");
 		if(pc.hasCock()) output("[pc.cock] stiffening, ready to go again");
 		if(pc.isHerm()) output(" and your ");
@@ -1884,20 +1884,21 @@ private function satisfyHelSoSheStopsMinoFucking():void {
 
 //Hel Sexual Ambush
 //(Proc's once per day when [Exploring] anywhere)
-public function helSexualAmbush():void {
+public function helSexualAmbush():Boolean {
+	if (!(flags["COC.PC_PROMISED_HEL_MONOGAMY_FUCKS"] == 1 && flags["COC.HEL_RAPED_TODAY"] != days && rand(10) == 0 && pc.hasGenitals() && !followerHel()))
+		return false;
+	
+	processTime(5 + rand(10));
 	clearOutput();
-	output("As you make your way around, you hear footfalls rapidly approaching.  Alarmed, you lift your [pc.mainWeapon] and spin - just in time for a blazing salamander to bull-rush you to the ground.  The two of you tumble back, eventually coming to a stop with Hel straddling you, already throwing off her scale bikini and clawing at your [pc.gear] - you can see that her thighs are slick with her juices and her skin is flushed with arousal.");
+	output("As you make your way around, you hear footfalls rapidly approaching.  Alarmed, you [pc.readyWeapon] and spin - just in time for a blazing salamander to bull-rush you to the ground.  The two of you tumble back, eventually coming to a stop with Hel straddling you, already throwing off her scale bikini and clawing at your [pc.gear] - you can see that her thighs are slick with her juices and her skin is flushed with arousal.");
 	
 	output("\n\n\"<i>Come on, [pc.name],</i>\" she growls, throwing her top aside, letting her big, bouncy breasts free. \"<i>You wanted me not to fuck 'taurs?  Fine... but I NEED you.  NOW!</i>\"");
+	//(Raise PC lust; Display sex options)
 	pc.lust(10 + pc.libido() / 20);
 	if(pc.lust() < 33) pc.lust(33, false);
 	flags["COC.HEL_RAPED_TODAY"] = days;
-	//(Raise PC lust; Display sex options)
-
-	// TODO Fix this?
-	// Why is this the only place in the whole game where buttonEvents is directly written to?
-//Got rid of this, now handled by passing true:	kGAMECLASS.buttonEvents[9] = pussyOutOfHelSexAmbush;
 	helFuckMenu(true);
+	return true;
 }
 
 //[Leave] (From Sexual Ambush)

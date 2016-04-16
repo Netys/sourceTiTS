@@ -979,6 +979,10 @@ package classes.GameData
 			else
 			{
 				output("You choose not to act.");
+				
+				for (var i:int = 0; i < _hostiles.length; i++)
+					if (_hostiles[i].hasOwnProperty("HandleAction")) _hostiles[i].HandleAction({isWait: true});
+				
 				if (_hostiles.length == 1 && _hostiles[0] is CrystalGooT1 && (_hostiles[0] as CrystalGooT1).ShouldIntercept({isWait: true}))
 				{
 					(_hostiles[0] as CrystalGooT1).SneakSqueezeAttackReaction( { isWait: true } );

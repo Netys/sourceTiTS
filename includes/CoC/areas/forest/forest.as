@@ -8,26 +8,24 @@ import classes.Engine.Utility.*;
 // Tamani daughters
 // Jojo corruption, rape and combat
 // Marble meeting
-// Helia monogamy encounter
 // dick-dragging
 public function exploreForest():void
 { 
+	if (helSexualAmbush()) return;
+	
 	showName("\nFOREST");
 	//Increment forest exploration counter.
 	IncrementFlag("COC.EXPLORED_FOREST");
 	
 	processTime(20 + rand(20)); // take your time looking for trouble!
 	
-	//Helia monogamy fucks
-	//if (flags[kFLAGS.PC_PROMISED_HEL_MONOGAMY_FUCKS] == 1 && flags[kFLAGS.HEL_RAPED_TODAY] == 0 && rand(10) == 0 && pc.gender > 0 && !kGAMECLASS.helScene.followerHel()) {
-		//kGAMECLASS.helScene.helSexualAmbush();
-		//return;
-	//}
 	//Chance to discover deepwoods
 	if (flags["COC.EXPLORED_FOREST"] >= 20 && flags["COC.EXPLORED_DEEPWOODS"] == undefined) {
 		flags["COC.EXPLORED_DEEPWOODS"] = 0;
 		output("After exploring the forest so many times, you decide to really push it, and plunge deeper and deeper into the woods.  The further you go the darker it gets, but you courageously press on.  The plant-life changes too, and you spot more and more lichens and fungi, many of which are luminescent.  Finally, a wall of tree-trunks as wide as houses blocks your progress.  There is a knot-hole like opening in the center, and a small sign marking it as the entrance to the 'Deepwoods'.  You don't press on for now, but you could easily find your way back to explore the Deepwoods.\n\n<b>Deepwoods exploration unlocked!</b>");
-		doNext(returnToCampUseOneHour);
+		processTime(30);
+		clearMenu();
+		addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 		return;
 	}
 

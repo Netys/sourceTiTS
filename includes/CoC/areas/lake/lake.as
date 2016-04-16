@@ -7,11 +7,12 @@ import classes.Engine.Utility.*;
 
 // TODO:
 // Pony April 1st event
-// Helia monogamy encounter
 // latexGirl
 // dick-dragging
 public function exploreLake():void
 {
+	if (helSexualAmbush()) return;
+	
 	showName("\nLAKE SHORE");
 	//Increment exploration count
 	IncrementFlag("COC.EXPLORED_LAKE");
@@ -20,11 +21,6 @@ public function exploreLake():void
 	
 	//if (kGAMECLASS.poniesYN()) return;
 
-	//Helia monogamy fucks
-	//if (flags[kFLAGS.PC_PROMISED_HEL_MONOGAMY_FUCKS] == 1 && flags[kFLAGS.HEL_RAPED_TODAY] == 0 && rand(10) == 0 && pc.gender > 0 && !kGAMECLASS.helScene.followerHel()) {
-		//kGAMECLASS.helScene.helSexualAmbush();
-		//return;
-	//}
 	var choice:Array = [];
 	var chance:Array = [];
 

@@ -5,12 +5,13 @@ import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
 // TODO:
-// Hel hook (meh... she is everywhere... who were complaining about creepy Arian?)
 // xmas event (rly?)
 // Minotaur sons (IF pregs done)
 // Mino addict scene (IF addiction done)
 // Phoenix scene (IF follower hel done)
 public function exploreHighMountain():void {
+	if (helSexualAmbush()) return;
+	
 	showName("HIGH\nMOUNTAIN");
 	IncrementFlag("COC.EXPLORED_HIGH_MOUNTAIN");
 	
@@ -18,12 +19,6 @@ public function exploreHighMountain():void {
 	
 	var choice:Array = [];
 	var chance:Array = [];
-	
-	//Helia monogamy fucks
-	//if (flags[kFLAGS.PC_PROMISED_HEL_MONOGAMY_FUCKS] == 1 && flags[kFLAGS.HEL_RAPED_TODAY] == 0 && rand(10) == 0 && pc.gender > 0 && !kGAMECLASS.helScene.followerHel()) {
-		//kGAMECLASS.helScene.helSexualAmbush();
-		//return;
-	//}
 	
 	//Gats xmas adventure!
 	//if (rand(5) == 0 && pc.gender > 0 && isHolidays() && flags[kFLAGS.GATS_ANGEL_DISABLED] == 0 && flags[kFLAGS.GATS_ANGEL_GOOD_ENDED] == 0 && (flags[kFLAGS.GATS_ANGEL_QUEST_BEGAN] == 0 || pc.hasKeyItem("North Star Key") >= 0)) {
@@ -55,13 +50,8 @@ public function exploreHighMountain():void {
 		//return;
 	//}
 	
-	//if (kGAMECLASS.dungeons.checkPhoenixTowerClear() && rand(4) == 0) {
-		//phoenixScene.encounterPhoenix();
-		//return;
-	//}
-	
 	//Minerva
-	if (flags["COC.EXPLORED_HIGH_MOUNTAIN"] % 8 == 0 && flags["COC.MET_MINERVA"] < 4) {
+	if (flags["COC.EXPLORED_HIGH_MOUNTAIN"] % 8 == 0 && Flag("COC.MET_MINERVA") < 4) {
 		encounterMinerva();
 		return;
 	}
@@ -70,6 +60,11 @@ public function exploreHighMountain():void {
 	if (pc.hasItem(new CoCOvipositionElixir()) || IncrementFlag("COC.TIMES_MET_CHICKEN_HARPY", false) <= 0) {
 		choice.push(chickenHarpy);
 		chance.push(pc.hasItem(new CoCOvipositionElixir(), 2) ? 2 : 6);
+	}
+	
+	if (PhoenixTowerCleared()) {
+		choice.push(encounterPhoenix);
+		chance.push(3);
 	}
 	
 	// Basilisk!

@@ -59,6 +59,7 @@ include "areas/highmountain/HarpyScene.as";
 include "areas/highmountain/highmountain.as";
 include "areas/highmountain/IzumiScene.as";
 include "areas/highmountain/MinervaScene.as";
+include "areas/highmountain/phoenix.as";
 include "areas/intro.as";
 include "areas/lake/CalluScene.as";
 include "areas/lake/FetishCultistScene.as";

@@ -5,8 +5,9 @@ import classes.Engine.Utility.*;
 
 // TODO:
 // Halloween event
-// Hel ambush
 public function exploreDeepwoods():void { 
+	if (helSexualAmbush()) return;
+	
 	clearOutput();
 	showName("\nDEEPWOODS");
 	//Increment deepwoods exploration counter.
@@ -88,19 +89,16 @@ public function exploreDeepwoods():void {
 			//}
 		//}
 	//}
-	//Hel jumps you for sex.
-	//if (flags[kFLAGS.PC_PROMISED_HEL_MONOGAMY_FUCKS] == 1 && flags[kFLAGS.HEL_RAPED_TODAY] == 0 && rand(10) == 0 && pc.gender > 0 && !kGAMECLASS.helScene.followerHel()) {
-		//kGAMECLASS.helScene.helSexualAmbush();
-		//return;
-	//}
 	
 	WeightedRandom(choice, chance, true)();
-};
+}
 
 public function deepwoodsWastedTime():void {
 	clearOutput();
 	output("You enjoy a peaceful walk in the deepwoods.  It gives you time to think over the recent, disturbing events.");
 	pc.slowStatGain("p", 0.5);
 	pc.slowStatGain("i", 1);
-	doNext(returnToCampUseOneHour);
+	processTime(15);
+	clearMenu();
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
