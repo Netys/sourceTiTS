@@ -81,19 +81,17 @@ package classes.Items.Transformatives
 				changes++;
 			}
 			//Effect script a:  (human wang)
-			if (pc.hasCock() && changes < changeLimit) {
-				if (rand(3) == 0 && pc.cockTotal() > pc.cockTotal(GLOBAL.TYPE_HUMAN)) {
-					var x:int = 0;
-					for (x = 0; x < pc.cockTotal() && pc.cocks[x].cType != GLOBAL.TYPE_HUMAN && pc.cockTypeUnlocked(x, GLOBAL.TYPE_HUMAN); x++) { }
-					if (x >= pc.cockTotal()) {
-						output("\n\n" + pc.cockTypeLockedMessage());
-					}
-					else
-					{
-						output("\n\nA strange tingling begins behind your " + pc.cockDescript(x) + ", slowly crawling up across its entire length.  While neither particularly arousing nor uncomfortable, you do shift nervously as the feeling intensifies.  You resist the urge to undo your [pc.gear] to check, but by the feel of it, your penis is shifting form.  Eventually the transformative sensation fades, <b>leaving you with a completely human penis.</b>");
-						pc.shiftCock(x, GLOBAL.TYPE_HUMAN);
-						changes++;
-					}
+			if (pc.hasCock() && changes < changeLimit && rand(3) == 0 && pc.cockTotal() > pc.cockTotal(GLOBAL.TYPE_HUMAN)) {
+				var x:int = 0;
+				for (x = 0; x < pc.cockTotal() && !(pc.cocks[x].cType == GLOBAL.TYPE_HUMAN || pc.cockTypeUnlocked(x, GLOBAL.TYPE_HUMAN)); x++) { }
+				if (x >= pc.cockTotal()) {
+					output("\n\n" + pc.cockTypeLockedMessage());
+				}
+				else
+				{
+					output("\n\nA strange tingling begins behind your " + pc.cockDescript(x) + ", slowly crawling up across its entire length.  While neither particularly arousing nor uncomfortable, you do shift nervously as the feeling intensifies.  You resist the urge to undo your [pc.gear] to check, but by the feel of it, your penis is shifting form.  Eventually the transformative sensation fades, <b>leaving you with a completely human penis.</b>");
+					pc.shiftCock(x, GLOBAL.TYPE_HUMAN);
+					changes++;
 				}
 			}
 			//Appearnace Change
@@ -115,25 +113,27 @@ package classes.Items.Transformatives
 					pc.skinTone = "albino";
 					pc.skinType = GLOBAL.SKIN_TYPE_SKIN;
 					pc.clearSkinFlags();
+					changes++;
 				}
 				else {
 					output("\n\nA warmth begins in your belly, slowly spreading through your torso and appendages. The heat builds, becoming uncomfortable, then painful, then nearly unbearable. Your eyes unfocus from the pain, and by the time the burning sensation fades, you can already tell something's changed. You raise a hand, staring at the sable flesh. Your eyes are drawn to the veins in the back of your hand, brightening to an ashen tone as you watch.  <b>You have black skin, with white veins!</b>");
 					pc.skinTone = "sable";
 					pc.skinType = GLOBAL.SKIN_TYPE_SKIN;
 					pc.clearSkinFlags();
+					changes++;
 				}
-				changes++;
 			}
 			//Legs
-			if (changes < changeLimit && pc.hasPerk("Incorporeality") && InCollection(pc.skinTone, skinColors) && pc.hairType == GLOBAL.HAIR_TYPE_TRANSPARENT) {
+			if (changes < changeLimit && !pc.hasPerk("Incorporeality") && InCollection(pc.skinTone, skinColors) && pc.hairType == GLOBAL.HAIR_TYPE_TRANSPARENT) {
 				//(ghost-legs!  Absolutely no problem with regular encounters, though! [if you somehow got this with a centaur it'd probably do nothing cuz you're not supposed to be a centaur with ectoplasm ya dingus])
 				output("\n\nAn otherworldly sensation begins in your belly, working its way to your " + pc.hipDescript() + ". Before you can react, your " + pc.legs() + " begin to tingle, and you fall on your rump as a large shudder runs through them. As you watch, your [pc.lowerBody] shimmers, becoming ethereal, wisps rising from the newly ghost-like " + pc.legs() + ". You manage to rise, surprised to find your new, ghostly form to be as sturdy as its former corporeal version. Suddenly, like a dam breaking, fleeting visions and images flow into your head, never lasting long enough for you to concentrate on one. You don't even realize it, but your arms fly up to your head, grasping your temples as you groan in pain. As fast as the mental bombardment came, it disappears, leaving you with a surprising sense of spiritual superiority.  <b>You have ghost [pc.lowerBody]!</b>\n\n");
 				output("<b>(Gained Perk:  Incorporeality</b>)");
 				pc.createPerk("Incorporeality", 0, 0, 0, 0, "Allows you to fade into a ghost-like state and temporarily possess others.");
+				changes++;
 			}
 			//Effect Script 8: 100% chance of healing
 			if (changes == 0) {
-				output("You feel strangely refreshed, as if you just gobbled down a bottle of sunshine.  A smile graces your lips as vitality fills you.  ");
+				output("\n\nYou feel strangely refreshed, as if you just gobbled down a bottle of sunshine.  A smile graces your lips as vitality fills you.  ");
 				pc.HP(pc.level * 5 + 10);
 				changes++;
 			}

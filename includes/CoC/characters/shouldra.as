@@ -716,6 +716,7 @@ private function ghostBJFinisher(inside:Boolean):void {
 	else {
 		output("She wobbles almost exaggeratedly before falling sideways, smacking her head against the ground and sending up a small splash of cum.  If she felt any pain, however, she doesn't react to it at all, staring vacantly at a dilapidated building and drooling slightly.  That outta teach her to try to pull a fast one on you twice, you figure.  As you stride past her, you tug her pants down to her knees and scoop out a good amount of ectoplasm from her vagina.  You reach into her pocket and grab a bottle (honking her boob for good measure and eliciting an aroused twitch), dumping the goo in and stuffing it in your pack.  She'll probably find a goblin eventually, you figure as you begin your journey back to the camp.");
 	}
+	output("\n\n");
 	
 	processTime(25 + rand(5));
 	pc.orgasm();
@@ -741,7 +742,7 @@ private function dewormYourGhost():void {
 	output("\n\n");
 	pc.lust(15);
 	output("There's silence for a moment, then you are almost rendered unconscious as she cries, \"<i>NOOOOOOOOPE,</i>\" telepathically, surging out of your body in record time. She corporealizes and backs away from you until she bumps into one of the ruined buildings. Then, she's off, booking it down the street to get as far away from you as possible. You shrug, figuring at the very least you dealt with her arousal, albeit in an unexpected way, and begin your trek back to your camp.");
-	
+	output("\n\n");
 	IncrementFlag("COC.SHOULDRA_WORM_SCENE_COUNTER");
 	
 	processTime(25 + rand(5));

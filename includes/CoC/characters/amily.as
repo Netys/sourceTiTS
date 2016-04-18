@@ -60,6 +60,44 @@ public function amilyCombatStart():void {
 	CombatManager.beginCombat();
 }
 
+public function followerCampMenuBlurbAmily(showInteractButton:Boolean):void {
+	if (amilyFollower() && !amilyCorrupt() && !showInteractButton) {
+		if (flags["COC.FUCK_FLOWER_LEVEL"] >= 4 && flags["COC.FUCK_FLOWER_KILLED"] == undefined)
+			output("Amily has relocated her grass bedding to the opposite side of the camp from the strange tree; every now and then, she gives it a suspicious glance, as if deciding whether to move even further.\n\n");
+		else output("A surprisingly tidy nest of soft grasses and sweet-smelling herbs has been built close to your bedroll. A much-patched blanket draped neatly over the top is further proof that Amily sleeps here. She changes the bedding every few days, to ensure it stays as nice as possible.\n\n");
+	}
+	
+	if (amilyFollower() && !amilyCorrupt() && flags["COC.AMILY_BLOCK_COUNTDOWN_BECAUSE_CORRUPTED_JOJO"] == undefined && showInteractButton) {
+		output("Amily is currently strolling around your camp, ");
+		temp = rand(6);
+		if (temp == 0) {
+			output("dripping water and stark naked from a bath in the stream");
+			if (flags["COC.RATHAZUL_IN_CAMP"] == 1) outputText(".  Rathazul glances over and immediately gets a nosebleed");
+		}
+		else if (temp == 1) output("slouching in the shade of some particularly prominent rocks, whittling twigs to create darts for her blowpipe");
+		else if (temp == 2) output("dipping freshly-made darts into a jar of something that looks poisonous");
+		else if (temp == 3) output("eating some of your supplies");
+		else if (temp == 4) output("and she flops down on her nest to have a rest");
+		else output("peeling the last strips of flesh off of an imp's skull and putting it on a particularly flat, sun-lit rock to bleach as a trophy");
+		output(".\n\n");
+		addButton(followerBtnNum++, "Amily", function():* { processTime(5); amilyFollowerEncounter() } );
+	}
+	//Amily out freaking Urta?
+	//else if (flags[kFLAGS.AMILY_VISITING_URTA] == 1 || flags[kFLAGS.AMILY_VISITING_URTA] == 2) {
+		//outputText("Amily's bed of grass and herbs lies empty, the mouse-woman still absent from her sojourn to meet your other lover.\n\n", false);
+	//}
+	
+	if (amilyFollower() && amilyCorrupt() && flags["COC.AMILY_BLOCK_COUNTDOWN_BECAUSE_CORRUPTED_JOJO"] == undefined && flags["COC.FOLLOWER_AT_FARM_AMILY"] == undefined) {
+		output("Sometimes you hear a faint moan from not too far away. No doubt the result of your slutty toy mouse playing with herself.\n\n");
+		if (showInteractButton) addButton(followerBtnNum++, "Amily", function():* { processTime(5); amilyFollowerEncounter() } );
+	}
+}
+
+private var followerCampMenuBlurbAmilyHook: * = followerCampMenuBlurbAmilyGrapple();
+private function followerCampMenuBlurbAmilyGrapple():* {
+	followerCampMenuBlurb.push(followerCampMenuBlurbAmily);
+}
+
 //public function AmilyScene()
 //{
 	//pregnancy = new PregnancyStore(kFLAGS.AMILY_PREGNANCY_TYPE, kFLAGS.AMILY_INCUBATION, kFLAGS.AMILY_BUTT_PREGNANCY_TYPE, kFLAGS.AMILY_OVIPOSITED_COUNTDOWN);

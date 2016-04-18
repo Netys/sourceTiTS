@@ -1779,7 +1779,7 @@ package classes.Engine.Utility
 				return false;
 			}
 			
-			if(!forced && !canVagPreg()) {
+			if(!forced && (!canVagPreg() || pc.fertility() <= 0)) {
 				return false; // No vagina or already pregnant, can't go into heat.
 			}
 			
@@ -1819,7 +1819,7 @@ package classes.Engine.Utility
 		* Second parameter: intensity, an integer multiplier that can increase the duration and intensity. Defaults to 1.
 		*/
 		public static function goIntoRut(pc:Creature, out:Boolean, intensity:int = 1):Boolean {
-			if (!pc.hasCock()) {
+			if (!pc.hasCock() || pc.virility() <= 0) {
 				// No cocks, can't go into rut.
 				return false;
 			}

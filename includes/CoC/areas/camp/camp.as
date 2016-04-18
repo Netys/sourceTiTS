@@ -70,19 +70,22 @@ public function campFollowersMenu(descOnly:Boolean = false):void {
 	}
 	followerBtnNum = 0;
 	for each (var name:* in followerCampMenuBlurb) 
+	{
 		name(!descOnly);
+		if (followerBtnNum == 14) followerBtnNum++;
+	}
 	addButton(14,"Back",mainGameMenu);
 }
 
 public function loversCount():int {
 	var counter:Number = 0;
-	//if(arianScene.arianFollower()) counter++;
+	if(arianFollower()) counter++;
 	//if(followerHel()) counter++;
 	////Izma!
 	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00238] == 1 && flags[kFLAGS.FOLLOWER_AT_FARM_IZMA] == 0) counter++;
 	//if(isabellaFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_ISABELLA] == 0) counter++;
 	//if(player.findStatusAffect(StatusAffects.CampMarble) >= 0 && flags[kFLAGS.FOLLOWER_AT_FARM_MARBLE] == 0) counter++;
-	//if(amilyScene.amilyFollower() && !amilyScene.amilyCorrupt()) counter++;
+	if(amilyFollower() && !amilyCorrupt()) counter++;
 	//if(followerKiha()) counter++;
 	//if(flags[kFLAGS.NIEVE_STAGE] == 5) counter++;
 	//if(flags[kFLAGS.ANT_WAIFU] > 0) counter++;
@@ -90,15 +93,23 @@ public function loversCount():int {
 }
 public function campLoversButton():void {
 	if (loversCount() > 0) addButton(10, "Lovers", campFollowersMenu);
-	else addDisabledButton(10, "Lovers", "Lovers", "Not implemented");
+	//else addDisabledButton(10, "Lovers", "Lovers", "Not implemented");
 }
+
+public var loverCampMenuBlurb:/*Function*/Array = []; // Container for self-declaring listeners. Functions here must accept showInteractButton:Boolean argument.
+public var loverBtnNum:int = 0;
 public function campLoversMenu(descOnly:Boolean = false):void {
-	//if (!descOnly) {
-		//clearMenu();
-		//clearOutput();
-	//}
-	//addButton(14,"Back",mainGameMenu);
-	campFollowersMenu(descOnly);
+	if (!descOnly) {
+		clearMenu();
+		clearOutput();
+	}
+	loverBtnNum = 0;
+	for each (var name:* in loverCampMenuBlurb) 
+	{
+		name(!descOnly);
+		if (loverBtnNum == 14) loverBtnNum++;
+	}
+	addButton(14,"Back",mainGameMenu);
 }
 
 public function slavesCount():int {
@@ -106,7 +117,7 @@ public function slavesCount():int {
 	//if(latexGooFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_LATEXY] == 0) counter++;
 	//if(vapulaSlave() && flags[kFLAGS.FOLLOWER_AT_FARM_VAPULA] == 0) counter++;
 	//if(campCorruptJojo() && flags[kFLAGS.FOLLOWER_AT_FARM_JOJO] == 0) counter++;
-	//if(amilyScene.amilyFollower() && amilyScene.amilyCorrupt() && flags[kFLAGS.FOLLOWER_AT_FARM_AMILY] == 0) counter++;
+	if(amilyFollower() && amilyCorrupt() && flags["COC.FOLLOWER_AT_FARM_AMILY"] == undefined) counter++;
 	////Bimbo sophie
 	//if(bimboSophie() && flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] == 0) counter++;
 	//if(ceraphIsFollower()) counter++;
@@ -115,15 +126,23 @@ public function slavesCount():int {
 }
 public function campSlavesButton():void {
 	if (slavesCount() > 0) addButton(12, "Slaves", campFollowersMenu);
-	else addDisabledButton(12, "Slaves", "Slaves", "Not implemented");
+	//else addDisabledButton(12, "Slaves", "Slaves", "Not implemented");
 }
+
+public var slaveCampMenuBlurb:/*Function*/Array = []; // Container for self-declaring listeners. Functions here must accept showInteractButton:Boolean argument.
+public var slaveBtnNum:int = 0;
 public function campSlavesMenu(descOnly:Boolean = false):void {
-	//if (!descOnly) {
-		//clearMenu();
-		//clearOutput();
-	//}
-	//addButton(14,"Back",mainGameMenu);
-	campFollowersMenu(descOnly);
+	if (!descOnly) {
+		clearMenu();
+		clearOutput();
+	}
+	slaveBtnNum = 0;
+	for each (var name:* in slaveCampMenuBlurb) 
+	{
+		name(!descOnly);
+		if (loverBtnNum == 14) slaveBtnNum++;
+	}
+	addButton(14,"Back",mainGameMenu);
 }
 
 private function swimInStream():void {	

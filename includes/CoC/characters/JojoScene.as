@@ -16,6 +16,10 @@ public function followerCampMenuBlurbJojo(showInteractButton:Boolean):void {
 			output(", though the mouse is probably hanging around the camp's perimeter.\n\n");
 		if (showInteractButton) addButton(followerBtnNum++, "Jojo", function():* { processTime(5); jojoCamp() } , null, "Talk", "Go find Jojo around the edges of your camp and meditate with him or talk about watch duty.");
 	}
+	//if (campCorruptJojo() && flags["COC.FOLLOWER_AT_FARM_JOJO"] == undefined) {
+		//output("From time to time you can hear movement from around your camp, and you routinely find thick puddles of mouse semen.  You are sure Jojo is here if you ever need to sate yourself.\n\n");
+		//if (showInteractButton) addButton(followerBtnNum++, "Jojo", corruptCampJojo, your, "Jojo", "Call your corrupted pet into camp in order to relieve your desires in a variety of sexual positions?  He's ever so willing after your last encounter with him.");
+	//}
 }
 
 private var followerCampMenuBlurbJojoHook: * = followerCampMenuBlurbJojoGrapple();

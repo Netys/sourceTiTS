@@ -139,7 +139,7 @@ public function EventsAdopterHellNotify():void {
 	}
 	
 	if (pc.hasStatusEffect("Heat") && pc.statusEffectv3("Heat") == 0) {
-		if (pc.isPregnant()) {
+		if (pc.isPregnant() || pc.fertility() <= 0) {
 			eventBuffer += "\n\n<b>Your heat is suddenly gone.</b>";
 			
 			if(pc.hasVagina() && pc.statusEffectv4("Heat") > 0) {
@@ -156,6 +156,10 @@ public function EventsAdopterHellNotify():void {
 	}
 	if (pc.hasStatusEffect("Rut") && !pc.hasCock()) {
 		eventBuffer += "\n\n<b>Your rut is gone with your cock.</b>";
+		pc.removeStatusEffect("Rut");
+	}
+	if (pc.hasStatusEffect("Rut") && pc.virility() <= 0) {
+		eventBuffer += "\n\n<b>Your rut is suddenly gone.</b>";
 		pc.removeStatusEffect("Rut");
 	}
 }

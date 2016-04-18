@@ -171,7 +171,6 @@ package classes.Characters.CoC
 			
 			this.createStatusEffect("Disarm Immune");
 			
-			sexualPreferences.setRandomPrefs(2 + rand(3));
 			sexualPreferences.setPref(GLOBAL.SEXPREF_HYPER,			GLOBAL.REALLY_LIKES_SEXPREF); // loves hyper things
 			sexualPreferences.setPref(GLOBAL.SEXPREF_GAPE,			GLOBAL.KINDA_LIKES_SEXPREF);
 			
@@ -188,6 +187,7 @@ package classes.Characters.CoC
 			sexualPreferences.setPref(GLOBAL.SEXPREF_NARROW_HIPS,	GLOBAL.KINDA_DISLIKES_SEXPREF);
 			sexualPreferences.setPref(GLOBAL.SEXPREF_SMALL_MALEBITS,GLOBAL.KINDA_DISLIKES_SEXPREF);
 			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		GLOBAL.REALLY_DISLIKES_SEXPREF);
+			sexualPreferences.setRandomPrefs(2 + rand(3));
 			
 			if (rand(3) == 0) inventory.push(new CoCEctoplasm());
 			

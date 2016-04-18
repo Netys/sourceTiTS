@@ -1391,7 +1391,7 @@ public function appearance(forTarget:Creature):void
 				output2(".");
 			}
 		}
-		if (target.hasPerk("Incorporeality") && !target.isGoo() && !target.hasLegFlag(GLOBAL.FLAG_GOOEY) && !target.skinType == GLOBAL.SKIN_TYPE_GOO) {
+		if (target.hasPerk("Incorporeality") && !target.isGoo() && !target.hasLegFlag(GLOBAL.FLAG_GOOEY) && target.skinType != GLOBAL.SKIN_TYPE_GOO) {
 			if (target.legCount > 1) output2("  Of course, your " + target.legsNoun() + " are partially transparent due to their ghostly nature.");
 			else output2("  Of course, your " + target.legNoun() + " is partially transparent due to it's ghostly nature.");
 		}
