@@ -16,6 +16,8 @@ package classes.Resources.Busts
 		
 		[Embed(source = "../../../assets/images/npcs/gats_old/flahne.png", mimeType = "image/png")]
 		public var Bust_FLAHNE:Class;
+		[Embed(source = "../../../assets/images/npcs/gats_old/flahne.png", mimeType = "image/png")]
+		public var Bust_FLAHNE_NUDE:Class;
 		
 		[Embed(source = "../../../assets/images/npcs/gats_old/jack.png", mimeType = "image/png")]
 		public var Bust_JACK:Class;
@@ -23,12 +25,8 @@ package classes.Resources.Busts
 		[Embed(source = "../../../assets/images/npcs/gats_old/jill.png", mimeType = "image/png")]
 		public var Bust_JILL:Class;
 		
-		[Embed(source = "../../../assets/images/npcs/gats_old/kelly.png", mimeType = "image/png")]
-		public var Bust_KELLY:Class;
-		
 		[Embed(source = "../../../assets/images/npcs/gats_old/kiro.png", mimeType = "image/png")]
 		public var Bust_KIRO:Class;
-		
 		[Embed(source = "../../../assets/images/npcs/gats_old/kiroNude.png", mimeType = "image/png")]
 		public var Bust_KIRO_NUDE:Class;
 		

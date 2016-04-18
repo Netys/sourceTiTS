@@ -836,7 +836,7 @@ public function syriReverseCowgirlConsensualization():void {
 
 	output("\n\n<i>“Is that how you " + plural(pc.race()) + " say 'please'?”</i> she says, moving down to kiss along your neck, then shoulders. <i>“I prefer to pitch, captain, but for you...”</i>");
 
-	output("\n\nSyri turns around atop you, planting her pert little ass right in front of your face as she grabs [pc.oneCock] in her firm, furred grip, giving it a few experimental pumps. Your prick jumps to attention, right into her waiting maw. Her tongue flicks out, trailing from base to [pc.cockHead " + x + "] until her lips wrap around your glans, planting a kiss right on the tip top of your prick. You lean back and sigh as Syri goes to work, pumping the shaft of your [pc.cock " + x + "] as her mouth tends the head, slathering your first inches in wet ausar kisses.");
+	output("\n\nSyri turns around atop you, planting her pert little ass right in front of your face as she grabs [pc.oneCock] in her firm, furred grip, giving it a few experimental pumps. Your prick jumps to attention, right into her waiting maw. Her tongue flicks out, trailing from base to [pc.cockHead " + x + "] until her lips wrap around your glans, planting a kiss right on the tip top of your prick. You lean back and sigh as Syri goes to work, pumping the length of your [pc.cock " + x + "] as her mouth tends the head, slathering your first inches in wet ausar kisses.");
 
 	output("\n\nShe's absolutely meticulous in her oral ministrations, unrelenting as she pumps your prick. Your hands slide up to her hips, digging into her taut ass cheeks and giving her a playful spank. Syri answers with a yelp that sounds a little too much like a bark before slurping up your [pc.cock " + x + "], lips sliding down your girth with seductively sensual slowness. As she gulps down your dick, the ausar girl lifts her bushy tail up and gives her hips an enticing wiggle. You figure you know what she's after, and quickly put a pair of fingers in your mouth, swirling your tongue around them much as Syri's doing to your own prick. You take your time, getting your digits nice and slathered before you spread Syri's taut, smooth cheeks, revealing her tight little pucker. She shivers as one of your cool, spit-slick fingers presses up against the dark hole, but a moment later and Syri relaxes, pushing back against your finger until it pops through her sphincter, sinking into her welcoming ass. Your [pc.cock " + x + "] comes free from the user's mouth as it falls agape, a low, feral moan escaping her lips as your finger plunges into her backside.");
 
@@ -1006,7 +1006,8 @@ public function getVagFukkedBySyri():void {
 	output("\n\n<i>“I don't deserve a " + pc.mf("boy","girl") + " like you... you're amazing, [pc.name],”</i> she says, smiling down at you with her puppy dog eyes that make you want nothing more than to kiss her, pulling the alien beauty onto you as you flip off the lights, drawing the blanket over your bare bodies to wait out her knot's deflation in each other's arms.");
 	processTime(40+rand(15));
 	pc.orgasm();
-	pc.loadInCunt(chars["SYRI"], x);
+	pc.loadInMouth(chars["SYRI"]);
+	//pc.loadInCunt(chars["SYRI"], x);
 	chars["SYRI"].orgasm();
 	clearMenu();
 	addButton(0,"Next",syriSexOutro);
@@ -1594,7 +1595,7 @@ public function allVaginalPathsMergeHere():void
 	processTime(15);
 	pc.orgasm();
 	chars["SYRI"].orgasm();
-	pc.loadInCunt(chars["SYRI"],x);
+	//pc.loadInCunt(chars["SYRI"],x);
 	if(flags["FUCKED_SYRI_COUNT"] == undefined) flags["FUCKED_SYRI_COUNT"] = 0;
 	flags["FUCKED_SYRI_COUNT"]++;
 	clearMenu();

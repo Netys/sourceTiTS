@@ -83,6 +83,12 @@ public function isNavDisabled(umask:uint):Boolean
 	return false;
 }
 
+public function setNavDisabled(addUmask:uint):void
+{
+	if (flags["NAV_DISABLED"] == undefined) flags["NAV_DISABLED"] = addUmask;
+	flags["NAV_DISABLED"] |= addUmask;
+}
+
 public function showLocationName():void
 {
 	if(currentLocation == "SHIP INTERIOR") setLocation("SHIP\nINTERIOR", rooms[rooms["SHIP INTERIOR"].outExit].planet, rooms[rooms["SHIP INTERIOR"].outExit].system);
@@ -137,6 +143,12 @@ public function mainGameMenu():void {
 	clearOutput();
 	output(rooms[currentLocation].description);
 	showLocationName();
+	
+	if (pc.hasStatusEffect("Bitterly Cold"))
+	{
+		tryApplyUvetoColdDamage();
+	}
+	
 	if(inCombat()) 
 		output("\n\n<b>You’re still in combat, you ninny!</b>");
 	if(pc.hasStatusEffect("Temporary Nudity Cheat"))
@@ -161,14 +173,22 @@ public function mainGameMenu():void {
 		else if(!pc.canMasturbate()) addDisabledButton(8, "Masturbate", "Masturbate", "You can’t seem to masturbate at the moment....");
 		else addButton(8, "Masturbate", masturbateMenu);
 	}
-	if(!rooms[currentLocation].hasFlag(GLOBAL.BED)) 
+	if (!rooms[currentLocation].hasFlag(GLOBAL.BED)) 
+	{
 		addButton(9, "Rest", rest);
+	}
 	else 
+	{
 		addButton(9, "Sleep", sleep);
+	}
+		
+	addButton(14, "Codex", showCodex);
+	
 	//Display movement shits - after clear menu for extra options!
 	if(rooms[currentLocation].runOnEnter != undefined) {
 		if(rooms[currentLocation].runOnEnter()) return;
 	}
+	
 	//Turn off encounters since you're already here. Moving clears this.
 	flags["ENCOUNTERS_DISABLED"] = 1;
 
@@ -226,13 +246,17 @@ public function mainGameMenu():void {
 			addButton(7, rooms[currentLocation].outText, move, rooms[currentLocation].outExit);
 		}
 	}
-	if(currentLocation == shipLocation) 
+	if (currentLocation == shipLocation)
+	{
 		addButton(5, "Enter Ship", move, "SHIP INTERIOR");
+	}
+	
+	if (rooms[currentLocation].runAfterEnter != null) rooms[currentLocation].runAfterEnter();
 
 	flags["NAV_DISABLED"] = undefined; // Clear disabled directions.
 
 	//if (kGAMECLASS.debug) this.addButton(13, "RESET NPCs", initializeNPCs);
-	addButton(14, "Codex", showCodex);
+	
 	// Show the minimap too!
 	userInterface.showMinimap();
 	generateMap();
@@ -733,6 +757,14 @@ public function flyMenu():void {
 		}
 	}
 	else addDisabledButton(3, "Locked", "Locked", "You need to find one of your father’s probes to access this planet’s coordinates and name.");
+	
+	if (uvetoUnlocked())
+	{
+		if (shipLocation != "UVS F15") addButton(4, "Uveto", flyTo, "Uveto");
+		else addDisabledButton(4, "Uveto", "Uvto", "You’re already here.");
+	}
+	else addDisabledButton(4, "Locked", "Locked", "You need to find one of your father’s probes to access this planet’s coordinates and name.");
+	
 	//NEW TEXAS
 	if(flags["NEW_TEXAS_COORDINATES_GAINED"] != undefined)
 	{
@@ -835,6 +867,13 @@ public function flyTo(arg:String):void {
 		shortTravel = (shipLocation == "600");
 		interruptMenu = true;
 		kq2TravelToKara(shortTravel);
+	}
+	else if (arg == "Uveto")
+	{
+		shipLocation = "UVS F15";
+		currentLocation = "UVS F15";
+		flyToUveto();
+		interruptMenu = true;
 	}
 	
 	var timeFlown:Number = (shortTravel ? 30 + rand(10) : 600 + rand(30));
@@ -1764,7 +1803,11 @@ public function processTime(arg:int):void {
 				if(flags["HOLIDAY_OWEEN_ACTIVATED"] == undefined && (isHalloweenish() || rand(100) == 0)) eventQueue.push(hollidayOweenAlert);
 				if(pc.hasPerk("Honeypot") && days % 3 == 0) honeyPotBump();
 				//Exhibitionism reduction!
-				if(!(pc.armor is EmptySlot) && !(pc.lowerUndergarment is EmptySlot) && !(pc.upperUndergarment is EmptySlot))
+				if
+				(	!(pc.armor is EmptySlot)
+				&&	!(pc.lowerUndergarment is EmptySlot || pc.lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL) || pc.lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_GROIN) || pc.lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_ASS))
+				&&	!(pc.upperUndergarment is EmptySlot || pc.upperUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL) || pc.upperUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_CHEST))
+				)
 				{
 					if(pc.isChestExposed() && pc.isCrotchExposed() && pc.isAssExposed())
 						{ /* No reduction for a full set of exposed clothing! */ }
@@ -1930,6 +1973,8 @@ public function processTime(arg:int):void {
 
 public function racialPerkUpdateCheck():void
 {
+	var msg:String = "";
+	
 	if(pc.hasPerk("'Nuki Nuts") && pc.perkv2("'Nuki Nuts") != 1)
 	{
 		if(pc.nukiScore() < 3)
@@ -1939,21 +1984,21 @@ public function racialPerkUpdateCheck():void
 				//Nuts inflated:
 				if(pc.perkv1("'Nuki Nuts") > 0)
 				{
-					eventBuffer += "\n\nThe extra size in your [pc.balls] bleeds off, making it easier to walk. You have a hunch that without all your kui-tan body-mods, you won't be swelling up with excess [pc.cumNoun] any more.";
+					msg += ParseText("\n\nThe extra size in your [pc.balls] bleeds off, making it easier to walk. You have a hunch that without all your kui-tan body-mods, you won't be swelling up with excess [pc.cumNoun] any more.");
 				}
 				//Nuts not inflated:
 				else
 				{
-					eventBuffer += "\n\nA tingle spreads through your [pc.balls]. Once it fades, you realize that your [pc.sack] is noticeably less elastic. Perhaps you've replaced too much kui-tan DNA to reap the full benefits.";
+					msg += ParseText("\n\nA tingle spreads through your [pc.balls]. Once it fades, you realize that your [pc.sack] is noticeably less elastic. Perhaps you've replaced too much kui-tan DNA to reap the full benefits.");
 				}
-				eventBuffer += "\n\n(<b>Perk Lost: 'Nuki Nuts</b>)";
+				msg += "\n\n(<b>Perk Lost: 'Nuki Nuts</b>)";
 				pc.ballSizeMod -= pc.perkv1("'Nuki Nuts");
 				pc.removePerk("'Nuki Nuts");
 				nutStatusCleanup();
 			}
 			else
 			{
-				eventBuffer += "\n\n(<b>Perk Lost: 'Nuki Nuts</b> - You no longer meet the requirements. You've lost too many kui-tan transformations.)";
+				msg += "\n\n(<b>Perk Lost: 'Nuki Nuts</b> - You no longer meet the requirements. You've lost too many kui-tan transformations.)";
 				pc.removePerk("'Nuki Nuts");
 			}
 		}
@@ -1962,10 +2007,10 @@ public function racialPerkUpdateCheck():void
 	{
 		if(!pc.hasVagina())
 		{
-			eventBuffer += "\n\nNo longer possessing a vagina, your body tingles";
-			if((pc.perkv1("Fecund Figure") + pc.perkv2("Fecund Figure") + pc.perkv3("Fecund Figure")) > 0) eventBuffer += ", rapidly changing as you lose your fertility goddess-like build";
-			eventBuffer += ".";
-			eventBuffer += "\n\n(<b>Perk Lost: Fecund Figure</b>)";
+			msg += "\n\nNo longer possessing a vagina, your body tingles";
+			if((pc.perkv1("Fecund Figure") + pc.perkv2("Fecund Figure") + pc.perkv3("Fecund Figure")) > 0) msg += ", rapidly changing as you lose your fertility goddess-like build";
+			msg += ".";
+			msg += "\n\n(<b>Perk Lost: Fecund Figure</b>)";
 			pc.removePerk("Fecund Figure");
 		}
 	}
@@ -1973,7 +2018,7 @@ public function racialPerkUpdateCheck():void
 	{
 		if(pc.balls <= 0)
 		{
-			eventBuffer += "\n\nA tingling sensations hits your crotch as you feel something fading away... Your codex beeps, informing you that the last remnants of your " + pc.skinAccent + " testicular tattoos have left your body, leaving the area bare.";
+			msg += "\n\nA tingling sensations hits your crotch as you feel something fading away... Your codex beeps, informing you that the last remnants of your " + pc.skinAccent + " testicular tattoos have left your body, leaving the area bare.";
 			pc.setStatusValue("Vanae Markings", 4, 0);
 		}
 	}
@@ -1981,20 +2026,20 @@ public function racialPerkUpdateCheck():void
 	{
 		if(pc.nyreaScore() < 3)
 		{
-			eventBuffer += "\n\nYou are interrupted by a shifting in your insides as a bubbling sensation fills your loins, and then... nothing.";
+			msg += "\n\nYou are interrupted by a shifting in your insides as a bubbling sensation fills your loins, and then... nothing.";
 			if(pc.statusEffectv1("Nyrea Eggs") > 0)
 			{
-				eventBuffer += " Strangely, you feel";
-				if(pc.statusEffectv1("Nyrea Eggs") <= 5) eventBuffer += " as if something is missing.";
-				else if(pc.statusEffectv1("Nyrea Eggs") <= 10) eventBuffer += " a bit lighter now.";
-				else if(pc.statusEffectv1("Nyrea Eggs") <= 50) eventBuffer += " like you have lost some pounds.";
-				else if(pc.statusEffectv1("Nyrea Eggs") <= 100) eventBuffer += " much lighter now.";
-				else eventBuffer += " like a huge weight has been lifted from you.";
+				msg += " Strangely, you feel";
+				if(pc.statusEffectv1("Nyrea Eggs") <= 5) msg += " as if something is missing.";
+				else if(pc.statusEffectv1("Nyrea Eggs") <= 10) msg += " a bit lighter now.";
+				else if(pc.statusEffectv1("Nyrea Eggs") <= 50) msg += " like you have lost some pounds.";
+				else if(pc.statusEffectv1("Nyrea Eggs") <= 100) msg += " much lighter now.";
+				else msg += " like a huge weight has been lifted from you.";
 			}
-			eventBuffer += " Double-checking your codex, you find that";
-			if(pc.statusEffectv1("Nyrea Eggs") > 0) eventBuffer += " the nyrean eggs you’ve been carrying in your [pc.cumNoun] have dissolved and absobed into your body";
-			else eventBuffer += " your [pc.cumNoun] is no longer capable of producing eggs anymore";
-			eventBuffer += ". It must be due to the lack of nyrean genes in your system....";
+			msg += " Double-checking your codex, you find that";
+			if(pc.statusEffectv1("Nyrea Eggs") > 0) msg += ParseText(" the nyrean eggs you’ve been carrying in your [pc.cumNoun] have dissolved and absobed into your body");
+			else msg += ParseText(" your [pc.cumNoun] is no longer capable of producing eggs anymore");
+			msg += ". It must be due to the lack of nyrean genes in your system....";
 			pc.removeStatusEffect("Nyrea Eggs");
 		}
 	}
@@ -2002,14 +2047,16 @@ public function racialPerkUpdateCheck():void
 	{
 		if(!pc.hasGenitals())
 		{
-			eventBuffer += "\n\nA sudden burning sensation hits your lower back, right above your [pc.ass]. You quickly";
-			if(pc.isCrotchGarbed()) eventBuffer += " struggle through your [pc.lowerGarments],";
-			eventBuffer += " turn back and wince hard when the area is instantly struck by a refreshing coolness - as if being splashed on with cold water after being branded. When your hazed vision returns to normal, you see the slutty tattoo that resides there gradually dissolve and vanish before your eyes. It looks like your lack of genitalia makes it easier for you to cope with your libido now.";
+			msg += ParseText("\n\nA sudden burning sensation hits your lower back, right above your [pc.ass]. You quickly");
+			if(pc.isCrotchGarbed()) msg += ParseText(" struggle through your [pc.lowerGarments],");
+			msg += " turn back and wince hard when the area is instantly struck by a refreshing coolness - as if being splashed on with cold water after being branded. When your hazed vision returns to normal, you see the slutty tattoo that resides there gradually dissolve and vanish before your eyes. It looks like your lack of genitalia makes it easier for you to cope with your libido now.";
 			
-			eventBuffer += "\n\n(<b>Perk Lost: Slut Stamp</b>)";
+			msg += "\n\n(<b>Perk Lost: Slut Stamp</b>)";
 			pc.removePerk("Slut Stamp");
 		}
 	}
+	
+	if(msg.length > 0) eventBuffer += msg;
 }
 
 public function badEnd(displayGG:String = "GAME OVER"):void 

@@ -620,7 +620,7 @@
 			return "Your [pc.antennae] are burning. Someone must be thinking about you.";
 		}
 		
-		public var horns: Number = 0;
+		public var horns:Number = 0;
 		public function hornsUnlocked(newHornsNumber:Number):Boolean
 		{
 			return true;
@@ -1774,6 +1774,9 @@
 				case "nippleColor":
 					buffer = nippleColor;
 					break;
+				case "nipplePiercings":
+					buffer = "nipple piercings"; // 9999
+					break;
 				case "eachCock":
 					buffer = eachCock();
 					break;
@@ -2820,6 +2823,10 @@
 			
 			return (personality <= 66 && personality > 33);
 		}
+		// BECAUSE NOBODY EVER SPELLS IT CORRECTLY OR COMPLETELY
+		public function isMisch():Boolean { return isMischievous(); }
+		public function isMisc():Boolean { return isMischievous(); }
+		
 		public function isAss(): Boolean {
 			if (hasPerk("Enlightened Nine-tails")) return false;
 			if (hasPerk("Corrupted Nine-tails")) return true;
@@ -2973,9 +2980,9 @@
 		}
 		public function maxOutCumflation(orifice:String, cumFrom:Creature):void
 		{
-			var minMaxFluid:Number = 50000; // mLs
+			var minMaxFluid:Number = 100000; // mLs
 			
-			minMaxFluid -= cumFrom.cumQ()
+			minMaxFluid -= cumFrom.cumQ();
 			if(minMaxFluid < 0) minMaxFluid = 0;
 			
 			if(InCollection(orifice, ["all", "vaginas", "vagina 0"]) && hasVagina(0))
@@ -2996,16 +3003,16 @@
 				addStatusValue("Vaginally-Filled", 1, minMaxFluid);
 				if(statusEffectv1("Vaginally-Filled") > statusEffectv2("Vaginally-Filled")) setStatusValue("Vaginally-Filled", 2, statusEffectv1("Vaginally-Filled"));
 			}
-			if(InCollection(orifice, ["all", "ass"]))
+			if(InCollection(orifice, ["all", "ass", "anus", "butt"]))
 			{
 				cumflationHappens(cumFrom, 3);
 				addStatusValue("Anally-Filled", 1, minMaxFluid);
 				if(statusEffectv1("Anally-Filled") > statusEffectv2("Anally-Filled")) setStatusValue("Anally-Filled", 2, statusEffectv1("Anally-Filled"));
 			}
-			if(InCollection(orifice, ["all", "mouth"]))
+			if(InCollection(orifice, ["all", "mouth", "oral"]))
 			{
 				cumflationHappens(cumFrom, 4);
-				setStatusValue("Orally-Filled", 3, cumFrom.cumType);
+				addStatusValue("Orally-Filled", 1, minMaxFluid);
 				if(statusEffectv1("Orally-Filled") > statusEffectv2("Orally-Filled")) setStatusValue("Orally-Filled", 2, statusEffectv1("Orally-Filled"));
 			}
 		}
@@ -3279,7 +3286,7 @@
 				currInt += level * 5 * perkv4("Implant: Cognitive Coprocessor");
 			}
 			// Slave collar multiplier.
-			if(hasStatusEffect("Psy Slave Collar")) currInt = Math.floor(currInt * statusEffectv1("Psy Slave Collar"));
+			if(hasStatusEffect("Psi Slave Collar")) currInt = Math.floor(currInt * statusEffectv1("Psi Slave Collar"));
 
 			if (currInt > intelligenceMax())
 			{
@@ -3326,7 +3333,7 @@
 				currWill += level * 5 * perkv4("Implant: Mental Shield");
 			}
 			// Slave collar multiplier.
-			if(hasStatusEffect("Psy Slave Collar")) currWill = Math.floor(currWill * statusEffectv2("Psy Slave Collar"));
+			if(hasStatusEffect("Psi Slave Collar")) currWill = Math.floor(currWill * statusEffectv2("Psi Slave Collar"));
 			
 			if (currWill > willpowerMax())
 			{
@@ -3489,7 +3496,7 @@
 			if(hasPerk("Drug Fucked")) bonus += 40;
 			if(hasPerk("Slut Stamp")) bonus += perkv2("Slut Stamp");
 			// Slave collar increases minimum by set level.
-			if(hasStatusEffect("Psy Slave Collar")) bonus += statusEffectv3("Psy Slave Collar");
+			if(hasStatusEffect("Psi Slave Collar")) bonus += statusEffectv3("Psi Slave Collar");
 			return (0 + bonus);
 		}
 		/**
@@ -10439,6 +10446,7 @@
 			{
 				if(descripted > 0) descript += ", ";
 				descript += "latex";
+				descripted++;
 			}
 			//Mane special stuff.
 			if (hasPerk("Mane") && hairLength > 3 && rand(2) == 0) {
@@ -10450,7 +10458,8 @@
 						descripted++;
 					}
 				}
-				if (descripted > 0) descript += " mane";
+				if (descripted > 0) descript += " ";
+				descript += "mane";
 				if (hairType == GLOBAL.HAIR_TYPE_FEATHERS) descript += " of feathers";
 				if (hairType == GLOBAL.HAIR_TYPE_QUILLS) descript += " of quills";
 				if (hairType == GLOBAL.HAIR_TYPE_GOO)
@@ -10604,6 +10613,7 @@
 			{
 				if(descripted > 0) descript += ", ";
 				descript += "latex";
+				descripted++;
 			}
 			//Not manes
 			//Oddball shit
@@ -12646,7 +12656,7 @@
 			return (lowerUndergarment.hardLightEquipped);
 		}
 		// Always picks the main anatomy--no need to complicate it!
-		public function cockOrStrapon(forceAdjective: int = 0): String {
+		public function cockOrStrapon(forceAdjective: int = 0, idxOverride:int = 0): String {
 			var descript: String = "";
 			var sAdjective:Array = [];
 			var sNoun:Array = [];
@@ -12684,8 +12694,8 @@
 			// Penis?
 			else if(hasCock())
 			{
-				if(forceAdjective == 1 || (forceAdjective == 0 && rand(2) == 0)) descript += cockAdjective(0) + " ";
-				descript += cockNoun2(cocks[0]);
+				if(forceAdjective == 1 || (forceAdjective == 0 && rand(2) == 0)) descript += cockAdjective(idxOverride) + " ";
+				descript += cockNoun2(cocks[idxOverride]);
 				return descript;
 			}
 			// Giant Clits?
@@ -13765,7 +13775,7 @@
 					{
 						if (holePointer.hymen && hole >= 0)
 						{
-							msg += capitalA + possessive(short) + " hymen is torn";
+							msg += (capitalA == "" ? short + "’s" : capitalA + possessive(short)) + " hymen is torn";
 							holePointer.hymen = false;
 						}
 						else msg += capitalA + short + " has been penetrated";
@@ -13818,11 +13828,11 @@
 						}
 						else
 						{
-							if(holePointer.looseness() >= 5) output("<b>" + capitalA + possessive(short) + " " + vaginaDescript(hole) + " is stretched painfully wide, gaped in a way that practically invites huge monster-cocks to plow " + mf("him", "her") +".</b>");
-							else if(holePointer.looseness() >= 4) output("<b>" + capitalA + possessive(short) + " " + vaginaDescript(hole) + " painfully stretches, the lips now wide enough to gape slightly.</b>");
-							else if(holePointer.looseness() >= 3) output("<b>" + capitalA + possessive(short) + " " + vaginaDescript(hole) + " is now somewhat loose.</b>");
-							else if(holePointer.looseness() >= 2) output("<b>" + capitalA + possessive(short) + " " + vaginaDescript(hole) + " is a little more used to insertions.</b>");
-							else output("<b>" + capitalA + possessive(short) + " " + vaginaDescript(hole) + " is stretched out a little bit.</b>");
+							if(holePointer.looseness() >= 5) output("<b>" + (capitalA == "" ? short + "’s" : capitalA + possessive(short)) + " " + vaginaDescript(hole) + " is stretched painfully wide, gaped in a way that practically invites huge monster-cocks to plow " + mf("him", "her") +".</b>");
+							else if(holePointer.looseness() >= 4) output("<b>" + (capitalA == "" ? short + "’s" : capitalA + possessive(short)) + " " + vaginaDescript(hole) + " painfully stretches, the lips now wide enough to gape slightly.</b>");
+							else if(holePointer.looseness() >= 3) output("<b>" + (capitalA == "" ? short + "’s" : capitalA + possessive(short)) + " " + vaginaDescript(hole) + " is now somewhat loose.</b>");
+							else if(holePointer.looseness() >= 2) output("<b>" + (capitalA == "" ? short + "’s" : capitalA + possessive(short)) + " " + vaginaDescript(hole) + " is a little more used to insertions.</b>");
+							else output("<b>" + (capitalA == "" ? short + "’s" : capitalA + possessive(short)) + " " + vaginaDescript(hole) + " is stretched out a little bit.</b>");
 						}
 					}
 					else {
@@ -13836,11 +13846,11 @@
 						}
 						else
 						{
-							if(holePointer.looseness() >= 5) output("<b>" + capitalA + possessive(short) + " " + assholeDescript() + " is stretched painfully wide, gaped in a way that practically invites huge monster-cocks to plow " + mf("him", "her") +".</b>");
-							else if(holePointer.looseness() >= 4) output("<b>" + capitalA + possessive(short) + " " + assholeDescript() + " painfully stretches, the lips now wide enough to gape slightly.</b>");
-							else if(holePointer.looseness() >= 3) output("<b>" + capitalA + possessive(short) + " " + assholeDescript() + " is now somewhat loose.</b>");
-							else if(holePointer.looseness() >= 2) output("<b>" + capitalA + possessive(short) + " " + assholeDescript() + " is a little more used to insertions.</b>");
-							else output("<b>" + capitalA + possessive(short) + " " + assholeDescript() + " is stretched out a little bit.</b>");
+							if(holePointer.looseness() >= 5) output("<b>" + (capitalA == "" ? short + "’s" : capitalA + possessive(short)) + " " + assholeDescript() + " is stretched painfully wide, gaped in a way that practically invites huge monster-cocks to plow " + mf("him", "her") +".</b>");
+							else if(holePointer.looseness() >= 4) output("<b>" + (capitalA == "" ? short + "’s" : capitalA + possessive(short)) + " " + assholeDescript() + " painfully stretches, the lips now wide enough to gape slightly.</b>");
+							else if(holePointer.looseness() >= 3) output("<b>" + (capitalA == "" ? short + "’s" : capitalA + possessive(short)) + " " + assholeDescript() + " is now somewhat loose.</b>");
+							else if(holePointer.looseness() >= 2) output("<b>" + (capitalA == "" ? short + "’s" : capitalA + possessive(short)) + " " + assholeDescript() + " is a little more used to insertions.</b>");
+							else output("<b>" + (capitalA == "" ? short + "’s" : capitalA + possessive(short)) + " " + assholeDescript() + " is stretched out a little bit.</b>");
 						}
 					}
 					if(spacingsB) output(" ");
@@ -14789,28 +14799,28 @@
 									break;
 								case "Horse Pill":
 									var pill:HorsePill = new HorsePill();
-									kGAMECLASS.eventQueue[kGAMECLASS.eventQueue.length] = pill.lastPillTF;
+									pill.lastPillTF();
 									break;
 								//Goblinola changes!
 								case "Goblinola Bar":
 									var gobbyTF:Goblinola = new Goblinola();
-									kGAMECLASS.eventQueue[kGAMECLASS.eventQueue.length] = gobbyTF.itemEndGoblinTF;
+									gobbyTF.itemEndGoblinTF();
 									break;
 								case "Gabilani Face Change":
 									var gobbyFaceTF:Goblinola = new Goblinola();
-									kGAMECLASS.eventQueue[kGAMECLASS.eventQueue.length] = gobbyFaceTF.itemGoblinFaceTF;
+									gobbyFaceTF.itemGoblinFaceTF();
 									break;
 								//Clippex changes!
 								case "Clippex Gel":
 									var clippexTF:Clippex = new Clippex();
-									if((statusEffects[x] as StorageClass).value2 > 1) kGAMECLASS.eventQueue[kGAMECLASS.eventQueue.length] = clippexTF.itemClippexTFPlus;
-									else kGAMECLASS.eventQueue[kGAMECLASS.eventQueue.length] = clippexTF.itemClippexTF;
+									if((statusEffects[x] as StorageClass).value2 > 1) clippexTF.itemClippexTFPlus();
+									else clippexTF.itemClippexTF();
 									break;
 								//Semen's Friend changes!
 								case "Semen's Candy":
 									var semensTF:SemensFriend = new SemensFriend();
-									if((statusEffects[x] as StorageClass).value2 > 1) kGAMECLASS.eventQueue[kGAMECLASS.eventQueue.length] = semensTF.itemSemensFriendTFPlus;
-									else kGAMECLASS.eventQueue[kGAMECLASS.eventQueue.length] = semensTF.itemSemensFriendTF;
+									if((statusEffects[x] as StorageClass).value2 > 1) semensTF.itemSemensFriendTFPlus();
+									else semensTF.itemSemensFriendTF();
 									break;
 								case "Red Myr Venom":
 									//Bit of a hacky solution
@@ -15003,7 +15013,7 @@
 						notice += "\n\n" + upperCase(fluidViscosity(statusEffects[z].value3)) + " " + fluidNoun(statusEffects[z].value3) + " hoses out ";
 						if(legCount > 1) notice += "from between your [pc.legs] ";
 						else notice += "of you ";
-						notice += "in a seemingly endless tide. You can't even move with wet gushes splattering onto the ground, marking a slut-shaming trail wherever you move.";
+						notice += "in a seemingly endless tide. You can't even move without wet gushes splattering onto the ground, marking a slut-shaming trail wherever you move.";
 						if(!isCrotchExposed()) notice += " It wouldn't be so bad if most of it didn't wind up inside your [pc.lowerGarments], leaving you slick and musky with residual love.";
 					}
 					else if(amountVented >= 10000)
@@ -15104,10 +15114,21 @@
 					statusEffects[o].value1 -= amountVented;
 				}
 				//Special notices!
-				if(this is PlayerCharacter && notice == "")
+				if(this is PlayerCharacter)
 				{
-					//If Jacques00 or Geddy wants to write stuff for this, feel free, but I'm fine with it being more laid back.
-					//9999 apply cum-drenched flag as appropriate?
+					if(notice == "")
+					{
+						//If Jacques00 or Geddy wants to write stuff for this, feel free, but I'm fine with it being more laid back.
+						//9999 apply cum-drenched flag as appropriate?
+					}
+					if(hairType == GLOBAL.HAIR_TYPE_GOO) addBiomass(amountVented);
+					if(hasPerk("Honeypot"))
+					{
+						kGAMECLASS.honeyPotBump();
+						if(amountVented >= 500) kGAMECLASS.honeyPotBump();
+						if(amountVented >= 1000) kGAMECLASS.honeyPotBump();
+						if(amountVented >= 2000) kGAMECLASS.honeyPotBump();
+					}
 				}
 				if(statusEffects[o].value1 <= 0) removals.push("Orally-Filled");
 			}
@@ -15130,6 +15151,32 @@
 		{
 			
 		}
+		
+		// Uveto Specials
+		public function hasHeatBelt():Boolean
+		{
+			return accessory.hasFlag(GLOBAL.ITEM_FLAG_HEATBELT);
+		}
+		
+		public function willTakeColdDamage(resToAvoid:Number = 25.0):Boolean
+		{
+			if (hasHeatBelt()) return false;
+			if (getHPResistances().freezing.resistanceValue >= resToAvoid) return false;
+			if (accessory.hasFlag(GLOBAL.ITEM_FLAG_HEAT_GENERATOR) || armor.hasFlag(GLOBAL.ITEM_FLAG_HEAT_GENERATOR) || lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_HEAT_GENERATOR) || upperUndergarment.hasFlag(GLOBAL.ITEM_FLAG_HEAT_GENERATOR)) return false;
+			
+			// Perk for some kinda TF or some shit, effect for a temporary/timed effect?
+			if (hasPerk("Icy Veins") || hasStatusEffect("Icy Veins")) return false;
+			return true;
+		}
+		
+		public function hasCybernetics():Boolean
+		{
+			if(isCyborg()) return true;
+			return false;
+		}
+		
+		// top kek
+		public function myMiddleNameIsJensen():Boolean { return hasCybernetics(); }
 	}
 	
 }

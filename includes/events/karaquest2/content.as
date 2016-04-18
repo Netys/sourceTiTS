@@ -443,7 +443,7 @@ public function kq2Herself():void
 		output("”</i>");
 	}
 
-	output("\n\nYour companion sighs and continues: <i>“I was born a slave in a kaithrit colony on Tarilia. The colony was short on males - it’s a problem on a lot of kaithrit worlds - so they kept anything with a dick cooped up as breeding stock. That includes me, if you’re wondering; I was born a hermaphrodite. About ten percent of kaithrit are. Blackstar met me on a run when the planet’s matriarch invited him to tour the ‘pleasure palace’ they kept us chained up in. Long story short: he liked me, and helped bust me out. I’ve been on the run ever since. I served under him on the </i>Silence</i>, learned the tricks of the trade, and when he was captured on Terra, I took command of the ship. Most of the crew bought their farms with him or got pinched by the Peacekeepers... or bailed out after the stunt I pulled with the Void. All that’s left is me");
+	output("\n\nYour companion sighs and continues: <i>“I was born a slave in a kaithrit colony on Tarilia. The colony was short on males - it’s a problem on a lot of kaithrit worlds - so they kept anything with a dick cooped up as breeding stock. That includes me, if you’re wondering; I was born a hermaphrodite. About ten percent of kaithrit are. Blackstar met me on a run when the planet’s matriarch invited him to tour the ‘pleasure palace’ they kept us chained up in. Long story short: he liked me, and helped bust me out. I’ve been on the run ever since. I served under him on the </i>Silence<i>, learned the tricks of the trade, and when he was captured on Terra, I took command of the ship. Most of the crew bought their farms with him or got pinched by the Peacekeepers... or bailed out after the stunt I pulled with the Void. All that’s left is me");
 	if (flags["SILENCE_RESCUED_CONNIE"] == undefined) output(" and my first mate.");
 	else output(", my first mate, and a V.I. in a robot.");
 	output(" Not much of a crew.”</i>");
@@ -451,9 +451,9 @@ public function kq2Herself():void
 	output("\n\nAfter a moment’s consideration, you ask, <i>“I thought you said your ship was the </i>Ghost<i>?”</i>");
 
 	output("\n\n<i>“Heh. About that...");
-	if (kara.isNice()) output(" The </i>Silence</i> got destroyed by the Black Void the last time we tangled.");
-	else if (kara.isMischievous()) output(" I might have sort of rammed a Black Void frigate with the </i>Silence</i>. It seemed like a good idea at the time, honest!");
-	else output(" I rammed a Black Void warship with the </i>Silence</i>. Crippled one of their best ships and killed dozens of pirates, though I lost the ship in the process. I’d do it again in a heartbeat.");
+	if (kara.isNice()) output(" The </i>Silence<i> got destroyed by the Black Void the last time we tangled.");
+	else if (kara.isMischievous()) output(" I might have sort of rammed a Black Void frigate with the </i>Silence<i>. It seemed like a good idea at the time, honest!");
+	else output(" I rammed a Black Void warship with the </i>Silence<i>. Crippled one of their best ships and killed dozens of pirates, though I lost the ship in the process. I’d do it again in a heartbeat.");
 	output(" Lucky me, my backer saw fit to replace her with a new ship: the </i>Ghost<i>. Brand new, sleek as hell, and tougher than </i>Silence<i> ever was.”</i>");
 
 	output("\n\nShe sounds like she’s trying to convince herself on that last point as much as she is you.");
@@ -1660,7 +1660,7 @@ public function kq2KhanPCDefeat():void
 	output(" and sliding the slim metal ring around your neck.");
 	
 	pc.removeAll();
-	pc.createStatusEffect("Psy Slave Collar", 0.5, 0.05, 50, 0, true, "Radio", "This metal collar limits your intelligence capacity and willpower while worn, making you completely subservient to the will of the one who operates it.", false, 0, 0xFF0000);
+	pc.createStatusEffect("Psi Slave Collar", 0.5, 0.05, 50, 0, true, "Radio", "This metal collar limits your intelligence capacity and willpower while worn, making you completely subservient to the will of the one who operates it.", false, 0, 0xFF0000);
 	
 	output("\n\n<i>“No... get away...”</i> Kara moans as one of the girls rolls her onto her face, just beside you. Before they collar her, the girls spend a few moments undressing the kaithrit, pulling off her skin-tight top and the skimpy skirt she’s wearing, even pulling her up to her knees so they can yank her underwear off. You watch as her E-cups bounce free, immediately in the grasp of another gold myr, who squeezes and kneads the perfect, soft orbs.");
 	
@@ -1994,7 +1994,7 @@ public function kq2CapturedByPiratesBadEndII():void
 	
 	output("\n\n<i>“Looks good on you,”</i> your new owner smirks, giving her subordinate a rough clap on the shoulder to send him on his way. She reaches down after that, grabbing the back on your collar and flicking a button. The moment she does, you feel a thrum of energy pass through your neck, and something warm press against your spine.");
 	
-	pc.createStatusEffect("Psy Slave Collar", 0.75, 0.50, 25, 0, true, "Radio", "This metal collar limits your intelligence capacity and willpower while worn, making you completely subservient to the will of the one who operates it.", false, 0, 0xFF0000);
+	pc.createStatusEffect("Psi Slave Collar", 0.75, 0.50, 25, 0, true, "Radio", "This metal collar limits your intelligence capacity and willpower while worn, making you completely subservient to the will of the one who operates it.", false, 0, 0xFF0000);
 	
 	output("\n\n<i>“This is the lowest setting,”</i> she explains, drawing her hand up from the collar and across your [pc.hair], gently pushing your head down. As she does, you feel a shudder pass through you, followed by a spreading heat from your back, slowly crawling through your body. <i>“Doctor Khan’s work is truly remarkable, in its perverse way. Stand up.”</i>");
 
@@ -2604,7 +2604,7 @@ public function kq2KaraFuckKittysKitty():void
 	clearOutput();
 	showKara();
 
-	output("You decide to take the initiative, grabbing Kara’s juicy hips and pulling her towards the tumescent shaft of your [pc.cock]. She gives a little gasp as your prick brushes up between her legs, finding a hot, wet gash hidden behind her churning sack. Kara smiles at you, rocking her hips back against your [pc.cockHead]. She gives you a rough push down onto the bed, putting your back on the sheets and her hands firmly planted on your [pc.chest].");
+	output("You decide to take the initiative, grabbing Kara’s juicy hips and pulling her towards the tumescent span of your [pc.cock]. She gives a little gasp as your prick brushes up between her legs, finding a hot, wet gash hidden behind her churning sack. Kara smiles at you, rocking her hips back against your [pc.cockHead]. She gives you a rough push down onto the bed, putting your back on the sheets and her hands firmly planted on your [pc.chest].");
 	
 	output("\n\n<i>“");
 	if (kara.isMischievous()) output("Want a little cat-girl pussy, [pc.name]?”</i>");
@@ -2617,7 +2617,7 @@ public function kq2KaraFuckKittysKitty():void
 	if (pc.biggestTitSize() >= 1) output(" giving your tits a squeeze");
 	else output(" pinching your [pc.nipples]");
 	if (kara.isAss()) output(" - just enough to remind you who’s in charge");
-	output(". She moves a little faster after that, rising on your [pc.cock]’s length and bouncing down again. The bed squeaks loudly underneath you, rebounding with every thrust of your hips or drop of Kara’s.");
+	output(". She moves a little faster after that, rising on your" + possessive(ParseText(" [pc.cock]")) + " length and bouncing down again. The bed squeaks loudly underneath you, rebounding with every thrust of your hips or drop of Kara’s.");
 	
 	output("\n\nAs she moves, you feel the hefty weight of her own masculine endowment bouncing on your [pc.belly], giving you a wet slap with every thrust. Deciding to give Kara a thrill, you reach down and wrap your hand around her nub-ringed kitty-cock. The moment your thumb brushes one of those nubs, Kara’s entire body goes rigid - especially that meaty cock of hers, throbbing so hard in your hand you’re afraid she’s going to nut just from a casual caress.");
 	
@@ -2720,8 +2720,17 @@ public function kq2PostKaraSexyCombineGo():void
 
 	currentLocation = "SHIP INTERIOR";
 
-	clearMenu();
-	addButton(0, "Next", mainGameMenu);
+	if (!pc.hasStatusEffect("Kara Fuck Alternate Path"))
+	{
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
+	}
+	else
+	{
+		currentLocation = "SHIP INTERIOR";
+		genericSleep(480);
+		CombatManager.genericVictory();
+	}
 }
 
 public function kq2PostKaraSexyCombineStay():void
@@ -2742,22 +2751,49 @@ public function kq2PostKaraSexyCombineStay():void
 	
 	output("\n\nYou turn in her embrace and give her a fierce hug, taking comfort in the warmth and softness of your kaithrit lover. The two of you spend a little while together, just enjoying each other’s company, before a heavy heart pulls you towards your ship. You still have an adventure of your own to finish.");
 	
-	output("\n\nKara nods understandingly, and walks you to the airlock. <i>“If you ever need anything, [pc.name],”</i> she starts, lacing her fingers with yours. <i>“I owe you. So, so much.”</i>");
+	output("\n\nKara nods understandingly, and walks you to the airlock. <i>“If you ever need anything, [pc.name],”</i> she starts, lacing her fingers with yours.");
 	
-	output("\n\nYou give her a parting hug as the airlock cycles. As you part, you see the <i>Ghost</i>’s pilot, Logan, rounding a corner with a dataslate tucked under her arm.");
-	
-	output("\n\n<i>“Kara! Chow’s on the Q-Comm for you,”</i> the pilot says, giving you a slight nod as you leave. <i>“Routed it to your quarters.”</i>");
-	
-	output("\n\nYour lover sighs and stuffs her hands into her robe pockets. <i>“Fun never ends. I’ll see you again soon [pc.name].”</i>");
-	
-	output("\n\nThe airlock snaps closed behind you, and you make the journey back to your own ship in silence.");
+	if (!pc.hasStatusEffect("Kara Fuck Alternate Path"))
+	{
+		output(" <i>“I owe you. So, so much.”</i>");
+		
+		output("\n\nYou give her a parting hug as the airlock cycles. As you part, you see the <i>Ghost</i>’s pilot, Logan, rounding a corner with a dataslate tucked under her arm.");
+		
+		output("\n\n<i>“Kara! Chow’s on the Q-Comm for you,”</i> the pilot says, giving you a slight nod as you leave. <i>“Routed it to your quarters.”</i>");
+		
+		output("\n\nYour lover sighs and stuffs her hands into her robe pockets. <i>“Fun never ends. I’ll see you again soon [pc.name].”</i>");
+		
+		output("\n\nThe airlock snaps closed behind you, and you make the journey back to your own ship in silence.");
 
-	currentLocation = "SHIP INTERIOR";
+		currentLocation = "SHIP INTERIOR";
+		genericSleep(480);
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
+	}
+	else
+	{
+		output(" <i>“Don’t hesitate to call. Just the chance to spend another night together would be reward enough.”</i>");
+		
+		output("\n\nYou give her a parting hug as the airlock cycles. As you part, you see the <i>Ghost</i>’s pilot, Logan, rounding a corner with a dataslate tucked under her arm.");
+		
+		output("\n\n<i>“Hey again, [pc.name],”</i> she says, giving you a friendly nod. <i>“You two sleep well?”</i>");
+		
+		output("\n\nKara murmurs an affirmation, slipping an arm around Logan’s waist so that she’s hugged between the two of you, resting her head on your shoulder. <i>“Mmm. Maybe next time you’ll even join us, you big shy baby.”</i>");
+		
+		output("\n\nThe reptilian-morphed pilot scowls, crossing her arms under her pert little bust. <i>“Just be happy I don’t mind sharing, you dirty minx. And you,”</i> she adds, reaching across the kaithrit’s jiggling robes, <i>“just keep treating my captain right, you hear?”</i>");
+		
+		output("\n\nYou chuckle and nod, tapping the airlock to cycle it open. That, you can do.");
+		
+		output("\n\nKara giggles and gives you a parting kiss - and a firm squeeze of your [pc.butt]. <i>“See ya, [pc.name]. Don’t be a stranger.”</i>");
+		
+		output("\n\nThe airlock snaps closed behind you, and you make the journey back to your own ship in silence.");
 
-	genericSleep(480);
+		pc.removeStatusEffect("Kara Fuck Alternate Path");
 
-	clearMenu();
-	addButton(0, "Next", mainGameMenu);
+		currentLocation = "SHIP INTERIOR";
+		genericSleep(480);
+		CombatManager.genericVictory();
+	}
 }
 
 public function kq2NukeBadend():void

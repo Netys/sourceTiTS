@@ -162,11 +162,14 @@
 		include "../includes/tavros/shearBeauty.as";
 		include "../includes/tavros/shelly.as";
 		include "../includes/tavros/vahn.as";
+		include "../includes/tavros/rooms.as";
+		include "../includes/tavros/tamaniCorpShop.as";
 		
 		//First planet
 		include "../includes/mhenga/burt.as";
 		include "../includes/mhenga/crazyCarl.as";
 		include "../includes/mhenga/cuntSnakes.as";
+		include "../includes/mhenga/dryad.as";
 		include "../includes/mhenga/flahne.as";
 		include "../includes/mhenga/frogGirls.as";
 		include "../includes/mhenga/julianSHaswell.as";
@@ -186,6 +189,7 @@
 		include "../includes/mhenga/vko.as";
 		include "../includes/mhenga/zilMale.as";
 		include "../includes/mhenga/zilFemale.as";
+		include "../includes/mhenga/rooms.as";
 		
 		//Second planet
 		include "../includes/tarkus/anno.as";
@@ -210,6 +214,7 @@
 		include "../includes/tarkus/taxi.as";
 		include "../includes/tarkus/theMess.as";
 		include "../includes/tarkus/sydianFemale.as";
+		include "../includes/tarkus/rooms.as";
 
 		//Third planet
 		include "../includes/newTexas/newTexas.as";
@@ -225,6 +230,7 @@
 		include "../includes/newTexas/yammi.as";
 		include "../includes/newTexas/yancy.as";
 		include "../includes/newTexas/zephyr.as";
+		include "../includes/newTexas/rooms.as";
 		
 		//Fourth planet
 		include "../includes/myrellion/anzhelaRedMyrMedic.as";
@@ -275,6 +281,12 @@
 		include "../includes/events/karaquest2/content.as";
 		include "../includes/events/karaquest2/rooms.as";
 		include "../includes/events/karaquest2/roomFunctions.as";
+		
+		// Uveto
+		include "../includes/uveto/nayna.as";
+		include "../includes/uveto/rooms.as";
+		include "../includes/uveto/roomFunctions.as";
+		include "../includes/events/icequeen/icequeen.as"; // Alt. path to unlocking uveto
 		
 		include "../includes/chargendata.as";
 		
@@ -378,7 +390,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.46";
+			version = "0.6.47";
 
 			//temporary nonsense variables.
 			temp = 0;
@@ -419,8 +431,14 @@
 			flags = new Dictionary();
 
 			initializeRooms();
+			initCoCRooms();
+			initTavrosRooms();
+			initMhengaRooms();
+			initTarkusRooms();
+			initNewTexasRooms();
 			initializeMyrellionRooms();
 			kquest2InitRooms();
+			initUvetoRooms();
 			
 			mapper = new Mapper(this.rooms)
 
@@ -551,6 +569,7 @@
 			}
 			
 			userInterface.updateTooltip((evt.currentTarget as DisplayObject));
+			userInterface.updateRoomTextVisibilityControl();
 			
 			jackJillDetector(btnName, tFunc, tArg);
 		}
@@ -764,6 +783,7 @@
 				updatePCStats();
 			}
 			
+			userInterface.updateRoomTextVisibilityControl();
 			// Then pass it into some code that will detect the failure state. If the state is triggered, use the args to figure out WHERE it happened.
 			jackJillDetector(btnName, tFunc, tArg);
 		}
@@ -1161,6 +1181,10 @@
 		public function get liriel():Liriel
 		{
 			return chars["LIRIEL"];
+		}
+		public function get lerris():Lerris
+		{
+			return chars["LERRIS"];
 		}
 		
 		private var _dbgtestvar:int = 0;

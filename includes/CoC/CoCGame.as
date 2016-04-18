@@ -20,6 +20,7 @@ public function notifyVariableRoomUpdateListenerss():void {
 include "events.as";
 include "gameStats.as";
 include "masturbation.as";
+include "rooms.as";
 
 // AREAS
 include "areas/boat/boat.as";

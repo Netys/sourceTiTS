@@ -60,7 +60,7 @@
 			var pc:Creature = target;
 			
 			// Non-Balled PCs
-			if(pc.balls <= 0 || !pc.hasCock())
+			if(pc.balls <= 0)
 			{
 				kGAMECLASS.output("You look at the cream-filled sphere and contemplate giving it a try despite not having");
 				if(pc.hasCock()) kGAMECLASS.output(" any balls");
@@ -106,19 +106,22 @@
 				addButton(0, "Next", kGAMECLASS.useItemFunction);
 				return;
 			}
-			// Monoball
-			else if(pc.balls <= 1)
+			// Monoball or co cock
+			else if(pc.balls < 2 || !pc.hasCock())
 			{
 				kGAMECLASS.output("Flexing the tiny ball of cream between your fingers, you recall that the cream has to be spread onto your");
 				if(pc.balls == 1) kGAMECLASS.output(" testicle");
 				else kGAMECLASS.output(" sack");
-				kGAMECLASS.output(" in order to work. You squeeze out the balm and try rubbing it onto the [pc.skinFurScales] of your pelvis and are rewarded with a very slight tingling sensation. Oddly enough, you feel a cramped sensation - not from the slow tingle of the minor growth, but from something else growing within your male pouch. Your [pc.sack] tightens, then relaxes and expands as a new testicular orb grows in. It seems this cosmetic cream needs you to have at least a pair to enjoy its full effect!");
+				kGAMECLASS.output(" in order to work. You squeeze out the balm and try rubbing it onto the [pc.skinFurScales] of your pelvis and are rewarded with a very slight tingling sensation.");
+				if(pc.balls < 2) kGAMECLASS.output(" Oddly enough, you feel a cramped sensation - not from the slow tingle of the minor growth, but from something else growing within your male pouch. Your [pc.sack] tightens, then relaxes and expands as a new testicular orb grows in. It seems this cosmetic cream needs you to have at least a pair to enjoy its full effect!");
+				else if(pc.ballSizeRaw < 30) kGAMECLASS.output(" Your testicles swell a small amount, but not much happens afterwards. Another tingle hits the region above your sack and instantly dissipates. Hm, it seems this cosmetic cream needs you to have at least one cock to enjoy its full effect!");
+				else kGAMECLASS.output("... and nothing happens afterwards. Another tingle hits the region above your sack and instantly dissipates. It seems this cosmetic cream needs you to have at least one cock to enjoy its full effect!");
 				
 				kGAMECLASS.processTime(3 + rand(3));
 				
 				pc.lust(20);
 				//pc.removeStatusEffect("Uniball");
-				pc.balls = 2;
+				if(pc.balls < 2) pc.balls = 2;
 				if(pc.ballSizeRaw < 30)
 				{
 					pc.ballSizeRaw++;
@@ -151,12 +154,59 @@
 				IncrementFlag("SUMA_CREAM_USES");
 				kGAMECLASS.processTime(5);
 				
+				// Kui-tan Hotfix/Workaround
+				if(pc.hasPerk("'Nuki Nuts") && pc.weightQ("testicle") >= 100 && pc.heightRatio("testicle") >= (40/60))
+				{
+					author("");
+					
+					kGAMECLASS.output("\n\nSomething strange happens as your body trembles and vibrates with an unfamiliar pressure... You feel your sack shrink slightly underneath you... Wait, that’s not supposed to happen is it? Could your kui-tan genes be preventing you from growing any larger?");
+					
+					pc.ballSizeRaw = (pc.tallness * (40/60) * Math.PI) - pc.ballSizeMod - (1 + rand(6));
+					if(pc.ballSizeRaw < 3) pc.ballSizeRaw = 3;
+					kGAMECLASS.processTime(1);
+					
+					kGAMECLASS.output("\n\nAs if answering your question, your body is immediately struck with the feeling of orgasm! Strangely enough, nothing comes of it--not from your [pc.cocks], nothing. What--");
+					kGAMECLASS.output("\n\nAnother wave hits you. And another. <i>And another!</i> <b>What the Void is going on?!</b>");
+					kGAMECLASS.output("\n\nUnable to stall the simultaneous, rapid-fire not-orgasms, you let the feelings surge through you and hope that your microsurgeons are able to fix whatever you ended up doing to yourself; to which you quickly feel the results of... The shrinking sensation you had earlier is now replaced by an increased bloating--in your nuts, that is.");
+					
+					pc.ballFullness = 100;
+					kGAMECLASS.processTime(1);
+					
+					kGAMECLASS.output("\n\nWave after overlapping wave, you shudder as your testicles inflate and expand to maximum fullness with each progressive rush, filling with what you know is your seed, your fat sack hanging freely into the open air");
+					if(kGAMECLASS.rooms[kGAMECLASS.currentLocation].hasFlag(GLOBAL.PUBLIC)) kGAMECLASS.output(" for everyone to see");
+					kGAMECLASS.output(". After several minutes, and what feels to be a hundred blank-gasms later, your balls have stopped their complaining and have become");
+					
+					pc.ballFullness += 100;
+					for(var j:int = 0; j < 10; j++)
+					{
+						if(rand(2) == 0)
+						{
+							if(pillColor == "white") pc.ballFullness += 100;
+							if(pillColor == "black") pc.ballFullness += 300;
+						}
+					}
+					pc.lust(200);
+					kGAMECLASS.processTime(20);
+					
+					if(pc.ballSize() < 36 * Math.PI) kGAMECLASS.output(" rather large.");
+					else if(pc.ballSize() <= pc.tallness * (40/60) * Math.PI) kGAMECLASS.output(" ridiculously oversized!");
+					else if(pc.ballSize() <= pc.tallness * Math.PI) kGAMECLASS.output(" as big as your are tall!");
+					else if(pc.ballSize() < 360 * Math.PI) kGAMECLASS.output(" bigger than you are!");
+					else kGAMECLASS.output(" bigger than a house!");
+					kGAMECLASS.output("\n\nThe feeling of expansion and having your talented balls convert the extra testicular mass into [pc.cumNoun] volume has set your arousal on fire...");
+					if(kGAMECLASS.silly) kGAMECLASS.output(" Well, at least it wasn’t bone wiggles...");
+					else kGAMECLASS.output(" You’ve got to take care of this!");
+					
+					clearMenu();
+					addButton(0, "Next", kGAMECLASS.useItemFunction);
+					return;
+				}
 				// Bad End
 				// {if players use White Cream while at 90” circumference or larger balls, or if players use Black cream while at 81” circumference or larger balls}
-				if((pillColor == "white" && pc.ballSizeRaw >= 90) || (pillColor == "black" && pc.ballSizeRaw >= 81))
+				else if(((pillColor == "white" && pc.ballSizeRaw >= 90) || (pillColor == "black" && pc.ballSizeRaw >= 81)) && pc.weightQ("testicle") >= 100 && pc.heightRatio("testicle") >= (40/60))
 				{
 					kGAMECLASS.showName("\nUH-OH!");
-					kGAMECLASS.output("\n\nYour body trembles and vibrates with an unfamiliar pressure. Your heart races and your mouth waters as moist tears brim at the periphery of your [pc.eyes]. Something’s wrong, that much is obvious. A bad reaction or a bad batch of Suma Cream? As panic starts rising in your [pc.chest], an equally intense pressure builds in your [pc.balls], your [pc.cocks] throbbing with what promises to be the most intense orgasm you’ve ever experienced. ");
+					kGAMECLASS.output("\n\nYour body trembles and vibrates with an unfamiliar pressure. Your heart races and your mouth waters as moist tears brim at the periphery of your [pc.eyes]. Something’s wrong, that much is obvious. A bad reaction or a bad batch of Suma Cream? As panic starts rising in your [pc.chest], an equally intense pressure builds in your [pc.balls], your [pc.cocks] throbbing with what promises to be the most intense orgasm you’ve ever experienced.");
 					kGAMECLASS.output("\n\nYou could rush to get help, or ride it out and go for broke. Just how much do you want big balls?");
 					// [Get Help] [Let em Grow]
 					clearMenu();
