@@ -99,10 +99,10 @@ public function exploreLake():void
 		
 	//ONE TIME EVENTS
 	//Amily Village discovery
-	//if (flags["COC.AMILY_VILLAGE_ACCESSIBLE"] == undefined) { 
-		//choice.push(discoverAmilyVillage);
-		//chance.push(1);
-	//}
+	if (flags["COC.AMILY_VILLAGE_ACCESSIBLE"] == undefined) { 
+		choice.push(discoverAmilyVillage);
+		chance.push(1);
+	}
 	//Sword Discovery
 	if (flags["COC.SWORD_IN_A_STONE"] == undefined) { 
 		choice.push(findSwordInStone);

@@ -31,6 +31,11 @@ public function dreamChances():Boolean
 	if (kidAXP() >= 40 && flags["COC.HAD_KID_A_DREAM"] == undefined && pc.hasGenitals() && rand(4) == 0 && currentLocation == "COC_CAMP") {
 		dreams.push(kidADreams);
 	}
+	if (flags["COC.SHOULDRA_SILLY_ENCOUNTER_FOLLOWUP_TIMER"] < timeAsStamp && 
+		!(pc.cockTotal() > 1 || pc.faceType != GLOBAL.TYPE_HUMAN || pc.legType != GLOBAL.TYPE_HUMAN || pc.hasTail() || pc.hasHorns() || pc.cor() > 15 || pc.longestCockLength() > 10 || pc.tallness < 65 || pc.tallness > 78 || pc.hasVagina())
+		&& pc.hasGenitals() && rand(4) == 0 && currentLocation == "COC_CAMP") {
+		dreams.push(paladinModeFollowup);
+	}
 	if(dreams.length > 0) 
 	{
 		if(!dreamed) eventQueue.push(dreams[rand(dreams.length)]);

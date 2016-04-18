@@ -97,22 +97,22 @@ include "places/owca/owca.as";
 include "places/phoenixTower/phoenixTower.as";
 include "places/teladre/TelAdre.as";
 
-// FOLLOWERS
-//include "characters/AmilyScene.as";
+// CHARACTERS
+include "characters/amily.as";
 include "characters/AnemoneScene.as";
 include "characters/ArianScene.as";
+include "characters/followerInteractions.as";
 include "characters/Hel.as";
 include "characters/IzmaScene.as";
 include "characters/JojoScene.as";
 include "characters/KihaScene.as";
 include "characters/Rathazul.as";
 include "characters/SheilaScene.as";
+include "characters/shouldra.as";
 include "characters/Sophie.as";
 
 public function initCoCJunk():void {
 	if (flags["COC.CORRUPTION"] == undefined) flags["COC.CORRUPTION"] = int(pc.personality / 2.1) + 10;
-	//flags["COC.PC_GEMS"] = 0;
-	if (flags["COC.IN_MARETH"] == undefined) flags["COC.IN_MARETH"] = 0;
 	if (flags["COC.TIMES_TRANSFORMED"] == undefined) flags["COC.TIMES_TRANSFORMED"] = 0;
 }
 public function inMareth():Boolean {
@@ -121,20 +121,7 @@ public function inMareth():Boolean {
 public function allowFollowers():Boolean {
 	return false;
 }
-//public function gems(val:int = 0, force:Boolean = false):Boolean {
-	//return coc_gems(val, force);
-//}
-//public function coc_gems(val:int = 0, force:Boolean = false):Boolean {
-	//if (flags["COC.PC_GEMS"] == undefined) flags["COC.PC_GEMS"] = 0;
-	//
-	//if (force) flags["COC.PC_GEMS"] = val; 
-	//else if (val != 0) flags["COC.PC_GEMS"] += val; 
-	//
-	//if (flags["COC.PC_GEMS"] < 0) flags["COC.PC_GEMS"] = 0;
-	//
-	//return flags["COC.PC_GEMS"];
-//}
-//
+
 public function cor(arg:Number = 0, apply:Boolean = false): Number 
 {
 	if (flags["COC.CORRUPTION"] == undefined) flags["COC.CORRUPTION"] = 0;
@@ -224,6 +211,13 @@ public function takeDamage(arg:Number):void {
 	var afterShield:Number = arg - pc.shields();
 	pc.shields(arg);
 	if (afterShield > 0) pc.HP( -afterShield);
+}
+
+public function gender(target:Creature):int {
+	if (target.isHerm()) return 3;
+	if (target.hasVagina()) return 2;
+	if (target.hasCock()) return 1;
+	return 0;
 }
 
 public function getKnownFireMagic():String {

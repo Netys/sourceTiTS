@@ -2775,7 +2775,7 @@ package classes.GameData
 			
 			var buffer:String = "";
 			var textRands:Array = [];
-			if (target.hasOwnProperty("teaseReactions")) buffer = target["teaseReactions"](damage);
+			if (target.hasOwnProperty("teaseReactions")) (buffer = target["teaseReactions"](damage)) != "";
 			else if (target is PlayerCharacter)
 			{
 				if (damage == 0) buffer = "You seem unimpressed.";

@@ -173,7 +173,7 @@ public function fightToBeatKeltVictory():void {
 	clearMenu();
 	addButton(0, "Kill Him", youBadEndKeltForGood);
 	addButton(1, "Rape Him", fuckKeltsShitUp);
-	addButton(4, "Leave", leaveKelt4Good);
+	addButton(14, "Leave", leaveKelt4Good);
 }
 
 //Give Kelt the Bad End!

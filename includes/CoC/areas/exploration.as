@@ -78,7 +78,7 @@ public function tryDiscover():void
 	// kGAMECLASS.goblinAssassinScene.goblinAssassinEncounter();
 	// return;
 	
-	if (flags["COC.CATHEDRAL_FOUND"] == undefined) {
+	if (flags["COC.FOUND_CATHEDRAL"] == undefined) {
 		events.push(gargoylesTheShowNowOnWBNetwork);
 		chance.push(6);
 	}
@@ -108,7 +108,7 @@ public function placesCount():int {
 	if (flags["COC.OWCA_UNLOCKED"] == 1) places++;
 	if (flags["COC.GOBLIN_SALON_FOUND"] > 0) places++;
 	if (flags["COC.TEL_ADRE_KNOWN"] >= 1) places++;
-	//if (flags[kFLAGS.AMILY_VILLAGE_ACCESSIBLE] > 0) places++;
+	if (flags["COC.AMILY_VILLAGE_ACCESSIBLE"] > 0) places++;
 	if (flags["COC.MET_MINERVA"] >= 4) places++;
 	//if (flags[kFLAGS.PRISON_CAPTURE_COUNTER] > 0) places++;
 	return places;
@@ -138,13 +138,13 @@ public function showPlacesMenu():Boolean {
 		if (flags["COC.GAR_NAME"] == undefined) addButton(2, "Cathedral", gargoylesTheShowNowOnWBNetwork, null, "Cathedral", "Visit the ruined cathedral you've recently discovered.");
 		else addButton(2, "Cathedral", returnToCathedral, null, "Cathedral", "Visit the ruined cathedral where " + flags["COC.GAR_NAME"] + " resides.");
 	}
+	if (flags["COC.AMILY_VILLAGE_ACCESSIBLE"] > 0) addButton(3, "Town Ruins", exploreVillageRuin, null, "Town Ruins", "Visit the village ruins.\n\nTimes explored: " + flags["COC.AMILY_VILLAGE_EXPLORED"]);
 	if (dungeonsKnown() > 0) addButton(4, "Dungeons", showDungeonsMenu, null, "Dungeons", "Delve into dungeons.");
 	if (flags["COC.WHITNEY_MET"] >= 3) addButton(5, "Farm", farmExploreEncounter, null, "Farm", "Visit Whitney's farm.");
 	if (flags["COC.OWCA_UNLOCKED"] == 1) addButton(6, "Owca", gangbangVillageStuff, null, "Owca", "Visit the sheep village of Owca, known for its pit where a person is hung on the pole weekly to be gang-raped by the demons.");
 	if (flags["COC.GOBLIN_SALON_FOUND"] > 0) addButton(7, "Salon", salonGreeting, null, "Salon", "Visit the salon for hair services.");
 	if (flags["COC.TEL_ADRE_KNOWN"] >= 1) addButton(8, "Tel'Adre", telAdreMenu, null, "Tel'Adre", "Visit the city of Tel'Adre in desert, easily recognized by the massive tower.");
-	//if (flags["COC.AMILY_VILLAGE_ACCESSIBLE"] > 0) addButton(10, "Town Ruins", exploreVillageRuin, null, "Town Ruins", "Visit the village ruins.\n\nTimes explored: " + flags["COC.EXPLORED_AMILY_VILLAGE"]);
-	if (flags["COC.MET_MINERVA"] >= 4) addButton(11, "Oasis Tower", encounterMinerva, null, "Oasis Tower", "Visit the ruined tower in the high mountains where Minerva resides.");
+	if (flags["COC.MET_MINERVA"] >= 4) addButton(9, "Oasis Tower", encounterMinerva, null, "Oasis Tower", "Visit the ruined tower in the high mountains where Minerva resides.");
 	
 	addButton(14, "Back", playerMenu);
 	return true;
@@ -163,7 +163,11 @@ public function showDungeonsMenu():Boolean {
 		addButton(1, "Deep Cave", ZetazCaveEnter, null, "Deep Cave", "Visit the cave you've found in the Deepwoods." + (flags["COC.DEFEATED_ZETAZ"] > 0 ? "\n\nYou've defeated Zetaz, your old rival." : "") + (ZetazCaveCleared() ? "\n\nCLEARED!" : ""));
 	
 	//Turn on dungeon 3
-	if (flags["COC.D3_DISCOVERED"] > 0) addButton(2, "Stronghold", TravelToLethiceFortress, null, "Stronghold", "Visit the stronghold in the high mountains that belongs to Lethice, the demon queen." + (flags["COC.LETHICE_DEFEATED"] > 0 ? "\n\nYou have put an end to the demonic threats. Congratulations, you've beaten the main story!" : "") + (checkLethiceStrongholdClear() ? "\n\nCLEARED!" : ""));
+	if (flags["COC.D3_DISCOVERED"] > 0) {
+		if (flags["COC.LETHICE_DEFEATED"] > 0)
+			addDisabledButton(2, "Stronghold", "Stronghold", "[Possible datablock corruption, link severed by recovery protocol.]");
+		else addButton(2, "Stronghold", TravelToLethiceFortress, null, "Stronghold", "Visit the stronghold in the high mountains that belongs to Lethice, the demon queen." + (flags["COC.LETHICE_DEFEATED"] > 0 ? "\n\nYou have put an end to the demonic threats. Congratulations, you've beaten the main story!" : "") + (checkLethiceStrongholdClear() ? "\n\nCLEARED!" : ""));
+	}
 	//Side dungeons
 	
 	if (flags["COC.DISCOVERED_WITCH_DUNGEON"] > 0) addButton(5, "Desert Cave", TravelToDesertCave, null, "Desert Cave", "Visit the cave you've found in the desert." + (flags["COC.SAND_WITCHES_COWED"] + flags["COC.SAND_WITCHES_FRIENDLY"] > 0 ? "\n\nFrom what you've known, this is the source of the Sand Witches." : "") + (DesertCaveCleared() ? "\n\nCLEARED!" : ""));

@@ -82,11 +82,15 @@ public function displayEncounterLogCoCVarious():int
 			// Mother
 			if(StatTracking.getStat("coc/pregnancy/imps birthed") > 0)
 				output2("\n<b>* Births, Imp Litters: </b>" + StatTracking.getStat("coc/pregnancy/imps birthed"));
+			if(StatTracking.getStat("coc/pregnancy/mice") > 0)
+				output2("\n<b>* Births, Amily Litters: </b>" + StatTracking.getStat("coc/pregnancy/mice"));
 			if(StatTracking.getStat("coc/pregnancy/anemones birthed") > 0)
 				output2("\n<b>* Births, Anemone: </b>" + StatTracking.getStat("coc/pregnancy/anemones birthed"));
 			// Father
 			if(StatTracking.getStat("coc/pregnancy/imps sired") > 0)
 				output2("\n<b>* Fathered, Imp Litters (Total): </b>" + StatTracking.getStat("coc/pregnancy/imps sired"));
+			if(StatTracking.getStat("coc/pregnancy/amily") > 0)
+				output2("\n<b>* Fathered, Amily Litters: </b>" + StatTracking.getStat("coc/pregnancy/amily"));
 			if(StatTracking.getStat("coc/pregnancy/tamani daughters") > 0)
 				output2("\n<b>* Fathered, Tamani Daughters: </b>" + StatTracking.getStat("coc/pregnancy/tamani daughters"));
 			if(StatTracking.getStat("coc/pregnancy/sheila joeys") > 0)
@@ -115,6 +119,15 @@ public function displayEncounterLogCoCVarious():int
 		else if (flags["COC.HEL_FUCKBUDDY"] == 1) output2(" Fuckbuddy");
 		else if (followerHel() && flags["COC.HEL_FOLLOWER_LEVEL"] == 2) output2(" Lover");
 		else  output2(" Undecided");
+	}
+	
+	output2("\n\n" + blockHeader("Encounters: Other", false));
+	if(flags["COC.AMILY_MET"] > 0) {
+		output2("\n<b><u>Amily</u></b>");
+		output2("\n<b>* Affection: </b>" + flags["COC.AMILY_AFFECTION"]);
+		if (flags["COC.AMILY_FUCK_COUNTER"] > 0) output2("\n<b>* Times sexed: </b>" + flags["COC.AMILY_FUCK_COUNTER"]);
+		if ((StatTracking.getStat("coc/pregnancy/amily") + StatTracking.getStat("coc/pregnancy/mice")) > 0)
+			output2("\n<b>* Litters: </b>" + (StatTracking.getStat("coc/pregnancy/amily") + StatTracking.getStat("coc/pregnancy/mice")));
 	}
 	
 	return variousCount;

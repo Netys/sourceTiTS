@@ -64,11 +64,12 @@ public function enterCocVrPod():void {
 		output("\n\nSame familiar holo-screen.");
 		output("\n\nWelcome to Corruption of Champions simulation. Running init sequence...");
 		output("\nHardware: E.22.5 Prototype/R2.1, feedback system status: full/extended, auto-ajust mode.");
-		output("\nSoftware: unknown proprietary system.");
+		output("\nSoftware: undefined.");
 		output("\nUser sync system: online.");
+		output("\nUser sync level: NaN, stable.");
 		output("\nWorld init... Saved state loaded.");
 		output("\nWarning: previous session was aborted.");
-		output("\nProcessing recovery protocol... Done. Warning: partial data loss registered.");
+		output("\nProcessing recovery protocol... Done. Warning: partial data loss registered. Rollback to stable state executed. Potentially corrupt module blocked.");
 		output("\nProcessing world changes... Done.");
 		output("\n\nWould you kindly enter the portal to launch main sequence?\n\n");
 		processTime(10);
@@ -81,7 +82,13 @@ public function enterCocVrPod():void {
 	clearMenu();
 	addButton(0, "Enter portal", EnterVRIAmYourBloodyChampionYouVapidCunt, null, "Enter portal", "Bring it on!");
 	addButton(4, "Abort", abortIAmNotBloodyChampion, null, "Abort", "You are not ready now.");
-	//addDisabledButton(9, "Reset", "Reset", "Not implemented yet."); // not sure ever would be, since resetting would allow recollection of unique loot
+	
+	if (pc.short != "Etis") return; // Debug mode for dummies
+	
+	if (flags["COC_VR_UNLIMITED"] == undefined)
+		addButton(10, "Safety Off", enableFullVRMode, undefined, "Safety Off", "Fully disengage already lax safety protocols. This non-canon mode disables some limitations, including camp followers restrictions. It can't be disabled once enabled, and it can lead to some consequences later.");
+	else addDisabledButton(10, "Safety Off", "Safety Off", "The artifical limitations are lifted.");
+	//addDisabledButton(11, "Reset", "Reset", "Not implemented yet."); // not sure ever would be, since resetting would allow recollection of unique loot
 }
 
 public function abortIAmNotBloodyChampion():void {
@@ -119,6 +126,11 @@ public function EnterVRIAmYourBloodyChampionYouVapidCunt():void {
 	} else {
 		move("COC_CAMP");
 	}
+}
+
+public function enableFullVRMode():void {
+	flags["COC_VR_UNLIMITED"] = 1;
+	addDisabledButton(10, "Safety Off", "Safety Off", "The artifical limitations are lifted.");
 }
 
 //////////////////////////////////////////
@@ -165,7 +177,6 @@ public function guildEmbassyBonusFunction():Boolean {
 		output("{ protocol: verbose deprecated; stream/representation enabled }\n\n");
 		output("{ location: name 'Stellar Furnace'; function embassy }\n\n");
 		output("{ interactions: nemo; exit }\n\n");
-		processTime(1);
 		clearMenu();
 		addButton(0, "{ next }", approachNemo);
 	}
@@ -174,10 +185,11 @@ public function guildEmbassyBonusFunction():Boolean {
 
 public function approachNemo():void {
 	clearOutput();
-	clearMenu();
 	showNemo();
 	output("{ input from nemo: welcome; request input }\n\n");
 	
+	processTime(1);
+	clearMenu();
 	addDisabledButton(0, "{ buy }", "{ buy }", "{ shop closed }");
 	
 	addButton(1, "{ stock }", nemoCollection, undefined, "{ stock }", "{ request: stock examine }");
@@ -190,18 +202,18 @@ public function approachNemo():void {
 
 public function leaveNemo():void {
 	clearOutput();
-	clearMenu();
 	author("Etis");
 	showName("{ STELLAR		\nFURNACE }");
 	output("{ input from nemo: bye }\n\n");
 	output("^%$@$adache after this chat. No doubts, little prankster is mocking you.");
 	
+	processTime(2);
+	clearMenu();
 	addButton(0, "Next", move, rooms[currentLocation].northExit);
 }
 
 public function nemoLook():void {
 	clearOutput();
-	clearMenu();
 	showNemo();
 	output("{\n");
 	output("	nemo {\n");
@@ -218,6 +230,7 @@ public function nemoLook():void {
 	output("	}\n");
 	output("}\n");
 	
+	clearMenu();
 	addButton(0, "{ next }", approachNemo);
 }
 
@@ -452,11 +465,11 @@ public function nemoCollection():void {
 
 public function nemoTalk():void {
 	clearOutput();
-	clearMenu();
 	showNemo();
 	output("{ input from nemo: request topic }\n\n");
-	var btn:int = 0;
 	
+	clearMenu();
+	var btn:int = 0;
 	if (flags["COC.NEMO_STOCK_SEEN"] == 1) addButton(btn++, "{ stock }", nemoTalkStock);
 	else addDisabledButton(btn++, "{ stock }", "{ stock }", "{ subject unknown }");
 	
@@ -472,17 +485,17 @@ public function nemoTalk():void {
 
 public function nemoTalkGender():void {
 	clearOutput();
-	clearMenu();
 	showNemo();
 	output("{ input from nemo: gender male }\n\n");
 	
 	flags["COC.NEMO_GENDER_KNOWN"] = 1;
+	processTime(1);
+	clearMenu();
 	addButton(0, "{ next }", nemoTalk);
 }
 
 public function nemoTalkStock():void {
 	clearOutput();
-	clearMenu();
 	showNemo();
 	output("{ output to nemo: stock wmd; legality }\n\n");
 	output("{ input from nemo: illegal }\n\n");
@@ -495,23 +508,25 @@ public function nemoTalkStock():void {
 	// yep, he totally can appear with fuckton of WMD in cargo hold and innocently ask if he can sell them to civilians just to see what happens...
 	// of course, he would decline any offers to trade with U.G.C. only - all or nothing
 	
+	processTime(4);
+	clearMenu();
 	addButton(0, "{ next }", nemoTalk);
 }
 
 public function nemoTalkVRPod():void {
 	clearOutput();
-	clearMenu();
 	showNemo();
 	output("{ output to nemo: 'vr pod'; info }\n\n");
 	output("{ input from nemo: not stock; unknown origin; possibly alive; confusion; offer; barter; payment telemetry }\n\n");
 	
+	processTime(1);
+	clearMenu();
 	addButton(0, "{ accept }", nemoTakeVRPod);
 	addButton(1, "{ decline }", nemoTalk);
 }
 
 public function nemoTakeVRPod():void {
 	clearOutput();
-	clearMenu();
 	showNemo();
 	output("{ output to nemo: 'vr pod'; trade; accept }\n\n");
 	output("{ input from nemo: sold; delivered; installed; enjoy }\n\n");
@@ -520,6 +535,8 @@ public function nemoTakeVRPod():void {
 	
 	flags["COC.NEMO_VR_POD_TAKEN"] = 1;
 	flags["COC.VR_POD_INSTALLED"] = 1;
+	processTime(2);
+	clearMenu();
 	addButton(0, "{ next }", nemoTalk);
 }
 
@@ -558,11 +575,12 @@ public function abortVRAfterVictoryIII():void {
 	
 	output("<i>\"Look who has honored us with a visit!\"</i>. Familiar place, almost familiar voice, though you've previously only heard it with your mind rather than ears. And you are pretty sure that your entry point was in other place. <i>\"Don't look at me that way. Yes, I know, you think that I owe you few answers. Problem is... I don't think so. I've already done too much for you.\"</i>");
 	
-	output("\n\nLooks like he is not really in mood for a talk. But this could be your chance to actually inquire something. Or you could ask for something...");
+	output("\n\nLooks like he is not really in a mood for a talk. But this could be your chance to actually inquire something. Or you could ask for something...");
 	
+	processTime(2);
 	clearMenu();
 	addButton(0, "Fix VR", abortVRAfterVictoryFixIt, undefined, "Fix VR", "It is just a piece of tech, and broken machines are meant to be fixed.");
-	addButton(1, "Recompense", abortVRAfterVictoryRecompense, undefined, "Recompense", "You feel that even if fixed, it would never be the same. Time to move on.");
+	addButton(1, "Recompense", abortVRAfterVictoryRecompense, undefined, "Recompense", "You feel that it would never be the same. Time to move on.");
 	// maybe add option to change pod into controllable body transformation system? it can do this, just change firmware...
 }
 
@@ -579,6 +597,7 @@ public function abortVRAfterVictoryFixIt():void {
 	
 	output("\n\n<b>You still have VR POD installed in your ship.</b>");
 	
+	processTime(2);
 	clearMenu();
 	addButton(0, "Leave", move, rooms[currentLocation].northExit);
 }
@@ -596,8 +615,7 @@ public function abortVRAfterVictoryRecompense():void {
 	
 	output("\n\nHe sighs and scowls. <i>\"Not myth. Legend. Old, old legend, from the times when Terra was the only known inhabited pebble in a sky. Legend about technological singularity...\"</i> for a moment his piercing gaze faded. <i>\"I've been alone for too long,\"</i> he mutters. <i>\"Let me drop this. Old and sad stories from long forgotten past are not relevant to current situation.\"</i> He braced himself, putting on presumptuous trickster's fasade back. <i>\"I can offer you one. It would help you improve one of your abilities. Not really top tier stuff, to be honest, but still quite good. Better than anything on the legal market, that's for sure, and totally without side effects, no less! I'll attune your nanosurgeons to work with it seamlessly. Now, your choise...\"</i>");
 	
-	flags["COC.NEMO_VR_POD_TAKEN"] = -1;
-	
+	processTime(5);
 	clearMenu();
 	addButton(0, "Intelligence", applyGuildImplant, "intelligence", "Intelligence", "Grants an extra potential for Intelligence training.");
 	addButton(1, "Physique", applyGuildImplant, "physique", "Physique", "Grants an extra potential for Physique training.");
@@ -611,7 +629,7 @@ public function applyGuildImplant(arg:String):void {
 	clearOutput();
 	showNemo();
 	
-	output("<i>\"This one? Your choise. Now...\"</i> Suddenly he appear right before your [pc.face], and you feel his paw-like palm on your forehead, soft and surprisingly hot. Your vision hazes for a moment, then everything snaps back, and you see him is on his usual place again. That's all? You are not feeling any different, right? Seems like your Codex knows you better than youself - it already reports about <b>potential for improvement in your " + arg + "</b>.");
+	output("<i>\"This one? Your choise. Now...\"</i> Suddenly he appears right before your [pc.face], and you feel his paw-like palm on your forehead, soft and surprisingly hot. Your vision hazes for a moment, then everything snaps back, and you see him is on his usual place again. That's all? You are not feeling any different, right? Seems like your Codex knows you better than youself - it already reports about <b>potential for improvement in your " + arg + "</b>.");
 	
 	flags["COC.NEMO_COMPENSATION"] = arg;
 	
@@ -626,8 +644,11 @@ public function applyGuildImplant(arg:String):void {
 	
 	output("\n\nFeeling suddenly empty inside, you turn to exit and leave without saying goodbye. It somehow feels right that way.");
 	
+	flags["COC.NEMO_VR_POD_TAKEN"] = -1;
+	
 	output("\n\n<b>You no longer have VR POD installed in your ship.</b>");
 	
+	processTime(60 + rand(60));
 	updatePCStats();
 	clearMenu();
 	addButton(0, "Leave", move, rooms[currentLocation].northExit);

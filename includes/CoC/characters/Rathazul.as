@@ -137,26 +137,26 @@ public function campRathazul(first:Boolean = true):void {
 		return;
 	}
 	//Special rathazul/follower scenes scenes.
-	//if(rand(6) == 0 && flags[kFLAGS.RATHAZUL_CAMP_INTERACTION_COUNTDOWN] == 0) {
-		//flags[kFLAGS.RATHAZUL_CAMP_INTERACTION_COUNTDOWN] = 3;
-		////Pure jojo
-		//if(flags[kFLAGS.JOJO_RATHAZUL_INTERACTION_COUNTER] == 0 && pc.findStatusAffect(StatusAffects.PureCampJojo) >= 0 && flags[kFLAGS.JOJO_DEAD_OR_GONE] == 0) {
-			//finter.jojoOffersRathazulMeditation();
-			//return;
-		//}
-		//if(flags[kFLAGS.AMILY_MET_RATHAZUL] == 0 && flags[kFLAGS.AMILY_FOLLOWER] == 1 && amilyScene.amilyFollower()) {
-			//finter.AmilyIntroducesSelfToRathazul();
-			//return;
-		//}
-		//if(flags[kFLAGS.AMILY_MET_RATHAZUL] == 1 && flags[kFLAGS.AMILY_FOLLOWER] == 1 && amilyScene.amilyFollower()) {
-			//finter.amilyIngredientDelivery();
-			//return;
-		//}
-		//if(flags[kFLAGS.AMILY_MET_RATHAZUL] == 2 && flags[kFLAGS.AMILY_FOLLOWER] == 1 && amilyScene.amilyFollower()) {
-			//finter.amilyAsksAboutRathazulsVillage();
-			//return;
-		//}
-	//}
+	if(rand(6) == 0 && !(flags["COC.RATHAZUL_CAMP_INTERACTION_COUNTDOWN"] > timeAsStamp)) {
+		flags["COC.RATHAZUL_CAMP_INTERACTION_COUNTDOWN"] = timeAsStamp + 3 * 60;
+		//Pure jojo
+		if(flags["COC.JOJO_RATHAZUL_INTERACTION_COUNTER"] == undefined && flags["COC.JOJO_IN_CAMP"] == 1 && flags["COC.JOJO_DEAD_OR_GONE"] == undefined) {
+			jojoOffersRathazulMeditation();
+			return;
+		}
+		if(flags["COC.AMILY_MET_RATHAZUL"] == undefined && flags["COC.AMILY_FOLLOWER"] == 1 && amilyFollower()) {
+			AmilyIntroducesSelfToRathazul();
+			return;
+		}
+		if(flags["COC.AMILY_MET_RATHAZUL"] == 1 && flags["COC.AMILY_FOLLOWER"] == 1 && amilyFollower()) {
+			amilyIngredientDelivery();
+			return;
+		}
+		if(flags["COC.AMILY_MET_RATHAZUL"] == 2 && flags["COC.AMILY_FOLLOWER"] == 1 && amilyFollower()) {
+			amilyAsksAboutRathazulsVillage();
+			return;
+		}
+	}
 	//Rat is definitely not sexy!
 	if(first) {
 		if (pc.lust() > 50) pc.lust( -1);

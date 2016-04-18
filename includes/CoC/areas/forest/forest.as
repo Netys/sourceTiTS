@@ -126,7 +126,7 @@ public function forestEventJojo():void {
 	clearOutput();
 	if (flags["COC.JOJO_MET"] == undefined /*&& pc.findStatusAffect(StatusAffects.PureCampJojo) < 0*/) 
 	{	
-		if (cor() < 25)
+		if (pc.cor() < 25)
 		{
 			if (pc.level >= 4)
 			{

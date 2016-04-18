@@ -1,6 +1,7 @@
 package classes.Engine.Combat.DamageTypes 
 {
 	import classes.DataManager.Serialization.ISaveable;
+	import classes.Engine.Combat.damageRand;
 	import flash.utils.getQualifiedClassName;
 	
 	/**
@@ -263,6 +264,13 @@ package classes.Engine.Combat.DamageTypes
 					}
 				}
 			}
+			return this;
+		}
+		
+		/** Applies damageRand function and returns same object changed. */
+		public function rand(deviation:Number = 15):TypeCollection
+		{
+			damageRand(this, deviation);
 			return this;
 		}
 		

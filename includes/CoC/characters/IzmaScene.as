@@ -2015,10 +2015,10 @@ private function submitToLakeIzma():void {
 	//addButton(0, "Next", mainGameMenu);
 //}
 //
-//private function izmaPreg():void {
+//private function izmaPreg(force:Boolean = false):void {
 	//if (flags["COC.FOLLOWER_AT_FARM_IZMA"] == 1) return;
 	////PREGGO CHANCES
-	//if (flags["COC.IZMA_KIDS_ALLOW"] == 1 && !izma.isPregnant() && rand(100) < (10 + Math.round(pc.cumQ() / 100))) {
+	//if (flags["COC.IZMA_KIDS_ALLOW"] == 1 && !izma.isPregnant() && (rand(100) < (10 + Math.round(pc.cumQ() / 100)) || force)) {
 		////pregnancy.knockUpForce(PregnancyStore.PREGNANCY_PLAYER, PregnancyStore.INCUBATION_IZMA);
 	//}
 //}
