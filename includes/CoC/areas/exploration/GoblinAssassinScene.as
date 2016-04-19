@@ -227,7 +227,7 @@ public function CoCGoblinAssassinPCVictory():void
 			addButton(6, "Web Condom", goblinCondomed);
 	}
 	//Breastfeed adds an option
-	if (pc.lactationQ() >= 500) addButton(7, "Breastfeed", giveGoblinAMilkMustache);
+	if (pc.lactationQ() >= 500) addButton(5, "Breastfeed", giveGoblinAMilkMustache);
 	
 	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); CombatManager.genericVictory(); } );
 }

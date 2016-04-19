@@ -457,8 +457,11 @@ package classes.Characters.CoC
 		{
 			var pc:PlayerCharacter = kGAMECLASS.pc;
 			output("The succubus lifts her hands up in the air, saying, <i>“Why not taste a sampling of the pleasures I offer?”</i> Above her, a canopy of corrupt, snarled greenery forms, oozing unmistakable sexual fluids - both male and female. Splatters of jism and pussy juice fall like curtains of corruptive rain, their scent lacing the air with their heady musk.");
-	
-			if (combatMiss(this, pc))
+			
+			if (pc.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)) {
+				output("\n\nWell, you guess thet it should be - nothing can seep inside your armor!");
+			}
+			else if (combatMiss(this, pc))
 			{
 			//Dodge
 				output(" Somehow, you manage to twist out from under the organic raincloud without getting stained by a single drop, though your breath has quickened, and not just from the physical effort.");
@@ -544,7 +547,10 @@ package classes.Characters.CoC
 			
 			output(" They're so soft and pillowy that you can't help but enjoy the feel of them on your skin, and you take a deep, contented breath before remembering where you are and struggling out of the creamy valley.");
 			
-			output("\n\nYour foe giggles, favoring you with a blown kiss. Her nipples are obviously a little harder, but then again, so are yours.");
+			output("\n\nYour foe giggles, favoring you with a blown kiss. Her nipples are obviously a little harder,");
+			applyDamage(new TypeCollection( { tease : 2 + libido() / 20 + cor() / 25 } ).rand(), pc, this);
+			output(" but then again, so are yours.");
+			applyDamage(new TypeCollection( { tease : 2 + pc.libido() / 20 + pc.cor() / 25 } ).rand(), this, pc);
 		}
 		
 		private function sapSpeed():void
@@ -588,7 +594,10 @@ package classes.Characters.CoC
 			output("\n\nOne of those tentacles is above you now, and it points down, its phallic shape clear. The slit at the end spreads open, and a blob of whitish goo appears. ");
 			
 			//Fail strength check!
-			if (rand(pc.physique() - 30) + 30 > this.physique())
+			if (pc.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)) {
+				output("\n\nIt hangs there for a moment before spraying you with the undoubtedly drugged jism. Good thing that your armor is watertight...");
+			}
+			else if (rand(pc.physique() - 30) + 30 > this.physique())
 			{
 				output("\n\nIt hangs there for a moment while the succubus yanks your mouth open, just in time to receive the undoubtedly drugged jism. It practically sizzles on your tongue, tasting of almonds and walnuts with a distinctly fruity aftertaste. Your mouth gulps it down automatically, and with slow-dawning comprehension, you understand how the succubus could be so obsessed with these plants. Your groin heats eagerly as the plant spunk absorbs into your system. Your pupils dilate. Gods, it feels good!");
 				

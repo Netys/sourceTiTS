@@ -1543,7 +1543,7 @@ private function rapeTheBeeGirlWithADick():void
 			if (pc.balls > 0) output(", and your [pc.balls] constrict", false);
 			output(".\n\n", false);
 
-			output("Your seed is propelled through your pulsating [cockNoun " + x + "] with surprising force.", false);
+			output("Your seed is propelled through your pulsating [pc.cockNoun " + x + "] with surprising force.", false);
 			//No testicles: 
 			if (pc.balls == 0) output("  It dribbles into the bee-girl as her honey squirts out of her once again. Her body trembles as the extreme exertions take their toll, and she slides off of your member with a damp plop, splashing into a puddle of her own fluids.", false);
 			else {

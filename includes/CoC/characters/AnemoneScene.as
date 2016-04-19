@@ -1434,7 +1434,9 @@ private function tutorAnemoneKid():void
 	//(if lust > 99, output)
 	if (pc.lustQ() >= 99) {
 		output("You're way too horny to focus on any sort of weapon instruction right now, and the anemone can see it in your expression as your gaze wanders over her body; she blushes a deep blue and shrinks into her barrel with a shy glance.");
-		returnToCamp();
+		processTime(1);
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
 		return;
 	}
 	output("The anemone obediently climbs out of her barrel, ");

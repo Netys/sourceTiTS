@@ -61,7 +61,8 @@ package classes.Items.Miscellaneous
 			clearOutput();
 			output("You cram the pearl in your mouth and swallow it like a giant pill with some difficulty.  Surprisingly there is no discomfort, only a cool calming sensation that springs up from your core.");
 			
-			target.libido( -5);
+			var libidoDiff:Number = -Math.min(5, target.libido() - 1);
+			if (libidoDiff < 0) target.libido( libidoDiff);
 			target.lust( -25);
 			target.cor( -10);
 

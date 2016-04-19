@@ -67,6 +67,7 @@ public function campFollowersMenu(descOnly:Boolean = false):void {
 	if (!descOnly) {
 		clearMenu();
 		clearOutput();
+		addButton(14,"Back",mainGameMenu);
 	}
 	followerBtnNum = 0;
 	for each (var name:* in followerCampMenuBlurb) 
@@ -74,7 +75,6 @@ public function campFollowersMenu(descOnly:Boolean = false):void {
 		name(!descOnly);
 		if (followerBtnNum == 14) followerBtnNum++;
 	}
-	addButton(14,"Back",mainGameMenu);
 }
 
 public function loversCount():int {
@@ -102,6 +102,7 @@ public function campLoversMenu(descOnly:Boolean = false):void {
 	if (!descOnly) {
 		clearMenu();
 		clearOutput();
+		addButton(14,"Back",mainGameMenu);
 	}
 	loverBtnNum = 0;
 	for each (var name:* in loverCampMenuBlurb) 
@@ -109,7 +110,6 @@ public function campLoversMenu(descOnly:Boolean = false):void {
 		name(!descOnly);
 		if (loverBtnNum == 14) loverBtnNum++;
 	}
-	addButton(14,"Back",mainGameMenu);
 }
 
 public function slavesCount():int {
@@ -135,6 +135,7 @@ public function campSlavesMenu(descOnly:Boolean = false):void {
 	if (!descOnly) {
 		clearMenu();
 		clearOutput();
+		addButton(14,"Back",mainGameMenu);
 	}
 	slaveBtnNum = 0;
 	for each (var name:* in slaveCampMenuBlurb) 
@@ -142,7 +143,6 @@ public function campSlavesMenu(descOnly:Boolean = false):void {
 		name(!descOnly);
 		if (loverBtnNum == 14) slaveBtnNum++;
 	}
-	addButton(14,"Back",mainGameMenu);
 }
 
 private function swimInStream():void {	

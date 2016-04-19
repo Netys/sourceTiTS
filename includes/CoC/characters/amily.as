@@ -326,7 +326,7 @@ public function exploreVillageRuin():void {
 		return;
 	}
 	//CORRUPTIONZ
-	if (flags["COC.AMILY_CORRUPT_FLIPOUT"] > 0 && pc.cor() > 25) {
+	if (flags["COC.AMILY_CORRUPT_FLIPOUT"] > 0 && pc.cor() > 25 && allowFollowers()) {
 		//Cook amily a snack if player doesnt have key item for it.
 		if (pc.hasKeyItem("Potent Mixture") < 0 && !(flags["COC.UNKNOWN_FLAG_NUMBER_00170"] > 3)) {
 			cookAmilyASnack();

@@ -709,9 +709,11 @@ private function hermsLikeMaleArian():void {
 	//Penetrate - (Proceed to appropriate scene)
 	//Get Penetrated - (Proceed to appropriate scene)
 	clearMenu();
-	if (pc.cockThatFits(arian.analCapacity()) >= 0) addButton(0,"Penetrate",giveArianAnal);
+	if (pc.cockThatFits(arian.analCapacity()) >= 0) addButton(0, "Pitch Anal", giveArianAnal);
+	else addDisabledButton(0, "Pitch Anal", "Pitch Anal", "This scene requires you to have fitting cock.");
 	addButton(1,"Get Penetrated",getPenetratedByArianAndHisHitlerMustache);
 }
+
 //[=Prefer Female=]
 private function hermsLikeFemaleArian():void {
 	clearOutput();
@@ -750,16 +752,11 @@ private function youDontMindBeingGayForArian():void {
 	
 	// Redirecting the scene if the players cock is too big for the anal scene... not ideal, but its a QWIKFIX™
 	clearMenu();
-	if (pc.cockThatFits(arian.analCapacity()) == -1)
-	{
-		addButton(0, "Next", getBlownByArian);
-	}
-	else
-	{
-		addButton(0, "Next", giveArianAnal);
-	}
-	
+	if (pc.cockThatFits(arian.analCapacity()) >= 0) addButton(0, "Anal - Pitch", giveArianAnal);
+	else addDisabledButton(0, "Anal - Pitch", "Anal - Pitch", "This scene requires you to have fitting cock.");
+	addButton(1, "Anal - Catch", getButtWreckedByArian);
 }
+
 //[=Like Girls=]
 private function youLikeGirlsNotSickLizardDudes():void {
 	clearOutput();
