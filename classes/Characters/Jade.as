@@ -213,5 +213,10 @@
 			d.inventory.push(new OvirAce().getSaveObject());
 			d.inventory.push(new OvirPositive().getSaveObject());
 		}
+		
+		override public function onLeaveBuyMenu():void
+		{
+			kGAMECLASS.approachJade();
+		}
 	}
 }
