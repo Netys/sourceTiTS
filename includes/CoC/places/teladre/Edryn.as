@@ -1,4 +1,6 @@
 import classes.Characters.PregnancyPlaceholder;
+import classes.Engine.Combat.applyDamage;
+import classes.Engine.Combat.DamageTypes.TypeCollection;
 import classes.GLOBAL;
 import classes.Items.Transformatives.CoCGroPlus;
 import classes.Items.Transformatives.CoCIncubiD;
@@ -13,11 +15,12 @@ import classes.Engine.Utility.*;
 public function get edryn():PregnancyPlaceholder // since there are no TFs... screw making actual character
 {
 	var pp:PregnancyPlaceholder = new PregnancyPlaceholder();
-	pp.legType = GLOBAL.TYPE_EQUINE;
+	pp.legType = GLOBAL.TYPE_EQUINE; // ensure Centaur status
 	pp.legCount = 4;
 	if (!pp.hasVagina()) pp.createVagina();
-	pp.vaginas[0].loosenessRaw = 3;
-	pp.vaginas[0].wetnessRaw = 4;
+	pp.vaginas[0].loosenessRaw = 4;
+	pp.vaginas[0].wetnessRaw = flags["COC.EDRYN_PREGNANCY_INCUBATION"] == undefined ? 3 : 5;
+	pp.vaginas[0].bonusCapacity = 100;
 	pp.ass.wetnessRaw = 1;
 	return pp;
 }
@@ -64,6 +67,27 @@ public function showEdryn():void {
 			//return false;
 		//}
 		////End of Interface Implementation
+
+public function EdrynNotify():void {
+	if (flags["COC.EDRYN_PREGNANCY_INCUBATION"] == undefined) return; // not pregnant
+	if (flags["COC.EDRYN_PREGNANT_AND_NOT_TOLD_PC_YET"] == undefined) return; //Pregnancy on hold until the PC discovers it
+	flags["COC.EDRYN_PREGNANCY_INCUBATION"]--;
+	if (flags["COC.EDRYN_PREGNANCY_INCUBATION"] > 0) return; // not ready yet
+	
+	flags["COC.EDRYN_PREGNANCY_INCUBATION"] = undefined; //Clear Pregnancy
+	if (flags["COC.EDRYN_PREGNANCY_TAOTH"] != undefined) {
+		flags["COC.EDRYN_PREGNANCY_TAOTH"] = undefined; //Clear Taoth flag
+		//kGAMECLASS.urtaQuest.urtaAndEdrynGodChildEpilogue();
+	} else {
+		IncrementFlag("COC.EDRYN_NUMBER_OF_KIDS");
+		flags["COC.EDRYN_NEEDS_TO_TALK_ABOUT_KID"] = 1; //Set 'needs to talk to edryn about da kid
+	}
+}
+
+private var EdrynHook: * = EdrynGrapple();
+private function EdrynGrapple():* { 
+		timeChangeListeners.push(EdrynNotify);
+	}
 
 public function edrynBarTalk():void {
 	showEdryn();
@@ -113,13 +137,14 @@ public function edrynBarTalk():void {
 		return;
 	}
 	//Mid-pregnancy talk
-	//else if (pregnancy.isPregnant) {
-		//output("Edryn smiles pleasantly as you approach, ", false);
-		//output("offering you a spot at the table across from her.  She pushes aside the piled-up dishes and shifts uncomfortably on her pregnant bulk.  You smile at her and enjoy a light chat for a while, until Edryn runs out of food.  She excuses herself, and rises to go to the restroom.\n\n", false);
-		////Edryn pregnant offer
-		//doNext(pregdrynOffer);
-		//return;
-	//}
+	else if (flags["COC.EDRYN_PREGNANCY_INCUBATION"] != undefined) {
+		output("Edryn smiles pleasantly as you approach, ");
+		output("offering you a spot at the table across from her.  She pushes aside the piled-up dishes and shifts uncomfortably on her pregnant bulk.  You smile at her and enjoy a light chat for a while, until Edryn runs out of food.  She excuses herself, and rises to go to the restroom.\n\n");
+		//Edryn pregnant offer
+		clearMenu();
+		addButton(0, "Next", pregdrynOffer);
+		return;
+	}
 	//Post kids talk
 	else if(flags["COC.EDRYN_NUMBER_OF_KIDS"] > 0) {
 		output("Edryn gestures for you to take a seat, and motions for a waitress to bring you a drink.  You sit with the busty centaur and chat her up for a little bit, recounting your latest adventures and sexual exploits.  She laughs at some, blushes at others, and comforts you at times, but by the time you've finished her child-birth-enlarged nipples are like two hard bullets under her tunic and her face is flushed.  Edryn picks at her food for a moment and excuses herself, \"<i>Sorry dear, but I'm feeling a little flushed.  I'm going to head back to my room and lie down a while...</i>\"\n\n");
@@ -437,6 +462,7 @@ public function edrynSexSelecter():void {
 	//Increment sex count
 	IncrementFlag("COC.EDRYN_AFFECTION");
 }
+
 private function fuckEdrynTaur():void {
 	showEdryn();
 	clearOutput();
@@ -483,6 +509,7 @@ private function fuckEdrynTaur():void {
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 }
+
 private function fuckEdrynNonTaur():void {
 	showEdryn();
 	clearOutput();
@@ -697,388 +724,388 @@ private function threesomeEdrynAndHel():void {
 }
 
 ////Pregdryn:
-//public function findOutEdrynIsPregnant():void {
-	//showEdryn();
-	//clearOutput();
-	//output("Edryn is lying down at her table, pensively circling a finger around a glass of water and poking listlessly at her plate of greens.  Her eyes keep glancing down or to the side every time you meet her gaze.  You've never seen the shameless centaur bothered like this, and you grab her by the shoulders to ask, \"<i>What's wrong?</i>\"\n\n", false);
-//
-	//output("She finally looks up at you, her large brown eyes wet with moisture, and explains, \"<i>I-I'm pregnant.  I saw the covenant about it and had them check with their magic.  You're the father.</i>\"\n\n", false);
-//
-	//output("The centaur blushes fiercely, blurting everything out in a rush now that she's started to talk, \"<i>I don't know how it happened!  I've been taking herbs to prevent this kind of thing, and I've NEVER heard of someone getting pregnant while they're on these.</i>\"  She gives her flank a gentle pat as she keeps speaking, \"<i>There's just something about your cum I guess!  Our child will be a centaur, just like her mom, and I intend to keep her.</i>\"\n\n", false);
-//
-	//output("<b>How do you react?</b>", false);
-//
-	//var aroused:Function = (pc.hasCock ? arousedByPregdryn : null);
-	////[Shocked] [Pleased] [Aroused (Requires Wang)]
-	//simpleChoices("Shocked", shockedByEdrynsPregnancy, "Pleased", pleasedbyPregdryn, "Aroused", aroused, "", null, "", null);
-//}
-//
-////Shocked
-//private function shockedByEdrynsPregnancy():void {
-	//showEdryn();
-	//clearOutput();
-	//output("You stammer for an answer, unsure of what to say in light of this startling revelation.  Edryn looks on the verge of tears and all you can do is struggle for words.  She grips the table, her knuckles turning white while her eyes flick from side to side in a panic.", false);
-//
-	//output("\n\n<b>What do you do?</b>", false);
-	////[Accept it] [Reject it]
-	//simpleChoices("Accept It", shockedByPregdrynThenAccept, "Reject It", beAnAssholeToPregdryn, "", null, "", null, "", null);
-//}
-////Accept it
-//private function shockedByPregdrynThenAccept():void {
-	//showEdryn();
-	//clearOutput();
-	//output("Leaning forward, you grab hold of Edryn's hands and cradle them in your grip.  She looks back up at your eyes and reads your expression, breaking into a smile as she reads the feelings on your face.\n\n", false);
-//
-	//output("\"<i>Thank you!  You had me really going for a moment there, you know that?  Wow, that is a weight off my chest,</i>\" exhales Edryn.  She climbs up onto her hooves and whispers, \"<i>I've got to use the little ponies' room, I'll be right back lover,</i>\" before she departs.\n\n", false);
-//
-	////[To Pregnant Offer]
-	//doNext(pregdrynOffer);
-//}
-//
-////Reject it
-//private function beAnAssholeToPregdryn():void {
-	//showEdryn();
-	//clearOutput();
-	//output("You look the panicked centauress dead in the eye and explain that what she does with her body is her business, and you want nothing to do with it.  She stares dumbfounded for a split-second before her face colors red with rage.  Edryn screams, \"<i>GET THE FUCK AWAY FROM ME THEN!</i>\"\n\n", false);
-//
-	//output("Everyone in the bar turns to watch the commotion, and with an angry, hormonal centaur and this many eyes on you, it would be best to depart.\n\n", false);
-//
-	//output("<b>(Edryn will no longer speak with you.)</b>", false);
-	//flags[kFLAGS.EDRYN_NEVER_SEE_AGAIN] = 1;
-	////Use the 1 hour cheat thinger
-	//doNext(telAdre.barTelAdre);
-//}
-////Pleased
-//private function pleasedbyPregdryn():void {
-	//showEdryn();
-	//output("",true);
-	//output("You crack into a smile and congratulate the lusty centaur.  She giggles with relief at your words and wipes a bead of sweat from her brow as you finish.  Edryn exclaims, \"<i>I'm so glad you're happy about this!  I don't expect you to drop your quest and move in with me or anything like that, but it'll be wonderful to hear the clipper-clopper of little hooves in this town.</i>\"\n\n", false);
-//
-	//output("Edryn pulls back from the table and stretches, her muscles visibly loosening as the tension oozes out of her imposing frame.  She whispers, \"<i>Be right back lover, I've got to make a stop at the little ponies' room,</i>\" before she departs.\n\n", false);
-//
-	////[To Pregger Offer]
-	//doNext(pregdrynOffer);
-//}
-//
-////Aroused
-//public function arousedByPregdryn():void {
-	//showEdryn();
-	//clearOutput();
-	//output("You break into a grin bordering on lecherousness and congratulate the lusty centaur.  Her eyes widen for a moment, shocked from your expression, then narrow into a sultry expression.  Edryn teases, \"<i>I think someone has a bit of a pregnancy fetish, hrmm?  Is it the thought of my tits getting swollen with milk or the idea of me being jiggly and randy all the time that does it for you?</i>\"  She shivers, the outlines of her prominent nipples straining against her already-tightly-stretched tunic.  Edryn's eyes drop down and a rueful smile works its way across her face as she admits, \"<i>Great, now I'm turned on too!  Let me go use the little ponies' room. Then, MAYBE, we can help take care of each other.</i>\"\n\n", false);
-//
-	////[To Pregger Offer]
-	//doNext(pregdrynOffer);
-//}
-//
-//
-////Pregger Offer
-//private function pregdrynOffer(cs:Boolean = true):void {
-	//showEdryn();
-	//if(cs) clearOutput();
-	////Used to call post birthing sexings.
-	//if (!pregnancy.isPregnant) {
-		////Actually choose the sex scene
-		//edrynSexSelecter();
-		//return;
-	//}
-	////VERY Pregnant Offer
-	//if (pregnancy.incubation < 250) {
-		//output("Edryn struggles to move, practically waddling thanks to her swollen, pregnant belly.  As usual, the glistening black lips of her sex are on display, and with the hormones pouring through her, she's leaking a steady trail of slime.  The scent coming off her is unreal!  It's like it's reaching right into your brain and cranking the 'fuck' dial up to maximum.  ", false);
-		//if(pc.cockTotal() > 1) output("All of your [pc.cocksLight] fill in seconds, growing rock hard and actually aching with their need.  ", false);
-		//else if(pc.cockTotal() == 1) output("Your [pc.cock] fills in seconds, growing rock hard and actually aching with need.  ", false);
-		//output("You're totally dazed by the massive spike in arousal, and ", false);
-		//if(cor() + pc.lib < 100 || pc.cockTotal() < 1) output("you struggle not to reach into your [pc.gear] to touch yourself.", false);
-		//else {
-			//output("you can't stop yourself from grabbing ", false);
-			//if(pc.cockTotal() == 1) output("your ", false);
-			//else output("a ", false);
-			//output(cockDescript(0) + " and stroking it under the table.", false);
-		//}
-		//output("\n\n", false);
-//
-		//output("You wouldn't notice her return if it wasn't for the increase in potent centaur pheromones hitting your nostrils.  It takes a hand slipping under the table to play with your ", false);
-		//if(pc.balls > 0) output(ballsDescriptLight(), false);
-		//else if(pc.hasSheath()) output("sheath", false);
-		//else if(pc.cockTotal() > 0) output(cockDescript(0), false);
-		//else output("crotch", false);
-		//output(" to rouse you from the incredible sexual haze.  ", false);
-	//}
-	////Mildly pregnant offer
-	//else {
-		//output("As usual, when Edryn pivots to leave, she gives you a perfect view of her unusual vagina.  The glistening black lips of her sex practically ooze moisture, and the scent coming off her seems even more potent than usual, making your head swim.  ", false);
-		//if(pc.cockTotal() > 1) output("All of your [pc.cocksLight] fill in seconds, growing rock hard and actually aching with their need.  ", false);
-		//else if(pc.cockTotal() == 1) output("Your [pc.cock] fills in seconds, growing rock hard and actually aching with need.  ", false);
-		//output("You're a little bit dazed by the sudden spike in arousal, and ", false);
-		//if(cor() + pc.lib < 100 || pc.cockTotal() < 1) output("you struggle not to reach into your [pc.gear] to touch yourself.", false);
-		//else {
-			//output("you can't stop yourself from grabbing ", false);
-			//if(pc.cockTotal() == 1) output("your ", false);
-			//output("a ", false);
-			//output(cockDescript(0) + " and stroking it under the table.", false);
-		//}
-		//output("\n\n", false);
-//
-		//output("As usual, you're barely cognizant of her return.  It isn't until a hand sneaks under the table to surreptitiously fondle your ", false);
-		//if(pc.balls > 0) output(ballsDescriptLight(), false);
-		//else if(pc.hasSheath()) output("sheath", false);
-		//else if(pc.cockTotal() > 0) output(cockDescript(0), false);
-		//else output("crotch", false);
-		//output(" that you come out of your daze.  ", false);
-	//}
-	////(NO WANGUUU)
-	//if(pc.cockTotal() == 0) {
-		//output("She looks down, eyes fixing on your crotch for a moment before she sighs, \"<i>Why did you get rid of your dick?  I like you a lot, but I don't really want to have sex with you like you are now.</i>\"\n\nEdryn leaves looking a little depressed.", false);
-		////Bar menu?
-		//cheatTime(1);
-		//doNext(telAdre.barTelAdre);
-		//return;
-	//}
-	////(MEETS SIZE REQUIREMENTS)
-	//var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
-	////-1 = none fit.  Set x to 0 for big boys.
-	//if(x < 0) x = 0;
-	//if(pc.cockVolume(x) >= 24 && pc.cockVolume(x) < edryn.vaginalCapacity()) {
-		//output("Edryn is smiling radiantly as she continues to caress you under the table.  She asks, \"<i>", false);
-		//if(flags["COC.EDRYN_NUMBER_OF_KIDS"] == 0) output("Does my scent have an even stronger effect on you now", false);
-		//else output("Are you going to cum just from sniffing at my cunt", false);
-		//output("?</i>\"  You try to deny it, but she pumps at your shaft and continues, \"<i>Don't lie dear, I can feel how hard you are now, and I DEFINITELY saw how dazed you were when I came back out.  Let's go back to my room so you can get another whiff, okay?</i>\"\n\n", false);
-//
-		//output("The centaur doesn't wait for a reply, and takes off at a trot towards her quarters.  A few drips have splattered across the floor, leaving a trail for you to follow.  You get up, dazed with arousal and leaking pre-cum, and stagger through the bar to her room, practically lust-drunk.", false);
-		//dynStats("lus", 50);
-		////TO SEX!
-		////doNext(fuckPregEdryn);
-		//output("\n\nHow do you want to handle this?  ");
-		//clearMenu();
-		//output("You could have some great, pregnant taur sex.");
-		//addButton(0,"Preg. Fuck", fuckPregEdryn);
-		//if(pc.biggestCockArea() >= edryn.vaginalCapacity()) {
-			//output("  Since at least part of you isn't acceptable to her, you could eat her out until you get off from her pheromones alone.");
-			//addButton(1,"NoFitEating", jizzFromEatingPregdrynOut);
-		//}
-		//output("  Or, you could go down on her until you're in a frenzy, then fuck her wildly.");
-		//addButton(2,"Eat,Rut,Fuck", eatEdrynPussyLikeABawss);
-		//return;
-	//}
-	////(PC TOO BIG)
-	//else if(pc.cockVolume(x) > edryn.vaginalCapacity()) {
-		//output("Edryn brushes her hand over ALL of your [pc.cock] then jerks it back, startled.  She sighs, \"<i>Dear, that thing is a BEAST.  I mean, there's no doubt I'd love to get it inside me, but I promise it won't fit me.</i>\"\n\n", false);
-//
-		//output("She looks at you pleadingly and practically begs, \"<i>Please, find a way to fit me.</i>\"  Edryn grabs you by the shoulders and whispers in your ear, \"<i>Being pregnant makes me so turned on ALL THE TIME.  I need you inside me.</i>\"\n\n", false);
-//
-		//output("A thoughtful look crosses the centaur's face as she continues to pant in your ear, \"<i>Come on, lets go back to my room.  I'll find a way to tend to that monster if you'll eat me out.  Maybe the pheromones wafting off my cunt will get you off without me even touching you?  I've seen it happen before with some of my clients, and with how strong my scent is now...</i>\"\n\n", false);
-//
-		//output("Edryn releases you and climbs up on all fours, making her way towards her room in the back of the establishment.  The smell of her need hangs heavy in the air, and you follow it like a lost puppy.  Of course, puppies don't have their massive, rock-hard maleness visible to everyone around them.  Thankfully, you reach her door quickly, and bolt inside.", false);
-		////Go to 'too big or too small eat out'
-		//doNext(jizzFromEatingPregdrynOut);
-		//dynStats("lus", 50);
-		//return;
-	//}
-	////(PC TOO SMALL)
-	//else {
-		//output("Edryn giggles, \"<i>When did you get this small?  I've seen ponies with bigger kits!</i>\" but her hand continues to stroke you.  You squirm in her grasp, about ready to burst.  The pregnant centaur teases, \"<i>Dear, I don't think I'd notice something that small if you stuck it inside me.</i>\"\n\n", false);
-//
-		//output("She laughs at the expression on your face and continues, \"<i>Oh don't be like that.  The truth is the truth.  You're still the father of my child.  Why don't we go back to my room?  You can eat me out till the centaur pheromones overpower your little dick and make it squirt, okay?</i>\"\n\n", false);
-//
-		//output("The centaur doesn't wait for a reply, and takes off at a trot towards her quarters.  A few drips have splattered across the floor, leaving a trail for you to follow.  You get up, dazed with arousal and leaking pre-cum, and stagger through the bar to her room, practically drunk on lust.", false);
-		////Go to 'too big or too small eat out'
-		//doNext(jizzFromEatingPregdrynOut);
-		//dynStats("lus", 50);
-		//return;
-	//}
-//}
-//
-//
-////Fucking
-//public function fuckPregEdryn():void {
-	//clearOutput();
-	//showEdryn();
+public function findOutEdrynIsPregnant():void {
+	showEdryn();
+	clearOutput();
+	output("Edryn is lying down at her table, pensively circling a finger around a glass of water and poking listlessly at her plate of greens.  Her eyes keep glancing down or to the side every time you meet her gaze.  You've never seen the shameless centaur bothered like this, and you grab her by the shoulders to ask, \"<i>What's wrong?</i>\"\n\n");
+
+	output("She finally looks up at you, her large brown eyes wet with moisture, and explains, \"<i>I-I'm pregnant.  I saw the covenant about it and had them check with their magic.  You're the father.</i>\"\n\n");
+
+	output("The centaur blushes fiercely, blurting everything out in a rush now that she's started to talk, \"<i>I don't know how it happened!  I've been taking herbs to prevent this kind of thing, and I've NEVER heard of someone getting pregnant while they're on these.</i>\"  She gives her flank a gentle pat as she keeps speaking, \"<i>There's just something about your cum I guess!  Our child will be a centaur, just like her mom, and I intend to keep her.</i>\"\n\n");
+
+	output("<b>How do you react?</b>");
+
+	processTime(3);
+	//[Shocked] [Pleased] [Aroused (Requires Wang)]
+	clearMenu();
+	addButton(0, "Shocked", shockedByEdrynsPregnancy);
+	addButton(1, "Pleased", pleasedbyPregdryn);
+	if (pc.hasCock())
+		addButton(2, "Aroused", arousedByPregdryn);
+	else
+		addDisabledButton(2, "Aroused", "Aroused", "This scene requires you to have cock.");
+}
+
+//Shocked
+private function shockedByEdrynsPregnancy():void {
+	showEdryn();
+	clearOutput();
+	output("You stammer for an answer, unsure of what to say in light of this startling revelation.  Edryn looks on the verge of tears and all you can do is struggle for words.  She grips the table, her knuckles turning white while her eyes flick from side to side in a panic.");
+
+	output("\n\n<b>What do you do?</b>");
+	processTime(1);
+	//[Accept it] [Reject it]
+	clearMenu();
+	addButton(0, "Accept It", shockedByPregdrynThenAccept);
+	addButton(1, "Reject It", beAnAssholeToPregdryn);
+}
+
+//Accept it
+private function shockedByPregdrynThenAccept():void {
+	showEdryn();
+	clearOutput();
+	output("Leaning forward, you grab hold of Edryn's hands and cradle them in your grip.  She looks back up at your eyes and reads your expression, breaking into a smile as she reads the feelings on your face.\n\n");
+
+	output("\"<i>Thank you!  You had me really going for a moment there, you know that?  Wow, that is a weight off my chest,</i>\" exhales Edryn.  She climbs up onto her hooves and whispers, \"<i>I've got to use the little ponies' room, I'll be right back lover,</i>\" before she departs.\n\n");
+
+	processTime(1);
+	//[To Pregnant Offer]
+	clearMenu();
+	addButton(0, "Next", pregdrynOffer);
+}
+
+//Reject it
+private function beAnAssholeToPregdryn():void {
+	showEdryn();
+	clearOutput();
+	output("You look the panicked centauress dead in the eye and explain that what she does with her body is her business, and you want nothing to do with it.  She stares dumbfounded for a split-second before her face colors red with rage.  Edryn screams, \"<i>GET THE FUCK AWAY FROM ME THEN!</i>\"\n\n");
+
+	output("Everyone in the bar turns to watch the commotion, and with an angry, hormonal centaur and this many eyes on you, it would be best to depart.\n\n");
+
+	output("<b>(Edryn will no longer speak with you.)</b>");
+	
+	flags["COC.EDRYN_NEVER_SEE_AGAIN"] = 1;
+	
+	processTime(3);
+	clearMenu();
+	addButton(0, "Next", telAdreMenu);
+}
+
+//Pleased
+private function pleasedbyPregdryn():void {
+	showEdryn();
+	clearOutput();
+	output("You crack into a smile and congratulate the lusty centaur.  She giggles with relief at your words and wipes a bead of sweat from her brow as you finish.  Edryn exclaims, \"<i>I'm so glad you're happy about this!  I don't expect you to drop your quest and move in with me or anything like that, but it'll be wonderful to hear the clipper-clopper of little hooves in this town.</i>\"\n\n");
+
+	output("Edryn pulls back from the table and stretches, her muscles visibly loosening as the tension oozes out of her imposing frame.  She whispers, \"<i>Be right back lover, I've got to make a stop at the little ponies' room,</i>\" before she departs.\n\n");
+
+	processTime(3);
+	//[To Pregger Offer]
+	clearMenu();
+	addButton(0, "Next", pregdrynOffer);
+}
+
+//Aroused
+public function arousedByPregdryn():void {
+	showEdryn();
+	clearOutput();
+	output("You break into a grin bordering on lecherousness and congratulate the lusty centaur.  Her eyes widen for a moment, shocked from your expression, then narrow into a sultry expression.  Edryn teases, \"<i>I think someone has a bit of a pregnancy fetish, hrmm?  Is it the thought of my tits getting swollen with milk or the idea of me being jiggly and randy all the time that does it for you?</i>\"  She shivers, the outlines of her prominent nipples straining against her already-tightly-stretched tunic.  Edryn's eyes drop down and a rueful smile works its way across her face as she admits, \"<i>Great, now I'm turned on too!  Let me go use the little ponies' room. Then, MAYBE, we can help take care of each other.</i>\"\n\n");
+
+	processTime(3);
+	//[To Pregger Offer]
+	clearMenu();
+	addButton(0, "Next", pregdrynOffer);
+}
+
+//Pregger Offer
+private function pregdrynOffer(cs:Boolean = true):void {
+	showEdryn();
+	if(cs) clearOutput();
+	//Used to call post birthing sexings.
+	if (flags["COC.EDRYN_PREGNANCY_INCUBATION"] == undefined) {
+		//Actually choose the sex scene
+		edrynSexSelecter();
+		return;
+	}
+	//VERY Pregnant Offer
+	if (flags["COC.EDRYN_PREGNANCY_INCUBATION"] < 250 * 60) {
+		output("Edryn struggles to move, practically waddling thanks to her swollen, pregnant belly.  As usual, the glistening black lips of her sex are on display, and with the hormones pouring through her, she's leaking a steady trail of slime.  The scent coming off her is unreal!  It's like it's reaching right into your brain and cranking the 'fuck' dial up to maximum.  ");
+		if(pc.cockTotal() > 1) output("All of your [pc.multiCocks] fill in seconds, growing rock hard and actually aching with their need.  ");
+		else if(pc.cockTotal() == 1) output("Your [pc.cock] fills in seconds, growing rock hard and actually aching with need.  ");
+		output("You're totally dazed by the massive spike in arousal, and ");
+		if(pc.slut() < 100 || pc.cockTotal() < 1) output("you struggle not to touch yourself.");
+		else output("you can't stop yourself from grabbing [pc.oneCock] and stroking it under the table.");
+		output("\n\n");
+
+		output("You wouldn't notice her return if it wasn't for the increase in potent centaur pheromones hitting your nostrils.  It takes a hand slipping under the table to play with your ");
+		if(pc.balls > 0) output(pc.ballsDescript());
+		else if(pc.hasSheath()) output("sheath");
+		else if(pc.cockTotal() > 0) output(pc.cockDescript(0));
+		else output("crotch");
+		output(" to rouse you from the incredible sexual haze.  ");
+	}
+	//Mildly pregnant offer
+	else {
+		output("As usual, when Edryn pivots to leave, she gives you a perfect view of her unusual vagina.  The glistening black lips of her sex practically ooze moisture, and the scent coming off her seems even more potent than usual, making your head swim.  ");
+		if(pc.cockTotal() > 1) output("All of your [pc.cocksLight] fill in seconds, growing rock hard and actually aching with their need.  ");
+		else if(pc.cockTotal() == 1) output("Your [pc.cock] fills in seconds, growing rock hard and actually aching with need.  ");
+		output("You're a little bit dazed by the sudden spike in arousal, and ");
+		if(pc.slut() < 100 || pc.cockTotal() < 1) output("you struggle not to touch yourself.");
+		else output("you can't stop yourself from grabbing [pc.oneCock] and stroking it under the table.");
+		output("\n\n");
+
+		output("As usual, you're barely cognizant of her return.  It isn't until a hand sneaks under the table to surreptitiously fondle your ");
+		if(pc.balls > 0) output(pc.ballsDescript());
+		else if(pc.hasSheath()) output("sheath");
+		else if(pc.cockTotal() > 0) output(pc.cockDescript(0));
+		else output("crotch");
+		output(" that you come out of your daze.  ");
+	}
+	
+	//(NO WANGUUU)
+	if(pc.cockTotal() == 0) {
+		output("She looks down, eyes fixing on your crotch for a moment before she sighs, \"<i>Why did you get rid of your dick?  I like you a lot, but I don't really want to have sex with you like you are now.</i>\"\n\nEdryn leaves looking a little depressed.");
+		//Bar menu?
+		processTime(5);
+		addButton(0, "Next", barTelAdre);
+		return;
+	}
+	//(MEETS SIZE REQUIREMENTS)
+	var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
+	//-1 = none fit.  Set x to 0 for big boys.
+	if(x < 0) x = 0;
+	if(pc.cockVolume(x) >= 24 && pc.cockVolume(x) < edryn.vaginalCapacity()) {
+		output("Edryn is smiling radiantly as she continues to caress you under the table.  She asks, \"<i>");
+		if(flags["COC.EDRYN_NUMBER_OF_KIDS"] == undefined) output("Does my scent have an even stronger effect on you now");
+		else output("Are you going to cum just from sniffing at my cunt");
+		output("?</i>\"  You try to deny it, but she pumps at your shaft and continues, \"<i>Don't lie dear, I can feel how hard you are now, and I DEFINITELY saw how dazed you were when I came back out.  Let's go back to my room so you can get another whiff, okay?</i>\"\n\n");
+
+		output("The centaur doesn't wait for a reply, and takes off at a trot towards her quarters.  A few drips have splattered across the floor, leaving a trail for you to follow.  You get up, dazed with arousal and leaking pre-cum, and stagger through the bar to her room, practically lust-drunk.");
+		applyDamage(new TypeCollection( { pheromone: 25, tease: 25 } ), edryn, pc, "minimal");
+		
+		//TO SEX!
+		//doNext(fuckPregEdryn);
+		output("\n\nHow do you want to handle this?  ");
+		clearMenu();
+		output("You could have some great, pregnant taur sex.");
+		addButton(0,"Preg. Fuck", fuckPregEdryn);
+		if(pc.biggestCockVolume() > edryn.vaginalCapacity()) {
+			output("  Since at least part of you isn't acceptable to her, you could eat her out until you get off from her pheromones alone.");
+			addButton(1, "NoFitEating", jizzFromEatingPregdrynOut);
+		}
+		output("  Or, you could go down on her until you're in a frenzy, then fuck her wildly.");
+		addButton(2, "Eat,Rut,Fuck", eatEdrynPussyLikeABawss);
+		return;
+	}
+	//(PC TOO BIG)
+	else if(pc.cockVolume(x) > edryn.vaginalCapacity()) {
+		output("Edryn brushes her hand over ALL of your [pc.cock] then jerks it back, startled.  She sighs, \"<i>Dear, that thing is a BEAST.  I mean, there's no doubt I'd love to get it inside me, but I promise it won't fit me.</i>\"\n\n");
+
+		output("She looks at you pleadingly and practically begs, \"<i>Please, find a way to fit me.</i>\"  Edryn grabs you by the shoulders and whispers in your ear, \"<i>Being pregnant makes me so turned on ALL THE TIME.  I need you inside me.</i>\"\n\n");
+
+		output("A thoughtful look crosses the centaur's face as she continues to pant in your ear, \"<i>Come on, lets go back to my room.  I'll find a way to tend to that monster if you'll eat me out.  Maybe the pheromones wafting off my cunt will get you off without me even touching you?  I've seen it happen before with some of my clients, and with how strong my scent is now...</i>\"\n\n");
+
+		output("Edryn releases you and climbs up on all fours, making her way towards her room in the back of the establishment.  The smell of her need hangs heavy in the air, and you follow it like a lost puppy.  Of course, puppies don't have their massive, rock-hard maleness visible to everyone around them.  Thankfully, you reach her door quickly, and bolt inside.");
+		applyDamage(new TypeCollection( { pheromone: 25, tease: 25 } ), edryn, pc, "minimal");
+		
+		//Go to 'too big or too small eat out'
+		addButton(0, "Next", jizzFromEatingPregdrynOut);
+		return;
+	}
+	//(PC TOO SMALL)
+	else {
+		output("Edryn giggles, \"<i>When did you get this small?  I've seen ponies with bigger kits!</i>\" but her hand continues to stroke you.  You squirm in her grasp, about ready to burst.  The pregnant centaur teases, \"<i>Dear, I don't think I'd notice something that small if you stuck it inside me.</i>\"\n\n");
+
+		output("She laughs at the expression on your face and continues, \"<i>Oh don't be like that.  The truth is the truth.  You're still the father of my child.  Why don't we go back to my room?  You can eat me out till the centaur pheromones overpower your little dick and make it squirt, okay?</i>\"\n\n");
+
+		output("The centaur doesn't wait for a reply, and takes off at a trot towards her quarters.  A few drips have splattered across the floor, leaving a trail for you to follow.  You get up, dazed with arousal and leaking pre-cum, and stagger through the bar to her room, practically drunk on lust.");
+		
+		applyDamage(new TypeCollection( { pheromone: 25, tease: 25 } ), edryn, pc, "minimal");
+		//Go to 'too big or too small eat out'
+		addButton(0, "Next", jizzFromEatingPregdrynOut);
+		return;
+	}
+}
+
+
+//Fucking
+public function fuckPregEdryn():void {
+	clearOutput();
+	showEdryn();
 	//output(images.showImage("edryn-preggo-fuck"));
-	//var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
-	//if(x < 0) x = 0;
-	//clearOutput();
-	////NONTAUR
-	//if(!pc.isTaur()) {
-		//output("Edryn lurches forwards as soon as the door closes behind you, slamming her powerful frame into you with enough force to propel you several feet back onto a large pile of pillows in the corner.  The feeling of her massive, milk-drooling teats ", false);
-		//if(pc.tallness < 60) output("bouncing against the top of your head", false);
-		//else if(pc.tallness < 84) output("battering your face", false);
-		//else output("crushed against your chest", false);
-		//output(" was totally worth the bruise-inducing impact.  Edryn pivots about, her hooves clattering noisily against the room's floorboards until she's presenting her hind end to you.  Her tail lifts of its own accord and displays the swollen, black lips of her sex.  A potent glaze of centaur-fluid drips from the gash in a steady trickle, splattering over your " + pc.feet() + " as your equine lover closes in.\n\n", false);
-//
-		//output("You tear off your [pc.gear] in a flash, fully exposing your ", false);
-		//if(pc.cockTotal() > 1) output("chosen ", false);
-		//output(cockDescript(x) + ".  It drips with anticipation, leaking drops of pre-cum with each inhalation of your mate's over-sexualized slit's scent.  Edryn looks over her shoulder to gauge the distance, but when she sees your state her face breaks into a happy smile.  She says, \"<i>Steady now, we wouldn't want you to miss your target, would we?</i>\" as her backside slowly descends, splattering hot sexual fluids over your length.\n\n", false);
-//
-		//output("The centaur's gash devours your [pc.cock " + x + "] with a long, wet slurping noise.  Her body-heat is much warmer than your own, wrapping slippery heat around every sensitive inch of your fuck-pole.  The flesh around you squeezes and massages instinctively.  It feels so good that it seems as if your [pc.cock " + x + "] is going to melt under the onslaught of pleasure.  Edryn moans loudly and begins to pump her hips atop you, \"<i>Oooh yes, thats perfeeeect...</i>\"\n\n", false);
-//
-		//output("Heavy thuds echo as hundreds of pounds of pregnancy-enhanced centaur backside are slammed into you over and over.  Were it not for the pillows absorbing some of the force, your pelvis would have been crushed with Edryn's first movement.  Her juices splatter with each rough fuck, soak your chest, and squirt up to your face.  You lie under her and moan, pumping back against her, but she doesn't even notice!  Her motions are backed up with more weight than your entire body, and her rough, pumping fuck only gets more and more intense.\n\n", false);
-//
-		//output("You grab hold of her tail and pull yourself against her with all of your strength, slamming your body into her cunt as brutally as possible.  Your own orgasm is just a moment away, and Edryn's pleasured moans and whinnies reach an ecstatic crescendo.  Her cunt squeezes you tightly, the hot vice milking you hard, and forcing your climax on the spot.  It squeezes tightly at the base, then ripples pressure to the tip, drawing explosive bursts of cum from your sexually brutalized member.\n\n", false);
-//
-		//output("Edryn sinks down, her whole body shaking and shuddering while milk fountains from her swollen breasts.  Her hands reach up to grab her nipples and tug on the milk-spouts.  They look longer now than before her pregnancy.  Her bloated milk-spouts are at least an inch or two long!  ", false);
-//
-		//if(pc.cumQ() < 100) {
-			//output("Your [pc.cock " + x + "] dumps the last of its seed into her hungry cunt and softens slightly.  Her warm cunt's constant milking motions continue, still pleasurable, but they prevent you from going soft until the centaur's orgasm has concluded.", false);
-		//}
-		//else if(pc.cumQ() < 500) {
-			//output("Your [pc.cock " + x + "] spurts thick flows of seed into her hungry cunt, flooding her snatch with an abnormally large load of semen.  Her warm cunt's constant milking motions continue, forcing more and more of your spunk inside her until her own orgasm has concluded.", false);
-		//}
-		//else {
-			//output("Your [pc.cock " + x + "] erupts, pouring a thick wave of seed into the centaur's hungry cunt.  The constant milking motions don't let up while Edryn's orgasm continues, helping you flood her with even more spooge.  Even after your pregnant lover's orgasm has concluded, your [pc.cock " + x + "] keeps dumping more cum into her until it's soaking and dripping from her huge, furry ass.", false);
-		//}
-//
-		//output("\n\n", false);
-		//output("You give her over-sized ass a gentle squeeze, massaging it lightly while Edryn comes back down from the wonderful sex.  She looks back at you and pants, \"<i>By Marae I needed that.</i>\"\n\n", false);
-//
-		//output("The centaur raises her back half up with a long wet 'schliiiiick'.  You pop free with a gasp and are given a perfect view of your work.  Her pussy's lips are slightly parted and glazed with a coating of white fluid.  The black-lipped cunt continues to drool sticky, sexual slime, but the color has gotten a bit more opaque thanks to your contributions.  The smell of sex fills the room, making your [pc.cock " + x + "] stiffen again.\n\n", false);
-//
-		//output("Edryn leans against the wall, panting and looking back at you.  She gives an exhausted smirk but doesn't look like she could handle another round.  You start to shiver; without the warmth of her love-tunnel wrapped around you, the room seems that much colder.  Glancing over, you find your equipment and put it on.  It's difficult to dress with an audience's rapt attention, but you manage to pull it off.\n\n", false);
-//
-		//output("After gathering your pouches, Edryn looks to have recovered.  She advances on you and wraps her arms around you, smashing your face squarely between her milk-filled tits.  You can smell the liquid dripping from her nipples.  It makes you happy to know your daughter will have such a bounty to feed on as she grows.  Edryn thanks you, \"<i>That was wonderful dear.  I'll probably be horny and soaked again in a few minutes, so please, come back soon.  I'm going to be a sopping wet mess until our child is born.</i>\"", false);
-	//}
-	////TAURZILLA
-	//else {
-		//output("Edryn smiles at you as you close the door behind you.  She stretches and lays out on a large batch of pillows, using them to help support the added weight of her pregnancy.  Her hindquarters are facing towards you, and she twists back to give you a 'come-hither' gesture.  You hesitantly climb down into the soft, padded mass with her and align your body behind hers.  Her position is perfect, and you wrap your arms around her 'human' waist to drag your lower half into position.  Edryn grabs your face and pulls you into a kiss, her archery-strengthened arms easily maintaining their grip as the two of you get settled into place.\n\n", false);
-//
-		//output("You break the kiss and suck the bottom of her earlobe into your mouth, straining to keep your mouth steady as you pull your [pc.cock " + x + "] into position with her needy sex.  The [pc.cockHead " + x + "] slips into the hot folds, forcing a gasp from your lips that lets Edryn's earlobe escape its oral prison.  She smirks, then nibbles at your shoulder while you slide the rest of the way into her large, slippery channel.  It's a near perfect fit thanks to your similar body types, and the both of you sigh out whinnies of pleasure.\n\n", false);
-//
-		//output("Edryn bites down harder, sending a jolt of pain through your shoulder.  Her hips wiggle against yours, and she begins rhythmically clenching and relaxing her entrance, squeezing you tightly ", false);
-		//if(!pc.hasSheath()) output("by the base", false);
-		//else output("just above your sheath", false);
-		//output(".  The lower half of your body arches, pulling your [pc.cock " + x + "] partway out, then lurches back forward to bury it deep inside her.  The impact jiggles her flesh from her ass to her shoulders, and you feel it underneath you as an instinctual, barely thought sign of sexual dominance.\n\n", false);
-//
-		//output("The centauress pulls back and moans, \"<i>Oh gods yes, it feels so much better pregnant!  My pu-pu-ahhhh-ussy is so much WETTER.  It's like I've got a faucet back there!  And I'm soo-ohhhh sensitive!  Ung fuck " + pc.mf("stud","dear") + " don't stop.  Please don't stop!</i>\"\n\n", false);
-//
-		//output("You grunt from the force of your exertions and begin to fuck her a little more roughly.  Your arms squeeze tightly around her midsection with a mixture of affection and need as you fulfill her request.  You pound her swollen, dripping cunt with hard strokes that make your intertwined forms shiver, dislodging a few pillows.  Scrabbling noise fills the air.  Your legs are scrambling for purchase, but there's no traction.  Lying sideways in the pillows with your pregnant lover prevents you from fucking quite as hard as your body would like.\n\n", false);
-//
-		//output("Her slippery, silken tunnel feels wonderful as it contracts and squeezes your maleness with vice-like tightness.  Edryn's mouth hangs open, and as her eyes start to cross, you can feel the passage intensifying its muscular twitches.  She's on the brink of orgasm, but you aren't too far behind her.  You pull one arm up to her head and kiss her, running your tongue over her lips before sliding it inside to tangle with hers.  She undulates underneath you, convulsing as she reaches her peak.  Her juices erupt, splattering over your thighs", false);
-		//if(pc.balls > 0) output(" and " + ballsDescriptLight(), false);
-		//output(".  Her twat clutches you so tightly that you're immobilized for fear of hurting yourself, and the tight seal of her entrance acts as a cock-ring, actually bloating your [pc.cock " + x + "] inside her.\n\n", false);
-//
-		//output("Your [pc.cock " + x + "] is milked from ", false);
-		//if(!pc.hasSheath()) output("base", false);
-		//else output("sheath", false);
-		//output(" to [pc.cockHead " + x + "], culminating in a tight squeeze at the tip. Then it releases and starts all over again.  Instinctively, you whinny and explode inside the warm, soaking wet tunnel.  The french-kiss turns into a feverish slobber-fest while the two of you mate, lost to orgasm.", false);
-		//if(pc.cumQ() < edryn.vaginalCapacity()) {}
-		//else if(pc.cumQ() < 1000) output("Your prodigious jism output soaks her sloppy tunnel and drips from the entrance with the centauress' girlcum.", false);
-		//else {
-			//output("Your body's cum-production easily fills her channel to capacity.  Each successive spurt blasts a wave of fluid out from her overstuffed cunt, soaking the pillows, Edryn's ass, and your crotch.", false);
-			//if(pc.cumQ() >= 4000) output("  By the time you calm down you've soaked all the pillows and spooge is puddling underneath.", false);
-		//}
-		//output("\n\n", false);
-//
-		//output("Edryn breaks the kiss with a strand of spit hanging in the middle.  She giggles euphorically, \"<i>Wow.  Ummm, wow!  That was nice!  Now get off me you ", false);
-		//if(pc.tallness > 74) output("big ", false);
-		//output("lug!</i>\"  She playfully pushes you back and tries to drag herself out from under you.  You laugh with her and pull back, letting your softening " + Appearance.cockNoun(CockTypesEnum.HUMAN) + " pull free from her cum-glazed twat.  It escapes with a wet squish, releasing a torrent of centaur cum from the unplugged opening.\n\n", false);
-//
-		//output("After you both get a chance to stagger up to your feet and get dressed, Edryn thanks you, \"<i>That was wonderful dear.  I'll probably be horny and dripping again in a few minutes, so please come back soon.  I think I'm going to be a sopping wet mess until our child is born.</i>\"\n\n", false);
-	//}
-	//pc.orgasm();
+	var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
+	if(x < 0) x = 0;
+	clearOutput();
+	//NONTAUR
+	if(!pc.isTaur()) {
+		output("Edryn lurches forwards as soon as the door closes behind you, slamming her powerful frame into you with enough force to propel you several feet back onto a large pile of pillows in the corner.  The feeling of her massive, milk-drooling teats ");
+		if(pc.tallness < 60) output("bouncing against the top of your head");
+		else if(pc.tallness < 84) output("battering your face");
+		else output("crushed against your chest");
+		output(" was totally worth the bruise-inducing impact.  Edryn pivots about, her hooves clattering noisily against the room's floorboards until she's presenting her hind end to you.  Her tail lifts of its own accord and displays the swollen, black lips of her sex.  A potent glaze of centaur-fluid drips from the gash in a steady trickle, splattering over your " + pc.feet() + " as your equine lover closes in.\n\n");
+
+		output("You tear off your [pc.gear] in a flash, fully exposing your ");
+		if(pc.cockTotal() > 1) output("chosen ");
+		output(pc.cockDescript(x) + ".  It drips with anticipation, leaking drops of pre-cum with each inhalation of your mate's over-sexualized slit's scent.  Edryn looks over her shoulder to gauge the distance, but when she sees your state her face breaks into a happy smile.  She says, \"<i>Steady now, we wouldn't want you to miss your target, would we?</i>\" as her backside slowly descends, splattering hot sexual fluids over your length.\n\n");
+
+		output("The centaur's gash devours your [pc.cock " + x + "] with a long, wet slurping noise.  Her body-heat is much warmer than your own, wrapping slippery heat around every sensitive inch of your fuck-pole.  The flesh around you squeezes and massages instinctively.  It feels so good that it seems as if your [pc.cock " + x + "] is going to melt under the onslaught of pleasure.  Edryn moans loudly and begins to pump her hips atop you, \"<i>Oooh yes, thats perfeeeect...</i>\"\n\n");
+
+		output("Heavy thuds echo as hundreds of pounds of pregnancy-enhanced centaur backside are slammed into you over and over.  Were it not for the pillows absorbing some of the force, your pelvis would have been crushed with Edryn's first movement.  Her juices splatter with each rough fuck, soak your chest, and squirt up to your face.  You lie under her and moan, pumping back against her, but she doesn't even notice!  Her motions are backed up with more weight than your entire body, and her rough, pumping fuck only gets more and more intense.\n\n");
+
+		output("You grab hold of her tail and pull yourself against her with all of your strength, slamming your body into her cunt as brutally as possible.  Your own orgasm is just a moment away, and Edryn's pleasured moans and whinnies reach an ecstatic crescendo.  Her cunt squeezes you tightly, the hot vice milking you hard, and forcing your climax on the spot.  It squeezes tightly at the base, then ripples pressure to the tip, drawing explosive bursts of cum from your sexually brutalized member.\n\n");
+
+		output("Edryn sinks down, her whole body shaking and shuddering while milk fountains from her swollen breasts.  Her hands reach up to grab her nipples and tug on the milk-spouts.  They look longer now than before her pregnancy.  Her bloated milk-spouts are at least an inch or two long!  ");
+
+		if(pc.cumQ() < 100) {
+			output("Your [pc.cock " + x + "] dumps the last of its seed into her hungry cunt and softens slightly.  Her warm cunt's constant milking motions continue, still pleasurable, but they prevent you from going soft until the centaur's orgasm has concluded.");
+		}
+		else if(pc.cumQ() < 500) {
+			output("Your [pc.cock " + x + "] spurts thick flows of seed into her hungry cunt, flooding her snatch with an abnormally large load of semen.  Her warm cunt's constant milking motions continue, forcing more and more of your spunk inside her until her own orgasm has concluded.");
+		}
+		else {
+			output("Your [pc.cock " + x + "] erupts, pouring a thick wave of seed into the centaur's hungry cunt.  The constant milking motions don't let up while Edryn's orgasm continues, helping you flood her with even more spooge.  Even after your pregnant lover's orgasm has concluded, your [pc.cock " + x + "] keeps dumping more [pc.cum] into her until it's soaking and dripping from her huge, furry ass.");
+		}
+
+		output("\n\n");
+		output("You give her over-sized ass a gentle squeeze, massaging it lightly while Edryn comes back down from the wonderful sex.  She looks back at you and pants, \"<i>By Marae I needed that.</i>\"\n\n");
+
+		output("The centaur raises her back half up with a long wet 'schliiiiick'.  You pop free with a gasp and are given a perfect view of your work.  Her pussy's lips are slightly parted and glazed with a coating of white fluid.  The black-lipped cunt continues to drool sticky, sexual slime, but the color has gotten a bit more opaque thanks to your contributions.  The smell of sex fills the room, making your [pc.cock " + x + "] stiffen again.\n\n");
+
+		output("Edryn leans against the wall, panting and looking back at you.  She gives an exhausted smirk but doesn't look like she could handle another round.  You start to shiver; without the warmth of her love-tunnel wrapped around you, the room seems that much colder.  Glancing over, you find your equipment and put it on.  It's difficult to dress with an audience's rapt attention, but you manage to pull it off.\n\n");
+
+		output("After gathering your pouches, Edryn looks to have recovered.  She advances on you and wraps her arms around you, smashing your face squarely between her milk-filled tits.  You can smell the liquid dripping from her nipples.  It makes you happy to know your daughter will have such a bounty to feed on as she grows.  Edryn thanks you, \"<i>That was wonderful dear.  I'll probably be horny and soaked again in a few minutes, so please, come back soon.  I'm going to be a sopping wet mess until our child is born.</i>\"");
+	}
+	//TAURZILLA
+	else {
+		output("Edryn smiles at you as you close the door behind you.  She stretches and lays out on a large batch of pillows, using them to help support the added weight of her pregnancy.  Her hindquarters are facing towards you, and she twists back to give you a 'come-hither' gesture.  You hesitantly climb down into the soft, padded mass with her and align your body behind hers.  Her position is perfect, and you wrap your arms around her 'human' waist to drag your lower half into position.  Edryn grabs your [pc.face] and pulls you into a kiss, her archery-strengthened arms easily maintaining their grip as the two of you get settled into place.\n\n");
+
+		output("You break the kiss and suck the bottom of her earlobe into your mouth, straining to keep your mouth steady as you pull your [pc.cock " + x + "] into position with her needy sex.  The [pc.cockHead " + x + "] slips into the hot folds, forcing a gasp from your lips that lets Edryn's earlobe escape its oral prison.  She smirks, then nibbles at your shoulder while you slide the rest of the way into her large, slippery channel.  It's a near perfect fit thanks to your similar body types, and the both of you sigh out whinnies of pleasure.\n\n");
+
+		output("Edryn bites down harder, sending a jolt of pain through your shoulder.  Her hips wiggle against yours, and she begins rhythmically clenching and relaxing her entrance, squeezing you tightly ");
+		if(!pc.hasSheath()) output("by the base");
+		else output("just above your sheath");
+		output(".  The lower half of your body arches, pulling your [pc.cock " + x + "] partway out, then lurches back forward to bury it deep inside her.  The impact jiggles her flesh from her ass to her shoulders, and you feel it underneath you as an instinctual, barely thought sign of sexual dominance.\n\n");
+
+		output("The centauress pulls back and moans, \"<i>Oh gods yes, it feels so much better pregnant!  My pu-pu-ahhhh-ussy is so much WETTER.  It's like I've got a faucet back there!  And I'm soo-ohhhh sensitive!  Ung fuck " + pc.mf("stud", "dear") + " don't stop.  Please don't stop!</i>\"\n\n");
+
+		output("You grunt from the force of your exertions and begin to fuck her a little more roughly.  Your arms squeeze tightly around her midsection with a mixture of affection and need as you fulfill her request.  You pound her swollen, dripping cunt with hard strokes that make your intertwined forms shiver, dislodging a few pillows.  Scrabbling noise fills the air.  Your legs are scrambling for purchase, but there's no traction.  Lying sideways in the pillows with your pregnant lover prevents you from fucking quite as hard as your body would like.\n\n");
+
+		output("Her slippery, silken tunnel feels wonderful as it contracts and squeezes your maleness with vice-like tightness.  Edryn's mouth hangs open, and as her eyes start to cross, you can feel the passage intensifying its muscular twitches.  She's on the brink of orgasm, but you aren't too far behind her.  You pull one arm up to her head and kiss her, running your tongue over her lips before sliding it inside to tangle with hers.  She undulates underneath you, convulsing as she reaches her peak.  Her juices erupt, splattering over your thighs");
+		if(pc.balls > 0) output(" and [pc.balls]");
+		output(".  Her twat clutches you so tightly that you're immobilized for fear of hurting yourself, and the tight seal of her entrance acts as a cock-ring, actually bloating your [pc.cock " + x + "] inside her.\n\n");
+
+		output("Your [pc.cock " + x + "] is milked from [pc.sheath " + x + "] to [pc.cockHead " + x + "], culminating in a tight squeeze at the tip. Then it releases and starts all over again.  Instinctively, you whinny and explode inside the warm, soaking wet tunnel.  The french-kiss turns into a feverish slobber-fest while the two of you mate, lost to orgasm.");
+		if(pc.cumQ() < edryn.vaginalCapacity()) {}
+		else if(pc.cumQ() < 1000) output("Your prodigious jism output soaks her sloppy tunnel and drips from the entrance with the centauress' girlcum.");
+		else {
+			output("Your body's cum-production easily fills her channel to capacity.  Each successive spurt blasts a wave of fluid out from her overstuffed cunt, soaking the pillows, Edryn's ass, and your crotch.");
+			if(pc.cumQ() >= 4000) output("  By the time you calm down you've soaked all the pillows and [pc.cum] is puddling underneath.");
+		}
+		output("\n\n");
+
+		output("Edryn breaks the kiss with a strand of spit hanging in the middle.  She giggles euphorically, \"<i>Wow.  Ummm, wow!  That was nice!  Now get off me you ");
+		if(pc.tallness > 74) output("big ");
+		output("lug!</i>\"  She playfully pushes you back and tries to drag herself out from under you.  You laugh with her and pull back, letting your softening [pc.cockNoun " + x + "] pull free from her [pc.cumNoun]-glazed twat.  It escapes with a wet squish, releasing a torrent of [pc.cum] from the unplugged opening.\n\n");
+
+		output("After you both get a chance to stagger up to your feet and get dressed, Edryn thanks you, \"<i>That was wonderful dear.  I'll probably be horny and dripping again in a few minutes, so please come back soon.  I think I'm going to be a sopping wet mess until our child is born.</i>\"\n\n");
+	}
+	processTime(25);
+	pc.orgasm();
 	//dynStats("sen", -.5);
-	//doNext(returnToCampUseOneHour);
-//}
-//
-////EAT THE BITCH'S CUNT OUT
-//private function jizzFromEatingPregdrynOut():void {
-	//showEdryn();
-	//clearOutput();
-	//var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
-	//if(x < 0) x = 0;
-//
-	//output("You shut the door behind you and rub your eyes, trying to adjust to the darkness in the room.  All the lights are out, save for a single candle on the far wall.  You peer about uselessly for a few seconds until inspiration strikes.  Her potent scent will lead you to her!  You lean down and start turning from side to side, sniffing about.  You hear a feminine giggle, though with the unfamiliar room you can't tell where it's originating from.  It's fairly easy to scent out your 'prey', and you've already determined from the strength of pussy-musk which corner of the room Edryn's in.\n\n", false);
-//
-	//output("The smell is potent, sexual, and thoroughly inhuman.  You take a step closer and continue taking little sniffs, barely noticing as your ", false);
-	//if(pc.cockVolume(x) < 24) output("small dick begins to twitch and leak.", false);
-	//else output("mammoth cock drags the ground, leaking pre-cum.", false);
-	//output("  The urge to find the juicy, potent pussy at the center of the musk-cloud overrides your thoughts.  Stalking forwards in a haze of desire, you take deeper and deeper breaths, inhaling ever-greater quantities of Edryn's heavenly scent.  You know you're almost there – you can hear her quiet breathing.\n\n", false);
-//
-	//output("You're so lost in desperate need that your hurried steps get you in trouble.  Your " + pc.foot() + " catches on something, and you fall inexorably forwards.  In a panic, you windmill your arms.  One slaps into fur-covered flesh with a loud 'SLAP', the other disappears into a mass of soft, yielding fabrics.  The pillows catch you, absorbing the fall, but your face splats directly into something warm, wet and aroused.  Edryn gasps and exclaims, \"<i>No need to be so rough about it!  I thought you might like some hide and seek... your dick seemed to like it, and I needed a moment to catch my breath.  It's not easy carrying your child around!</i>\"\n\n", false);
-//
-	//output("Her words fall on deaf ears.  You push yourself up onto your elbows and lean forward, feeling strands of female lubricant hanging from your face as you inhale deep lungfuls of her scent.  ", false);
-	//if(pc.totalCocks() > 1) output("Each of y", false);
-	//else output("Y", false);
-	//output("our [pc.cocksLight] ", false);
-	//if(pc.cumQ() < 100) output("drips pre-cum onto the pillows.", false);
-	//else if(pc.cumQ() < 500) output("leaks pre-cum in a steady stream, quickly soaking a few pillows.", false);
-	//else output("pours out enough pre-cum to soak a pillow, and in no time your overenthusiastic dick is doing its damnedest to dribble over everything.", false);
-	//output("  It's a powerful smell.  The centaur's heady musk already has you on the edge, and you haven't even tasted her slit yet!  Your heart beats hard, as you grab onto her flanks with each hand and prepare to service your pregnant lover.\n\n", false);
-//
-	//output("After being in the dark room for so long, your eyes have adjusted to the dim light.  Mere inches in front of you is Edryn's massive slit.  Its black folds are coated in a thick layer of slime that trails down to her bulbous clit, collecting before dripping off.  You lean forward, take a long, deep breath, and then smash your face into the gash.  Your tongue darts out, practically of its own accord, lapping at her inner folds and tasting the sweet, tangy nectar she drips.  The warmth is palpable, and the air is practically steaming with the heat of Edryn's desire as  you rub your face up and down the slit.  You lick and slurp at the slippery sweetness of her desire, but it never seems to be enough for you or your drooling [pc.cocksLight].\n\n", false);
-//
-	//output("Squirming and writhing, Edryn moans, \"<i>Yessssss... right-ahhh-there.  Mmmm... I think you're hooked on my cunt, aren't you?</i>\"  She stretches back to pat your head and coos, \"<i>Yes that's a good " + pc.mf("boy","girl") + ", lap it allll up.  Oh my, you're dripping like a sieve just from eating me out!  Oooh yeah, lower, lick my cliiiiit-yes yes-ooooh... Mmm I bet the smell is just overwhelming you isn't it?  Why don't you suckle my clit and take a quick breather.  I bet you'll be spurting helplessly in no time.</i>\"\n\n", false);
-//
-	//output("You tremble as you pull away, licking her lust from your lips and gasping for air as you shift to lick at her clit.", false);
-	//if(pc.isTaur()) {
-		//output("  Your legs twitch weekly on the floor, forgetten about as you focus entirely on your hands, mouth, and pulsating " + Appearance.cockNoun(CockTypesEnum.HUMAN), false);
-		//if(pc.cockTotal() > 1) output("s", false);
-		//output(".", false);
-	//}
-	//output("  Her button, like her pussy, is many sizes larger than a human's, and it's as big around as a golfball and several inches long.  You suck it into your lips and plunge a hand inside her slippery channel, fisting her while you suckle and bob on her clit.  Edryn whinnies and clenches around the invading fist.  Her cunt erupts and splatters your face with fluid, soaking you with her fragrant scent.\n\n", false);
-//
-	//output("Startled from your sexual fog, you jerk back and gasp.  The smell – it's like sex distilled into orgasm and fired straight into your brain.  Your [pc.hips] shake uncontrollably, spasming wildly as your scent-addled mind sets off a full-body orgasm.  ", false);
-	//if(pc.hasVagina()) {
-		//output("Your [pc.vagina] contracts and spasms with the rest of you, ", false);
-		//if(pc.vaginas[0].wetness() == VAGINA_WETNESS_SLAVERING) output("squirting", false);
-		//else output("leaking", false);
-		//output(" in a pale imitation of Edryn's box.  ", false);
-	//}
-//
-	//output("Cum begins to ooze from ", false);
-	//if(pc.totalCocks() > 1) output("each of ", false);
-	//output("your [pc.cocksLight] in a steady stream.  Your urethra bulges and flexes, forcing you to waste your seed all over Edryn's pillows.", false);
-	//if(pc.cumQ() < 1000) {
-		//output("  The flow gets thicker and thicker.  Edryn even remarks, \"<i>Oh my, my baby's daddy is just full of cum!  Let it all out for me dear, you did such a good job on my clit that you deserve release.</i>\" You squirt and dribble, breathing airborne orgasm and squirting ", false);
-		//if(pc.cumQ() < 3000) output("out the last of your liquid pleasure.", false);
-		//else output("ever greater amounts of liquid peasure.  Jism drips through the floorboards as you create a puddle a few inches deep.", false);
-	//}
-	//output("\n\n", false);
-//
-	//output("Edryn laughs and hauls you up to embrace a tight hug.  She whispers in your ear, \"<i>Thank you for being so understanding.  I'm not normally this... sensitive, or potent.  You can keep doing this while I'm pregnant, but you'll need to fit me if you want any more sex after our child is born.</i>\"\n\n", false);
-//
-	//output("You nod and give her milk-dripping teat a squeeze.  A squirt of the white stuff escapes before Edryn pushes you away.  You chuckle and get dressed while she does the same, but before you can escape her room, she lifts her shirt, squeezes a teat, and catches you in the face with her milk.\n\n", false);
-//
-	//output("\"<i>Turn-about is fair play!</i>\" she exclaims. You leave, unable to dispute the logic.", false);
-	//pc.orgasm();
+	clearMenu();
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+}
+
+//EAT THE BITCH'S CUNT OUT
+private function jizzFromEatingPregdrynOut():void {
+	showEdryn();
+	clearOutput();
+	var x:Number = pc.cockThatFits(edryn.vaginalCapacity());
+	if(x < 0) x = 0;
+
+	output("You shut the door behind you and rub your eyes, trying to adjust to the darkness in the room.  All the lights are out, save for a single candle on the far wall.  You peer about uselessly for a few seconds until inspiration strikes.  Her potent scent will lead you to her!  You lean down and start turning from side to side, sniffing about.  You hear a feminine giggle, though with the unfamiliar room you can't tell where it's originating from.  It's fairly easy to scent out your 'prey', and you've already determined from the strength of pussy-musk which corner of the room Edryn's in.\n\n");
+
+	output("The smell is potent, sexual, and thoroughly inhuman.  You take a step closer and continue taking little sniffs, barely noticing as your ");
+	if(pc.cockVolume(x) < 24) output("small dick begins to twitch and leak.");
+	else output("mammoth cock drags the ground, leaking pre-cum.");
+	output("  The urge to find the juicy, potent pussy at the center of the musk-cloud overrides your thoughts.  Stalking forwards in a haze of desire, you take deeper and deeper breaths, inhaling ever-greater quantities of Edryn's heavenly scent.  You know you're almost there – you can hear her quiet breathing.\n\n");
+
+	output("You're so lost in desperate need that your hurried steps get you in trouble.  Your " + pc.foot() + " catches on something, and you fall inexorably forwards.  In a panic, you windmill your arms.  One slaps into fur-covered flesh with a loud 'SLAP', the other disappears into a mass of soft, yielding fabrics.  The pillows catch you, absorbing the fall, but your face splats directly into something warm, wet and aroused.  Edryn gasps and exclaims, \"<i>No need to be so rough about it!  I thought you might like some hide and seek... your dick seemed to like it, and I needed a moment to catch my breath.  It's not easy carrying your child around!</i>\"\n\n");
+
+	output("Her words fall on deaf ears.  You push yourself up onto your elbows and lean forward, feeling strands of female lubricant hanging from your face as you inhale deep lungfuls of her scent.  [pc.EachCock] ");
+	if(pc.cumQ() < 100) output("drips pre-cum onto the pillows.");
+	else if(pc.cumQ() < 500) output("leaks pre-cum in a steady stream, quickly soaking a few pillows.");
+	else output("pours out enough pre-cum to soak a pillow, and in no time your overenthusiastic dick is doing its damnedest to dribble over everything.");
+	output("  It's a powerful smell.  The centaur's heady musk already has you on the edge, and you haven't even tasted her slit yet!  Your heart beats hard, as you grab onto her flanks with each hand and prepare to service your pregnant lover.\n\n");
+
+	output("After being in the dark room for so long, your eyes have adjusted to the dim light.  Mere inches in front of you is Edryn's massive slit.  Its black folds are coated in a thick layer of slime that trails down to her bulbous clit, collecting before dripping off.  You lean forward, take a long, deep breath, and then smash your face into the gash.  Your tongue darts out, practically of its own accord, lapping at her inner folds and tasting the sweet, tangy nectar she drips.  The warmth is palpable, and the air is practically steaming with the heat of Edryn's desire as  you rub your face up and down the slit.  You lick and slurp at the slippery sweetness of her desire, but it never seems to be enough for you or your drooling [pc.cocksLight].\n\n");
+
+	output("Squirming and writhing, Edryn moans, \"<i>Yessssss... right-ahhh-there.  Mmmm... I think you're hooked on my cunt, aren't you?</i>\"  She stretches back to pat your head and coos, \"<i>Yes that's a good " + pc.mf("boy","girl") + ", lap it allll up.  Oh my, you're dripping like a sieve just from eating me out!  Oooh yeah, lower, lick my cliiiiit-yes yes-ooooh... Mmm I bet the smell is just overwhelming you isn't it?  Why don't you suckle my clit and take a quick breather.  I bet you'll be spurting helplessly in no time.</i>\"\n\n");
+
+	output("You tremble as you pull away, licking her lust from your lips and gasping for air as you shift to lick at her clit.");
+	if(pc.isTaur()) {
+		output("  Your [pc.legs] twitch weekly on the floor, forgetten about as you focus entirely on your hands, mouth, and pulsating [pc.cocksNounSimple].");
+	}
+	output("  Her button, like her pussy, is many sizes larger than a human's, and it's as big around as a golfball and several inches long.  You suck it into your lips and plunge a hand inside her slippery channel, fisting her while you suckle and bob on her clit.  Edryn whinnies and clenches around the invading fist.  Her cunt erupts and splatters your face with fluid, soaking you with her fragrant scent.\n\n");
+
+	output("Startled from your sexual fog, you jerk back and gasp.  The smell – it's like sex distilled into orgasm and fired straight into your brain.  Your [pc.hips] shake uncontrollably, spasming wildly as your scent-addled mind sets off a full-body orgasm.  ");
+	if(pc.hasVagina()) {
+		output("Your [pc.vagina] contracts and spasms with the rest of you, ");
+		if(pc.isSquirter()) output("squirting");
+		else output("leaking");
+		output(" in a pale imitation of Edryn's box.  ");
+	}
+
+	output("[pc.Cum] begins to ooze from [pc.eachCock] in a steady stream.  Your urethra bulges and flexes, forcing you to waste your seed all over Edryn's pillows.");
+	if(pc.cumQ() < 1000) {
+		output("  The flow gets thicker and thicker.  Edryn even remarks, \"<i>Oh my, my baby's daddy is just full of cum!  Let it all out for me dear, you did such a good job on my clit that you deserve release.</i>\" You squirt and dribble, breathing airborne orgasm and squirting ");
+		if(pc.cumQ() < 3000) output("out the last of your liquid pleasure.");
+		else output("ever greater amounts of liquid peasure.  Jism drips through the floorboards as you create a puddle a few inches deep.");
+	}
+	output("\n\n");
+
+	output("Edryn laughs and hauls you up to embrace a tight hug.  She whispers in your ear, \"<i>Thank you for being so understanding.  I'm not normally this... sensitive, or potent.  You can keep doing this while I'm pregnant, but you'll need to fit me if you want any more sex after our child is born.</i>\"\n\n");
+
+	output("You nod and give her milk-dripping teat a squeeze.  A squirt of the white stuff escapes before Edryn pushes you away.  You chuckle and get dressed while she does the same, but before you can escape her room, she lifts her shirt, squeezes a teat, and catches you in the face with her milk.\n\n");
+
+	output("\"<i>Turn-about is fair play!</i>\" she exclaims. You leave, unable to dispute the logic.");
+	processTime(20 + rand(10));
+	applyPussyDrenched(pc);
+	pc.girlCumInMouth(edryn);
+	pc.orgasm();
 	//dynStats("lib", 1, "sen", 2);
-	//doNext(returnToCampUseOneHour);
-//}
-//
+	pc.slowStatGain("l", 1);
+	clearMenu();
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+}
+
 private function edrynPregChance():void {
-	////Get out if already pregged.
-	//if (pregnancy.isPregnant) return;
-//
-	////See if any of the scenarios get her preg
-	//var preg:Boolean = false;
-	///*
-	////25% chance if 'stud'
-	//if(pc.hasPerk("Marae's Gift - Stud") >= 0 && rand(4) == 0) {
-		//preg = true;
-	//}
-	////10% chance if elf xmas
-	//if(pc.hasPerk("Elven Bounty") >= 0 && rand(10) == 0) {
-		//preg = true;
-	//}*/
-	////1% chance per 500mLs of cum, max 5%
-	//temp = pc.cumQ()/500;
-	//if(temp > 5) temp = 5;
-	//temp += pc.virilityQ() * 200;
-//
-	//trace("Edryn Preg Check Virility Score: " + temp);
-	//if(pc.cumQ() > 250 && temp >= rand(100)) {
-		//preg = true;
-		//trace("Edryn knocked up!");
-	//}
-	//else trace("Edryn not knocked up!");
-	//if (preg) {
+	//Get out if already pregged.
+	if (flags["COC.EDRYN_PREGNANCY_INCUBATION"] != undefined) return;
+
+	//See if any of the scenarios get her preg
+	var preg:Boolean = false;
+	//1% chance per 500mLs of cum, max 5%
+	var temp:Number = pc.cumQ() / 500;
+	if(temp > 5) temp = 5;
+	temp *= pc.virility();
+
+	trace("Edryn Preg Check Virility Score: " + temp);
+	if(pc.cumQ() > 250 && temp >= rand(100)) {
+		preg = true;
+		trace("Edryn knocked up!");
+	}
+	else trace("Edryn not knocked up!");
+	if (preg) {
 		//pregnancy.knockUpForce(PregnancyStore.PREGNANCY_PLAYER, PregnancyStore.INCUBATION_CENTAUR + 80);
-		//flags[kFLAGS.EDRYN_PREGNANT_AND_NOT_TOLD_PC_YET] = 0;
-	//}
+		flags["COC.EDRYN_PREGNANCY_INCUBATION"] = 500 * 60; // nearly 21 day
+		flags["COC.EDRYN_PREGNANT_AND_NOT_TOLD_PC_YET"] = undefined;
+	}
 }
 
-// stub
 public function edrynisPregnant():Boolean {
-	return false;
+	return flags["COC.EDRYN_PREGNANCY_INCUBATION"] != undefined;
 }
-
 
 //Male PC + Edryn, preferred at camp with preggo variance + bonus if some BJ, scent-induced rut
 //have the Scene taking place in Tel'Adre instead of the PC's Camp.
@@ -1214,12 +1241,13 @@ public function eatEdrynPussyLikeABawss():void {
 	output("\n\nYou slump down upon her fuzzy back as Edryn rolls sideways onto some nearby cushions, lewdly moaning as her eyes flutter closed, drifting into an exhausted slumber.  Dipping down into closure, your eyelids decide that you should join her.  Her pheromones are still heavy in the air, however, and even in slumber, you feel your [pc.balls] refill and your [pc.hips] begin to pump your cock through that slippery channel once more.");
 	output("\n\n'<b>Squish-squish-squish-squish-</b>' can be heard for several hours by anyone lucky enough to hold their ear to the door.");
 	processTime(3 * 60 + rand(30));
-	//[Next]
-	clearMenu();
-	addButton(0, "Next", postEdrynEatOutRut);
 	pc.orgasm();
 	//dynStats("lib", .25, "sen", -3);
 	pc.slowStatGain("l", 0.25);
+	applyPussyDrenched(pc);
+	//[Next]
+	clearMenu();
+	addButton(0, "Next", postEdrynEatOutRut);
 }
 
 private function postEdrynEatOutRut():void {

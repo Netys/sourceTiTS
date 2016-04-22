@@ -46,26 +46,26 @@ public function barTelAdre():void {
 	//}
 	//EDRYN!
 	
-	if (edrynBar()) {// && edryn.pregnancy.type != PregnancyStore.PREGNANCY_TAOTH) { //Edryn is unavailable while pregnant with Taoth
-		//if (edryn.pregnancy.isPregnant) {
-			//if (flags[kFLAGS.EDRYN_PREGNANT_AND_NOT_TOLD_PC_YET] == 0) {
-				//flags[kFLAGS.EDRYN_PREGNANT_AND_NOT_TOLD_PC_YET] = 1;
-				//if (flags[kFLAGS.EDRYN_NUMBER_OF_KIDS] == 0) { //Edryn panic appearance! (First time mom)
-					//output("\n\nEdryn smiles when she sees you and beckons you towards her.  Fear and some kind of frantic need are painted across her face, imploring you to come immediately.  Whatever the problem is, it doesn't look like it can wait.", false);
-					//doNext(edryn.findOutEdrynIsPregnant);
-					//return;
-				//}
-				//else { //Edryn re-preggers appearance!
-					//output("\n\nEdryn smiles at you and yells, \"<i>Guess what " + pc.short + "?  I'm pregnant again!</i>\"  There are some hoots and catcalls but things quickly die down.  You wonder if her scent will be as potent as before?", false);				
-				//}
-			//}
-			//else { //Mid-pregnancy appearance
-				//output("\n\nEdryn is seated at her usual table, and chowing down with wild abandon.  A stack of plates is piled up next to her.  Clearly she has been doing her best to feed her unborn child.  She notices you and waves, blushing heavily.", false);
-			//}
-		//}
+	if (edrynBar() && flags["COC.EDRYN_PREGNANCY_TAOTH"] == undefined) { //Edryn is unavailable while pregnant with Taoth
+		if (flags["COC.EDRYN_PREGNANCY_INCUBATION"] != undefined) {
+			if (flags["COC.EDRYN_PREGNANT_AND_NOT_TOLD_PC_YET"] == undefined) {
+				flags["COC.EDRYN_PREGNANT_AND_NOT_TOLD_PC_YET"] = 1;
+				if (flags["COC.EDRYN_NUMBER_OF_KIDS"] == undefined) { //Edryn panic appearance! (First time mom)
+					output("\n\nEdryn smiles when she sees you and beckons you towards her.  Fear and some kind of frantic need are painted across her face, imploring you to come immediately.  Whatever the problem is, it doesn't look like it can wait.");
+					clearMenu();
+					addButton(0, "Next", findOutEdrynIsPregnant);
+					return;
+				}
+				else { //Edryn re-preggers appearance!
+					output("\n\nEdryn smiles at you and yells, \"<i>Guess what [pc.name]?  I'm pregnant again!</i>\"  There are some hoots and catcalls but things quickly die down.  You wonder if her scent will be as potent as before?");
+				}
+			}
+			else { //Mid-pregnancy appearance
+				output("\n\nEdryn is seated at her usual table, and chowing down with wild abandon.  A stack of plates is piled up next to her.  Clearly she has been doing her best to feed her unborn child.  She notices you and waves, blushing heavily.", false);
+			}
+		}
 		//Edryn just had a kid and hasn't talked about it!
-		//else 
-		if (flags["COC.EDRYN_NEEDS_TO_TALK_ABOUT_KID"] == 1) {
+		else if (flags["COC.EDRYN_NEEDS_TO_TALK_ABOUT_KID"] == 1) {
 			output("\n\nEdryn the centaur isn't pregnant anymore!  She waves excitedly at you, beckoning you over to see her.  It looks like she's already given birth to your child!");
 		}
 		//Appearance changes if has had kids

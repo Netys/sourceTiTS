@@ -53,8 +53,7 @@ public function followerCampMenuBlurbIzma(showInteractButton:Boolean):void {
 	else if (temp == 1) output("You notice Izma isn't around right now.  She's probably gone off to the nearby stream to get some water.  Never mind, she comes around from behind a rock, still dripping wet.");
 	//Text 3 
 	else output("Izma is lying on her back near her bedroll.  You wonder at first just why she isn't using her bed, but as you look closer you notice all the water pooled beneath her and the few droplets running down her arm, evidence that she's just returned from the stream.");
-	outputText("\n\n");
-	addButton(4, "Izma", izmaScene.izmaFollowerMenu);
+	output("\n\n");
 	
 	if (showInteractButton) addButton(followerBtnNum++, "Izma", function():* { processTime(5); izmaFollowerMenu() } );
 }
