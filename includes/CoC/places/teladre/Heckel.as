@@ -56,7 +56,7 @@ public function greetHeckel():void {
 	}
 	//Brooke + Heckel 3some
 	// Affection = 70, after first-time sex, talk to Heckel between 13:00 and 15:00, must not be a first-time encounter with Heckel, requires a gender
-	else if(brookeAffection() >= 70 && flags["COC.BROOKE_MEDIUM_SCENE"] == 1 && flags["COC.MET_HECKEL"] == 1 && hours >= 13 && hours <= 15 && (pc.hasVagina() || pc.cockThatFits(brookeCapacity()) >= 0)) {
+	else if(brookeAffection() >= 70 && flags["COC.BROOKE_MEDIUM_SCENE"] == 1 && flags["COC.MET_HECKEL"] == 1 && hours >= 13 && hours <= 15 && (pc.hasVagina() || pc.cockThatFits(brooke.vaginalCapacity()) >= 0)) {
 		specialHeckelAndBrookeEncounter();
 		return;
 	}
