@@ -1,3 +1,4 @@
+import classes.Characters.PregnancyPlaceholder;
 import classes.GLOBAL;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
@@ -6,6 +7,14 @@ import classes.Engine.Utility.*;
 public function showSlipperySqueeze():void
 {
 	userInterface.showName("SLIPPERY\nSQUEEZE");
+}
+
+public function get joey():PregnancyPlaceholder // since there are no TFs... screw making actual character
+{
+	var pp:PregnancyPlaceholder = new PregnancyPlaceholder();
+	if(!pp.hasCock()) pp.createCock();
+	pp.createPerk("Fixed CumQ", 10000, 0, 0, 0);
+	return pp;
 }
 
 //Semen Bukkake and Massage Parlor
@@ -233,6 +242,7 @@ private function joeysMassageWifNoExtraJizz():void {
 	}
 	//(reduces libido significantly if very high, reduces lust, and reduces sensitivity to 40)
 	pc.orgasm();
+	pc.shower();
 	if(pc.libido() > 20) pc.slowStatGain("l", pc.libido() / -20);
 	//if(pc.sens > 40) dynStats("lib", -.5); // ???
 	processTime(40);
@@ -286,6 +296,7 @@ private function joeysMassageWithEXTRASpooge():void {
 	output("Joey leaves, his poofy tail bobbing back and forth.  You can see his thong is distended, virtually packed with his own still-pumping spooge, and you marvel at his perverse ingenuity when you realize his thong is waterproofed and shaped to guide all the jizz between his thighs and into his back-door.  Kinky.");
 	pc.cumMultiplierRaw += 0.02;
 	pc.orgasm();
+	pc.shower();
 	if(pc.libido() > 20) pc.slowStatGain("l", pc.libido() / -20);
 	//if(pc.sens > 40) dynStats("lib", -.5); // ???
 	processTime(40);
@@ -369,6 +380,8 @@ private function suckOffJoeysGardenHose():void {
 	output("\"<i>I cleaned out your balls; you can clean up the floor,</i>\" you joke as you leave, kissing him one last time on the mouth before you go.\n\n");
 	output("Joey blushes again and begins looking for a mop.");
 	pc.lust(70);
+	pc.loadInMouth(joey);
+	pc.shower();
 	processTime(40);
 	clearMenu();
 	addButton(0, "Next", enterTheBazaarAndMenu);
@@ -458,6 +471,7 @@ private function eggsInButt(eggButt:Boolean = false):void {
 	
 	output("\n\nJoey leaves, his rabbit tail bobbing to and fro.  You see his thong is distended, practically packed to the brim with more of his still-drooling chocolatey cum.  As usual, the waterproof thong seems to be pumping it all between his soft thighs and right into his already egg-filled asshole.  He really does like feeling full back there.  Kinky.");
 	pc.orgasm();
+	pc.shower();
 	//dynStats("lib", -2, "sen", -2);
 	pc.slowStatGain("l", -2);
 	processTime(40);

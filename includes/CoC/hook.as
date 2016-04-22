@@ -412,7 +412,7 @@ public function nemoCollection():void {
 	tmp.shortName = "Lotus Suit";
 	tmp.longName = "Lotus Suit";
 	tmp.description = "a Lotus suit";
-	tmp.tooltip = "Advanced suit designed for infiltrators and diversionists. While suits constructed from a gray goo are not really new concept, this particular model is honed to perfection. It can take form of any outfit suitable for the situation. Even if quite thin, layer of nanobots is more than able to form a hard exoskeleton with all benefits usual power armor could provide, including thermal management and life support. Highly advanced mimicry software can imitate any species of appropriate body configuration or act as chameleon camouflage, allowing it's owner to blend in with the crowd or hide in a plain sight. Needless to say about functions like forming high variety of tools, weapons and gadgets.";
+	tmp.tooltip = "Advanced suit designed for infiltrators and diversionists. While suits constructed from a gray goo are not really new concept, this particular model is honed to perfection. It can take form of any outfit suitable for the situation. Even if quite thin, layer of nanobots is more then able to form a hard exoskeleton with all benefits usual power armor could provide, including thermal management and life support. Highly advanced mimicry software can imitate any species of appropriate body configuration or act as chameleon camouflage, allowing it's owner to blend in with the crowd or hide in a plain sight. Needless to say about functions like forming high variety of tools, weapons and gadgets.";
 	TooltipManager.addFullName(tmp.shortName, StringUtil.toTitleCase(tmp.longName));
 	TooltipManager.addTooltip(tmp.shortName, tmp.tooltip);
 	tmp.defense = 25;

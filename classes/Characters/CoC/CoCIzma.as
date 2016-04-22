@@ -132,10 +132,12 @@ package classes.Characters.CoC
 			this.buttRatingRaw = 5;
 			//No dicks here!
 			this.cocks = new Array();
-			this.createCock(15);
-			this.balls = 4;
-			this.ballSizeRaw = 3 * Math.PI;
-			this.cumMultiplierRaw = 4;
+			if(flags["COC.IZMA_NO_COCK"] != 1) {
+				this.createCock(15);
+				this.balls = 4;
+				this.ballSizeRaw = 3 * Math.PI;
+				this.cumMultiplierRaw = 4;
+			}
 			
 			this.createVagina();
 			this.girlCumType = GLOBAL.FLUID_TYPE_GIRLCUM;
@@ -156,13 +158,13 @@ package classes.Characters.CoC
 			this.ass.bonusCapacity = 10;
 			
 			this.createStatusEffect("Disarm Immune");
-			this.createStatusEffect("Infertile");
+			if(flags["COC.IZMA_KIDS_ALLOW"] != 1) this.createStatusEffect("Infertile");
 			
-			sexualPreferences.setRandomPrefs(2 + rand(3));
 			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.KINDA_LIKES_SEXPREF);
 			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.KINDA_LIKES_SEXPREF);
 			sexualPreferences.setPref(GLOBAL.SEXPREF_HERMAPHRODITE,	GLOBAL.KINDA_LIKES_SEXPREF);
 			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		GLOBAL.REALLY_DISLIKES_SEXPREF);
+			sexualPreferences.setRandomPrefs(2 + rand(3));
 			
 			inventory = [];
 			

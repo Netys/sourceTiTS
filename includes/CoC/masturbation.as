@@ -320,6 +320,8 @@ public function catAutoLick():void { //Male cat masturbation
 			
 			output("\n\nFinally satiated, you begin untangling yourself and realize how sweaty and sticky you are. Again, remembering the cats, you begin to lick ever square inch clean you can reach just like they do and you discover a new form of pleasure. After you lick yourself clean, you stretch out into the spread-eagle position to get a few small kinks out and to admire your naked body glistening in your spit. As you begin to doze off, <b>you think your balls feel a little denser.</b>");
 			
+			processTime(5 + rand(5));
+			pc.shower();
 			pc.cumMultiplierRaw += 0.05;
 		}
 		else {
@@ -426,6 +428,8 @@ public function centaurGirlsGetHorseAids():void {
 	
 	pc.addKeyValue("Centaur Pole", 1, 1);
 	processTime(50 + rand(20));
+	if (pc.hasVagina()) pc.loadInCunt();
+	else pc.loadInAss();
 	pc.orgasm();
 	//dynStats("sen", -2);
 	clearMenu();
@@ -614,6 +618,9 @@ public function tentacleSelfFuck():void {
 	pc.loadInCunt(pc);
 	if (pc.cockTotal(GLOBAL.TYPE_TENTACLE) > 1) pc.loadInAss(pc);
 	if (pc.cockTotal(GLOBAL.TYPE_TENTACLE) > 2) pc.loadInMouth(pc);
+	if (pc.cockTotal(GLOBAL.TYPE_TENTACLE) > 3 && pc.cumQ() >= 50) {
+		applyCumSoaked(pc);
+	}
 	pc.orgasm();
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
@@ -631,15 +638,22 @@ public function tentacleGoesUpYerPooperNewsAtEleven():void {
 	}
 	clearOutput();
 	
-	output("You eagerly pet your flora pecker as it squirms and wriggles on its own, gently caressing the green surface here and there, its coloration changing as you tease yourself.  After toying with your tentacle dick for a while, you decide to get down to business; using your newly acquired shaft muscles, you expertly guide your ever-writhing [pc.cock " + tentacle + "] to your back, pointing it toward your buttocks.  You grind the tip against your [pc.butt], making pre-cum flow from your mushroom-like head and smearing it against your " + pc.skinFurScales() + ".  Using your own seminal fluid as a natural lube, you press the tip of your [pc.cock " + tentacle + "] in front of your own backdoor, stretching your [pc.asshole] little by little, careful not to tear your own insides.  This goes on for a while, until you suddenly lose all patience and roughly stuff your own [pc.cock " + tentacle + "] at full force inside your colon.");
+	output("You eagerly pet your flora pecker as it squirms and wriggles on its own, gently caressing the green surface here and there, its coloration changing as you tease yourself.  After toying with your tentacle dick for a while, you decide to get down to business; using your newly acquired shaft muscles, you expertly guide your ever-writhing [pc.cock " + tentacle + "] to your back, pointing it toward your buttocks.  You grind the tip against your [pc.butt], making pre-cum flow from your mushroom-like head and smearing it against your " + pc.skinFurScales() + ".  Using your own seminal fluid as a natural lube, you press the tip of your [pc.cockNoun " + tentacle + "] in front of your own backdoor, stretching your [pc.asshole] little by little, careful not to tear your own insides.  This goes on for a while, until you suddenly lose all patience and roughly stuff your own [pc.cock " + tentacle + "] at full force inside your colon.");
 	//[anal tightness check]
 	pc.buttChange(pc.cockVolume(tentacle), true, true, false);
 	
-	output("\n\nThe impetuousness of the act makes you cry in a mixture of pleasure and pain, your [pc.asshole] being overloaded with intense sensations.  Fortunately the tender and rubbery texture of your [pc.cock " + tentacle + "] allows for more sensitivity, the subtle friction sending tingles from your crotch all the way up your spine.  You shiver from the sheer cocktail of raw pleasure you're inflicting on your own body.  Your [pc.cock " + tentacle + "] keeps squirming against your insides, making you quiver and giggle like a whore, until it lodges all the way inside your colon, adopting a more comfortable position.  You then proceed to ferociously fuck your own [pc.asshole], stretching it a bit more at every thrust.");
+	output("\n\nThe impetuousness of the act makes you cry in a mixture of pleasure and pain, your [pc.asshole] being overloaded with intense sensations.  Fortunately the tender and rubbery texture of your [pc.cockNoun " + tentacle + "] allows for more sensitivity, the subtle friction sending tingles from your crotch all the way up your spine.  You shiver from the sheer cocktail of raw pleasure you're inflicting on your own body.  Your [pc.cockNoun " + tentacle + "] keeps squirming against your insides, making you quiver and giggle like a whore, until it lodges all the way inside your colon, adopting a more comfortable position.  You then proceed to ferociously fuck your own [pc.asshole], stretching it a bit more at every thrust.");
 	
 	//[Standard text for stroking other cocks/vagina goes here; text between ()s should be removed if the PC doesn't have multicocks]
 	
-	output("\n\nThe conjugated friction of your [pc.cock " + tentacle + "] writhing inside your devastated interior (as well as the rough hanjdob you're giving yourself) eventually proves too much for your horny body, and [pc.eachCock] releases a massive load, squirting sexual juices everywhere inside (and outside) your body.  Pressure builds in your ass (and your hands) as [pc.cum] flows out of you");
+	output("\n\nThe conjugated friction of your [pc.cock " + tentacle + "] writhing inside your devastated interior");
+	if(pc.cockTotal() > 1) output(" (as well as the rough hanjdob you're giving yourself)");
+	output(" eventually proves too much for your horny body, and [pc.eachCock] releases a massive load, squirting sexual juices everywhere inside");
+	if (pc.cockTotal() > 1) {
+		output(" (and outside)");
+		if (pc.cumQ() >= 100) applyCumSoaked(pc);
+	}
+	output(" your body.  Pressure builds in your ass as [pc.cum] flows out of you");
 	//[if cum production is massive]
 	if (pc.cumQ() >= 1000) output(", making [pc.eachCock] bulge.  The extra feeling sends you over the edge and you quickly reach your climax as you cum and cum");
 	output(".");
@@ -648,7 +662,7 @@ public function tentacleGoesUpYerPooperNewsAtEleven():void {
 	//[if cum production is massive] 
 	if (pc.cumQ() >= 1500) output("  Your poor insides cannot handle the enormous cumshot being unloaded in your [pc.asshole] and a significant volume of [pc.cum] dribbles outside, carelessly polluting the floor.");
 	//[Standard text for other cocks cumming goes here.]
-	output("  You groan and lazily remove your [pc.cock " + tentacle + "] from your anus as you give in to your pleasure-induced drowsiness.");
+	output("  You groan and lazily remove your [pc.cockNoun " + tentacle + "] from your anus as you give in to your pleasure-induced drowsiness.");
 	if (pc.cocks.length > 0) {
 		//Single Cock
 		if (pc.cocks.length == 1) {

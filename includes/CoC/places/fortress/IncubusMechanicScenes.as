@@ -209,6 +209,7 @@ public function suckIncubusDick():void
 	pc.cor(5);
 	pc.lust(pc.lustMax(), true);
 	pc.loadInMouth(new CoCIncubusMechanic());
+	applyCumSoaked(pc);
 
 	processTime(60 + rand(10));
 	clearMenu();

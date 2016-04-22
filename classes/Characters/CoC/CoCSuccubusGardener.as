@@ -459,7 +459,7 @@ package classes.Characters.CoC
 			output("The succubus lifts her hands up in the air, saying, <i>“Why not taste a sampling of the pleasures I offer?”</i> Above her, a canopy of corrupt, snarled greenery forms, oozing unmistakable sexual fluids - both male and female. Splatters of jism and pussy juice fall like curtains of corruptive rain, their scent lacing the air with their heady musk.");
 			
 			if (pc.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)) {
-				output("\n\nWell, you guess thet it should be - nothing can seep inside your armor!");
+				output(" Well, you guess that it should be - nothing can seep inside your armor!");
 			}
 			else if (combatMiss(this, pc))
 			{
@@ -473,8 +473,10 @@ package classes.Characters.CoC
 					pc.createStatusEffect("Cum Shower", 3, 0, 0, 0, false, "Icon_Splatter", "You are covered with sexual fluids!", true, 0, 0xFF0000);
 				else
 					pc.addStatusValue("Cum Shower", 1, 3);
-					
+				
 				output(" You try your best to avoid the onslaught of off-white, but your efforts are in vain. Slick wetness splatters into and around you, making the ground itself so slippery that you nearly topple over. Unfortunately, the treacherous footing gives the gardener's plants plenty of time to work their foul work, layering you mixed slime until you're dripping. You groan in disappointment and building arousal, uncomfortably aware of the way the juices are exciting you as you they soak into your skin.");
+				kGAMECLASS.applyCumSoaked(pc);
+				kGAMECLASS.applyPussyDrenched(pc);
 			}
 		}
 		

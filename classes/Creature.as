@@ -2244,11 +2244,11 @@
 		/**
 		 * Accepts String as name, ItemSlotClass object as name source, or Class for class comparation.
 		 */
-		public function itemCount(arg:*,amount:int = 1):int
+		public function itemCount(arg:*):int
 		{
 			if (inventory.length == 0) return 0;
 			
-			var key:String = (arg is ItemSlotClass) ? arg.shortName : key = arg;			
+			var key:String = (arg is ItemSlotClass) ? arg.shortName : key = arg;
 			var foundAmount:int = 0;
 			for(var x:int = 0; x < inventory.length; x++)
 			{
@@ -8180,6 +8180,8 @@
 					break;
 				case GLOBAL.TYPE_KANGAROO:
 					cocks[slot].cockColor = RandomInCollection(["red", "pink"]);
+					cocks[slot].knotMultiplier = 1;
+					cocks[slot].cThicknessRatioRaw = 0.6;
 					cocks[slot].addFlag(GLOBAL.FLAG_PREHENSILE);
 					cocks[slot].addFlag(GLOBAL.FLAG_TAPERED);
 					break;

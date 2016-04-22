@@ -198,12 +198,12 @@ private function femFuckHerII(cockType:int):void
 
 		output("\n\nSmirking, you reply, \"<i>That's more like it,</i>\" even as you shift down, letting the pointed crown of her cock finally taste the juicy vulva of your pussy.  From then on, you let your box do the talking, slowly sliding down and squeezing each freshly devoured inch with deliberate cuntractions.  The knot stops you when it presses on your labia, your unready pussy not quite ready to take it.  Small dollops of warm dick-juice slowly roll out inside you, mixing with your own copious lube as it soaks into the centaur's underfur.");
 
-		pc.cuntChange(0, Math.min(pc.vaginalCapacity(), 1000), true, true, false);
+		pc.cuntChange(0, Math.min(pc.vaginalCapacity(), 2000), true, true, false);
 
 		output("\n\nRocking your [pc.hips] slowly, you begin to properly ride your mount.  The demoness's cock slips almost the whole way out with ease, lubricated as it is, and it goes back in with a delicious squish of slippery pleasure.  You bounce upon your mastiff-endowed sex-toy with glee, listening with rapt attention to the hammering equine heart just above your head.  Reaching down, your hands find their way down to the swollen ballsack, and you roll the hefty orbs across your fingers as you ride their twitching spout.");
 
 		output("\n\nAt last, your frantic fucking hits the doggie-dick hard enough to pop the slowly-swelling knot inside your snatch.");
-		pc.cuntChange(0, Math.min(pc.vaginalCapacity() * 1.2, 1200), true, true, false);
+		pc.cuntChange(0, Math.min(pc.vaginalCapacity() * 1.2, 2400), true, true, false);
 		output("  The pleasure of being so fully stretched is enough to overwhelm any pain at such an act, and you switch over to smaller, faster strokes the leave most of the animal-cock inside you.  Bouncing atop the centaur's balls with a dopey grin on your [face], you sigh and moan.  This is how you're going to take down these demons, one fuck at a time!  The thought gives your " + pc.skin() + " a fresh flush, and you pinch your nipple while imaging mounting a demon queen atop an orgy of her defeated lieutenants.");
 
 		output("\n\nInside you, the knot stretches, interrupting your daydreams with its orgasm.  By the time you react, it's already dilated your cunt obscenely, rounding it into more of a sphere than a passage.  A second after, you feel the first splashes of dog-jizz spurting into your tunnel.  The first gushes of sperm effectively flood the love-canal, and those that follow just force the sealed juices deeper inside you, into your womb.  The heavy balls in your hand expand mid-orgasm, nearly doubling in size.  The taut scrotum skin is forced to stretch drum-tight while the prodigious orbs swell, the whole time somehow still pumping cum inside you.");
@@ -237,7 +237,7 @@ private function femFuckHerII(cockType:int):void
 		output("\n\nWiping the showing spunk from your eyes, you give the throbbing member an affectionate pat, which only succeeds in coating your hand with a fresh layer of gooey glaze.  The centauress breathily exhales a satisfied sigh, at least, until you give her scrotum another encouraging squeeze.  Her flagging erection surges back to rock-hard life, and you quickly pivot, aligning the swollen tip with your ever-hungry muff.  Pressing back at it, you try to impale yourself upon the bestial girth but find it still thicker than you can easily handle.");
 
 		output("\n\nYou're not going to give up that easy!  The dick presses harder against your [pc.vagina] as you shift your body weight into it, the rubbery flesh of the flare flexing as it starts to part your lips at last.  Grunting, you try to relax, hoping it will ease the penetration, and to your delight, it does.  The veiny shaft pops into your waiting folds with surprising easy once the crown is inside you, sinking deeply into the well of feminine fluids.  You give up an unlady-like scream of pleasure at the feel of being filled so fully, that wonderful thick tip massaging every nerve ending along your walls as it plows deeper.");
-		pc.cuntChange(0, Math.min(pc.vaginalCapacity(), 1000), true, true, false);
+		pc.cuntChange(0, Math.min(pc.vaginalCapacity(), 2000), true, true, false);
 
 		output("\n\nAfter taking all that, you begin to bounce up and down atop it, even though your [pc.legs] are shaking and your [pc.vagina] is");
 		if (pc.wetness() < 4) output(" practically");
