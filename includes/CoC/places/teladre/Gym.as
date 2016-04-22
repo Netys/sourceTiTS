@@ -15,10 +15,10 @@ include "SexMachine.as";
 public function TelAdreGymDesc():void {
 	showName("\nGYM");
 	//PREGGO ALERT!
-	//if (flags[kFLAGS.PC_IS_A_GOOD_COTTON_DAD] + flags[kFLAGS.PC_IS_A_DEADBEAT_COTTON_DAD] == 0 && cotton.pregnancy.isPregnant) {
-		//cotton.cottonPregnantAlert();
-		//return;
-	//}
+	if (flags["COC.PC_IS_A_GOOD_COTTON_DAD"] == undefined && flags["COC.PC_IS_A_DEADBEAT_COTTON_DAD"] == undefined && flags["COC.COTTON_PREGNANCY_INCUBATION"] != undefined) {
+		cottonPregnantAlert();
+		return;
+	}
 
 	clearOutput();
 	clearMenu();
