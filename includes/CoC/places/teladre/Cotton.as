@@ -18,6 +18,7 @@ public function get cotton():PregnancyPlaceholder // since there are no TFs... s
 	pp.cocks[0].cLengthRaw = 24;
 	
 	if (!pp.hasVagina()) pp.createVagina();
+	pp.shiftVagina(0, GLOBAL.TYPE_EQUINE);
 	pp.vaginas[0].loosenessRaw = 4;
 	pp.vaginas[0].wetnessRaw = 3;
 	
