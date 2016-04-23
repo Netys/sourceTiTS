@@ -3669,14 +3669,57 @@ private function firstTimeWithKatherinePartTwoUltraChampionshipEditionHyperTurbo
 	//(Set KATHERINE_UNLOCKED to 1)
 	flags["COC.KATHERINE_UNLOCKED"] = 1; //If Kath was recruited through Scyllia then KATHERINE_MET_SCYLLA will be set to 1
 	
-/*	// Setup her cock defaults - No longer needed, all handled in firstTimeWithKatherineUTerribleScrub so the handjob scene works properly first time through
-	flags[kFLAGS.KATHERINE_DICK_COUNT] = 1;
-	flags[kFLAGS.KATHERINE_DICK_LENGTH] = 8;
-	flags[kFLAGS.KATHERINE_KNOT_THICKNESS] = 6;
-	flags[kFLAGS.KATHERINE_BALL_SIZE] = 1; */
-	
 	output("\n\n(<b>Kath's alley is now added to homes!</b>)");
 	processTime(15);
+	clearMenu();
+	addButton(0, "Next", telAdreMenu);
+}
+
+public function kathNeedIntroductionFromScylla():Boolean {
+	return hours > 8 && hours < 18 && pc.hasKeyItem("Silver Kitty-Bell");
+}
+
+//If player has Silver Bell key item and is at Wet Bitch when Scylla is not busy with her Addicts Anonymous group
+public function catMorphIntr():void {
+	output("\n\nThe cum-drinking nun Scylla is here, apparently resting up between one of her missions.  Recalling the last 'mission' you went on, your hand unthinkingly touches the silver bell you received from that strange herm cat-morph.  Scylla could probably help you find her again.");
+}
+
+public function katherineGreeting():void {
+	clearOutput();
+	//[If Player chooses 'Scylla' button]
+	output("Scylla smiles when she sees you approaching, and politely greets you.  “<i>Why, hello, " + pc.short + "; it's good to see you.  Do you need something?</i>”\n\n");
+
+	output("You tell her that you do, and, showing her the bell you have, you ask her if she remembers that little mission the two of you went on where she ended up ministering to those milk-hungry cats.\n\n");
+
+	output("Scylla nods, a pleased expression and a soft blush blooming on her features.  “<i>Yes.  Poor things... to be so hungry as to do something like that.</i>”  Then she stops and her eyes focus on the bell, glittering with mirth.  “<i>I take it you want to see the friendly dear who gave you that bell again?</i>” she asks.  When you admit that is what you hoped she'd help you with, she promptly stands up, decisively.  “<i>Well then, let's go and re-introduce you two.</i>”  She smiles softly as she turns and walks away at a brisk pace, forcing you to hurry to catch up.\n\n");
+
+	output("Scylla takes you on a very different route from the last time you 'encountered' the cat-morphs in question, leading you to a surprisingly seedy part of the city.  Strangely, despite all of the houses you know are empty and uninhabited from the people lost to the demons, there are myriad people around who are quite clearly vagrants.  Centaurs, dog-morphs, cat-morphs, mouse-morphs, fox-morphs, wolf-morphs, and stranger things beside - you think you see something that looks vaguely like a centaur/wolf-morph hybrid at one point.  Curious, you can't help but ask Scylla what you're doing here.\n\n");
+
+	output("The towering nun suddenly calls out.  “<i>I did a little asking around after that first incident.  They told me that those cats in particular like to hang out in this part of town.  In fact... there!  Hello!  Mr. Kitty?  I want to talk with you and your friends...  Maybe, if you're thirsty, I can offer you a drink?</i>”\n\n");
+
+	output("You're caught off-guard by Scylla's actions, but then spot a familiar-ish feline face peeking warily out from behind a corner.  You make a point of walking away from Scylla, and one of the male cats who basically mugged Scylla for her milk promptly slips out of hiding, the other eleven or so males and females quickly joining him.  The mutated nun, smiling with all three lips, is already innocently removing her habit to expose her huge, milk-filled breasts.  The cats barely hesitate before swarming towards her, pushing and shoving to be the first to start making out with her lipples and drinking their fill of creamy nun-milk.  You watch the situation dispassionately - it is, after all, a lot more voluntary on Scylla's part than it was the first time - and then pull out the silver bell, which you start idly jingling.\n\n");
+
+	output("“<i>...Is that really you?  You actually came?</i>”  A voice from just off to the side sounds; quiet, hesitant, filled with hope, doubt and fear in equal parts.\n\n");
+
+	output("Looking around, you quickly spot the lonely herm cat-morph, the reason behind your coming here.  Still dressed in her ragged clothes, her too-large shirt covers up her B-cup breasts, while her too-tight pants make her canine sheath and small balls stand out to a casual observer.  Under these calmer conditions, you can make out her eyes, a rather pretty shade of green, while her shoulder-length hair is neon pink, a stark contrast to her black fur.  Funny, you don't recall it being that color before... finally remembering that she's addressed you, you smile and agree.\n\n");
+
+	output("She looks from you to the small milk-drinking orgy and then shyly indicates an alleyway nearby.  “<i>Do you want to talk somewhere more privately?</i>” she asks.  When you indicate your assent, she gives a relieved smile and leads you away.  Once you're out of sight of the other cats, she suddenly hugs you fiercely.  “<i>I can't believe you actually came!  Oh, I dreamed that this would happen!</i>”  She purrs, happily rubbing her cheek against you, then pulls away timidly, blushing brightly.  “<i>I'm sorry... It's just,  I've never had anyone show interest in me before.  Not with this...</i>”  She strokes the bulge of her puppy pecker meaningfully.  Then, a thought seems to occur to her and she turns a fearful look at you.  “<i>You - are - interested in me, aren't you?  You didn't come here just to tell me off for liking you?</i>”  From the tone of her voice, this last question was more a plea than an icebreaker.\n\n");
+
+	output("You smile and assure her that you are interested... though you have to confess that more intimate conversations may have to wait for another time.  As if on cue, the happy purring of other cat-morphs reaches you in the alleyway as they start to finish up with Scylla.\n\n");
+
+	output("The dog-dicked cat nods.  “<i>Right.... hey, there's a pawnshop in the main street - run by a golden retriever named Oswald?  You know it?</i>”  When you nod your head, she continues, “<i>Well, Oswald's a pretty nice guy, he buys things I find sometimes and always gives me a fair price even though it's obvious how desperate I am; these guys don't really care whether I'm here or not, so I'll start hanging around in the back alley behind his place.  We can meet up there - is that okay with you?</i>”\n\n");
+
+	output("You tell her that sounds much better than needing to get Scylla to come here as a distraction each time.  The silver bell you return to her, with a coy remark that it looks better on her anyway.  Giving you a heartfelt smile, she gently takes it, then reattaches it to her leather collar.\n\n");
+
+	output("As you walk away, she realizes something.  “<i>Oh!  My name's Katherine!  What's yours?</i>” she asks.  With another smile, you tell her. She mouths the name to herself, her eyes a-twinkle with happiness.\n\n");
+
+	output("The other cats are lying sprawled in the street, swollen with the milk they've drunk from Scylla, who is merrily pulling her habit back on.  She gives you a knowing look but doesn't speak as she leads you back toward the main street.");
+	output("\n\n<b>(Kath's Alley unlocked in Oswald's Pawn shop menu!)</b>");
+
+	initKathFlags();
+	//Player can now encounter Katherine by using the Back Alley button at the Pawn Shop
+	flags["COC.KATHERINE_UNLOCKED"] = 1;
+	processTime(16);
 	clearMenu();
 	addButton(0, "Next", telAdreMenu);
 }

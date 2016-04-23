@@ -7,6 +7,7 @@ include "AuntNancy.as";
 include "dominika.as";
 include "Edryn.as";
 include "Niamh.as";
+include "scylla.as";
 include "Urta.as";
 include "UrtaSex.as";
 
@@ -31,7 +32,7 @@ public function barTelAdre():void {
 	if (pc.race() != "human") output("despite your inhuman appearance, ");
 	output("you hardly get any odd stares.  There are a number of rooms towards the back, as well as a stairway leading up to an upper level.");
 	
-	//scylla.scyllaBarSelectAction(); //Done before anything else so that other NPCs can check scylla.action to see what she's doing
+	scyllaBarSelectAction(); //Done before anything else so that other NPCs can check scylla.action to see what she's doing
 		//Thanks to this function and edryn.edrynHeliaThreesomePossible() the bar menu will always display the same possible options until the game time advances.
 		//So it's safe to return to this menu, Helia or Urta can't suddenly disappear or appear just from leaving and re-entering the bar.
 
@@ -42,7 +43,8 @@ public function barTelAdre():void {
 		addButton(counter++, "Ask4Amily", askAboutAmily);
 	}
 	//DOMINIKA
-	if(hours > 17 && hours < 20 && flags["COC.UNKNOWN_FLAG_NUMBER_00150"] != -1) {
+	if (hours > 17 && hours < 20 && flags["COC.DOMINIKA_MET"] != -1) {
+		fellatrixBarAppearance();
 		addButton(counter++, "Dominika", fellatrixBarApproach);
 	}
 	
@@ -62,7 +64,7 @@ public function barTelAdre():void {
 				}
 			}
 			else { //Mid-pregnancy appearance
-				output("\n\nEdryn is seated at her usual table, and chowing down with wild abandon.  A stack of plates is piled up next to her.  Clearly she has been doing her best to feed her unborn child.  She notices you and waves, blushing heavily.", false);
+				output("\n\nEdryn is seated at her usual table, and chowing down with wild abandon.  A stack of plates is piled up next to her.  Clearly she has been doing her best to feed her unborn child.  She notices you and waves, blushing heavily.");
 			}
 		}
 		//Edryn just had a kid and hasn't talked about it!
@@ -126,56 +128,56 @@ public function barTelAdre():void {
 		output("\n\nRo'gar is here with his back turned to the door, wearing his usual obscuring cloak.");
 	}
 
-	//switch (scylla.action) { //Scylla - requires dungeon shut down
-		//case Scylla.SCYLLA_ACTION_FIRST_TALK:
-			//output("\n\nThere is one nun sitting in a corner booth who catches your eye.  She sits straight-backed against the dark, wood chair, her thin waist accentuating the supple curve of her breasts. She's dressed in a black robe that looks a few sizes too small for her hips and wears a black and white cloth over her head.");
-			//button = anotherButton(button, "Nun", scylla.talkToScylla);
-			//break;
-		//case Scylla.SCYLLA_ACTION_ROUND_TWO:
-			//scylla.scyllaRoundII();
-			//return;
-		//case Scylla.SCYLLA_ACTION_ROUND_THREE:
-			//scylla.scyllaRoundThreeCUM();
-			//return;
-		//case Scylla.SCYLLA_ACTION_ROUND_FOUR:
-			//scylla.scyllaRoundIVGo();
-			//return;
-		//case Scylla.SCYLLA_ACTION_MEET_CATS:
-			//output("\n\nIt looks like Scylla is here but getting ready to leave.  You could check and see what the misguided nun is up to.");
-			//button = anotherButton(button, "Scylla", scylla.Scylla6);
-			//break;
-		//case Scylla.SCYLLA_ACTION_ADICTS_ANON:
-			//output("\n\nYou see Scylla's white and black nun's habit poking above the heads of the other patrons.  The tall woman seems unaware of her effect on those around her, but it's clear by the way people are crowding she's acquired a reputation by now.  You're not sure what she's doing, but you could push your way through to find out.");
-			//button = anotherButton(button, "Scylla", scylla.scyllaAdictsAnonV);
-			//break;
-		//case Scylla.SCYLLA_ACTION_FLYING_SOLO:
-			//output("\n\nIt looks like Scylla is milling around here this morning, praying as she keeps an eye out for someone to 'help'.");
-			//button = anotherButton(button, "Scylla", scylla.scyllasFlyingSolo);
-			//break;
-		//default:
-	//}
+	switch (scyllaAction) { //Scylla - requires dungeon shut down
+		case SCYLLA_ACTION_FIRST_TALK:
+			output("\n\nThere is one nun sitting in a corner booth who catches your eye.  She sits straight-backed against the dark, wood chair, her thin waist accentuating the supple curve of her breasts. She's dressed in a black robe that looks a few sizes too small for her hips and wears a black and white cloth over her head.");
+			addButton(counter++, "Nun", talkToScylla);
+			break;
+		case SCYLLA_ACTION_ROUND_TWO:
+			scyllaRoundII();
+			return;
+		case SCYLLA_ACTION_ROUND_THREE:
+			scyllaRoundThreeCUM();
+			return;
+		case SCYLLA_ACTION_ROUND_FOUR:
+			scyllaRoundIVGo();
+			return;
+		case SCYLLA_ACTION_MEET_CATS:
+			output("\n\nIt looks like Scylla is here but getting ready to leave.  You could check and see what the misguided nun is up to.");
+			addButton(counter++, "Scylla", Scylla6);
+			break;
+		case SCYLLA_ACTION_ADICTS_ANON:
+			output("\n\nYou see Scylla's white and black nun's habit poking above the heads of the other patrons.  The tall woman seems unaware of her effect on those around her, but it's clear by the way people are crowding she's acquired a reputation by now.  You're not sure what she's doing, but you could push your way through to find out.");
+			addButton(counter++, "Scylla", scyllaAdictsAnonV);
+			break;
+		case SCYLLA_ACTION_FLYING_SOLO:
+			output("\n\nIt looks like Scylla is milling around here this morning, praying as she keeps an eye out for someone to 'help'.");
+			addButton(counter++, "Scylla", scyllasFlyingSolo);
+			break;
+		default:
+	}
 	//Nun cat stuff!
-	//if (katherine.needIntroductionFromScylla()) {
-		//katherine.catMorphIntr();
-		//button = anotherButton(button,"ScyllaCats",katherine.katherineGreeting);
-	//}
+	if (kathNeedIntroductionFromScylla()) {
+		catMorphIntr();
+		addButton(counter++, "ScyllaCats", katherineGreeting);
+	}
 	//URTA
 	if (urtaAtBar()) {
-		////Scylla & The Furries Foursome
-		//if (scylla.action == Scylla.SCYLLA_ACTION_FURRY_FOURSOME)
-		//{
-			//trace("SCYLLA ACTION: " + scylla.action);
-			//output("\n\nScylla’s spot in the bar is noticeably empty. She’s usually around at this time of day, isn’t she? Urta grabs your attention with a whistle and points to a back room with an accompanying wink. Oh... that makes sense. Surely the nun won’t mind a little help with her feeding...");
-			//button = anotherButton(button,"Back Room",scylla.openTheDoorToFoursomeWivScyllaAndFurries);
-		//}
-		////Urta X Scylla threesome
-		//if (scylla.action == Scylla.SCYLLA_ACTION_FUCKING_URTA) {
-			//if (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00143] == 0)
+		//Scylla & The Furries Foursome
+		if (scyllaAction == SCYLLA_ACTION_FURRY_FOURSOME)
+		{
+			trace("SCYLLA ACTION: " + scyllaAction);
+			output("\n\nScylla’s spot in the bar is noticeably empty. She’s usually around at this time of day, isn’t she? Urta grabs your attention with a whistle and points to a back room with an accompanying wink. Oh... that makes sense. Surely the nun won’t mind a little help with her feeding...");
+			addButton(counter++, "Back Room", openTheDoorToFoursomeWivScyllaAndFurries);
+		}
+		//Urta X Scylla threesome
+		//if (scyllaAction == SCYLLA_ACTION_FUCKING_URTA) {
+			//if (int(flags["COC.UNKNOWN_FLAG_NUMBER_00143"]) == 0)
 				//output("\n\n<b>Though Urta would normally be here getting sloshed, her usual spot is completely vacant.  You ask around but all you get are shrugs and giggles.  Something isn't quite right here.  You see an empty bottle of one of her favorite brands of whiskey still rolling on her table, so she can't have been gone long.  Maybe she had guard business, or had to head to the back rooms for something?</b>");
 			//else
 				//output("\n\nUrta's usual place is vacant, though her table still holds a half-drank mug of something potent and alcoholic.  If it's anything like the last time this happened, she's snuck into a back room with Scylla to relieve some pressure.  It might not hurt to join in...");
-			//flags[kFLAGS.URTA_TIME_SINCE_LAST_CAME] = 4;
-			//button = anotherButton(button, "Back Room", kGAMECLASS.urta.scyllaAndUrtaSittingInATree);
+			//flags["COC.URTA_TIME_SINCE_LAST_CAME"] = timeAsStamp + 60 * 4;
+			//addButton(counter++, "Back Room", scyllaAndUrtaSittingInATree);
 		//}
 		//else 
 		if (urtaBarDescript()) {
