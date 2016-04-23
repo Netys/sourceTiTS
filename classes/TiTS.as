@@ -586,10 +586,10 @@
 			userInterface.showName(name);
 		}
 		
-		public function addNextButton(func:Function):void
+		public function addNextButton(func:Function, arg:* = undefined):void
 		{
 			clearMenu();
-			addButton(0, "Next", func);
+			addButton(0, "Next", func, arg);
 		}
 		
 		public function addButton(slot:int, cap:String = "", func:Function = undefined, arg:* = undefined, ttHeader:String = null, ttBody:String = null):void

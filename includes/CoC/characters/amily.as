@@ -8507,7 +8507,7 @@ private function izmaAmilyDrugThreeWaySex2():void {
 private function izmaAmilyDrugThreeWaySex3():void {
 	clearOutput();
 	pc.orgasm();
-	dynStats("sen", -3);
+	//dynStats("sen", -3);
 	output("<b>Some time later...</b>\n");
 	output("You come to in a daze.  You're soaked in sexual juices of all kinds from the waist down, though for once, [pc.eachCock] has gone soft.  Izma is snuggled up under your left arm and Amily under your right.  They're still asleep, but they're even more soaked than you, and hugging each other across your body.  The potion may have worked a little differently than Amily designed it to, but you can't really complain about the results.");
 	if (flags["COC.IZMA_INCUBATION"] == undefined || flags["COC.AMILY_INCUBATION"] == undefined) {

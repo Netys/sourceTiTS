@@ -66,14 +66,14 @@ private function telAdreCrystal():void {
 	flags["COC.TEL_ADRE_KNOWN"] = 0;
 	showName("\nTEL'ADRE");
 	//-70+ corruption, or possessed by exgartuan
-	if (/*pc.findStatusAffect(StatusAffects.Exgartuan) >= 0 || */pc.cor() >= 70 + corruptionTolerance()) {
+	if (pc.hasStatusEffect("Exgartuan") || pc.cor() >= 70) {
 		output("The crystal pendant begins to vibrate in the air, swirling around and glowing dangerously black.  Edryn snatches her hand back and says, \"<i>I'm sorry, but you're too far gone to step foot into our city.  If by some miracle you can shake the corruption within you, return to us.</i>\"\n\n");
 		output("You shrug and step back.  You could probably defeat these two, but you know you'd have no hope against however many friends they had beyond the walls.  You turn around and leave, a bit disgruntled at their hospitality.  After walking partway down the dune you spare a glance over your shoulder and discover the city has vanished!  Surprised, you dash back up the dune, flinging sand everywhere, but when you crest the apex, the city is gone.");
 		addButton(0, "Next", function():*{ processTime(15 + rand(5)); mainGameMenu(); } );
 		return;
 	}
 	//-50+ corruption or corrupted Jojo
-	else if(pc.cor() >= 50 /*|| kGAMECLASS.monk >= 5*/) {
+	else if(pc.cor() >= 50 || isBeyondMoralHorizon()) {
 		output("The crystal pendant shimmers, vibrating in place and glowing a purple hue.  Edryn steps back, watching you warily, \"<i>You've been deeply touched by corruption.  You balance on a razor's edge between falling completely and returning to sanity.  You may enter, but we will watch you closely.</i>\"\n\n");
 	}
 	//-25+ corruption or corrupted Marae
@@ -100,8 +100,8 @@ private function telAdreTour():void {
 	//kGAMECLASS.urta.urtaSprite();
 	output("Urta leads you into the streets of Tel'Adre, giving you a brief run-down of her and her city, \"<i>You see, about two decades back, the demons were chewing their way through every settlement and civilization in Mareth.  The covenant, a group of powerful magic-users, realized direct confrontation was doomed to fail.  They hid us in the desert with their magic, and the demons can't corrupt what they can't find.  So we're safe, for now.</i>\"\n\n");
 	output("The two of you find yourselves in the center of a busy intersection.  Urta explains that this is the main square of the city, and that, although the city is large, a goodly portion of it remains empty.  Much of the population left to assist other settlements in resisting the demons and was lost.  She brushes a lock of stray hair from her eye and guides you down the road, making sure to point out her favorite pub - \"The Wet Bitch\".  You ");
-	if(pc.cor() < 25) output("blush", false);
-	else output("chuckle", false);
+	if(pc.cor() < 25) output("blush");
+	else output("chuckle");
 	output(" at the rather suggestive name as Urta turns around and says, \"<i>With how things are, we've all gotten a lot more comfortable with our sexuality.  I hope it doesn't bother you.</i>\"\n\n");
 	output("A bit further on, you're shown a piercing parlor, apparently another favorite of Urta's.  A cute human girl with cat-like ears peeks out the front and gives you both a friendly wave.  It's so strange to see so many people together in one place, doing things OTHER than fucking.  The whole thing makes you miss your hometown more than ever.  Tears come to your eyes unbidden, and you wipe them away, glad to at least have this one reminder of normalcy.  Urta politely pretends not to notice, though the tail she keeps wrapped around her leg twitches as she wraps up the tour.\n\n");
 	output("She gives you a friendly punch on the shoulder and says, \"<i>Okay, gotta go!  Be good and stay out of trouble, alright?</i>\"\n\n");
@@ -268,7 +268,7 @@ private function watchUrtaBeABadass():void {
 	output("The bigger canid charges, snarling, with his claws extended.  Urta sidesteps and pivots, her momentum carrying her foot around in a vicious kick.  Her foot hits the side of the beast's knee hard enough to buckle it, and the wolf goes down on his knees with an anguished cry.  Urta slips under his arm and twists, turning his slump into a fall.  A cloud of dust rises from the heavy thud of the beast's body as it slams into the cobblestone street.\n\n");
 
 	output("Now that it's immobile, you get can get a better look at the defeated combatant, and you're ");
-	//if(pc.findStatusAffect(StatusAffects.Infested) >= 0) output("aroused", false);
+	//if(pc.findStatusAffect(StatusAffects.Infested) >= 0) output("aroused");
 	//else 
 	if(pc.cor() < 50) output("horrified");
 	else output("confused");

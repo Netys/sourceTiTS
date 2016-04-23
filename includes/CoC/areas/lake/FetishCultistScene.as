@@ -648,7 +648,8 @@ private function swimsuitVibrators():void
 		else output("a torrent");
 		output(" of your [pc.girlCum].  You shudder for a moment and look down at it on the ground.  It seems to have, deflated a bit?  There is a clear fluid flowing out of the top of the toy.  A thump sound brings the cultist back to your attention, but only briefly as you see she is writhing on the ground in pleasure from the toy still inside her.  You shake your head and get dressed again.\n\n");
 		//end scene
-		dynStats("lib", 1, "sen", -3);
+		//dynStats("lib", 1, "sen", -3);
+		pc.slowStatGain("l", 1);
 		pc.orgasm();
 		processTime(5 + rand(5));
 		CombatManager.genericVictory();

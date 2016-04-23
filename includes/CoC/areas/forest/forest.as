@@ -1,3 +1,6 @@
+import classes.Engine.Combat.applyDamage;
+import classes.Engine.Combat.DamageTypes.DamageFlag;
+import classes.Engine.Combat.DamageTypes.TypeCollection;
 import classes.GLOBAL;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
@@ -162,7 +165,7 @@ public function forestCorruptedGlade():void {
 public function forestRootTrip():void {
 	clearOutput();
 	output("You trip on an exposed root, scraping yourself somewhat, but otherwise the hour is uneventful.");
-	takeDamage(10);
+	applyDamage(new TypeCollection( { tease : 5 }, DamageFlag.BYPASS_SHIELD).rand(50), pc, pc);
 	clearMenu();
 	addButton(0, "Next", function():* { processTime(10 + rand(10)); mainGameMenu(); } );
 }

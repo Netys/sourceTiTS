@@ -139,26 +139,6 @@ public function cor(arg:Number = 0, apply:Boolean = false): Number
 	return flags["COC.CORRUPTION"];
 }
 
-public function dynStats(...args:*):void {
-	if (args.length % 2 > 0)
-		trace("dynStats: " + args);
-
-	for (var i:int = 0; i <= args.length / 2; i++) {
-		var stat:String = args[i];
-		var mod:Number = args[i + 1];
-	}
-}
-
-public function dynStat(stat:String, arg:Number):void {
-	if (stat == "cor")
-		pc.cor(arg);
-	else if (stat == "lus")
-		pc.lust(arg);
-	else if (stat == "lib")
-		pc.libido(arg);
-	else trace("dynStat: " + stat + " " + arg);
-}
-
 // TODO: use weightedRand
 public function WeightedRandom(options:Array, weights:Array, inverted:Boolean = false):* {
 	if (options.length != weights.length)
@@ -184,7 +164,7 @@ public function WeightedRandom(options:Array, weights:Array, inverted:Boolean = 
 
 // done something awful
 public function isBeyondMoralHorizon():Boolean {
-	return flags["COC.NIAMH_STATUS"] > 0; //kGAMECLASS.monk >= 5 || pc.findStatusAffect(StatusAffects.Exgartuan) >= 0 || kGAMECLASS.amilyScene.amilyCorrupt() || flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00283] > 0 || flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00282] > 0 || 
+	return flags["COC.NIAMH_STATUS"] > 0 || flags["COC.JOJO_STATE"]  >= 5 || amilyCorrupt(); // || flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00283] > 0 || flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00282] > 0 || 
 }
 
 public function get timeAsStamp():uint {
@@ -197,21 +177,13 @@ public function timeUntil(target:int):uint {
 }
 
 // legacy wrappers
-public function doNext(param:Function, arg:*=null):void {
-	clearMenu();
-	addButton(0, "Next", param, arg);
+public function doNext(param:Function, arg:*= null):void {
+	addNextButton(param, arg);
 }
-public function outputText(text:String, param:Boolean = false):void {
-	if (param) { clearOutput(); clearMenu(); }	
-	output(text);
-}
-public function playerMenu():void {	returnToCamp(); }
-public function corruptionTolerance():int { return 0; }
 
-public function takeDamage(arg:Number):void {
-	var afterShield:Number = arg - pc.shields();
-	pc.shields(arg);
-	if (afterShield > 0) pc.HP( -afterShield);
+public function outputText(text:String, param:Boolean = false):void {
+	if (param) { clearOutput(); clearMenu(); }
+	output(text);
 }
 
 public function gender(target:Creature):int {
@@ -238,5 +210,16 @@ public function getKnownFireBreath():String {
 }
 
 public function hasSpells():Boolean {
-	return flags["COC.SPELL_AROUSE"] == 1 || flags["COC.SPELL_HEAL"] == 1 || flags["COC.SPELL_MIGHT"] == 1 || flags["COC.SPELL_CHARGE"] == 1 || flags["COC.SPELL_BLIND"] == 1 || flags["COC.SPELL_WHITEFIRE"] == 1 || pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Corrupted Nine-tails");
+	return spellCount() > 0 || pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Corrupted Nine-tails");
+}
+
+public function spellCount():int {
+	var counter:int = 0;
+	if (flags["COC.SPELL_AROUSE"] == 1) counter++;
+	if (flags["COC.SPELL_HEAL"] == 1) counter++;
+	if (flags["COC.SPELL_MIGHT"] == 1) counter++;
+	if (flags["COC.SPELL_CHARGE"] == 1) counter++;
+	if (flags["COC.SPELL_BLIND"] == 1) counter++;
+	if (flags["COC.SPELL_WHITEFIRE"] == 1) counter++;
+	return counter;
 }

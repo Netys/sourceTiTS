@@ -1209,7 +1209,9 @@ private function getRidOfAnemone():void
 	output("\n\nUpon reaching your destination, you dump the contents of the anemone's erstwhile apartment into the babbling brook, then point down-current toward the lake and set your jaw.  Glancing at your stony demeanor, the blue girl steps into the water, moistens her gills, and then begins the long trek to her ancestral home.");
 	//(set Kidswag to -1)
 	flags["COC.ANEMONE_KID"] = -1;
-	doNext(playerMenu);
+	processTime(5);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 //[no, bonsai anemone is awesome and fuck the haters]
@@ -1230,7 +1232,9 @@ private function keepAnemoneKid():void
 	flags["COC.ANEMONE_KID"] = 1;
 	flags["COC.KID_ITEM_FIND_HOURS"] = timeAsStamp;
 	flags["COC.KID_A_XP"] = 0;
-	doNext(playerMenu);
+	processTime(5);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 
@@ -1908,9 +1912,10 @@ public function kidADreams():void
 		output("  Sighing, you turn over and attempt to return to sleep despite the pervading smell of semen.");
 	}
 	flags["COC.HAD_KID_A_DREAM"] = 1;
-	//dynStats("lus", 50 + pc.sens / 2, "resisted", false);
-	pc.lust(50 + pc.libido() / 2);
-	doNext(playerMenu);
+	applyDamage(new TypeCollection( { tease : 10 + pc.libido() / 2, drug : 40 } ), kida, pc);
+	processTime(7);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 //Kid-and-kid interaction scenes:

@@ -267,7 +267,7 @@ private function centaurGirlOnImps():void {
 
 		output("  Collecting your things, you give the assorted bodies one last look and stumble back to camp.\n\n");
 		
-		dynStats("cor", 1);
+		pc.cor(1);
 	}
 	processTime(25 + rand(10));
 	pc.orgasm();

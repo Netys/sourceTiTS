@@ -1,4 +1,5 @@
 import classes.GLOBAL;
+import classes.Items.Melee.CoCSpellblade;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -6,17 +7,18 @@ import classes.Engine.Utility.*;
 //[Mage's Tower]
 public function visitZeMagesTower():void {
 	userInterface.showName("\nLIBRARY");
-	if(IncrementFlag("COC.TIMES_BEEN_TO_LIBRARY", false) == 0) firstTowerVisit();
+	if(int(flags["COC.TIMES_BEEN_TO_LIBRARY"]) == 0) firstTowerVisit();
 	else towerFollowUpVisits();
 	clearMenu();
-	if(flags["COC.TIMES_BEEN_TO_LIBRARY"] == 0 || hours >= 6 && hours <= 17)  {
+	if(int(flags["COC.TIMES_BEEN_TO_LIBRARY"]) == 0 || hours >= 6 && hours <= 17)  {
 		addButton(1, "You Okay?", youOkayBuddy);
-		if (flags["COC.UNKNOWN_FLAG_NUMBER_00175"] > 0) addButton(2, "Mali", talkToMali);
+		if (flags["COC.DOMINIKA_DRAMA"] > 0) addButton(2, "Mali", talkToMali);
 	}
 	if (flags["COC.TIMES_VISITED_MALI"] > 0) addButton(2, "Mali", talkToMali);
 	addButton(0, "Study", studyInTA);
-	flags["COC.TIMES_BEEN_TO_LIBRARY"]++;
 	addButton(14, "Leave", telAdreMenu);
+	
+	IncrementFlag("COC.TIMES_BEEN_TO_LIBRARY");
 }
 
 
@@ -145,10 +147,10 @@ private function studyInTA():void {
 			}
 		}
 		//OR (player is bimbo/bimbro/whatever) 
-		else if(pc.libido() > 75 || pc.cor() > 75 || pc.isBimbo() || pc.isBro()) output("\n\nYou pick up a book from a table randomly and open it up.  Incredibly disappointed, you soon realize that there are no pictures of people fucking at all.  Reading sucks.  You eventually toss the book aside and resolve to go do something more fun.");
+		else if(pc.slut() > pc.IQ() || pc.isBimbo() || pc.isBro()) output("\n\nYou pick up a book from a table randomly and open it up.  Incredibly disappointed, you soon realize that there are no pictures of people fucking at all.  Reading sucks.  You eventually toss the book aside and resolve to go do something more fun.");
 		//OR (history) 
 		else output("\n\nSelecting a book randomly from the scattered tomes, you find a historical text documenting life in Mareth.  It's dreadfully dull, and though you do your best to learn what you can the dry work is putting you to sleep.  Eventually you close the book and accept that you're not going to be learning anything tonight.");
-		processTime(30 + rand(20));
+		processTime(40 + rand(20));
 		clearMenu();
 		addButton(0, "Next", telAdreMenu);
 	}
@@ -176,7 +178,7 @@ private function youOkayBuddy():void {
 private function talkToMali():void {
 	clearOutput();
 	userInterface.showName("\nMALI");
-	if(Flag("COC.TIMES_VISITED_MALI") == 0) {
+	if(int(flags["COC.TIMES_VISITED_MALI"]) == 0) {
 		IncrementFlag("COC.TIMES_VISITED_MALI");
 		output("You mention to Quinn that you're looking to speak with Mali.  \"<i>Ah, Asa Mali, our very own Alissyn del Aliana.</i>\"  Quinn chuckles and rubs his chin.  You think you're talking about the same person.  \"<i>How mysterious that she of all people should have a visitor.  Am I setting up a forbidden tryst?  A secret rendezvous?  Or perhaps, given the nature of her work, something far more... ominous.</i>\"  He looms curiously, but you clear your throat and ask if she's in.  Disappointed, he sighs and gestures up the stairs.  \"<i>Yes, our sylvan sorceress is not that much of a socialite.</i>\"");
 		
@@ -204,7 +206,7 @@ private function talkToMali():void {
 		addButton(0, "Next", telAdreMenu);
 	}	
 	//[[Mali], player has spellblade]
-	else if ((pc.getWeaponName() == "inscribed spellblade" || pc.hasItemByName("S_BLADE")) && IncrementFlag("COC.MALI_TAKEN_BLADE", false) == 0) {
+	else if ((pc.meleeWeapon is CoCSpellblade || pc.hasItemByType(CoCSpellblade)) && int(flags["COC.MALI_TAKEN_BLADE"]) == 0) {
 		IncrementFlag("COC.TIMES_VISITED_MALI");
 		output("You tell Quinn you're here to see Mali.  He seems intrigued by the wrapped blade you're carrying, but doesn't ask any questions.  Unlocking the second floor as usual, he escorts you to Mali's quarters.");
 		output("\n\n\"<i>What's that?</i>\" Mali asks, curious when you pull out the inscribed spellblade.  You place it down on the desk and explain that you got it from... from...  Mali's eyes light up at your strained inability to explain.  \"<i>Yes!</i>\" she says excitedly, reaching over the desk and grabbing your cheeks.  She plants a quick and enthusiastic kiss on your lips in thanks, looking back down at the sword and running her hands over it.");
@@ -212,18 +214,12 @@ private function talkToMali():void {
 		output("\n\n\"<i>Yes, yes,</i>\" she says as she inspects it, \"<i>This is definitely... yes, I can sense her, now that I know.  I can feel the magic she poured into this.  Aaah!</i>\"  Bursting with excitement she can't help but ball her hands and shake them a little, hopping from one foot to the other.  \"<i>Yes, we can do it!  We can protect the city!</i>\"  Mali quickly steps around the table and pulls you into a large hug, her breasts squishing against your chest.  \"<i>Thank you so much,</i>\" she smiles, \"<i>You've done what no one else could.  I know it might not seem like much, but most people forget I've even asked about her.  You didn't just remember, you...</i>\"  She hugs you again, before excitedly running back around the desk and lifting up the sword, looking closer at it.");
 		
 		output("\n\n\"<i>I'm going to use this to track her,</i>\" she explains, \"<i>Then gather up some guards and find out just what she's up to.  You should rest up, prepare for lethal danger, then come back.</i>\"  The grin on her face doesn't seem to be going anywhere.  \"<i>I can't imagine doing this without your help now.</i>\"");
-		output("\n\n\"<i>Please, come back soon.</i>\"");
-		output("\n\n(<b>Conclusion not yet complete...</b>)");
-		//if (pc.weapon == weapons.S_BLADE) {
-			//pc.setWeapon(WeaponLib.FISTS);
-//			pc.weapon.unequip(player, false, true);
-//			pc.removePerk(PerkLib.WizardsFocus);
-		//}
-		//else {
-			//pc.consumeItem(weapons.S_BLADE);
-		//}
-		//flags[kFLAGS.MALI_TAKEN_BLADE] = 1;
-		//doNext(returnToCampUseOneHour);
+		if (pc.meleeWeapon is CoCSpellblade) pc.removeEquipment("meleeWeapon");
+		else pc.destroyItemByType(CoCSpellblade);
+		flags["COC.MALI_TAKEN_BLADE"] = 1;
+		processTime(10 + rand(5));
+		clearMenu();
+		addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 	}
 	//[[Mali], player does not have spellblade]
 	else {

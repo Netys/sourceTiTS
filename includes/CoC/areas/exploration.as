@@ -48,7 +48,7 @@ public function doExplore():void
 	//if (flags[kFLAGS.DISCOVERED_GLACIAL_RIFT] > 0) addButton(10, "Glacial Rift", kGAMECLASS.glacialRift.exploreGlacialRift, null, null, null, "Visit the chilly glacial rift. \n\nRecommended level: 16" + (debug ? "\n\nTimes explored: " + flags[kFLAGS.DISCOVERED_GLACIAL_RIFT] : ""));
 	//if (flags[kFLAGS.DISCOVERED_VOLCANO_CRAG] > 0) addButton(11, "Volcanic Crag", kGAMECLASS.volcanicCrag.exploreVolcanicCrag, null, null, null, "Visit the infernal volcanic crag. \n\nRecommended level: 20" + (debug ? "\n\nTimes explored: " + flags[kFLAGS.DISCOVERED_VOLCANO_CRAG] : ""));
 
-	addButton(14, "Back", playerMenu);
+	addButton(14, "Back", mainGameMenu);
 }
 
 //Try to find a new location - called from doExplore once the first location is found
@@ -146,7 +146,7 @@ public function showPlacesMenu():Boolean {
 	if (flags["COC.TEL_ADRE_KNOWN"] >= 1) addButton(8, "Tel'Adre", telAdreMenu, null, "Tel'Adre", "Visit the city of Tel'Adre in desert, easily recognized by the massive tower.");
 	if (flags["COC.MET_MINERVA"] >= 4) addButton(9, "Oasis Tower", encounterMinerva, null, "Oasis Tower", "Visit the ruined tower in the high mountains where Minerva resides.");
 	
-	addButton(14, "Back", playerMenu);
+	addButton(14, "Back", mainGameMenu);
 	return true;
 }
 
@@ -174,7 +174,7 @@ public function showDungeonsMenu():Boolean {
 	
 	if (flags["COC.CLEARED_HEL_TOWER"] != undefined) addButton(6, "PhoenixTwr", TravelToPhoenixTower, null, "Phoenix Tower", "Re-visit the tower you went there as part of Helia's quest.\n\nYou've helped Helia in the quest and resolved the problems. \n\nCLEARED!");
 	
-	addButton(14, "Back", playerMenu);
+	addButton(14, "Back", mainGameMenu);
 	return true;
 }
 

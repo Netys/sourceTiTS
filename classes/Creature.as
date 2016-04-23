@@ -9287,6 +9287,11 @@
 			//if (milkType == 9999) counter++;
 			if (cumType == GLOBAL.FLUID_TYPE_OIL) counter++;
 			//if (girlCumType == 9999) counter++;
+			if (hasPerk("Implant: Iron Body")) counter++;
+			if (hasPerk("Implant: Wired Reflexes")) counter++;
+			if (hasPerk("Implant: Optical Analyzer")) counter++;
+			if (hasPerk("Implant: Cognitive Coprocessor")) counter++;
+			if (hasPerk("Implant: Mental Shield")) counter++;
 			return counter;
 		}
 		public function isCyborg(numParts:int = 1):Boolean

@@ -113,7 +113,6 @@ public function encounterRogarSwamp():void {
 			output("Ro'gar looks at you and blinks.  He sets his mug aside and smiles.  \"<i>Sorry, honey, but you're not my type.  Mighty kind of ya though.</i>\"  You furrow your brow in disappointment at his rejection.  \"<i>Ya ain't the drinking type are ya?</i>\" he continues.  \"<i>Should'a known this would'a been too strong.  'Pologies.  You should sleep it off.</i>\"  Blinking, you find yourself being gently but quickly removed from Ro'gar's hut.  The door closes behind you with a \"<i>Take care now,</i>\" and you're left standing in the swamp with a bewildered look on your face.  Maybe you did have too much to drink.  You stumble a bit as you make your way to camp, earning another faceful of mud and disappointment on the way.\n\n");
 			//set Ro'gar phase = 2
 			flags["COC.ROGAR_PHASE"] = 2;
-			dynStats("lus", 30);
 			pc.lust(30);
 			processTime(60 + rand(60));
 			clearMenu();

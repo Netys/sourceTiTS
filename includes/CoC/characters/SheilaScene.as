@@ -3740,8 +3740,8 @@ private function sheilaGoesDemon():void {
 	//reduce lust and lib, raise corr slightly, gain key item Sheila's Lethicite, set sheilacite = 1
 	processTime(20 + rand(10));
 	pc.orgasm();
-	dynStats("lib", -1, "cor", 3);
 	pc.slowStatGain("l", -1);
+	pc.cor(3);
 	pc.createKeyItem("Sheila's Lethicite", 0, 0, 0, 0);
 	flags["COC.SHEILA_CITE"] = 1;
 	flags["COC.SHEILA_DEMON"] = 1;

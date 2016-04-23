@@ -1292,7 +1292,10 @@ private function milkerBadEnd1():void {
 		output("  You barely take notice of her as another explosive orgasm goes off, your enormously swollen penis", false);
 		if(pc.cockTotal() > 1) output("es", false);
 		output(" pushing massive loads of semen down the tubes and out of the release valves in a firework pattern. Whitney shrinks back as some of the spooge squirts across the barn and comes to a stop less than a foot from her. The canine woman screams volubly enough to wake the entire farm. \"<i>Dammit, " + pc.short + "; just... DAMMIT!</i>\" You spare her not even a thought as you anticipate your next injection of the tainted chemicals and work up another batch of jizz.", false);
-		dynStats("lib", 20, "sen", 10, "lus", 80, "cor", 20);
+		//dynStats("lib", 20, "sen", 10, "lus", 80, "cor", 20);
+		pc.slowStatGain("l", 20);
+		pc.lust(pc.lustMax(), true);
+		pc.cor(20);
 	}
 	//[(corruption > 90, high demonscore)
 	else {
@@ -1305,7 +1308,10 @@ private function milkerBadEnd1():void {
 		if(pc.totalCocks() == 1) output("dick", false);
 		else output("set of dicks", false);
 		output(" like yours, why worry about anything else for the moment?", false);
-		dynStats("lib", 20, "sen", 10, "lus", 80, "cor", 100);
+		//dynStats("lib", 20, "sen", 10, "lus", 80, "cor", 100);
+		pc.slowStatGain("l", 20);
+		pc.lust(pc.lustMax(), true);
+		pc.cor(100);
 	}
 	badEnd();
 }

@@ -596,7 +596,7 @@ private function talkToBenoit():void {
 			output("You ask " + benoitMF("Benoit","Benoite") + " how " + benoitMF("he","she") + " got into this line of work.");
 			output("\n\n\"<i>I 'ave always worked with salvage,</i>\" " + benoitMF("he","she") + " shrugs.  \"<i>Back in ze mountains I worked in ze magpie room - obviously, because I was no good on ze outside.  You can tell from ze weight of sings, and 'ow zey smell, what it is and 'ow much it is worth.  More zan zat you can tell... what it meant to its last owner.  Zat is ze true worse of an object.</i>\"  " + benoitMF("He","She") + " taps his claws on the counter, lost in thought.  \"<i>Ze magpie room is amazing, [pc.name], I wish I could show it to you.  Such good acoustics, filled with ze sound and smell of a thousand pieces of junk - every day a new symphony.  And 'oo would ever steal ze demons' treasures?  You would 'ave to be mad to try to steal from a hall full of basilisks.  Or blind.</i>\"");
 			output("\n\n" + benoitMF("He","She") + " laughs throatily, then sighs.  \"<i>Ah, but it was rotten, really - always a sour note underneath everysing.  A thousand basilisks, driven by nussing but greed and lust.  I got sick of it, being stuck in zat place with zose thoughts, zat 'opeless cycle, and one day ran away.  I took what I could carry and used zat to start up here.  Away from ze mountains, I can zink clearly.  I can say what ze uzzer basilisks only know at ze back of zeir minds.</i>\"  " + benoitMF("Benoit","Benoite") + " slams a fist into the counter, making you jump.  \"<i>Don't ever make a deal with a demon, [pc.name],</i>\" " + benoitMF("he","she") + " says, voice thick with rage.  \"<i>Even when you sink it is a win-win?  Zey will still find a way to fuck you good.</i>\"");
-			dynStats("cor", -1);
+			pc.cor( -1);
 		}
 		else if(choice == 5) {
 			output("You ask Benoit if " + benoitMF("he","she") + " can tell you anything about the Bazaar.");
@@ -1146,7 +1146,7 @@ private function suggestSexAfterBasiWombed(later:Boolean = true):void {
 	//if (pc.pregnancyType == PregnancyStore.PREGNANCY_BASILISK) pc.knockUpForce(PregnancyStore.PREGNANCY_BENOIT, pc.pregnancyIncubation);
 	doNext(returnToCampUseOneHour);
 	pc.orgasm();
-	dynStats("sen", -2);
+	//dynStats("sen", -2);
 }
 
 //PC laying

@@ -4,6 +4,7 @@ import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
 include "AuntNancy.as";
+include "dominika.as";
 include "Edryn.as";
 include "Niamh.as";
 include "Urta.as";
@@ -27,7 +28,7 @@ public function barTelAdre():void {
 	}
 	//output(images.showImage("location-teladre-thewetbitch"));
 	output("The interior of The Wet Bitch is far different than the mental picture its name implied.  It looks like a normal tavern, complete with a large central hearth, numerous tables and chairs, and a polished dark wood bar.  The patrons all seem to be dressed and interacting like normal people, that is if normal people were mostly centaurs and dog-morphs of various sub-species.  The atmosphere is warm and friendly, and ");
-	if (pc.race() != "human") output("despite your altered appearance, ");
+	if (pc.race() != "human") output("despite your inhuman appearance, ");
 	output("you hardly get any odd stares.  There are a number of rooms towards the back, as well as a stairway leading up to an upper level.");
 	
 	//scylla.scyllaBarSelectAction(); //Done before anything else so that other NPCs can check scylla.action to see what she's doing
@@ -37,15 +38,15 @@ public function barTelAdre():void {
 	clearMenu();
 	var counter:int = 0;
 	//AMILY!
-	//if(flags[kFLAGS.AMILY_VISITING_URTA] == 1) {
-		//button = anotherButton(button,"Ask4Amily",kGAMECLASS.followerInteractions.askAboutAmily);
-	//}
+	if(flags["COC.AMILY_VISITING_URTA"] == 1) {
+		addButton(counter++, "Ask4Amily", askAboutAmily);
+	}
 	//DOMINIKA
-	//if(hours > 17 && hours < 20 && flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00150] != -1) {
-		//button = anotherButton(button, "Dominika", dominika.fellatrixBarApproach);
-	//}
-	//EDRYN!
+	if(hours > 17 && hours < 20 && flags["COC.UNKNOWN_FLAG_NUMBER_00150"] != -1) {
+		addButton(counter++, "Dominika", fellatrixBarApproach);
+	}
 	
+	//EDRYN!
 	if (edrynBar() && flags["COC.EDRYN_PREGNANCY_TAOTH"] == undefined) { //Edryn is unavailable while pregnant with Taoth
 		if (flags["COC.EDRYN_PREGNANCY_INCUBATION"] != undefined) {
 			if (flags["COC.EDRYN_PREGNANT_AND_NOT_TOLD_PC_YET"] == undefined) {

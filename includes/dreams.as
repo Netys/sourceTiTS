@@ -36,6 +36,9 @@ public function dreamChances():Boolean
 		&& pc.hasGenitals() && rand(4) == 0 && currentLocation == "COC_CAMP") {
 		dreams.push(paladinModeFollowup);
 	}
+	if ((flags["COC.DOMINIKA_AGREEMENT"] == 1 || flags["COC.DOMINIKA_AGREEMENT"] == 2) && pc.hasGenitals() && rand(4) == 0 && currentLocation == "COC_CAMP") {
+		dreams.push(fellatrixDream);
+	}
 	if(dreams.length > 0) 
 	{
 		if(!dreamed) eventQueue.push(dreams[rand(dreams.length)]);

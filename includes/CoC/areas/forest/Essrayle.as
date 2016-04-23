@@ -242,11 +242,11 @@ public function approachTrappedEssy():void {
 		output("Essrayle sits here in her pot just like you left her.  She seems to be a bit out of it once more, not realizing you're there.  Her heavy breasts jiggle and ripple with the least amount of movement, apparently drawing nutrients from her soil to refill themselves.  Just watching the oblivious girl pant and swell with bovine surplus is oddly arousing, and having sampled her sap already... no wonder the sand witches keep her here.  Judging by the steady leak coming from her four breasts, it seems likely the ethereal hands have recently given her a good milking, but you're sure she wouldn't mind a more personal touch.");
 	}
 	//dynStats("lus", 10+pc.lib/10);
-	pc.lust(10 + pc.libido() / 10);
+	applyDamage(new TypeCollection( { tease : 10 + pc.libido() / 10 } ), pc, pc);
 	clearMenu();
 	//Option: [Feed her] [leave]
-	if(pc.hasGenitals()) addButton(0,"Feed Her",feedTrappedEssy);
-	addButton(4, "Leave", playerMenu);
+	if (pc.hasGenitals()) addButton(0, "Feed Her", feedTrappedEssy);
+	addButton(14, "Leave", mainGameMenu);
 }
 
 //[Feed Her]

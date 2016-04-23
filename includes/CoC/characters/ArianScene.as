@@ -2286,7 +2286,7 @@ private function suckAriansDick():void {
 	output("\n\n\"<i>Uuuh... see you soon?</i>\"");
 	output("\n\nYou throw [arian.em] a smirk over your shoulder, shake your [pc.ass] for [arian.eir] benefit, and head on out.");
 	
-	dynStats("lus", 10 + pc.libido() / 5);
+	pc.lust(10 + pc.libido() / 5);
 	processTime(arianFollower() ? 35 + rand(5) : 55 + rand(10));
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);

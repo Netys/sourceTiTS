@@ -1425,7 +1425,8 @@ private function rideKellyForPunishment():void {
 		output("\n\n\"<i>Thank you, [pc.Master],</i>\" she says, smiling at you devotedly.  Her voice hardens. \"<i>You were right.  I deserved that punishment, because from it I will learn to make sure you never have to do it again.  I will be the most obedient cumslut there ever was!</i>\" You smile and tell her to run along for now.  Your grin widens as you watch the girl who never learns leave.");
 	}
 	pc.orgasm();
-	dynStats("sen", -1, "cor", .5);
+	//dynStats("sen", -1, "cor", .5);
+	pc.cor(0.5);
 	doNext(returnToCampUseOneHour);
 }
 
@@ -1604,7 +1605,7 @@ private function kellyTitJob():void {
 		else output("\n\nYou go on and on, driven by a deep impulse to coat her with your potency, your dick flexing out string after string of jism until it aches with pleasure and you are dripping with sweat.  After what seems like minutes upon end of orgasm, you finally sigh and step back to admire your handiwork.  Kelly's face, shoulders and hair are absolutely plastered with cum, her eyes pasted shut.  As you watch her tongue emerges and does a wide circuit of her mouth, drawing in a big dollop of jizz which is then swallowed with a hum of pure contentment.\n\n\"<i>Mmm... I'm so lucky to have a [pc.Master] who is so virile,</i>\" she purrs.  She unsticks her eyes with her fingers and gazes at you with contented pleasure as she licks them clean of oozing addiction.  \"<i>Thank you so much for giving me what I need, [pc.Master]!</i>\" You tell her she's quite welcome as you use her braid to wipe your dick clean, climb back into your [pc.gear], and leave her to enjoy her fix.");
 	}
 	pc.orgasm();
-	dynStats("sen", -3);
+	//dynStats("sen", -3);
 	doNext(returnToCampUseOneHour);
 }
 
@@ -1643,7 +1644,7 @@ private function kellyPregSex():void {
 	output("\n\nYou grasp her generous hips and lock yourself into her cunt as it milks you with inhuman contractions. Your [pc.cock " + x + "] feels sucked in, squeezed and stretched to the point you believe it might rip.  However, this little worry is quickly drowned in a sea of never-ending ecstasy, as torrents after torrents of cum are being injected into the centauress' waiting womb; you know you won't be able to knock her up more than she already is but you've made her appear more pregnant than ever.  Kelly moans, whinnies and shudders as she absorbs more and more cum into her body until she looks ready to give birth to a full tribe.  When you're done and pull out, a fountain of various fluids spurts out of her manhandled cunt, and the slut sighs in satisfaction.  She does look more healthy than before despite having been forced to eat dirt like the whore she is.  Maybe your cum will have beneficial properties to your unborn centaur kids?");
 	
 	pc.orgasm();
-	dynStats("sen", -4);
+	//dynStats("sen", -4);
 	doNext(returnToCampUseOneHour);
 }
  
