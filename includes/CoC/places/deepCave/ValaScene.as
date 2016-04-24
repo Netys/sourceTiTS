@@ -769,7 +769,7 @@ public function valaFightVictoryFuckPtII():void {
 //Purified Fairy
 public function purifiedFaerieBitchBar():Boolean {
 	//Is Vala freed?  If not boot out
-	if(Flag("COC.FREED_VALA") == 0) return false;
+	if(int(flags["COC.FREED_VALA"]) == 0) return false;
 	//(Entering the Wet Bitch for the first time after Healing her)
 	//[Entering the bar description]
 	//(Works from 12:00 to 21:00)
@@ -789,6 +789,10 @@ public function purifiedFaerieBitchBar():Boolean {
 	return false;
 }
 
+public function isValaAtBar():Boolean {
+	return flags["COC.FREED_VALA"] > 0 && hours >= 12 && hours <= 21;
+}
+
 //[Vala]
 public function chooseValaInBar():void {
 	showVala();
@@ -796,7 +800,7 @@ public function chooseValaInBar():void {
 	processTime(5);
 	clearMenu();
 	//(First meeting)
-	if (Flag("COC.ENCOUNTERED_VALA_AT_BAR") == 0) {
+	if (int(flags["COC.ENCOUNTERED_VALA_AT_BAR"]) == 0) {
 		IncrementFlag("COC.ENCOUNTERED_VALA_AT_BAR");
 		output("You take a seat and flag the fairy barmaid over. Vala is dressed in a long, emerald, sleeveless dress that covers her from neck to toe, her fluttering wings keeping the hem from ever touching the ground. She wears thick bracelets around her wrists, has her glittering purple hair done up in a no-nonsense bun, and has a plain white apron over her chest. You realize she's intentionally covering up the scars and tattoos from her imprisonment. She doesn't seem to notice it's you until she gets close enough to touch your shoulder \"<i>Oh!</i>\" she exclaims. \"<i>Why, if it isn't my heroic rescuer!</i>\" She leans in to give you a kiss on the cheek and places a drink on your table. \"<i>From me. It's the least I can do. I'm still new at this, so we're a bit slammed right now, but I'd love a chance to catch up. Can you wait 'til I get a chance to take a break?</i>\"\n\n");
 		
@@ -805,7 +809,7 @@ public function chooseValaInBar():void {
 		addButton(0,"Next",cleansedFirstRemeet);
 		return;
 	}
-	else if(Flag("COC.SHOULDRA_MET_VALA") == 1) {
+	else if(int(flags["COC.SHOULDRA_MET_VALA"]) == 1) {
 		flags["COC.SHOULDRA_MET_VALA"] = 2;
 		output("As soon as you call for Vala, she flutters over with a smile.  Before you even manage a word, she kisses you full on the mouth.  The kiss is a passionate, sloppy mess that has her tongue piercing your lips with reckless abandon, fluttering around your own as she presses her demon-distorted body against you, allowing you to feel just how gigantic her breasts are on her small frame.  It's deliciously obscene.");
 		output("\n\nThe human-sized faerie releases you with a high-pitched whimper of excitement, brushing away the strings of saliva that hang between you.  A bit alarmed, you ask what brought on the unusually passionate display.  You're still a bit shocked by her attitude - is this a result of the tryst you and Shouldra had?  No, that was almost rape... surely she wouldn't be happy about it?");

@@ -44,6 +44,10 @@ public static const KLOC_BAR_URTA_REFUSED:int           =     6; //At the Wet Bi
 public static const KLOC_LAKE:int                       =     7; //You take her out to the lake, either for training or for a date
 public static const KLOC_DESERT:int                     =     8; //You take her out into the desert for training
 
+public static const KDATE_LITTLE:int                    =     0; //Have sex together only in threesomes with you
+public static const KDATE_WHENEVER:int                  =     1; //Have sex together whenever they like
+public static const KDATE_LOTS:int                      =     2; //Have lots of sex together
+
 public function kathLocation(allowOverride:Boolean = true):int {
 	if (allowOverride && flags["COC.KATHERINE_LOCATION"] != undefined) return flags["COC.KATHERINE_LOCATION"]; // for forced location override by events
 	
@@ -54,6 +58,62 @@ public function kathLocation(allowOverride:Boolean = true):int {
 	
 	return KLOC_KATHS_APT; // at home
 }
+
+public function KatherineTimePassedNotify():void {
+	if (minutes == 0 ) { // called every hour
+		if (flags["COC.KATHERINE_UNLOCKED"] < 4) { //Before employment always returns to the alleyway behind Oswald’s after sex.
+			flags["COC.KATHERINE_LOCATION"] = KLOC_STREETS;
+			return; //She only has tattered clothes, so no need to deal with clothing either.
+		}
+		
+		if (hours == 5) {
+			flags["COC.KATHERINE_LOCATION"] = KLOC_STREETS; //On duty
+			if (flags["COC.KATHERINE_URTA_DATE"] == KDATE_WHENEVER) {
+				if (days % 4 == 0) katherineAndUrtaHadSex(false); //Roughly twice a week
+			}
+			else if (flags["COC.KATHERINE_URTA_DATE"] == KDATE_LOTS) katherineAndUrtaHadSex(false); //They fuck at least once a day
+			if (flags["COC.KATHERINE_VALA_DATE"] == KDATE_WHENEVER) {
+				if (days % 4 == 0) katherineAndValaHadSex(); //Roughly twice a week
+			}
+			else if (flags["COC.KATHERINE_VALA_DATE"] == KDATE_LOTS) katherineAndValaHadSex(); //They fuck at least once a day
+		}
+		
+		if (hours >= 14) {
+			//Once employed Kath goes home from any encounter after 14:00 hours, unless they happened at either Urta’s apartment or Urta’s house.
+			switch (flags["COC.KATHERINE_LOCATION"]) {
+				case KLOC_KATHS_APT:
+				case KLOC_URTAS_HOME: break; //Already at final destination for the night
+				case KLOC_URTAS_APT:
+					if (flags["COC.KATHERINE_URTA_AFFECTION"] > 31) {
+						if (rand(4) != 0) { //A three in four chance that Kath will stay with Urta once they've hooked up
+							if (pc.hasKeyItem("Spare Key to Urta's House") >= 0) flags["COC.KATHERINE_LOCATION"] = KLOC_URTAS_HOME;
+							break; //If Urta doesn't have a home to return to then she and Kath stay at the apartment
+						}
+					}
+					else if (flags["COC.KATHERINE_URTA_AFFECTION"] >= 11 && flags["COC.KATHERINE_URTA_DATE"] != KDATE_LITTLE) {
+						if (rand(3) != 0) { //A two in three chance that Kath will stay with Urta if they're fuckbuddies
+							if (pc.hasKeyItem("Spare Key to Urta's House")) flags["COC.KATHERINE_LOCATION"] = KLOC_URTAS_HOME;
+							break; //If Urta doesn't have a home to return to then she and Kath stay at the apartment
+						}
+					} //else fall through to the default case, Kath goes home
+				default: flags["COC.KATHERINE_LOCATION"] = KLOC_KATHS_APT;
+			}
+		}
+		else if (hours >= 10) {
+			//Any time after 10:00 but before 14:00 Kath returns to the bar after encounters, though she will stay at her home if the encounter happened there.
+			switch (flags["COC.KATHERINE_LOCATION"]) {
+				case KLOC_BAR:
+				case KLOC_KATHS_APT: break;
+				default: flags["COC.KATHERINE_LOCATION"] = KLOC_BAR;
+			}
+		}
+		
+		return;
+	}
+}
+
+private var KatherineTimePassedNotifyHook: * = KatherineTimePassedNotifyGrapple();
+private function KatherineTimePassedNotifyGrapple():* { timeChangeListeners.push(KatherineTimePassedNotify); }
 
 public function kathIsAt(location:int):Boolean { return kathLocation() == location; }
 
@@ -167,13 +227,13 @@ private function katherineMenu():void {
 		//addButton(4, "Date", katherineDate);
 		//addButton(14, "Leave", katherineApartmentLeave);
 	}
-	//else { // wet bitch
-		//addButton(0, "Drink", katherineDrinkUp);
-		//addButton(1, "Sex", katherineSex);
-		//addButton(3, "Talk", talkToKatherine);
-		//addButton(4, "Date", katherineDate);
-		//addButton(14, "Leave", barTelAdre);
-	//}
+	else { // wet bitch
+		addButton(0, "Drink", katherineDrinkUp);
+		addButton(1, "Sex", katherineSex);
+		addButton(3, "Talk", talkToKatherine);
+		addButton(4, "Date", katherineDate);
+		addButton(14, "Leave", barTelAdre);
+	}
 }
 
 //Seeing Katherine
@@ -202,24 +262,24 @@ public function katherineVisitNormal(checkTraining:Boolean = true):void
 		default: output("waking up from a cat-nap");
 	}
 	
-	//if (flags["COC.KATHERINE_UNLOCKED"] == 1) { //Regular menu
+	if (flags["COC.KATHERINE_UNLOCKED"] == 1) { //Regular menu
 		output(", and she smiles when she sees you.  “<i>[pc.name]!  Did you come to see me?</i>”");
-		//if (checkTraining && flags["COC.KATHERINE_TRAINING"] > 2) { //You have talked to at least one of Edryn, Urta or the desk sargeant
-			//talkToKath();
-			//return;
-		//}
+		if (checkTraining && flags["COC.KATHERINE_TRAINING"] > 2) { //You have talked to at least one of Edryn, Urta or the desk sargeant
+			talkToKath();
+			return;
+		}
 		katherineMenu();
-	//}
-	//else { //You are training her alone
-		//output(".\n\n");
-		//if (flags["COC.KATHERINE_TRAINING"] >= 100)
-			//katherineTrainingComplete();
-		//else if (flags["COC.KATHERINE_TRAINING"] >= 66)
-			//katherineTrainingStage3();
-		//else if (flags["COC.KATHERINE_TRAINING"] >= 33)
-			//katherineTrainingStage2();
-		//else katherineTrainingStage1(false);
-	//}
+	}
+	else { //You are training her alone
+		output(".\n\n");
+		if (flags["COC.KATHERINE_TRAINING"] >= 100)
+			katherineTrainingComplete();
+		else if (flags["COC.KATHERINE_TRAINING"] >= 66)
+			katherineTrainingStage3();
+		else if (flags["COC.KATHERINE_TRAINING"] >= 33)
+			katherineTrainingStage2();
+		else katherineTrainingStage1(false);
+	}
 }
 
 //Sex
@@ -272,25 +332,31 @@ private function katSexMenu():void {
 	addButton(6, "To the Lake", dateKathBath);
 	
 	if (kathIsAt(KLOC_KATHS_APT)) {
-		//addDisabledButton(6, "Bed Bondage", "Bed Bondage", "You should have 40 gems to buy some extra equipment for this scene.");
-		//if (flags["COC.KBIT_SUB_BED_BOND"] != undefined || pc.credits >= 400) addButton(6, "Bed Bondage", bedroomBondage);
+		addDisabledButton(6, "Bed Bondage", "Bed Bondage", "You should have 40 gems to buy some extra equipment for this scene.");
+		if (flags["COC.KBIT_SUB_BED_BOND"] != undefined || pc.credits >= 400) addButton(6, "Bed Bondage", bedroomBondage);
 	}
 	else { //Not yet employed or at the bar. Kath can't be on duty, since there's a special sex menu for on duty encounters
-		//if (kathIsAt(KLOC_BAR)) { //Check to see if her partners are comfortable fucking her sober
-			//if (flags["COC.KATHERINE_URTA_AFFECTION"] > 10 && urtaAtBar() && urtaAvailableForSex()) seeUrta = katherineSeeUrta;
-			//if (flags["COC.KATHERINE_VALA_AFFECTION"] > 10 && isValaAtBar()) seeVala = katherineSeeVala;
-		//}
-		//else if (kathIsAt(KLOC_BAR_DRUNK)) {
-			//suckle = null; //If she's drunk she wants sex, not suckling
-			//if (urtaAtBar() && urtaAvailableForSex() && !getGame().urta.drainedByKath) seeUrta = katherineDrunkSeeUrta; //Different conversation if Kath is sloshed
-			//if (isValaAtBar() && !getGame().urta.drainedByKath) seeVala = katherineSeeVala;
-			//backOpt = null; //Kath won't take no for an answer if she's sauced
-		//}
-		//else if (kathIsAt(KLOC_BAR_URTA_REFUSED)) {
-			//if (isValaAtBar()) seeVala = katherineSeeVala;
-			//backOpt = null; //Kath won't take no for an answer if she's sauced
-		//}
-		// "See Urta", seeUrta, "See Vala", seeVala,
+		if (kathIsAt(KLOC_BAR)) { //Check to see if her partners are comfortable fucking her sober
+			if (flags["COC.KATHERINE_URTA_AFFECTION"] > 10 && urtaAtBar() && urtaAvailableForSex()) {
+				addButton(3, "See Urta", katherineSeeUrta);
+			}
+			if (flags["COC.KATHERINE_VALA_AFFECTION"] > 10 && isValaAtBar()) {
+				addButton(4, "See Vala", katherineSeeVala);
+			}
+		}
+		else if (kathIsAt(KLOC_BAR_DRUNK)) {
+			addDisabledButton(5, "Suckle", "Suckle", "This scene requires either you or Kath to lactate."); //If she's drunk she wants sex, not suckling
+			if (urtaAtBar() && urtaAvailableForSex() && flags["COC.URTA_TIME_SINCE_LAST_CAME"] < timeAsStamp) {
+				addButton(3, "See Urta", katherineDrunkSeeUrta); //Different conversation if Kath is sloshed
+			}
+			if (isValaAtBar() && flags["COC.URTA_TIME_SINCE_LAST_CAME"] < timeAsStamp)
+				addButton(4, "See Vala", katherineSeeVala);
+			addDisabledButton(14, "Back"); //Kath won't take no for an answer if she's sauced
+		}
+		else if (kathIsAt(KLOC_BAR_URTA_REFUSED)) {
+			if (isValaAtBar()) addButton(4, "See Vala", katherineSeeVala);
+			addDisabledButton(14, "Back"); //Kath won't take no for an answer if she's sauced
+		}
 	}
 }
 
@@ -913,11 +979,11 @@ public function letKatKnotYourCuntPussyFuck():void {
 	output("</i>”\n\n");
 
 	//[(PC is very loose)
-	if (pc.vaginalCapacity() >= kath.biggestCockVolume() * kath.cocks[0].knotMultiplier && kathIsAt(KLOC_STREETS)) output("Nonplussed by the idea of waiting naked and penetrated in a back alley, and eager to see the look on Katherine's face, you pull apart anyway; your thoroughly stretched-out pussy relinquishes the knot with no more than a long sucking noise.  Free of her, you look back over your shoulder.  As you guessed, Katherine is sitting there wordlessly with her mouth open, staring alternately at the abused, cum-drooling lips of your pussy and at the enormous mass of flesh you just managed to pass through it.");
+	if (pc.vaginalCapacity() >= new CockClass(kath.longestCockLength(), kath.cocks[0].knotMultiplier).volume() && kathIsAt(KLOC_STREETS)) output("Nonplussed by the idea of waiting naked and penetrated in a back alley, and eager to see the look on Katherine's face, you pull apart anyway; your thoroughly stretched-out pussy relinquishes the knot with no more than a long sucking noise.  Free of her, you look back over your shoulder.  As you guessed, Katherine is sitting there wordlessly with her mouth open, staring alternately at the abused, cum-drooling lips of your pussy and at the enormous mass of flesh you just managed to pass through it.");
 	else output("You tell her that it's all right; you'll stay here with her until nature takes its course.  Even though you can't really see her, given your respective positions, you know she's smiling.");
 	output("\n\n");
 
-	if (pc.vaginalCapacity() < kath.biggestCockVolume() * kath.cocks[0].knotMultiplier || !kathIsAt(KLOC_STREETS)) {
+	if (pc.vaginalCapacity() < new CockClass(kath.longestCockLength(), kath.cocks[0].knotMultiplier).volume() || !kathIsAt(KLOC_STREETS)) {
 		output("About an hour later, she's deflated and y");
 		processTime(25 + rand(10));
 	}
@@ -1008,11 +1074,11 @@ public function getPenetratedByKath():void {
 	output("</i>”\n\n");
 
 	//[(PC is very loose)
-	if (pc.analCapacity() >= kath.biggestCockVolume() * kath.cocks[0].knotMultiplier && kathIsAt(KLOC_STREETS)) output("Nonplussed by the idea of waiting naked and penetrated in a back alley, and eager to see the look on Katherine's face, you pull apart anyway; your thoroughly stretched-out asshole relinquishes the knot with no more than a long sucking noise.  Free of her, you look back over your shoulder.  As you guessed, Katherine is sitting there wordlessly with her mouth open, staring alternately at the abused, cum-drooling ring of your sphincter and at the enormous mass of flesh you just managed to pass through it.");
+	if (pc.analCapacity() >= new CockClass(kath.longestCockLength(), kath.cocks[0].knotMultiplier).volume() && kathIsAt(KLOC_STREETS)) output("Nonplussed by the idea of waiting naked and penetrated in a back alley, and eager to see the look on Katherine's face, you pull apart anyway; your thoroughly stretched-out asshole relinquishes the knot with no more than a long sucking noise.  Free of her, you look back over your shoulder.  As you guessed, Katherine is sitting there wordlessly with her mouth open, staring alternately at the abused, cum-drooling ring of your sphincter and at the enormous mass of flesh you just managed to pass through it.");
 	else output("You tell her that it's all right; you'll stay here with her until nature takes its course.  Even though you can't really see her, given your respective positions, you know she's smiling.");
 	output("\n\n");
 
-	if (pc.analCapacity() < kath.biggestCockVolume() * kath.cocks[0].knotMultiplier || !kathIsAt(KLOC_STREETS)) {
+	if (pc.analCapacity() < new CockClass(kath.longestCockLength(), kath.cocks[0].knotMultiplier).volume() || !kathIsAt(KLOC_STREETS)) {
 		output("About an hour later, she's deflated and y");
 		processTime(25 + rand(10));
 	}
@@ -2375,7 +2441,7 @@ private function talkToKatherine():void {
 		addButton(3, "Dog Cock", askKatherineAboutDogCock);
 		addButton(4, "Vagrancy", askKatherineAboutVagrancy);
 		addButton(5, "LoveAndLust", askKatherineAboutLoveAndLust);
-		//if (flags["COC.KATHERINE_UNLOCKED"] == 1 && flags["COC.KATHERINE_TRAINING"] == 1) addButton(6, "Employment", employmentTalk);
+		if (flags["COC.KATHERINE_UNLOCKED"] == 1 && flags["COC.KATHERINE_TRAINING"] == 1) addButton(6, "Employment", employmentTalk);
 		
 		addButton(14, "Back", katherineMenu);
 		return;
@@ -2515,7 +2581,7 @@ private function askKatherineAboutVagrancy():void {
 
 	output("You can't help wondering how much of that is true and how much of that is prejudice.");
 	//Player returns to Tel'Adre Menu Screen or to camp, if code insists on it
-	flags["COC.KATHERINE_TRAINING"] = 1; //Now you can talk about Kath getting a job
+	if(int(flags["COC.KATHERINE_TRAINING"]) == 0) flags["COC.KATHERINE_TRAINING"] = 1; //Now you can talk about Kath getting a job
 	processTime(3);
 	clearMenu();
 	addButton(0, "Next", katherineMenu);
@@ -3722,4 +3788,753 @@ public function katherineGreeting():void {
 	processTime(16);
 	clearMenu();
 	addButton(0, "Next", telAdreMenu);
+}
+
+
+/////////////////////////// Kath post-employment content
+
+private function bedroomBondage():void {
+	//If this is the first time then the player needs to have at least 40 gems to buy stuff (10g per scarf)
+	clearOutput();
+	if (flags["COC.KBIT_SUB_BED_BOND"] != undefined) {
+		output("You walk over to Katherine’s wardrobe and soon find what you’re looking for.  You take the silk scarves in hand and walk back to Kath.  She’s got a big grin on her face and as you approach she turns her back to you, walking away so slowly you’re sure to catch up.\n\n");
+
+		output("When you grab her and lock her arm behind her back she pretends to struggle and improvises a little roleplay, saying, “<i>Hey!  I know I was making eyes at you back at the bar, but what kind of girl do you think I am?</i>”  You laugh as you tie up your compliant pussy - it seems she likes this little game.\n\n");
+	}
+	else {
+		output("You give Katherine a quick kiss and tell her to wait here, you have an idea.  You race through Tel’Adre’s streets, searching for one of the many vendors of sex toys and other items for the bedroom.\n\n");
+
+		output("Not far from Kath’s you find a shop with what you need.  You pick out some silk scarves, quickly pay the merchant and make your way back to Kath’s.  She’s sitting on the edge of the bed, but springs to her feet as you return.\n\n");
+		processTime(10);
+		pc.credits -= 400;
+
+		output("“<i>What’s up " + kathPlayerText() + "?</i>” she asks, her ears swivelling toward you.\n\n");
+
+		output("Rather than answering you walk up to her, spin her around and lock her arms behind her.\n\n");
+
+		output("“<i>Oh!  " + kathPlayerText() + " - what are you doing?</i>”\n\n");
+
+		output("You start tying her wrists together with one of the silk scarves.  Kath wriggles, but she’s not really trying to escape.  Her tail is flicking back and forth, smacking against your [pc.legs], so she’s definitely excited.\n\n");
+	}
+
+	output("You push her onto the bed and flip her on her back.  It doesn’t take much effort to pull her clothes off.  She keeps struggling playfully but you’ve soon tied her legs to opposite sides of the bedframe.  If she weren’t a cat " + kath.catGirl("girl", "morph") + " doing the splits like this would be mildly uncomfortable.  Katherine obviously doesn’t mind and you can feel the heat radiating " + kath.catGirl("from her skin", "through her fur") + " as she grows flushed with excitement.  At last you untie her wrists just long enough to re-tie them to the head of the bed.\n\n");
+
+	output("You take a moment to appreciate what lies before you.  Katherine is spread - eagled on the bed, her legs and hips naked" + (kath.hasCock() ? ", her hard cock" + kath.CockMultiple("", "s") + " aimed at the ceiling" : "") + " and her pussy wet and glistening.  You can see her chest rising and falling, her nipples poking against the fabric.  ");
+	if (flags["COC.KBIT_SUB_BED_BOND"] != undefined) {
+		output("You grin at Kath as she pretends to struggle.  You know this is one of her favorite bedroom games.\n\n");
+
+		output("Keeping to her character Kath pants, “<i>Just cause I brought you home doesn’t mean I put out on the first date.  You seem like a nice " + pc.mf("guy", "girl") + ", let’s talk about this, huh?</i>”\n\n");
+	}
+	else output("If Kath doesn’t already have a fetish for getting tied up like this you plan to give her one.\n\n");
+
+	output("You laugh and blow on her " + (kath.hasCock() ? "cock" + kath.CockMultiple("", "s") : "clit") + ", causing Kath to strain against her bonds.  You tell her that she should consider her position.  She’s bound hand and foot to her own bed and only you can help her reach orgasm.  You take her tail and start gently stroking the underside.  Kath rolls her hips and purrs.  Then you stop, moving to stroke her still covered breasts and give her a kiss.  You ask her how it feels, being completely at your mercy.\n\n");
+
+	if (flags["COC.KBIT_SUB_BED_BOND"] != undefined)
+		output("“<i>Oh " + pc.mf("mister", "miss") + " - that feels good.  I never sleep with someone on the first date but I think I’ll make an exception for you.</i>”");
+	else output("Kath just sighs.  Her pupils are fully dilated and you doubt you’re going to hear anything coherent from her until this is over.");
+
+	output("\n\nAt first you barely touch her " + (kath.hasCock() ? "cock" + kath.CockMultiple("", "s") + " or " : "") + "pussy.  Instead you tease her by stroking her breasts and running your hands over her belly and thighs.  Kath wriggles in place and the bedframe creaks but the silk scarves are strong enough to hold her.\n\n");
+
+	output("When you finally get back to blowing on her " + (kath.hasCock() ? "cock" + kath.CockMultiple("", "s") : "clit") + " Kath starts to beg for more.  You stop everything and sit next to her on the bed.  You stroke her ear and tell her that she’s broken your concentration - you can't even remember what you were doing just now.  Kath whimpers and bites her tongue.  After giving her another quick kiss you start over.\n\n");
+
+	output("This time it’s even harder for Kath.  When you start blowing on her " + (kath.hasCock() ? "cock" + kath.CockMultiple("", "s") + " you see precum oozing from the tip" + kath.CockMultiple("", "s") : "clit you see femcum oozing from her pussy") + " like a fountain.  " + (kath.hasCock() ? "You could take her pulse by watching her knot" + kath.CockMultiple("", "s") + " expanding and contracting.  " : "") + "Katherine must love being tied up - she’s so close to cumming that when you start massaging " + (kath.hasCock() ? "the base of her knot" + kath.CockMultiple(" it inflates and hardens", "s they inflate and harden") : "her inner labia her legs start to shiver") + " almost immediately.\n\n");
+
+	output("You slow your pace once again and whisper in Katherine’s ear that you aren’t going to play with her " + (kath.hasCock() ? "cock" + kath.CockMultiple("", "s") + (kath.hasBalls() ? ", her balls" : "") + " or her " : "") + "pussy.  You’re going to prove how much she loves this by making her cum some other way.  She whimpers and you see tears forming at the corners of her eyes.\n\n");
+
+	output("You go back to her ears and start teasing them with your fingers.  " + (kath.hasCock() ? "With every heartbeat her cock" + kath.CockMultiple("", "s") + " jump but she doesn’t cum" : "Each time she takes a breath you hear her pussy dripping juice onto the sheets") + ".  You switch to rubbing her nipples and Kath lets out a deep moan.");
+	if (kath.isLactating())
+		output("  In no time her breasts are soaked with rich, sugary cream and");
+	else output("  By now");
+	output(" her " + (kath.hasCock() ? "cock" + kath.CockMultiple(" is", "s are") : "pussy is") + " glazed from top to bottom with a thick coat of " + (kath.hasCock() ? "pre" : "fem") + "cum." + (kath.hasCock() ? "  " + kath.CockMultiple("It continues to leak like a lazy volcano", "They continue to leak like lazy volcanoes") : "") + ".\n\n");
+
+	output("If her ears won’t do it and her breasts don’t cut it there’s one part of Kath’s body you know will set her off.  You take her tail and start to stroke it.  When you rub the muscles near the base Kath’s hips launch upwards and you hear a " + (kath.hasCock() ? "sound like a bucket of water being poured onto a wood floor.  The stream" + kath.CockMultiple(" she fires is so powerful it hits the ceiling and spatters", "s she fires are so powerful they hit the ceiling and spatter") + " all over the place like a cum sprinkler system" : "scream that starts at high pitched before passing out of the range of human hearing") + ".\n\n");
+
+	output((kath.hasCock() ? "It takes several more shots to drain Katherine’s " + (kath.hasBalls() ? kath.ballAdj() + " balls" : "unnatural prostate") + ".  When it’s over the whole apartment is soaked in cum" : "Kath goes through several more orgasms before she's drained of energy.  When it's over the bedsheets are drenched") + " and Kath is panting and laughing like a crazy person.  " + (kath.hasCock() ? "Her body, directly beneath the rain of cum dripping from the ceiling, is coated head to toe.  " : "") + "When she recovers enough to be sensible she looks over at you and says ");
+	if (flags["COC.KBIT_SUB_BED_BOND"] != undefined)
+		output("“<i>Oh baby!  No one’s ever made me cum like that.  Just give me a few minutes to recover.  I want to pay you back, you’re a keeper.</i>”");
+	else
+		output("“<i>Oh " + kathPlayerText()  + ", that was amazing.  I’m so... spent.  Let me up and I’ll try to find the strength to do something for you.</i>”");
+
+	var x:int = pc.cockThatFits(kath.vaginalCapacity());
+	if (pc.hasCock() && x > -1) { //Males and herms (with small enough junk to fit)
+		var pcLen:int = pc.cocks[x].cLength();
+		output("  You sit down astride Kath and ask her why she thinks you’re going to stop?  You’ve only just warmed her up.  Now she’s ready for the main course.  Her eyes go wide and she pulls at the scarves but there’s no escape.\n\n");
+		
+		output("You position yourself on the bed and line " + (pc.cocks.length > 1 ? "up one of your dicks" : "your cock") + " with Kath’s slit.  " + (kath.hasCock() ? "Her cum is still dripping on your back when you push inside her.  " : "") + "She’s incredibly wet and her pussy opens itself before you, " + (kath.hasCock() ? "almost like it’s jealous of the treatment her male side received" : "begging for more even though she's shaking her head") + ".\n\n");
+
+		output("Unlike Katherine you haven’t cum yet and your [pc.cocks] are aching for release.  You stroke her ");
+		if (!kath.isPregnant()) {
+			output("flat tummy and ask her where she wants your seed.\n\n");
+			if (flags["COC.KBIT_SUB_BED_BOND"] != undefined)
+				output("“<i>That’s what you wanted all along, isn’t it?  You want to knock up a dumb slut you found at the bar.  Well I can’t stop you, so do your best stud!</i>”");
+			else output("“<i>Oh yes!  Fuck me!  Cum inside me, please!  I need it so bad,</i>” she whines.");
+		}
+		else { //Is pregnant
+			output("pregnant belly and ask her if she does this often.\n\n");
+
+			output("Her hips buck and some drool runs from the corner of her mouth.  ");
+			if (flags["COC.KBIT_SUB_BED_BOND"] != undefined)
+				output("“<i>You know I do stud.  I love getting knocked up and parading my big belly around town.  I’m sure not going to bars for the drinks right now.  Mommy needs so much cum!</i>”");
+			else output("“<i>Oh " + kathPlayerText()  + ", don’t stop now.  I need that cum.  I need your hot love inside me.</i>”");
+		}
+		output("  With your feline lover so wet and ready you waste no time and start to hammer into her hot cunt.  Kath goes wild and even tied up she does everything she can to try and force a little more of your cock inside.\n\n");
+
+		output("You force it as deep as you can, " + (pcLen < 15 ? "trying to make it as good for her as it is for you" : "rubbing the tip against Kath’s cervix and causing her eyes to roll back in her skull") + ".  When you cum ");
+		if (pc.cumQ() <= 500)
+			output("you feel a small pool of sperm form around the tip of your cock." + (!kath.isPregnant() ? "  You’re sure you can feel Kath’s cervix sucking some of it in." : ""));
+		else if (pc.cumQ() <= 1500)
+			output("your sperm streams from your cock and starts to pool inside Katherine.  " + (!kath.isPregnant() ? "Her belly starts to swell and you give her formerly flat belly a little rub while Kath purrs." : "With her cervix blocking the way forward most of your cum bubbles back out of Kath’s pussy."));
+		else if (pc.cumQ() <= 3000) {
+			output("your seed flows into Kath like a river.  ");
+			if (!kath.isPregnant()) {
+				output("Her cervix is forced open ");
+				if (pcLen < 15)
+					output("and the pressure around your cock lessens as your seed flows unimpeded into her womb");
+				else
+					output("and you sink into her a bit further as the " + (pcLen == 15 ? "tip" : "first " + (pcLen - 15) + " inches") + " of your cock slide into her womb");
+				output(".  Kath’s belly grows larger and larger, taking all the cum you can give her until she looks five months pregnant and her belly button pops out, signaling that she can hold no more");
+			}
+			else output("Since her womb is already filled with a child it’s her vagina that takes the brunt of it.  Before your eyes a small hard bulge forms just above her cock" + kath.CockMultiple("", "s") + " as the upper end of her birth canal is forced wide open by the flood from your " + (pc.balls > 0 ? "balls" : "prostate"));
+			output(".  The rest of your [pc.cum] flows back around your cock, pouring out onto the bed.");
+		}
+		else {
+			output("your " + (pc.balls > 0 ? "overactive balls" : "unnatural prostate") + ", fueled by the strange magic of this world, inject" + (pc.balls > 0 ? "" : "s") + " an impossible amount of sperm into your cat " + kath.catGirl("girl", "morph") + " lover.  The breath is forced from Kath’s lungs and ");
+			if (!kath.isPregnant()) {
+				output("in an instant her cervix is forced open.  ");
+				if (pcLen < 15)
+					output("The pressure around your cock lessens as your seed flows unimpeded into her womb");
+				else output("You sink into her a bit further as the " + (pcLen == 15 ? "tip" : "first " + (pcLen - 15) + " inches") + " of your cock slide into her womb");
+				output(".  Kath’s belly grows larger and larger, taking in all the [pc.cumNoun] you can give her and growing by leaps and bounds.  She soon looks five or six months pregnant and her belly button pops out.  But your cum " + (pc.balls > 1 ? "factories aren't" : "factory isn't") + " done.\n\n");
+
+				output("Your " + (pc.balls > 0 ? "balls fire" : "prostate fires") + " even higher pressure blasts, overcoming all resistance from Kath’s tortured belly and inflating her taut tummy until she looks nine months pregnant.   ");
+				if (pc.cor() < 25)
+					output("You hope you aren’t doing any permanent damage to Katherine with such a big load.");
+				else if (pc.cor() < 75)
+					output("You hope Kath is enjoying this as much as you are.");
+				else
+					output("Secretly you want to see just how far you can stretch out your kitty’s belly.  Even more, you want to see if you can get her addicted to the feeling of being overfilled.");
+
+				output("\n\nKath whimpers, but her tail is wagging.  You’re pretty sure she’s enjoying herself - and if not, well she can’t do anything about it anyway.");
+			}
+			else
+				output("the top of her birth canal balloons under the strain.  Somehow her cervix remains closed, protecting her offspring.  It feels like you stuck your cock in a waterfall.  There’s a powerful stream of [pc.cum] blasting backward and hitting your groin hard enough that it almost forces you to pull out.");
+		}
+
+		output("\n\nWhen it’s over you collapse on top of your cat " + kath.catGirl("girl", "morph") + " lover.  You feel completely spent and you enjoy the feeling of your sperm leaking slowly from inside her body.\n\n");
+
+		output("As you lie there you " + (kath.hasCock() ? "realize there’s a " + kath.CockMultiple(" hot, hard bulge", "pair of hot, hard bulges") + " between the two of you.  " : "notice that Kath's nippes are rock hard once again") + "It looks like Kath enjoyed herself so much that she " + (kath.hasCock() ? "wants round two" : "needs to cum again") + ".  You don’t want to disappoint so you roll off her and start to " + (kath.hasCock() ? "stroke her cock" + kath.CockMultiple(" and her knot", "s and knots") : "massage her throbbing clit") + ".\n\n");
+
+		output("Kath realizes what you’re up to and starts to beg weakly - “<i>I don’t know if I can.  Let me rest for a minute, please.</i>”\n\n");
+
+		if (pc.cor() < 25)
+			output("You consider it, but you know Kath will end up loving it." + (flags["COC.KBIT_SUB_BED_BOND"] != undefined ? "" : "  She’s obviously turned on from being tied up, from letting you take control.") + "  You give her a smile and continue to stroke her gently");
+		else if (pc.cor() < 75)
+			output("Of course she can.  And she’ll love it.  You’re about to prove that to her");
+		else output("How does she think this works?  She’s tied to the bed, you’ve got her " + (kath.hasCock() ? "cock" + kath.CockMultiple("", "s") + " in hand" : "clit between your fingers") + ".  If you want her to cum then she’s going to cum!  You stop just long enough to give Kath a wicked smile and then you start to " + (kath.hasCock() ? "jerk her cock" + kath.CockMultiple("", "s") : "work her clit") + " in earnest");
+		output(".  Kath moans and tries to escape but her tail sweeps from side to side, showing you she couldn’t be happier.  When her hips launch off the bed you " + (kath.hasCock() ? "aim her cock" + kath.CockMultiple("", "s") + " at the ceiling and once again she gets coated in a shower of her own cum" : "lean in and give her a long deep kiss") + ".\n\n");
+
+		output("After that marathon Katherine is so tired that within a minute or two she starts to snore.  You gently untie her arms from the bed without waking her.  Cats need their naps after all.  She looks so content that you leave her soaking in a puddle of her own cum and let yourself out.");
+	}
+	//else if (!hasCock()) { //She has no cock and you either don't have one or it's too big
+		//output("You stroke her hair and tell her not to worry.  You had lots of fun tying her up.  Kath laughs and says she can't wait to try this again, anytime you want.  Still, after that marathon Katherine is so tired that within a minute or two she starts to snore.  You gently untie her arms from the bed without waking her.  Cats need their naps after all.  She looks so content that you leave her be and let yourself out.");
+	//}
+	else { //Female, Genderless or your cock is too big
+		var dPen:Boolean = pc.hasVagina() && kath.cockTotal() > 1;
+		output("  You sit down astride Kath and ask her why she thinks you’re going to stop?  You’ve only just warmed her up.  Now she’s ready for the main course.  Her eyes go wide and she pulls at the scarves but there’s no escape.\n\n");
+		
+		output("You position yourself above Katherine and slowly lower your " + (pc.hasVagina() ? "pussy" : "ass") + " onto her " + (dPen ? "upper shaft.  A moment later you feel her lower shaft start to force its way into your ass" : "shaft") + ".  Kath mewls as her oversensitive cock" + (dPen ? "s disappear into your holes" : " disappears into your cunt") + ".\n\n");
+
+		if (flags["COC.KBIT_SUB_BED_BOND"] != undefined)
+			output("“<i>Oh " + pc.mf("mister", "miss") + ", I’m never going to have to pick up at that bar again.  It’s love at first fuck but please, no more.</i>”");
+		else output("“<i>" + kathPlayerText() + ", please don’t.  Not so soon.  I can’t cum anymore.  Just let me recover or my " + (kath.hasBalls() ? "balls are" : "prostate is") + " going to turn inside out.</i>”");
+
+		output("\n\nYou put an end to her babbling by kissing her while you allow your " + (dPen ? "holes to swallow her cocks" : (pc.hasVagina() ? "pussy" : "rectum") + " to swallow up her cock") + ".  Kath’s hips weakly try to push more inside, but her hot and solid knot" + (dPen ? "s prevent" : " prevents") + " it.\n\n");
+
+		output("You rock forward and back, enjoying the feeling of Katherine’s " + (dPen ? "staves grinding against one another inside you" : "staff probing your depths") + ".  Your hands roam over Kath’s breasts, the sperm soaked top doing little to conceal her " + kath.breastCup() + " mounds.\n\n");
+
+		output("Kath soon forgets her complaints and starts trying to move beneath you.  Although it’s difficult you pull yourself off her shaft" + (dPen ? "s" : "") + " and remind her that you and only you are going to decide when she gets to cum.  Kath lets out the most needy moan you’ve ever heard, but when you lower yourself again you find her hips have locked in place.\n\n");
+
+		output("You’re starting to feel that familiar throbbing as you rock against Katherine’s knot" + (dPen ? "s" : "") + " and you decide it’s time to make this kitty blow her load.  Reaching underneath her cock you first rub your palm gently against her pussy.  Then you " + (kath.hasBalls() ? "slide your hand upwards and take hold of her " + kath.ballAdj() + " balls.  They’re" : "push your fingers past her sphincter and start to massage her prostate.  It’s") + " boiling hot - probably working overtime to rebuild Kath’s supplies of sperm.\n\n");
+
+		output("As your fingers expertly massage her sperm " + (kath.hasBalls() ? "factories" : "factory") + " you innocently ask, “<i>You said you couldn’t cum again.  Does it still feel that way, or was I right after all?</i>”  Kath seems to be lost in a dream world, so you try something else and yell out a command: “<i>Kath - CUM!</i>”\n\n");
+
+		output("At that her body stiffens and her " + (kath.hasBalls() ? "balls try to pull toward her body" : "prostate contracts") + ".  You decide to make things a little more intense and you " + (kath.hasBalls() ? "hold her balls in place" : "pinch one end of her prostate") + ", making it harder for her to pump out her latest load.  Kath’s head starts thrashing from side to side and you feel her " + (kath.hasBalls() ? "balls'" : "prostate’s") + " contractions go into overdrive as she fights for the chance to fill you.\n\n");
+
+		pc.loadInAss(kath);
+		if (dPen) pc.loadInCunt(kath);
+		kath.orgasm(); //Kath has already cum once, so reduce her load to the minimum amount.
+		output("Your belly starts to swell with Kath’s red hot seed but since she’s already emptied her " + (kath.hasBalls() ? "balls" : "prostate") + " once tonight you don’t end up as completely stuffed as usual.  Kath gasps and pants like a fish out of water and with the last of your strength you untie her and press her hands to your " + (kath.cumQ() > 500 ? "swollen " : "") + "belly.\n\n");
+
+		output("“<i>It’s so hot,</i>” she says.  As she rubs your belly Kath mumbles, “<i>I must have just made all this.  You’re full of my fresh, hot cum.</i>”  You kiss her and tell her you really enjoy the feeling.  If there’s ever a chilly night you’ll have to remember this trick for keeping warm.\n\n");
+
+		output("Katherine giggles and pulls you into a hug.  She’s so tired that within a minute or two she starts to snore.  She looks so content that you leave her soaking in a puddle of her own cum and let yourself out.");
+	}
+	
+	processTime(25 + rand(10));
+	pc.orgasm();
+	kath.orgasm();
+	IncrementFlag("COC.KATHERINE_TIMES_SEXED");
+	flags["COC.KBIT_SUB_BED_BOND"] = 1;
+	clearMenu();
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+}
+
+public function katherineBarApproach():void {
+	clearOutput(); 
+	katherineSprite();
+	output("Kath sits up as you approach, preening herself and adjusting her blouse as you navigate your way to her table." + (kath.isLactating() ? "  Her hands subconsciously move to her breasts and you note the damp spots over her nipples." : "") + "\n\n");
+	output("When you sit down Kath asks you what you want to do and takes a sip of her drink.");
+	katherineMenu();
+}
+
+private function katherineSeeUrta():void {
+	clearOutput();
+	if (urtaDrunk()) {
+		output("Katherine looks over at Urta’s table and sees that the captain is obviously sloshed.  She finishes off her drink and whispers, “<i>Now " + kathPlayerText() + ", I think we both know that if I go over there Urta is going to pound me into the floor.</i>”\n\n");
+		output("You smile and say, “<i>Only if you ask nicely.</i>”\n\n");
+		output("Kath stands up and offers you her hand.  “<i>I guess I’d better bring you along.  I might need help and besides, you always have some fun ideas.</i>”\n\n");
+		output("Urta looks up as the two of you cross the open floor, her horse cock rising rapidly.");
+		clearMenu();
+		addButton(0, "Watch", watch, true);
+		if (kath.hasCock()) addButton(1, "Pin & Fuck", pinAndFuck);
+		else addDisabledButton(1, "Pin & Fuck", "Pin & Fuck", "This scene requires kath to have cock.");
+	}
+	else {
+		output("Katherine looks over at Urta’s table.  Urta catches her looking and gestures for both of you to come over.\n\n");
+		output("Kath offers you her hand and says, “<i>I guess we’d better get over there.  It looks like Urta’s really horny and I wouldn’t want to disappoint her.</i>”\n\n");
+		output("Given the warmth you feel from Katherine’s body you think that she’s projecting some of her own feelings onto Urta.  It doesn’t matter much to you.  No matter how you play this you’re likely to wind up with a pair of hot, naked herms on your hands.  Life as the champion can be so tough sometimes.\n\n");
+		clearMenu();
+		if (!pc.hasGenitals()) {
+			if (kath.hasCock()) addButton(0, "Roast You", kathRoastYou);
+			else addButton(0, "Watch", watch, false); //A non-drunk version of this scene deals with the difficult ones if Kath can't pound you
+		}
+		else {
+			addButton(0, "Circlejeck", kathCirclejerk);
+			addButton(1, "Roast Kath", spitroastKath);
+			if (kath.hasCock()) addButton(2, "Roast You", kathRoastYou);
+			if (pc.hasCock()) addButton(3, "369", threeSixtyNine);
+		}
+	}
+}
+
+private function katherineDrunkSeeUrta():void {
+	clearOutput();
+	output("Now that you’ve lowered Kath’s inhibitions you suggest the two of you should go and talk to Urta.\n\n");
+	output("“<i>Yeah, the captain looks like she could use some company.</i>”\n\n");
+	output("You have to help Katherine get to Urta’s table, but once there Kath plops down into the seat next to Urta and gives her a big hug.\n\n");
+	if (urtaDrunk()) {
+		output("Urta hugs Kath back and says, “<i>Hey there cutie,</i>” before groping Kath’s behind.\n\n");
+		output("Kath purrs and buries her head in Urta’s bosom.\n\n");
+		output("You get the feeling you are going to have to intervene quickly if you don’t want them to fuck right here and now.");
+		var button:int = 0;
+		clearMenu();
+		if (kathSubmissiveness() < 3) {
+			addButton(button++, "Orgy", kathOrgy);
+			output("\n\nYou");
+		}
+		else output("  On the other hand everyone enjoys an orgy.\n\nOtherwise you");
+		if (!pc.hasGenitals()) {
+			output(" could let the two of them fuck.  Unfortunately, you really aren't equipped for more than that.");
+			addButton(button++, "Watch", kathWatchNoIntro, true);
+		}
+		else {
+			output(" could let the two of them fuck and then help yourself or you and Urta could work together to fill Kath's needy holes.");
+			addButton(button++, "Let 'em fuck", doubleStuffKath);
+			if (pc.hasCock()) addButton(button++, "Dbl Pen Kath", doublePenetrateKath);
+			else addDisabledButton(button++, "Dbl Pen Kath", "Dbl Pen Kath", "This scene requires you to have cock.");
+		}
+	}
+	else if (flags["COC.KATHERINE_URTA_AFFECTION"] > 10) { //Willing to bang Kath (when sober)
+		output("Urta hugs her back and asks, “<i>" + pc.short + ", Kath - Looking to get in a little trouble?</i>” before scratching behind Kath’s ears.\n\n");
+		output("Kath winks at you, gives Urta a kiss and says, “<i>only the best kind of trouble,</i>” in a slightly slurred voice.");
+		clearMenu();
+		addButton(0, "Lick Out", kathLicksOutUrta);
+		if(kath.hasCock())
+			addButton(1, "Sandwich", kathSandwich);
+		else addDisabledButton(2, "Sandwich", "Sandwich", "This scene requires Kath to be herm.");
+		
+		if(kath.hasCock() && pc.hasGenitals()) //Do not show knothole button for genderless
+			addButton(2, "Knothole", kathKnothole);
+		else addDisabledButton(2, "Knothole", "Knothole", "This scene requires Kath to be herm and you to have genitals.");
+	}
+	else { //Not willing to bang Kath (while sober) just yet
+		output("Urta pushes Kath back gently.  “<i>Whoa - " + pc.short + " I think someone’s had a bit much.</i>”\n\n");
+		output("Kath smiles and her eyes wander downward, clearly checking out Urta’s chest and then her cock.  Her voice slightly slurred Kath says, “<i>I like you cap'n,</i>” before Urta can lift her up, haul her back to her booth and dump Katherine in her usual seat.\n\n");
+		output("Urta turns to you and whispers, “<i>You’d better do something about her.  She’s going to start humping a table leg if you don’t give her some relief.  It’s a real shame, 'cause I could go for some relief from you too.</i>”" + (flags["COC.URTA_INCUBATION"] != undefined ? "  She rubs her pregnant belly absentmindedly as she stares at you and Kath." : "") + "\n\n");
+		output("As she walks away Kath props her head up on her hands and looks at you dreamily.");
+		flags["COC.KATHERINE_LOCATION"] = KLOC_BAR_URTA_REFUSED; //Shows the same options as when you get her drunk, except no option to see Urta
+		katSexMenu();
+	}
+}
+
+private function katherineSeeVala():void {
+	clearOutput();
+	output("Kath looks like she’s ready for some fun but before you get started something else catches your eye.  You note that Vala is sitting at one end of the bar, her tray propped up beside her.  It looks like a slow night and Vala seems bored.  " + (flags["COC.KATHERINE_VALA_AFFECTION"] < 5 ? "You decide it’s time to expand their horizons and" : "You know they enjoy each other’s company so you") + " motion for her to come over.\n\n");
+	output("Vala flies over quickly.  When she arrives you pat the seat next to you. You’re sitting between your submissive cat " + kath.catGirl("girl", "morph") + " on one side and your supersized faerie on the other.  You certainly walked a strange path to wind up here.");
+	clearMenu();
+	addButton(0, "Fist Them", fistKathAndVala);
+	addDisabledButton(1, "Eat Out", "Eat Out", "This scene requires Kath to be herm.");
+	addDisabledButton(2, "Dbl Stuff", "Dbl Stuff", "This scene requires Kath to be herm and you to have cock. It does not accomodate taurs.");
+	if (kath.hasCock()) { //All but the fisting scene require Kath be a herm
+		addButton(1, "Eat Out", kathEatOutVala);
+		if (!pc.isTaur() && pc.hasCock()) addButton(2, "Dbl Stuff", doubleStuffVala);
+	}
+}
+
+private function drunkFuckKath():void {
+	output("The waitress brings over one last drink and Kath slams it back in one shot.  She’s got an obvious bulge under her clothes and she gives you a crooked smile as she gets up.\n\n");
+
+	output("You take her hand, but instead of heading for the alley as you expected Kath pulls you toward one of the empty backrooms.  She’s so excited she's practically skipping.  You get inside, lock the door and Kath pounces you.  She uses the very techniques you " + (flags["COC.KATHERINE_TRAINING"] == 1 ? "and Urta " : "") + "taught her to pin your arm behind your back while she relieves you of your clothes, all the while giggling to herself.\n\n");
+
+	output("Once you’re naked she " + (pc.hasVagina() ? "starts roughly playing with your clit" : "jabs a finger and then two inside your ass") + ".  She’s not gentle, aiming only to get you hotter and hotter.  Kath leans in close and whispers, “<i>It’s my turn now.  You wanted me - so for now I’m callin the shots.</i>”  She ");
+	if (pc.hasVagina())
+		output("keeps attacking your clit until you feel your juices running down your leg");
+	else if (pc.hasCock())
+		output("keeps milking your prostate until you feel like you’re about to cum");
+	else
+		output("gets her whole hand inside your ass and rolls it around, knowing how much it takes to drive a genderless lover to distraction");
+
+	output(".\n\nOnly when you’re having trouble even standing does Kath release your arm");
+ 	if (!pc.hasVagina()) output(" and yank her " + (pc.hasCock() ? "fingers" : "fist") + " from your ass");
+	output(", and that’s just so she can undo her pants, pull aside her panties and grab your hips with both hands.  Just a moment later your ");
+	var dPen:Boolean = kath.cockTotal() > 1 && pc.hasVagina();
+	if (dPen)
+		output("cunt and ass get");
+	else if (pc.hasVagina())
+		output("cunt gets");
+	else output("ass gets");
+	output(" split wide open as Kath pulls you back onto her shaft" + (dPen ? "s, burying herself to the hilt in both your holes" : ", burying herself to the hilt") + ".\n\n");
+
+	output("You’ve never seen Kath acting this aggressive!  She doesn’t say anything; she concentrates entirely on dominating your ");
+	if (dPen)
+		output("pussy and your ass, making them");
+	else if (pc.hasVagina())
+		output("pussy, making it");
+	else output("ass, making it");
+	output(" hers.  She bangs you against the door hard enough that everyone in the bar must know what’s going on in here.  ");
+	if (pc.hasCock())
+		output("The constant battering overcomes you and " + (pc.cocks.length > 1 ? "your cocks start" : "your cock starts") + " to spray, coating the door " + (pc.cumQ() > 1000 ? "and then the floor " : "") + "with your sticky semen");
+	else if (pc.hasVagina())
+		output("All that thrusting " + (pc.bellyRating() > 30 ? "along with the bouncing of your huge belly " : "") + "overcomes you and the walls of your pussy " + (dPen ? "and ass " : "") + "clamp down on Kath’s spear");
+	else output("All the nerves in your rectum start to fire and your sphincter spasms furiously, trying to expel the invader");
+	
+	output(".\n\nKath laughs like a madwoman and starts to hammer you even harder.  You feel her swollen knot" + (dPen ? "s" : "") + " fighting against your spasming passage" + (dPen ? "s, trying to force their" : ", trying to force its") + " way inside.  Katherine lets out a yowl and pulls back with all her strength.  Her knot" + (dPen ? "s, already near their final size, smash through your defenses, your muscles unable to hold them" : ", already near its final size, smashes through your defenses, your muscles unable to hold it") + " at bay.  At last Kath stops moving.  She must be enjoying the feeling as your ");
+	if (dPen)
+		output("pussy and rectum ripple");
+	else if (pc.hasVagina())
+		output("pussy ripples");
+	else output("ass ripples");
+	output(" along the length of her shaft" + (dPen ? "s" : "") + ".\n\n");
+
+	output("In a whisper so quiet you almost miss it Kath says, “<i>My turn!</i>”  Your knees buckle as your kitten’s cock" + (dPen ? "s discharge" : " discharges") + " a tidal wave of spooge into your ");
+	if (pc.hasVagina())
+		output((pc.isPregnant() ? "pussy" : "vacant womb") + (dPen ? " and colon" : ""));
+	else output("colon");
+	output((!dPen && kath.cockTotal() > 1) ? ".  Her other member, nestled between your thighs, spurts a stream of seed onto the floorboards" : "");
+	output(".  After several long, hard blasts your belly has swollen up as Kath’s turbocharged " + (kath.hasBalls() ? "testicles do their" : "prostate does its") + " best to change you into a balloon.  When she’s spent Kath falls backwards, dragging you with her.  You wind up " + (pc.isTaur() ? "with your belly on the ground, all four legs splayed out," : "sitting in Kath’s lap") + " still feeling her heartbeat through the veins of her knot" + (dPen ? "s" : "") + ".\n\n");
+
+	output("From behind you come a worried voice.  “<i>I’m sorry " + kathPlayerText() + ", I really went out of control there.  I shouldn’t have, but you got me so drunk and horny... anyway, I’m sorry.</i>”\n\n");
+
+	if (pc.cor() < 25)
+		output("You know it was your fault.  You look over your shoulder and smile, telling Kath that it’s all right, you wanted to enjoy yourself and you did.  She beams at the praise.");
+	else if (pc.cor() < 75)
+		output("You’d have a much easier time being mad or punishing your cat " + kath.catGirl("girl", "morph") + " if that hadn’t been so enjoyable.");
+	else
+		output("It was fucking good.  It’s been a while since you got dominated like that and it’s so unlike Kath.  Secretly you wonder if you could get her to do this again, but out loud you tell her that you’re going to come up with some appropriate punishment for this.  Kath just nods her head.  Apparently fading alcohol and the orgasm have turned her back to her usual submissive self.");
+
+	output("\n\nWhen the knot" + (dPen ? "s finally come" : " finally comes") + " free you get up, get dressed and walk out into the bar.  Several patrons, many sporting erections, give you applause.  Kath, still lying on the floor in a puddle of cum, tries to shrink down to nothing.  Even though she’s almost fully clothed she pulls a broken chair in front of her to try and hide from the bar.\n\n");
+
+	if (pc.cor() < 25)
+		output("You blow Kath a kiss, resulting in a few more cat calls.  Then you close the door mouthing ‘later’ to her.  She nods and starts to collect herself, happy to be out of the public eye right now.");
+	else if (pc.cor() < 75)
+		output("You take a bow and blow Kath a kiss.  The other patrons love it and you prop the door wide open so that Kath will be embarrassed long after you leave.");
+	else {
+		output("You give Katherine an evil grin and stride back into the room.  The other patrons watch, some stroking their erections or slipping fingers into their pussies.  “<i>" + kathPlayerText() + " - what are you doing?</i>” she asks, quite worried.  You pull her up in front of you and stand behind her, much as she stood behind you moments ago." + (pc.hasCock() ? "  Your partially deflated cock rubs against her backside, but that’s not what she should be worried about." : ""));
+
+		output("You put your arms under hers and start to unbutton her blouse, exposing her bra.\n\n");
+
+		output("Kath goes stiff in your arms, transfixed by all the stares from the bar patrons.  Meanwhile you start rolling her breasts around in your hands, enjoying your lover’s titflesh and embarrassment.  You say, “<i>Sorry Kath, I should have done this earlier - I completely neglected your lovely breasts.</i>”\n\n");
+
+		output("“<i>No, no, no,</i>” she squeaks out.  ");
+		if (kathSubmissiveness() < 6) {
+			output("After a few minutes of playing with her you finally let Kath go.  There’s a definite feeling of disappointment from the bar, but you don’t think you could get Kath to do something in front of other people.  Maybe someday you’ll have her so enthralled that she’ll do it.\n\n");
+
+			output("You give her a quick kiss and leave the bar, whistling.");
+		}
+		else {
+			output("You ignore her of course.  " + (flags["COC.KBIT_SUB_PUBLIC_EXHIBITION"] != undefined ? "You know your pet loves it when you force her to do things." : "It’s time for Kath to learn a new trick.  You’ve always thought her body could please a crowd, but after today’s behavior you’ve decided to prove it!"));
+
+			output("\n\nYou step back and tell Kath this won’t do at all.  She pants and reaches to readjust her clothes.  Then you tell her, “<i>These people just applauded your performance Kath.  They expect an encore.</i>”  She freezes in place and then you tell her, “<i>They can’t get a good view with all those clothes in the way... you’re going to have to strip.</i>”\n\n");
+
+			output("That gets some hoots and hollers from the crowd and you see a few patrons kicking off their pants or skirts in preparation for the show.  Katherine shudders but knows better than to argue when you use that tone of voice.  She starts to quickly take off her clothes until you tell her to stop.\n\n");
+
+			output("She looks back, perhaps wondering if you’re about to tell her you were just kidding.  Instead you explain, “<i>Give them a show, strip like you’re doing this for money.</i>”\n\n");
+
+			output("Kath gulps but turns back to the crowd and starts unbuttoning her blouse slowly.  The crowd loves it and Kath, perhaps feeling a little bold thanks to the booze still in her system, starts to get into it and starts to sway back and forth, her cat-like flexibility allowing her hips to move through a hypnotic pattern that silences the crowd." + (isValaAtBar() ? "  You even see a certain faerie waitress paused mid-flight with a tray of drinks.  You see her eyes following every move that Kath’s hips make." : ""));
+
+			output("\n\nYou have to smile watching Katherine dancing in front of all these people.  This is something she would never have done before you met her.  As her hips gyrate Kath pulls off her blouse and starts to play with her breasts.  After a few cheers and cries of “<i>More!</i>” she removes the bra as well.\n\n");
+
+			output("With every eye in the place locked on her body Kath lets out a sexy purr , loosens her skirt and slowly slides it over her hips.  She poses before kicking off her panties, leaving herself totally naked in front of the crowd.\n\n");
+
+			output("With Katherine nude and distracted you sneak up behind her and grab " + kath.CockMultiple("her cock with both hands", "both her cocks") + ".  She lets out a surprised meow as you fondle her member" + (kath.hasBalls() ? ", her balls" : "") + " and her dripping pussy.\n\n");
+
+			output("The crowd starts to cheer as you smear Kath’s cock" + kath.CockMultiple("", "s") + " with her own pussy juice.");
+			if (isValaAtBar())
+				output("   You notice Vala has put down her tray.  One of her hands is under her skirt and she has a zoned out happy look on her face as she watches you molest your " + kath.catGirl("cat girl.", "feline lover."));
+			output("  Katherine starts playing with her own breasts and grins at her audience" + (kath.isLactating() ? ".  Every time she gives them a little squeeze some cream leaks out and dribbles down her front.  She" : ".  Then she") + " closes her eyes and leans back against you, losing herself in the feeling of her fingers and yours as they pleasure the most sensitive areas of her body.\n\n");
+
+			output("Having cum recently Kath is able to put on quite the show.  Even with your hands working her shaft" + kath.CockMultiple("", "s") + " and occasionally dipping into her cunt it still takes minutes before you feel " + kath.CockMultiple("that knot", "those knots") + " of hers firming up.  Kath’s hips jerk forward and you aim " + kath.CockMultiple("her shaft toward the ceiling.  When Kath cums a thick stream of semen under high pressure blasts from the tip of her cock, striking the wall above the door and raining down in thick, heavy droplets", "her upper cock to the left and her lower cock to the right.  When Kath cums twin streams of semen under high pressure blast from the tips of her cocks - one striking the wall on the left of the door, one striking the wall on the right") + ".  The whole bar applauds as Katherine unloads.  As the final squirts bubble from her member" + kath.CockMultiple("", "s") + " Kath falls to her knees and her tongue hangs from the side of her mouth.\n\n");
+
+			output("You’re sure everyone in the bar appreciated that show but you don’t intend to leave a naked and near comatose Katherine in their hands.  You step out of the room and tell Kath you’ll see her later.  She makes a happy gurgling noise that you assume was an “<i>Okay!</i>” and then you close the door, making sure to slam it so the locking bar drops down on the inside.\n\n");
+
+			output("You stride out of the bar" + (isValaAtBar() ? ", pausing only to pull Vala into your arms to quickly kiss her and grope her ass. She sighs, winks and tells you to come back later. You" : " and") + " head for home, knowing you’ve " + (flags["COC.KBIT_SUB_PUBLIC_EXHIBITION"] != undefined ? "once again helped Kath see how much fun showing off can be." : "opened Kath up to some new possibilities."));
+			flags["COC.KBIT_SUB_PUBLIC_EXHIBITION"] = 1;
+		}
+	}
+	processTime(35 + rand(5));
+	if (!pc.hasVagina() || kath.cockTotal() > 1) pc.loadInAss(kath);
+	if (pc.hasVagina()) pc.loadInCunt(kath);
+	pc.orgasm();
+	kath.orgasm();
+	IncrementFlag("COC.KATHERINE_TIMES_SEXED");
+	clearMenu();
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+}
+
+public function katherineAndUrtaHadSex(drunkSex: Boolean):void {
+	//Every time they have sex they get a little closer, but this is limited to a max of 30
+	//while still in training. Once Kath has a job they can tell you they love each other.
+	//Only the two of them having sex sober can cause them to gain the last point.
+	IncrementFlag("COC.KATHERINE_URTA_TIMES_SEX");
+	if (flags["COC.KATHERINE_URTA_AFFECTION"] >= 31) return;
+	if (flags["COC.KATHERINE_URTA_AFFECTION"] == 30 && (drunkSex || flags["COC.KATHERINE_UNLOCKED"] < 4 || flags["COC.KATHERINE_URTA_DATE"] == KDATE_LITTLE)) return;
+	//Kath and Urta can’t gain that last point and become lovers if Kath has not yet
+	//completed her training, if this was alcohol fueled sex or if you told them to only
+	//fuck each other when you were around.
+	IncrementFlag("COC.KATHERINE_URTA_AFFECTION");
+}
+
+public function katherineAndValaHadSex():void {
+	//Every time they have sex they get a little closer, but this is limited to a max of 11.
+	IncrementFlag("COC.KATHERINE_VALA_TIMES_SEX")
+	if (flags["COC.KATHERINE_VALA_AFFECTION"] > 11) return;
+	IncrementFlag("COC.KATHERINE_VALA_AFFECTION");
+}
+
+public function katherineBarDescription():void {
+	output("\n\nYou see Katherine sitting alone in her usual booth, nursing something that " + (!kath.isPregnant() ? "looks like a cream liqueur" : "is probably a milkshake") + ".  She’s wearing " + kath.clothesChoice("a matching blouse and skirt", "her sheer bodysuit", "the elegant long dress", "her spider silk robe", "that revealing tube top", "the sexy nurse’s outfit") + ".");
+}
+
+public function katherineBarFirstEncounter():void {
+	output("\n\nYou see a familiar feline lounging at one of the tables.  When she sees you Kath leaps up, nearly spilling her drink, and tackles you with a hug and a flurry of kisses.\n\n");
+	output("She finally regains some composure and says, “<i>I’ve been waiting for you to turn up!  It feels like so much has happened these last few days.  Oh, I’m such a screwup - I told you I had an apartment but I didn’t say where.</i>”\n\n");
+	output("She pulls a key and a scrap of paper out and hands them to you.  “<i>There we go.  A key to my place and directions.  Please come over and see me " + kathPlayerText() + ", I’ll be lonely if you don’t.</i>”\n\n");
+	output("You laugh, give her a scratch behind the ear and let her lead you back to her table.");
+	//Show the same menu options you would normally see if sitting with Kath
+	flags["COC.KATHERINE_UNLOCKED"] = 5; //She’s met you at the wet bitch and given you her apt key
+	katherineMenu();
+}
+
+public function barKathUrtaLoveAnnounce():void {
+	//Special event that happens on entering the bar when KATHERINE_URTA_AFFECTION == 31
+	//and both Kath and (sober) Urta should be present in the bar at this time normally
+	clearOutput();
+	output("When you walk into the Wet Bitch you see Kath and Urta sitting together at Urta's table.  As soon as Kath spots you she waves you over enthusiastically.\n\n");
+	output("Urta offers you the seat next to her and Kath shifts over so she's on your other side.  “<i>So your big plan worked,</i>” says Urta with a grin that runs from ear to ear.  “<i>You got us fucking, " + (flags["COC.KATHERINE_URTA_DATE"] == KDATE_LOTS ? "hell you encouraged us to fuck every chance we got!  So" : "so") + " it should be no surprise that we’ve become close.</i>”\n\n");
+	output("“<i>Really close,</i>” says Katherine, grinding her hip up against yours.\n\n");
+	output("“<i>So anyway,</i>” Urta continues, “<i>we both still love you, especially since we only met each other because of you.  But now we love each other too.  I figure you must have expected this, so don’t pretend to be surprised.</i>”\n\n");
+	output("“<i>How do you want to celebrate?</i>” asks Kath.  You can see the matching pair of " + (kath.hasCock() ? "bulges" : "smiles") + ", one to each side.  They both put their arms around you, pressing their breasts against you deliberately.  But hey, who are you to argue?  A threesome seems like an awfully good idea.");
+	flags["COC.KATHERINE_URTA_AFFECTION"] = 32;
+	var button:int = 0;
+	clearMenu();
+	if (pc.hasCock()) addButton(button++, "369", threeSixtyNine);
+	else addDisabledButton(button++, "369", "369", "This scene requires you to have cock.");
+	
+	if (kath.hasCock()) addButton(button++, "Roast You", kathRoastYou);
+	else addButton(button++, "Watch", watch, false); //A non-drunk version of this scene deals with the difficult ones if Kath can't pound you
+	
+	if (pc.hasCock() || pc.hasVagina()) addButton(button++, "Spitr Kath", spitroastKath);
+	else addDisabledButton(button++, "Spitr Kath", "Spitroast Kath", "This scene requires you to have genitals.");
+}
+
+public function katherineOnDuty():void {
+	clearOutput();
+	output("As you walk through the streets of Tel’Adre you notice a small group of Watch officers out on patrol.  One of them looks your way and you see a familiar face.  Kath says something to one of the other officers.  Soon enough Kath is headed your way while the others walk to a nearby cafe.\n\n");
+	if (flags["COC.KATHERINE_UNLOCKED"] == 4) { //First encounter since training
+		output("“<i>" + pc.short + "!</i>” she calls out, running straight into your arms.  “<i>I’ve been hoping to run into you - here,</i>” she says, thrusting a key into your hand.  “<i>I was so excited when I saw you at the gate; I completely forgot to give you this.  It's a key to my new place.</i>”  She beams proudly as she speaks the words.\n\n“<i>Please come by any time, that way we can get up to anything we want,</i>” she adds before kissing you and wrapping her tail around your waist.  She whispers the directions to her new place in your ear, then releases you and steps back.\n\n“<i>Now, as for right now, y");
+		flags["COC.KATHERINE_UNLOCKED"] = 5;
+	}
+	else { //Normal introduction
+		output("When she reaches you Katherine skids to a stop.  “<i>" + (kath.playerMaster() ? "[pc.Master]" : "Hi " + pc.short) + "!</i>” she says, grinning ear to ear.  “<i>Y");
+	}
+	output("ou’ve got good timing.  We were due to take a break anyway.</i>”  Before she says any more Katherine stands up straight, casually places her hands behind her back and shifts her body to emphasize her breasts and the " + (kath.hasCock() ? "bulge of her crotch" : "curve of her hips") + ".  “<i>So... how do I look?</i>” she asks with a purr.\n\n");
+
+    katherinesAppearance(false); //This will output most of the encounter text
+	output("Totally naked, tail waving with pleasure, Katherine stretches, giving you a very good show of all her most private parts.  “<i>Like what you see, my love?</i>” she purrs.\n\nYes, you do, you tell her.  Her uniform suits her just fine, and you can certainly appreciate her new flirty attitude.  You motion for her to give a little twirl.  The cat" + kath.catGirl(" girl", "-morph") + " does as you indicate, pirouetting with surprising elegance in a slow circle, grinning at you as she resumes facing you.  “<i>You should really come and see me after work.</i>” she winks, even as she bends down and, with a wiggle of her ass, starts gathering her clothes up again.  You can’t help but feel a bit disappointed as she begins to redress.\n\n“<i>But... I still got a little time, if you maybe want to do something else...?</i>” she purrs with a sultry wink.\n\n");
+	
+	flags["COC.KATHERINE_LAST_AMBUSH"] = days;
+	
+	//[Give Oral] [Kath Laps] [Fuck Her] [Anal] [Leave]
+	processTime(6);
+	clearMenu();
+	addButton(0, "Give Oral", giveKatOralPenisWingWang);
+	if (pc.hasGenitals()) addButton(1, "Kath Laps", katherineGivesPCOralAllDayLongDotJPG);
+	else addDisabledButton(1, "Kath Laps", "Kath Laps", "This scene requires you to have genitals.");
+	
+	if (pc.hasCock() && (pc.cockThatFits(kath.vaginalCapacity()) >= 0))
+		addButton(2, "Fuck Vag", penetrateKatsVag);
+	else
+		addDisabledButton(2, "Fuck Vag", "Fuck Vag", "This scene requires you to have fitting cock.");
+	
+		if (pc.hasCock() && (pc.cockThatFits(kath.vaginalCapacity()) >= 0))
+		addButton(3, "Fuck Ass", pcPenetratesKatAnally)
+	else
+		addDisabledButton(3, "Fuck Ass", "Fuck Ass", "This scene requires you to have fitting cock.");
+	
+	addButton(14, "Leave", katherineOnDutyLeave);
+}
+
+private function katherineOnDutyLeave():void {
+    output("It’s probably best that you don’t get Kath in trouble.  You bid her farewell, promising that you’ll come and see her once she’s off duty.\n\n");
+	processTime(2);
+	addNextButton(telAdreMenu);
+}
+
+public function katherineVisitAtHome():void { //You go to Kath's place alone - she may or may not be home
+	clearOutput();
+	if (kathIsAt(KLOC_KATHS_APT)) {
+		if (flags["COC.KATHERINE_URTA_AFFECTION"] == 31) { //Special event that happens only once
+			katherineSprite();
+			output("When you open the door to Kath’s place you see Kath and Urta both sitting together on the bed.  As soon as they spot you Kath crooks her finger and scoots over, leaving a space between her and Urta.\n\n");
+			output("Once you’re seated Urta laughs and says, “<i>so your big plan worked.  You got us fucking, " + (flags["COC.KATHERINE_URTA_DATE"] == KDATE_LOTS ? "hell you encouraged us to fuck every chance we got!  So" : "so") + " it should be no surprise that we’ve become close.</i>”\n\n");
+			output("“<i>Really close,</i>” says Katherine, grinding her hip up against yours.\n\n");
+			output("“<i>So anyway,</i>” Urta continues, “<i>we both still love you, especially since we only met each other because of you.  But now we love each other too.  I figure you must have expected this, so don’t pretend to be surprised.</i>”\n\n");
+			output("“<i>How do you want to celebrate?</i>” asks Kath.  You can see the matching pair of " + (kath.hasCock() ? "bulges" : "smiles") + ", one to each side.  They both put their arms around you, pressing their breasts against you deliberately.  But hey, who are you to argue?  A threesome seems like an awfully good idea.");
+			flags["COC.KATHERINE_URTA_AFFECTION"] = 32;
+			var button:int = 0;
+			clearMenu();
+			if (pc.hasCock()) addButton(button++, "369", threeSixtyNine);
+			else addDisabledButton(button++, "369", "369", "This scene requires you to have cock.");
+			
+			if (kath.hasCock()) addButton(button++, "Roast You", kathRoastYou);
+			else addDisabledButton(button++, "Roast You", "Roast You", "This scene requires Kath to have cock.");
+			
+			if (pc.hasCock() || pc.hasVagina()) addButton(button++, "Spitr Kath", spitroastKath);
+			else addDisabledButton(button++, "Spitr Kath", "Spitr Kath", "This scene requires you to have genitals.");
+			
+			if(!pc.hasGenitals()) addButton(button++, "Watch", watch, false); //A non-drunk version of this scene deals with the difficult ones if Kath can't pound you
+		}
+		else {
+			katherineSprite();
+			output("It looks like Kath heard you coming.  You find her waiting in her bedroom with a sexy smile that suggests she’s up for anything.");
+			kathClothes();
+			output("\n\nShe stands next to her bed, waiting for you to " + (kath.playerMaster() ? "tell her what to do." : "make the first move."));
+			katherineMenu();
+		}
+	}
+	else if (hours < 10) {
+		output("Kath's apartment is empty.  That shouldn't be surprising to you, at this time of the morning she's got to be out patrolling the market.\n\n");
+		katherineApartmentEmptyLeave();
+	}
+	else if (kathIsAt(KLOC_URTAS_APT) || kathIsAt(KLOC_URTAS_HOME)) {
+		output("The apartment is empty.  Unusual, but maybe Kath is staying over at Urta's place - you could always check for her there.");
+		clearMenu();
+		addButton(0, "Go to Urta's", katherineAtUrtas);
+		addButton(1, "Leave", katherineApartmentEmptyLeave);
+	}
+	else {
+		output("It looks like Kath is out somewhere.  She's probably still at the Wet Bitch.");
+		addNextButton(telAdreMenu);
+	}
+}
+
+private function katherineApartmentLeave():void {
+	clearOutput();
+	output("You sigh and tell Kath that you just stopped by to see her.  Unfortunately you have to get going.  She gives you a sad look but nods and says “<i>");
+	if (kath.playerMaster()) output("Yes [pc.master].  Please come back soon.</i>”\n\n");
+	else output("Alright " + pc.short + " but next time I want to have some fun.</i>”\n\n");
+	
+	addNextButton(telAdreMenu);
+}
+
+private function katherineApartmentEmptyLeave():void {
+	output("You lock up and walk back toward the market, looking for something else to do while you wait for Katherine to finish her shift.");
+	addNextButton(telAdreMenu);
+}
+
+public function katherineAtUrtas():void {
+	output("You lock up and walk over to Urta's ");
+	if (kathIsAt(KLOC_URTAS_APT)) { //This option happens if you and Urta have no children
+		output("apartment.  A few knocks on the door and " + (kath.hasCock() ? "a sheepish looking pair of herms" : "your sheepish lovers") + " answer the door.\n\n");
+		output("“<i>" + pc.short + ", speak of the devil,</i>” Urta says, sounding relieved.  “<i>For a second there I thought we had actually been loud enough that a neighbour came over to complain.</i>”\n\n");
+		output("Kath says, “<i>We just finished cleaning up, so I was just about to head home for the night.  Where did you want to go?</i>”");
+		clearMenu();
+		addButton(0, "To Kath's", dateGotoKaths);
+		addButton(1, "To the Lake", dateKathBath);
+		addButton(2, "To the Bar", dateGotoBar);
+		addButton(14, "Leave", telAdreMenu);
+	}
+	else { //At Urta's House
+		switch (rand(4)) {
+			case 0:
+				output("house.  Letting yourself in with the spare key you sneak upstairs and peek into the master bedroom.\n\n");
+				output("You can smell the sex from the doorway.  On the bed you can see both your girls, " + (kath.hasCock() ? "each bloated with the other's cum" : "Urta's horsecock still buried inside Kath; Kath's belly still bloated with Urta's seed") + ".  They're hugging each other tight and their tails are moving back and forth lazily.\n\n");
+				output("You could say hello or you could just let yourself out quietly.");
+				clearMenu();
+				addButton(0, "Say Hello", urtaPlusKathCuddle);
+				addButton(14, "Leave", telAdreMenu);
+				break;
+			case 1:
+				output("house.  Letting yourself in with the spare key you sneak upstairs and peek into the master bedroom.\n\n");
+				output("You see Urta sitting with Kath in front of a large mirror.  It looks like she's helping dry Kath's hair with a towel while Katherine " + kath.clothesChoice("finishes adjusting her blouse", "finishes strightening out her sheer bodysuit", "does up the last few buttons on her long dress", "fiddles with her spider silk robe, seemingly trying to find a way to show off more of her skin", "adjusts her tube top, making sure the outline of her bra shows through the tight fabric", "adjusts the sexy nurse's outfit you gave her and plays with the little white hat that's sitting on her lap") + ".\n\n");
+				output("Kath spots you in the mirror and waves you in happily, trying to jump up and hug you.\n\n");
+				output("Urta holds Kath in her seat while she picks up a comb and finishes working on Kath's " + kath.hairColor + " locks.  “<i>Hold still you horny pussy, I'm almost done.  You want to look your best for " + pc.short + ", don't you?</i>”\n\n");
+				output("Urta gives each of you a kiss and shakes her head when Kath wraps herself around you.  “<i>Where do you get the energy Kath?</i>” she asks.  “<i>You want sex even more than I do.</i>”  You feel Kath blush a little at Urta's comment, but a quick scratch of her ears and she goes back to snuggling in your arms.\n\n");
+				output("Urta walks over and hugs her from the other side, kissing each of you.  “<i>Much as I'd love to join you I need to rest up for tomorrow.  Have fun, but don't do anything I wouldn't do.</i>”\n\n");
+				output("Kath snickers at the tired old saying and Urta swats her bum, then pushes both of you out the door.  “<i>Make sure to come by sometime soon.  I might not be in the mood now, but I guarantee it'll be a different story by tomorrow morning.</i>”");
+				clearMenu();
+				addButton(0, "To Kath's", dateGotoKaths);
+				addButton(1, "To the Lake", dateKathBath);
+				addButton(2, "To the Bar", dateGotoBar);
+				break;
+			default:
+				output("house.  You step inside and find Kath sitting on the floor with ");
+				var kids:int = urtaKids();
+				if (kids == 1)
+					output("your child.  " + (flags["COC.URTA_FIRSTBORN_GENDER"] == 1 ? "He" : "She") + "'s sitting in Katherine's lap, head mashed against her breasts like " + (flags["COC.URTA_FIRSTBORN_GENDER"] == 1 ? "he" : "she") + " hasn't got a care in the world.\n\n");
+				else output((kids > 5 ? "a few of your kids" : "a pile of your children") + ".  They're lying all over Kath, playing with her ears and tail while she scratches their heads and gives them little kisses.");
+				output("When Kath spots you she gives you a big smile and you hear “<i>" + pc.mf("Daddy", "Mommy") + "!</i>” from your offspring, who " + (kids > 1 ? "run over and hug" : "runs over and hugs") + " your [pc.legs].\n\n");
+				output("Kath comes over and hugs you too, whispering, “<i>");
+				if (kids == 1) 
+					output(flags["COC.URTA_FIRSTBORN_GENDER"] == 1 ? "He's" : "She's");
+				else output("They're");
+				output(" so cute,</i>” in your ear.\n\n");
+				output("Urta walks down from upstairs and tells ");
+				if (kids == 1) 
+					output(flags["COC.URTA_FIRSTBORN_GENDER"] == 1 ? "him" : "her");
+				else output("them");
+				output("them, “<i>Okay, you've " + (kids == 1 ? "" : "all ") + "had fun with aunt Katherine, now move it.  Chores don't do themselves and I'm not going to raise a " + (kids == 1 ? "lazy fox" : "pack of lazy foxes") + ".</i>”  There's little grumbling as ");
+				if (kids == 1) 
+					output(flags["COC.URTA_FIRSTBORN_GENDER"] == 1 ? "he races off to his room" : "she races off to her room");
+				else output("they race off in different directions");
+				output(" with the energy of youth.\n\n");
+				output("Urta gives you both a quick hug and says “<i>Listen, I need to go check on some stuff - duty calls and all that.  Lianna's just had a break thanks to Kath, so she'll be able to keep up.</i>”  She gives you both a quick kiss and heads off towards the watch headquarters with a spring in her step.</i>”");
+				clearMenu();
+				addButton(0, "To Kath's", dateGotoKaths);
+				addButton(1, "To the Lake", dateKathBath);
+				addButton(2, "To the Bar", dateGotoBar);
+				break;
+		}
+	}
+}
+
+private function urtaPlusKathCuddle():void {
+	if (pc.reflexes() >= 40) {
+		output("\n\nYou creep over to the bed and stroke Kath's tail.  She and Urta both nearly jump out of their skin.  Urta gives you a good smack in the shoulder as soon as she realizes who you are and what you just did.  “<i>" + pc.short + "!  Are you a frigging ghost or something?  Ow, gods, you just made Kath ");
+		if (kath.hasCock())
+			output("yank her knot right out of me.</i>”\n\n");
+		else output("dig her " + kath.catGirl("nails", "claws") + " in.</i>”\n\n");
+		output("Kath looks sheepish and says, “<i>Sorry, sorry, I thought it was ");
+		if (urtaKids() == 1) 
+			output(flags["COC.URTA_FIRSTBORN_GENDER"] == 1 ? "your son" : "your daughter");
+		else output("one of your kids");
+		output(",</i>” while gently stroking Urta's ears.\n\n");
+		output("Urta lets out a big sigh and returns the favour, garnering a constant deep purr from Kath as she relaxes again.\n\nKath mumbles, ");
+	}
+	else {
+		output("\n\nYou creep over to the bed and stroke Kath's tail.  She and Urta both start giggling and Urta pats your hand, saying, “<i>Hey baby, nice try, but you're not as quiet as you think you are.  Care to join us?</i>”\n\n");
+		output("Kath " + (kath.hasCock() ? "gently removes her knot from Urta's pussy" : "slides off Urta's cock") + " and rolls on her back so she can see you.  “<i>I hope you don't mind - we've been taking care of each other.</i>”\n\n");
+		output("As if you couldn't tell.  Still, you take a seat on the edge of the bed and give each of them scratches.\n\n");
+		output("Kath twists and turns under your touch and says, ");
+	}
+	output("“<i>I'm feeling really good right now " + kathPlayerText() + ", but if you want to do something, I'm game.</i>”\n\n");
+	output("Urta laughs and says, “<i>Oh yeah, and leave me with this mess, huh?</i>”  She scoops a little cum up from the bed and rubs it between her fingers.  “<i>I suppose I could take care of it tomorrow morning if it means you get a good dose of pussy, " + pc.short + ".</i>”");
+	clearMenu();
+	addButton(0, "Back to Kath's", dateGotoKaths);
+	addButton(1, "To the Lake", dateKathBath);
+	addButton(2, "Back to the Bar", dateGotoBar);
+	addButton(14, "Leave", telAdreMenu);
+}
+
+private function katherineDate():void {
+	clearOutput(); //Urta's Place and Camp are not available in this expansion
+	output("You decide that it might be an idea to lead Katherine somewhere.  Who knows what kind of fun you could get up to?");
+	clearMenu();
+	if (kathIsAt(KLOC_KATHS_APT)) {
+		addButton(0, "The Bar", dateGotoBar);
+		addButton(1, "Bath", dateKathBath);
+		addButton(14, "Back", katherineMenu);
+	}
+	else {
+		addButton(0, "Kath's Place", dateGotoKaths);
+		addButton(1, "Bath", dateKathBath);
+		addButton(14, "Back", katherineMenu);
+	}
+}
+
+private function dateGotoKaths():void {
+	if (kathIsAt(KLOC_URTAS_APT)) {
+		output("\n\nYou offer to walk her home.  Kath smiles at you, but before she steps out the door Urta grabs her from behind, giving the cat " + kath.catGirl("girl", "morph") + " a big hug.  Then Urta steps out and gives you a hug too.\n\n");
+		output("As she goes back inside Urta says, “<i>You take care of each other - and don't do anything I wouldn't do.</i>”");
+	}
+	else if (kathIsAt(KLOC_URTAS_HOME)) {
+		output("\n\nYou have to wait while Kath cleans herself up, but she tries to be quick about it.  You sit on the edge of the bed and rub the back of Urta's neck.  Urta groans and lies down flat in the puddle of cum, saying, “<i>Thanks " + pc.short + ", I'll be fine.  I'm really comfy.</i>”\n\n");
+		output("As Kath tracks down the last piece of her clothing you hear gentle snoring from Urta.  You and Kath tiptoe out, leaving Urta to her well deserved rest.");
+	}
+	else {
+		output("\n\nYou ask Kath if she feels like going back to her place.\n\n");
+		output("She downs the last of her drink and replies, “<i>Mmmm, I hope you have something in mind.  Preferably something naughty.</i>”");
+	}
+	processTime(4);
+	addNextButton(takeKathHome);
+}
+
+private function takeKathHome():void { //You are bringing her home for sexy times
+	output("\n\nThe two of you race through the streets heading for Kath's apartment.  You let her stay ahead of you most of the way so you get a nice view of her tight little ass.\n\n");
+	output("Kath just about attacks the lock with her key.  As soon as the door opens she pulls you through eagerly, locking it behind you and leading you to the bedroom.\n\n");
+	kathClothes();
+	output("\n\nShe stands next to her bed, waiting for you to " + (kath.playerMaster() ? "tell her what to do." : "make the first move."));
+	flags["COC.KATHERINE_LOCATION"] = KLOC_KATHS_APT;
+	processTime(4);
+	katherineMenu();
+}
+
+private function dateGotoBar():void {
+	if (kathIsAt(KLOC_URTAS_APT)) {
+		output("\n\nYou offer to take Kath back to the Wet Bitch.  Kath smiles at you, but before she steps out the door Urta grabs her from behind, giving the cat " + kath.catGirl("girl", "morph") + " a big hug.  Then Urta steps out and gives you a hug too.\n\n");
+		output("As she goes back inside Urta says, “<i>You take care of each other - and don't do anything I wouldn't do.</i>”");
+	}
+	else if (kathIsAt(KLOC_URTAS_HOME)) {
+		output("\n\nYou have to wait while Kath cleans herself up, but she tries to be quick about it.  You sit on the edge of the bed and rub the back of Urta's neck.  Urta groans and lies down flat in the puddle of cum, saying, “<i>Thanks " + pc.short + ", I'll be fine.  I'm really comfy.</i>”\n\n");
+		output("As Kath tracks down the last piece of her clothing you hear gentle snoring from Urta.  You and Kath tiptoe out, leaving Urta to her well deserved rest.");
+	}
+	else {
+		output("\n\nYou ask Kath if she feels like wandering back to the bar.\n\n");
+		output("She says, “<i>There are fun things we could do right here.</i>”  Before you can reply she’s hopped into your arms and says, “<i>Of course I’m sure you’ve got something fun in mind when you suggested going there." + (!kath.isPregnant() ? "  Or are you just planning to get me toasted so you can have your way with me?" : "") + "</i>”");
+	}
+	processTime(3);
+	addNextButton(takeKathToTheBar);
+}
+
+private function takeKathToTheBar():void { //You are bringing her to the Wet Bitch
+	output("\n\nThe two of you walk through the streets of Tel'Adre arm in arm.  Kath enjoys the walk while you think about what you'd like to do with her once you reach the bar.\n\n");
+	output("When you walk through the doors of the Wet Bitch Kath stops at the bar and buys a " + (kath.isPregnant() ? "milkshake" : "brown, creamy looking drink with ice cubes in it") + ", which she starts sipping luxuriously.\n\n");
+	output("Since it happens to be free you both take a seat at her usual booth and you feel Kath's leg rub against " + (pc.isNaga() ? "yours." : "your tail."));
+	flags["COC.KATHERINE_LOCATION"] = KLOC_BAR;
+	processTime(3);
+	katherineMenu();
+}
+
+private function katherineDrinkUp():void {
+	clearOutput();
+	output("You sit across from Kath and ask her what she’s drinking.\n\n");
+	output("She shows you a tumbler with some opaque light brown liquid in it.  “<i>They have this cream liqueur called Venusia.  It’s like drinking milk and booze at the same time.  It’s pretty strong but also girly - kinda like me.  I guess that’s why I like it a lot.</i>”\n\n");
+	output("You ask if it’s strong enough to get drunk on.\n\n");
+	output("“<i>I’ve already got drunk from this stuff by accident.  Like I said, it’s pretty strong.  My first day in the Watch lots of people bought me drinks.  I found out the hard way that I get a little horny when I’m drunk.  Urta spotted it and got me home before I did anything stupid, but now I make sure to only have one or two of these at a time.</i>”\n\n");
+	output("You grin and tell Kath that since you’re here she can indulge.\n\n");
+	output("She gives you a smile and waves over the waitress.  When the next tumbler arrives she takes a sip and says, “<i>I bet you’re just trying to get me drunk cause you think I’ll get horny.</i>”  You rub " + (pc.isNaga() ? "the tip of your tail" : "your [pc.toes]") + " against the inside of Katherine’s leg.  She tips back the tumbler, swallows, smiles and orders another.\n\n");
+	output("In no time you see the telltale signs that your girlfriend is now wasted.");
+	processTime(20 + rand(10));
+	flags["COC.KATHERINE_LOCATION"] = KLOC_BAR_DRUNK;
+	katSexMenu();
 }

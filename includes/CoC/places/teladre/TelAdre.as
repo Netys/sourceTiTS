@@ -21,6 +21,8 @@ include "Weapon.as";
 
 // NPCs
 include "Katherine.as";
+include "katherineEmployment.as";
+include "katherineThreesome.as";
 
 public function discoverTelAdre():void {
 	clearOutput();
@@ -141,15 +143,15 @@ public function telAdreMenu():void {
 		case  3: //You and Urta are training her
 			break;
 		case  4: //Employed
-			//if (!kathIsAt(KLOC_KATHS_APT) && flags["COC.KATHERINE_TRAINING"] >= 100) {
-				//katherineGetsEmployed();
-				//return;
-			//}
+			if (!kathIsAt(KLOC_KATHS_APT) && flags["COC.KATHERINE_TRAINING"] >= 100) {
+				katherineGetsEmployed();
+				return;
+			}
 		default: //Has given you a spare key to her apartment
-			//if (hours >= 5 && hours < 10 && rand(12) == 0) { //If employed or housed she can sometimes be encountered while on duty
-				//katherineOnDuty();
-				//return;
-			//}
+			if (hours >= 5 && hours < 10 && rand(12) == 0 && flags["COC.KATHERINE_LAST_AMBUSH"] != days) { //If employed or housed she can sometimes be encountered while on duty
+				katherineOnDuty();
+				return;
+			}
 	}
 	if(!(flags["COC.ARIAN_PARK"] > 0) && rand(10) == 0 && flags["COC.NOT_HELPED_ARIAN_TODAY"] != days) {
 		meetArian();
@@ -232,16 +234,16 @@ public function TelAdreHouses():void {
 	clearMenu();
 	if (flags["COC.ARIAN_PARK"] >= 4 && !arianFollower()) addButton(0, "Arian's", visitAriansHouse);
 	//addButton(1,"Orphanage",orphanage);
-	//if (kGAMECLASS.urtaPregs.urtaKids() > 0 && pc.hasKeyItem("Spare Key to Urta's House") >= 0)
+	//if (urtaKids() > 0 && pc.hasKeyItem("Spare Key to Urta's House"))
 		//addButton(2, "Urta's House", (katherine.isAt(Katherine.KLOC_URTAS_HOME) ? katherine.katherineAtUrtas : kGAMECLASS.urtaPregs.visitTheHouse));
 	//if (flags["COC.KATHERINE_UNLOCKED"] >= 5) addButton(3, "Kath's Apt", katherineVisitAtHome);
 
-	switch (flags["COC.KATHERINE_UNLOCKED"]) {
+	switch (int(flags["COC.KATHERINE_UNLOCKED"])) {
 		case 1:
 		case 2: addButton(3, "Kath's Alley", visitKatherine); break;
-		//case 3: addButton(3, "Safehouse", katherineTrainingWithUrta, undefined, "Safehouse", "Check Kath's training progress."); break;
-		//case 4: addButton(3, "Kath's Alley", postTrainingAlleyDescription); break; //Appears until Kath gives you her housekeys
-		//case 5: addButton(3, "Kath's Apt", katherineVisitAtHome); break;
+		case 3: addButton(3, "Safehouse", katherineTrainingWithUrta, undefined, "Safehouse", "Check Kath's training progress."); break;
+		case 4: addButton(3, "Kath's Alley", postTrainingAlleyDescription); break; //Appears until Kath gives you her housekeys
+		case 5: addButton(3, "Kath's Apt", katherineVisitAtHome); break;
 	}
 	
 	addButton(14, "Back", telAdreMenu);

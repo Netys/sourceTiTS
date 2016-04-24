@@ -77,7 +77,10 @@ public function timeChange():void
 }
 
 public function urtaIsPregnant(byPc:Boolean):Boolean {
-	return false;
+	return flags["COC.URTA_INCUBATION"] != undefined;
+}
+public function urtaKids():int {
+	return int(flags["COC.URTA_KIDS_MALES"]) + int(flags["COC.URTA_KIDS_FEMALES"]) + int(flags["COC.URTA_KIDS_HERMS"]);
 }
 
 public function urtaSprite():void {
@@ -86,9 +89,9 @@ public function urtaSprite():void {
 
 public function urtaCapacity():Number {
 	var maxSize:Number = 19; // 60 capacity in CoC is arount 19" cock
-	var bonus:int = flags["COC.TIMES_RUT_FUCKED_URTAS_CUNT"];
+	var bonus:int = int(flags["COC.TIMES_RUT_FUCKED_URTAS_CUNT"]);
 	if(bonus > 5) bonus = 5; // up to 24
-	if(flags["COC.URTA_TENTACLE_GAPED"] > 0) bonus += 30; // up to 55
+	if(int(flags["COC.URTA_TENTACLE_GAPED"]) > 0) bonus += 30; // up to 55
 	return new CockClass(maxSize + bonus).volume();
 }
 
@@ -113,7 +116,7 @@ public function urtaLove(love:Number = 0):Boolean {
 	return false;
 }
 
-public function urtaAvailableForSex():Boolean { return urtaFuckbuddy() /*&& telAdre.scylla.action != Scylla.SCYLLA_ACTION_FUCKING_URTA*/ && Flag("COC.URTA_ANGRY_AT_PC_COUNTDOWN") == 0; }
+public function urtaAvailableForSex():Boolean { return urtaFuckbuddy() && scyllaAction != SCYLLA_ACTION_FUCKING_URTA && int(flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"]) == 0; }
 
 public function urtaFuckbuddy():Boolean { //Returns true if Urta is either the player's fuckbuddy or lover
 	if (/*kGAMECLASS.urtaQuest.urtaBusy() ||*/ flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"] == -1) return false;
@@ -124,7 +127,7 @@ public function urtaFuckbuddy():Boolean { //Returns true if Urta is either the p
 public function urtaJustFriends():Boolean { return Flag("COC.URTA_COMFORTABLE_WITH_OWN_BODY") == 0 && flags["COC.URTA_PC_LOVE_COUNTER"] == -1; }
 
 public function urtaAtBar():Boolean { //Is Urta physically at the Wet Bitch?
-return (/*!kGAMECLASS.urtaQuest.urtaBusy() && flags["COC.AMILY_VISITING_URTA"] != 1 &&*/ hours > 4 && hours < 15 && flags["COC.KATHERINE_UNLOCKED"] != 3);
+return (/*!kGAMECLASS.urtaQuest.urtaBusy() &&*/ flags["COC.AMILY_VISITING_URTA"] != 1 && hours > 4 && hours < 15 && flags["COC.KATHERINE_UNLOCKED"] != 3);
 }
 
 public function urtaDrunk():Boolean {
@@ -254,7 +257,7 @@ public function urtaBarApproach():void {
 	var temp:Function = null;
 	clearOutput();
 	//Raphael Reward
-	if(flags["COC.RAPHEAL_COUNTDOWN_TIMER"] == -1 && flags["COC.UNKNOWN_FLAG_NUMBER_00148"] == 0) {
+	if(flags["COC.RAPHEAL_COUNTDOWN_TIMER"] == -1 && int(flags["COC.UNKNOWN_FLAG_NUMBER_00148"]) == 0) {
 		flags["COC.UNKNOWN_FLAG_NUMBER_00148"] = 1;
 		pc.credits += 10000;
 		//statScreenRefresh();
@@ -322,10 +325,10 @@ public function urtaBarApproach():void {
 		//urtaChewsOutPC();
 		//return;
 	//}
-	//if (telAdre.katherineEmployment.canTalkToUrta()) { //Katherine training discussion
-		//telAdre.katherineEmployment.talkToUrta();
-		//return;
-	//}
+	if (canTalkToUrta()) { //Katherine training discussion
+		talkToUrta();
+		return;
+	}
 	//PREGNANT URTA
 	//if (pregnancy.type == PregnancyStore.PREGNANCY_PLAYER) {
 	//urtaPregs.urtaPreggoApproached();

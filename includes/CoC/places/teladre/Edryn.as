@@ -100,10 +100,10 @@ public function edrynBarTalk():void {
 	//If no cocks fit, set to primary
 	if(x < 0) x = 0;
 
-	//if (telAdre.katherineEmployment.canTalkToEdryn()) { //Katherine training discussion
-		//telAdre.katherineEmployment.talkToEdryn();
-		//return;
-	//}
+	if (canTalkToEdryn()) { //Katherine training discussion
+		talkToEdryn();
+		return;
+	}
 	//Talk about latest birth
 	if(flags["COC.EDRYN_NEEDS_TO_TALK_ABOUT_KID"] == 1) {
 		var kidGender:Number = rand(2);

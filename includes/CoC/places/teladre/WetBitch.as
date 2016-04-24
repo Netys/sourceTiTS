@@ -82,18 +82,18 @@ public function barTelAdre():void {
 		else output("\n\nEdryn the centauress is here, sipping wine at a table by herself.  She looks up and spots you, her eyes lighting up with happiness.  She gives you a wink and asks if you'll join her.");
 		addButton(counter++, "Edryn", edrynBarTalk);
 	}
-	//if (flags[kFLAGS.KATHERINE_LOCATION] == Katherine.KLOC_BAR) {
-		//if (flags[kFLAGS.KATHERINE_UNLOCKED] == 4) { 
-			//katherine.barFirstEncounter();
-			//return;
-		//}
-		//if (flags[kFLAGS.KATHERINE_URTA_AFFECTION] == 31 && kGAMECLASS.urta.urtaAtBar() && !kGAMECLASS.urta.urtaDrunk() && flags[kFLAGS.URTA_ANGRY_AT_PC_COUNTDOWN] == 0) {
-			//katherine.barKathUrtaLoveAnnounce();
-			//return;
-		//}
-		//katherine.barDescription();
-		//button = anotherButton(button, "Katherine", katherine.barApproach);
-    //}
+	if (kathIsAt(KLOC_BAR)) {
+		if (flags["COC.KATHERINE_UNLOCKED"] == 4) { 
+			katherineBarFirstEncounter();
+			return;
+		}
+		if (flags["COC.KATHERINE_URTA_AFFECTION"] == 31 && urtaAtBar() && !urtaDrunk() && int(flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"]) == 0) {
+			barKathUrtaLoveAnnounce();
+			return;
+		}
+		katherineBarDescription();
+		addButton(counter++, "Katherine", katherineBarApproach);
+    }
 	//trace("HEL FOLLOWER LEVEL: " + flags[kFLAGS.HEL_FOLLOWER_LEVEL] + " HEL FUCKBUDDY: " + flags[kFLAGS.HEL_FUCKBUDDY] + " HARPY QUEEN DEFEATED: " + flags[kFLAGS.HEL_HARPY_QUEEN_DEFEATED]);
 	//trace("REDUCED ENCOUNTER RATE (DISPLINED): " + flags[kFLAGS.HEL_REDUCED_ENCOUNTER_RATE]);
 	//HELIA

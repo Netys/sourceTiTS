@@ -174,5 +174,15 @@ package classes.Characters.CoC
 		public function fertileText(fertileText:String, infertileText:String):String { return (fertility() > 0 ? fertileText : infertileText); }
 		
 		public function playerMaster():Boolean { return kGAMECLASS.flags["COC.KBIT_SUB_CALL_MASTER"] != undefined; }
+		
+		public function clothesChoice(...args:*):String
+		{
+			return args[0];
+		}
+		
+		public function clothesLowerChoice(...args:*):String
+		{
+			return args[0];
+		}
 	}
 }
