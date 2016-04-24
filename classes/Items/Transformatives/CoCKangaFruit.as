@@ -119,7 +119,7 @@ package classes.Items.Transformatives
 			}
 			//-Shorten clits to reasonable size
 			if (pc.clitLength >= 4 && changes < changeLimit && rand(5) == 0) {
-				output("\n\nPainful pricks work through your [pc.clit], all the way into its swollen clitoral sheath.  Gods, it feels afire with pain!  Agony runs up and down its length, and by the time the pain finally fades, the feminine organ has lost half its size.", false);
+				output("\n\nPainful pricks work through your [pc.clit], all the way into its swollen clitoral sheath.  Gods, it feels afire with pain!  Agony runs up and down its length, and by the time the pain finally fades, the feminine organ has lost half its size.");
 				pc.clitLength /= 2;
 				changes++;
 			}
@@ -133,11 +133,11 @@ package classes.Items.Transformatives
 					changes++;
 				}
 				//COCK TF!
-				if (pc.cockTotal(GLOBAL.TYPE_KANGAROO) < pc.cockTotal() && (enchanted && rand(2) == 0) && changes < changeLimit) {
-					output("\n\nYou feel a sharp pinch at the end of your penis and whip down your clothes to check.  Before your eyes, the tip of it collapses into a narrow point and the shaft begins to tighten behind it, assuming a conical shape before it retracts into ", false);
-					if (pc.hasSheath()) output("your sheath", false);
-					else output("a sheath that forms at the base of it", false);
-					output(".  <b>You now have a kangaroo-penis!</b>", false);
+				if (pc.cockTotal(GLOBAL.TYPE_KANGAROO) < pc.cockTotal() && (enchanted || rand(2) == 0) && changes < changeLimit) {
+					output("\n\nYou feel a sharp pinch at the end of your penis and whip down your clothes to check.  Before your eyes, the tip of it collapses into a narrow point and the shaft begins to tighten behind it, assuming a conical shape before it retracts into ");
+					if (pc.hasSheath()) output("your sheath");
+					else output("a sheath that forms at the base of it");
+					output(".  <b>You now have a kangaroo-penis!</b>");
 					var cockIdx:int = 0;
 					//Find first non-roocock!
 					while (cockIdx < pc.cockTotal()) {
@@ -174,7 +174,7 @@ package classes.Items.Transformatives
 			//if (pc.findPerk(PerkLib.Diapause) < 0 && pc.kangaScore() > 4 && rand(4) == 0 && changes < changeLimit && pc.hasVagina()) {
 				////Perk name and description:
 				//pc.createPerk(PerkLib.Diapause, 0, 0, 0, 0);
-				//output("\n\nYour womb rumbles as something inside it changes.\n<b>(You have gained the Diapause perk.  Pregnancies will not progress when fluid intake is scarce, and will progress much faster when it isn't.)", false);
+				//output("\n\nYour womb rumbles as something inside it changes.\n<b>(You have gained the Diapause perk.  Pregnancies will not progress when fluid intake is scarce, and will progress much faster when it isn't.)");
 				//changes++;
 				////trigger effect: Your body reacts to the influx of nutrition, accelerating your pregnancy. Your belly bulges outward slightly.
 			//}

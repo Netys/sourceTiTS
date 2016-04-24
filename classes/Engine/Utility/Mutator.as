@@ -1971,6 +1971,14 @@ package classes.Engine.Utility
 			return cType;
 		}
 		
+		public static function ajustCapacity(target:Creature, targetCapacity:Number, hole:int = 0):void {
+			if (target.isTaur()) targetCapacity -= hole == 3 ? 100 : 400;
+			targetCapacity /= target.elasticity;
+			targetCapacity /= ((hole == 3 ? target.ass : target.vaginas[hole]).wetness() + 4) / 5;
+			var targetWithBonus:Number = targetCapacity;
+			targetCapacity = 20 * ((hole == 3 ? target.ass : target.vaginas[hole]).looseness() * 5 + 1) / 3;
+			(hole == 3 ? target.ass : target.vaginas[hole]).bonusCapacity = targetWithBonus - targetCapacity;
+		}
 		
 		/**
 		 * Legacy tool. Use example:

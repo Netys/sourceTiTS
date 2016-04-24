@@ -5226,7 +5226,7 @@
 			return output;
 		}
 		public function hasClawedHands(): Boolean {
-			return InCollection(armType, GLOBAL.TYPE_CANINE, GLOBAL.TYPE_FELINE, GLOBAL.TYPE_BADGER, GLOBAL.TYPE_PANDA, GLOBAL.TYPE_LEITHAN, GLOBAL.TYPE_DEMONIC);
+			return InCollection(armType, GLOBAL.TYPE_CANINE, GLOBAL.TYPE_VULPINE, GLOBAL.TYPE_FELINE, GLOBAL.TYPE_BADGER, GLOBAL.TYPE_PANDA, GLOBAL.TYPE_LEITHAN, GLOBAL.TYPE_DEMONIC);
 		}
 		public function hasPaddedHands(): Boolean {
 			if (hasArmFlag(GLOBAL.FLAG_PAWS)) return true;
@@ -14333,6 +14333,12 @@
 			score += Math.max(libido(), cor()); // Should corruption work outside of Mareth? Not that this function would be used outside of Mareth...
 			if (isBimbo() || isBro()) score += 100;
 			return score;
+		}
+		
+		/** For checks like ability to do autocunnilingus */
+		public function isFlexible():Boolean
+		{
+			return elasticity >= 3 || isNaga() || isGoo() || hasPerk("Flexibility") || (legType == GLOBAL.TYPE_FELINE && hasTail(GLOBAL.TYPE_FELINE) && earType == GLOBAL.TYPE_FELINE) || felineScore() >= 6 || kaithritScore() >= 6;
 		}
 		
 		// Calculates the value of body strength (carry threshold).

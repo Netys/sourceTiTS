@@ -363,7 +363,7 @@ public function exploreVillageRuin():void {
 	//meeting scenes for when PC is the same gender as when they last met Amily
 	if (flags["COC.AMILY_PC_GENDER"] == gender(pc)) {
 		//"bad" or "good" ends.
-		if (StatTracking.getStat("coc/pregnancy/amily") + StatTracking.getStat("coc/pregnancy/mice") >= 5 && flags["COC.AMILY_VILLAGE_ENCOUNTERS_DISABLED"] == undefined && allowFollowers())
+		if (StatTracking.getStat("coc/pregnancy/amily") + StatTracking.getStat("coc/pregnancy/pc amily") >= 5 && flags["COC.AMILY_VILLAGE_ENCOUNTERS_DISABLED"] == undefined && allowFollowers())
 		{
 			if (flags["COC.AMILY_AFFECTION"] < 40) thisIsAReallyShittyBadEnd();
 			else thisFunctionProbablySucksTooOhYeahAmilyFunction();
@@ -1625,17 +1625,17 @@ private function thisFunctionProbablySucksTooOhYeahAmilyFunction():void {
 
 	output("“<i>Our children, yours and mine");
 	// Mix
-	if (StatTracking.getStat("coc/pregnancy/mice") > 0 && StatTracking.getStat("coc/pregnancy/amily") > 0)
+	if (StatTracking.getStat("coc/pregnancy/pc amily") > 0 && StatTracking.getStat("coc/pregnancy/amily") > 0)
 	{
 		output(".</i>”");
 	}
 	// Only PC birth
-	else if (StatTracking.getStat("coc/pregnancy/mice") > 0 && StatTracking.getStat("coc/pregnancy/amily") == 0)
+	else if (StatTracking.getStat("coc/pregnancy/pc amily") > 0 && StatTracking.getStat("coc/pregnancy/amily") == 0)
 	{
 		output(", planted by me inside of you.</i>”");
 	}
 	// Only Amily birth
-	else if (StatTracking.getStat("coc/pregnancy/mice") == 0 && StatTracking.getStat("coc/pregnancy/amily") > 0)
+	else if (StatTracking.getStat("coc/pregnancy/pc amily") == 0 && StatTracking.getStat("coc/pregnancy/amily") > 0)
 	{
 		output(", planted by you inside of me.</i>”");
 	}
@@ -5257,7 +5257,7 @@ public function hermilyOnFemalePC():void {
 //Player gives Birth (quest version):
 public function pcBirthsAmilysKidsQuestVersion():void {
 	amilySprite();
-	StatTracking.track("coc/pregnancy/mice");
+	StatTracking.track("coc/pregnancy/pc amily");
 	//In camp version:
 	if (flags["COC.AMILY_FOLLOWER"] == 1) {
 		playerBirthsWifAmilyMiceInCamp();
@@ -5265,14 +5265,14 @@ public function pcBirthsAmilysKidsQuestVersion():void {
 	}
 	//Quest Ending: Herm Amily Variant
 	//Requirements: Player must have given birth to a litter of Amily's children at least five times before.
-	if (StatTracking.getStat("coc/pregnancy/mice") + StatTracking.getStat("coc/pregnancy/amily") >= 5) {
+	if (StatTracking.getStat("coc/pregnancy/pc amily") + StatTracking.getStat("coc/pregnancy/amily") >= 5 && allowFollowers()) {
 		output("You wake up suddenly to strong pains and pressures in your gut. As your eyes shoot wide open, you look down to see your belly absurdly full and distended. You can feel movement underneath the skin, and watch as it is pushed out in many places, roiling and squirming in disturbing ways. The feelings you get from inside are just as disconcerting. You count not one, but many little things moving around inside you. There are so many, you can't keep track of them.\n\n");
 
 		output("Pain shoots through you as they pull open your cervix forcefully, causing you to cry out involuntarily. At once, Amily suddenly appears, racing out from the undergrowth. \"<i>Is it time? Are you going into labor?</i>\" She asks, worry evident in her voice. Your pain is momentarily forgotten by your surprise and you ask where she came from. She snorts disdainfully at the question. \"<i>I've been shadowing you for a couple of days, now. Did you really think I'd let the mother of my children go through this alone?</i>\"\n\n");
 
 		output("Any reply you may have been inclined to make to that is swallowed by another cry of pain as yet another contraction wrings its way through you. Amily takes your hand in hers and you cling to the lifeline of comfort it offers, thankful to not be alone for this. You can feel the first child moving out of your womb, through your cervix, down and into your " + pc.vaginaDescript() + ". Your lips part and, with a grunt, you expel the first child into Amily's waiting hand. She holds it up to you so that you can see your firstborn; it's a little mouselet", false);
 		//(if player is female: 1 in 3 chance of it being boy, girl or herm, if player is herm, 100% chance of it being a herm)"
-		output(((flags["COC.AMILY_NOT_FURRY"] == undefined)?", naked, pink, and totally hairless":"") +". Amily helps hold it to your " + pc.breastDescript(0) + ", where it eagerly takes hold of your " + pc.nippleDescript(0) + " and starts to suckle. As it drinks, it starts to grow larger, and "+((flags["COC.AMILY_NOT_FURRY"] == undefined)?"fur the same color as your own hair starts to cover its body":"") +". It quickly drinks its fill and then detaches, its 'father' putting it aside, which is good, because by this time there's another baby waiting for its turn... and another... and another...\n\n");
+		output(((flags["COC.AMILY_NOT_FURRY"] == undefined)?", naked, pink, and totally hairless":"") +". Amily helps hold it to your " + pc.breastDescript(0) + ", where it eagerly takes hold of your " + pc.nippleDescript(0) + " and starts to suckle. As it drinks, it starts to grow larger, and " + ((flags["COC.AMILY_NOT_FURRY"] == undefined)?"fur the same color as your own hair starts to cover its body":"") +". It quickly drinks its fill and then detaches, its 'father' putting it aside, which is good, because by this time there's another baby waiting for its turn... and another... and another...\n\n");
 
 		output("Soon, you are back to your old self again, lying down in exhaustion with Amily sitting nearby, your many rambunctious offspring already starting to walk and play around you.\n\n");
 
@@ -5462,7 +5462,7 @@ private function amilyNewGenderConfrontation():void {
 				//FEN: Increase affection!
 				flags["COC.AMILY_AFFECTION"] += 15;
 				//FEN: If PC has had any kids with her, set as good to go!
-				if (StatTracking.getStat("coc/pregnancy/mice") > 0) flags["COC.AMILY_OFFER_ACCEPTED"] = 1;
+				if (StatTracking.getStat("coc/pregnancy/pc amily") > 0) flags["COC.AMILY_OFFER_ACCEPTED"] = 1;
 				processTime(3);
 			}
 			//Medium Affection:
@@ -5472,7 +5472,7 @@ private function amilyNewGenderConfrontation():void {
 				//FEN: Increase affection!
 				flags["COC.AMILY_AFFECTION"] += 5;
 				//FEN: If PC has had any kids with her, set as good to go!
-				if (StatTracking.getStat("coc/pregnancy/mice") > 0) flags["COC.AMILY_OFFER_ACCEPTED"] = 1;
+				if (StatTracking.getStat("coc/pregnancy/pc amily") > 0) flags["COC.AMILY_OFFER_ACCEPTED"] = 1;
 				processTime(3);
 			}
 			//High Affection:
@@ -5782,7 +5782,7 @@ private function playerBirthsWifAmilyMiceInCamp():void {
 
 	output("You grunt in affirmation with a trace of irritation; ");
 	//Repeat brood
-	if (StatTracking.getStat("coc/pregnancy/mice") > 0) output("this is hardly the first time you've given birth to her offspring before, after all");
+	if (StatTracking.getStat("coc/pregnancy/pc amily") > 0) output("this is hardly the first time you've given birth to her offspring before, after all");
 	//First time!
 	else output("she's probably just glad you're the one that has to push them all out");
 	output(". However, any more detailed reply you may have been inclined to make to that is swallowed by another cry of pain as yet another contraction wrings its way through you. Amily takes your hand in hers and you cling to the lifeline of comfort it offers, thankful to not be alone for this. You can feel the first child moving out of your womb, through your cervix, down and into your " + pc.vaginaDescript() + ". Your lips part and, with a grunt, you expel the first child into Amily's waiting hand. She holds it up to you so that you can see your firstborn; it's a little mouselet" + ((flags["COC.AMILY_NOT_FURRY"] == undefined)?", naked, pink, and totally hairless":"") +". Amily helps hold it to your " + pc.chestDesc() + ", where it eagerly takes hold of your " + pc.nippleDescript(0) + " and starts to suckle. As it drinks, it starts to grow larger" + ((flags["COC.AMILY_NOT_FURRY"] == undefined)?", and fur the same color as your own hair starts to cover its body":"") +". It quickly drinks its fill and then detaches, its 'father' putting it aside, which is good, because by this time there's another baby waiting for its turn... and another... and another...\n\n");
@@ -5797,7 +5797,7 @@ private function playerBirthsWifAmilyMiceInCamp():void {
 
 	output("You nod your head and admit that you agree. Once you have regained your strength, you spend some time talking with your fully adult children and playing with your overdeveloped newborns. Then, with a final wave goodbye, the "+((flags["COC.AMILY_NOT_FURRY"] == undefined)?"mouse-morphs":"family of mice") +" disappear into the wilderness once more.");
 	//Add to brood size count
-	StatTracking.track("coc/pregnancy/mice");
+	StatTracking.track("coc/pregnancy/pc amily");
 	processTime(4 * 60 + rand(60));
 }
 

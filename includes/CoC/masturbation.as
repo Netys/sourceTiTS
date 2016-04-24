@@ -7,7 +7,7 @@ import classes.Engine.Utility.*;
 
 public function getCoCFapOptions(faps:Array, roundTwo:Boolean):void {
 	var fap:FapCommandContainer;
-	if((pc.hasPerk("Flexibility") || pc.legType == GLOBAL.TYPE_FELINE && pc.hasTail(GLOBAL.TYPE_FELINE) && pc.earType == GLOBAL.TYPE_FELINE) && !pc.isTaur()) { // ugh... really want cat-taur variant of scene
+	if(pc.isFlexible() && (pc.felineScore() >= 6 || !pc.isTaur())) { // ugh... really want proper cat-taur variant of scene
 		if(pc.hasCock() && pc.smallestCockLength() <= 12) // scene does little sense for longer ones
 		{
 			fap = new FapCommandContainer();
@@ -253,7 +253,7 @@ public function lickYerGirlParts():void { //Female cat masturbation
 		output("Your [pc.vagina] is now right in front of your [pc.face], and you can't help but give it a lick with your [pc.tongue]. The feeling is amazing as you flick your [pc.tongueNoun] across your swollen [pc.clit]. Juices leak from your moist hole, filling your mouth with the [pc.girlCumFlavor] taste of [pc.girlCumNoun]. You can feel you entire sex pulsing and throbbing around your [pc.tongueNoun] as you plumb the depths of your [pc.vagina].  The vibrations from your moans and screams of pleasure cause the intense feelings to increase, making you a slave to your own needs. Your juices flow down your chin as you try to swallow every last drop. You crane your neck, giving you deeper access to your wanting honey pot. You can feel yourself tightening around your [pc.tongueNoun] as it rams into your pussy and soaking up all the juices as you slowly reach your peak. You lick and suck hard around your [pc.clit], using both your [pc.hands] to spread your cunt farther open. You move your head in an up and down motion just like a cat when they groom themselves. Your lapping and [pc.tongueNoun] play continues until you can feel your body tense up, ready to cum.\n\n");
 	
 		output("You lap harder and faster with each second, coming closer and closer to tasting the [pc.girlCum] about to squirt out of you. You feel your eager sex tighten one more time around your [pc.tongue] before it releases its sweet nectar into your craving mouth. You guzzle as much as you can, but some leaks onto your [pc.face].  You stick your [pc.tongueNoun] into your slick cunt to tease out the last few drops of [pc.girlCumNoun]. You [pc.tongue] explores the depths once more, feeling its way around your [pc.vagina] walls and gathering up everything that may not have come out. You wriggle it around for a while until you're satisfied that you got most of the [pc.girlCum]. You pull away from your sex and spread out relaxed on your bedroll, letting out a sigh like you just drank a whole pitcher of ale in one chug.");
-		if (!rooms[currentLocation].hasFlag(GLOBAL.PUBLIC) && !rooms[currentLocation].hasFlag(GLOBAL.HAZARD)) output(" You stretch out your arms and legs and curl up, ready to take a catnap.");
+		if (rooms[currentLocation].hasFlag(GLOBAL.PRIVATE) && !rooms[currentLocation].hasFlag(GLOBAL.HAZARD)) output(" You stretch out your arms and legs and curl up, ready to take a catnap.");
 	}
 	//Stats & next event
 	//DONE!
@@ -282,7 +282,7 @@ public function catAutoLick():void { //Male cat masturbation
 		output("A very familiar feeling of pleasure rushes through your body, causing you to shudder. You pull your cock out and begin to stroke it as you suck on the tip, practically drinking your pre-cum. You can feel your [pc.cumNoun] building up as it gets ready to be released. After flicking your [pc.tongue] against the tip of your [pc.cock " + x + "], you feel the flood of [pc.cumNoun] flowing up your dick");
 		
 		output(". Suddenly, a feeling of complete bliss takes over your body, and you start to squirm and writhe as [pc.cumFlavor] [pc.cumNoun] shoots down your throat. You pull off of the tip and let the next burst hit your [pc.face]. Soon, the torrent of [pc.cum] subsides, though your hips are still jerking in the air from the intense orgasm.");
-		if (!rooms[currentLocation].hasFlag(GLOBAL.PUBLIC) && !rooms[currentLocation].hasFlag(GLOBAL.HAZARD)) output(" You take a moment to lie down properly and decide to take a small cat nap.");
+		if (rooms[currentLocation].hasFlag(GLOBAL.PRIVATE) && !rooms[currentLocation].hasFlag(GLOBAL.HAZARD)) output(" You take a moment to lie down properly and decide to take a small cat nap.");
 	}
 	//[Repeatable]
 	else {
@@ -291,16 +291,16 @@ public function catAutoLick():void { //Male cat masturbation
 		else output(" With a twist of your incredibly flexible body");
 		output(" you easily bend your [pc.face] down to your member.\n\n");
 		
-		var throat:Boolean = pc.cocks[x].cLength() > (4 + (pc.hasFaceFlag(GLOBAL.FLAG_MUZZLED) ? 2 : 0) + (pc.hasFaceFlag(GLOBAL.FLAG_LONG) ? 2 : 0));
+		var throat:Boolean = pc.cocks[x].cLength() > (4 + (pc.hasMuzzle() ? 2 : 0) + (pc.hasFaceFlag(GLOBAL.FLAG_LONG) ? 2 : 0));
 		
-		output("Your [pc.cock " + x + "] is now poking at the left cheek of your [pc.face]; you miscalculated how much flexibility you needed. You use your [pc.tongueNoun] to guide the eager meat-rod into your dripping wet mouth. Your [pc.lips] latch around the tip, sucking on it while your [pc.tongue] rolls around the [pc.cockHead " + x + "]. You begin leaning your head forward, bringing the [pc.cock " + x + "] further into your mouth. Your [pc.tongueNoun] massages the underside as you stick it out to cover as much cock as you can. Small bits of pre-cum shoot out, sending its [pc.cumFlavor] taste down your throat. You lift your head off and your [pc.tongueNoun] follows close behind, leaving a trail of saliva and resulting in a slurp as you continue to lick the throbbing head. You take the cock " + (throat ? "down your throat" : "in your mouth") + " once more, bobbing your head up and down the shaft while flicking your [pc.tongueNoun] from left to right. You begin moving your head faster and harder, making you let out lewd gagging sounds, but it feels too good to stop now. Your entire cock is soaked in saliva, dripping down your shaft and onto the ground. Soon you're moving your hips as much as you can; you are no longer giving yourself a blowjob - you're " + (throat ? "throat" : "face") + "-fucking yourself. The lewd, gagging sound grows louder and more aggressive.\n\n");
+		output("Your [pc.cock " + x + "] is now poking at the left cheek of your [pc.face]; you miscalculated how much flexibility you needed. You use your [pc.tongueNoun] to guide the eager meat-rod into your dripping wet mouth. Your [pc.lips] latch around the tip, sucking on it while your [pc.tongue] rolls around the [pc.cockHead " + x + "]. You begin leaning your head forward, bringing the [pc.cock " + x + "] further into your mouth. Your [pc.tongueNoun] massages the underside as you stick it out to cover as much cock as you can. Small bits of pre-cum shoot out, sending its [pc.cumFlavor] taste down your throat. You lift your head off and your [pc.tongueNoun] follows close behind, leaving a trail of saliva and resulting in a slurp as you continue to lick the throbbing head. You take the cock " + (throat ? "down your throat" : "in your mouth") + " once more, bobbing your head up and down the shaft while flicking your [pc.tongueNoun] from left to right. You begin moving your head faster and harder, making you let out lewd gagging sounds, but it feels too good to stop now. Your entire cock is soaked in saliva, dripping down your shaft and onto the ground. Soon you're moving your hips as much as you can; you are no longer giving yourself a blowjob - you're " + (throat ? "throat" : (pc.hasMuzzle() ? "muzzle" : "face")) + "-fucking yourself. The lewd, gagging sound grows louder and more aggressive.\n\n");
 		
 		output("Another shot of pre-cum is sent down your throat, followed by the building pressure of your release. You force your head down to the [pc.base " + x + "] of your [pc.cockNoun " + x + "], ");
 		if (throat) output("sending it deeply down your throat, feeling the warm and smooth inside as it tightens around the invading member. Thank goodness you're holding your breath, or you would be suffocating right now. You hurry up before you choke on your cock,");
 		else output("taking advantage of your small package to caress it whole with your [pc.tongueNoun],");
 		output(" moving your head back and forth while your hand caresses the [pc.base " + x + "] of your cock. ");
 		
-		if (flags["COC.TIMES_AUTOFELLATIO_DUE_TO_CAT_FLEXABILITY"] > 10 && pc.balls >= 2 && rand(3) == 0) {
+		if (flags["COC.TIMES_AUTOFELLATIO_DUE_TO_CAT_FLEXABILITY"] > 5 && pc.balls >= 2 && rand(2) == 0) {
 			output("But it's not enough");
 			if (throat) output(" and you are forced to come up for air.\n\nWhile gasping for air");
 			output(", you scowl at your [pc.cock " + x + "] in disapproval. That's when your [pc.sack] catches your attention. It's gleaming with your sex sheen and you watch one of your balls slowly slide off to one side.");
@@ -322,11 +322,11 @@ public function catAutoLick():void { //Male cat masturbation
 			
 			processTime(5 + rand(5));
 			pc.shower();
-			pc.cumMultiplierRaw += 0.05;
+			pc.cumMultiplierRaw += 0.1;
 		}
 		else {
 			output("This releases the pent - up pressure through your cock and down your throat. It's too much for you to handle; your cheeks fill up with [pc.cum] and you pull your head back, making a loud popping sound when you finally free your mouth, as the [pc.cumNoun] pooled in your cheeks spills out all over your cock. Your cock spurts a few more lines of sperm onto your stomach. You stroke the exhausted member a few times, milking the last drops of [pc.cumNoun] out.");
-			if (!rooms[currentLocation].hasFlag(GLOBAL.PUBLIC) && !rooms[currentLocation].hasFlag(GLOBAL.HAZARD)) output(" Satisfying the final bits of lust, you lay down and fall into a short cat nap.");
+			if (rooms[currentLocation].hasFlag(GLOBAL.PRIVATE) && !rooms[currentLocation].hasFlag(GLOBAL.HAZARD)) output(" Satisfying the final bits of lust, you lay down and fall into a short cat nap.");
 		}
 	}
 	//Stats & next event

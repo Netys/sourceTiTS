@@ -146,7 +146,7 @@ public function campSlavesMenu(descOnly:Boolean = false):void {
 }
 
 private function swimInStream():void {	
-	clearMenu();
+	clearOutput();
 	output("You ponder over the nearby stream that's flowing. Deciding you'd like a dip, ");
 	if (pc.inSwimwear()) output("you are going to swim while wearing just your swimwear. ");
 	else if(!pc.isNude()) output("you strip off your [pc.gear] until you are completely naked. ");

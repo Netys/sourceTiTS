@@ -5,8 +5,10 @@
 	public class CockClass extends UnversionedSaveable
 	{
 		//constructor
-		public function CockClass()
+		public function CockClass(clength: Number = 5.5, cthickness: Number = 1)
 		{
+			cLengthRaw = clength;
+			cThicknessRatioRaw = cthickness;
 		}
 		//For cheateyness.
 		// include "consts.as"

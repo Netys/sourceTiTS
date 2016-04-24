@@ -9,6 +9,7 @@ include "Edryn.as";
 include "Niamh.as";
 include "scylla.as";
 include "Urta.as";
+include "urtaHeatRut.as";
 include "UrtaSex.as";
 
 private function enterBarTelAdre():void {
@@ -171,16 +172,15 @@ public function barTelAdre():void {
 			addButton(counter++, "Back Room", openTheDoorToFoursomeWivScyllaAndFurries);
 		}
 		//Urta X Scylla threesome
-		//if (scyllaAction == SCYLLA_ACTION_FUCKING_URTA) {
-			//if (int(flags["COC.UNKNOWN_FLAG_NUMBER_00143"]) == 0)
-				//output("\n\n<b>Though Urta would normally be here getting sloshed, her usual spot is completely vacant.  You ask around but all you get are shrugs and giggles.  Something isn't quite right here.  You see an empty bottle of one of her favorite brands of whiskey still rolling on her table, so she can't have been gone long.  Maybe she had guard business, or had to head to the back rooms for something?</b>");
-			//else
-				//output("\n\nUrta's usual place is vacant, though her table still holds a half-drank mug of something potent and alcoholic.  If it's anything like the last time this happened, she's snuck into a back room with Scylla to relieve some pressure.  It might not hurt to join in...");
-			//flags["COC.URTA_TIME_SINCE_LAST_CAME"] = timeAsStamp + 60 * 4;
-			//addButton(counter++, "Back Room", scyllaAndUrtaSittingInATree);
-		//}
-		//else 
-		if (urtaBarDescript()) {
+		if (scyllaAction == SCYLLA_ACTION_FUCKING_URTA) {
+			if (int(flags["COC.UNKNOWN_FLAG_NUMBER_00143"]) == 0)
+				output("\n\n<b>Though Urta would normally be here getting sloshed, her usual spot is completely vacant.  You ask around but all you get are shrugs and giggles.  Something isn't quite right here.  You see an empty bottle of one of her favorite brands of whiskey still rolling on her table, so she can't have been gone long.  Maybe she had guard business, or had to head to the back rooms for something?</b>");
+			else
+				output("\n\nUrta's usual place is vacant, though her table still holds a half-drank mug of something potent and alcoholic.  If it's anything like the last time this happened, she's snuck into a back room with Scylla to relieve some pressure.  It might not hurt to join in...");
+			flags["COC.URTA_TIME_SINCE_LAST_CAME"] = timeAsStamp + 60 * 4;
+			addButton(counter++, "Back Room", scyllaAndUrtaSittingInATree);
+		}
+		else if (urtaBarDescript()) {
 			//if (auntNancy.auntNancy(false) && flags["COC.URTA_INCUBATION_CELEBRATION"] == undefined && urtaIsPregnant(true)) {
 				//urtaIsHappyAboutPregnancyAtTheBar();
 				//return;
