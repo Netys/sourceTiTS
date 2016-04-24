@@ -230,6 +230,7 @@ public function initiateTraining():Boolean
 	clearOutput();
 	output("As you approach Katherine’s alleyway, you take a mental inventory of your preparations, to see if it’s time to begin her training.  You realize that once Kath’s training has begun, she will no longer have time to engage in your usual activities until her training is complete, so perhaps you should postpone the final preparations and just pay her a recreational visit instead?");
 	
+	clearMenu();
 	addButton(0, "Postpone", postponeKathTraining);
 	addButton(1, "Train", trainKath);
 	addButton(2, "With Urta", trainKathWithUrta);

@@ -503,6 +503,7 @@ private function fuckEdrynTaur():void {
 	output("\n\nThe two of you wipe up as best you can, redress, and head back out to the bar.  You're consciously aware of how strongly your groin reeks of centaur-slut.  Your body, happy with the scent and scrutiny of the bar's patrons, refuses to go soft, providing a wonderful view of your cum-slicked member.  Giggles and laughter break out around you as you leave, though more than a few of those taking notice have hard nipples or tents of their own.");
 	if(Flag("COC.EDRYN_AFFECTION") >= 4) edrynPregChance();
 	pc.orgasm();
+	applyAinaMareMuskEffect();
 	//dynStats("sen", -3);
 	if (pc.lust() < 30) pc.lust(30, true);
 	processTime(40);
@@ -563,6 +564,7 @@ private function fuckEdrynNonTaur():void {
 	output("The two of you clean up as best you can, redress, and head back out to the bar.  You're consciously aware of how strongly you reek of centaur-slut.  Your body, happy with the scent and the scrutiny of the bar's patrons, refuses to go soft, providing a more-than-ample tent.  Giggles and laughter break out around you as you leave, though more than a few of those taking notice have hard nipples or tents of their own.");
 	if(Flag("COC.EDRYN_AFFECTION") >= 4) edrynPregChance();
 	pc.orgasm();
+	applyAinaMareMuskEffect();
 	//dynStats("sen", -3);
 	if (pc.lust() < 30) pc.lust(30, true);
 	processTime(40);
@@ -1012,6 +1014,7 @@ public function fuckPregEdryn():void {
 	processTime(25);
 	pc.orgasm();
 	//dynStats("sen", -.5);
+	applyAinaMareMuskEffect();
 	clearMenu();
 	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
@@ -1073,6 +1076,7 @@ private function jizzFromEatingPregdrynOut():void {
 	applyPussyDrenched(pc);
 	pc.girlCumInMouth(edryn);
 	pc.orgasm();
+	applyAinaMareMuskEffect();
 	//dynStats("lib", 1, "sen", 2);
 	pc.slowStatGain("l", 1);
 	clearMenu();
@@ -1245,6 +1249,7 @@ public function eatEdrynPussyLikeABawss():void {
 	//dynStats("lib", .25, "sen", -3);
 	pc.slowStatGain("l", 0.25);
 	applyPussyDrenched(pc);
+	applyAinaMareMuskEffect();
 	//[Next]
 	clearMenu();
 	addButton(0, "Next", postEdrynEatOutRut);

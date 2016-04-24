@@ -106,14 +106,13 @@ public function urtaLove(love:Number = 0):Boolean {
 	if(love < 0) {
 		Flag("COC.URTA_PC_AFFECTION_COUNTER", -love, true);
 	}
-	//if(flags["COC.URTA_PC_LOVE_COUNTER"] == 1) {
-		////Queue up Amily madness
-		////Only happens if freakout hasn't happened yet.
-		//if(love > 0 && flags["COC.AMILY_VISITING_URTA"] == 0 && amilyScene.amilyFollower() && flags["COC.AMILY_FOLLOWER"] == 1) flags["COC.AMILY_NEED_TO_FREAK_ABOUT_URTA"] = 1;
-		//return true;
-	//}
-	//else 
-	return false;
+	if(flags["COC.URTA_PC_LOVE_COUNTER"] == 1) {
+		//Queue up Amily madness
+		//Only happens if freakout hasn't happened yet.
+		if(love > 0 && int(flags["COC.AMILY_VISITING_URTA"]) == 0 && amilyFollower() && flags["COC.AMILY_FOLLOWER"] == 1) flags["COC.AMILY_NEED_TO_FREAK_ABOUT_URTA"] = 1;
+		return true;
+	}
+	else return false;
 }
 
 public function urtaAvailableForSex():Boolean { return urtaFuckbuddy() && scyllaAction != SCYLLA_ACTION_FUCKING_URTA && int(flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"]) == 0; }

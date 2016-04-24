@@ -133,18 +133,44 @@ public function displayEncounterLogCoCVarious():int
 		}
 	}
 	
-	output2("\n\n" + blockHeader("Encounters: Plains", false));
-	if(flags["COC.HEL_TIMES_ENCOUNTERED"] > 0) {
-		output2("\n<b><u>Helia</u></b>");
-		output2("\n<b>* Times met: </b>" + flags["COC.HEL_TIMES_ENCOUNTERED"]);
-		output2("\n<b>* Times sexed: </b>" + flags["COC.HEL_FUCK_COUNTER"]);
-		output2("\n<b>* Affection: </b>" + helAffection());
+	if(flags["COC.TEL_ADRE_KNOWN"] > 0) {
+		output2("\n\n" + blockHeader("Encounters: Tel Adre", false));
+		
+		output2("\n<b><u>Urta</u></b>"); // if you know Tel Adre you know Urta
+		if (int(flags["COC.TIMES_FUCKED_URTA"]) > 0)
+			output2("\n<b>* Times sexed: </b>" + int(flags["COC.TIMES_FUCKED_URTA"]));
+		if (int(flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"]) > 0)
+			output2("\n<b>* Confidence: </b>" + int(flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"]));
+		if (int(flags["COC.URTA_PC_AFFECTION_COUNTER"]) > 0)
+			output2("\n<b>* Affection: </b>" + int(flags["COC.URTA_PC_AFFECTION_COUNTER"]));
+		if(int(flags["COC.DISCUSSED_URTA_ALCOHOLISM"]) == 1) {
+			output2("\n<b>* Alcohol: </b>");
+			if (int(flags["COC.URTA_ALCOHOL_HABIT"]) == -1) output2(" Little");
+			if (int(flags["COC.URTA_ALCOHOL_HABIT"]) == 0) output2(" Average");
+			if (int(flags["COC.URTA_ALCOHOL_HABIT"]) == 1) output2(" Lots");
+		}
 		output2("\n<b>* Attitude: </b>");
-		if (flags["COC.HEL_REDUCED_ENCOUNTER_RATE"] == 1) output2(" Upset");
-		else if (flags["COC.HEL_FUCKBUDDY"] == 1 && flags["COC.PC_PROMISED_HEL_MONOGAMY_FUCKS"] == 1) output2(" Stalker");
-		else if (flags["COC.HEL_FUCKBUDDY"] == 1) output2(" Fuckbuddy");
-		else if (followerHel() && flags["COC.HEL_FOLLOWER_LEVEL"] == 2) output2(" Lover");
+		if (flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"] == -1) output2(" Upset");
+		else if (urtaJustFriends()) output2(" Friend");
+		else if (urtaLove()) output2(" Lover");
+		else if (urtaFuckbuddy()) output2(" Fuckbuddy");
 		else  output2(" Undecided");
+	}
+	
+	if(flags["COC.EXPLORED_PLAINS"] > 0) {
+		output2("\n\n" + blockHeader("Encounters: Plains", false));
+		if(flags["COC.HEL_TIMES_ENCOUNTERED"] > 0) {
+			output2("\n<b><u>Helia</u></b>");
+			output2("\n<b>* Times met: </b>" + flags["COC.HEL_TIMES_ENCOUNTERED"]);
+			output2("\n<b>* Times sexed: </b>" + flags["COC.HEL_FUCK_COUNTER"]);
+			output2("\n<b>* Affection: </b>" + helAffection());
+			output2("\n<b>* Attitude: </b>");
+			if (flags["COC.HEL_REDUCED_ENCOUNTER_RATE"] == 1) output2(" Upset");
+			else if (flags["COC.HEL_FUCKBUDDY"] == 1 && flags["COC.PC_PROMISED_HEL_MONOGAMY_FUCKS"] == 1) output2(" Stalker");
+			else if (flags["COC.HEL_FUCKBUDDY"] == 1) output2(" Fuckbuddy");
+			else if (followerHel() && flags["COC.HEL_FOLLOWER_LEVEL"] == 2) output2(" Lover");
+			else  output2(" Undecided");
+		}
 	}
 	
 	output2("\n\n" + blockHeader("Encounters: Other", false));

@@ -228,7 +228,7 @@ private function katherineMenu():void {
 		//addButton(14, "Leave", katherineApartmentLeave);
 	}
 	else { // wet bitch
-		addButton(0, "Drink", katherineDrinkUp);
+		if(!kath.isPregnant()) addButton(0, "Drink", katherineDrinkUp);
 		addButton(1, "Sex", katherineSex);
 		addButton(3, "Talk", talkToKatherine);
 		addButton(4, "Date", katherineDate);
@@ -241,9 +241,9 @@ public function visitKatherine():void {
 	clearOutput();
 	katherineSprite();
 	//output(images.showImage("katherine-visit-alley"));
-	//if (flags["COC.KATHERINE_UNLOCKED"] == 1) {
-		//if (initiateTraining()) return;
-	//}
+	if (flags["COC.KATHERINE_UNLOCKED"] == 1) {
+		if (initiateTraining()) return;
+	}
 	//If Back Alley button is selected
 	output("The back alley behind Oswald's pawnshop is quite unremarkable, except that it's reasonably clean.  A number of empty crates, old blankets and torn strips of cloth have been assembled into a makeshift “<i>nest</i>”, the kind of place that a homeless vagrant would use as a resting place.\n\n");
 	katherineVisitNormal();
@@ -2449,10 +2449,10 @@ private function talkToKatherine():void {
 	output((kathIsAt(KLOC_KATHS_APT) ? "She sits on the edge of the bed" : "She leans back in her chair") + " and says “<i>I’d love to talk.  What’s on your mind?</i>”");
 	
 	clearMenu();
-	//addButton(0, "Gangs", talkGangs);
-	//addButton(1, "The Watch", talkWatch);
-	//addButton(2, "Her Home", talkHome);
-	//addButton(3, "The Bar", talkWetBitch);
+	addButton(0, "Gangs", talkGangs);
+	addButton(1, "The Watch", talkWatch);
+	addButton(2, "Her Home", talkHome);
+	addButton(3, "The Bar", talkWetBitch);
 	//if (doneSubmissive(KBIT_SUB_CAT_GIRL)) addButton(4, "Cat Girl", talkCatGirl);
 	//if (kathIsAt(KLOC_KATHS_APT) && flags[kFLAGS.KATHERINE_CLOTHES] >= 4) addButton(5, "Clothes", talkClothes); //All the special clothes have a value of 4 or more
 	//if (playerLovers() > 0) addButton(6, "Lovers", talkLovers);
