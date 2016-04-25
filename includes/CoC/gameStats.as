@@ -136,33 +136,59 @@ public function displayEncounterLogCoCVarious():int
 	if(flags["COC.TEL_ADRE_KNOWN"] > 0) {
 		output2("\n\n" + blockHeader("Encounters: Tel Adre", false));
 		
-		output2("\n<b><u>Urta</u></b>"); // if you know Tel Adre you know Urta
-		if (int(flags["COC.TIMES_FUCKED_URTA"]) > 0)
-			output2("\n<b>* Times sexed: </b>" + int(flags["COC.TIMES_FUCKED_URTA"]));
-		if (int(flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"]) > 0)
-			output2("\n<b>* Confidence: </b>" + int(flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"]));
-		if (int(flags["COC.URTA_PC_AFFECTION_COUNTER"]) > 0)
-			output2("\n<b>* Affection: </b>" + int(flags["COC.URTA_PC_AFFECTION_COUNTER"]));
-		if(int(flags["COC.DISCUSSED_URTA_ALCOHOLISM"]) == 1) {
-			output2("\n<b>* Alcohol: </b>");
-			if (int(flags["COC.URTA_ALCOHOL_HABIT"]) == -1) output2(" Little");
-			if (int(flags["COC.URTA_ALCOHOL_HABIT"]) == 0) output2(" Average");
-			if (int(flags["COC.URTA_ALCOHOL_HABIT"]) == 1) output2(" Lots");
+		if (flags["COC.KATHERINE_UNLOCKED"] > 0) {
+			output2("\n<b><u>Katherine</u></b>");
+			output2("\n<b>* Status: </b>");
+			if (flags["COC.KATHERINE_UNLOCKED"] <= 2) output2(" Vagrant");
+			else if (flags["COC.KATHERINE_UNLOCKED"] == 3) output2(" Recruit");
+			else output2(" Guardswoman");
+			if (flags["COC.KATHERINE_TIMES_SEXED"] > 0) output2("\n<b>* Times Sexed: </b>" + int(flags["COC.KATHERINE_TIMES_SEXED"]));
+			output2("\n<b>* Genitals: </b> Vagina");
+			if (kath.cockTotal() > 0) {
+				output2(",");
+				if (kath.cockTotal() > 1) output2(" 2x");
+				output2(" " + int(kath.longestCockLength()) + "\" ");
+				if(kath.cockTotal(GLOBAL.TYPE_CANINE) > 0)  output2(" Canine");
+				else output2(" Feline");
+				output2(" penis, ");
+				output2(" " + int(pc.knotThickness() * 10) / 10 + "\" Knot");
+			}
 		}
-		output2("\n<b>* Attitude: </b>");
-		if (flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"] == -1) output2(" Upset");
-		else if (urtaJustFriends()) output2(" Friend");
-		else if (urtaLove()) output2(" Lover");
-		else if (urtaFuckbuddy()) output2(" Fuckbuddy");
-		else  output2(" Undecided");
+		
+		output2("\n<b><u>Urta</u></b>"); // if you know Tel Adre you know Urta
+		if (flags["COC.URTA_GOBLIN_SLAVE"] == 1) output2("\n<b>* Status: Goblin slave</b>");
+		else if (flags["COC.URTA_BECOMES_SNAKE_SLAVE"] == 1) output2("\n<b>* Status: Naga slave</b>");
+		else if (flags["COC.URTA_TAKEN_BY_GNOLLS"] == 1) output2("\n<b>* Status: Gnoll slave</b>");
+		else if (flags["COC.URTA_MINO_AND_SUCCUBI_SLAVE"] == 1) output2("\n<b>* Status: Succubi slave</b>");
+		else if (flags["COC.URTA_IS_VULQUINE_MENACE"] == 1) output2("\n<b>* Status: Vulquine menace</b>");
+		else {
+			if (int(flags["COC.TIMES_FUCKED_URTA"]) > 0)
+				output2("\n<b>* Times Sexed: </b>" + int(flags["COC.TIMES_FUCKED_URTA"]));
+			if (int(flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"]) > 0)
+				output2("\n<b>* Confidence: </b>" + int(flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"]));
+			if (int(flags["COC.URTA_PC_AFFECTION_COUNTER"]) > 0)
+				output2("\n<b>* Affection: </b>" + int(flags["COC.URTA_PC_AFFECTION_COUNTER"]));
+			if(int(flags["COC.DISCUSSED_URTA_ALCOHOLISM"]) == 1) {
+				output2("\n<b>* Alcohol: </b>");
+				if (int(flags["COC.URTA_ALCOHOL_HABIT"]) == -1) output2(" Little");
+				if (int(flags["COC.URTA_ALCOHOL_HABIT"]) == 0) output2(" Average");
+				if (int(flags["COC.URTA_ALCOHOL_HABIT"]) == 1) output2(" Lots");
+			}
+			output2("\n<b>* Attitude: </b>");
+			if (flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"] == -1) output2(" Upset");
+			else if (urtaJustFriends()) output2(" Friend");
+			else if (urtaLove()) output2(" Lover");
+			else if (urtaFuckbuddy()) output2(" Fuckbuddy");
+			else  output2(" Undecided");
+		}
 	}
 	
 	if(flags["COC.EXPLORED_PLAINS"] > 0) {
 		output2("\n\n" + blockHeader("Encounters: Plains", false));
 		if(flags["COC.HEL_TIMES_ENCOUNTERED"] > 0) {
 			output2("\n<b><u>Helia</u></b>");
-			output2("\n<b>* Times met: </b>" + flags["COC.HEL_TIMES_ENCOUNTERED"]);
-			output2("\n<b>* Times sexed: </b>" + flags["COC.HEL_FUCK_COUNTER"]);
+			output2("\n<b>* Times Met: </b>" + flags["COC.HEL_TIMES_ENCOUNTERED"]);
+			output2("\n<b>* Times Sexed: </b>" + flags["COC.HEL_FUCK_COUNTER"]);
 			output2("\n<b>* Affection: </b>" + helAffection());
 			output2("\n<b>* Attitude: </b>");
 			if (flags["COC.HEL_REDUCED_ENCOUNTER_RATE"] == 1) output2(" Upset");
@@ -189,7 +215,7 @@ public function displayEncounterLogCoCVarious():int
 		if (flags["COC.COTTON_MET_FUCKED"] >= 2) output2(", Sexed");
 		if (flags["COC.PC_IS_A_DEADBEAT_COTTON_DAD"] == 1) output2(", Upset");
 		if (flags["COC.COTTON_UNUSUAL_YOGA_BOOK_TRACKER"] != undefined) {
-			output2("\n<b>* Special book: </b> ");
+			output2("\n<b>* Special Book: </b> ");
 			if (flags["COC.COTTON_UNUSUAL_YOGA_BOOK_TRACKER"] == 1) {
 				if (pc.hasKeyItem("Yoga Guide")) output2("Found");
 				else output2("Not Found");
@@ -212,7 +238,7 @@ public function displayEncounterLogCoCVarious():int
 	if(flags["COC.IZMA_MET"] > 0) {
 		output2("\n<b><u>Izma</u></b>");
 		if (flags["COC.IZMA_TIMES_FOUGHT_AND_WON"] != undefined && flags["COC.IZMA_TIMES_FOUGHT_AND_WON"] != 0)
-			output2("\n<b>* Combat victories streak: </b>" + flags["COC.IZMA_TIMES_FOUGHT_AND_WON"]);
+			output2("\n<b>* Combat Victories Streak: </b>" + flags["COC.IZMA_TIMES_FOUGHT_AND_WON"]);
 		
 		if (StatTracking.getStat("coc/pregnancy/izma sharkgirls") + StatTracking.track("coc/pregnancy/pc sharkgirls") + StatTracking.getStat("coc/pregnancy/izma tigersharks") + StatTracking.track("coc/pregnancy/pc tigersharks") > 0)
 		{

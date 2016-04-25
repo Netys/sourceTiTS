@@ -3663,8 +3663,8 @@ private function normalSheilaPregNotifREPEATEDEDHelpABitchOutTOCAMP():void {
 	}
 	//(else if PC has Kid A and Kid's n.watch is on)
 	else if (flags["COC.ANEMONE_WATCH"] == 1 && flags["COC.ANEMONE_KID"] == 1) output("\n\nYou wave off Sheila's objections, pointing to the large barrel housing your skinny tenant and explaining that she watches the camp at night for you in exchange for a place to stay.  Sheila looks dubious as the tall blue girl shuffles over and sits down, shyly hiding herself behind you.  \"<i>Um... hi,</i>\" the anemone mumbles.");
-	else if ((pc.accessory is TamWolf) || (pc.accessory is TamWolfDamaged) || pc.hasStatusEffect("Varmint Buddy")) {
-		output("\n\nYou wave off Sheila's objections, pointing at your familiar. \"<i>I have someone to stay on guard. ");
+	else if (pc.accessory is TamWolf || pc.accessory is TamWolfDamaged || pc.accessory is TamWolfII || pc.hasStatusEffect("Varmint Buddy")) {
+		output("\n\nYou wave off Sheila's objections, pointing at your pet. \"<i>I have someone to stay on guard. ");
 		if (pc.hasStatusEffect("Varmint Buddy")) output("Not exactly a watchdog, but close enough.");
 		else output("TamWolf is always on the alert.");
 		output("</i>\"");

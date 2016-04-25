@@ -170,7 +170,7 @@ package classes.Characters.CoC
 			this.ass.bonusCapacity = 9000;
 			
 			this.createStatusEffect("Disarm Immune");
-			this.createPerk("Incorporeality");
+			this.createPerk("Incorporeality", 0, 0, 0, 0);
 			
 			sexualPreferences.setPref(GLOBAL.SEXPREF_HYPER,			GLOBAL.REALLY_LIKES_SEXPREF); // loves hyper things
 			sexualPreferences.setPref(GLOBAL.SEXPREF_GAPE,			GLOBAL.KINDA_LIKES_SEXPREF);

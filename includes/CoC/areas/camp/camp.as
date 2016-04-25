@@ -13,8 +13,10 @@ public function returnToCamp(timeUsed:int = 0):void {
 public function returnToCampUseOneHour():void { returnToCamp(1); } //Replacement for event number 13;		
 
 public function cocCampMenu():void {
-	initCoCJunk();
+	if (campEvent()) return;
+	
 	showLocationName(); // force validation, since mainGameMenu does not always do it
+	
 	output("Your campsite is fairly simple at the moment.  Your tent and bedroll are set in front of the rocks that lead to the portal.  You have a small fire pit as well.  "); // there are no actual counter for time in Mareth...
 	output("You have a number of traps surrounding your makeshift home, but they are fairly simple and may not do much to deter a demon.  ");
 	output("The portal shimmers in the background as it always does, looking menacing and reminding you of why you came.\n\n");
@@ -169,4 +171,14 @@ private function swimInStream():void {
 	processTime(25 + rand(10));
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
+}
+
+public function campEvent():Boolean
+{
+	if (flags["COC.EDRYN_PREGNANCY_TAOTH"] < timeAsStamp)
+	{
+		urtaAndEdrynGodChildEpilogue();
+		return true;
+	}
+	return false;
 }

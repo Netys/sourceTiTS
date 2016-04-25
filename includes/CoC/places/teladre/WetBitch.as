@@ -10,6 +10,7 @@ include "Niamh.as";
 include "scylla.as";
 include "Urta.as";
 include "urtaHeatRut.as";
+include "urtaQuest.as";
 include "UrtaSex.as";
 
 private function enterBarTelAdre():void {

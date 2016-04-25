@@ -999,7 +999,9 @@ internal function urtaHomeLuvLuvinsMenu():void {
 	
 	if (flags["COC.URTA_PETPLAY_DONE"] != -1) {
 		addDisabledButton(7, "Collar", "Collar", "This scene requires you to have genitals.");
-		if(pc.hasGenitals()) addButton(7, "Collar", urtaPetPlayDeletedForeverBecauseThirdProovedMeWrongAboutDice);
+		if (pc.hasGenitals()) addButton(7, "Collar", urtaPetPlayDeletedForeverBecauseThirdProovedMeWrongAboutDice);
+		if (flags["COC.URTA_COLLAR_TAKEN"] == 1 && !pc.hasItemByType(CoCUrtaCollar) && !(pc.accessory is CoCUrtaCollar))
+			addDisabledButton(7, "Collar", "Collar", "You should take collar with you if you want some petplay.");
 	}
 }
 
@@ -1915,19 +1917,36 @@ private function urtaPetPlayDeletedForeverBecauseThirdProovedMeWrongAboutDice():
 	clearMenu();
 	addButton(0, "Wear", wearZeCollar);
 	addButton(1, "Ignore", ignoreUrtasCollar);
+	addButton(2, "Take", takeUrtasCollar, undefined, "Take", "You may be not into petplay, but you can take it as accessory.");
 }
 
 private function ignoreUrtasCollar():void {
-	flags["COC.URTA_PETPLAY_DONE"] = -1;
 	clearOutput();
+	flags["COC.URTA_PETPLAY_DONE"] = -1;
 	if(urtaLove()) urtaHomeLuvLuvinsMenu();
 	else goBackToUrtasForLuvinzII();
 }
 
+private function takeUrtasCollar():void {
+	clearOutput();
+	flags["COC.URTA_COLLAR_TAKEN"] = 1;
+	
+	output("You reach down into the trashcan for the collar. <i>I'm not sure about roleplaying, but I'll take it.</i>\n\n");
+	
+	itemScreen = urtaLove() ? urtaHomeLuvLuvinsMenu : goBackToUrtasForLuvinzII;
+	lootScreen = itemScreen;
+	useItemFunction = itemScreen;
+	
+	itemCollect([new CoCUrtaCollar()]);
+}
+
 private function wearZeCollar():void {
 	clearOutput();
-	if(flags["COC.URTA_PETPLAY_DONE"] == undefined) {
-		output("You reach down into the trashcan, unclasp the collar and slip it on.  You tighten it until it fits snugly against your [pc.skinFurScales], but isn't otherwise uncomfortable.  With a satisfying <b>click</b>, the clasp snaps shut, so you know there's no going back.  Urta's mouth drops as she watches you do this, completely at a loss for words.  Her cock, on the other hand, hardens, knowing just what to do.");
+	if (flags["COC.URTA_PETPLAY_DONE"] == undefined) {
+		if (pc.hasItem(new CoCUrtaCollar())) output("You reach into your pocket, unclasp the collar and slip it on.  You tighten it until it fits snugly against your [pc.skinFurScales], but isn't otherwise uncomfortable.  With a satisfying <b>click</b>, the clasp snaps shut, so you know there's no going back.  ");
+		else if (pc.accessory is CoCUrtaCollar) output("You stroke collar on your neck meaningly, asking Urta if she still want play with her \"pet\".  ");
+		else output("You reach down into the trashcan, unclasp the collar and slip it on.  You tighten it until it fits snugly against your [pc.skinFurScales], but isn't otherwise uncomfortable.  With a satisfying <b>click</b>, the clasp snaps shut, so you know there's no going back.  ");
+		output("Urta's mouth drops as she watches you do this, completely at a loss for words.  Her cock, on the other hand, hardens, knowing just what to do.");
 		
 		output("\n\nYou sink to your knees and then onto your hands in front of her, brazenly displaying your submission to the vixen goddess before you.  She leans back slightly, stunned by this action.  It takes her a minute to recover and pick her jaw up off the floor.  You dutifully wait, silently, until Urta issues a command.  She seems to sense this and clears her throat, clearly embarrassed and nervous.  \"<i>Oh, um, good " + pc.mf("boy", "girl") + ",</i>\" she murmurs, patting your head.  You rub your [pc.face] into her palm, which brings a smile to Urta's face.");
 		

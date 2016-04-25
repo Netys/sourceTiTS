@@ -126,7 +126,7 @@ public function urtaFuckbuddy():Boolean { //Returns true if Urta is either the p
 public function urtaJustFriends():Boolean { return Flag("COC.URTA_COMFORTABLE_WITH_OWN_BODY") == 0 && flags["COC.URTA_PC_LOVE_COUNTER"] == -1; }
 
 public function urtaAtBar():Boolean { //Is Urta physically at the Wet Bitch?
-return (/*!kGAMECLASS.urtaQuest.urtaBusy() &&*/ flags["COC.AMILY_VISITING_URTA"] != 1 && hours > 4 && hours < 15 && flags["COC.KATHERINE_UNLOCKED"] != 3);
+return (!urtaBusy() && flags["COC.AMILY_VISITING_URTA"] != 1 && hours > 4 && hours < 15 && flags["COC.KATHERINE_UNLOCKED"] != 3);
 }
 
 public function urtaDrunk():Boolean {
@@ -926,8 +926,8 @@ public function urtaDialogueMenu():void {
 	addButton(1, "Edryn", urtaDiscussesEdryn);
 	addButton(2, "The Watch", urtaDiscussesTheWatch);
 	if (!urtaJustFriends()) addButton(3, "Alcoholism", urtaDiscussesAlcholism);
-	//if (flags["COC.KATHERINE_UNLOCKED"] >= 4) addButton(5, "Katherine", urtaDiscussessKatherine);
-	//if(urtaPregs.urtaKids() > 0 && pc.hasKeyItem("Spare Key to Urta's House") < 0)
+	if (flags["COC.KATHERINE_UNLOCKED"] >= 4) addButton(5, "Katherine", urtaDiscussessKatherine);
+	//if(urtaKids() > 0 && pc.hasKeyItem("Spare Key to Urta's House") < 0)
 	//addButton(4,"Visit Kids",urtaPregs.visitKidsFirstTime);
 	//else
 	//if(flags[kFLAGS.FIRST_TIME_AT_URTA_HOUSE] > 0) addButton(4,"Her House",urtaPregs.talkToUrtaAboutHerHouse);
@@ -952,7 +952,7 @@ private function urtaDiscussesSelf():void {
 		addButton(14, "Back", urtaDialogueMenu);
 	}
 	else if (flags["COC.URTA_QUEST_STATUS"] == .5) {
-		//addButton(0, "Infertility", kGAMECLASS.urtaQuest.infertilityQuestions);
+		addButton(0, "Infertility", infertilityQuestions);
 		addButton(1, "Romance&Sex", urtaDiscussesSexAndRomance);
 		addButton(2, "Employment", urtaDiscussesEmployment);
 		addButton(3, "Prejudice", urtaDiscussesPrejudice);
@@ -1295,30 +1295,29 @@ private function TwuWuvIsBeautifulUrta():void {
 private function urtaDiscussesFamily():void {
 	clearOutput();
 	urtaSprite();
-	//if(!urtaLove()) {
-		//output("You tell Urta that you'd like to learn about her family.  What are her parents like?  Does she have any siblings?  Is she the only hermaphrodite in the family?");
-	////(Regular
-	//if(!urtaLove()) {
-		//if(flags["COC.URTA_FAMILY_TALK_ATTEMPTS"] == 0)
-			//output("\n\nUrta winces, eyes starting to grow damp with unshed tears.  However, then she stares at you fiercely.  \"<i>I don't want to talk about them,</i>\" she growls.");
-		//else
-			//output("\n\nShe gives you a cold stare, making it quite clear she's still not inclined to discuss them.  Whatever the story is, it must be pretty painful.");
-	//}
-	////(Lover, First Time:
-	//else {
-		if(flags["COC.URTA_FAMILY_TALK_ATTEMPTS"] == 0) output("\n\nUrta sighs softly, closing her eyes sadly.  She stares fixedly into her glass.  \"<i>Please... not that. I'll talk about anything else, but not that,</i>\" she tells you.");
-		//(Lover, Subsequent:
-		else output("\n\nUrta shakes her head slowly.  \"<i>No.  It's... a painful topic - one I'd rather forget than relive.</i>\"");
-	//}
-	output("\n\nYou apologize and change the topic.");
-	//[The other Urta dialogue option buttons appear at the bottom of the screen]
-	urtaDialogueMenu();
-	//}
-	//else {
-		//kGAMECLASS.urtaQuest.talkWithUrtaAboutFamFam();
-	//}
+	if (!urtaLove()) {
+		output("You tell Urta that you'd like to learn about her family.  What are her parents like?  Does she have any siblings?  Is she the only hermaphrodite in the family?");
+		//(Regular
+		if (!urtaLove()) {
+			if (int(flags["COC.URTA_FAMILY_TALK_ATTEMPTS"]) == 0)
+				output("\n\nUrta winces, eyes starting to grow damp with unshed tears.  However, then she stares at you fiercely.  \"<i>I don't want to talk about them,</i>\" she growls.");
+			else
+				output("\n\nShe gives you a cold stare, making it quite clear she's still not inclined to discuss them.  Whatever the story is, it must be pretty painful.");
+		}
+		//(Lover, First Time:
+		else {
+			if (int(flags["COC.URTA_FAMILY_TALK_ATTEMPTS"]) == 0) output("\n\nUrta sighs softly, closing her eyes sadly.  She stares fixedly into her glass.  \"<i>Please... not that. I'll talk about anything else, but not that,</i>\" she tells you.");
+			//(Lover, Subsequent:
+			else output("\n\nUrta shakes her head slowly.  \"<i>No.  It's... a painful topic - one I'd rather forget than relive.</i>\"");
+		}
+		output("\n\nYou apologize and change the topic.");
+		//[The other Urta dialogue option buttons appear at the bottom of the screen]
+		urtaDialogueMenu();
+	}
+	else {
+		talkWithUrtaAboutFamFam();
+	}
 }
-
 
 //[=Sex/Romance=]
 private function urtaDiscussesSexAndRomance():void {
@@ -1743,30 +1742,29 @@ private function urtaKathSexDont():void {
 	clearOutput();
 	output("You give Urta a smile tell her that while you’re happy for her you’d really prefer if she waited for you to be around before banging Katherine.  You feel a little left out.\n\n");
 	output("Urta gives you a weak smile and says, “<i>Alright [pc.name], I understand.  I’ll keep it in my pants.  Course I hope you’re up for a lot of three ways.  Girl’s got to get her fix.</i>”");
-	//flags[kFLAGS.KATHERINE_URTA_DATE] = Katherine.KDATE_LITTLE;
+	flags["COC.KATHERINE_URTA_DATE"] = KDATE_LITTLE;
 	processTime(2);
-	clearMenu();
-	addButton(0, "Next", urtaDialogueMenu);
+	urtaDialogueMenu();
 }
 
 private function urtaKathSexWhenever():void {
+	clearMenu();
 	output("You put your arm around Urta and tell her that you don’t mind if your favorite girls need to blow off a little steam together.  As long as they don’t wear each other out that is.\n\n");
 	output("Urta lets out a relieved laugh and says, “<i>That’s good.  That’s good.  I’ll make sure not to wear our kitten out.</i>”");
-	//flags[kFLAGS.KATHERINE_URTA_DATE] = Katherine.KDATE_WHENEVER;
+	flags["COC.KATHERINE_URTA_DATE"] = KDATE_WHENEVER;
 	processTime(2);
-	clearMenu();
-	addButton(0, "Next", urtaDialogueMenu);
+	urtaDialogueMenu();
 }
 
 private function urtaKathSexEncourage():void {
+	clearMenu();
 	output("You ask Urta what she would say if you told her you flat out expect them to have sex when you’re not around.\n\n");
 	output("“<i>Are you sure [pc.name]?  I mean I love the idea, I’m sure Kath will love it too, but you know what my appetite’s like.</i>”\n\n");
 	output("You give her a kiss and tell her you know very well.  Since you’re not in town all the time you expect Urta to see to Kath’s needs and Kath to hers.\n\n");
 	output("“<i>Carte blanche?  Ok [pc.name], but I’m warning you - your sex kitten is going to be very well fucked whenever you see her.</i>”");
-	//flags[kFLAGS.KATHERINE_URTA_DATE] = Katherine.KDATE_LOTS;
+	flags["COC.KATHERINE_URTA_DATE"] = KDATE_LOTS;
 	processTime(2);
-	clearMenu();
-	addButton(0, "Next", urtaDialogueMenu);
+	urtaDialogueMenu();
 }
 
 //[Back Room]

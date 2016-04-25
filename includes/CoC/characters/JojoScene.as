@@ -281,23 +281,27 @@ public function refuseOfferOfHelp():void
 	jojoCampMenu();
 }
 
+public function campCorruptJojo():Boolean {
+	return false;
+}
+
 public function jojoCamp():void {
 	clearOutput();
 	showJojo();
-	//if (flags["COC.AMILY_MET_PURE_JOJO] == 0 && flags["COC.AMILY_FOLLOWER"] == 1 && amilyScene.amilyFollower()) {
-		//getGame().followerInteractions.amilyMeetsPureJojo();
-		//return;
-	//}
-	//if (flags["COC.JOJO_RATHAZUL_INTERACTION_COUNTER] == 1 && rand(2) == 0) {
-		//getGame().followerInteractions.catchRathazulNapping();
-		//return;
-	//}
-	//if (pc.findStatusAffect(StatusAffects.Infested) >= 0) { // Worms overrides everything else
-		//output("As you approach the serene monk, you see his nose twitch.\n\n");
-		//output("\"<i>It seems that the agents of corruption have taken residence within the temple that is your body,</i>\" Jojo says flatly, \"<i>This is a most unfortunate development.  There is no reason to despair as there are always ways to fight the corruption.  However, great effort will be needed to combat this form of corruption and may have a lasting impact upon you.  If you are ready, we can purge your being of the rogue creatures of lust.</i>\"\n\n");
-		//jojoCampMenu();
-		//return;
-	//}
+	if (flags["COC.AMILY_MET_PURE_JOJO"] == undefined && flags["COC.AMILY_FOLLOWER"] == 1 && amilyFollower()) {
+		amilyMeetsPureJojo();
+		return;
+	}
+	if (flags["COC.JOJO_RATHAZUL_INTERACTION_COUNTER"] == 1 && rand(2) == 0) {
+		catchRathazulNapping();
+		return;
+	}
+	if (pc.hasStatusEffect("Infested")) { // Worms overrides everything else
+		output("As you approach the serene monk, you see his nose twitch.\n\n");
+		output("\"<i>It seems that the agents of corruption have taken residence within the temple that is your body,</i>\" Jojo says flatly, \"<i>This is a most unfortunate development.  There is no reason to despair as there are always ways to fight the corruption.  However, great effort will be needed to combat this form of corruption and may have a lasting impact upon you.  If you are ready, we can purge your being of the rogue creatures of lust.</i>\"\n\n");
+		jojoCampMenu();
+		return;
+	}
 	if (pc.cor() > 10 && flags["COC.JOJO_LAST_MEDITATION"] != days) { //New "offer of help" menu
 		if (pc.cor() >= 40) {
 			output("You walk toward the boulder where Jojo usually sits, and as soon as you're close Jojo approaches you with urgency.  \"<i>By Marae! [pc.name], we must do something! I feel the corruption surrounding you like a dense fog.  We need to meditate or I’m going to lose you!</i>\" Jojo pleads.\n\n");
@@ -734,8 +738,12 @@ public function apparantlyJojoDOESlift():void
 			// Kick back to previous menu
 			processTime(2);
 			clearMenu();
-			addButton(0, "Meditate", jojoFollowerMeditate, null, "Meditate", "Accept offer and meditate now.");
-			addButton(1, "Postpone", jojoCamp, null, "Postpone", "You have no time right now.");
+			if (flags["COC.JOJO_LAST_MEDITATION"] != days) {
+				addButton(0, "Meditate", jojoFollowerMeditate, null, "Meditate", "Accept offer and meditate now.");
+				addButton(1, "Postpone", jojoCamp, null, "Postpone", "You have no time right now.");
+			} else {
+				addButton(0, "Next", jojoCamp);
+			}
 			return;
 		}
 		else

@@ -4279,6 +4279,9 @@
 					types.push("dog-like", "canine", "large", "floppy");
 					if(race().indexOf("ausar") != -1) types.push("ausar");
 					break;
+				case GLOBAL.TYPE_VULPINE:
+					types.push("canine", "cute", "vulpine");
+					break;
 				case GLOBAL.TYPE_FELINE:
 					types.push("cat-like", "feline", "cute");
 					if(race().indexOf("kaithrit") != -1) types.push("kaithrit");
@@ -8073,7 +8076,7 @@
 					break;
 				case GLOBAL.TYPE_CANINE:
 					vaginas[slot].clits = 1;
-					vaginas[slot].vaginaColor = "pink";
+					vaginas[slot].vaginaColor = RandomInCollection(["pink", "pink", "black"]);
 					vaginas[slot].wetnessRaw = 3;
 					vaginas[slot].minLooseness = 3;
 					break;
@@ -13738,7 +13741,7 @@
 				var msg:String = "";
 				if(spacingsF) msg += " ";
 				msg += "<b>"
-				if (this is PlayerCharacter)
+				if (this == kGAMECLASS.pc)
 				{
 					msg += "You have succumbed to your desires and lost your";
 					if (hasVagina()) msg += " masculine";
@@ -13804,7 +13807,7 @@
 					var msg:String = "";
 					if (spacingsF) msg += " ";
 					msg += "<b>";
-					if (this is PlayerCharacter)
+					if (this == kGAMECLASS.pc)
 					{
 						if (holePointer.hymen && hole >= 0)
 						{
@@ -13864,7 +13867,7 @@
 					//Non virgins as usual
 					else if(spacingsF) output(" ");
 					if (hole >= 0) {
-						if (this is PlayerCharacter)
+						if (this == kGAMECLASS.pc)
 						{
 							if(holePointer.looseness() >= 5) output("<b>Your " + vaginaDescript(hole) + " is stretched painfully wide, gaped in a way that practically invites huge monster-cocks to plow you.</b>");
 							else if(holePointer.looseness() >= 4) output("<b>Your " + vaginaDescript(hole) + " painfully stretches, the lips now wide enough to gape slightly.</b>");
@@ -13882,7 +13885,7 @@
 						}
 					}
 					else {
-						if (this is PlayerCharacter)
+						if (this == kGAMECLASS.pc)
 						{
 							if(holePointer.looseness() >= 5) output("<b>Your " + assholeDescript() + " is stretched painfully wide, gaped in a way that practically invites huge monster-cocks to plow you.</b>");
 							else if(holePointer.looseness() >= 4) output("<b>Your " + assholeDescript() + " painfully dilates, the pucker now able to gape slightly.</b>");
