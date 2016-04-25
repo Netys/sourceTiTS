@@ -1682,10 +1682,13 @@ package classes.GameData
 		
 			addButton(3, "Hips", teaseHips, target, "Hips Tease", "Use your [pc.hips] to tease your enemy.");
 			
-			if ((InCollection(pc.milkType, GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK, GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK) && pc.isLactating()) || (pc.isMilkTank() && pc.canMilkSquirt())) addButton(4, "Milk Squirt", teaseSquirt, target, "Milk Squirt", "Spray the enemy with your [pc.milk], arousing them.");
-			else if (InCollection(pc.milkType, GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK, GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK) || pc.isMilkTank()) addDisabledButton(4, "Milk Squirt", "Milk Squirt", "You do not currently have enough [pc.milkNoun] available to squirt any.");
+			var extra:int = 4;
+			
+			if ((InCollection(pc.milkType, GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK, GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK) && pc.isLactating()) || (pc.isMilkTank() && pc.canMilkSquirt())) addButton(extra++, "Milk Squirt", teaseSquirt, target, "Milk Squirt", "Spray the enemy with your [pc.milk], arousing them.");
+			else if (InCollection(pc.milkType, GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK, GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK) || pc.isMilkTank()) addDisabledButton(extra++, "Milk Squirt", "Milk Squirt", "You do not currently have enough [pc.milkNoun] available to squirt any.");
 			//Reqs: PC has an aphrodisiac-laced cock big enough to slap
-			if(pc.biggestCockLength() >= 12 && pc.hasCockFlag(GLOBAL.FLAG_APHRODISIAC_LACED, pc.biggestCockIndex())) addButton(5, "Dick Slap" , dickslap, target, "Dick Slap", "Slap the enemy with your aphrodisiac-coated dick.");
+			if (pc.biggestCockLength() >= 12 && pc.hasCockFlag(GLOBAL.FLAG_APHRODISIAC_LACED, pc.biggestCockIndex())) addButton(extra++, "Dick Slap" , dickslap, target, "Dick Slap", "Slap the enemy with your aphrodisiac-coated dick.");
+			if (pc.hasPerk("Incorporeality")) addButton(extra++, "Possess" , possess, target, "Possess", "Attempt to temporarily possess a foe and force them to raise their own lusts.");
 
 			addButton(14, "Back", generateCombatMenu, undefined, "Back", "Back out. Recommended if you haven’t yet used “Sense” to determine your foe’s likes and dislikes. Remember you can pull up your appearance screen in combat or use the scene buffer buttons in the lower left corner to compare yourself to your foe’s preferences!");
 		}
@@ -2213,6 +2216,39 @@ package classes.GameData
 			}
 			processCombat();
 		}
+		private function possess(target:Creature):void
+		{
+			clearOutput();
+			output("With a smile and a wink, your form becomes completely intangible, and you waste no time in throwing yourself toward the opponent's frame.  ");
+			if (target.hasPerk("Incorporeality")) {
+				output("Sadly, it was doomed to fail, as you bounce right off your foe's ghostly form.");
+				processCombat();
+				return;
+			}
+			
+			if (!target.hasGenitals() || target.isLustImmune || target.intelligence() == 0 || target.isPlural || target.originalRace == "robot" || target.originalRace == "Automaton") {
+				output("Unfortunately, it seems they have a body that's incompatible with any kind of possession.");
+				processCombat();
+				return;
+			}
+			
+			//if (pc.intelligence() >= (target.intelligence() - 10) + rand(21)) {
+				output("Before " + target.mfn("he", "she", "it") + " can regain the initiative, you take control of one of " + target.mfn("his", "her", "its") + " limbs, vigorously masturbating for several seconds before you're finally thrown out.");
+				//var damage:Number = Math.round(pc.intelligence() / 5) + rand(pc.level) + pc.level;
+			//}
+			
+			applyTeaseDamage(pc, target, pc.intelligence() * pc.willpower() * 100 / (target.intelligence() * target.willpower()), "POSSESS");
+			
+			if (target is CrystalGooT1 && (target as CrystalGooT1).ShouldIntercept({ isTease: true }))
+			{
+				(target as CrystalGooT1).SneakSqueezeAttackReaction( { isTease: true } );
+			}
+			else if (target is CrystalGooT2 && (target as CrystalGooT2).ShouldIntercept( { isTease: true } ))
+			{
+				(target as CrystalGooT2).SpecialAction( { isTease: true } );
+			}
+			processCombat();
+		}
 		private function crotchTeaseText(target:Creature):void 
 		{
 			var msg:String = "";
@@ -2683,6 +2719,12 @@ package classes.GameData
 					output(" (<b>0</b>)");
 					teaseSkillUp(teaseType);
 				}
+				else if(teaseType == "POSSESS")
+				{
+					output("\n\nUnfortunately, it seems " + target.mfn("he", "she", "it") + " was more mentally prepared than you hoped, and you're summarily thrown out of " + target.mfn("his", "her", "its") + " body before you're even able to have fun with " + target.mfn("him", "her", "it") + ". Darn, you muse. Gotta get smarter.");
+					output(" (<b>0</b>)");
+					teaseSkillUp(teaseType);
+				}
 				else if (target is HuntressVanae || target is MaidenVanae)
 				{
 					output("\n\n");
@@ -2711,6 +2753,7 @@ package classes.GameData
 			{
 				var damage:Number = 10 * (teaseCount / 100 + 1) + attacker.sexiness() / 2 + sweatyBonus / 2;
 				if (teaseType == "SQUIRT") damage += 5;
+				if (teaseType == "POSSESS") damage += Math.min((attacker.intelligence() + attacker.willpower() - target.intelligence() - target.willpower()) / 5 + attacker.level - target.level, 0);
 				if (attacker.hasPerk("Pheromone Cloud")) damage += 1 + rand(4);
 				damage *= (rand(31) + 85) / 100;
 				
@@ -2728,6 +2771,10 @@ package classes.GameData
 				{
 					if(target.isPlural) output(target.capitalA + target.uniqueName + " are splattered with your [pc.milk], unable to get it off. All of a sudden, their faces begin to flush, and they look quite aroused. ");
 					else output(target.capitalA + target.uniqueName + " is splattered with your [pc.milk], unable to get it off. All of a sudden, " + target.mfn("his","her","its") + " " + target.face() + " begins to flush, and " + target.mfn("he","she","it") + " looks quite aroused. ");
+				}
+				if(teaseType == "POSSESS")
+				{
+					output("Recorporealizing, you notice " + possessive(target.a + target.uniqueName) + " blush, and know your efforts were somewhat successful. ");
 				}
 				if(teaseType == "DICK SLAP")
 				{

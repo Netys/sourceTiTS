@@ -2649,6 +2649,14 @@ private function talkHome():void {
 	katSexMenu();
 }
 
+private function talkWetBitch():void {
+	clearOutput();
+	output("You ask Katherine why she hangs out at the Wet Bitch after work.\n\n");
+	output("She smiles and replies that they make a mean plate of fries.  Then more seriously she says, “<i>There are a few other bars in Tel’Adre, but since Urta " + (kathIsAt(KLOC_KATHS_APT) ? "goes there it's" : "comes here this is") + " sort of the unofficial watch bar.  For average people it means starting fights or robbing drunks is a bad idea but for Watch officers it means " + (kathIsAt(KLOC_KATHS_APT) ? "it's" : "this is") + " a good place for gossip and stories or for just hanging out after work.</i>”\n\n");
+	output((kathIsAt(KLOC_KATHS_APT) ? "She scoots closer to you and says" : "She takes a sip from her mug and adds") + ", “<i>when I joined up I thought I would just head home and sleep after shifts but sometimes it helps, talking to people who have the same job as you.  Besides, it turns out it’s hard to get drinks at home in Tel’Adre.  The city worries so much about demonic liquors that only a few merchants can sell the stuff legally and they charge nearly as much as the bars.</i>”");
+	katherineMenu();
+}
+
 //Give Item:
 private function giveKatherineAnItem():void {
 	clearOutput();

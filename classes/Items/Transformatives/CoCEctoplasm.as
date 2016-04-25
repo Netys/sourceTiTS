@@ -83,13 +83,16 @@ package classes.Items.Transformatives
 			//Effect script a:  (human wang)
 			if (pc.hasCock() && changes < changeLimit && rand(3) == 0 && pc.cockTotal() > pc.cockTotal(GLOBAL.TYPE_HUMAN)) {
 				var x:int = 0;
-				for (x = 0; x < pc.cockTotal() && !(pc.cocks[x].cType == GLOBAL.TYPE_HUMAN || pc.cockTypeUnlocked(x, GLOBAL.TYPE_HUMAN)); x++) { }
+				while (x < pc.cocks.length) {
+					if (pc.cocks[x].cType != GLOBAL.TYPE_HUMAN && pc.cockTypeUnlocked(x, GLOBAL.TYPE_HUMAN)) break;
+					x++;
+				}
 				if (x >= pc.cockTotal()) {
 					output("\n\n" + pc.cockTypeLockedMessage());
 				}
 				else
 				{
-					output("\n\nA strange tingling begins behind your " + pc.cockDescript(x) + ", slowly crawling up across its entire length.  While neither particularly arousing nor uncomfortable, you do shift nervously as the feeling intensifies.  You resist the urge to undo your [pc.gear] to check, but by the feel of it, your penis is shifting form.  Eventually the transformative sensation fades, <b>leaving you with a completely human penis.</b>");
+					output("\n\nA strange tingling begins behind your [pc.cock " + x + "], slowly crawling up across its entire length.  While neither particularly arousing nor uncomfortable, you do shift nervously as the feeling intensifies.  You resist the urge to undo your [pc.gear] to check, but by the feel of it, your penis is shifting form.  Eventually the transformative sensation fades, <b>leaving you with a completely human penis.</b>");
 					pc.shiftCock(x, GLOBAL.TYPE_HUMAN);
 					changes++;
 				}
