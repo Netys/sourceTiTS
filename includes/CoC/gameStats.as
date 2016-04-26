@@ -1,3 +1,4 @@
+import classes.GameData.StatTracking;
 import classes.GLOBAL;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
@@ -99,6 +100,9 @@ public function displayEncounterLogCoCVarious():int
 					enum.push(StatTracking.getStat("coc/pregnancy/pc tigersharks") + " tigersharks");
 				output2(enum.toString() + ".");
 			}
+			if (StatTracking.getStat("coc/pregnancy/pc urta") > 0)
+				output2("\n<b>* Births, Urta Children: </b>" + StatTracking.getStat("coc/pregnancy/pc urta"));
+			
 			
 			// Father
 			if(StatTracking.getStat("coc/pregnancy/imps sired") > 0)
@@ -123,6 +127,8 @@ public function displayEncounterLogCoCVarious():int
 				output2("\n<b>* Fathered, Sheila Joeys: </b>" + StatTracking.getStat("coc/pregnancy/sheila joeys"));
 			if(StatTracking.getStat("coc/pregnancy/sheila imps") > 0)
 				output2("\n<b>* Fathered, Sheila Imps: </b>" + StatTracking.getStat("coc/pregnancy/sheila imps"));
+			if (StatTracking.getStat("coc/pregnancy/urta") > 0)
+				output2("\n<b>* Fathered, Urta Children: </b>" + StatTracking.getStat("coc/pregnancy/urta"));
 		}
 		if(totalProduce)
 		{
@@ -177,9 +183,19 @@ public function displayEncounterLogCoCVarious():int
 			output2("\n<b>* Attitude: </b>");
 			if (flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"] == -1) output2(" Upset");
 			else if (urtaJustFriends()) output2(" Friend");
-			else if (urtaLove()) output2(" Lover");
+			else if (urtaLove()) {
+				output2(" Lover");
+				if(flags["COC.URTA_QUEST_STATUS"] == 1) output2("+");
+			}
 			else if (urtaFuckbuddy()) output2(" Fuckbuddy");
 			else  output2(" Undecided");
+		}
+		if (urtaKids() > 0) {
+			enum.clear();
+			if (int(flags["COC.URTA_KIDS_MALES"]) > 0) enum.push(int(flags["COC.URTA_KIDS_MALES"]) + (int(flags["COC.URTA_KIDS_MALES"]) > 1 ? " boys" : " boy"))
+			if (int(flags["COC.URTA_KIDS_FEMALES"]) > 0) enum.push(int(flags["COC.URTA_KIDS_FEMALES"]) + (int(flags["COC.URTA_KIDS_FEMALES"]) > 1 ? " girls" : " girls"))
+			if (int(flags["COC.URTA_KIDS_HERMS"]) > 0) enum.push(int(flags["COC.URTA_KIDS_HERMS"]) + (int(flags["COC.URTA_KIDS_HERMS"]) > 1 ? " herms" : " herms"))
+			output2("\n<b>* Children: </b> " + enum.toString());
 		}
 	}
 	

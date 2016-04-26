@@ -3,16 +3,6 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "AuntNancy.as";
-include "dominika.as";
-include "Edryn.as";
-include "Niamh.as";
-include "scylla.as";
-include "Urta.as";
-include "urtaHeatRut.as";
-include "urtaQuest.as";
-include "UrtaSex.as";
-
 private function enterBarTelAdre():void {
 	//if(isThanksgiving() && flags[kFLAGS.PIG_SLUT_DISABLED] == 0) kGAMECLASS.pigSlutRoastingGreet();
 	//else 
@@ -182,10 +172,10 @@ public function barTelAdre():void {
 			addButton(counter++, "Back Room", scyllaAndUrtaSittingInATree);
 		}
 		else if (urtaBarDescript()) {
-			//if (auntNancy.auntNancy(false) && flags["COC.URTA_INCUBATION_CELEBRATION"] == undefined && urtaIsPregnant(true)) {
-				//urtaIsHappyAboutPregnancyAtTheBar();
-				//return;
-			//}
+			if (auntNancy(false) && flags["COC.URTA_INCUBATION_CELEBRATION"] == undefined && urtaIsPregnant(true)) {
+				urtaIsHappyAboutPregnancyAtTheBar();
+				return;
+			}
 			addButton(counter++, "Urta", urtaBarApproach);
 		}
 	}

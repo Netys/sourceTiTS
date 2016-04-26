@@ -180,5 +180,15 @@ public function campEvent():Boolean
 		urtaAndEdrynGodChildEpilogue();
 		return true;
 	}
+	if (flags["COC.URTA_INCUBATION"] <= timeAsStamp)
+	{
+		preggoUrtaGivingBirth();
+		return true;
+	}
+	if (flags["COC.NEED_URTA_LETTER"] <= timeAsStamp)
+	{
+		getUrtaLetter();
+		return true;
+	}
 	return false;
 }

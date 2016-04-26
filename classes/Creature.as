@@ -14333,7 +14333,8 @@
 		public function slut():Number
 		{
 			var score:Number = exhibitionism() / 4;
-			score += Math.max(libido(), cor()); // Should corruption work outside of Mareth? Not that this function would be used outside of Mareth...
+			score += lustQ() / 4;
+			score += kGAMECLASS.inMareth() ? Math.max(libido(), cor()) : libido(); // Should corruption work outside of Mareth? Not that this function would be used outside of Mareth...
 			if (isBimbo() || isBro()) score += 100;
 			return score;
 		}

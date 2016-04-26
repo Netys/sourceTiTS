@@ -5,7 +5,7 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-public function get urta():PregnancyPlaceholder // since there are no TFs... screw making actual character
+public function get urta():PregnancyPlaceholder // TODO: actual character
 {
 	var ppUrta:PregnancyPlaceholder = new PregnancyPlaceholder();
 	if(!ppUrta.hasCock()) ppUrta.createCock();
@@ -272,7 +272,7 @@ internal function goBackToUrtasForLuvinz():void {
 
 		output("Every chance you get, you brush a hand or a hip against her sensitive nether-bulge or lust-tightened nipples.  For someone with such a bad-ass reputation, Urta's quite easy to tease, and she makes adorable gasps and shuddering shakes every time you brush against her flare or surprise her with a tender caress.  She lets out cute whimpers as she shuffles onward, but she doesn't protest as her 'male' half drenches her dress with more and more slimy pre-cum.\n\n");
 		output("The door to her apartment looms before you and you push her inside.  You do your best to stifle an involuntary snicker as you close the door and see a trail of Urta's moist arousal on the street right up to the door.  The apartment is impeccably clean, though you see a few large sex-toys half-hidden about the place.  For someone as ashamed of her desires as Urta was, she sure is terrible at hiding her kinks.");
-		if(flags["COC.URTA_PETPLAY_DONE"] == undefined && urtaLove()) output("  <b>A new, shiny leather collar lies half-concealed under a cushion, as though its owner haphazardly tried to bury it in a rush.</b>");
+		if(flags["COC.URTA_PETPLAY_DONE"] == undefined && flags["COC.URTA_COLLAR_TAKEN"] == undefined && urtaLove()) output("  <b>A new, shiny leather collar lies half-concealed under a cushion, as though its owner haphazardly tried to bury it in a rush.</b>");
 		output("  The busty fox has already retreated from the front-room, the half-soaked dress on the floor the only indication she was there with you a moment ago.\n\n");
 		output("You follow a trail of pre-cum on the floor and the scent of copious female arousal deeper into the apartment, around a corner, and into Urta's relatively small bedroom.  Your vulpine lover is reclined on her bed, wearing nothing but lacy stockings and a latex cock-sheath.  ");
 		if (pc.hasCock()) output("In her hand is another sheath, ready to gird your own equipment in a fashion similar to her own.  ");

@@ -47,12 +47,12 @@ import classes.Engine.Utility.*;
 //const URTA_PETPLAY_DONE:int = 857;
 
 //Implementation of TimeAwareInterface
-public function timeChange():void
+public function UrtaTimePassedNotify():void
 {
 	//var needNext:Boolean = false;
 	//drainedByKath = false; //This var will only be set true after Kath licks Urta out - it stops you from going back immediately for more Urta sex
 	//pregnancy.pregnancyAdvance();
-	//trace("\nUrta time change: Time is " + hours + ", incubation: " + pregnancy.incubation + ", event: " + pregnancy.event);
+	//trace("\nUrta time change: Time is " + hours + ", incubation: " + pregnancy.incubation + ", event: " + urtaPregnancyEvent());
 	//if (flags["COC.NEED_URTA_LETTER"] == 1 && model.time.hours == 6) urtaPregs.getUrtaLetter(); //Urta Letters
 	//if (pregnancy.incubation == 0 && (pregnancy.type == PregnancyStore.PREGNANCY_BEE_EGGS || PregnancyStore.PREGNANCY_DRIDER_EGGS)) {
 		//pregnancy.knockUpForce(); //Silently clear Urta's egg pregnancy
@@ -61,26 +61,33 @@ public function timeChange():void
 	//}
 	//if (flags["COC.URTA_TIME_SINCE_LAST_CAME"] > 0) Flag("COC.URTA_TIME_SINCE_LAST_CAME", -1, true); //Count down timer for urta's lust
 	//if (flags["COC.URTA_EGG_FORCE_EVENT"] > 0) flags["COC.URTA_EGG_FORCE_EVENT"]--; //Countdown to urta freakout
-	//Urta egg freak out
-	//if (flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] > 1) {
-		//flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"]--;
-		//if (flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] < 1) flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] = 1;
-	//}
+	if (flags["COC.URTA_INCUBATION_EGGS"] < timeAsStamp) {
+		flags["COC.URTA_INCUBATION_EGGS"] = undefined;
+		flags["COC.URTA_INCUBATION_EGGS_TYPE"] = undefined;
+	}
+	
 	if (hours == 0) {
-		if (Flag("COC.URTA_TIME_SINCE_LAST_CAME") == 0) IncrementFlag("COC.URTA_CUM_NO_CUM_DAYS");
-		else flags["COC.URTA_CUM_NO_CUM_DAYS"] = 0;
-		if (flags["COC.URTA_PC_AFFECTION_COUNTER"] > 0) {
+		//if (Flag("COC.URTA_TIME_SINCE_LAST_CAME") == 0) IncrementFlag("COC.URTA_CUM_NO_CUM_DAYS");
+		//else flags["COC.URTA_CUM_NO_CUM_DAYS"] = 0;
+		if (flags["COC.URTA_PC_AFFECTION_COUNTER"] > 0 && flags["COC.URTA_PC_AFFECTION_COUNTER"] < 30) {
 			flags["COC.URTA_PC_AFFECTION_COUNTER"] -= .5;
 			if (flags["COC.URTA_PC_AFFECTION_COUNTER"] < 0) flags["COC.URTA_PC_AFFECTION_COUNTER"] = 0;
 		}
 	}
+	if (minutes == 0) {
+		//Urta egg freak out
+		if (flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] > 1) {
+			flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"]--;
+			if (flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] < 1) flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] = 1;
+		}
+	}
 }
 
-public function urtaIsPregnant(byPc:Boolean):Boolean {
+private var UrtaTimePassedNotifyHook: * = UrtaTimePassedNotifyGrapple();
+private function UrtaTimePassedNotifyGrapple():* { timeChangeListeners.push(UrtaTimePassedNotify); }
+
+public function urtaIsPregnant(byPc:Boolean = true):Boolean {
 	return flags["COC.URTA_INCUBATION"] != undefined;
-}
-public function urtaKids():int {
-	return int(flags["COC.URTA_KIDS_MALES"]) + int(flags["COC.URTA_KIDS_FEMALES"]) + int(flags["COC.URTA_KIDS_HERMS"]);
 }
 
 public function urtaSprite():void {
@@ -126,7 +133,7 @@ public function urtaFuckbuddy():Boolean { //Returns true if Urta is either the p
 public function urtaJustFriends():Boolean { return Flag("COC.URTA_COMFORTABLE_WITH_OWN_BODY") == 0 && flags["COC.URTA_PC_LOVE_COUNTER"] == -1; }
 
 public function urtaAtBar():Boolean { //Is Urta physically at the Wet Bitch?
-return (!urtaBusy() && flags["COC.AMILY_VISITING_URTA"] != 1 && hours > 4 && hours < 15 && flags["COC.KATHERINE_UNLOCKED"] != 3);
+	return (!urtaBusy() && flags["COC.AMILY_VISITING_URTA"] != 1 && hours > 4 && hours < 15 && flags["COC.KATHERINE_UNLOCKED"] != 3);
 }
 
 public function urtaDrunk():Boolean {
@@ -140,33 +147,32 @@ public function urtaDrunk():Boolean {
 
 private function urtaOpenAboutEdryn():Boolean {
 	//Did it come out from the scylla threesome?
-	//if(flags["COC.UNKNOWN_FLAG_NUMBER_00145"] > 0) return true;
+	if(flags["COC.UNKNOWN_FLAG_NUMBER_00145"] > 0) return true;
 	//Did it come out from marble?
-	//if(flags[kFLAGS.URTA_KNOWS_PC_HAS_MARBLE_FOLLOWER] > 0) return true;
+	if(flags["COC.URTA_KNOWS_PC_HAS_MARBLE_FOLLOWER"] > 0) return true;
 	//Did it come out from discussions?
 	if(flags["COC.URTA_OPEN_ABOUT_EDRYN"] > 0) return true;
 	return false;
 }
 
 public function knockUpUrtaChance():void { //Moved here from UrtaPregs since it needs to be accessed from outside Urta
-	////GTFO IF PREGGO
-	//if (pregnancy.isPregnant) return;
-	////GTFO IF NOT FERTILE
-	//if (flags["COC.URTA_FERTILE"] != 1) return;
-	////10% + up to 40% @ 1000mLs of cum, with bonus virility!
-	//var chance:Number = 10;
-	//temp = pc.cumQ() / 25;
-	//if (temp > 40) temp = 40;
-	//chance += temp;
-	////Bonus virility time!
-	//temp = pc.virilityQ() * 100;
-	//if (temp > 50) temp = 50;
-	//chance += temp;
-	////FINAL ROLL!
-	//if (chance > rand(100)) {
-	//pregnancy.knockUpForce(PregnancyStore.PREGNANCY_PLAYER, 384);
-	//flags[kFLAGS.URTA_PREGNANT_DELIVERY_SCENE] = 0;
-	//}
+	//GTFO IF PREGGO
+	if (flags["COC.URTA_INCUBATION"] != undefined) return;
+	if (flags["COC.URTA_INCUBATION_EGGS"] != undefined) return;
+	//GTFO IF NOT FERTILE
+	if (flags["COC.URTA_FERTILE"] != 1) return;
+	if (pc.virility() <= 0) return;
+	//10% + up to 40% @ 1000mLs of cum, with bonus virility!
+	var chance:Number = 10 + Math.min(pc.cumQ() / 25, 40);
+	//Bonus virility time!
+	chance = Math.min(chance * pc.virility(), 75);
+	//FINAL ROLL!
+	if (chance > rand(100)) {
+		//pregnancy.knockUpForce(PregnancyStore.PREGNANCY_PLAYER, 384);
+		flags["COC.URTA_INCUBATION"] = timeAsStamp + 384 * 60;
+		flags["COC.URTA_PREGNANT_DELIVERY_SCENE"] = undefined;
+		trace("Urta preg!");
+	} else trace("Urta NO preg!");
 }
 
 public function urtaBarDescript():Boolean {
@@ -181,7 +187,7 @@ public function urtaBarDescript():Boolean {
 	//[Post Pissed Talk]
 	if(flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] == 1) {
 		output("Urta is sitting at a table, swishing a bottle around and looking forlorn.  She looks up at you and sighs, \"<i>Look, I still don't think we'll ever be the same, but to be frank, we're great in the sack and I've been lonely.  For now, I'll put the past behind me.</i>\"");
-		flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] = 0;
+		flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] = undefined;
 		return true;
 	}
 	//Raphael betrayed reward
@@ -189,6 +195,7 @@ public function urtaBarDescript():Boolean {
 		output("Urta has an ecstatic grin plastered across her muzzle, and it only gets wider when she sees you.  Perhaps you should see what all the fuss is about?");
 		return true;
 	}
+	// something with Amily
 	if(flags["COC.UNKNOWN_FLAG_NUMBER_00350"] == 1) {
 		output("Urta is sitting at her usual table, holding her head in her hands.  She doesn't even seem to notice you.");
 		return true;
@@ -205,28 +212,28 @@ public function urtaBarDescript():Boolean {
 	}
 	//PREGNANT URTA
 	//if (pregnancy.isPregnant) {
-	//if (pregnancy.type == PregnancyStore.PREGNANCY_PLAYER) {
-		//urtaPregs.urtaPregAppearance();
-	//}
-	//else { //Egg-Stuffed Urta:
-		////This replaces the normal "display" for Urta in the Wet Bitch screen
-		/////This scene lasts for the duration of Urta's egg pregnancy, whatever that is
-		////Egg Level 1:
-		//if (flags["COC.URTA_EGGS"] < 20) output("Urta is sitting quietly at her usual seat, sipping a mug of some non-alcoholic beer.  Though her clothes are still in place, you can just make out the bulging midriff stretching them taut, a consequence of all the eggs in her womb.");
-		//else if (flags["COC.URTA_EGGS"] < 40) output("Urta is sitting rather uncomfortably at her usual seat.  Her swollen stomach is so large it keeps her from wearing her usual outfit, instead forcing her into a mini-shirt and a skirt bottom, allowing her midriff to be bare.  She occasionally runs a hand over the expanse, as if she can't believe it's actually there.");
-		////Egg Level 3:
-		//else output("Urta's bloated belly forces her to sit side-saddle at her usual table, the lumpy, egg-stuffed mass ballooning out in front of her.  Forced into a midriff-baring ensemble, she frequently touches it, occasionally seeming to trace an egg through the taut skin.");
-	//}
-	//return true;
-	//}
+	if (flags["COC.URTA_INCUBATION"] != undefined) {
+		urtaPregAppearance();
+		return true;
+	}
+	else if(flags["COC.URTA_INCUBATION_EGGS"] != undefined) { //Egg-Stuffed Urta:
+		//This replaces the normal "display" for Urta in the Wet Bitch screen
+		///This scene lasts for the duration of Urta's egg pregnancy, whatever that is
+		//Egg Level 1:
+		if (flags["COC.URTA_EGGS"] < 20) output("Urta is sitting quietly at her usual seat, sipping a mug of some non-alcoholic beer.  Though her clothes are still in place, you can just make out the bulging midriff stretching them taut, a consequence of all the eggs in her womb.");
+		else if (flags["COC.URTA_EGGS"] < 40) output("Urta is sitting rather uncomfortably at her usual seat.  Her swollen stomach is so large it keeps her from wearing her usual outfit, instead forcing her into a mini-shirt and a skirt bottom, allowing her midriff to be bare.  She occasionally runs a hand over the expanse, as if she can't believe it's actually there.");
+		//Egg Level 3:
+		else output("Urta's bloated belly forces her to sit side-saddle at her usual table, the lumpy, egg-stuffed mass ballooning out in front of her.  Forced into a midriff-baring ensemble, she frequently touches it, occasionally seeming to trace an egg through the taut skin.");
+		return true;
+	}
 	//Eggs Laid:
 	//This replaces the normal "display" for Urta in the Wet Bitch Screen
 	//This scene only appears once, after Urta's "pregnancy" is over
-	//if (flags[kFLAGS.URTA_TIMES_EGG_PREGGED] > 0 && !pregnancy.isPregnant && flags[kFLAGS.URTA_FLATBELLY_NOTICE] == 0) {
-	//output("Urta is seated at her usual spot in her usual dress, eagerly chugging down mug after mug of booze; her belly is washboard-flat again, and she's clearly making up for lost time after having given up alcohol for her 'pregnancy'.");
-	//flags[kFLAGS.URTA_FLATBELLY_NOTICE] = 1;
-	//return true;
-	//}
+	if (flags["COC.URTA_TIMES_EGG_PREGGED"] > 0 && flags["COC.URTA_INCUBATION"] == undefined && flags["COC.URTA_INCUBATION"] == undefined && flags["COC.URTA_FLATBELLY_NOTICE"] == 0) {
+		output("Urta is seated at her usual spot in her usual dress, eagerly chugging down mug after mug of booze; her belly is washboard-flat again, and she's clearly making up for lost time after having given up alcohol for her 'pregnancy'.");
+		flags["COC.URTA_FLATBELLY_NOTICE"] = 1;
+		return true;
+	}
 	//[Love Urta Bar Appearance]
 	if(flags["COC.URTA_PC_LOVE_COUNTER"] == 1) {
 		if(flags["COC.URTA_ALCOHOL_HABIT"] == -1 || !urtaDrunk()) output("Urta is sitting at her usual table, sipping a glass of wine and wearing a form-fitting evening gown of shimmering black.  She looks up at you, happiness filling her eyes when she notices you entering the bar.");
@@ -320,19 +327,19 @@ public function urtaBarApproach():void {
 		return;
 	}
 	//TO ZE FLIPOUT!
-	//if(flags["COC.URTA_EGG_FORCE_EVENT"] > 0) {
-		//urtaChewsOutPC();
-		//return;
-	//}
+	if(flags["COC.URTA_EGG_FORCE_EVENT"] < timeAsStamp && flags["COC.URTA_EGG_FORCE_EVENT"] != -1) {
+		urtaChewsOutPC();
+		return;
+	}
 	if (canTalkToUrta()) { //Katherine training discussion
 		talkToUrta();
 		return;
 	}
 	//PREGNANT URTA
-	//if (pregnancy.type == PregnancyStore.PREGNANCY_PLAYER) {
-	//urtaPregs.urtaPreggoApproached();
-	//return;
-	//}
+	if (flags["COC.URTA_INCUBATION"] != undefined) {
+		urtaPreggoApproached();
+		return;
+	}
 	//HERE WE GOEZ!
 	if(flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"] >= 5 && ((pc.hasStatusEffect("Rut") && pc.hasCock()) || (pc.hasStatusEffect("Heat") && pc.hasVagina())))
 	{
@@ -370,7 +377,7 @@ public function urtaBarApproach():void {
 			//simpleChoices("Her Place",goBackToUrtasForLuvinz,"Suck Off",blowUrtaUnderTheTableLuv,"Eat Out",eatUrtaOutNomNomPussy,"",0,"",0);
 			clearMenu();
 			addButton(0, "Her Place", goBackToUrtasForLuvinz, null, "Her Place", "Go to Urta's apartment for sex.");
-			if (flags["COC.URTA_CUM_NO_CUM_DAYS"] >= 5) 
+			if (flags["COC.URTA_TIME_SINCE_LAST_CAME"] + 3 * 24 * 60 < timeAsStamp) 
 				addButton(1,"Suck Off",slurpFawkesCocksForFunAndInflation, null, "Suck Off", "Suck Urta's dick until she cums! \n\nNote: Given how long she hasn't relieved, this is most likely going to fill your belly.");
 			else addButton(1, "Suck Off", blowUrtaUnderTheTableLuv, null, "Suck Off", "Suck Urta's dick until she cums!");
 			
@@ -427,19 +434,19 @@ public function urtaBarApproach():void {
 		//CUT FOR NOW output("throw you over the table and fuck you,");
 		output("let the beast loose and bounce you on my lap while we drink, ");
 		output("jerk off onto your face in front of everyone, or have to remember your ass for later when you bolt for the door.  What'll it be, hun?</i>\"");
-		//temp = null;
-		//if(pc.canOviposit()) {
-			//if(flags[kFLAGS.URTA_TIMES_EGG_PREGGED] == 0) output("\n\nHmm... sounds like she wants to fuck almost as badly as you want to get these eggs out of you.  Besides, didn't Urta say to you once that she's basically barren and sterile?  You'd be doing her a favor by letting her carry your eggs, wouldn't you?  Let's see if she's drunk enough to let you fill her full...");
-			//temp = giveTheFoxSomeEggs;
-		//}
-		//simpleChoices("Jerkoff",getAPublicFacialFromUrta,"Anal Ride",takeUrtaInTheButtPublically,"Lay Eggs",temp,"Spank Her",spank,"Leave",barTelAdre);
 		clearMenu();
 		addButton(0, "Jerkoff", getAPublicFacialFromUrta);
-		if (pc.slut() < 33 && pc.exhibitionism() < 33) addDisabledButton(1, "Anal Ride", "Anal Ride", "No way!  You're not going to do that in front of EVERYONE.");
+		if (pc.cor() < 33 && pc.exhibitionism() < 33) addDisabledButton(1, "Anal Ride", "Anal Ride", "No way!  You're not going to do that in front of EVERYONE.");
 		else addButton(1, "Anal Ride", takeUrtaInTheButtPublically);
-		//addButton(2,"Lay Eggs",temp);
-		if((pc.hasCock() && pc.cockThatFits(urtaCapacity()) >= 0) || pc.hasKeyItem("Deluxe Dildo") >= 0)
-			addButton(3,"Spank Her",spankTheShitOutOfUrtaAndMakeHerCreamHerselfFromProstateStimulationAloneLikeTheHornyDrunkenSlutSheReallyIs);
+		
+		if(pc.canOviposit() && pc.eggs >= 10) {
+			if(int(flags["COC.URTA_TIMES_EGG_PREGGED"]) == 0) output("\n\nHmm... sounds like she wants to fuck almost as badly as you want to get these eggs out of you.  Besides, didn't Urta say to you once that she's basically barren and sterile?  You'd be doing her a favor by letting her carry your eggs, wouldn't you?  Let's see if she's drunk enough to let you fill her full...");
+			addButton(2, "Lay Eggs", giveTheFoxSomeEggs);
+		} else addDisabledButton(2, "Lay Eggs", "Lay Eggs", "This scene requires you to have ovipositor and eggs.");
+		
+		if((pc.hasCock() && pc.cockThatFits(urtaCapacity()) >= 0) || pc.hasKeyItem("Deluxe Dildo"))
+			addButton(3, "Spank Her", spankTheShitOutOfUrtaAndMakeHerCreamHerselfFromProstateStimulationAloneLikeTheHornyDrunkenSlutSheReallyIs);
+		else addDisabledButton(3, "Spank Her", "Spank Her", "This scene requires you to have fitting cock or Tamani's dildo.");
 		//if(flags[kFLAGS.RAPHEAL_COUNTDOWN_TIMER] == -2 && RaphaelLikes() && flags[kFLAGS.URTA_X_RAPHAEL_HAPPENED] == 0) {
 			//output("\n\nYou know Urta and Raphael get along about as well as cats and dogs, but it might be fun to have them double-team you in the dark.");
 			//addButton(8,"3SomeSurprise",urtaAndRaphaelSurprise);
@@ -463,17 +470,17 @@ public function urtaBarApproach():void {
 		}
 		else output("She asks, \"<i>Would you like to go back to my place and help me play with my 'little' friend again?  Or maybe you could climb under the table and give me some relief?</i>\"");
 	}
-	//if(pc.canOviposit()) {
-		//if(flags[kFLAGS.URTA_TIMES_EGG_PREGGED] == 0) output("\n\nYou contemplate asking Urta to help you take a load off your abdomen, but decide against it; Urta's probably too shy and pent up to let you fill her with your eggs. Maybe when she's gotten herself drunk and is more pliable, though...");
-		//else output("\n\nYou don't think it's likely Urta would agree to host your eggs in her present state; wait until she's turned down her inhibitions before asking.");
-	//}
+	if(pc.canOviposit()) {
+		if(int(flags["COC.URTA_TIMES_EGG_PREGGED"]) == 0) output("\n\nYou contemplate asking Urta to help you take a load off your abdomen, but decide against it; Urta's probably too shy and pent up to let you fill her with your eggs. Maybe when she's gotten herself drunk and is more pliable, though...");
+		else output("\n\nYou don't think it's likely Urta would agree to host your eggs in her present state; wait until she's turned down her inhibitions before asking.");
+	}
 	//[Under Table BJ] [Public Jerkoff onto your face] [Public Buttfucking (Receiver)] [Tender lovemaking @ Urtas] [Minotaur Cum-Addict Special?] [TABLE FUCK]
 	//simpleChoices("Hidden BJ",blowUrtaUnderTable,"Urta's Place",goBackToUrtasForLuvinz,"",0,"",0,"Leave",barTelAdre);
 	clearMenu();
 	addButton(0, "Urta's Place", goBackToUrtasForLuvinz, null, "Urta's Place", "Go to Urta's apartment for sex.");
-	if (flags["COC.URTA_CUM_NO_CUM_DAYS"] >= 5) addButton(1, "Hidden BJ", slurpFawkesCocksForFunAndInflation, null, "Hidden BJ", "Suck Urta's dick until she cums! \n\nNote: Given how long she hasn't relieved, this is most likely going to fill your belly.");
+	if (flags["COC.URTA_TIME_SINCE_LAST_CAME"] + 3 * 24 * 60 < timeAsStamp) addButton(1, "Hidden BJ", slurpFawkesCocksForFunAndInflation, null, "Hidden BJ", "Suck Urta's dick until she cums! \n\nNote: Given how long she hasn't relieved, this is most likely going to fill your belly.");
 	else addButton(1, "Hidden BJ", blowUrtaUnderTable, null, "Hidden BJ", "Suck Urta's dick until she cums!");
-	addButton(4, "Leave", barTelAdre);
+	addButton(14, "Leave", barTelAdre);
 }
 
 private function drinkUrtasBooze():void {
@@ -927,10 +934,10 @@ public function urtaDialogueMenu():void {
 	addButton(2, "The Watch", urtaDiscussesTheWatch);
 	if (!urtaJustFriends()) addButton(3, "Alcoholism", urtaDiscussesAlcholism);
 	if (flags["COC.KATHERINE_UNLOCKED"] >= 4) addButton(5, "Katherine", urtaDiscussessKatherine);
-	//if(urtaKids() > 0 && pc.hasKeyItem("Spare Key to Urta's House") < 0)
-	//addButton(4,"Visit Kids",urtaPregs.visitKidsFirstTime);
+	if(urtaKids() > 0 && !pc.hasKeyItem("Spare Key to Urta's House"))
+	addButton(4, "Visit Kids", visitKidsFirstTime);
 	//else
-	//if(flags[kFLAGS.FIRST_TIME_AT_URTA_HOUSE] > 0) addButton(4,"Her House",urtaPregs.talkToUrtaAboutHerHouse);
+	if (flags["COC.FIRST_TIME_AT_URTA_HOUSE"] > 0) addButton(4, "Her House", talkToUrtaAboutHerHouse);
 	addButton(14, "Leave", barTelAdre);
 }
 
@@ -2385,6 +2392,260 @@ private function tellUrtaToStayTheSame():void {
 	//(+love score)
 	urtaLove(5);
 	processTime(6);
+	clearMenu();
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+}
+
+//Suggestion: One could either deposit the eggs inside urta (if drunk enough to agree:P) or Urta could help you fertilize them for someone else (Horsecock stretching yer Ovipositer)
+//Urta's not fertile yet though
+//Display Eggs option
+
+
+//Eggs Option
+public function giveTheFoxSomeEggs():void {
+	clearOutput();
+	if (flags["COC.URTA_TIMES_EGG_PREGGED"] > 0) {
+		repeatUrtaEgging();
+		return;
+	}
+	output("You give the drunken fox a winning smile and sashay towards her; the herm's eyes lock onto your body as you approach.  Gently you run your hand down her cheek, lean in close to her face and ask if she'd like to help both of you sort something out.  At her baffled but willing look, you whisper that you could make her a mommy if she likes.");
+
+	output("\n\nUrta's eyes start to grow wet with tears, her lower lip wobbling sadly as one hand automatically snakes to her flat, toned belly.  \"<i>M-mommy?</i>\" she mumbles to you.");
+
+	output("\n\nYou hasten to cut that off, telling her that you can show her what it's like to be pregnant - and to have a lot of fun doing so.  This makes the herm vixen stop sniffling and start snuggling against you, impatient to begin.  However, ");
+	if (pc.exhibitionism() >= 66) output("as much fun as it might be, ");
+	output("you don't think it's a good idea to throw her over a table and fill her full of eggs here in front of everyone.  So, you whisper into her ear that if she wants you, she'll need to come out back with you.  Promptly rising from your seat, you head out through the back door that leads to the alley where you and Urta had your first encounter, swinging your hips alluringly.  Urta hastens to follow, tongue lolling in lusty anticipation, cock blatantly bulging against her undergarments; you're almost surprised she doesn't leave a slug-like trail of mixed drool and pre-cum in her wake.");
+
+	output("\n\nYou slip out through the door and playfully hide yourself behind the adjacent wall.  When the drunken vixen stumbles through, looking for you, you pounce, grabbing her from behind and gently shoving her towards a handy crate near the wall.  Urta is so far gone with lust and beer that she allows you to bend her over without fighting back.  Indeed, she giggles and wags her tail, brushing the fluffy appendage tantalizingly across your crotch.  You waste little time in tugging off first your [pc.gear], and then enough of her clothes to leave her bottom half exposed, rubbing your hand teasingly against her heavy, swaying balls and dripping wet cunt.");
+
+	output("\n\nBut it's a far different need that is driving you now, and you can't be bothered to engage in much foreplay.  You straddle the sloshed fox, ");
+	if (pc.isTaur()) output("positioning your [pc.lowerBody], ");
+	else if (pc.isDrider()) output("[pc.lowerBody] over the bulk of her back, ");
+	output("and release your ovipositor from its usual hiding slit, already dripping with ");
+	if (pc.canOvipositSpider()) output("green slime");
+	else if (pc.canOvipositBee()) output("honey");
+	else output("[pc.girlCumNoun]");
+	output(" in anticipation of laying.  The appendage droops down, curling around to slide its wet length against Urta's balls and the base of her cock.  \"<i>[pc.name], wha...?</i>\" she slurs at you, but you just gently shush her and tell her to relax.  With a little effort, you bring it slithering back up to pry at the dampness of her netherlips...");
+
+	output("\n\nUrta moans like the slutty drunk she is as your tubular appendage worms its way inside of her.  You shiver in pleasure at her hot, wet depths as they embrace your strange phallic appendage, but keep sliding it forward, pushing deeper and deeper inside of her in pursuit of your ultimate goals.  Urta's cock jumps and waggles with each thrust of your ovipositor inside of her, pre-cum gushing forward and drooling wet and slick down her length, splatting moistly onto the ground.");
+	if (pc.hasGenitals()) {
+		output("  Your own ");
+		if (pc.hasCock()) output("[pc.cock]");
+		if (pc.isHerm()) output(" and ");
+		if (pc.hasVagina()) output("[pc.vagina]");
+		if (pc.isHerm()) output(" are ");
+		else output(" is ");
+		output("starting to grow wet with arousal, matting her back with your sexual fluids, but you ignore them, too caught up in your need of release to bother with conventional pleasures.");
+	}
+	else output("  The entirety of your sexual world begins and ends with your ovipositor, with the sensation of the mock-cock burrowing inexorably towards Urta's womb overwhelming you with pleasure.  Having no other sexual organs to distract you allows you to fully embrace it; you thrust harder and harder, desperate to ensure you have reached the womb before you start to lay.");
+
+	output("\n\nFinally, blissfully, you reach the cervix; with one last mighty thrust, eliciting a shriek of arousal-tinged pain and an explosive gout of cum from your vulpine brood-host, you penetrate her all the way into the womb.  You both hover there, gasping as you recover from your mutual exertions, when the wonderful tingling of your eggs moving emanates from your insectile fuckspear.  You moan and groan as contractions push the first of your eggs down, pumping a steady stream of ");
+	if (pc.canOvipositSpider()) output("spider-goo");
+	else if (pc.canOvipositBee()) output("honey");
+	else output("[pc.girlCumNoun]");
+	output(" to keep Urta moist and slick and pliable.");
+
+	output("\n\nThe drunken herm barks and whimpers with pleasure as your egg stretches your ovipositor - and by extension the walls of her pussy - on its passage, rubbing her in a way equivalent to the most wonderfully filling of cocks.  Her inner walls clamp down on your protruding organ, rippling and suckling as if anxious to pull your first egg inside of her - already, the stimulation makes the second of your eggs start pulsing down, a third close behind on its metaphorical heels.  Urta lets out a howl as the first egg pushes and finally explosively propels itself into her waiting womb, the stimulation pushing her to orgasm; frothy vixen-spooge fountains all over the ground, noisily splatting and drizzling under her.  When the second and third eggs push their way in, it's too much for both of you; Urta cums for a second time, while you cum for the first time, ");
+	var wetness:Number = 0;
+	if (pc.hasVagina()) wetness += pc.wetness() * 100;
+	if (pc.hasCock()) wetness += pc.cumQ();
+	if (wetness < 300) output("splattering");
+	else if (wetness < 500) output("matting");
+	else if (wetness < 1000) output("soaking");
+	else output("flooding");
+	output(" the fox with your gushing ");
+	if (pc.hasCock() && !pc.hasVagina()) output("[pc.cum]");
+	else if (!pc.hasCock() && pc.hasVagina()) output("[pc.girlCum]");
+	else output("mixed sexual fluids");
+	output(".");
+
+	output("\n\nEgg after egg rolls down your ovipositor, each eliciting a gurgling splurt of cum from Urta's immense dick as it gushes into her, ensuring  the ground under her is soaked with sexual fluids");
+	if (pc.hasGenitals()) output(" just as her back is from your own release");
+	output(".");
+
+	//[Egg Level 1:
+	if (pc.eggs < 20) output("  Urta's stomach starts to swell as your clutch of eggs fills her once-empty womb, stretching into a noticeable bulge, though not one that she couldn't hide if she wanted.");
+
+	//[Egg Level 2:
+	else if (pc.eggs < 40) output("  As the eggs keep on coming, Urta's womb swells and bulges, crammed full of goo and eggs, growing larger and larger until Urta could easily pass for an expectant mother, ready to give birth any day now.");
+
+	//[Egg Level 3:
+	else output("  You stuff Urta with eggs until you're wondering how many either of you can hold. Her belly just keeps getting rounder and rounder even as your eggs keep coming; soon, not only does she look like a woman pregnant with multiples, her skin is visibly stretched over the eggs, giving it a distinctively lumpy look rather than the round, smooth bulge she might have if your load was smaller.");
+
+	output("\n\nFinally, your eggs are all spent - you're not sure either of you could have lasted much longer.  You barely have the strength to wobble off of Urta and then topple onto your backside in the sodden earth, Urta's multiple orgasms having flooded the dusty alley and turned it into a boggy quagmire of jizz-mud.  Urta, meanwhile, barely has the strength to keep herself from falling face-first into her leavings, though she still sinks slowly to her knees and then flops into the boggy surface. After you have regained your wind, you smirk and ask if Urta enjoyed herself.");
+
+	output("\n\n... You get no answer save a drunken snore.  It looks like it was all too much for the already drunk herm; she's passed out!");
+
+	//[Corruption <50:
+	if(pc.cor() >= 50 || pc.isAss()) output("\n\nWith a shrug, figuring Urta's probably slept more than one drunken debauch off in this very alley, you turn and start walking back to camp, whistling in pleasure.  A weight is off your abdomen, a certain itch has been scratched very pleasantly, and all is right with the world.");
+	else {
+		output("\n\nWell, you can't leave her here like this, ");
+		if (pc.fertilizedEggs == 0) output("even if your eggs weren't fertile, ");
+		output("and so you");
+		if (pc.bodyStrength() < pc.fullBodyWeight() + urta.fullBodyWeight()) output(" painstakingly");
+		else output(" easily");
+		output(" heave the drunken, egg-swollen fox upright.  Supporting her on your shoulder, you awkwardly carry-drag her back to her house, stopping for the occasional orientations in the city's still-unfamiliar streets.  Once there, you gratefully lay her down on her bed, give her bloated belly a pat, and head back to camp, feeling much lighter now.");
+	}
+	flags["COC.URTA_EGGS"] = pc.eggs;
+	flags["COC.URTA_FERTILE_EGGS"] = pc.fertilizedEggs;
+	IncrementFlag("COC.URTA_TIMES_EGG_PREGGED");
+	//if (pc.findPerk(PerkLib.BeeOvipositor) >= 0)
+		//pregnancy.knockUpForce(PregnancyStore.PREGNANCY_BEE_EGGS, 72);
+	//else
+		//pregnancy.knockUpForce(PregnancyStore.PREGNANCY_DRIDER_EGGS, 72);
+	flags["COC.URTA_INCUBATION_EGGS"] = timeAsStamp + 72 * 60;
+	flags["COC.URTA_INCUBATION_EGGS_TYPE"] = pc.canOvipositBee() ? "bee" : "spider";
+	flags["COC.URTA_FLATBELLY_NOTICE"] = 0;
+	//First time, tag for triggering freakout!
+	if (flags["COC.URTA_EGG_FORCE_EVENT"] != -1) flags["COC.URTA_EGG_FORCE_EVENT"] = timeAsStamp + 48 * 60;
+	pc.dumpEggs();
+	processTime(25 + rand(10));
+	pc.orgasm();
+	clearMenu();
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+}
+
+
+//Urta Chews You Out:
+//Play this scene automatically after PC impreggnates Urta for the first time
+// This scene makes little sense post-quest... @Etis
+public function urtaChewsOutPC(newScreen:Boolean = true):void {
+	if (newScreen) clearOutput();
+	else output("\n");
+	output("Urta looks up at you and snorts fiercely; you almost expect steam to come flaring out of her nostrils, and her livid eyes are doing their best to burn holes straight through you.  \"<i>There you are, [pc.name]!  You have some nerve!</i>\"");
+
+	output("\n\nYou casually pull up a seat and ask why that is.");
+
+	output("\n\n\"<i>Why's that?  Are you blind?!  Look at me!  I look like a stuffed fowl ready for the oven, and you're the one who did the stuffing!</i>\" the fox hisses at you; looking almost as confused as she is angry.");
+
+	output("\n\nWith the same nonchalance, you point out that Urta agreed to let you fill her with eggs in the first place; you asked, you didn't make her go along with it.");
+
+	output("\n\n\"<i>I was drunk!  I do stupid shit when I'm drunk!</i>\" Urta hisses at you, fingers idly tapping at the dome of her gurgling belly.  She catches herself and stops with a nervous frown.");
+
+	output("\n\nSo, she didn't enjoy it?  That she isn't actually enjoying herself now");
+	if ((pc.cor() > 50 || pc.isAss()) && flags["COC.URTA_QUEST_STATUS"] != 1) output(", especially given this may be the closest she'll ever get to experiencing pregnancy");
+	output("?");
+
+	output("\n\nAt that, Urta does a full-body flinch, a faint hint of red blooming under the fur on her cheeks.  \"<i>Well... no, I guess I'm not saying that...</i>\" she admits.  She pats her belly with one hand, a faint smile perking her lips.  But then she looks upset again.  \"<i>But... what am I supposed to do when the eggs come out?");
+	if (flags["COC.URTA_QUEST_STATUS"] != 1) output("  I CAN'T look after any babies - this city needs every able body it can watching for demons, not replacing pacifiers!");
+	output("</i>\"");
+
+	//[Unfertilised Eggs:
+	if (flags["COC.URTA_FERTILE_EGGS"] == 0) {
+		output("\n\nYou tell her that she doesn't need to worry about that; they're all blanks.  Nothing but shell and goo, no babies.  At this, Urta looks disgruntled.  \"<i>Terrific.  So you stuff me full of eggs and there're not even any babies in them?  Well, I guess I can sell them or throw them out or something when I lay them,</i>\" she proclaims.");
+		if (pc.libido() > 49 && pc.hasVagina()) {
+			output("  Raising an eyebrow, you lean closer and inform her that you could make babies for her - she just needs to find you a big cock dripping with, and this is the important part, <i>fertile</i> seed.");
+
+			output("\n\nUrta shifts in her seat.  \"<i>Er, well.  I, ah... I'll keep... an eye out for one.</i>\"");
+		}
+	}
+	//[Giant Bee:
+	else if (flags["COC.URTA_INCUBATION_EGGS_TYPE"] == "bee") output("\n\nWell, you're pretty sure the eggs will just hatch into bee swarms; doesn't Tel'Adre have farms of some kind that could use them, you ask?  Urta looks thoughtful for a few moments, then nods.  \"<i>Yeah, and the farmers often complain that the crops don't produce so well because the drought means there's almost no insects to pollinate them any more.  They'd be happy to take in some swarms, even if they will grow up and move away after three years,</i>\" she mumbles, more to herself than to you.");
+	//[Drider:
+	else output("\n\nMaybe she could give them up to a tailor's guild or something?  After all, they'll be driders like you are now, so they could produce lots of silk for the city.  The fox-morph looks puzzled at the idea, then rubs her chin contemplatively.  \"<i>I guess that might work...</i>\" she mumbles.");
+
+	output("\n\nIt seems like Urta has cooled down, and you ask if things are okay now.  Your vulpine lover and current surrogate looks at you with blank eyes for a few moments, again stroking the drum-taut fur of her midriff, then huffs in exasperation, resting her chin in the palm of one hand as she leans against the table.  \"<i>All right... it was kind of fun...  Just don't do this to me very often!  I have a job besides being a ready breeding womb for you!</i>\"");
+
+	urtaLove(-10);
+	output("\n\nYou kiss the embarrassed fox on the nose and tell her to take care before heading out.  She grabs you by the neck and kisses you back hard, whispering, \"<i>Don't try to make me do this sober, sneaky ");
+	if (pc.canOvipositSpider()) output("spider");
+	else output("little bee");
+	output("...</i>\"\n");
+	//(Technically finished, now, but waiting Fen's okay before adding repeatable version)
+	flags["COC.URTA_EGG_FORCE_EVENT"] = -1;
+	processTime(15);
+	if (newScreen) addNextButton();
+}
+
+
+//Repeatable Eggs Option:
+private function repeatUrtaEgging():void {
+	clearOutput();
+	//output(images.showImage("urta-egg-repeat"), false);
+	output("With a smile, you ask if Urta would be willing to let you lay a few eggs in her womb again?");
+
+	output("\n\nThe drunken vixen giggles and taps you playfully on the nose.  \"<i>Naughty, naughty [pc.name]... but, if you got eggs for me, I'll hatch 'em for yah, I guesh.  Jusht make sure you put them in the right hole, okay?  I don't want no eggs up da butt.</i>\"  She giggles again and gets up, heedless of the way her erection is ");
+	if (!urtaLove()) output("blatantly hanging out of her stockings and drooling pre-cum everywhere");
+	else output("vulgarly bulging her dress and rendering it sopping wet from her arousal");
+	output(", before sashaying in a drunkenly exaggerated fashion out towards the alleyway where you and she first began your relationship- and where you first 'impreggnated' her.");
+
+	output("\n\nYou follow close behind, striving to avoid slipping in the fox-goo trail she leaves in her wake.  By the time you catch up, she's already stripped down and is leaning over a crate for support, idly stroking her huge mare-prick with a free hand even as her tail wags in anticipation.  \"<i>Well, whatcha waiting for, lover?  Come 'n' geddit!</i>\"");
+
+	output("\n\nYou waste little time in tugging off your [pc.gear] and then approaching the eager fox, who uses her tail to tease you by brushing it tantalizingly across your crotch.  You return the favor, rubbing your hand teasingly against her heavy, swaying balls and dripping wet cunt.");
+
+	output("\n\nBut it's a far different need that is driving you now, and you can't be bothered to engage in much foreplay.  You straddle the sloshed fox, ");
+	if (pc.isTaur() || pc.isDrider()) {
+		if (pc.isTaur()) output("positioning your [pc.lowerBody]");
+		else output("[pc.lowerBody] over the bulk of her back");
+		output(", ");
+	}
+	output("and release your ovipositor from its usual hiding slit, already dripping with ");
+	if (pc.canOvipositSpider()) output("green slime");
+	else if (pc.canOvipositBee()) output("honey");
+	else output("[pc.girlCumNoun]");
+	output(" in anticipation of laying.  The appendage droops down, curling around to slide its wet length against Urta's balls and the base of her cock.  In her present state, there's no need to tell her to relax; indeed, she whimpers eagerly in anticipation of what's to come.  With a little effort, you bring it slithering back up to pry at the dampness of her netherlips...");
+
+	output("\n\nUrta moans like the slutty drunk she is as your tubular appendage worms its way inside of her.  You shiver in pleasure at her hot, wet depths as they embrace your strange phallic appendage, but keep sliding it forward, pushing deeper and deeper inside of her in pursuit of your ultimate goals.  Urta's cock jumps and waggles with each thrust of your ovipositor inside of her, pre-cum gushing forward and drooling wet and slick down her length, splatting moistly onto the ground.");
+	//((sexed)
+	if (pc.hasGenitals()) {
+		output("\n\nYour own ");
+		if (pc.hasCock()) output("[pc.cock]");
+		if (pc.isHerm()) output(" and ");
+		if (pc.hasVagina()) output("[pc.vagina]");
+		output(" are starting to grow wet with arousal, matting her back with your sexual fluids, but you ignore them, too caught up in your need of release to bother with conventional pleasures.");
+	}
+	else output("\n\nThe entirety of your sexual world begins and ends with your ovipositor, with the sensation of the mock-cock burrowing inexorably towards Urta's womb overwhelming you with pleasure.  Having no other sexual organs to distract you allows you to fully embrace it; you thrust harder and harder, desperate to ensure you have reached the womb before you start to lay.");
+
+	output("\n\nFinally, blissfully, you reach the cervix; with one last mighty thrust, eliciting a shriek of arousal-tinged pain and an explosive gout of cum from your vulpine brood-host, you penetrate her all the way into the womb.  You both hover there, gasping as you recover from your mutual exertions, when the wonderful tingling of your eggs moving emanates from your insectile fuckspear.  You moan and groan as contractions push the first of your eggs down, pumping a steady stream of ");
+	if (pc.canOvipositSpider()) output("spider-goo");
+	else if (pc.canOvipositBee()) output("honey");
+	else output("[pc.girlCumNoun]");
+	output(" to keep Urta moist and slick and pliable.");
+
+	output("\n\nThe drunken herm barks and whimpers with pleasure as your egg stretches your ovipositor - and by extension the walls of her pussy - on its passage, rubbing her in a way equivalent to the most wonderfully filling of cocks.  Her inner walls clamp down on your protruding organ, rippling and suckling as if anxious to pull your first egg inside of her - already, the stimulation makes the second of your eggs start pulsing down, a third close behind on its metaphorical heels.  Urta lets out a howl as the first egg pushes and finally explosively propels itself into her waiting womb, the stimulation pushing her to orgasm; frothy vixen-spooge fountains all over the ground, noisily splatting and drizzling under her.  When the second and third eggs push their way in, it's too much for both of you; Urta cums for a second time, while you cum for the first time, ");
+	var wetness:Number = 0;
+	if (pc.hasVagina()) wetness += pc.wetness()*100;
+	if (pc.hasCock()) wetness += pc.cumQ();
+	if (wetness < 300) output("splattering");
+	else if (wetness < 500) output("matting");
+	else if (wetness < 1000) output("soaking");
+	else output("flooding");
+	output(" the fox with your gushing ");
+	if (pc.hasCock() && !pc.hasVagina()) output("[pc.cum]");
+	else if (!pc.hasCock() && pc.hasVagina()) output("[pc.girlCum]");
+	else output("mixed sexual fluids");
+	output(".");
+
+	output("\n\nEgg after egg rolls down your ovipositor, each eliciting a gurgling splurt of cum from Urta's immense dick as it gushes into her, ensuring  the ground under her is soaked with sexual fluids");
+	if (pc.wetness() > 0) output(" just as her back is from your own release");
+	output(".");
+
+	//[Egg Level 1:
+	if (pc.eggs < 20) output("  Urta's stomach starts to swell as your clutch of eggs fills her once-empty womb, stretching into a noticeable bulge, though not one that she couldn't hide if she wanted.");
+
+	//[Egg Level 2:
+	else if (pc.eggs < 40) output("  As the eggs keep on coming, Urta's womb swells and bulges, crammed full of goo and eggs, growing larger and larger until Urta could easily pass for an expectant mother, ready to give birth any day now.");
+
+	//[Egg Level 3:
+	else output("  You stuff Urta with eggs until you're wondering how many either of you can hold. Her belly just keeps getting rounder and rounder even as your eggs keep coming; soon, not only does she look like a woman pregnant with multiples, her skin is visibly stretched over the eggs, giving it a distinctively lumpy look rather than the round, smooth bulge she might have if your load was smaller.");
+
+	output("\n\nFinally, your eggs are all spent - you're not sure either of you could have lasted much longer.  You barely have the strength to wobble off of Urta and then topple onto your backside in the sodden earth, Urta's multiple orgasms having flooded the dusty alley and turned it into a boggy quagmire of jizz-mud.  Urta, meanwhile, barely has the strength to keep herself from falling face-first into her leavings, though she still sinks slowly to her knees and then flops into the boggy surface. After you have regained your wind, you smirk and ask if Urta enjoyed herself.");
+
+	//(Regular:
+	if (!urtaLove()) output("\n\nUrta laughs drunkenly.  \"<i>Like, that's the weirdest fuck I've ever had... but, damn if it's not fun.  Maybe come and do that again, eh?</i>\" she suggests.");
+
+	else output("\n\nShe gives you a dopey grin and nods, but then looks sad.  \"<i>I do like the sex, but... I kinda wish these were our babies for real, y'know?</i>\" She mumbles.");
+
+	output("\n\nAwkwardly hauling her distended form to its feet, she gives you a sloppy kiss, grabs her clothes and starts waddling back home, clearly intending to sleep it off.  You watch her go, then pick yourself up and head back to camp.");
+	flags["COC.URTA_EGGS"] = pc.eggs;
+	flags["COC.URTA_FERTILE_EGGS"] = pc.fertilizedEggs;
+	IncrementFlag("COC.URTA_TIMES_EGG_PREGGED");
+	flags["COC.URTA_INCUBATION_EGGS"] = timeAsStamp + 72 * 60;
+	flags["COC.URTA_INCUBATION_EGGS_TYPE"] = pc.canOvipositBee() ? "bee" : "spider";
+	flags["COC.URTA_FLATBELLY_NOTICE"] = 0;
+	pc.dumpEggs();
+	processTime(20 + rand(10));
+	pc.orgasm();
 	clearMenu();
 	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }

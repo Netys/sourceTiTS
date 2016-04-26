@@ -3,6 +3,7 @@ package classes.GameData
 	import classes.Characters.PlayerCharacter;
 	import classes.Creature;
 	import classes.Engine.Combat.DamageTypes.DamageResult;
+	import classes.Engine.Utility.enum;
 	import classes.Items.Armor.GooArmor;
 	import classes.ItemSlotClass;
 	import classes.StorageClass;
@@ -1754,11 +1755,12 @@ package classes.GameData
 			//75+
 			if(select == 0)
 			{
-				output("Turning away at an opportune moment, you slip down your clothes and reach back, slapping your [pc.butt] into a bounce before shaking it for " + target.a + target.uniqueName + ". Your technique has grown impeccable, and you bounce your [pc.butt] masterfully, even reaching back and spreading your cheeks, giving " + target.a + target.uniqueName + " an excellent view of your [pc.asshole]");
-				if(pc.hasVagina() && pc.balls > 0) output(" and [pc.vaginas] and [pc.balls]");
-				else if(pc.hasVagina()) output(" and [pc.vaginas]");
-				else if(pc.balls > 0) output(" and [pc.balls]");
-				output(".");
+				output("Turning away at an opportune moment, you slip down your clothes and reach back, slapping your [pc.butt] into a bounce before shaking it for " + target.a + target.uniqueName + ". Your technique has grown impeccable, and you bounce your [pc.butt] masterfully, even reaching back and spreading your cheeks, giving " + target.a + target.uniqueName + " an excellent view of your ");
+				enum.clear();
+				enum.push("[pc.asshole]");
+				if(pc.hasVagina()) enum.push("[pc.vaginas]");
+				if(pc.balls > 0) enum.push("[pc.balls]");
+				output(enum.toString() + ".");
 			}
 			//50+
 			else if(select == 1)

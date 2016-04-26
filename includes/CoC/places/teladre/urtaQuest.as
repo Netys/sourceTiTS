@@ -32,7 +32,7 @@ import classes.Engine.Utility.*;
 //const EDRYN_BIRF_COUNTDOWN:int = 722;
 
 public function urtaBusy():Boolean {
-	return (flags["COC.EDRYN_PREGNANCY_TAOTH"] != undefined || flags["COC.URTA_QUEST_STATUS"] == -1);
+	return (flags["COC.EDRYN_PREGNANCY_TAOTH"] != undefined || flags["COC.URTA_QUEST_STATUS"] == -1 || flags["COC.NEED_URTA_LETTER"] != undefined);
 }
 
 public function isUrta():Boolean {
@@ -290,6 +290,14 @@ public function startUrtaQuest():void {
 	pc.meleeWeapon.longName = "halberd";
 	pc.armor = new LeatherArmor();
 	
+	// TODO: sort out tease and specials
+	
+	userInterface.resetPCStats()
+	userInterface.deglow();
+	userInterface.hideMinimap();
+	userInterface.hideTime();
+	userInterface.setLocation("\nURTA", "TEL'ADRE", "PLANET: MARETH");
+	
 	//DISPLAY SOME SHIT YO
 	clearOutput();
 	flags["COC.URTA_QUEST_STATUS"] = .75;
@@ -310,6 +318,7 @@ public function startUrtaQuest():void {
 //The Tower of the Covenant(C)*
 private function towerOfTheCovanant():void {
 	clearOutput();
+	userInterface.setLocation("\nTOWER", "TEL'ADRE", "PLANET: MARETH");
 	output("You get up to leave the table, nervously wrapping your tail down your leg, even though [player2.name] helped you overcome that timid habit long ago.  You tell [player2.himHer] that [player2.heShe] can't follow.  To bring [player2.himHer] into the tower would require countless tests for what should only take a few brief moments if you go alone.  Secretly, you wish [player2.heShe] could come with you and hold you tight, to comfort you through this nerve wracking ordeal.  Lifting your chin, you marshal your courage and walk out, wiggling your bottom in " + possessive(player2.short) + " direction to remind [player2.himHer] what [player2.heShe]'ll be claiming tonight if a solution can be found.");
 
 	output("\n\nThe door to the Wet Bitch closes behind you with a dull thunk, shutting you off from the warm atmosphere and intoxicating scents you've come to love over your long patronage.  Instead of dwelling on the emotions tying your guts into knots, you focus on putting one furred foot in front of the other.  The crowds of Tel'Adre's most inhabited district are as thick as ever, and they only get worse as you set off towards the temple.  Twice, you almost get trampled by centaurs rushing to their errands.  They have the good sense to apologize with \"<i>Sorry, Urta!</i>\", but they really ought to be more careful.");
@@ -397,6 +406,7 @@ private function towerOfTheCovenantII():void {
 //{Before embarking on the Quest for Getting a God out of My Dick, add a [Get a Drink] option before leaving Tel'Adre. Must be Fuckbuddies with Hel.}
 private function getHelBangedAsUrta():void {
 	clearOutput();
+	userInterface.setLocation("WET\nBITCH", "TEL'ADRE", "PLANET: MARETH");
 	output("Before you head out, you decide to grab some liquid fortitude at your favorite watering hole. You make your way down to the Wet Bitch, squinting as your eyes adjust to the deep shadows of Tel'Adre's seediest - and sexiest - bar. You slip in, grabbing a stool at the bar; when your drink comes, you toss your gear aside like a physical weight off your shoulders, sighing heavily as you bring the hefty stein up to your lips. The cool beer goes down quickly, washing away your worries about the upcoming quest, and the recent revelations you've been given. Your mind wanders to [player2.name], wondering if [player2.heShe]'s set you on the right course...");
 
 	output("\n\nA hard shove shocks you out of your reverie. You yelp as someone falls right on you, spilling a whole platter full of drinks right on your lap! Your own drink goes falling to the floor as a head falls flat in your crotch, her cheek brushing against your thick equine prick through the now-soaked fabric of your uniform. The young woman that's fallen right into your lap cries out, stuttering out apologies as she tries to stand - only to slip on spilt drinks and fall on her ass, legs spread wide under her too-short skirt, revealing the tight slit of a hairless little cunt... and a sizable prick above it. Seeing your fellow hermaprodite's exposed genitalia brings a sudden and unwelcome hardness to your own hidden cock. You quickly close your legs and try to wrap it up in your tail, but with your clothes utterly soaked, the mottled shaft is plain for anyone to see.");
@@ -500,6 +510,7 @@ private function fuckHelAndKitsunesAsUrta():void {
 //Last Rendezvous with PC - Intro + Sex Menu(C)*
 private function visitPCPreUrtaQuest(truth:Boolean):void {
 	clearOutput();
+	userInterface.setLocation(possessive(player2.short).toUpperCase() + "\nCAMP", "WILDERNESS", "PLANET: MARETH");
 	output("You set out for " + possessive(player2.short) + " camp, known to you thanks to the amazing efforts of your scouts.  Behind you, the tower slowly shrinks, less imposing now that you've finished that step on your journey.   Ahead lies uncertainty and struggle.  You know you'll likely wind up fighting the corrupted denizens of the lost regions of Mareth in your travels, and it's likely at least a demon or two will get in your way.  Still, as you exit the city gates, you give your home a forlorn gaze.  At least there's one bright patch ahead - your lover's camp.");
 	output("\n\nThe sun has set by the time you get there, but the darkness conceals your movements thanks to your natural fur color.  ");
 	if (flags["COC.JOJO_NIGHT_WATCH"] == 1 && flags["COC.JOJO_IN_CAMP"] == 1)
@@ -937,6 +948,7 @@ private function morningAfterCampVisitEmbark(truth:Boolean):void {
 //Intro(C)*
 public function runIntoAGoblin(camped:Boolean = false):void {
 	clearOutput();
+	userInterface.setLocation("\nGOBLIN ELDER", "WILDERNESS", "PLANET: MARETH");
 	if (camped) {
 		output("Holding the pendant in front of you, you set off in a random direction from the camp, hoping it will give you some kind of sign.  A couple times, you could swear it flickered with an inner light, but the passing luminance could just be a reflection of the omnipresent sun.  You wipe the sweat from your brow and turn around, a little confused as to how you should progress.");
 	}
@@ -963,6 +975,9 @@ public function GoblinBroodmotherUrtaVictory():void
 	clearOutput();
 	output("The goblin broodmother is defeated!  You find a bottle of succubi milk on her.  That stuff is banned in Tel'Adre - and for good reason, but it might come in handy.  You pocket the foul fluid for now.");
 	output("  You could use her for a quick, willing fuck to sate your lusts before continuing on.  Do you?");
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nGOBLIN ELDER", "WILDERNESS", "PLANET: MARETH");
 	clearMenu();
 	addButton(0, "Fuck", winFuckAGoblinBroodmotherAsUrta);
 	addButton(1, "Leave", nagaPleaseNagaStoleMyDick);
@@ -1013,6 +1028,9 @@ public function winFuckAGoblinBroodmotherAsUrta():void {
 //Urta Loses(C)*
 public function urtaLosesToGoblin():void {
 	clearOutput();
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nGOBLIN ELDER", "WILDERNESS", "PLANET: MARETH");
 	//Urta bad end, written by Kinathis... Buckle up for the worst writing you have ever seen!....Okay lets do this! Raaaaa!!! o-o What did i get myself into...
     //Loss by lust intro(C)*
 	if (pc.lustQ() > 99) {
@@ -1154,13 +1172,13 @@ private function urtaGameOver():void {
 	//}
 	//clearMenu();
 	//addButton(0, "Combo", urtaComboAttack, undefined, "Combo", "Make a three-hit combo.  Each attack has an extra 33% chance to miss, unless the target is blind. \n\nEnergy cost: 25");
-	//if(pc.energy() < 25) userInterface().setButtonDisabled(0);
+	//if(pc.energy() < 25) userInterface.setButtonDisabled(0);
 	//addButton(1, "Vault", urtaVaultAttack, undefined, "Vault", "Make a vaulting attack for an extra 25% damage.  Automatically crits stunned foes. \n\nEnergy cost: 20");
-	//if(pc.energy() < 20) userInterface().setButtonDisabled(1);
+	//if(pc.energy() < 20) userInterface.setButtonDisabled(1);
 	//addButton(2, "Sidewinder", urtaSidewinder, undefined, "Sidewinder", "An attack that hits for reduced damage but has a high chance of stunning. \n\nEnergy cost: 10");
-	//if(pc.energy() < 10) userInterface().setButtonDisabled(2);
+	//if(pc.energy() < 10) userInterface.setButtonDisabled(2);
 	//addButton(3, "Dirt Kick", urtaDirtKick, undefined, "Dirt Kick", "Attempt to blind your foe with a spray of kicked dirt. \n\nEnergy cost: 5");
-	//if(pc.energy() < 5) userInterface().setButtonDisabled(3);
+	//if(pc.energy() < 5) userInterface.setButtonDisabled(3);
 	//
 	//if(pc.HP() < (pc.maxHP() * 0.1) + 1)  addDisabledButton(4, "Metabolize", "Metabolize", "You have no HP to convert!");
 	//else addButton(4, "Metabolize", urtaMetabolize, undefined, "Metabolize", "Convert 10% of your maximum HP into energy.");
@@ -1221,6 +1239,9 @@ private function urtaGameOver():void {
 //Immune to tease, focuses on eyes so much that he doesn't notice poses.
 public function nagaPleaseNagaStoleMyDick():void {
 	clearOutput();
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nSIRIUS", "WILDERNESS", "PLANET: MARETH");
 	//Encounter Intro
 	output("You pick your way through the forest, intent on following the vague directions the talisman gives you... sheesh, this is like the children's game of hotter-colder you used to see the other kids playing when you were a little kit.  You push irritably through a dense cluster of brush; the damn thing would lead you off the beaten path, now wouldn't it?");
 
@@ -1267,6 +1288,10 @@ public function urtaBeatsUpSiriusRadio():void {
 
 	output("\n\nYou take a deep breath, cursing your rotten luck for running into this guy.  You consider just leaving him there at the mercy of whatever creature happens to find him next, but on the other hand, perhaps you could make use of the naga to relieve your own lust... he's out cold now, so you wouldn't have to worry about his hypnotic gaze.");
 
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nSIRIUS", "WILDERNESS", "PLANET: MARETH");
+	
 	//[Rape][Leave]
 	clearMenu();
 	addButton(0, "Fuck Him", urtaWinFucksSirius);
@@ -1359,6 +1384,9 @@ private function fuckSiriusRadioII():void {
 //Urta Loses*
 public function urtaLosesToSirriusSnakeRadio():void {
 	clearOutput();
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nSIRIUS", "WILDERNESS", "PLANET: MARETH");
 	flags["COC.URTA_BECOMES_SNAKE_SLAVE"] = 1;
 	//Loss by HP:
 	if (pc.HP() <= 1) output("You cry out in pain as the bruises and buffets you've taken overwhelm you.  You struggle to stay upright, but to no avail; your injured body has reached its limits and you collapse, helpless and at the mercy of your assailant.");
@@ -1461,6 +1489,9 @@ private function siriusSatelliteRadioOwnsYouII():void {
 //Gnoll Alpha Encounter*
 private function gnollAlphaBitchIntro():void {
 	clearOutput();
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nALPHA GNOLL", "WILDERNESS", "PLANET: MARETH");
 	//Intro*
 	output("The last two fights were wearying, but you still feel pretty good. Perhaps best of all, as your last defeated challenger fades into the distance, you become aware of the pendant glowing fairly brightly.  You must be headed in the right direction!  Setting off at a trot, you pick up your pace, covering great distance in the blink of an eye, eyes never leaving the rapidly approaching horizon.  Focus is key to travel in the uninhabited sections of Mareth, as you well know, but it also allows you to move with swiftness surpassing the fastest animal.");
 
@@ -1487,6 +1518,9 @@ public function AlphaGnollUrtaVictory():void
 {
 	clearOutput();
 	output("The gnoll alpha is defeated!  You could use her for a quick, willing fuck to sate your lusts before continuing on.  Hell, you could even dose her up with that succubi milk you took from the goblin first - it might make her even hotter.  Do you?");
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nALPHA GNOLL", "WILDERNESS", "PLANET: MARETH");
 	clearMenu();
 	addButton(0, "Fuck", winRapeHyenaPrincess);
 	addButton(1, "Succ Milk", useSuccubiMilkOnGnollPrincesses);
@@ -1614,6 +1648,9 @@ public function useSuccubiMilkOnGnollPrincesses():void {
 //Lose Via Lust (Bonus Scene in Intro!)* ✓
 public function loseToGnollPrincessAndGetGangBanged():void {
 	clearOutput();
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nALPHA GNOLL", "WILDERNESS", "PLANET: MARETH");
 	flags["COC.URTA_TAKEN_BY_GNOLLS"] = 1;
 	if (pc.lustQ() > 99) {
 		output("Sinking to your knees, utterly overwhelmed by lust, you gaze up the clit-cocked amazon, licking your chops. She responds by disdainfully pushing you down with one of her soft, padded paws.  \"<i>Did you really think you could trespass in my mother's territory and go unpunished?</i>\"");
@@ -1790,6 +1827,9 @@ public function urtaNightSleep():void {
 	output("\n\nAs you settle down for a night's sleep, you consider your armor.  It's starting to chafe a little.  Wearing it to bed would be uncomfortable, likely giving you a restless sleep, but it might also give you a fighting chance if something comes after you.  Do you want to sleep naked and rest better at some risk, or do you want to sleep in your armor, safer, but tossing and turning?");
 
 	CombatManager.abortCombat();
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nCAMP", "WILDERNESS", "PLANET: MARETH");
 	clearMenu();
 	addButton(0, "SleepNaked", urtaSleepsNaked);
 	addButton(1, "Wear Armor", urtaSleepsArmored);
@@ -1829,6 +1869,9 @@ private function urtaSleepsNaked():void {
 //[Next]
 private function urtaGetsTentaRaped():void {
 	clearOutput();
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nTENTACLES...", "WILDERNESS", "PLANET: MARETH");
 	output("In your dreams, you're dancing with [player2.name] at your favorite bar, the bounty of your newly restored genitals bulging between your bodies.  You feel yourself growing warm at the closeness of your lover's body, already aroused and ready for another coupling.  Inhaling deeply, you savor the scent of mixed lust - sweet, so sweet. It makes you a little dizzy to be honest, and you stumble, letting [player2.name] catch you.  Mmmm, so warm.  A tongue enters your mouth, dripping more sweet scent onto your palette.  You swallow involuntarily, compulsively, as that oral organ penetrates so deeply into your throat.");
 	output("\n\nWait...  [player2.name] doesn't smell (or taste) like that.  You're still fucking horny, though!  Waking, you stretch and go to yawn, but all that escapes your mouth is a muffled, \"<i>Mmmph!</i>\"");
 	output("\n\nYou go to full alert in an instant.  Looming above, a wriggling monstrosity has eclipsed the moon.  Hundreds of wiggly tentacles coil and move around each other, creating a show of scintillating illumination from the moonlight that can squeeze through the cracks.  There's three dozen of them poised above with bulbous, purple tips that drip clear, sweet sap.  A few lack the tip, instead having pulsing mouths, capped with obscene, smiling black lips; plump, soft, and glossy.  Your blanket is gone.  The creature must have removed it.  With the tentacle leaking down your throat, you can't really get a good look around, but you can feel your dick on your tummy, obscenely rigid and leaking onto your breasts.  It doesn't seem like the beast has come after the rest of you yet...  You can still get free!");
@@ -1935,6 +1978,10 @@ private function introSuccubiAndMinotaur():void {
 
 	output("\n\nThe minotaur lord thunders towards you, picking up the loose chain to use a weapon.  It's a fight!");
 	
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nMINO. LORD", "WILDERNESS", "PLANET: MARETH");
+	
 	var MinotaurLord:CoCMinotaur = new CoCMinotaur(); // TODO: MinotaurLord
 	MinotaurLord.HPMod = 350;
 	MinotaurLord.short = "minotaur lord";
@@ -1945,12 +1992,16 @@ private function introSuccubiAndMinotaur():void {
 	CombatManager.setHostileCharacters(MinotaurLord);
 	CombatManager.victoryScene(MinotaurLordUrtaVictory);
 	CombatManager.lossScene(MinotaurLordUrtaLoss);
-	CombatManager.displayLocation("MINOTAUR LORD");
+	CombatManager.displayLocation("MINO. LORD");
 	addNextButton(CombatManager.beginCombat);
 }
 
 public function MinotaurLordUrtaLoss():void
 {
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nMINO. LORD", "WILDERNESS", "PLANET: MARETH");
+	
 	if (pc.HP() < 1) urtaLosesToMinotaurRoughVersion();
 	else urtaSubmitsToMinotaurBadEnd();
 }
@@ -1959,6 +2010,9 @@ public function MinotaurLordUrtaVictory():void
 {
 	clearOutput();
 	output("The minotaur lord is defeated!    You could use him for a quick fuck to sate your lusts before continuing on.  Do you?");
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nMINO. LORD", "WILDERNESS", "PLANET: MARETH");
 	clearMenu();
 	addButton(0, "Fuck", winRapeAMinoLordAsUrta);
 	addButton(1, "Leave", beatMinoLordOnToSuccubi);
@@ -2234,6 +2288,10 @@ public function beatMinoLordOnToSuccubi():void {
 
 	output("\n\n<b>It's a fight!</b>");
 	
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nCOWCUBUS", "WILDERNESS", "PLANET: MARETH");
+	
 	var MilkySuccubus:CoCSecretarialSuccubus = new CoCSecretarialSuccubus(); // TODO: MilkySuccubus
 	MilkySuccubus.HPMod = 350;
 	MilkySuccubus.short = "milky succubus";
@@ -2244,7 +2302,7 @@ public function beatMinoLordOnToSuccubi():void {
 	CombatManager.setHostileCharacters(MilkySuccubus);
 	CombatManager.victoryScene(urtaBeatsUpCowcubi);
 	CombatManager.lossScene(urtaLosesToCowCubi);
-	CombatManager.displayLocation("SUCCUBUS");
+	CombatManager.displayLocation("COWCUBUS");
 	addNextButton(CombatManager.beginCombat);
 }
 
@@ -2272,6 +2330,9 @@ public function beatMinoLordOnToSuccubi():void {
 //Urta Wins*
 public function urtaBeatsUpCowcubi():void {
 	clearOutput();
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nCOWCUBUS", "WILDERNESS", "PLANET: MARETH");
 	//HP:
 	if (enemy.HP() <= 1) {
 		output("The succubus trips and falls on her face, dropping her whip at your feet.  You quickly take her whip and use it to bind her hands behind her back.");
@@ -2364,6 +2425,9 @@ private function fuckTheCowCubi():void {
 //Urta Loses*
 public function urtaLosesToCowCubi():void {
 	clearOutput();
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("\nCOWCUBUS", "WILDERNESS", "PLANET: MARETH");
 	output("Sinking to your knees, ");
 	if (pc.HP() <= 1) output("you struggle futilely to rise.  Your arms are shaking and bloody.  It's just too hard.  Your muscles just won't respond, and you fall flat on your face, unable to get up.  The succubus laughs at your plight, and places both her hands on your head.  You struggle, but you're too wounded to wiggle free.  Her magic begins to pulse through your brain, thrumming erotically through your consciousness.  Your heart begins to beat faster and faster, blood rushing to your extremities.  You moan, rigidly, exquisitely hard, your member rising through the soft moss below.  You might have been resistant to her magic at a distance, but nothing could protect you from this.  You NEED to fuck.");
 	else output("you start pulling at your [pc.gear], struggling with every strap and piece of restraining, constricting leather.  Your lust-clouded mind can barely focus to work your fumbling fingers against the snaps and straps.  In your haste, with balancing forgotten, you tumble onto your face, smearing your dick exquisitely between your fallen form and a patch of soft moss.  You mewl pitifully in protest.  You need to fuck!");
@@ -2442,6 +2506,11 @@ private function enteringTaothsShrine():void {
 	output("\n\nA shiver ripples up your spine, hackles instinctively growing erect as a sepulchral voice whispers directly into your mind.");
 
 	output("\n\n\"<i>I wake...</i>\"");
+	
+	userInterface.hideNPCStats();
+	userInterface.hideMinimap();
+	userInterface.setLocation("TAOTH\nSHRINE", "WILDERNESS", "PLANET: MARETH");
+	
 	//Next Page, go to Dead Gods Dreaming
 	clearMenu();
 	addButton(0, "Next", deadGodsDreaming);
@@ -2485,9 +2554,8 @@ private function deadGodsDreaming():void {
 	output("\n\nThen you awake with a start, still kneeling before the unmoving statue.  Was it all a dream?  You don't know...  Your head is throbbing like mad, and you can't think clearly.  But even as the pain dims, you become aware of another, more pressing matter.  Lust.  That familiar yearning burns inside your arm-length prick like a raging inferno, the tower of equine fuckmeat thrusting boldly before you and steadily gushing precum onto the ground.  Naked, hungry NEED screams and claws and gibbers behind your eyes... [player2.name], you must have [player2.name]!");
 
 	output("\n\nAbsently licking drool from your lips, you stagger upright and, using your halberd for support, start loping home from the shrine.  In your wake you leave a slug-like trail of sexual lubricants, too focused on finding and fucking your lover to care about the glistening slime caking your dick and plastering your inner thighs.");
-	pc.lust(pc.lustMax(), true);
 	//Revert to PC control and change page to Urta Arrives At Camp
-	resetToPC();
+	pc.lust(pc.lustMax(), true);
 	clearMenu();
 	addButton(0, "Next", urtaArrivesAtCampForFukks);
 }
@@ -2495,6 +2563,8 @@ private function deadGodsDreaming():void {
 //Urta Arrives at Camp
 private function urtaArrivesAtCampForFukks():void {
 	clearOutput();
+	userInterface.setLocation("\nCAMPSITE", "YOUR CAMP", "PLANET: MARETH");
+	resetToPC();
 	output("<b><u>Meanwhile, back at camp...</u></b>");
 	output("\n\nAs you are getting ready to set out for another day in Mareth, you find yourself surprised with an unusual encounter at the very boundaries of your camp.  It's Urta!  She's come back at last... and boy, she's a mess; her eyes roll wildly in her head, until she sees you and fixes on you like a starving fox on a fat hen; her cock thrusts wildly before her, precum bubbling over its tip and splatting wetly into the dust before her, femcum drooling out of her gash like water and plastering her legs with shiny wetness.  The fox breaks into a run until she skids to a halt in front of you, panting with lust and exertion.");
 
@@ -2504,7 +2574,7 @@ private function urtaArrivesAtCampForFukks():void {
 	else output("if you'd rather not");
 	output(", I can always go and use Edryn...</i>\"");
 
-	output("\n\n\"<i>What do we do, [pc.lust(pc.lustMin(), true);pc.name]?</i>\" she pants, practically whimpering.  \"<i>We need to choose fast... I can't hold.... hold back much longer!</i>\"");
+	output("\n\n\"<i>What do we do, [pc.name]?</i>\" she pants, practically whimpering.  \"<i>We need to choose fast... I can't hold.... hold back much longer!</i>\"");
 
 	output("\n\nWell, this is quite the surprise!  You have no idea who 'Taoth' is, but you can only guess that it's some kind of spirit or demon or something.  She seems to have been put into some kind of wild rut and heat, determined to produce a baby to release this... thing from inside of her.  Do you");
 	if (pc.hasGenitals()) output(" fuck the horny fox and help her out of her predicament, or");
@@ -2513,7 +2583,6 @@ private function urtaArrivesAtCampForFukks():void {
 		if (pc.cockThatFits(urtaCapacity()) < 0) output("  A shame you're too big to fit inside her.");
 	}*/
 	//Genderless PCs auto-select the Edryn option, KnockUrta requires PC has penis, KnockMe requires PC has vagina
-	clearMenu();
 	//[KnockUrta] [KnockMe] [Edryn]
 	clearMenu();
 	if (pc.hasCock()) addButton(0, "KnockUrta", knockUpUrtaWithGodChild);
@@ -2570,6 +2639,7 @@ private function knockUpUrtaWithGodChild():void {
 //Post-Sex Epilogue*
 private function postFuckUrtaUp():void {
 	clearOutput();
+	userInterface.setLocation("\nTOWER", "TEL'ADRE", "PLANET: MARETH");
 	output("When you wake, any queries you might have about Urta's \"<i>quest</i>\" having worked are instantly answered.  The snoring vixen beside you already looks very pregnant; it's a good thing that she went to bed naked, because you don't want to think about how she would have swollen up like she has whilst still in her leather jerkin.  The bulge wobbles slightly as she inhales and exhales and you wonder how you're going to wake her up.");
 
 	output("\n\nThankfully, Urta spares you the trouble, waking up with a moan.  \"<i>Oh... I feel so full,</i>\" she grumbles, struggling to get up under the weight of her belly.  When she realizes what's holding her down, she stops, staring at it in dumbfounded awe.  \"<i>[pc.name], is this really...?</i>\"  When you nod, she shakes her head in disbelief.   \"<i>Incredible... it really is real.  Oh, [pc.name], I just... I just don't have the words to tell you how I feel about this.</i>\"");
@@ -2610,11 +2680,13 @@ private function preggedUrtaWithGodChildEpilogue():void {
 
 	output("\n\nUrta nods down at the child-god, now standing almost five-foot six.  He gives a wry smile and a mocking bow, then turns, confidently loping down a hallway.  The room erupts into chaos, the mages chasing after him, trailing at his heels.  It seems Taoth can take care of himself, and for now, you've got a newly fertile lover.");
 
-	output("\n\nThe fox-girl drags you into a huge hug, kissing you passionately.  She whispers, \"<i>Thank you so much for getting me started on this road, [pc.lust(pc.lustMin(), true);pc.name].  I'm so exhausted now, but come see me at the Wet Bitch later, and maybe... maybe we could see about starting a family.  I mean, maybe there's hope after all?  A dead god was reincarnated!</i>\"");
+	output("\n\nThe fox-girl drags you into a huge hug, kissing you passionately.  She whispers, \"<i>Thank you so much for getting me started on this road, [pc.name].  I'm so exhausted now, but come see me at the Wet Bitch later, and maybe... maybe we could see about starting a family.  I mean, maybe there's hope after all?  A dead god was reincarnated!</i>\"");
 
 	output("\n\nYou help her leave the tower, arm in arm, saying goodbye to her only after she's tucked tightly into her bed at home, to rest.  Urta gives you a teary kiss before you leave with a little swagger in your step.  You wonder if Taoth will help the Covenant, or if they've bitten off more than they can chew?  Either way, it seems there's a potent new ally on the field.");
 	flags["COC.URTA_QUEST_STATUS"] = 1;
 	
+	userInterface.showMinimap();
+	userInterface.showTime();
 	addNextButton(function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 }
 
@@ -2692,7 +2764,7 @@ private function getKnockedUpWithGodChild():void {
 		output("\n\nUrta gasps when gold gilt lips find their way onto her steaming, cum-drenched ball-sack.  Looking back, she can see the slutty bimbo harpy servicing her nuts, her plump puckers wrapped around one of the prodigious, cum-bloated testes.  \"<i>Mmmmmmm,</i>\" she coos around the fat gonad, sloppily kissing and licking, her tongue sliding through every crevice of the folded, sex-stained skin.  In no time flat, the big bootied bird bitch has polished away the slime and replaced it with a shining veneer of gold gloss overlaid in clear saliva.  Sophie giggles when Urta's dick begins to twitch inside you, rigid and ready for more.  The bimbo seems thrilled to polish the fox-girl's big, bouncy balls, and when Urta turns back to you with a blissful smile on her face, you realize she's enjoying it too.");
 	}
 	else if (choice == 3) {
-		output("\n\nUrta gasps when a slithering tongue winds its way around her balls.  Looking back, she sees a scaley visage you'd recognize anywhere - the salamander berserker, Hel.   Hel chuckles around the black, slime-slicked folds in her mouth.  \"<i>Didja thfwink joo could, mmmm, get thwis fwox all to yerself, [pc.lust(pc.lustMin(), true);pc.name]?</i>\" she says through the mouthful of vixensack.   The salamander-slut releases the musky black skin from her oral grip and continues, \"<i>You know I'm always up to get dirty with you and your friends, lover mine.</i>\"  She returns her attentions to the cum-bloated orbs before her, licking every bit of mixed cum from Urta's sack, replacing the thick sludge with a veneer of shining spit.");
+		output("\n\nUrta gasps when a slithering tongue winds its way around her balls.  Looking back, she sees a scaley visage you'd recognize anywhere - the salamander berserker, Hel.   Hel chuckles around the black, slime-slicked folds in her mouth.  \"<i>Didja thfwink joo could, mmmm, get thwis fwox all to yerself, [pc.name]?</i>\" she says through the mouthful of vixensack.   The salamander-slut releases the musky black skin from her oral grip and continues, \"<i>You know I'm always up to get dirty with you and your friends, lover mine.</i>\"  She returns her attentions to the cum-bloated orbs before her, licking every bit of mixed cum from Urta's sack, replacing the thick sludge with a veneer of shining spit.");
 		if (pc.balls > 0) output("  She does the same to your own [pc.balls], even giving your [pc.asshole] a happy, sloppy kiss before returning to polishing the supple, skin-shrouded spheres just ahead.");
 		output("  Helia seems thrilled to be egging you both on to new heights of pleasure, and when Urta turns back to you with a blissful smile on her face, you realize she's enjoying it too.");
 	}
@@ -2735,6 +2807,7 @@ private function getKnockedUpWithGodChild():void {
 //Post-Sex Epilogue*
 private function getKnockedUpUrtaEpilogue():void {
 	clearOutput();
+	userInterface.setLocation("\nTOWER", "TEL'ADRE", "PLANET: MARETH");
 	var x:int = pc.findEmptyPregnancySlot(Creature.PREGSLOT_VAG);
 	if (x == -1) x = 0;
 	output("When you wake, you're ");
@@ -2788,6 +2861,8 @@ private function getKnockedUpByUrtaEpilogueII():void {
 	output("\n\nShe helps leave the tower, arm in arm, saying her goodbye only after she's tucked you in to take a rest.  Urta gives you a teary kiss and trots back towards the city with a swagger in her step.  You wonder if Taoth will help the Covenant, or if they've bitten off more than they can chew?  Either way, it seems there's a potent new ally on the field.");
 	flags["COC.URTA_QUEST_STATUS"] = 1;
 	
+	userInterface.showMinimap();
+	userInterface.showTime();
 	addNextButton(function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 }
 
@@ -2806,6 +2881,7 @@ private function urtaAndEdrynGodChild():void {
 //Urta & Edryn God-child epilogue:*
 public function urtaAndEdrynGodChildEpilogue():void {
 	clearOutput();
+	userInterface.setLocation("\nTOWER", "TEL'ADRE", "PLANET: MARETH");
 	output("A fast-moving figure appears in the distance, kicking up a cloud of dust and sand behind it.  Before you know it, the blur skids to a stop in your camp - it's Urta!  She's decked out in full battle gear, armored leather, halberd, and all.");
 
 	output("\n\n\"<i>Hey... [pc.name]... damn...</i>\" she says, doubling over with her hands on her knees, \"<i>Just gotta catch... my breath...</i>\"  She huffs and puffs, tongue flaring as she pants to recover.  What's the hurry?  Did something happen with that 'Taoth' spirit she was rambling about the other day?  You put your hand on her shoulder and let her lean against you.");
@@ -2850,5 +2926,7 @@ private function urtaAndEdrynGodChildEpilogueII():void {
 	//set completed tags!
 	flags["COC.URTA_QUEST_STATUS"] = 1;
 	
+	userInterface.showMinimap();
+	userInterface.showTime();
 	addNextButton(function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 }

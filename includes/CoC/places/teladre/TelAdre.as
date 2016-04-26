@@ -20,9 +20,19 @@ include "UmasShop.as";
 include "Weapon.as";
 
 // NPCs
+include "AuntNancy.as";
+include "dominika.as";
+include "Edryn.as";
 include "Katherine.as";
 include "katherineEmployment.as";
 include "katherineThreesome.as";
+include "Niamh.as";
+include "scylla.as";
+include "Urta.as";
+include "urtaHeatRut.as";
+include "urtaPregs.as";
+include "urtaQuest.as";
+include "UrtaSex.as";
 
 public function discoverTelAdre():void {
 	clearOutput();
@@ -71,6 +81,7 @@ private function telAdreCrystal():void {
 	if (pc.hasStatusEffect("Exgartuan") || pc.cor() >= 70) {
 		output("The crystal pendant begins to vibrate in the air, swirling around and glowing dangerously black.  Edryn snatches her hand back and says, \"<i>I'm sorry, but you're too far gone to step foot into our city.  If by some miracle you can shake the corruption within you, return to us.</i>\"\n\n");
 		output("You shrug and step back.  You could probably defeat these two, but you know you'd have no hope against however many friends they had beyond the walls.  You turn around and leave, a bit disgruntled at their hospitality.  After walking partway down the dune you spare a glance over your shoulder and discover the city has vanished!  Surprised, you dash back up the dune, flinging sand everywhere, but when you crest the apex, the city is gone.");
+		processTime(4);
 		addButton(0, "Next", function():*{ processTime(15 + rand(5)); mainGameMenu(); } );
 		return;
 	}
@@ -119,14 +130,14 @@ public function telAdreMenu():void {
 		//kGAMECLASS.crazyVDayShenanigansByVenithil();
 		//return;
 	//}
-	if(/*!kGAMECLASS.urtaQuest.urtaBusy() &&*/ Flag("COC.PC_SEEN_URTA_BADASS_FIGHT") == 0 && rand(15) == 0 && hours > 15 && hours < 20) {
+	if (!urtaBusy() && int(flags["COC.PC_SEEN_URTA_BADASS_FIGHT"]) == 0 && rand(15) == 0 && hours > 15 && hours < 20) {
 		urtaIsABadass();
 		return;
 	}
-	//if (!kGAMECLASS.urtaQuest.urtaBusy() && kGAMECLASS.urta.pregnancy.event > 5 && rand(30) == 0) {
-		//kGAMECLASS.urtaPregs.urtaIsAPregnantCopScene();
-	   //return;
-	//}
+	if (!urtaBusy() && urtaPregnancyEvent() > 5 && rand(30) == 0) {
+		urtaIsAPregnantCopScene();
+	   return;
+	}
 	switch (flags["COC.KATHERINE_UNLOCKED"]) {
 		case undefined:
 		case -1:
@@ -163,10 +174,10 @@ public function telAdreMenu():void {
 	//Must have Urta's Key.
 	//Urta must be pregnant to trigger this scene.
 	//Play this scene upon entering Tel'Adre.
-	//if (kGAMECLASS.urta.pregnancy.event > 2 && rand(4) == 0 && flags[kFLAGS.URTA_PREGNANT_DELIVERY_SCENE] == 0 && pc.hasKeyItem("Spare Key to Urta's House") >= 0) {
-		//kGAMECLASS.urtaPregs.urtaSpecialDeliveries();
-		//return;
-	//}
+	if (urtaPregnancyEvent() > 2 && rand(4) == 0 && int(flags["COC.URTA_PREGNANT_DELIVERY_SCENE"]) == 0 && pc.hasKeyItem("Spare Key to Urta's House")) {
+		urtaSpecialDeliveries();
+		return;
+	}
 	if(flags["COC.BAKERY_MADDIE_STATE"] == -1) {
 		runAwayMaddieFollowup();
 		return;
@@ -175,9 +186,6 @@ public function telAdreMenu():void {
 	//output(images.showImage("location-teladre"));
 	output("Tel'Adre is a massive city, though most of its inhabitants tend to hang around the front few city blocks.  It seems the fall of Mareth did not leave the city of Tel'Adre totally unscathed.  A massive tower rises up in the center of the city, shimmering oddly.  From what you overhear in the streets, the covenant's magic-users slave away in that tower, working to keep the city veiled from outside dangers.  There does not seem to be a way to get into the unused portions of the city, but you'll keep your eyes open.\n\n");
 	output("A sign depicting a hermaphroditic centaur covered in piercings hangs in front of one of the sandstone buildings, and bright pink lettering declares it to be the 'Piercing Studio'.  You glance over and see the wooden facade of Urta's favorite bar, 'The Wet Bitch'.  How strange that those would be what she talks about during a tour.  In any event you can also spot some kind of wolf-man banging away on an anvil in a blacksmith's stand, and a foppishly-dressed dog-man with large floppy ears seems to be running some kind of pawnshop in his stand.  Steam boils from the top of a dome-shaped structure near the far end of the street, and simple lettering painted on the dome proclaims it to be a bakery.  Perhaps those shops will be interesting as well.");
-	//if (flags[kFLAGS.RAPHEAL_COUNTDOWN_TIMER] == -2 && !kGAMECLASS.raphael.RaphaelLikes()) {
-		//output("\n\nYou remember Raphael's offer about the Orphanage, but you might want to see about shaping yourself more to his tastes first.  He is a picky fox, after all, and you doubt he would take well to seeing you in your current state.");
-	//}
 	telAdreMenuShow();
 }
 
@@ -231,13 +239,11 @@ public function TelAdreHouses():void {
 			//output("\n\nYou remember Raphael's offer about the Orphanage, but you might want to see about shaping yourself more to his tastes first.  He is a picky fox, after all, and you doubt he would take well to seeing you in your current state.");
 		//}
 	//}
-	clearMenu();
 	if (flags["COC.ARIAN_PARK"] >= 4 && !arianFollower()) addButton(0, "Arian's", visitAriansHouse);
 	//addButton(1,"Orphanage",orphanage);
-	//if (urtaKids() > 0 && pc.hasKeyItem("Spare Key to Urta's House"))
-		//addButton(2, "Urta's House", (katherine.isAt(Katherine.KLOC_URTAS_HOME) ? katherine.katherineAtUrtas : kGAMECLASS.urtaPregs.visitTheHouse));
-	//if (flags["COC.KATHERINE_UNLOCKED"] >= 5) addButton(3, "Kath's Apt", katherineVisitAtHome);
-
+	if (urtaKids() > 0 && pc.hasKeyItem("Spare Key to Urta's House"))
+		addButton(2, "Urta's House", (kathIsAt(KLOC_URTAS_HOME) ? katherineAtUrtas : visitTheHouse));
+	
 	switch (int(flags["COC.KATHERINE_UNLOCKED"])) {
 		case 1:
 		case 2: addButton(3, "Kath's Alley", visitKatherine); break;
@@ -270,9 +276,8 @@ private function watchUrtaBeABadass():void {
 	output("The bigger canid charges, snarling, with his claws extended.  Urta sidesteps and pivots, her momentum carrying her foot around in a vicious kick.  Her foot hits the side of the beast's knee hard enough to buckle it, and the wolf goes down on his knees with an anguished cry.  Urta slips under his arm and twists, turning his slump into a fall.  A cloud of dust rises from the heavy thud of the beast's body as it slams into the cobblestone street.\n\n");
 
 	output("Now that it's immobile, you get can get a better look at the defeated combatant, and you're ");
-	//if(pc.findStatusAffect(StatusAffects.Infested) >= 0) output("aroused");
-	//else 
-	if(pc.cor() < 50) output("horrified");
+	if(pc.hasStatusEffect("Infested")) output("aroused");
+	else if(pc.cor() < 50) output("horrified");
 	else output("confused");
 	output(" by what you see.  A pair of thick, demonic horns curve back over the beast's head, piercing through the bottoms of its wolf-like ears.  Its entire body is covered in rippling muscle, leaving you in no doubt of its strength.  Even with a broken knee, the wolf-man is clearly aroused: protruding from a bloated sheath, his massive dog-dick is fully erect, solid black in color, with an engorged knot.  Small white worms crawl over the surface of his penis, wriggling out of the tip and crawling down the length, leaving trails of slime behind them.\n\n");
 
