@@ -42,6 +42,7 @@
 	import classes.Engine.Utility.possessive;
 	import classes.Engine.Combat.DamageTypes.DamageType;
 	import classes.Engine.Utility.weightedRand;
+	import classes.Engine.Interfaces.ParseText;
 
 
 	/**
@@ -7729,7 +7730,7 @@
 			{
 				trace("BLUE BALLS FOR: " + short);
 				//Hit max cum - standard message
-				kGAMECLASS.eventBuffer += "\n\nYou’re feeling a little... excitable, a little randy even. It won’t take much to excite you so long as your [pc.balls] ";
+				kGAMECLASS.eventBuffer += ParseText("\n\nYou’re feeling a little... excitable, a little randy even. It won’t take much to excite you so long as your [pc.balls] ");
 				if(balls == 1) kGAMECLASS.eventBuffer += "is";
 				else kGAMECLASS.eventBuffer += "are";
 				kGAMECLASS.eventBuffer += " this full.";
@@ -14844,6 +14845,11 @@
 							switch((statusEffects[x] as StorageClass).storageName)
 							{
 								case "Lane's Hypnosis":
+								case "Lane's Hypnosis - Physique":
+								case "Lane's Hypnosis - Reflexes":
+								case "Lane's Hypnosis - Aim":
+								case "Lane's Hypnosis - Intelligence":
+								case "Lane's Hypnosis - Willpower":
 									kGAMECLASS.baseHypnosisWearsOff((statusEffects[x] as StorageClass).storageName);
 									break;
 								case "Crabbst":
@@ -14916,7 +14922,7 @@
 								//Mighty Tight ends!
 								case "Mighty Tight":
 									kGAMECLASS.eventBuffer += "\n\nPausing for a moment, you feel your backdoor";
-									if(hasVagina()) kGAMECLASS.eventBuffer += " and [pc.vaginas] relaxing";
+									if(hasVagina()) kGAMECLASS.eventBuffer += ParseText(" and [pc.vaginas] relaxing");
 									else kGAMECLASS.eventBuffer += " relax";
 									kGAMECLASS.eventBuffer += " a bit. It is probably safe to say that you are no longer under the effects of Mighty Tight.";
 									break;
@@ -14925,7 +14931,7 @@
 									//Message text, last boob size increase. 7 days later.
 									kGAMECLASS.eventBuffer += "\n\nUnfortunately, as you admire your now-larger bosom, you realize that the gentle, wet rumble of the pads has come to a stop. <b>It looks like you’ve exhausted the BoobSwell Pads";
 									if(bRows() > 1) kGAMECLASS.eventBuffer += "on your " + kGAMECLASS.num2Text2((statusEffects[x] as StorageClass).value1+1) + " row of breasts";
-									kGAMECLASS.eventBuffer += "!</b> You peel them off your [pc.skinFurScales] and toss them away.";
+									kGAMECLASS.eventBuffer += ParseText("!</b> You peel them off your [pc.skinFurScales] and toss them away.");
 									break;
 								//Treatment finishing.
 								case "The Treatment":
@@ -15185,6 +15191,18 @@
 						if(amountVented >= 1000) kGAMECLASS.honeyPotBump();
 						if(amountVented >= 2000) kGAMECLASS.honeyPotBump();
 					}
+					if(hasPerk("'Nuki Nuts") && InCollection(statusEffects[o].value3, GLOBAL.VALID_CUM_TYPES)) //Implementing Kui-Tan Cum Cascade from Codex
+					{
+						//Calculate amount metabolized over time
+						var cumTransfer:Number = (statusEffects[o].value1) / 10; //Metabolize entire load over 10 minutes.
+						cumTransfer *= timePassed;
+						cumTransfer += amountVented;
+						if (cumTransfer > statusEffects[o].value1) cumTransfer = statusEffects[o].value1;
+						statusEffects[o].value1 -= cumTransfer;
+						cumCascade(cumTransfer);
+						trace("Cum Metabolized: " + cumTransfer + " mLs");
+						//cumProduced(timePassed);
+					}
 				}
 				if(statusEffects[o].value1 <= 0) removals.push("Orally-Filled");
 			}
@@ -15194,9 +15212,25 @@
 				removeStatusEffect(removals[0]);
 				removals.splice(0,1);
 			}
-			kGAMECLASS.eventBuffer += notice;
+			kGAMECLASS.eventBuffer += ParseText(notice);
 		}
 
+		/**
+		 * Kui-tan "Cum Cascade" function.
+		 * Takes ingested cum and adds 5x to balls.
+		 * @param	amount	amount of cum digested in mL
+		 */
+		public function cumCascade(amount:Number): void 
+		{
+			var percent:Number = (amount / maxCum()) * 500;//Take percentage of maximum cum, and multiply 5x.
+			trace("Percent Increase: " + percent + " %");
+			if (percent > 10) {
+				if (this is PlayerCharacter) kGAMECLASS.eventBuffer += ParseText("\n\nYou hear a faint gurgling from your stomach and [pc.balls] as you feel them swelling fuller and fuller each passing second. With your kui-tan physiology, all that cum you ingested must have spiked your own production!");
+				lust(20); //increase Lust
+			}
+			ballFullness += percent;
+		}
+		
 		// OnTakeDamage is called as part of applyDamage.
 		// You should generate a message for /deferred/ display in the creature
 		// rather than emitting text immediately. You should then emit it
