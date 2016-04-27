@@ -433,13 +433,13 @@ package classes.Items.Transformatives
 				if (InCollection(player.wingType, GLOBAL.TYPE_SMALLDEMONIC) && player.cor() >= 75) {
 					output("\n\n");
 					output("Your small demonic wings stretch and grow, tingling with the pleasure of being attached to such a tainted body.  You stretch over your shoulder to stroke them as they unfurl, turning into full-sized demon-wings.  <b>Your demonic wings have grown!</b>");
-					player.wingType = GLOBAL.TYPE_DEMONIC;
+					player.shiftWings(GLOBAL.TYPE_DEMONIC, 2);
 				}
 				else if (InCollection(player.wingType, GLOBAL.TYPE_SHARK)) {
 					output("\n\n");
 					output("The muscles around your shoulders bunch up uncomfortably, changing to support the new bat-like wings growing from your back.  You twist your head as far as you can for a look and realize your fin has changed into ");
 					output("small ");
-					player.wingType = GLOBAL.TYPE_SMALLDEMONIC;
+					player.shiftWings(GLOBAL.TYPE_SMALLDEMONIC, 2);
 					output("bat-like demon-wings!");
 				}
 				else if (player.hasWings() && !InCollection(player.wingType, GLOBAL.TYPE_SMALLDEMONIC)) {
@@ -447,11 +447,11 @@ package classes.Items.Transformatives
 					output("The muscles around your shoulders bunch up uncomfortably, changing to support your wings as you feel their weight changing.  You twist your head as far as you can for a look and realize they've changed into ");
 					if (InCollection(player.wingType, GLOBAL.TYPE_SMALLDRACONIC, GLOBAL.TYPE_SMALLBEE)) {
 						output("small ");
-						player.wingType = GLOBAL.TYPE_SMALLDEMONIC;
+						player.shiftWings(GLOBAL.TYPE_SMALLDEMONIC, 2);
 					}
 					else {
 						output("large ");
-						player.wingType = GLOBAL.TYPE_DEMONIC;
+						player.shiftWings(GLOBAL.TYPE_DEMONIC, 2);
 					}
 					output("<b>bat-like demon-wings!</b>");
 				}
@@ -461,7 +461,7 @@ package classes.Items.Transformatives
 					output("A knot of pain forms in your shoulders as they tense up.  With a surprising force, a pair of small demonic wings sprout from your back");
 					if(player.hasArmor()) output(", ripping a pair of holes in the back of your [pc.armor]");
 					output(".  <b>You now have tiny demonic wings</b>.");
-					player.wingType = GLOBAL.TYPE_SMALLDEMONIC;
+					player.shiftWings(GLOBAL.TYPE_SMALLDEMONIC, 2);
 				//flags[kFLAGS.TIMES_TRANSFORMED]++;
 				}
 			}

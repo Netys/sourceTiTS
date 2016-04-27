@@ -258,7 +258,7 @@ package classes.Items.Transformatives
 					output("\n\n");
 					if (pc.hasWings()) output("Your wings fold into themselves, merging together with your back.  ");
 					output("You groan and slump down in pain, almost instantly regretting eating the tooth. You start sweating profusely and panting loudly, feeling the space between your shoulder blades shifting about. You hastily remove your [pc.gear] just in time before a strange fin-like structure bursts from in-between your shoulders. You examine it carefully and make a few modifications to your [pc.gear] to accommodate your new fin.");
-					pc.wingType = GLOBAL.TYPE_SHARK;
+					pc.shiftWings(GLOBAL.TYPE_SHARK, 1);
 					changes++;
 				}
 				else

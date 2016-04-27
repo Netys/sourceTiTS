@@ -1039,6 +1039,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			pc.tongueType = GLOBAL.TYPE_DRACONIC; // 120 cm of strong, prehensile tongue? yes!
 			pc.tongueFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_PREHENSILE];
 			pc.wingType = GLOBAL.TYPE_DRACONIC; // I believe I can fly...
+			pc.wingCount = 2;
 			pc.earType = GLOBAL.TYPE_VULPINE; // I can hear you!
 			pc.armType = GLOBAL.TYPE_VULPINE; // pads and claws? that will do
 			pc.armFlags = [GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS];

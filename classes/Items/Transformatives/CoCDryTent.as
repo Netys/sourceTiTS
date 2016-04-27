@@ -87,7 +87,7 @@ package classes.Items.Transformatives
 			//-may randomly remove bee wings:
 			if (rand(4) == 0 && (pc.wingType == GLOBAL.TYPE_SMALLBEE || pc.wingType == GLOBAL.TYPE_BEE) && changes < changeLimit) {
 				output("\n\nYour wings twitch and flap involuntarily.  You crane your neck to look at them as best you are able; from what you can see, they seem to be shriveling and curling up.  They're starting to look a lot like they did when they first popped out, wet and new.  <b>As you watch, they shrivel all the way, then recede back into your body.</b>", false);
-				pc.wingType = 0;
+				pc.removeWings();
 				changes++;
 			}
 			//-hair morphs to anemone tentacles, retains color, hair shrinks back to med-short('shaggy') and stops growing, lengthening treatments don't work and goblins won't cut it, but more anemone items can lengthen it one level at a time

@@ -259,7 +259,7 @@ package classes.Items.Transformatives
 			if (changes < changeLimit && (enchanted || pc.hasWings(GLOBAL.TYPE_AVIAN)) && rand(4) == 0 && Mutator.changeTail(pc, GLOBAL.TYPE_AVIAN, 1, [GLOBAL.FLAG_FEATHERED])) changes++;
 			
 			//-Propah Wings
-			if (changes < changeLimit && (enchanted || pc.armType == GLOBAL.TYPE_AVIAN) && rand(4) == 0 && Mutator.changeWings(pc, GLOBAL.TYPE_AVIAN)) changes++;
+			if (changes < changeLimit && (enchanted || pc.armType == GLOBAL.TYPE_AVIAN) && rand(4) == 0 && Mutator.changeWings(pc, GLOBAL.TYPE_AVIAN, 2)) changes++;
 			
 			//-Feathery Arms
 			if (changes < changeLimit && (enchanted || pc.hairType == GLOBAL.HAIR_TYPE_FEATHERS) && rand(4) == 0 && Mutator.changeArms(pc, GLOBAL.TYPE_AVIAN, [GLOBAL.FLAG_FEATHERED])) changes++;

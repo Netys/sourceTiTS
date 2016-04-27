@@ -66,7 +66,7 @@ package classes.Items.Transformatives
 			if (target.hasWings() && rand(3) == 0 && changes < changeLimit) {
 				if (target.wingType == GLOBAL.TYPE_SHARK) output("\n\nA wave of tightness spreads through your back, and it feels as if someone is stabbing a dagger into your spine.  After a moment the pain passes, though your fin is gone!");
 				else output("\n\nA wave of tightness spreads through your back, and it feels as if someone is stabbing a dagger into each of your shoulder-blades.  After a moment the pain passes, though your wings are gone!");
-				target.wingType = 0;
+				target.removeWings();
 				changes++;
 			}
 			//Removes antennae

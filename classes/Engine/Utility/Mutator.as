@@ -1368,11 +1368,12 @@ package classes.Engine.Utility
 		 * @param	display
 		 * @return is something changed
 		 */
-		public static function changeWings(target:Creature, newType:int, display:Boolean = true):Boolean {
+		public static function changeWings(target:Creature, newType:int, newCount:int, display:Boolean = true):Boolean {
 			buffer = "";
 			var changes:Number = 0;
-						
+			
 			if (newType == -1) newType = target.wingType;
+			if (newCount == -1) newType = target.wingCount;
 			
 			// basic case - change type
 			if(target.wingType != newType)
@@ -1383,9 +1384,11 @@ package classes.Engine.Utility
 					return changes > 0;
 				}
 				
-				if (newType == 0) buffer += " <b>Your " +  target.wingsDescript() + " are gone!</b>";
-				
-				target.wingType = newType;
+				if (newType == 0) {
+					buffer += " <b>Your " +  target.wingsDescript() + " are gone!</b>";
+					target.removeWings();
+				}
+				else target.shiftWings(newType, newCount);
 				
 				if (target.wingType != 0) buffer += " <b>You now have " + target.wingsDescript() + "!</b>";
 				

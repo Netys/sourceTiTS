@@ -263,7 +263,7 @@ package classes.Items.Transformatives
 			//Grow bigger bee wings!
 			if (changes < changeLimit && pc.hasWings(GLOBAL.TYPE_SMALLBEE) && rand(4)) {
 				changes++;
-				pc.wingType = GLOBAL.TYPE_BEE;
+				pc.shiftWings(GLOBAL.TYPE_BEE, 2);
 				output("\n\nYour wings tingle as they grow, filling out until they are large enough to lift you from the ground and allow you to fly!  <b>You now have large bee wings!</b>  You give a few experimental flaps and begin hovering in place, a giddy smile plastered on your face by the thrill of flight.");
 			}
 			//Grow new bee wings if player has none.
@@ -271,13 +271,13 @@ package classes.Items.Transformatives
 				changes++;
 				if (pc.wingType == GLOBAL.TYPE_SHARK) output("\n\nYou feel an itching on your large back-fin as something begins growing there.  You twist and contort yourself, trying to scratch and bring yourself relief, and failing miserably.  A sense of relief erupts from you as you feel something new grow out from your fin.  You hastily remove the top portion of your [pc.gear] and marvel as a pair of small bee-like wings sprout from your back, replacing the fin that once grew there.  Tenderly flexing your new muscles, you find you can flap them quite fast.  Unfortunately you can't seem to flap your little wings fast enough to fly, but they would certainly slow a fall.  A few quick modifications to your [pc.gear] later and you are ready to continue your journey with <b>your new bee wings</b>.");
 				else output("\n\nYou feel an itching between your shoulder-blades as something begins growing there.  You twist and contort yourself, trying to scratch and bring yourself relief, and failing miserably.  A sense of relief erupts from you as you feel something new grow out from your body.  You hastily remove the top portion of your [pc.gear] and marvel as a pair of small bee-like wings sprout from your back.  Tenderly flexing your new muscles, you find you can flap them quite fast.  Unfortunately you can't seem to flap your little wings fast enough to fly, but they would certainly slow a fall.  A few quick modifications to your [pc.gear] later and you are ready to continue your journey with <b>your new bee wings</b>.");
-				pc.wingType = GLOBAL.TYPE_SMALLBEE;
+				pc.shiftWings(GLOBAL.TYPE_SMALLBEE, 2);
 			}
 			//Melt demon wings!
 			if (changes < changeLimit && (pc.hasWings(GLOBAL.TYPE_DEMONIC) || pc.hasWings(GLOBAL.TYPE_SMALLDEMONIC))) {
 				changes++;
 				output("\n\nYour demonic wings ripple, jelly-like.  Worried, you crane back to look, and to your horror, they're melting away!  Runnels of amber honey trail down the wings' edges, building into a steady flow.  <b>In a moment, the only remnant of your wings is a puddle of honey in the dirt</b>.  Even that is gone in seconds, wicked into the dry soil.");
-				pc.wingType = 0;
+				pc.removeWings();
 			}
 			if (rand(4) == 0 && pc.gills && changes < changeLimit) {
 				output("\n\nYour chest itches, and as you reach up to scratch it, you realize your gills have withdrawn into your skin.");

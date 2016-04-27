@@ -195,21 +195,21 @@ package classes.Items.Transformatives
 			if (!pc.hasWings(GLOBAL.TYPE_DRACONIC) && changes < changeLimit && rand(3) == 0) {
 				if (!pc.hasWings()) {
 					output("\n\nYou double over as waves of pain suddenly fill your shoulderblades; your back feels like it's swelling, flesh and muscles ballooning.  A sudden sound of tearing brings with it relief and you straighten up.  Upon your back now sit small, leathery wings, not unlike a bat's. <b>You now have small dragon wings.  They're not big enough to fly with, but they look adorable.</b>");
-					pc.wingType = GLOBAL.TYPE_SMALLDRACONIC;
+					pc.shiftWings(GLOBAL.TYPE_SMALLDRACONIC, 2);
 				}
 				//(If Small Dragon Wings Present)
 				else if (pc.hasWings(GLOBAL.TYPE_SMALLDRACONIC)) {
 					output("\n\nA not-unpleasant tingling sensation fills your wings, almost but not quite drowning out the odd, tickly feeling as they swell larger and stronger.  You spread them wide - they stretch further than your arms do - and beat them experimentally, the powerful thrusts sending gusts of wind, and almost lifting you off your feet.  <b>You now have fully-grown dragon wings, capable of winging you through the air elegantly!</b>");
-					pc.wingType = GLOBAL.TYPE_DRACONIC;
+					pc.shiftWings(GLOBAL.TYPE_DRACONIC, 2);
 				}
 				else if (pc.wingType == GLOBAL.TYPE_SHARK) {
 					output("\n\nA sensation of numbness suddenly fills your fin.  When it does away, it feels... different.  Looking back, you realize that it has been replaced by new, small wings, ones that you can only describe as draconic.  <b>Your shark-like fin has changed into dragon wings.</b>");
-					pc.wingType = GLOBAL.TYPE_SMALLDRACONIC;
+					pc.shiftWings(GLOBAL.TYPE_SMALLDRACONIC, 2);
 				}
 				//(If other wings present)
 				else {
 					output("\n\nA sensation of numbness suddenly fills your wings.  When it dies away, they feel... different.  Looking back, you realize that they have been replaced by new, small wings, ones that you can only describe as draconic.  <b>Your wings have changed into dragon wings.</b>");
-					pc.wingType = GLOBAL.TYPE_SMALLDRACONIC;
+					pc.shiftWings(GLOBAL.TYPE_SMALLDRACONIC, 2);
 				}
 				changes++;
 			}
