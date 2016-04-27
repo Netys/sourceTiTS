@@ -670,6 +670,7 @@ public function inventoryDisplay():void
 public function generalInventoryMenu():void
 {
 	clearOutput();
+	showName("\nINVENTORY");
 	var x:int = 0;
 	itemScreen = inventory;
 	useItemFunction = inventory;
@@ -710,6 +711,7 @@ public function generalInventoryMenu():void
 public function combatInventoryMenu():void
 {
 	clearOutput();
+	showName("\nINVENTORY");
 	clearMenu();
 	itemScreen = inventory;
 	useItemFunction = inventory;
@@ -1050,6 +1052,15 @@ public function replaceItemGo(args:Array):void
 	}
 	else 
 		this.addButton(0,"Next",lootScreen);
+}
+
+public function quickLoot(... args):void
+{
+	itemScreen = mainGameMenu;
+	lootScreen = mainGameMenu;
+	useItemFunction = mainGameMenu;
+	
+	itemCollect(args);
 }
 
 public function hasShipStorage():Boolean

@@ -155,6 +155,8 @@
 		include "../includes/tavros/oviliumBonus.as";
 		include "../includes/tavros/reaha.as";
 		include "../includes/tavros/reaha.expansion.as";
+		include "../includes/tavros/rooms.as";
+		include "../includes/tavros/roomFunctions.as";
 		include "../includes/tavros/saendraXPack1.as";
 		include "../includes/tavros/sellesy.as";
 		include "../includes/tavros/semith.as";
@@ -162,9 +164,9 @@
 		include "../includes/tavros/seraXPack1.as";
 		include "../includes/tavros/shearBeauty.as";
 		include "../includes/tavros/shelly.as";
-		include "../includes/tavros/vahn.as";
-		include "../includes/tavros/rooms.as";
 		include "../includes/tavros/tamaniCorpShop.as";
+		include "../includes/tavros/terensha.as";
+		include "../includes/tavros/vahn.as";
 		
 		//First planet
 		include "../includes/mhenga/burt.as";
@@ -180,6 +182,7 @@
 		include "../includes/mhenga/naleenMale.as";
 		include "../includes/mhenga/penny.as";
 		include "../includes/mhenga/penny_bimbo.as";
+		include "../includes/mhenga/rooms.as";
 		include "../includes/mhenga/roomFunctions.as";
 		include "../includes/mhenga/scrapyard.as";
 		include "../includes/mhenga/syri.as";
@@ -190,7 +193,6 @@
 		include "../includes/mhenga/vko.as";
 		include "../includes/mhenga/zilMale.as";
 		include "../includes/mhenga/zilFemale.as";
-		include "../includes/mhenga/rooms.as";
 		
 		//Second planet
 		include "../includes/tarkus/anno.as";
@@ -207,6 +209,7 @@
 		include "../includes/tarkus/lapinara.as";
 		include "../includes/tarkus/raskvelFemaleFight.as";
 		include "../includes/tarkus/raskvelMaleFight.as";
+		include "../includes/tarkus/rooms.as";
 		include "../includes/tarkus/roomFunctions.as";
 		include "../includes/tarkus/sexbots.as";
 		include "../includes/tarkus/shekka.as";
@@ -215,7 +218,6 @@
 		include "../includes/tarkus/taxi.as";
 		include "../includes/tarkus/theMess.as";
 		include "../includes/tarkus/sydianFemale.as";
-		include "../includes/tarkus/rooms.as";
 
 		//Third planet
 		include "../includes/newTexas/newTexas.as";
@@ -225,13 +227,14 @@
 		include "../includes/newTexas/gianna.as";
 		include "../includes/newTexas/gobbles.as";
 		include "../includes/newTexas/millie.as";
+		include "../includes/newTexas/rooms.as";
+		include "../includes/newTexas/roomFunctions.as";
 		include "../includes/newTexas/tenTonGym.as";
 		include "../includes/newTexas/treatment.as";
 		include "../includes/newTexas/varmint_wrangling.as";
 		include "../includes/newTexas/yammi.as";
 		include "../includes/newTexas/yancy.as";
 		include "../includes/newTexas/zephyr.as";
-		include "../includes/newTexas/rooms.as";
 		
 		//Fourth planet
 		include "../includes/myrellion/anzhelaRedMyrMedic.as";
