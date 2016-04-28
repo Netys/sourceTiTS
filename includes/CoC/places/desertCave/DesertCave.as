@@ -179,7 +179,8 @@ public function DesertCaveBathroom():Boolean {
 	}
 	return false;
 }
-public function DesertCaveCumWitchOffice():Boolean {	
+
+public function DesertCaveCumWitchOffice():Boolean {
 	if(flags["COC.SAND_WITCHES_FRIENDLY"] > 0) {
 		//{SAND WITCHES NOW FRIENDLY}
 		output("The cum witch is here, pounding away at one of her sister's cunts, like usual.  She seems to CONSTANTLY excrete her jism into her partner's many cunt-folds, but as her passion and speed rises, the flow thickens, eventually filling the poor milk-witch's wombs entirely.  They go at it like animals for a few seconds more, then separate after a climactic orgasm that leaves a puddle of spooge inches deep on part of the uneven floor.  The cum-witch moves her insensate sister to rest on a nearby bench before putting on her hat and robes.  She winks at you and offers, \"<i>Well, I hope you enjoyed the show, interloper.  Did you come here for some of my gift, or something else?</i>\"");

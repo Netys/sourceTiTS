@@ -6,6 +6,7 @@ import classes.Engine.Utility.*;
 //*Sand Witch Milk Bath -McGirt
 public function milkBathsAhoy():void {
 	clearOutput();
+	showBathGirl();
 	output("Well, you can probably squeeze in a quick bath.  You've already dealt with the bulk of their number, and this area seems devoid of any more of them.  Your [pc.gear] easily slides into a pile alongside of rounded, stone tub while the dusky titty-monster looks on with anticipation.  Once nude, you hop down inside and say, \"<i>Bath Time.</i>\"");
 	
 	output("\n\nWith trembling anticipation, the black-skinned milk-slave reaches down for her teat-like nipples.  Her huge, plate-sized areola bead with white perspiration in anticipation, and the woman's hands nearly disappear into her chest-globes as she struggles to grasp her engorged nipples.  You drop the plug into the drain and look up.  Cooing in delight, the huge-breasted girl finally manages to get her shivering fingertips around each of her aching milk-spouts.  She massages her nipple-flesh for a moment, her eyes lidded and heavy from pleasure, and she releases the first heavy torrent of white into the tub.  Surprisingly, the fluid is thin and watery, less milk-like than you'd think.  Whether the witches or the woman's physiology is to blame you cannot tell.  Her eyes are too vacant to give any clues, and her mouth is too busy making sighs of relief to speak.");
@@ -35,6 +36,7 @@ public function milkBathsAhoy():void {
 //[Next] (Relax)
 public function finishMilkBath():void {
 	clearOutput();
+	showBathGirl();
 	output("You sit in the tub for a while, letting the fragrant fluids soak into your " + pc.skinFurScales() + ".  Yet, you have work to do, and eventually, you tire of relaxing in the sand witches' endless white bounty.  You pull out the tub's plug and climb out, finding a towel on the wall.  Thankfully, the milk doesn't seem to leave behind any residue, and you feel clean and refreshed, if a bit horny.");
 	//(+Lust, -Fatigue)
 	//dynStats("lus", 10);
@@ -48,6 +50,7 @@ public function finishMilkBath():void {
 //[Milk Girl]
 public function grabTheMilkGirl():void {
 	clearOutput();
+	showBathGirl();
 	output("You call out to the milk slave before she can slink away, and wade over to the side of the tub, leaving your face a few scant inches from her massive, milk-laden jugs. She cocks her head to the side, obviously unused to the attention, and quietly whispers, \"<i>" + pc.mf("M-master?","M-mistress?") + "</i>\"");
 	output("\n\nYou flash her a mischievous grin before grabbing a handful of her giant tits and pulling, yanking her into the tub with you. The milk-maid lets out a sharp cry of surprise as she tumbles in, a huge splash of cream spraying over the rim of the tub, painting the walls white. Gasping, her head pops back over the surface of her own milk, long ebony hair dripping onto the tops of her seemingly-buoyant teats, which bob over the milky waves with a strangely serene, regal grace.  \"<i>" + pc.mf("M-master?","M-mistress?") + "</i>\" the slave girl repeats, her lower lip quivering with fright as she wades through her own lactation, slowly retreating to the edge of the tub. Smiling, you reach out and stroke her cheek, telling her it's all right, that you thought she might like a bath, too. She starts to reply in her broken dialect, but you cut her off with a playful stroke of her massive mounds, urging her over toward you. Though still nervous, she does as you ask, sliding up under your arm and onto your lap. Once seated, she looks ups to you with saucer-like brown eyes until you cup her cheek and give her a short, tender kiss, pressing your lips to her dusky mounds. To your delight, she seems to melt at your touch, relaxing in an instant as you hold her as close as you can, seperated only by her prodigious chest");
 	if(pc.biggestTitSize() >= 8) output(", pressing deep into your own huge rack, your nipples flicking across her own leaky tits");
@@ -93,6 +96,7 @@ public function grabTheMilkGirl():void {
 //[Don't]
 public function dontFuckMilkBathBabe():void {
 	clearOutput();
+	showBathGirl();
 	output("You allow the girl to continue for a long, long while until your entire body feels deeply refreshed, her milk having soaked into your body and making you feel fresh and revitalized. You start to thank the milk girl for the pleasurable company, but when you open your mouth, she slips into your arms and presses her lips to yours.  Chuckling to yourself, you hold the girl as tight against yourself as her udders will allow, turning her to the side to let her nuzzle her cheek into your [pc.chest], kissing the top of her head before the two of you climb from the pool.  You have to help her out, her massive extra weight nearly dragging her back in except for your quick reflexes.  You gather your [pc.gear] and ruffle the milk slave's hair before turning back to the task at hand.");
 	//[+Lust, +HP, -Fatigue]
 	processTime(5 + rand(5));
@@ -105,15 +109,16 @@ public function dontFuckMilkBathBabe():void {
 //[Fuck Her] (PC has a Dick)
 public function fuckMilkbabeWithPenor():void {
 	clearOutput();
-	var x:int = pc.cockThatFits(50);
+	showBathGirl();
+	var x:int = pc.cockThatFits(cockVolume(50));
 	if(x < 0) {
 		x = pc.smallestCockIndex();
 	}
 	
 	output("You turn around and pull the milk-slut against you, her massive teats pressing hard against your [pc.chest] until they spurt milk.  You stroke her cheeks, bringing her lips up to yours. Her hand finds your [pc.cock] again, stroking you with mounting speed as your tongue finds its way into her mouth, your hands wandering down to grope her sizable ass and flared, breeder's hips.  Your milk maid sighs heavily, breath filled with lust as you push her up against the rim of the tub, her legs spreading wide for easy access to her milk-lubed cunt.  She locks her arms around your shoulder, moaning happily as you press into her, your [pc.cock " + x + "] sliding easily into her sodden box.");
 	output("\n\nSubmerged beneath a sea of creamy milk, it's so very, very easy to slide into the slave girl, ");
-	if(pc.cockVolume(x) < 30) output("hilting her in one long stroke");
-	else if(pc.cockVolume(x) < 50) output("pushing your many inches into her until your hips join, her nice and loose cunt easily taking your length");
+	if(pc.cockVolume(x) < cockVolume(30)) output("hilting her in one long stroke");
+	else if(pc.cockVolume(x) < cockVolume(50)) output("pushing your many inches into her until your hips join, her nice and loose cunt easily taking your length");
 	else output("your cock gaining as much entrance as your massive member can, the excess dickmeat embraced in cream between you");
 	output(".  With your prick buried in her, the milk slave hooks her legs around your [pc.hips] and starts to rock her hips gently, letting you take the initiative. Smiling at the meek girl, you sink your fingers into milk-yielding titflesh and start to move your hips, thrusting into her with measured ease, letting milk flood into her channel and coat your dick to lubricate each and every motion.");
 	
@@ -135,6 +140,7 @@ public function fuckMilkbabeWithPenor():void {
 //[Fuck Her] (PC has Cooch & C+cups)
 public function ladyFucks():void {
 	clearOutput();
+	showBathGirl();
 	output("You turn around in the milky pool, pulling the cute little slave tight against you.  She gasps with surprise, but settles as soon as you press your lips to hers, your hands wandering across her huge teats and supple, milky body.  She nuzzles up against you, her head resting on your [pc.chest] as you hold her against yourself, stroking her dark hair.  After a few moments of such a simple pleasure, the little slave girl shifts her cheek along your breast, wrapping her full, dusky lips around your [pc.nipple].  You let out a long moan as she suckles gently");
 	if(pc.lactationQ() >= 200) output(", drawing out a trickle of milk from your motherly reserves.  She gulps deeply, smiling up at you as a trickle of your milk runs down her chin, dripping into the pool of her own");
 	output(".  Her hand slips up your body, brushing your vulva and [pc.clit] before cupping your other breast, delicate fingers wrapping around your [pc.nipple].  With deft, practiced motion, she works your teats between her fingers, working your breast like she might her own");
@@ -160,6 +166,7 @@ public function ladyFucks():void {
 //[Drink & Masturbate]
 public function drinkNFap():void {
 	clearOutput();
+	showBathGirl();
 	output("\"<i>Wait,</i>\" you call out to the ebony woman, letting the milk obscure your hands as you begin to masturbate, \"<i>I want a drink.</i>\"  Sheepishly, the milk slave obliging shifts to drag her tits back into place.");
 	output("\n\nShe begs, \"<i>Forgiveness please, [pc.Master].  Bath slut would love to give you more milk.</i>\"  She rolls her shoulders, sending an enticing jiggle through the milk-weighted fluid-factories on the edge of the tub, the sable flesh of her nipples blotted by fresh drops of white.  The milky morsels roll down the undercurve of the black slut's tits before dripping into the tub and sending tiny waves of cream through the tub.  Her well-used teat looks almost over-engorged by this point, puffy, swollen, and a little red, even through her coal-dark skin.  Thick streams of her alabaster nectar start to run from each of her nipple-tips as you lean closer, the anticipation already too much for the ever-full milk-machine of a woman.");
 	

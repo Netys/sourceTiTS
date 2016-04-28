@@ -77,6 +77,18 @@ public function campFollowersMenu(descOnly:Boolean = false):void {
 		name(!descOnly);
 		if (followerBtnNum == 14) followerBtnNum++;
 	}
+	
+	// TODO: separate followers/slaves/lovers?
+	for each (var name2:* in loverCampMenuBlurb)
+	{
+		name2(!descOnly);
+		if (followerBtnNum == 14) followerBtnNum++;
+	}
+	for each (var name3:* in slaveCampMenuBlurb) 
+	{
+		name3(!descOnly);
+		if (followerBtnNum == 14) followerBtnNum++;
+	}
 }
 
 public function loversCount():int {
@@ -101,6 +113,9 @@ public function campLoversButton():void {
 public var loverCampMenuBlurb:/*Function*/Array = []; // Container for self-declaring listeners. Functions here must accept showInteractButton:Boolean argument.
 public var loverBtnNum:int = 0;
 public function campLoversMenu(descOnly:Boolean = false):void {
+	campFollowersMenu(descOnly);
+	return;
+	
 	if (!descOnly) {
 		clearMenu();
 		clearOutput();
@@ -134,6 +149,9 @@ public function campSlavesButton():void {
 public var slaveCampMenuBlurb:/*Function*/Array = []; // Container for self-declaring listeners. Functions here must accept showInteractButton:Boolean argument.
 public var slaveBtnNum:int = 0;
 public function campSlavesMenu(descOnly:Boolean = false):void {
+	campFollowersMenu(descOnly);
+	return;
+	
 	if (!descOnly) {
 		clearMenu();
 		clearOutput();
@@ -188,6 +206,10 @@ public function campEvent():Boolean
 	if (flags["COC.NEED_URTA_LETTER"] <= timeAsStamp)
 	{
 		getUrtaLetter();
+		return true;
+	}
+	if (!pc.hasKeyItem("Super Reducto") && milkSlave() && flags["COC.RATHAZUL_IN_CAMP"] == 1 && flags["COC.RATHAZUL_DAYS_IN_CAMP"] >= 4) {
+		ratducto();
 		return true;
 	}
 	return false;

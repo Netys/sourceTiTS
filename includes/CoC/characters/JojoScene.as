@@ -43,7 +43,7 @@ public function jojoFollowerMeditate(clear:Boolean = true):void {
 		else if (pc.cor() > 40)
 			cleanse -= 1;
 		pc.cor(cleanse);
-		//dynStats("cor", cleanse - pc.countCockSocks("alabaster"));
+		//dynStats("cor", cleanse - pc.countCockSocks("alabaster")); // handled within cor()
 		
 		//if (pc.str < 45) dynStats("str", 1); //Str boost to 45
 		//if (pc.tou < 45) dynStats("tou", 1); //Tou boost to 45

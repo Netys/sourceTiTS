@@ -158,26 +158,25 @@ package classes.Characters.CoC
 			//this.setWeapon(weapons.URTAHLB);
 			//this.setArmor(armors.URTALTA);
 			
-			this.createPerk("Bloodthirsty", 0, 0, 0, 0);
-			this.createPerk("Critical Blows", 0, 0, 0, 0);
-			this.createPerk("Tough", 0, 0, 0, 0);
-			this.createPerk("Tough 2", 0, 0, 0, 0);
-			this.createPerk("Power Strike", 0, 0, 0, 0);
-			this.createPerk("Juggernaut", 0, 0, 0, 0);
-			this.createPerk("Riposte", 0, 0, 0, 0);
-			this.createPerk("Second Wind", 0, 0, 0, 0);
-			this.createPerk("Low Tech Solutions", 0, 0, 0, 0);
-			this.createPerk("Cleave", 0, 0, 0, 0);
-			this.createPerk("Second Attack", 0, 0, 0, 0);
-			this.createPerk("Lucky Breaks", 0, 0, 0, 0);
-			this.createPerk("Low Blow", 0, 0, 0, 0);
 			this.createPerk("Agility", 0, 0, 0, 0);
-			this.createPerk("Leap Up", 0, 0, 0, 0);
+			this.createPerk("Bloodthirsty", 0, 0, 0, 0);
 			this.createPerk("Burst of Energy", 0, 0, 0, 0);
+			this.createPerk("Cleave", 0, 0, 0, 0);
+			this.createPerk("Critical Blows", 0, 0, 0, 0);
+			this.createPerk("Juggernaut", 0, 0, 0, 0);
+			this.createPerk("Leap Up", 0, 0, 0, 0);
+			this.createPerk("Low Blow", 0, 0, 0, 0);
+			this.createPerk("Low Tech Solutions", 0, 0, 0, 0);
+			this.createPerk("Lucky Breaks", 0, 0, 0, 0);
+			this.createPerk("Power Strike", 0, 0, 0, 0);
+			this.createPerk("Riposte", 0, 0, 0, 0);
+			this.createPerk("Second Attack", 0, 0, 0, 0);
+			this.createPerk("Second Wind", 0, 0, 0, 0);
+			this.createPerk("Tough 2", 0, 0, 0, 0);
+			this.createPerk("Tough", 0, 0, 0, 0);
 			this.createPerk("Transformation Resistance", 0, 0, 0, 0, "You are extremely resistant to any transformatives.");
-			this.createStatusEffect("Sexy Costume", 25);
 			
-			this.createStatusEffect("Disarm Immune");
+			this.createStatusEffect("Sexy Costume", 25);
 			
 			this._isLoading = false;
 		}

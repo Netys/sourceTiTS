@@ -644,7 +644,7 @@ public function menFuckUpSomeCumWitch():void {
 		else if(pc.cumQ() < 500) output("gushes out of your dual cum-slits, soaking both holes in and out with pearly white.");
 		else if(pc.cumQ() < 1000) output("gushes out with incredible force from your dual cum-slits, quickly plugging both holes so full of seed that the witch's belly slowly rises, cum-inflated.");
 		else output("washes out of your dual cum-slits in a tidal wave, flooding the hungry holes with your virile seed.  You cum and cum, spunking up the witch's belly.  First it bulges slightly, but all too soon you have it rounded into a pregnant dome.");
-		output("  The bouncing girl-cock above the woman's gushing pussy does a fine job of painting her belly and bust white.  It spurts rope after rope onto her chocolate-toned flesh, and soon she looks more like an icing-drizzled tart than a formidable foe.");
+		output("  The bouncing girl-cock above the woman's gushing pussy does a fine job of painting her belly and bust [pc.cumColor].  It spurts rope after rope onto her chocolate-toned flesh, and soon she looks more like an icing-drizzled tart than a formidable foe.");
 		output("\n\nFeeling empty and sated, you unsheath your double dongs to reveal the fruits of your labors - a pair of juicy creampies, one vertical, the other small, puckered, and oozing.\n\n");
 		pc.orgasm();
 	}
@@ -673,8 +673,8 @@ public function menFuckUpSomeCumWitch():void {
 		output("\n\nThe witch sighs and idly rubs her ");
 		if(pc.cumQ() >= 700) output("swollen ");
 		output("tummy, smearing her own wasted goo into her skin as you withdraw and re-dress.");
-		if(cor() < 33) output("  You hope she learned something from the experience, but knowing most people in this strange land, she'll go right back to her rotten ways.");
-		else if(cor() < 66) output("  You wonder if she'll learn anything from this and shrug nonchalantly.  Who cares?");
+		if(pc.cor() < 33) output("  You hope she learned something from the experience, but knowing most people in this strange land, she'll go right back to her rotten ways.");
+		else if(pc.cor() < 66) output("  You wonder if she'll learn anything from this and shrug nonchalantly.  Who cares?");
 		else output("  You smirk as you wonder if she'll learn anything from this.  You hope not - it's a fun lesson to teach.\n\n");
 	}
 	processTime(15 + rand(5));
@@ -713,13 +713,13 @@ public function maleTooBigVictorySex():void {
 	
 	output("\n\nThe cum-soaked, hermaphrodite witch tries to beg for your cum, but you shut her up with another load of bubbling pre.  As you watch her try to swallow it all, you feel a twinge of heat inside yourself");
 	if(pc.balls > 0) output(" along with your [pc.balls] growing tight");
-	output(", and you know your climax has arrived.  You hammer your [pc.cock " + x + "] back home, smashing it into her face.  The first wave seems to languish in your body forever, gradually stretching your urethra wide until you see your [pc.cockHead " + x + "] swell and open.  A wave of white fills the bitch's mouth, soaks her hair, and washes over her shoulders.  There's so much of the alabaster gunk that ropes of it dangle around her head in a shroud, slowly dripping into a puddle onto the floor.  You inch back a bit, and let the next explosion take her in the tits.  The jism pours out like it water from a five gallon bucket, and the black tits are immediately wreathed in glistening white.");
+	output(", and you know your climax has arrived.  You hammer your [pc.cock " + x + "] back home, smashing it into her face.  The first wave seems to languish in your body forever, gradually stretching your urethra wide until you see your [pc.cockHead " + x + "] swell and open.  A wave of [pc.cumColor] fills the bitch's mouth, soaks her hair, and washes over her shoulders.  There's so much of the [pc.cumColor] gunk that ropes of it dangle around her head in a shroud, slowly dripping into a puddle onto the floor.  You inch back a bit, and let the next explosion take her in the tits.  The jism pours out like it water from a five gallon bucket, and the black tits are immediately wreathed in [pc.cum].");
 	
 	output("\n\nDemanding more friction, your [pc.cock " + x + "] draws you right back up to her face, and this time she doesn't even try to catch it in her mouth.  The black slut simply plants a kiss just below your opening and meets your gaze as the alabaster flow takes her, holding eye contact for as long as she can.  Of course, that isn't long, and she's quickly drenched in spunk, her eyes glued shut with syrupy strings of spooge.");
 	
 	output("\n\nYou aren't done!  Not by a long shot!  This dark creature blessed you with unholy levels of virility, and you aren't going to waste it.  You stand away and butt your [pc.cockHead " + x + "] into her nether-lips, and the remainder of your orgasm is injected directly into the woman's waiting womb.  Her belly rounds into a nice, gravid bump that carries her cock up with it, and you're given the first chance to see the results of the cum witch's own orgasm.  The dark, glossy cock is absolutely soaked in sperm, while her balls are wreathed in churned up, frothy cum.  Once you've made her uterus a swollen dome, you aim up and drizzle the last ropes atop her pathetic, half-limp dick.");
 	
-	output("\n\nExhausted at last, you pat your [pc.cock " + x + "] affectionately.  You'd wipe it off on the witch's hair, if it wasn't messier than the " + pc.skin() + " you plan to clean.  She begins to lick her fingers and clean the stuff off her face.  You just laugh, and get dressed.  There's still much to do.");
+	output("\n\nExhausted at last, you pat your [pc.cock " + x + "] affectionately.  You'd wipe it off on the witch's hair, if it wasn't messier than the organ you plan to clean.  She begins to lick her fingers and clean the stuff off her face.  You just laugh, and get dressed.  There's still much to do.");
 	processTime(15 + rand(5));
 	pc.orgasm();
 	if (inCombat()) CombatManager.genericVictory();
@@ -749,9 +749,9 @@ public function ladyVictorySex():void {
 	pc.cuntChange(0, enemy.biggestCockVolume(),true,true,false);
 	output("\n\nThe semi-conscious witch stirs beneath you, responding to the sexual pleasure you've forced back upon her.  \"<i>...Wha?</i>\" she asks as comprehension washes over her features.  \"<i>Oooh... you're not done?</i>\"  You bite her lower lip as your work her cock over, pumping away with wild abandon.  The only answer she needs is the feel of your body climaxing atop her, and you begin to play with her breasts as you work towards that goal.");
 	
-	output("\n\nThe dark-skinned blond pants, \"<i>Too soon... gonna... gonna cum... again!</i>\"  She screws up her eyes and throws back her head, her tongue weakly flopping to the side, and you feel her cock erupt, the heavy orbs of her balls twitching under your [pc.butt].  Molten hot semen gushes through your passage, bathing your womb in thick sperm until you feel full in a whole different way, and as if triggered by biological imperative, you cum, creaming that thick rod with your lady-spunk.");
+	output("\n\nThe dark-skinned blond pants, \"<i>Too soon... gonna... gonna cum... again!</i>\"  She screws up her eyes and throws back her head, her tongue weakly flopping to the side, and you feel her cock erupt, the heavy orbs of her balls twitching under your [pc.butt].  Molten hot semen gushes through your passage, bathing your womb in thick sperm until you feel full in a whole different way, and as if triggered by biological imperative, you cum, creaming that thick rod with your [pc.girlCum].");
 	if(pc.isSquirter()) output("  It gushes out of you in a soaking river, utterly drenching the futa's stomach, hips, and butt.");
-	if(pc.isLactating()) output("  At the same time, milk spouts from your bosom to wash over your hermaphrodite.");
+	if(pc.isLactating()) output("  At the same time, [pc.milk] spouts from your bosom to wash over your hermaphrodite.");
 	
 	output("\n\nThe orgasm drives your body relentlessly, and you're forced to ride the hermaphrodite like a bucking bronco, milking her cock relentlessly.  You hips thump wetly atop the chocolate lady's thighs, and it isn't until you make that final, echoing smack of soaked flesh on flesh that you come down, sagging weakly into the comfortable tits below.  The witch sighs contently and begins to stroke your [pc.hair], but her fingers fall away after a second as her eyes flutter closed.");
 	
@@ -791,8 +791,8 @@ public function tentacleVictoryGangbangCumWitch():void {
 	
 	if(pc.balls > 0) output("\n\nYour balls begin to tremble with quaking warmth, releasing their thick cargo to pump up [pc.eachCock].");
 	else output("\n\nYour body begins to tremble with the quaking warmth, releasing its thick cargo to pump up [pc.eachCock].");
-	output("  You shudder and grab the ebony sorceress's tits in your hands, squeezing her bronzed orbs tightly as you release works through you.  Jets of cum well up to plug the witch's pussy and anus simultaneously.  The spit-soaked, cum-splattered vine between her tits quivers meaningfully, and then unloads, squirting a thick wave of jizz onto her face.");
-	if(pc.cockTotal(GLOBAL.TYPE_TENTACLE) >= 4) output("  Of course, your fourth prick is not to be outdone, and blasts a gooey coating of cream across the witch's own pulsating prick, wreathing it in drizzles of syrupy white.");
+	output("  You shudder and grab the ebony sorceress's tits in your hands, squeezing her bronzed orbs tightly as you release works through you.  Jets of [pc.cum] well up to plug the witch's pussy and anus simultaneously.  The spit-soaked, cum-splattered vine between her tits quivers meaningfully, and then unloads, squirting a thick wave of jizz onto her face.");
+	if(pc.cockTotal(GLOBAL.TYPE_TENTACLE) >= 4) output("  Of course, your fourth prick is not to be outdone, and blasts a [pc.cumVisc] coating of [pc.cumNoun] across the witch's own pulsating prick, wreathing it in drizzles of [pc.cumColor].");
 	if(pc.cumQ() >= 500) output("  Wave after wave of spunk washes into the tight holes and toned form of your foe, turning her into a complete mess.");
 	if(pc.cumQ() >= 1000) output("  A few more virile splurts see to her utterly inundated state, bloating her belly into a tightly-stretched dome.");
 	
@@ -974,6 +974,7 @@ public function cumWitchBlessed(virility:Boolean = true):void {
 		pc.createPerk("Magical Fertility", 0.1, 0.25, 0, 0, "10% higher chance of pregnancy and increased pregnancy speed.");
 	}
 	output("</b>");
+	applyCumSoaked(pc);
 	flags["COC.BEEN_BLESSED_BY_CUM_WITCH"] = 1;
 	//dynStats("lib", 1, "sen", -5);
 	pc.slowStatGain("libido", 1);

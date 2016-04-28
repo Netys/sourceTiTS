@@ -318,14 +318,14 @@ public function forceDildosSphinx():void {
 	output("\n\nInstead, the sphinx-girl teases you with another lick, and another; but as she does, you can see her fingers moving in arcane gestures, weaving thin blue lines of magic in their wake as a spell takes shape.  A long, wrist-thick pole of translucent blue light soon forms between her hands, the crown at its tip giving it the unmistakable shape of a phallus.  With a final lick across your sensitive flesh, the sphinx spreads your cheeks as wide as they'll go, letting your spit-slicked hole taste the dry desert air.  A moment later, you feel the tip of the spectral dildo against the mouth of your [pc.vagOrAss], the magical energies that form it sending electric currents through your body; every hair on your bare form jumps to attention as pleasure burns in you like a fire, even before the slightest penetration.");
 	
 	output("\n\nWhen the tip does slide in, you nearly cum on the spot.");
-	if (pc.hasVagina()) pc.cuntChange(0, 10, true, true, false);
-	else pc.buttChange(10, true, true, false);
+	if (pc.hasVagina()) pc.cuntChange(0, cockVolume(10), true, true, false);
+	else pc.buttChange(cockVolume(10), true, true, false);
 	output("\n\nEvery inch of your sensitive inner walls that the arcane pseudo-cock presses past explodes in a conflagration of pleasure, electrifying your every nerve as Sanura slowly sinks her summoned dildo into your [pc.vagOrAss].  You clench your teeth as you try to bear the orgasmic overload radiating from your fuck-hole, but the magical shock-wave soon spreads over your entire body.  Your [pc.legs] quiver as the half-lion sinks her rod deeper and deeper into you, reaming your innermost depths wide with inch after inch of mind-numbing stimulation.  Suddenly, though, her advance ceases, leaving you skewered on a gently-vibrating rod of arcane ecstasy.  Just as your sex-addled mind starts to question the lack of movement, you feel a sudden and overwhelming force pressing into your [pc.vagOrAss] atop the cock already embedded inside you, trying to stretch your hole even wider.  This second ethereal prick is even bigger than the first, slowly working and wedging itself into your abused hole, forcing you open until you're screaming in pleasure and pain.  Finally, the massive cock pops in, and relief spreads through you as Sanura starts gently working it in, cooing softly as she penetrates you once again.");
 	
 	if(pc.hasVagina()) {
 		//if PC has Vagina
 		output("\n\nAs your quivering cunt tries to adjust to the pair of massive intruders tearing it apart, the sultry sphinx conjures up a third rod, just as big as the last.  You grit your teeth, bracing for her attempt to cram THAT up your slit as well, but instead feel only a gentle, probing wetness against your [pc.ass].  You shiver from your very core as Sanura drags her tongue along your backdoor, pressing the tip in, seeking entrance.  Despite the static pleasure roiling in your cunt, you try your best to relax the muscles in your sphincter; eventually, after a few long moments of prodding, you feel the first inch of the magic dildo pierce your [pc.asshole], stretching you out to your limit and beyond as Sanura shapes its size to utterly fill your rear entrance.");
-		pc.buttChange(10, true, true, false);
+		pc.buttChange(cockVolume(10), true, true, false);
 	}
 	//If PC Ain't Got No Cunt
 	else {
@@ -353,13 +353,13 @@ public function fuckDatLionPussah():void {
 	output("You disrobe, tossing your [pc.gear] aside into a small pile.  You stretch your muscles in the dry desert air and exult in the warm rays beating down on your " + pc.skinFurScales() + " and [pc.cocksLight].  Sanura pads around you, taking in your appearance with her chestnut-colored eyes before clicking her tongue approvingly.  Her leonine tail swishes across the top of your [pc.cock " + pc.biggestCockIndex() + "], stroking it with the silky soft tuft of fur at its tip.  You shiver at the contact, unsure of what to think.  Your penis, on the other hand, has no such conflictions, and immediately begins to rise.");
 	
 	//(Small dicks) 
-	if(pc.biggestCockVolume() < 6) output("\n\n\"<i>Aw, it's so cute and compact.  I didn't know these things came in women's sizes,</i>\" she giggles, flicking the [pc.cockHead " + pc.biggestCockIndex() + "] of your cock with her tail.  You blush brightly.  Even by Ingnam standards you're a little below average, and in Mareth, well, you're just plain tiny.  \"<i>Don't worry, love, it will suffice for what I have in mind.</i>\"");
+	if(pc.biggestCockVolume() < cockVolume(6)) output("\n\n\"<i>Aw, it's so cute and compact.  I didn't know these things came in women's sizes,</i>\" she giggles, flicking the [pc.cockHead " + pc.biggestCockIndex() + "] of your cock with her tail.  You blush brightly.  Even by Ingnam standards you're a little below average, and in Mareth, well, you're just plain tiny.  \"<i>Don't worry, love, it will suffice for what I have in mind.</i>\"");
 	
 	//(Normal-sized dicks)
-	else if(pc.biggestCockVolume() < 30) output("\n\n\"<i>Hm, not the biggest I've seen out here, but it certainly looks delicious...</i>\" she purrs, wrapping her tail around your cock.  Sanura gives it a little squeeze and flicks her tail away with a giggle.");
+	else if(pc.biggestCockVolume() < cockVolume(30)) output("\n\n\"<i>Hm, not the biggest I've seen out here, but it certainly looks delicious...</i>\" she purrs, wrapping her tail around your cock.  Sanura gives it a little squeeze and flicks her tail away with a giggle.");
 	
 	//(Large dicks)
-	else if(pc.biggestCockVolume() < 100) {
+	else if(pc.biggestCockVolume() < cockVolume(100)) {
 		output("\n\n\"<i>Mmm, now that's what I'm talking about,</i>\" Sanura purrs, wrapping her tail around your large dick and teasing your ");
 		if(pc.balls > 0) output("balls");
 		else if(pc.hasVagina()) output("cunt");
@@ -466,12 +466,12 @@ public function fenPutsHisShittyFetishInYoSphinx(submit:Boolean = true):void {
 	output("\n\nTilting your head to the side, you try to look up above, but all you can see past her brustling belly-fur are the pert swells of her cleavage and a few swirling, ephemeral hexagons floating around her wrists while her fingers swivel with inhuman dexterity.  There's a barely audible 'fwoomp' followed by a tingling against your [pc.asshole], abruptly carrying its magical effervescence into your sphincter as something flat and blunted butts up against it.  Your eyes open wide in surprise at the pressure on your backdoor, something Sanura takes absolute delight in seeing, bending her human-half over to take in your expression while her forepaws push you harder onto her magical spear.");
 	
 	//Big capable entrances 100+
-	if(pc.analCapacity() >= 100) {
+	if(pc.analCapacity() >= cockVolume(100)) {
 		output("\n\nYou will yourself to relax, and like magic, your [pc.asshole] stretches out to handle the elephantine force-cock with ease, devouring the flat, flared phallus straight into your rectum.  It distends your [pc.belly] slightly as it pushes deeper, Sanura grunting when a middle ring catches for a second before popping in, rapt with the ecstasy your welcoming asshole can provide.  She provides you with a lazy smile before straightening out and placing her hand on your head, stroking your " + pc.hairDescript() + " and lazily patting you as she finally bottoms out, accompanied by the feeling of sparking, tingling nuts slapping hard into your [pc.butt].");
 		output("\n\n\"<i>Mmmm, I knew you'd be a good " + pc.mf("boy","girl") + ".</i>\"");
 	}
 	//Medium capacity! 40+!
-	else if(pc.analCapacity() >= 40) {
+	else if(pc.analCapacity() >= cockVolume(40)) {
 		output("\n\nYou will yourself to relax, but even so, your [pc.asshole] is stretched to its limit even before Sanura's flared force-cock can pop inside.  Whimpering in discomfort, you try to endure her forceful attempts at buttfucking.  She doesn't seem to have any such plans, smashing her fat, butt-destroying horse-cock against you again and again, each time spreading your asshole further, pounding your sphincter's structural integrity down into that of a weak, accepting anus.  You feel it bow under the pressure.  Growling, Sanura holds it there, pressing with such insistent strength that your entrance yields all at once; her member's brutal, bulging tip pops into your rectum.  She doesn't stop there.  Inch after inch of tingling, phantasmal dong is pushed straight up your straining rectum, only pausing for a brief moment when the swollen middle ring catches for a half-second.");
 		output("\n\nElectrically charged balls the size of large melons plop against your [pc.butt] as she bottoms out.  \"<i>Mmmm, I knew you'd be a good " + pc.mf("boy","girl") + ".</i>\" Sanura purrs, patting you on the head.");
 	}
@@ -492,7 +492,7 @@ public function fenPutsHisShittyFetishInYoSphinx(submit:Boolean = true):void {
 	
 	//END VARIATION
 	//Buttchange 75
-	pc.buttChange(75, true, true, false);
+	pc.buttChange(cockVolume(75), true, true, false);
 	
 	output("\n\nSanura reluctantly changes direction and begins to pull the immense length out of you.  She actually yanks it back far enough that the top flops out of your gaped orifice, flopping lewdly against a [pc.leg] as she lines back up for a second push.  As the sphinx nudges her tree-trunk-like totem into you, you try to fathom the size of the thing.  It must be several feet long and at least four inches wide by the way it's distending your innards, maybe five inches across at the tip.  Moaning, you helplessly give yourself over to the unusual feelings her ephemeral erection installs in your plugged-up pucker.");
 	
@@ -536,7 +536,7 @@ public function getSphinxPawjob(skipped:Boolean = false):void {
 	//[if event occurrence > 0]
 	else {
 		output("\"<i>Again?</i>\" Sanura asks, cocking her head to the side.  \"<i>They must feel better than I imagine... well then, get out of your clothes and I'll do as you ask.");
-		if(pc.biggestCockVolume() > 100) output("  It's not as if there's all that much else I can do for that monster of yours anyways.");
+		if(pc.biggestCockVolume() > cockVolume(100)) output("  It's not as if there's all that much else I can do for that monster of yours anyways.");
 		output("</i>\" She raises a paw and examines it, as though trying to figure out just what it is about them that you enjoy so much.  You cough as a means of drawing her attention once you've stripped off the last bit of your armor, shaking her from her reverie.");
 	}
 		
@@ -593,18 +593,19 @@ public function getSphinxPawjob(skipped:Boolean = false):void {
 	output(".  You suddenly grab her ankle, and she looks up at you confused, probably thinking you mean for her to stop.  You guide her back into steadier, quicker motions in short order though, eliciting a giggle from the playful sphinx.  She presses against you more confidently with your hand there to guide her, less fearful of causing you harm.  You slide her paw faster and faster, desperate to bring yourself more sensation and to orgasm.  Not feeling like it's quite enough, you take her other large paw from your hip and press its pad against your shaft too, using her feet like some odd sex toy to hug your [pc.cock " + pc.biggestCockIndex() + "].  Rather than being upset about being used in such an unusual manner, Sanura coos and grasps at your meat even tighter, reveling in the strange experience.  You buck your hips slightly in time with the strokes, and it's not long before you feel a familiar need and warmth well up inside.");
 	
 	//[if cum output is normal]
-	if(pc.cumQ() < 250) output("\n\nWith a few final pushes you find release, spraying ropes of thick cum along the length of her leg.");
+	if(pc.cumQ() < 250) output("\n\nWith a few final pushes you find release, spraying ropes of [pc.cum] along the length of her leg.");
 	else {
-		output("\n\nA torrent of cum bursts forth from your cock");
+		output("\n\nA torrent of [pc.cum] bursts forth from your cock");
 		if(pc.cockTotal() > 1) output("s");
-		output(" like a geyser, covering both you and Sanura in a flood of your semen.  The flow doesn't stop, cum churning and burning as it roils within you.  The sphinx pulls away in an effort to dodge the unexpected volume of man-milk, but to no avail: both halves of her body are painted white and your cum drips from her hair to her skin, fur, and wings. She tries to wipe her face at least clean, but manages only to smear more across her cheek.  With a sigh, she shakes what she can off her hands.");
+		output(" like a geyser, covering both you and Sanura in a flood of your semen.  The flow doesn't stop, cum churning and burning as it roils within you.  The sphinx pulls away in an effort to dodge the unexpected volume of man-milk, but to no avail: both halves of her body are painted [pc.cumColor] and your [pc.cumNoun] drips from her hair to her skin, fur, and wings. She tries to wipe her face at least clean, but manages only to smear more across her cheek.  With a sigh, she shakes what she can off her hands.");
+		applyCumSoaked(pc);
 	}
 	output("  Exhausted from the orgasm, you let go of her, leaving the sphinx to milk out the last drops of cum with gentle pressure from her pad on her own.  Sanura stands back up and laughs.  \"<i>Look at the mess you made!</i>\"  She places her dirtied paw on your chest and pushes you back, easily making you fall on your [pc.ass].  \"<i>Well, that was... interesting");
 	if(flags["COC.SPHINX_PAWJOBS"] != undefined) output(" as always");
 	output(", [pc.name].  Now get your stuff back on, I've a temple to guard and a coat to clean.</i>\"  At that, she turns and pads away from you, lying down in front of the door and licking at her");
 	//[if cum output is normal]
 	if(pc.cumQ() < 250) output(" leg.");
-	else output(" stained-white fur in a futile attempt to get some of your cum off.");
+	else output(" stained fur in a futile attempt to get some of your cum off.");
 	
 	if (flags["COC.SPHINX_PAWJOBS"] == undefined) flags["COC.SPHINX_PAWJOBS"] = 0;
 	flags["COC.SPHINX_PAWJOBS"]++;

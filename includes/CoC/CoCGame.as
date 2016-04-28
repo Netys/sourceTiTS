@@ -108,6 +108,7 @@ include "characters/Hel.as";
 include "characters/IzmaScene.as";
 include "characters/JojoScene.as";
 include "characters/KihaScene.as";
+include "characters/milkWaifu.as";
 include "characters/Rathazul.as";
 include "characters/SheilaScene.as";
 include "characters/shouldra.as";
@@ -121,7 +122,7 @@ public function inMareth():Boolean {
 	return rooms[currentLocation].system == "PLANET: MARETH";
 }
 public function allowFollowers():Boolean {
-	return false;
+	return flags["COC_VR_UNLIMITED"] == 1;
 }
 
 public function cor(arg:Number = 0, apply:Boolean = false): Number 
