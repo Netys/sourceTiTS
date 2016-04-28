@@ -1,3 +1,4 @@
+import classes.Characters.CoC.CoCUrta;
 import classes.Characters.PregnancyPlaceholder;
 import classes.GLOBAL;
 import classes.Items.Accessories.CoCUrtaCollar;
@@ -5,20 +6,13 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-public function get urta():PregnancyPlaceholder // TODO: actual character
+public function get urta():CoCUrta
 {
-	var ppUrta:PregnancyPlaceholder = new PregnancyPlaceholder();
-	if(!ppUrta.hasCock()) ppUrta.createCock();
-	ppUrta.shiftCock(0, GLOBAL.TYPE_EQUINE);
-	ppUrta.cocks[0].cLengthRaw = 16;
-	if (!ppUrta.hasVagina()) ppUrta.createVagina();
-	ppUrta.vaginas[0].loosenessRaw = 2;
-	ppUrta.vaginas[0].wetnessRaw = 3;
-	ppUrta.vaginas[0].bonusCapacity = flags["COC.TIMES_RUT_FUCKED_URTAS_CUNT"] == undefined ? 0 : Math.min(flags["COC.TIMES_RUT_FUCKED_URTAS_CUNT"] * 5, 40);
-	if (flags["COC.URTA_TENTACLE_GAPED"] > 0) ppUrta.vaginas[0].bonusCapacity = 500;
-	ppUrta.ass.wetnessRaw = 1;
-	ppUrta.ass.bonusCapacity = ppUrta.vaginas[0].bonusCapacity; // that's how it works originally...
-	return ppUrta;
+	var _urta:CoCUrta = new CoCUrta();
+	_urta.vaginas[0].bonusCapacity = flags["COC.TIMES_RUT_FUCKED_URTAS_CUNT"] == undefined ? 0 : Math.min(flags["COC.TIMES_RUT_FUCKED_URTAS_CUNT"] * 5, 40);
+	if (flags["COC.URTA_TENTACLE_GAPED"] > 0) _urta.vaginas[0].bonusCapacity = 500;
+	_urta.ass.bonusCapacity = _urta.vaginas[0].bonusCapacity; // that's how it works originally...
+	return _urta;
 }
 
 //[Under Table BJ]

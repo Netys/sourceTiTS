@@ -157,7 +157,7 @@ public function displayEncounterLogCoCVarious():int
 				if(kath.cockTotal(GLOBAL.TYPE_CANINE) > 0)  output2(" Canine");
 				else output2(" Feline");
 				output2(" penis, ");
-				output2(" " + int(pc.knotThickness() * 10) / 10 + "\" Knot");
+				output2(" " + int(kath.knotThickness() * 10) / 10 + "\" Knot");
 			}
 		}
 		

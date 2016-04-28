@@ -1,10 +1,16 @@
 import classes.Characters.CoC.CoCGnollSpearThrower;
-import classes.Characters.CoC.CoCGoblin;
-import classes.Characters.CoC.CoCMinotaur;
-import classes.Characters.CoC.CoCNaga;
-import classes.Characters.CoC.CoCSecretarialSuccubus;
+import classes.Characters.CoC.CoCUQGoblinBroodmother;
+import classes.Characters.CoC.CoCUQMilkySuccubus;
+import classes.Characters.CoC.CoCUQMinotaurLord;
+import classes.Characters.CoC.CoCUQSirius;
+import classes.Characters.CoC.CoCUrta;
 import classes.Characters.PlayerCharacter;
 import classes.Creature;
+import classes.Engine.Combat.applyDamage;
+import classes.Engine.Combat.combatMiss;
+import classes.Engine.Combat.DamageTypes.DamageFlag;
+import classes.Engine.Combat.DamageTypes.TypeCollection;
+import classes.Engine.Combat.rangedCombatMiss;
 import classes.GameData.CombatAttacks;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
@@ -171,126 +177,10 @@ private function resetToPC():void {
 // TODO: extract class
 public function startUrtaQuest():void {
 	clearOutput();
-	flags["COC.URTA_QUEST_PC"] = JSON.stringify(pc.getSaveObject())
+	// As long as we can't save during quest, no need for this.
+	//flags["COC.URTA_QUEST_PC"] = JSON.stringify(pc.getSaveObject())
 	chars["URTA_QUEST_PC"] = chars["PC"];
-	chars["PC"] = new PlayerCharacter();
-	pc.originalRace = "fox-morph";
-	pc.short = "Urta";
-	pc.tallness = 71;
-	pc.hairColor = "gray";
-	pc.hairLength = 12;
-	pc.skinType = GLOBAL.SKIN_TYPE_FUR;
-	pc.breastRows = [];
-	pc.createBreastRow();
-	pc.breastRows[0].breastRatingRaw = 5;
-	pc.nippleLengthRatio = 1.5;
-	pc.skinTone = "black";
-	pc.furColor = "gray";
-	pc.eyeColor = "green";
-	pc.lipColor = "black";
-	pc.nippleColor = "black";
-	pc.legType = GLOBAL.TYPE_VULPINE;
-	pc.legCount = 2;
-	pc.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_PAWS, GLOBAL.FLAG_FURRED];
-	pc.armType = GLOBAL.TYPE_VULPINE;
-	pc.armFlags = [GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS];
-	pc.earType = GLOBAL.TYPE_VULPINE;
-	pc.faceType = GLOBAL.TYPE_VULPINE;
-	pc.faceFlags = [GLOBAL.FLAG_MUZZLED];
-	pc.tongueType = GLOBAL.TYPE_VULPINE;
-	pc.tailType = GLOBAL.TYPE_VULPINE;
-	pc.tailFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_FLUFFY];
-	pc.tailCount = 1;
-	pc.cocks = [];
-	pc.createCock();
-	pc.shiftCock(0, GLOBAL.TYPE_EQUINE);
-	pc.cocks[0].cLengthRaw = 20;
-	pc.cocks[0].cThicknessRatioRaw = 0.9; // 3"
-	pc.balls = 2;
-	pc.ballSizeRaw = 4 * Math.PI;
-	pc.cumMultiplierRaw = 80;
-	pc.thickness = 30;
-	pc.tone = 50;
-	pc.femininity = 90;
-	pc.hipRatingRaw = 12;
-	pc.buttRatingRaw = 12;
-	pc.ass.loosenessRaw = 2;
-	pc.ass.minLooseness = 2;
-	pc.vaginas = [];
-	pc.createVagina();
-	pc.shiftVagina(0, GLOBAL.TYPE_CANINE);
-	pc.vaginas[0].bonusCapacity = 20; // 58 originally, TODO: recalculate
-	pc.vaginas[0].wetnessRaw = 4;
-	pc.vaginas[0].loosenessRaw = 2;
-	pc.vaginas[0].vaginaColor = "black";
-	pc.vaginas[0].hymen = false;
-	pc.vaginalVirgin = false;
-	pc.analVirgin = false;
-	pc.cockVirgin = false;
-	pc.clitLength = 1;
-	pc.level = 15;
-	pc.physiqueRaw = 75 / 20 * pc.level;
-	//pc.tou = 80;
-	pc.reflexesRaw = 90 / 20 * pc.level;
-	pc.aimRaw = 90 / 20 * pc.level;
-	pc.intelligenceRaw = 55 / 20 * pc.level;
-	pc.willpowerRaw = 55 / 20 * pc.level;
-	pc.libidoRaw = 70;
-	//pc.sens = 50;
-	pc.personality = 30;
-	pc.lustRaw = 55;
-	//pc.hunger = 100;
-	pc.credits = 1830;
-	//pc.teaseLevel = 4; // that's why you don't use global flags...
-	pc.HP(pc.maxHP());
-	pc.energy(pc.energyMax());
-
-	//PERKS
-	//pc.createPerk(PerkLib.Resistance,0,0,0,0);
-	//pc.createPerk(PerkLib.Agility,0,0,0,0);
-	//pc.createPerk(PerkLib.WeaponMastery,0,0,0,0);
-	//pc.createPerk(PerkLib.Acclimation,0,0,0,0);
-	//pc.createPerk(PerkLib.Nymphomania,0,0,0,0);
-	//pc.createPerk(PerkLib.Precision,0,0,0,0);
-	//pc.createPerk(PerkLib.Seduction,0,0,0,0);
-	//pc.createPerk(PerkLib.Evade,0,0,0,0);
-	//pc.createPerk(PerkLib.Tactician,0,0,0,0);
-	//pc.createPerk(PerkLib.LungingAttacks,0,0,0,0);
-	//pc.createPerk(PerkLib.ImmovableObject,0,0,0,0);
-	//pc.createPerk(PerkLib.BrutalBlows,0,0,0,0);
-	//pc.createPerk(PerkLib.Brawler,0,0,0,0);
-	//pc.createPerk(PerkLib.Berzerker,0,0,0,0);
-	//pc.createPerk(PerkLib.Tank,0,0,0,0);
-	//pc.createPerk(PerkLib.HistoryFighter,0,0,0,0);
-	
-	pc.createPerk("Bloodthirsty", 0, 0, 0, 0);
-	pc.createPerk("Critical Blows", 0, 0, 0, 0);
-	pc.createPerk("Tough", 0, 0, 0, 0);
-	pc.createPerk("Tough 2", 0, 0, 0, 0);
-	pc.createPerk("Power Strike", 0, 0, 0, 0);
-	pc.createPerk("Juggernaut", 0, 0, 0, 0);
-	pc.createPerk("Riposte", 0, 0, 0, 0);
-	pc.createPerk("Second Wind", 0, 0, 0, 0);
-	pc.createPerk("Low Tech Solutions", 0, 0, 0, 0);
-	pc.createPerk("Cleave", 0, 0, 0, 0);
-	pc.createPerk("Second Attack", 0, 0, 0, 0);
-	pc.createPerk("Lucky Breaks", 0, 0, 0, 0);
-	pc.createPerk("Low Blow", 0, 0, 0, 0);
-	pc.createPerk("Agility", 0, 0, 0, 0);
-	pc.createPerk("Leap Up", 0, 0, 0, 0);
-	pc.createPerk("Burst of Energy", 0, 0, 0, 0);
-	pc.createPerk("Transformation Resistance", 0, 0, 0, 0, "You are extremely resistant to any transformatives.");
-	pc.createStatusEffect("Sexy Costume", 25);
-	
-	//GEAR!
-	//pc.setWeapon(weapons.URTAHLB);
-	//pc.setArmor(armors.URTALTA);
-	pc.meleeWeapon = new CoCMinotaurAxe();
-	pc.meleeWeapon.hasRandomProperties = true;
-	pc.meleeWeapon.longName = "halberd";
-	pc.armor = new LeatherArmor();
-	
-	// TODO: sort out tease and specials
+	chars["PC"] = urta;
 	
 	userInterface.resetPCStats()
 	userInterface.deglow();
@@ -963,7 +853,7 @@ public function runIntoAGoblin(camped:Boolean = false):void {
 	
 	CombatManager.newGroundCombat();
 	CombatManager.setFriendlyCharacters(pc);
-	CombatManager.setHostileCharacters(new CoCGoblin()); // TODO GoblinBroodmother
+	CombatManager.setHostileCharacters(new CoCUQGoblinBroodmother());
 	CombatManager.victoryScene(GoblinBroodmotherUrtaVictory);
 	CombatManager.lossScene(urtaLosesToGoblin);
 	CombatManager.displayLocation("GOBLIN ELDER");
@@ -1161,78 +1051,186 @@ private function urtaGameOver():void {
 //Metabolize: Convert HP into fatigue
 //Second Wind: Regain 50% HP and lose 50 lust.  Once per fight.
 
-//// TODO: move this shit to Urta's class
-//public function urtaSpecials():void {
-////Gone	menuLoc = 3;
-	//if (inCombat() && pc.hasStatusEffect("Sealed") && pc.statusEffectv2("Sealed") == 5) {
-		//clearOutput();
-		//output("You try to ready a special attack, but wind up stumbling dizzily instead.  <b>Your ability to use physical special attacks was sealed, and now you've wasted a chance to attack!</b>\n\n");
-		//CombatManager.processCombat();
-		//return;
-	//}
-	//clearMenu();
-	//addButton(0, "Combo", urtaComboAttack, undefined, "Combo", "Make a three-hit combo.  Each attack has an extra 33% chance to miss, unless the target is blind. \n\nEnergy cost: 25");
-	//if(pc.energy() < 25) userInterface.setButtonDisabled(0);
-	//addButton(1, "Vault", urtaVaultAttack, undefined, "Vault", "Make a vaulting attack for an extra 25% damage.  Automatically crits stunned foes. \n\nEnergy cost: 20");
-	//if(pc.energy() < 20) userInterface.setButtonDisabled(1);
-	//addButton(2, "Sidewinder", urtaSidewinder, undefined, "Sidewinder", "An attack that hits for reduced damage but has a high chance of stunning. \n\nEnergy cost: 10");
-	//if(pc.energy() < 10) userInterface.setButtonDisabled(2);
-	//addButton(3, "Dirt Kick", urtaDirtKick, undefined, "Dirt Kick", "Attempt to blind your foe with a spray of kicked dirt. \n\nEnergy cost: 5");
-	//if(pc.energy() < 5) userInterface.setButtonDisabled(3);
-	//
-	//if(pc.HP() < (pc.maxHP() * 0.1) + 1)  addDisabledButton(4, "Metabolize", "Metabolize", "You have no HP to convert!");
-	//else addButton(4, "Metabolize", urtaMetabolize, undefined, "Metabolize", "Convert 10% of your maximum HP into energy.");
-	//
-	//if (pc.hasStatusEffect("UrtaSecondWinded")) addDisabledButton(5, "SecondWind", "Second Wind", "You've already pushed yourself as hard as you can!");
-	//else addButton(5, "SecondWind", urtaSecondWind, undefined, "SecondWind", "Regain 50% of your HP, 50 fatigue, and reduce lust by 50 once per fight.");
-	//
-	//addButton(14, "Back", undefined, false);
-//}
-//
-//private function urtaMetabolize():void {
-	//clearOutput();
-	//pc.HP(pc.maxHP() * -0.1);
-	//output("You work your body as hard as you can, restoring your fatigue at the cost of health. (" + pc.maxHP() * -0.1 + ")\nRestored 20 fatigue!\n\n");
-	//pc.energy(20);
-	//CombatManager.processCombat();
-//}
-//
-//private function urtaSecondWind():void {
-	//clearOutput();
-	//pc.createStatusEffect("UrtaSecondWinded", 0, 0, 0, 0, true, "", "", true);
-	//pc.HP(pc.maxHP() * 0.5);
-	//pc.energy(50);
-	//pc.lust( -50);
-	//output("Closing your eyes for a moment, you focus all of your willpower on pushing yourself to your absolute limits, forcing your lusts down and drawing on reserves of energy you didn't know you had!\n\n");
-	//CombatManager.processCombat();
-//}
-//
-////Combo: 3x attack, higher miss chance, guaranteed hit vs blind
-//private function urtaComboAttack():void {
-	//pc.energy( -25);
-	//// Do regular attack (including multi-attack and additional flurry shots)
-	//CombatAttacks.MeleeAttack(attacker, target);
-	//
-	//// Two bonus shots using flurry mechanics
-	//CombatAttacks.SingleMeleeAttackImpl(attacker, target, true);
-	//CombatAttacks.SingleMeleeAttackImpl(attacker, target, true);
-//}
-//
-////Dirt Kick
-//private function urtaDirtKick():void {
-	//pc.energy( -5);
-//}
-//
-////SideWinder: 70% damage + stun chance
-//private function urtaSidewinder():void {
-	//pc.energy( -10);
-//}
-//
-//
-////Vault: Use the halberd to support her weight and deliver a high power kick to the enemy, deals 15% more damage. If the enemy is stunned, auto-critical. This is like the move she uses during the fight against the wolf in that scene at Tel'Adre.
-//private function urtaVaultAttack():void {
-	//pc.energy( -20);
-//}
+public function urtaAdditionalCombatMenuEntries():void
+{
+	if (pc.hasStatusEffect("Grappled")) return;
+	
+	if (pc.hasStatusEffect("Disarmed")) addDisabledButton(0, "Attack");
+	addDisabledButton(1, "Shoot");
+	addDisabledButton(3, "Inventory");
+	addDisabledButton(6, "Sense");
+	addDisabledButton(14, "Run");
+	
+	addButton(4, "Specials", urtaSpecials);
+	addButton(5, "Tease", urtaTease);
+}
+
+public function urtaTease():void {
+	clearOutput();
+	var target:Creature = CombatManager.getHostileCharacters()[0];
+	var attacker:Creature = pc;
+	//Tease #1:
+	if (rand(2) == 0) {
+		output("You lift your skirt and flash your [pc.cock], already unsheathing itself and drooling pre, at your opponent.  \"<i>Come on, then; I got plenty of girlcock for you if that's what you want!</i>\" you cry.");
+	}
+	//Tease #2:
+	else {
+		output("You turn partially around and then bend over, swaying your [pc.tail] from side to side in your most flirtatious manner and wiggling your [pc.hips] seductively, your skirt fluttering with the motions.  \"<i>Come on then, what are you waiting for?  This is a fine piece of ass here,</i>\" you grin, spanking yourself with an audible slap.");
+	}
+	var damage:Number = (rand(31) + 85) / 5;
+	if (damage > 15 + attacker.level * 2) damage = 15 + attacker.level * 2;
+	damage = (1 - (target.getLustResistances().tease.damageValue / 100)) * damage;
+	if (damage > 25 + attacker.level * 2) damage = 25 + attacker.level * 2;
+	
+	if (target.hasOwnProperty("teaseReactions")) target["teaseReactions"](damage);
+	else applyDamage(new TypeCollection( { truelust : damage } ), attacker, target, "tease");
+	
+	CombatManager.processCombat();
+}
+
+public function urtaSpecials():void {
+	clearMenu();
+	addButton(0, "Combo", urtaComboAttack, undefined, "Combo", "Make a three-hit combo.  Each attack has an extra 33% chance to miss, unless the target is blind. \n\nEnergy cost: 25");
+	if(pc.energy() < 25 || pc.hasStatusEffect("Disarmed")) addDisabledButton(0, "Combo", "Combo", "Make a three-hit combo.  Each attack has an extra 33% chance to miss, unless the target is blind. \n\nEnergy cost: 25");
+	
+	addButton(1, "Vault", urtaVaultAttack, undefined, "Vault", "Make a vaulting attack for an extra 25% damage.  Automatically crits stunned foes. \n\nEnergy cost: 20");
+	if(pc.energy() < 20 || pc.hasStatusEffect("Disarmed")) addDisabledButton(1, "Vault", "Vault", "Make a vaulting attack for an extra 25% damage.  Automatically crits stunned foes. \n\nEnergy cost: 20");
+	
+	addButton(2, "Sidewinder", urtaSidewinder, undefined, "Sidewinder", "An attack that hits for reduced damage but has a high chance of stunning. \n\nEnergy cost: 10");
+	if(pc.energy() < 10 || pc.hasStatusEffect("Disarmed")) addDisabledButton(2, "Sidewinder", "Sidewinder", "An attack that hits for reduced damage but has a high chance of stunning. \n\nEnergy cost: 10");
+	
+	addButton(3, "Dirt Kick", urtaDirtKick, undefined, "Dirt Kick", "Attempt to blind your foe with a spray of kicked dirt. \n\nEnergy cost: 5");
+	if(pc.energy() < 5) addDisabledButton(3, "Dirt Kick", "Dirt Kick", "Attempt to blind your foe with a spray of kicked dirt. \n\nEnergy cost: 5");
+	
+	if(pc.HP() < (pc.maxHP() * 0.1) + 1)  addDisabledButton(4, "Metabolize", "Metabolize", "You have no HP to convert!");
+	else addButton(4, "Metabolize", urtaMetabolize, undefined, "Metabolize", "Convert 10% of your maximum HP into energy.");
+	
+	if (pc.hasStatusEffect("UrtaSecondWinded")) addDisabledButton(5, "SecondWind", "Second Wind", "You've already pushed yourself as hard as you can!");
+	else addButton(5, "SecondWind", urtaSecondWind, undefined, "SecondWind", "Regain 50% of your HP, 50 fatigue, and reduce lust by 50 once per fight.");
+	
+	addButton(14, "Back", CombatManager.showCombatMenu);
+}
+
+private function urtaMetabolize():void {
+	clearOutput();
+	pc.HP(pc.maxHP() * -0.1);
+	output("You work your body as hard as you can, restoring your energy at the cost of health. (" + pc.maxHP() * -0.1 + ")\nRestored 20 energy!\n\n");
+	pc.energy(20);
+	CombatManager.processCombat();
+}
+
+private function urtaSecondWind():void {
+	clearOutput();
+	pc.createStatusEffect("UrtaSecondWinded", 0, 0, 0, 0, true, "", "", true);
+	pc.HP(pc.maxHP() * 0.5);
+	pc.energy(50);
+	pc.lust( -50);
+	output("Closing your eyes for a moment, you focus all of your willpower on pushing yourself to your absolute limits, forcing your lusts down and drawing on reserves of energy you didn't know you had!\n\n");
+	CombatManager.processCombat();
+}
+
+//Combo: 3x attack, higher miss chance, guaranteed hit vs blind
+private function urtaComboAttack():void {
+	clearOutput();
+	pc.energy( -25);
+	var cTarget:Creature = CombatManager.getHostileCharacters()[0];
+	
+	if (cTarget.hasStatusEffect("Blinded")) cTarget.createStatusEffect("Grappled"); // to force hit
+	
+	if (pc.hasStatusEffect("Blind")) {
+		output("You attempt to attack, but as blinded as you are right now, you doubt you'll have much luck!\n");
+	}
+	CombatAttacks.MeleeAttack(pc, cTarget);
+	output("\n");
+	CombatAttacks.SingleMeleeAttackImpl(pc, cTarget, true);
+	output("\n");
+	CombatAttacks.SingleMeleeAttackImpl(pc, cTarget, true);
+	
+	cTarget.removeStatusEffect("Grappled");
+	
+	CombatManager.processCombat();
+}
+
+//Dirt Kick
+private function urtaDirtKick():void {
+	clearOutput();
+	pc.energy( -5);
+	var cTarget:Creature = CombatManager.getHostileCharacters()[0];
+	
+	//Blind
+	if (pc.hasStatusEffect("Blind")) {
+		output("You attempt to dirt kick, but as blinded as you are right now, you doubt you'll have much luck!  ");
+	}
+	else output("Spinning about, you drag your footpaw through the dirt, kicking a wave of debris towards " + cTarget.a + cTarget.short + "!  ");
+	//Dodged!
+	if (pc.aim() / 2 + rand(20) + 6 < cTarget.reflexes() / 2 + 10) {
+		output(cTarget.mf("He", "She") + " manages to shield " + cTarget.mf("his", "her") + " eyes.  Damn!\n\n");
+	}
+	else if (cTarget.hasStatusEffect("Blind")) {
+		output(cTarget.mf("He", "She") + "'s already blinded.  What a waste.\n\n");
+	}
+	else {
+		output(cTarget.mf("He", "She") + "'s blinded!\n\n");
+		cTarget.createStatusEffect("Blinded", 3, 0, 0, 0, false, "Blind", "Accuracy is reduced, and ranged attacks are far more likely to miss.", true, 0,0xFF0000);
+	}
+	CombatManager.processCombat();
+}
+
+//SideWinder: 70% damage + stun chance
+private function urtaSidewinder():void {
+	clearOutput();
+	pc.energy( -10);
+	var cTarget:Creature = CombatManager.getHostileCharacters()[0];
+	
+	//Blind
+	if (pc.hasStatusEffect("Blind")) {
+		output("You attempt to hit with a vicious blow to the side, but as blinded as you are right now, you doubt you'll have much luck!  ");
+	}
+	else output("You make a wide swing to the side, hoping to stun your foe!  ");
+	
+	//Determine if dodged!
+	if (combatMiss(pc, cTarget)) {
+		output(cTarget.capitalA + cTarget.short + " avoids your attack!");
+		CombatManager.processCombat();
+		return;
+	}
+	
+	//30% crappier than normal attack.
+	applyDamage(pc.meleeDamage().multiply(0.7).rand(), pc, cTarget, "melee");
+	
+	if (pc.physique() / 2 + rand(20) + 1 >= cTarget.physique() / 2 + 10) {
+		output("\n<b>" + target.capitalA + target.uniqueName + " is stunned.</b>");
+		cTarget.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Cannot act for a turn.", true, 0,0xFF0000);
+	}
+	CombatManager.processCombat();
+}
+
+
+//Vault: Use the halberd to support her weight and deliver a high power kick to the enemy, deals 15% more damage. If the enemy is stunned, auto-critical. This is like the move she uses during the fight against the wolf in that scene at Tel'Adre.
+private function urtaVaultAttack():void {
+	clearOutput();
+	pc.energy( -20);
+	var cTarget:Creature = CombatManager.getHostileCharacters()[0];
+	//Blind
+	if (pc.hasStatusEffect("Blind")) {
+		output("You attempt to make a high, vaulting attack, but as blinded as you are right now, you doubt you'll have much luck!  ");
+	}
+	else output("You leap into the air, intent on slamming your " + pc.meleeWeapon.longName + " into your foe!  ");
+	
+	//Determine if dodged!
+	if (combatMiss(pc, cTarget)) {
+		output(cTarget.capitalA + cTarget.short + " avoids your attack!");
+		CombatManager.processCombat();
+		return;
+	}
+	
+	//25% better than normal attack.
+	if(cTarget.hasStatusEffect("Stunned")) pc.meleeWeapon.critBonus = 50; // don't wanna another dirty hack
+	applyDamage(pc.meleeDamage().multiply(1.25).rand(), pc, cTarget, "melee");
+	pc.meleeWeapon.critBonus = 0;
+	
+	CombatManager.processCombat();
+}
 
 //Male Naga Encounter
 //Has a hypno lust raising attack.
@@ -1265,19 +1263,12 @@ public function nagaPleaseNagaStoleMyDick():void {
 	
 	CombatManager.newGroundCombat();
 	CombatManager.setFriendlyCharacters(pc);
-	CombatManager.setHostileCharacters(new CoCNaga()); // TODO Sirius
+	CombatManager.setHostileCharacters(new CoCUQSirius());
 	CombatManager.victoryScene(urtaBeatsUpSiriusRadio);
 	CombatManager.lossScene(urtaLosesToSirriusSnakeRadio);
 	CombatManager.displayLocation("SIRIUS");
 	addNextButton(CombatManager.beginCombat);
 }
-
-//Tease*
-
-//Poison Bite*
-
-//Poison Spit*
-//Blinds for 3 turns.
 
 //Urta Wins*
 public function urtaBeatsUpSiriusRadio():void {
@@ -1982,14 +1973,9 @@ private function introSuccubiAndMinotaur():void {
 	userInterface.hideMinimap();
 	userInterface.setLocation("\nMINO. LORD", "WILDERNESS", "PLANET: MARETH");
 	
-	var MinotaurLord:CoCMinotaur = new CoCMinotaur(); // TODO: MinotaurLord
-	MinotaurLord.HPMod = 350;
-	MinotaurLord.short = "minotaur lord";
-	MinotaurLord.long = "Across from you is the biggest minotaur you've ever seen.  Fully eleven feet tall, this shaggy monstrosity has muscles so thick that they stand even through his thick, obscuring fur.  A leather collar with a tag indicates his status as 'pet' though it seems completely out of place on the herculean minotaur.  His legs and arms are like thick tree trunks, imposing and implacable, flexing fiercely with every movement.  This can only be a minotaur lord, a minotaur of strength and virility far beyond his lesser brothers. In his hands, a massive chain swings, connected to his collar, but used as an impromptu weapon for now.  A simple loincloth girds his groin, though it does little to hide the massive, erect length that tents it.  It winds up looking more like a simple, cloth condom than any sort of clothing, and it drips long strings of musky pre-slime in ribbons onto the ground.  Below, heavy testes, each easily the size of a basketball, swing in a taut, sloshing sack.  You can almost smell the liquid bounty he has for you, and the musk he's giving off makes it seem like a good idea...";
-	MinotaurLord.maxOutHP();
 	CombatManager.newGroundCombat();
 	CombatManager.setFriendlyCharacters(pc);
-	CombatManager.setHostileCharacters(MinotaurLord);
+	CombatManager.setHostileCharacters(new CoCUQMinotaurLord());
 	CombatManager.victoryScene(MinotaurLordUrtaVictory);
 	CombatManager.lossScene(MinotaurLordUrtaLoss);
 	CombatManager.displayLocation("MINO. LORD");
@@ -2292,14 +2278,9 @@ public function beatMinoLordOnToSuccubi():void {
 	userInterface.hideMinimap();
 	userInterface.setLocation("\nCOWCUBUS", "WILDERNESS", "PLANET: MARETH");
 	
-	var MilkySuccubus:CoCSecretarialSuccubus = new CoCSecretarialSuccubus(); // TODO: MilkySuccubus
-	MilkySuccubus.HPMod = 350;
-	MilkySuccubus.short = "milky succubus";
-	MilkySuccubus.long = "You are fighting a milky, cow-like succubus.  She stands about seven feet tall and is hugely voluptuous, with breasts three times the size of her head, tipped with a cluster of four obscenely teat-like nipples.  Her hips flare out into an exaggerated hourglass shape, with a long tail tipped with a fleshy arrow-head spade that waves above her spankable butt.  A small cowbell is tied at the base of the arrow-head with a cute little ribbon.  Wide, cow-like horns, easily appropriate for a minotaur, rise from her head, and she flicks bovine ears about the sides of her head whilst sashaying from side to side on demonic, high-heeled feet.  Her skin is a vibrant purple with splotches of shiny black here and there, including one large spot covering her right eye.  She's using a leather whip as a weapon.";
-	MilkySuccubus.maxOutHP();
 	CombatManager.newGroundCombat();
 	CombatManager.setFriendlyCharacters(pc);
-	CombatManager.setHostileCharacters(MilkySuccubus);
+	CombatManager.setHostileCharacters(new CoCUQMilkySuccubus());
 	CombatManager.victoryScene(urtaBeatsUpCowcubi);
 	CombatManager.lossScene(urtaLosesToCowCubi);
 	CombatManager.displayLocation("COWCUBUS");

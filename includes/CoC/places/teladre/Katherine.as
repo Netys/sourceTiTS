@@ -979,7 +979,12 @@ public function letKatKnotYourCuntPussyFuck():void {
 	output("</i>”\n\n");
 
 	//[(PC is very loose)
-	if (pc.vaginalCapacity() >= new CockClass(kath.longestCockLength(), kath.cocks[0].knotMultiplier).volume() && kathIsAt(KLOC_STREETS)) output("Nonplussed by the idea of waiting naked and penetrated in a back alley, and eager to see the look on Katherine's face, you pull apart anyway; your thoroughly stretched-out pussy relinquishes the knot with no more than a long sucking noise.  Free of her, you look back over your shoulder.  As you guessed, Katherine is sitting there wordlessly with her mouth open, staring alternately at the abused, cum-drooling lips of your pussy and at the enormous mass of flesh you just managed to pass through it.");
+	if (pc.vaginalCapacity() >= new CockClass(kath.longestCockLength(), kath.cocks[0].knotMultiplier).volume() && kathIsAt(KLOC_STREETS)) {
+		output("Nonplussed by the idea of waiting naked and penetrated in a back alley");
+		if (kath.knotThickness() >= 4) output(", and eager to see the look on Katherine's face,");
+		output(" you pull apart anyway; your thoroughly stretched-out pussy relinquishes the knot with no more than a long sucking noise.");
+		if (kath.knotThickness() >= 4) output("  Free of her, you look back over your shoulder.  As you guessed, Katherine is sitting there wordlessly with her mouth open, staring alternately at the abused, cum-drooling lips of your pussy and at the enormous mass of flesh you just managed to pass through it.");
+	}
 	else output("You tell her that it's all right; you'll stay here with her until nature takes its course.  Even though you can't really see her, given your respective positions, you know she's smiling.");
 	output("\n\n");
 
@@ -1074,7 +1079,12 @@ public function getPenetratedByKath():void {
 	output("</i>”\n\n");
 
 	//[(PC is very loose)
-	if (pc.analCapacity() >= new CockClass(kath.longestCockLength(), kath.cocks[0].knotMultiplier).volume() && kathIsAt(KLOC_STREETS)) output("Nonplussed by the idea of waiting naked and penetrated in a back alley, and eager to see the look on Katherine's face, you pull apart anyway; your thoroughly stretched-out asshole relinquishes the knot with no more than a long sucking noise.  Free of her, you look back over your shoulder.  As you guessed, Katherine is sitting there wordlessly with her mouth open, staring alternately at the abused, cum-drooling ring of your sphincter and at the enormous mass of flesh you just managed to pass through it.");
+	if (pc.analCapacity() >= new CockClass(kath.longestCockLength(), kath.cocks[0].knotMultiplier).volume() && kathIsAt(KLOC_STREETS)) {
+		output("Nonplussed by the idea of waiting naked and penetrated in a back alley");
+		if (kath.knotThickness() >= 4) output(", and eager to see the look on Katherine's face,");
+		output(" you pull apart anyway; your thoroughly stretched-out asshole relinquishes the knot with no more than a long sucking noise.");
+		if (kath.knotThickness() >= 4) output("  Free of her, you look back over your shoulder.  As you guessed, Katherine is sitting there wordlessly with her mouth open, staring alternately at the abused, cum-drooling ring of your sphincter and at the enormous mass of flesh you just managed to pass through it.");
+	}
 	else output("You tell her that it's all right; you'll stay here with her until nature takes its course.  Even though you can't really see her, given your respective positions, you know she's smiling.");
 	output("\n\n");
 
@@ -2246,7 +2256,7 @@ private function bathTimePenetrated():void {
 	if (!pc.hasVagina()) { //Genderless or Male - get this out of the way since it will be a little different
 		if (pc.hasCock()) {
 			output("Kath's " + kath.CockMultiple("staff slides", "staves slide") + (pc.isNaga() ? " against your scaly behind" : " between your legs") + ", leaving little streaks of precum" + (pc.isNaga() ? "." : " on your inner thighs."));
-			if (pc.balls > 0) output("  " + (pc.isNaga() ? "Her hands slide down your side and she wraps her fingers around" : "She slides her cock" + kath.CockMultiple("", "s") + " back and forth, rubbing " + kath.CockMultiple("it", "them") + " against") + " your scrotum, teasing you with her sharp " + kath.catGirl("nails", "claws") + " until your cock" + (pc.cocks.length > 1 ? "s are" : "is") + " standing fully erect.");
+			if (pc.balls > 0) output("  " + (pc.isNaga() ? "Her hands slide down your side and she wraps her fingers around" : "She slides her cock" + kath.CockMultiple("", "s") + " back and forth, rubbing " + kath.CockMultiple("it", "them") + " against") + " your scrotum, teasing you with her sharp " + kath.catGirl("nails", "claws") + " until your cock" + (pc.cocks.length > 1 ? "s are" : " is") + " standing fully erect.");
 		}
 		else
 			output("Maddened by the " + (pc.isNaga() ? "lack of genitals on your snake half you grind the upper part of your tail against" : "sensations from your flat, nearly featureless crotch you close your legs around") + " Kath’s " + kath.CockMultiple("staff", "staves") + ".");
@@ -2257,9 +2267,9 @@ private function bathTimePenetrated():void {
 			output("slick fur rubbing against your " + (pc.hasFur() ? "own" : "[pc.skinFurScales]"));
 		else
 			output("wet skin " + (pc.hasFur() ? "rubbing against your fur" : "sliding over your body"));
-		output(" overloads your senses.  " + (pc.cor() < 75 ? "You close your eyes and lose yourself in the sensual feelings, the icy water forgotten." : "Your ability to fight back drains away and you curse your lack of planning - you’re so aroused that you can’t take advantage of Kath.  In fact she’s the one taking the lead!") + "\n\n");
+		output(" overloads your senses.  " + (pc.cor() < 75 ? "You close your eyes and lose yourself in the sensual feelings, the icy water forgotten." : "Your ability to fight back drains away and you curse your lack of planning - you’re so aroused that you can’t take advantage of Kath.  In fact she’s the one taking the lead!"));
 
-		output("For a while you and Kath just enjoy the feeling of the water lazily drifting past and the slow and steady grinding.  When every part of you seems infused with desire you feel your asshole begin to loosen, your body begging for something to fill your needy hole.\n\n");
+		output("\n\nFor a while you and Kath just enjoy the feeling of the water lazily drifting past and the slow and steady grinding.  When every part of you seems infused with desire you feel your asshole begin to loosen, your body begging for something to fill your needy hole.");
 
 		output("\n\nThen " + kath.CockMultiple("that lovely hot cock of hers disappears", "those lovely hot cocks of hers disappear") + (pc.isNaga() ? ", no longer grinding against your tail" : " from between your legs") + ".  You open your eyes just as Kath wraps her arms around you tightly.  She spoons you and the tip of her " + kath.CockMultiple("", "upper ") + "cock plants itself against your anus.\n\n");
 

@@ -1,3 +1,4 @@
+import classes.CockClass;
 import classes.Creature;
 import classes.GLOBAL;
 import classes.Util.*;
@@ -222,4 +223,9 @@ public function spellCount():int {
 	if (flags["COC.SPELL_BLIND"] == 1) counter++;
 	if (flags["COC.SPELL_WHITEFIRE"] == 1) counter++;
 	return counter;
+}
+
+// convert CoC area to TiTS volume
+public function cockVolume(area:Number):Number {
+	return new CockClass(Math.sqrt(area * 6)).volume();
 }

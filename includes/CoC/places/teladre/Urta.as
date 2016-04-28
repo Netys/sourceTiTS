@@ -1017,23 +1017,23 @@ private function urtaFertilityDiscussion():void {
 	processTime(1);
 	clearMenu();
 	if(flags["COC.URTA_FERTILE"] == 1) {
-	output("\n<b>Urta is currently fertile.</b>");
-	addButton(0, "No Fertile", urtaFertilityToggle);
+		output("\n<b>Urta is currently fertile.</b>");
+		addButton(0, "No Fertile", urtaFertilityToggle);
 	}
 	else {
-	output("\n<b>Urta can not currently get pregnant (or inseminate anyone, let alone you).</b>");
-	addButton(0, "Go Fertile", urtaFertilityToggle);
+		output("\n<b>Urta can not currently get pregnant (or inseminate anyone, let alone you).</b>");
+		addButton(0, "Go Fertile", urtaFertilityToggle);
 	}
-	if(flags["COC.URTA_PREG_EVERYBODY"] == 1) {
-	output("\n<b>Urta thinks you're okay with her 'sharing the love (and kids)' with any other sexual partners she might have.</b>");
-	addButton(1, "No Preg", urtaPregOthersToggle);
-	}
-	else {
-	output("\n<b>Urta will not knock up or be knocked up by anyone else unless you tell her otherwise.</b>");
-	addButton(2, "Share Preg", urtaPregOthersToggle);
-	}
-	output("\n\n<b>(Note: There is no content for Urta to impregnate or be impregnated by other NPCs, yet.)</b>");
-	addButton(4, "Back", urtaDialogueMenu);
+	//if(flags["COC.URTA_PREG_EVERYBODY"] == 1) {
+		//output("\n<b>Urta thinks you're okay with her 'sharing the love (and kids)' with any other sexual partners she might have.</b>");
+		//addButton(1, "No Preg", urtaPregOthersToggle);
+	//}
+	//else {
+		//output("\n<b>Urta will not knock up or be knocked up by anyone else unless you tell her otherwise.</b>");
+		//addButton(2, "Share Preg", urtaPregOthersToggle);
+	//}
+	//output("\n\n<b>(Note: There is no content for Urta to impregnate or be impregnated by other NPCs, yet.)</b>");
+	addButton(1, "Back", urtaDialogueMenu);
 }
 
 private function urtaFertilityToggle():void {

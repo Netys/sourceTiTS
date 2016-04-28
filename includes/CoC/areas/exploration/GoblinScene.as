@@ -164,7 +164,9 @@ public function goblinRapesPlayer():void
 			output("The little slut jumps back onto you, wrapping her arms and legs tightly around your [pc.cockNounComplex].  Her tongue slithers over ");
 			if (pc.balls > 0) output("your [pc.balls]");
 			else output("the [pc.base] of your [pc.cock]");
-			output(" before she buries it deep into your [pc.vagOrAss].  Her thighs, breasts, and body surround you with a shroud of warm green flesh that wriggles and twists around you with feverish lust.  The lips of her still-partially stretched cunt do their best to devour your member's [pc.cockHead] when the flexible little minx curves her hips back down to grind on it.\n\n");
+			output(" before she buries it deep into your [pc.vagOrAss].  Her thighs, breasts, and body surround you with a shroud of warm green flesh that wriggles and twists around you with feverish lust.  The lips of her still-partially stretched cunt do their best to devour your member's [pc.cockHead] when the flexible little minx curves her hips back down to grind on it.");
+			pc.cockChange();
+			output("\n\n");
 			output("The lewd little creature body-fucking your titanic tool is just so passionate and sensual that you can't hold the budding pressure in your loins.  You're sure you must be leaking pre-cum, but the squishing wet cunt wrapped around your [pc.cockHead] has you so slathered in fuck-juice you'd never be able to tell.  You tremble, struggling to hold back and ");
 			if (pc.slut() > 50) output("prolong your pleasure");
 			else output("prevent the monstrous girl from getting what she wants");
@@ -191,8 +193,9 @@ public function goblinRapesPlayer():void
 		}
 		//[DICK FITS]
 		else {
-			output("The goblin-girl doesn't waste time with any more foreplay, she just arches her back like a cat about to get the cream, and slides her plush ass towards your [pc.cock " + x + "] with deliberate slowness.  Her eyes watch you with an intent expression as the slightly parted lips of her sex brush against your [pc.cockhead " + x + "]");
-			output(", spreading around you ever-so-slowly as she sinks further and further down.  She licks her glossy lips and blows you a kiss as she violently pushes the rest of the way down, impaling herself on every inch of your length.\n\n");
+			output("The goblin-girl doesn't waste time with any more foreplay, she just arches her back like a cat about to get the cream, and slides her plush ass towards your [pc.cock " + x + "] with deliberate slowness.  Her eyes watch you with an intent expression as the slightly parted lips of her sex brush against your [pc.cockhead " + x + "], spreading around you ever-so-slowly as she sinks further and further down.  She licks her glossy lips and blows you a kiss as she violently pushes the rest of the way down, impaling herself on every inch of your length.");
+			pc.cockChange();
+			output("\n\n");
 			output("She arches her back further, proudly displaying the bulge your manhood has made in her tight little tummy.  She coos while fiddling with her clit, \"<i>Mmmm I'm so glad that fit.  The last mate I found was too big to stuff my greedy hole, and that's never as fun.</i>\"  She looks wistful for a moment as her hips begin grinding up and down, \"<i>He did fill me fit to burst though.  Can you do that for me?  Can you fuck me pregnant?</i>\" she asks.\n\n");
 			output("You're too turned on to do anything besides groan and nod, imprisoned by desire and her tight wet pussy.  You can feel it rippling around you, squeezing and milking in rhythmic motions as if it's trying to drain you dry.  Girlish giggles erupt from the goblin when your hips start grinding back against her, bouncing her up and down and making her leather-wrapped tits jiggle for you.  Light reflects off her piercings with hypnotic intensity as they bounce to and fro.\n\n");
 			output("The sultry slut pulls out a flask from somewhere behind her and uncorks it, releasing a puff of red smoke that smells of cherries.\n\n");
@@ -329,7 +332,9 @@ private function gobboButtSecks():void
 	output("With a sneer, you take the crown of your [pc.cock " + x + "] and press it not against her drenched pussy lips, but her asshole!\n\n");
 	output("\"<i>Not there!</i>\" she begs, her lips trembling and eyes watering. \"<i>I need your spunk to make my own tribe!</i>\" she explains.\n\n");
 	output("You say nothing to the trembling woman in your grasp. No words could describe the joy you feel from crushing her dreams. By the elders, this world has truly corrupted you, and you love it!\n\n");
-	output("Without any reservations, you slam the goblin whore onto your [pc.cock " + x + "], virtually impaling her! The immediate tightness of her asshole nearly drives you over the edge! The more she squirms, the tighter her ass muscles squeeze you. You stand frozen in ecstasy for a moment, your [pc.tongue] drooping out of your mouth and eyes rolling into the back of your head.\n\n");
+	output("Without any reservations, you slam the goblin whore onto your [pc.cock " + x + "], virtually impaling her!");
+	pc.cockChange();
+	output(" The immediate tightness of her asshole nearly drives you over the edge! The more she squirms, the tighter her ass muscles squeeze you. You stand frozen in ecstasy for a moment, your [pc.tongue] drooping out of your mouth and eyes rolling into the back of your head.\n\n");
 	output("Protesting, the goblin squirms more, even going as far as to beat her fists into your chest; she's so feeble at the moment that her strikes actually tickle. Her puny assault is enough to knock you out of your carnal daze. You grin manically as you grasp her tiny waist and hammer her! Your [pc.cock " + x + "] quickly adjusts to her stretching asshole as you thrust harder and deeper!\n\n");
 	output("\"<i>This isn't what I wanted!</i>\" she cries, \"<i>This isn't what I wanted!</i>\" If your [pc.cock " + x + "] expanding her ass wasn't enough, she can feel your ");
 	if (pc.balls > 0) output("[pc.balls]");
@@ -471,7 +476,9 @@ private function rapeAGoblinCorruptTooBig():void
 
 	output("You have a seat");
 	if (pc.isBiped()) output(", legs wide,");
-	output(" on the ground and hold the little goblin whore with her relatively tiny slit resting at the tip of your [pc.cock " + x + "]. Finally out of her stupor a look of extreme conflict crosses her face as her need for cock and cum goes to war with her survival instincts. On the brink of defeat, those instinct suddenly regroup and beat back her lust once she feels the pain of just the [pc.cockHead" + x + "] of your [pc.cock " + x + "] starting to stretch out her [enemy.vagina]. She does all she can to resist, but with the way you're holding this is little more than flailing wildly and pushing against your [pc.cock " + x + "] with her feet, practically climbing it like the tree trunk it must look like from her perspective.\n\n");
+	output(" on the ground and hold the little goblin whore with her relatively tiny slit resting at the tip of your [pc.cock " + x + "]. Finally out of her stupor a look of extreme conflict crosses her face as her need for cock and cum goes to war with her survival instincts. On the brink of defeat, those instinct suddenly regroup and beat back her lust once she feels the pain of just the [pc.cockHead" + x + "] of your [pc.cock " + x + "] starting to stretch out her [enemy.vagina]. She does all she can to resist, but with the way you're holding this is little more than flailing wildly and pushing against your [pc.cock " + x + "] with her feet, practically climbing it like the tree trunk it must look like from her perspective.");
+	pc.cockChange();
+	output("\n\n");
 	output("Both of you dripping with sweat from your respective exertions, you slowly begin to realize the combination of her furious struggling and the tightness of her [enemy.vagina] is going to keep you from the penetration you were so looking forward to. However, as you begin to consider finishing off in her throat, a darkness stirs and another idea crosses your mind.\n\n");
 	output("The goblin relaxes a little when she feels you no longer pressing her down onto your [pc.cock " + x + "]. She absolutely thrills when you bring her tiny pussy to your lips and begin to have at it. Your [pc.tongue] plays around both on the inside and outside of her [enemy.vagina] until you coax her little nub out from hiding. You wrap your [pc.lips] around it and begin putting your corruption to task. As you drive the goblin slut closer and closer to orgasm, working over her clit with an expertise rarely found outside of the infernal ranks, bolts of corrupt energies travel from your tongue, through her clit, and deep into her core. As she cums, screaming, you pull off of her, admiring the outward signs of your demonic handiwork. What before was an average sized love button has swollen five times its size into a proud, engorged clit... and that's not the only thing you enlarged.\n\n");
 
@@ -578,7 +585,9 @@ private function gobboGetsRapedMaleFits():void
 	//outputText(images.showImage("goblin-win-male-getridden"));
 	//(FITS( barley) – Get ridden)
 	if (pc.cockVolume(x) > enemy.vaginalCapacity() * .8) {
-		output("You pick up the defeated goblin, looking her over. She crosses her arms across her chest pitifully and asks, \"<i>What now?</i>\" with her eyes darting down when she thinks you won't notice. A grimace temporarily crossing her face at the size of your [pc.cock " + x + "]. You get the idea of giving her more cock than she can handle, and lower her down towards your [pc.cock " + x + "]. The tip slips between her moist and folds, stretching her and taking some of her weight off your arms. She winces slightly, wrapping her legs as far around your [pc.hips] as possible.\n\n");
+		output("You pick up the defeated goblin, looking her over. She crosses her arms across her chest pitifully and asks, \"<i>What now?</i>\" with her eyes darting down when she thinks you won't notice. A grimace temporarily crossing her face at the size of your [pc.cock " + x + "]. You get the idea of giving her more cock than she can handle, and lower her down towards your [pc.cock " + x + "]. The tip slips between her moist and folds, stretching her and taking some of her weight off your arms. She winces slightly, wrapping her legs as far around your [pc.hips] as possible.");
+		pc.cockChange();
+		output("\n\n");
 		output("You start walking, letting your movements work with gravity, allowing you to penetrate her with little difficulty. Those puffy wet walls clench you tightly as she slides down, ");
 		if (pc.hasCockFlag(x, GLOBAL.FLAG_NUBBY)) output("rubbing painfully against your nubs");
 		else if (pc.hasKnot(x)) output("stretching painfully around your knot");
@@ -669,7 +678,9 @@ private function goblinCondomed(mode:Number = 0):void
 	}
 	output(" Time to give the goblin what she asked for, if not what she wanted.\n\n");
 
-	output("Still holding her wriggling feet, you bend down and pull her legs apart as far as you can, muscles stretching almost wider and wider as her inner thighs clench against the tugging. The added pressure along with her own frantic jilling crests the girl into another orgasm, this time her gushing lube squirting upwards in crystal streams of depraved lust that patter against your abdomen warmly. Her arms fall at her sides, palms up and fingers twitching, clearing the path for your [pc.cock " + x + "] to the quivering green pussy she has so kindly prepared for you. Pushing against her engorged lips, you find she's so wet that you practically slip right in, her climax-racked muscles spasming irregularly as you fill her with your stiff manhood. \"Oh yesss, you finally found your cock\" she pants, drool bubbling in her mouth. \"Pump me like you hate me, you fucker\" she demands and you haul her upward by the ankles, pulling her further onto your pulsing dick, her dribbling cunny sucking at your shaft as her deep green inner folds part before your thrusting length. \"I'm not a glass doll, you pussy, just fucking jam it in!\" she screams, fingers clawing at the ground as she bucks upward to get more of you inside her.\n\n", false);
+	output("Still holding her wriggling feet, you bend down and pull her legs apart as far as you can, muscles stretching almost wider and wider as her inner thighs clench against the tugging. The added pressure along with her own frantic jilling crests the girl into another orgasm, this time her gushing lube squirting upwards in crystal streams of depraved lust that patter against your abdomen warmly. Her arms fall at her sides, palms up and fingers twitching, clearing the path for your [pc.cock " + x + "] to the quivering green pussy she has so kindly prepared for you. Pushing against her engorged lips, you find she's so wet that you practically slip right in, her climax-racked muscles spasming irregularly as you fill her with your stiff manhood. \"Oh yesss, you finally found your cock\" she pants, drool bubbling in her mouth. \"Pump me like you hate me, you fucker\" she demands and you haul her upward by the ankles, pulling her further onto your pulsing dick, her dribbling cunny sucking at your shaft as her deep green inner folds part before your thrusting length. \"I'm not a glass doll, you pussy, just fucking jam it in!\" she screams, fingers clawing at the ground as she bucks upward to get more of you inside her.");
+	pc.cockChange();
+	output("\n\n");
 
 	output("The mouthy bitch apparently forgot who lost the fight, it seems, so you decide to remind her. Using her legs like a lever, you twist her around on your dick, spinning her 180 degrees, leaving her lying on her tits, her ass jutting up as you slam your cock the rest of the way into the olive-skinned nympho. She grunts and starts to say something else, but you push forward and grind her face into the mud before she can get it out, her mouth filling with her own lubrication-soaked dirt with an ecstatic gurgle. Her legs fight against your grip, jerking this way and that, her slick feet nearly slipping out of your hands. You grit your teeth and begin screwing her slavering twat as hard as you can, eager to tame the thrashing cunt of a girl. Slamming her sweat-soaked thighs against your [pc.hip], your thrusts become almost savage, bringing a deep flush to her backside as you slap her snatch against your groin, the secret condom working perfectly, as thin as skin on your [pc.cock " + x + "].\n\n");
 
@@ -717,9 +728,10 @@ private function gatsGoblinBoners():void
 	if (pc.cockTotal() == 1) output("it");
 	else output("them");
 	output(" against the bare flesh of her ass, whilst your victim anxiously awaits your next move.  You take your time massaging the goblin's slutty ass with your bare hands before sliding your [pc.cock " + x + "] in between her soft cheeks.  Your horny victim appears impatient, attempting to grind against you as she spreads her moist lips open, enthusiastic that she's found someone willing to mate with her.  You slap her ass firmly as you quicken your thrusting - seconds before finally plunging ");
-	if (pc.cockTotal() == 1 || y == -1) output("your dick inside of the panting whore, pushing her forwards violently as you enter her tight snatch");
-	else output("both of your dicks inside of the panting whore, pushing her forwards violently as you enter her tight snatch and asshole");
-	output(".\n\n");
+	if (pc.cockTotal() == 1 || y == -1) output("your dick inside of the panting whore, pushing her forwards violently as you enter her tight snatch.");
+	else output("both of your dicks inside of the panting whore, pushing her forwards violently as you enter her tight snatch and asshole.");
+	pc.cockChange();
+	output("\n\n");
 
 	output("You roughly pound against the goblin girl, maintaining a firm grip on her hips while she squeals with delight.  The sound of your groin slapping against her echoes throughout the area, followed by your grunting and the goblin's moans of ecstasy.  Your victim struggles to lift herself up by her arms, only to collapse back down from the feeling of you invading her insides.\n\n");
 

@@ -1015,6 +1015,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			break;
 		/*Etis is a nine-tails kitsune cyborg, who got best of two worlds, bost as in being herm and as in being a bridge between CoC and TiTS worlds. Mostly pure white with azure accents. Done hell op for purpose of testing overleveled CoC encounters. And to feel badass. Just 'cause I had the mood for procrastination, it has ton of details and even notably different tauric version for start as Leithan.*/
 		case "etis":
+			if(!TF) return true;
 			pc.originalRace = pc.isTaur() ? "kitsune-taur" : "kitsune"; // You've always been a kitsune. Always, I said!
 			pc.tallness = pc.isTaur() ? 12 * 6 + 6 : 12 * 4 + 9; // small and dainty anthro foxes are adorable, but small taurs? taurs should be big!
 			pc.tone = pc.isTaur() ? 100 : 20;

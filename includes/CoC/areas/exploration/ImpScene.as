@@ -113,6 +113,7 @@ private function rapeImpWithDick():void {
 		else output("stroking it to full hardness languidly.");
 	}
 	output("\n\nWith no foreplay, you press your [pc.cock " + x + "] against his tight little pucker and ram it in to the hilt.  The imp's eyes bulge in surprise even as a thick stream of pre leaks from his [enemy.cock].  You grab him by his distended waist and brutally rape the little demon, whose claws stay busy adding to his pleasure.");
+	pc.cockChange();
 	if(pc.hasCockFlag(GLOBAL.FLAG_NUBBY, x)) output("  The tiny creature's claws dig into your sides at the feeling of soft, hooked barbs stroking his sensitive insides.");
 	if(pc.cocks[x].cLength() >= 7 && pc.cocks[x].cLength() <= 12) output("  Each thrust obviously distorts the imp's abdomen.  It amazes you that it doesn't seem to be hurting him.");
 	if(pc.cocks[x].cLength() > 12) output("  Each plunge into the imp's tight asshole seems to distort its entire body, bulging obscenely from its belly and chest.  Amazingly he doesn't seem to mind, his efforts focused solely on his sorely throbbing [enemy.cockNoun].");
@@ -383,12 +384,14 @@ private function centaurOnImpMale(vape:Boolean = false):void {
 	//}
 	// no tentackles
 	output("As your shadow falls over the imp, it looks between your [pc.legs] with a hint of fear.  ");
-	if(pc.cockVolume(x) <= 30) {
+	if(pc.cockVolume(x) <= cockVolume(30)) {
 		output("Relief washes over it followed by intense lust as is throws itself onto a mossy rock and eagerly presents its [enemy.asshole].   The sound of your [pc.feet] moving on either side of its body seems to send the creature into a frenzy as it begins humping the air while small mewling sounds escape its lips.  ");
 		//<<Cor <50>> 
-		if(cor() < 50) output("You slowly rub your [pc.cock " + x + "] between the creature's cheeks, letting your pre-cum oil the small hole, before slowly beginning the insertion.  Before you can get half-way the creatures drives its self back against you, impaling its [enemy.asshole] around your [pc.cock " + x + "] and making inhuman sounds of ecstasy. The [enemy.asshole] relaxes around your [pc.cock " + x + "], taking it all in while its practiced muscles grip and jerk you off internally.\n\n");
+		if(pc.cor() < 50) output("You slowly rub your [pc.cock " + x + "] between the creature's cheeks, letting your pre-cum oil the small hole, before slowly beginning the insertion.  Before you can get half-way the creatures drives its self back against you, impaling its [enemy.asshole] around your [pc.cock " + x + "] and making inhuman sounds of ecstasy. The [enemy.asshole] relaxes around your [pc.cock " + x + "], taking it all in while its practiced muscles grip and jerk you off internally.");
 		//<<Cor 50+>> 
-		else output("You position your [pc.cock " + x + "] against its dry anus and drive yourself inside of it using your powerful [pc.legs].  The creatures gives a loud shriek as its insides are forced open, and you feel the raw tightness trying to resist your intrusion.  Giving the creature no chance to relax you begin pistoning into it, grinning as the sounds of pain give way to grunts and yelps of pleasure. You cannot last long in the creature's hole, and soon spurts of cum begin shooting out and filling its bowels.\n\n");
+		else output("You position your [pc.cock " + x + "] against its dry anus and drive yourself inside of it using your powerful [pc.legs].  The creatures gives a loud shriek as its insides are forced open, and you feel the raw tightness trying to resist your intrusion.  Giving the creature no chance to relax you begin pistoning into it, grinning as the sounds of pain give way to grunts and yelps of pleasure. You cannot last long in the creature's hole, and soon spurts of cum begin shooting out and filling its bowels.");
+		pc.cockChange();
+		output("\n\n");
 		//<<GoTo I1>>
 		centaurOnImpResults(1);
 		//<<End>>
@@ -418,7 +421,9 @@ private function centaurOnImpMale(vape:Boolean = false):void {
 		}
 		//<<Cock: large, Cor 50+>>
 		else {
-			output("The imp's eyes widen and you see apprehension as it tries to turn around and get away.  It does not make it far before you run it down, knocking it over with your muscled flank.  Before it can try to run again you pin it down and position your [pc.cock " + x + "] against its [enemy.asshole].  It feels far too small to handle your girth but a push of your powerful legs gets you in with the first inches.  The imp squeals out in pain and you wince slightly in the vice-like grip.  Gritting your teeth you push in the remaining length, the sounds of pain only serving to drive you forward all the harder.  Soon your [pc.cock " + x + "] is moving in and out with more ease, though the imp's tender asshole is distending abnormally to accommodate the invading member.  As much as you long to extend your pleasure, the sensation and the unnatural sounds of the penetration prove too much for you to last long.\n\n");
+			output("The imp's eyes widen and you see apprehension as it tries to turn around and get away.  It does not make it far before you run it down, knocking it over with your muscled flank.  Before it can try to run again you pin it down and position your [pc.cock " + x + "] against its [enemy.asshole].  It feels far too small to handle your girth but a push of your powerful legs gets you in with the first inches.  The imp squeals out in pain and you wince slightly in the vice-like grip.  Gritting your teeth you push in the remaining length, the sounds of pain only serving to drive you forward all the harder.");
+			pc.cockChange();
+			output("  Soon your [pc.cock " + x + "] is moving in and out with more ease, though the imp's tender asshole is distending abnormally to accommodate the invading member.  As much as you long to extend your pleasure, the sensation and the unnatural sounds of the penetration prove too much for you to last long.\n\n");
 			//<<GoTo I1>>
 			centaurOnImpResults(1);
 			//<<End>>

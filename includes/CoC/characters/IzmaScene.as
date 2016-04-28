@@ -1159,7 +1159,7 @@ private function chooseYourIzmaWeapon():void {
 	clearMenu();
 	addDisabledButton(0, "Male", "Male", "This scene requires you to have cock.");
 	addDisabledButton(1, "Female", "Female", "This scene requires you to have vagina.");
-	addDisabledButton(2, "Genderless", "Genderless", "This scene requires you to have no genitals.");
+	//addDisabledButton(2, "Genderless", "Genderless", "This scene requires you to have no genitals.");
 	if (pc.hasCock()) addButton(0, "Male", nonFightIzmaSmexPAINUS);
 	if (pc.hasVagina()) addButton(1, "Female", nonFightIzmaSmexCUNTPUSSYSNATCHQUIM);
 	if (!pc.hasGenitals()) addButton(2, "Genderless", nonFightIzmaSmexASS);

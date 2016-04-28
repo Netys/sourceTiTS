@@ -1926,9 +1926,9 @@ private function feederTheKitsunes():void
 	output("\"<i>Milk...</i>\" she whispers breathlessly, leaning forward to latch onto your [pc.nipple] without hesitation.  She moans with approval, closing her eyes and drinking deeply of your overflowing udders, suckling sloppily.\n\n");
 
 	output("Twin streams of [pc.milk] flow down the corners of her mouth, dribbling inward and joining beneath her chin and rolling down the curve of her neck.  As she drinks down your [pc.milkNoun] greedily, she releases a diverse assortment of lewd noises, pressing her face into your pillowy chest.  Patting the top of her head gently, you hold her face against your cleavage, rocking gently as you trail your fingers slowly through her soft, ");
-	if (enemy.hairColor == "black") output("lustrous black ");
+	if (enemy.hairColor == "black") output("lustrous black");
 	else output(enemy.hairColor);
-	output("hair.\n\n");
+	output(" hair.\n\n");
 
 	output("She looks up from your breasts momentarily, her fiery green eyes dulled and glazed over with submission.  You shudder and moan approvingly, wrapping both arms around the captive kitsune and hugging her to your bosom assertively.  Her plump, full lips never once leave your [pc.nipple], the soft, moist pillows feeling wonderful as they suckle on you passionately.\n\n");
 
