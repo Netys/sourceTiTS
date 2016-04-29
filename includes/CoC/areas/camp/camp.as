@@ -1,4 +1,7 @@
 import classes.GLOBAL;
+import classes.Items.Transformatives.Catnip;
+import classes.Items.Transformatives.CoCReptilum;
+import classes.ItemSlotClass;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -27,7 +30,7 @@ public function cocCampMenu():void {
 	//campLoversButton();
 	//campSlavesButton();
 	
-	//addButton(5, "Debug", doDebugFunction);
+	addButton(5, "Debug", doDebugFunction);
 	
 	// TODO: camp stash
 	if (hasShipStorage()) addButton(3, "Stash", shipStorageMenuRoot);
@@ -38,6 +41,7 @@ public function cocCampMenu():void {
 }
 
 public function doDebugFunction():void {
+	if (!pc.hasPerk("Magic Affinity")) pc.createPerk("Magic Affinity", 63, 0, 0, 0, "Grants you insight into mysteries of magic.");
 }
 
 public function hasCompanions():Boolean {

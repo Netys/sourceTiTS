@@ -334,7 +334,7 @@ private function fuckCinnabarHugerAndCorruptedEr():void {
 	output("\n\n");
 	
 	output("She twists her fist inside you and reaches up to palm the tender lump of your prostate as she says, \"<i>Payback's a bitch.</i>\"  Her eyes flare, the magic exploding inside you, worming through your prostate and into your mind.  ");
-	if(pc.IQ() >= 50 || Flag("COC.SPELL_AROUSE") == 1) output("You dimly register it as an arousal spell, but you were already on edge, and your poor prostate is practically wringing itself dry in an effort to cum.");
+	if(pc.intelligence() >= 20 && pc.hasPerk("Magic Affinity") || (pc.perkv1("Magic Affinity") & KBIT_SPELL_AROUSE) > 0) output("You dimly register it as an arousal spell, but you were already on edge, and your poor prostate is practically wringing itself dry in an effort to cum.");
 	else output("It's too much for your utterly encapsulated member and violated anus, and your poor prostate practically wrings itself dry as it tries to unload.");
 	output("  A half-second later your [pc.cock " + x + "] joins it, your internal muscles clenching and convulsing, heaving the jizz from your body in one huge, gooey blast.\n\n");
 	

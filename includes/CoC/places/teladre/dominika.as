@@ -161,7 +161,9 @@ private function acceptDominikasKnowledge():void {
 	if (int(flags["COC.UNKNOWN_FLAG_NUMBER_00155"]) <= timeAsStamp) {
 		flags["COC.UNKNOWN_FLAG_NUMBER_00155"] = timeAsStamp + (7 + rand(3)) * 60;
 		output("\"<i>Now then,</i>\" she says. Her hands glow with a brief sense of power, and many of the tattoos shine with equal illumination. She gestures with her hand and the lamps all acquire an unearthly light, as green glowing circles appear interlinked on the floor. \"<i>How much do you know about magic?</i>\"\n\n");
-
+		
+		if (!pc.hasPerk("Magic Affinity")) pc.createPerk("Magic Affinity", 0, 0, 0, 0, "Grants you insight into mysteries of magic.");
+		
 		//[If player knows all spells]
 		if (spellCount() >= 6) {
 			if (flags["COC.UNKNOWN_FLAG_NUMBER_00154"] == undefined) {
@@ -179,28 +181,28 @@ private function acceptDominikasKnowledge():void {
 
 			output("Dominika seems to be quite good at magic, and you find yourself picking up the spell she demonstrates fairly quickly.");
 			//(Player receives random unlearned spell.)
-			if (flags["COC.SPELL_MIGHT"] != 1) {
-				flags["COC.SPELL_MIGHT"] = 1;
+			if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_MIGHT) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_MIGHT);
 				output("\n\n<b>New Black Magic Spell Learned: Might</b>");
 			}
-			else if (flags["COC.SPELL_HEAL"] != 1) {
-				flags["COC.SPELL_HEAL"] = 1;
+			else if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_HEAL) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_HEAL);
 				output("\n\n<b>New Black Magic Spell Learned: Heal</b>");
 			}
-			else if (flags["COC.SPELL_AROUSE"] != 1) {
-				flags["COC.SPELL_AROUSE"] = 1;
+			else if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_AROUSE) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_AROUSE);
 				output("\n\n<b>New Black Magic Spell Learned: Arouse</b>");
 			}
-			else if (flags["COC.SPELL_CHARGE"] != 1) {
-				flags["COC.SPELL_CHARGE"] = 1;
+			else if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_CHARGE) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_CHARGE);
 				output("\n\n<b>New White Magic Spell Learned: Charge</b>");
 			}
-			else if (flags["COC.SPELL_BLIND"] != 1) {
-				flags["COC.SPELL_BLIND"] = 1;
+			else if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_BLIND) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_BLIND);
 				output("\n\n<b>New White Magic Spell Learned: Blind</b>");
 			}
-			else if (flags["COC.SPELL_WHITEFIRE"] != 1) {
-				flags["COC.SPELL_WHITEFIRE"] = 1;
+			else if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_WHITEFIRE) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_WHITEFIRE);
 				output("\n\n<b>New White Magic Spell Learned: Whitefire</b>");
 			}
 			else output("==SOMETHING FUCKED UP==");
@@ -214,28 +216,28 @@ private function acceptDominikasKnowledge():void {
 
 			output("Even with your inexperience, you find Dominika to be a good teacher. She helps you focus and train your mind, and you quickly find your first spell to be easy to perform.");
 			//(Player receives random unlearned spell.)
-			if (flags["COC.SPELL_MIGHT"] != 1) {
-				flags["COC.SPELL_MIGHT"] = 1;
+			if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_MIGHT) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_MIGHT);
 				output("\n\n<b>New Black Magic Spell Learned: Might</b>");
 			}
-			else if (flags["COC.SPELL_HEAL"] != 1) {
-				flags["COC.SPELL_HEAL"] = 1;
+			else if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_HEAL) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_HEAL);
 				output("\n\n<b>New Black Magic Spell Learned: Heal</b>");
 			}
-			else if (flags["COC.SPELL_AROUSE"] != 1) {
-				flags["COC.SPELL_AROUSE"] = 1;
+			else if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_AROUSE) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_AROUSE);
 				output("\n\n<b>New Black Magic Spell Learned: Arouse</b>");
 			}
-			else if (flags["COC.SPELL_CHARGE"] != 1) {
-				flags["COC.SPELL_CHARGE"] = 1;
+			else if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_CHARGE) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_CHARGE);
 				output("\n\n<b>New White Magic Spell Learned: Charge</b>");
 			}
-			else if (flags["COC.SPELL_BLIND"] != 1) {
-				flags["COC.SPELL_BLIND"] = 1;
+			else if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_BLIND) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_BLIND);
 				output("\n\n<b>New White Magic Spell Learned: Blind</b>");
 			}
-			else if (flags["COC.SPELL_WHITEFIRE"] != 1) {
-				flags["COC.SPELL_WHITEFIRE"] = 1;
+			else if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_WHITEFIRE) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_WHITEFIRE);
 				output("\n\n<b>New White Magic Spell Learned: Whitefire</b>");
 			}
 			else output("==SOMETHING FUCKED UP==");

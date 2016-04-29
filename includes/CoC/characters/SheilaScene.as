@@ -430,7 +430,7 @@ private function sheilaIsSorrySheRapedYou():void {
 	//[Forgive][Fight][Cast Arouse][Leave Me Alone]
 	addButton(0, "Forgive", sheilaIsSorryAndYouForgive);
 	addButton(1, "Fight", sheilaPologyFight);
-	if (flags["COC.SPELL_AROUSE"] == 1 && pc.energy() >= 15) addButton(2, "CastArouse", sheilaPologyCastArouse);
+	if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_AROUSE) > 0 && pc.energy() >= 15) addButton(2, "CastArouse", sheilaPologyCastArouse);
 	addButton(3, "LemmeAlone", sheilaIsSorryButLeaveMeAlone);
 	
 

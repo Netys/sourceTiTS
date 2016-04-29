@@ -5668,7 +5668,7 @@
 		}
 
 		//Create a perk
-		public function createPerk(keyName: String, value1: Number, value2: Number, value3: Number, value4: Number, desc: String = ""): void 
+		public function createPerk(keyName: String, value1: Number = 0, value2: Number = 0, value3: Number = 0, value4: Number = 0, desc: String = ""): void 
 		{
 			var newPerk:StorageClass = new StorageClass();
 			newPerk.storageName = keyName;
@@ -14872,7 +14872,24 @@
 		 */
 		public function CalculateEnergyCost(attack:SingleCombatAttack):Number
 		{
-			return attack.EnergyCost;
+			var cost:Number = attack.EnergyCost;
+			if (attack.GetAttackTypeFlags()["isMagic"] != undefined) {
+				cost *= Math.max(100 - perkv3("Magic Affinity"), 10) / 100;
+			}
+			return cost;
+		}
+		
+		public function spellMod():Number
+		{
+			var mod:Number = (100 + perkv3("Magic Affinity")) / 100;
+			
+			var weaponMod:Number = 1;
+			if (meleeWeapon.baseDamage.getFlagsArray().indexOf(DamageFlag.AMPLIFYING) != -1)
+				weaponMod = 1 + rangedWeapon.attack / 10;
+			if (rangedWeapon.baseDamage.getFlagsArray().indexOf(DamageFlag.AMPLIFYING) != -1)
+				weaponMod = Math.max(weaponMod, 1 + rangedWeapon.attack / 10);
+			
+			return mod * weaponMod;
 		}
 		
 		public function untypedDroneDamage():Number

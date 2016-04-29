@@ -1085,6 +1085,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			if (!pc.hasPerk("Enlightened Nine-tails")) pc.createPerk("Enlightened Nine-tails", 0, 0, 0, 0, "The mystical energy surges through you, filling you with cosmic power!");
 			if (!pc.hasPerk("Dragonfire")) pc.createPerk("Dragonfire", 0, 0, 0, 0, "You are much more dragon inside than outside."); // my hide is keeping explosion inside, not vice versa!
 			if (!pc.hasPerk("Androgyny")) pc.createPerk("Androgyny", 0, 0, 0, 0, "Your visage is always androgynous."); // not anthro enough for usual gender recognition patterns to really work
+			if (!pc.hasPerk("Magic Affinity")) pc.createPerk("Magic Affinity", 63, 0, 50, 0, "Grants you insight into mysteries of magic.");
 			if (!pc.hasStatusEffect("Tolerance"))		pc.createStatusEffect("Tolerance", 100, 0, 0, 0); // too lazy to code real immunity
 			if (!pc.hasStatusEffect("Genital Slit"))	pc.createStatusEffect("Genital Slit", 0, 0, 0, 0); // dangling all the time bits are not classy
 			if (!pc.hasStatusEffect("Uniball"))			pc.createStatusEffect("Uniball", 0, 0, 0, 0);

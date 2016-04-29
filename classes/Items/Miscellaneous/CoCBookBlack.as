@@ -73,24 +73,20 @@ package classes.Items.Miscellaneous
 				output("\n\nThe contents of the book did little for your already considerable intellect.");
 			}
 			target.slowStatGain("i", 4 * target.intelligenceMax() / 100);
-				
-			//Smart enough for Charge Weapon and doesnt have it
-			if (target.IQ() >= 25 && kGAMECLASS.flags["COC.SPELL_AROUSE"] != 1) {
+			
+			if (target.intelligence() >= 15 && !target.hasPerk("Magic Affinity")) target.createPerk("Magic Affinity", 0, 0, 0, 0, "Grants you insight into mysteries of magic.");
+			
+			if (target.intelligence() >= 15 && (target.perkv1("Magic Affinity") & kGAMECLASS.KBIT_SPELL_AROUSE) == 0) {
+				target.setPerkValue("Magic Affinity", 1, target.perkv1("Magic Affinity") | kGAMECLASS.KBIT_SPELL_AROUSE);
 				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Arouse.</b>");
-				kGAMECLASS.flags["COC.SPELL_AROUSE"] = 1;
-				return false;
 			}
-			//Smart enough for Blind and doesnt have it
-			if (target.IQ() >= 30 && kGAMECLASS.flags["COC.SPELL_HEAL"] != 1) {
+			else if(target.intelligence() >= 20 && (target.perkv1("Magic Affinity") & kGAMECLASS.KBIT_SPELL_HEAL) == 0) {
+				target.setPerkValue("Magic Affinity", 1, target.perkv1("Magic Affinity") | kGAMECLASS.KBIT_SPELL_HEAL);
 				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Heal.</b>");
-				kGAMECLASS.flags["COC.SPELL_HEAL"] = 1
-				return false;
 			}
-			//Smart enough for Whitefire and doesnt have it
-			if (target.IQ() >= 40 && kGAMECLASS.flags["COC.SPELL_MIGHT"] != 1) {
+			else if (target.intelligence() >= 25 && (target.perkv1("Magic Affinity") & kGAMECLASS.KBIT_SPELL_MIGHT) == 0) {
+				target.setPerkValue("Magic Affinity", 1, target.perkv1("Magic Affinity") | kGAMECLASS.KBIT_SPELL_MIGHT);
 				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Might.</b>");
-				kGAMECLASS.flags["COC.SPELL_MIGHT"] = 1
-				return false;
 			}
 			return false;
 		}

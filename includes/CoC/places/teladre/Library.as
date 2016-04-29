@@ -113,37 +113,32 @@ private function studyInTA():void {
 		if(rand(3) == 0) {
 			//magic)
 			output("\n\nSelecting a book at chance from the mess across the tables, you are delighted to find that it is a tome about magic.  Though the language used is archaic at first you slowly find yourself getting the grasp of it and understanding more of the theory put down in the text.  You find yourself thinking about how to apply the things you're reading about to your own abilities, and figuring out how to better utilize magic yourself.  In short, you experience the condition known as \"learning\", and feel smarter for it.");
-			pc.slowStatGain("i", 1 + rand(2));
 			//(Intelligence increase)
-			//Smart enough for arouse and doesnt have it
-			if(pc.intelligence() >= 15 && flags["COC.SPELL_AROUSE"] != 1) {
+			pc.slowStatGain("i", 1 + rand(2));
+			if (!pc.hasPerk("Magic Affinity")) pc.createPerk("Magic Affinity", 0, 0, 0, 0, "Grants you insight into mysteries of magic.");
+			if(pc.intelligence() >= 15 && (pc.perkv1("Magic Affinity") & KBIT_SPELL_AROUSE) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_AROUSE);
 				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Arouse.</b>");
-				flags["COC.SPELL_AROUSE"] = 1;
 			}
-			//Smart enough for arouse and doesnt have it
-			else if(pc.intelligence() >= 20 && flags["COC.SPELL_HEAL"] != 1) {
+			else if(pc.intelligence() >= 20 && (pc.perkv1("Magic Affinity") & KBIT_SPELL_HEAL) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_HEAL);
 				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Heal.</b>");
-				flags["COC.SPELL_HEAL"] = 1;
 			}
-			//Smart enough for arouse and doesnt have it
-			else if(pc.intelligence() >= 25 && flags["COC.SPELL_MIGHT"] != 1) {
+			else if (pc.intelligence() >= 25 && (pc.perkv1("Magic Affinity") & KBIT_SPELL_MIGHT) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_MIGHT);
 				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Might.</b>");
-				flags["COC.SPELL_MIGHT"] = 1;
 			}
-			//Smart enough for arouse and doesnt have it
-			else if(pc.intelligence() >= 15 && flags["COC.SPELL_CHARGE"] != 1) {
+			else if (pc.intelligence() >= 15 && (pc.perkv1("Magic Affinity") & KBIT_SPELL_CHARGE) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_CHARGE);
 				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Charge Weapon.</b>");
-				flags["COC.SPELL_CHARGE"] = 1;
 			}
-			//Smart enough for arouse and doesnt have it
-			else if(pc.intelligence() >= 20 && flags["COC.SPELL_BLIND"] != 1) {
+			else if(pc.intelligence() >= 20 && (pc.perkv1("Magic Affinity") & KBIT_SPELL_BLIND) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_BLIND);
 				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Blind.</b>");
-				flags["COC.SPELL_BLIND"] = 1;
 			}
-			//Smart enough for arouse and doesnt have it
-			else if(pc.intelligence() >= 25 && flags["COC.SPELL_WHITEFIRE"] != 1) {
+			else if(pc.intelligence() >= 25 && (pc.perkv1("Magic Affinity") & KBIT_SPELL_WHITEFIRE) == 0) {
+				pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_WHITEFIRE);
 				output("\n\nYou blink in surprise, assaulted by the knowledge of a <b>new spell: Whitefire.</b>");
-				flags["COC.SPELL_WHITEFIRE"] = 1;
 			}
 		}
 		//OR (player is bimbo/bimbro/whatever) 

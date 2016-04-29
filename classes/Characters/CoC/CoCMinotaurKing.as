@@ -196,7 +196,7 @@ package classes.Characters.CoC
 			sexualPreferences.setPref(GLOBAL.SEXPREF_BIG_BREASTS,	GLOBAL.REALLY_LIKES_SEXPREF);
 			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		GLOBAL.KINDA_DISLIKES_SEXPREF);
 			
-			this._lastSpellCastCount = kGAMECLASS.flags["COC.SPELLS_CAST"];
+			this._lastSpellCastCount = kGAMECLASS.pc.perkv3("Magic Affinity");
 			inventory = [new CoCGodMeadPro()];
 			
 			_isLoading = false;
@@ -269,9 +269,9 @@ package classes.Characters.CoC
 					return;
 				}
 			}
-			if (_lastSpellCastCount != kGAMECLASS.flags["COC.SPELLS_CAST"])
+			if (_lastSpellCastCount != kGAMECLASS.pc.perkv3("Magic Affinity"))
 			{
-				_lastSpellCastCount = kGAMECLASS.flags["COC.SPELLS_CAST"];
+				_lastSpellCastCount = kGAMECLASS.pc.perkv3("Magic Affinity");
 				headbutt();
 			}
 			else

@@ -37,7 +37,7 @@ package classes.Items.Melee
 			
 			//Information
 			this.basePrice = 5000;
-			this.attack = 0;
+			this.attack = 5;
 			
 			baseDamage.kinetic.damageValue = 8;
 			baseDamage.addFlag(DamageFlag.PENETRATING);

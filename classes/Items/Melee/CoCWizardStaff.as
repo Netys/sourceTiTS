@@ -37,13 +37,14 @@ package classes.Items.Melee
 			
 			//Information
 			this.basePrice = 3500;
-			this.attack = 2;
+			this.attack = 4;
 			
 			baseDamage = new TypeCollection();
 			baseDamage.kinetic.damageValue = 1;
 			baseDamage.burning.damageValue = 5;
 			baseDamage.addFlag(DamageFlag.CRUSHING);
 			baseDamage.addFlag(DamageFlag.ENERGY_WEAPON);
+			baseDamage.addFlag(DamageFlag.AMPLIFYING);
 			addFlag(GLOBAL.ITEM_FLAG_ENERGY_WEAPON);
 			
 			this.defense = 0;

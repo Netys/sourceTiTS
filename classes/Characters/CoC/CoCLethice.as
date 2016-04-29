@@ -250,7 +250,7 @@ package classes.Characters.CoC
 				{
 					output(" Unfortunately, they’ve grabbed you. You need to break free to do anything!");
 				}
-				if (kGAMECLASS.flags["COC.SPELL_WHITEFIRE"] == 1 || kGAMECLASS.isNineTails(pc))
+				if ((pc.perkv1("Magic Affinity") & kGAMECLASS.KBIT_SPELL_WHITEFIRE) > 0 || kGAMECLASS.isNineTails(pc))
 				{
 					output(" A blast of magical fire could probably dispel them, or you could rely on your");
 					if (pc.canFly())
@@ -439,7 +439,7 @@ package classes.Characters.CoC
 			pc.removeStatusEffect("LethicesRapeTentacles");
 			pc.removeStatusEffect("Grappled");
 			
-			IncrementFlag("COC.SPELLS_CAST");
+			output(kGAMECLASS.onSpellCast(kGAMECLASS.pc));
 			kGAMECLASS.pc.energy( -15);
 			kGAMECLASS.updatePCStats();
 			CombatManager.processCombat();
@@ -697,7 +697,7 @@ package classes.Characters.CoC
 			addDisabledButton(0, "DemonFuck", "Demon Fuck", "This scene requires you to have genitals.");
 			addDisabledButton(1, "Recover", "Recover", "This scene requires you to know healing techniques and be wounded.");
 			if (pc.hasGenitals()) addButton(0, "DemonFuck", p2DemonFuck, hpVictory);
-			if (kGAMECLASS.flags["COC.SPELL_HEAL"] == 1 && pc.HP() < pc.maxHP() || kGAMECLASS.isNineTails(pc) && pc.energy() < pc.energyMax()) addButton(1, "Recover", p2Heal);
+			if ((pc.perkv1("Magic Affinity") & kGAMECLASS.KBIT_SPELL_HEAL) > 0 && pc.HP() < pc.maxHP() || kGAMECLASS.isNineTails(pc) && pc.energy() < pc.energyMax()) addButton(1, "Recover", p2Heal);
 			addButton(2, "Next", p2Next);
 		}
 		
@@ -859,7 +859,7 @@ package classes.Characters.CoC
 			}
 			
 			
-			if (kGAMECLASS.flags["COC.SPELL_HEAL"] == 1) {
+			if ((pc.perkv1("Magic Affinity") & kGAMECLASS.KBIT_SPELL_HEAL) > 0) {
 				output("\n\nDrawing on your magic, you use the opportunity to mend your wounds.");
 				pc.HP((pc.level + pc.intelligence() / 1.5 + rand(pc.intelligence())) * 2);
 			}

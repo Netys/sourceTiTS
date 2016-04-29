@@ -1097,6 +1097,8 @@ private function arianMagicLessons():void {
 	}
 	output("\n\nArian nods.  \"<i>Of course!  Now where do I begin....</i>\"");
 	
+	if (!pc.hasPerk("Magic Affinity")) pc.createPerk("Magic Affinity", 0, 0, 0, 0, "Grants you insight into mysteries of magic.");
+	
 	//(else if PC int < 50 //Teach Charge Weapon if PC doesn't know.
 	if (pc.intelligence() >= 15 && Flag("COC.ARIAN_LESSONS") == 1) {
 		output("\n\nYou tell Arian you've got the fundamentals down, so why not cover something a bit more advanced?");
@@ -1110,15 +1112,15 @@ private function arianMagicLessons():void {
 		else output(", exiting [arian.eir] tent and going about your business.");
 		
 		//(if PC doesn't know Charge Weapon)
-		if (flags["COC.SPELL_CHARGE"] != 1) {
+		if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_CHARGE) == 0) {
 			output("\n\nAs you ");
 			if (!pc.isNaga()) output("walk");
 			else output("slither");
 			output(" away, you start pondering Arian's lesson of the day.  You wonder if you could perhaps apply the channeling principle to strengthen your [pc.mainWeapon] in combat.");
 			output("\n\nThat would be very helpful; you'll have to try it sometime.");
-			flags["COC.SPELL_CHARGE"] = 1;
+			pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_CHARGE);
 		}
-		if(flags["COC.SPELL_CHARGE"] == 1) Flag("COC.ARIAN_LESSONS", 2);
+		if((pc.perkv1("Magic Affinity") & KBIT_SPELL_CHARGE) == 0) Flag("COC.ARIAN_LESSONS", 2);
 	}
 	else if (pc.intelligence() >= 20 && Flag("COC.ARIAN_LESSONS") == 2) {
 		//output("<b>Game Note: This isn't canon and will be re-written soonish.</b>");
@@ -1129,12 +1131,12 @@ private function arianMagicLessons():void {
 		output("\n\nArian wasn't kidding; this is quite a complex subject...");
 		output("\n\n\"<i>Now to finish our lesson, I'll give you a practical example of how to effectively use conjuration to defend yourself.  So pay attention, [pc.name].  Conjured objects are generally weaker than real objects, so conjuring a shield or a suit of armor or even a weapon is no good.  Not to mention it's quite complicated.  A suit of armor is made not only of metal, but of other components as well - you'd have to conjure and maintain each individually.  Instead, conjure a simple element that can turn the tide of the battle in your favor.</i>\"");
 		//(if PC doesn't know Blind)
-		if (flags["COC.SPELL_BLIND"] != 1) {
+		if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_BLIND) == 0) {
 			output("\n\nLike what?  You ask in curiosity.");
 			output("\n\nArian lifts a closed fist.  \"<i>Mind your eyes.</i>\"  You nod.  Arian points [arian.eir] fist towards a nearby wall and opens [arian.eir] hand.  A bright flash of light shoots out of [arian.eir] hand to hit the wall harmlessly.  \"<i>This was the element of light.  I produced a bright light capable of temporarily blinding whomever happens to be looking at it when it's exposed.</i>\"");
 			output("\n\nYou note how such a spell could be useful for you in combat.  Arian grins at you.  \"<i>I'm glad this lesson was helpful, [pc.name].  Come here and I'll teach you how to properly conjure it.</i>\"");
 			output("\n\nYou spend a few minutes learning how to properly use the spell, and after some practice you can reliably use the spell whenever you want to.  You thank Arian for the lesson and for teaching you a new spell.  Then bidding farewell to the grinning lizan, you leave, promising to visit [arian.em] again soon.");
-			flags["COC.SPELL_BLIND"] = 1;
+			pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_BLIND);
 			//Return to camp.
 		}
 		else {
@@ -1142,7 +1144,7 @@ private function arianMagicLessons():void {
 			output("\n\nArian nods pridefully.  \"<i>Very well, [pc.name]!  That's exactly what I mean.</i>\"");
 			output("\n\nYou spend a few more minutes talking to Arian before  thanking [arian.em] for the lesson and bidding farewell to the grinning lizan, you promise to visit [arian.em] again soon.");
 		}
-		if(flags["COC.SPELL_CHARGE"] == 1) Flag("COC.ARIAN_LESSONS", 3);
+		if((pc.perkv1("Magic Affinity") & KBIT_SPELL_BLIND) == 0) Flag("COC.ARIAN_LESSONS", 3);
 	}
 	else if (pc.intelligence() >= 25 && Flag("COC.ARIAN_LESSONS") == 2) {
 		//Teach Whitefire if PC doesn't know.
@@ -1159,12 +1161,12 @@ private function arianMagicLessons():void {
 		if (!arianFollower()) output("begin the trek home.");
 		else output("exit [arian.eir] tent.");
 		//(if PC doesn't know Whitefire)
-		if (flags["COC.SPELL_WHITEFIRE"] != 1) {
+		if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_WHITEFIRE) == 0) {
 			output("\n\nAs you walk, you ponder what you discussed with Arian and conclude that by combining conjuration with alteration, you could quickly and easily create an expanding conflagration of flames, burning your foes in combat.");
 			output("\n\nYou should put that into practice sometime soon.");
-			flags["COC.SPELL_WHITEFIRE"] = 1;
+			pc.setPerkValue("Magic Affinity", 1, pc.perkv1("Magic Affinity") | KBIT_SPELL_WHITEFIRE);
 		}
-		if(flags["COC.SPELL_WHITEFIRE"] == 1) Flag("COC.ARIAN_LESSONS", 4);
+		if((pc.perkv1("Magic Affinity") & KBIT_SPELL_WHITEFIRE) > 0) Flag("COC.ARIAN_LESSONS", 4);
 	}
 	//(if PC int < 25) //Basics!
 	else {

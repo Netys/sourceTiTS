@@ -44,7 +44,7 @@ package classes.Characters.CoC
 				addDisabledButton(1, "Shoot", "Shoot", "You are disarmed!");
 			}
 			
-			if ((kGAMECLASS.pc.hasStatusEffect("Web") || kGAMECLASS.pc.hasStatusEffect("Silence")) && kGAMECLASS.pc.energy() >= 5 && (kGAMECLASS.pc.hasPerk("Enlightened Nine-tails") || kGAMECLASS.pc.hasPerk("Corrupted Nine-tails") || kGAMECLASS.flags["COC.SPELL_WHITEFIRE"] == 1 && !kGAMECLASS.pc.hasStatusEffect("Silence"))) {
+			if ((kGAMECLASS.pc.hasStatusEffect("Web") || kGAMECLASS.pc.hasStatusEffect("Silence")) && kGAMECLASS.pc.energy() >= 5 && (kGAMECLASS.isNineTails(kGAMECLASS.pc) || (kGAMECLASS.pc.perkv1("Magic Affinity") & kGAMECLASS.KBIT_SPELL_WHITEFIRE) > 0 && !kGAMECLASS.pc.hasStatusEffect("Silence"))) {
 				addButton(10, "Burn Webs", CleansingFlame, null, "Burn webs", "Get rid of that webs by <b>all</b> means!");
 			}
 		}
@@ -52,7 +52,6 @@ package classes.Characters.CoC
 		public function CleansingFlame():void {
 			clearOutput();
 			kGAMECLASS.pc.energy( -5);
-			IncrementFlag("COC.SPELLS_CAST");
 			
 			output("In desperate attempt to get rid of your restrains, you are brought to setting them ablaze!  ");
 			var damage:Number = 0;
@@ -64,7 +63,7 @@ package classes.Characters.CoC
 				output("Holding out your palm, you conjure corrupted purple flame that dances across your fingertips.  You squeeze it in your [pc.hand], and it envelops your own body, burning webs and showering dazzling lavender sparks everywhere. Good news - your own fox fire can't burn you. Bad news - burning webs can...  ");
 				damage = 0;
 			}
-			else if (kGAMECLASS.flags["COC.SPELL_WHITEFIRE"] == 1) {
+			else if ((kGAMECLASS.pc.perkv1("Magic Affinity") & kGAMECLASS.KBIT_SPELL_WHITEFIRE) > 0) {
 				output("You narrow your eyes, focusing your mind with deadly intent.  You snap your fingers and flash of searing flame envelops your own body, burning webs and your own body alike!  ");
 				damage = 10;
 			}
@@ -80,6 +79,7 @@ package classes.Characters.CoC
 				createStatusEffect("Stunned", 1, 0, 0, 0, true, "Stun", "Cannot act for a turn.", true, 0);
 			}
 			kGAMECLASS.updatePCStats();
+			output(kGAMECLASS.onSpellCast(kGAMECLASS.pc));
 			CombatManager.processCombat();
 		}
 		

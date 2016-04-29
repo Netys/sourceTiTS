@@ -29,6 +29,7 @@ package classes.GameData
 		public static const ATF_STAND:uint = 8;
 		public static const ATF_FANTASIZE:uint = 9;
 		public static const ATF_FLEE:uint = 10;
+		public static const ATF_MAGIC:uint = 20;
 		
 		private var AttackTypeFlags:Object;
 		public function SetAttackTypeFlags(... args):void
@@ -48,6 +49,7 @@ package classes.GameData
 					case ATF_STAND: AttackTypeFlags["isStand"] = true; break;
 					case ATF_FANTASIZE: AttackTypeFlags["isFantasize"] = true; break;
 					case ATF_FLEE: AttackTypeFlags["isFlee"] = true; break;
+					case ATF_MAGIC: AttackTypeFlags["isMagic"] = true; break;
 					default: trace("Unknown attack type flag value: " + elem); break;
 					
 				}

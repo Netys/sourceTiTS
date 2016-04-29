@@ -195,10 +195,17 @@ public function gender(target:Creature):int {
 	return 0;
 }
 
+public const KBIT_SPELL_AROUSE:uint		= 1;
+public const KBIT_SPELL_HEAL:uint		= 2;
+public const KBIT_SPELL_MIGHT:uint		= 4;
+public const KBIT_SPELL_CHARGE:uint		= 8;
+public const KBIT_SPELL_BLIND:uint		= 16;
+public const KBIT_SPELL_WHITEFIRE:uint	= 32;
+
 public function getKnownFireMagic():String {
 	if (pc.hasPerk("Enlightened Nine-tails")) return "ethereal fire";
 	if (pc.hasPerk("Corrupted Nine-tails")) return "ghostly flame";
-	if (flags["COC.SPELL_WHITEFIRE"] == 1) return "whitefire";
+	if ((pc.perkv1("Psionic Affinity") & KBIT_SPELL_WHITEFIRE) > 0) return "whitefire";
 	if (pc.hasPerk("Fire Lord")) return "terrestreal fire";
 	if (pc.hasPerk("Hellfire")) return "hellfire";
 	return null;
@@ -212,21 +219,47 @@ public function getKnownFireBreath():String {
 }
 
 public function hasSpells():Boolean {
-	return spellCount() > 0 || pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Corrupted Nine-tails");
+	return spellCount() > 0 || isNineTails(pc);
 }
 
 public function spellCount():int {
 	var counter:int = 0;
-	if (flags["COC.SPELL_AROUSE"] == 1) counter++;
-	if (flags["COC.SPELL_HEAL"] == 1) counter++;
-	if (flags["COC.SPELL_MIGHT"] == 1) counter++;
-	if (flags["COC.SPELL_CHARGE"] == 1) counter++;
-	if (flags["COC.SPELL_BLIND"] == 1) counter++;
-	if (flags["COC.SPELL_WHITEFIRE"] == 1) counter++;
+	if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_AROUSE) > 0) counter++;
+	if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_HEAL) > 0) counter++;
+	if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_MIGHT) > 0) counter++;
+	if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_CHARGE) > 0) counter++;
+	if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_BLIND) > 0) counter++;
+	if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_WHITEFIRE) > 0) counter++;
 	return counter;
 }
 
 // convert CoC area to TiTS volume
 public function cockVolume(area:Number):Number {
 	return new CockClass(Math.sqrt(area * 6)).volume();
+}
+
+public function onSpellCast(caster:Creature):String {
+	if (caster != pc) return "";
+	
+	// perk values: known spells mask / power mod / cost mod / cast counter
+	if(!pc.hasPerk("Magic Affinity")) pc.createPerk("Magic Affinity", 0, 0, 0, 0, "Grants you insight into mysteries of magic.");
+	
+	pc.addPerkValue("Magic Affinity", 4, 1);
+	
+	if (pc.perkv4("Magic Affinity") >= 5 && pc.perkv3("Magic Affinity") < 20) {
+		pc.setPerkValue("Magic Affinity", 3, 20);
+		return "\n<b>You've become more comfortable with your spells, reducing energy cost of spells by 20%!</b>\n";
+	}
+	
+	if (pc.perkv4("Magic Affinity") >= 15 && pc.perkv3("Magic Affinity") < 35) {
+		pc.setPerkValue("Magic Affinity", 3, 35);
+		return "\n<b>You've become more comfortable with your spells, reducing energy cost of spells by an additional 15%!</b>\n";
+	}
+	
+	if (pc.perkv4("Magic Affinity") >= 45 && pc.perkv3("Magic Affinity") < 50) {
+		pc.setPerkValue("Magic Affinity", 3, 50);
+		return "\n<b>You've become more comfortable with your spells, reducing energy cost of spells by an additional 15%!</b>\n";
+	}
+	
+	return "";
 }
