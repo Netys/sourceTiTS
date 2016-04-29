@@ -25,7 +25,7 @@ package classes.Items.Transformatives
 	 *   Neat musclemass and tone balance - they are strong, but they are first of all sentients, so physique was considered secondary stat for them during development.
 	 *   Long and prehensile tongue (one more limb? handy!).
 	 *   Long and prehensile tail (same reason).
-	 *   Note about lactation: they are mammals by all means, but leaking precious nutrients all the time is barely a viable survival strategy. Also, having extra useless weight on chest is not very practical too. They have naturally flat chest unless lactating, and their lactation is easily induced just by prolonged enough nipples stimulation, so anyone can feed a baby when have to, and quickly subsides (not hardlocked though, player can grow breasts by any other way).
+	 *   Note about lactation: they are mammals by all means, but leaking precious nutrients all the time is barely a viable survival strategy. Also, having extra useless weight on chest is not very practical too. They have naturally flat chest unless lactating, and their lactation is easily induced just by prolonged enough nipples stimulation, so anyone can feed a baby when have to, and quickly subsides (not hardlocked though, player can grow breasts by any other way). Possible option - lactation is vanae-like, permanent, but without need to be milked regulary.
 	 *   Lifespan 150-200 years without modern medicine, but this is purposive flaw to stimulate maintaining high technological level, since their lifespan with proper medicine is essentially unlimited, especially with help of cybernetic surgery, which can  improve "autonomous time" up to millenias.
 	 *   Designed to be totally fine without clothes in most but harshest environments, so they have predisposition to nudism, but not to exhibitionism, nakedness itself just doesn't matter for them.
 	 *   Have no hair, only fur on head.
@@ -96,7 +96,6 @@ package classes.Items.Transformatives
 		{
 			counter = 0;
 			options = [];
-			var pc:Creature = target;
 			clearOutput();
 			if(target is PlayerCharacter) {
 				output("Pressing the activation stud is all it will take. You hold the tip against your arm and brace yourself, pushing the button.");
@@ -204,7 +203,7 @@ package classes.Items.Transformatives
 			buffer += ("\nLegs: ");
 			if (routeLegsAvailable(target) && (target.legCount <= 2 && target.legCountUnlocked(2) || target.legCount >= 3 && target.legCountUnlocked(4) || target.legCount >= 5 && target.legCountUnlocked(6)) || force) {
 				buffer += ("<b>route available</b>.");
-				if (target.legCount <= 2 && target.legCountUnlocked(2) || force)
+				if (target.legCount <= 2 && (target.legCount == 2 || target.legCountUnlocked(2)) || force)
 				{
 					addButton(buttons++, "Legs", routeLegs, target, "Legs", "Concentrate on legs.");
 					if(target.armType == GLOBAL.TYPE_FELINE)
@@ -213,15 +212,15 @@ package classes.Items.Transformatives
 				else
 				{
 					buffer += (" Please note, tauric stances are legacy and not included into default route.");
-					if (target.legCountUnlocked(2))
+					if (target.legCount == 2 || target.legCountUnlocked(2))
 					{
 						addButton(buttons++, "2 Legs", routeLegs, target, "Two Legs", "Concentrate on legs. Default bipedal humanoid stance route.");
 						if(target.armType == GLOBAL.TYPE_FELINE)
 							options.push(routeLegs);
 					}
-					if(target.legCountUnlocked(4))
+					if(target.legCount == 4 || target.legCountUnlocked(4))
 						addButton(buttons++, "4 Legs", routeLegs4, target, "Four Legs", "Concentrate on legs. Legacy quadripedal tauric stance route.");
-					if(target.legCount > 4 && target.legCountUnlocked(6))
+					if(target.legCount >= 5 && (target.legCount == 6 || target.legCountUnlocked(6)))
 						addButton(buttons++, "6 Legs", routeLegs6, target, "Six Legs", "Concentrate on legs. Hexapedal version of legacy tauric stance route.");
 				}
 			}
@@ -275,13 +274,13 @@ package classes.Items.Transformatives
 			// should get rid of facial hair also
 			
 			// decrease thicknes
-			if (target.thickness >= 20 && Mutator.modThickness(target, 20, 10, false))
+			if (target.thickness >= 20 && modThickness(target, 20, 10, false))
 			{
 				output("\n\nSomething is shifting inside you, and you suddenly feel you can move with less effort. <b>Looks like you lose some weight!</b> ");
 				changes++;
 				
 				// increase definition as side effect only
-				if (target.tone <= 65 && Mutator.modTone(target, 65, 10, false))
+				if (target.tone <= 65 && modTone(target, 65, 10, false))
 				{
 					output("It doesn't look like your muscles are affected, though - if anything, they are even more defined now.");
 				}
@@ -309,13 +308,13 @@ package classes.Items.Transformatives
 				changes++;
 			}
 			
-			if (Mutator.modFem(target, 100, 10, false))
+			if (modFem(target, 100, 10, false))
 			{
 				output("\n\nYou feel a slight change in your facial structure. When they finish, <b>you feel less masculine</b>!");
 				changes++;
 			}
 			
-			// target is thin, animalistic lips with high overall feminity
+			// target is thin, animalistic lips with high overall feminity, because thick lips on animalistic muzzle are grotesque
 			if (target.lipRating() > 0 && target.lipModUnlocked(target.lipMod - 1))
 			{
 				output("\n\nYou feel your [pc.lips] pucker reflexively, relaxing only to feel thinner and less pouty than before. <b>Your lips are less pronounced.</b>");
@@ -323,7 +322,7 @@ package classes.Items.Transformatives
 				target.lipMod--;
 			}
 			
-			// hit cap and still going up!
+			// hit cap and still going up! changed this one to work differently from CoC, it unties face description from femininity stat, so you can use femininity to change gender aligment without having feminine face - you can't really recognize gender from animalistic muzzle!
 			if (target.femininity >= target.femininityMax() && target.lipRating() <= 0 && !target.hasPerk("Androgyny")) {
 				output("\n\nYour [pc.face] is now very confusing - it have imponderable tint of feminity, while lacking distinct femine features. You suspect you could make your apparent gender even more ambiguous.");
 				target.createPerk("Androgyny", 0, 0, 0, 0, "Your face is always androgynous.");
@@ -348,13 +347,13 @@ package classes.Items.Transformatives
 				
 				kGAMECLASS.clearList();
 				if (target.ass.minLooseness > 1) {
-					kGAMECLASS.addToList("much more tight")
+					kGAMECLASS.addToList("notably more tight")
 					target.ass.minLooseness--;
 					if (target.ass.minLooseness < 1) target.ass.minLooseness = 1;
 					if (target.ass.looseness() > target.ass.minLooseness) target.ass.looseness(target.ass.minLooseness, true);
 				}
 				if (target.ass.wetnessRaw > 1) {
-					kGAMECLASS.addToList("much less wet")
+					kGAMECLASS.addToList("notably less lubricated")
 					target.ass.wetnessRaw--;
 					if (target.ass.wetnessRaw < 1) target.ass.wetnessRaw = 1;
 				}
@@ -421,7 +420,7 @@ package classes.Items.Transformatives
 					target.vaginas[x].minLooseness > 1 && target.loosenessUnlocked(x, target.vaginas[x].minLooseness - 1)
 					|| target.vaginas[x].wetnessRaw > 2 && target.wetnessUnlocked(x, target.vaginas[x].wetnessRaw - 1)
 					) changes++;
-				else if(target.vaginas[x].type != GLOBAL.TYPE_FELINE) changes++;
+				else if(target.vaginas[x].type != GLOBAL.TYPE_FELINE && target.vaginaTypeUnlocked(x, GLOBAL.TYPE_FELINE)) changes++;
 			
 			//Ball shrinkage to 1.5 inch
 			var limit:Number = 1.5;
@@ -450,7 +449,7 @@ package classes.Items.Transformatives
 			//Feminine TFs
 			for(var x:int = 0; x < target.totalVaginas(); x++)
 			{
-				if(target.vaginas[x].vaginaColor != "pink" || target.vaginas[0].type != GLOBAL.TYPE_FELINE)
+				if(target.vaginas[x].vaginaColor != "pink" || target.vaginas[0].type != GLOBAL.TYPE_FELINE && target.vaginaTypeUnlocked(x, GLOBAL.TYPE_FELINE))
 				{
 					output("\n\nA tickling, teasing sensation flutters across your nether-lips");
 					if(target.totalVaginas() > 1)
@@ -472,15 +471,15 @@ package classes.Items.Transformatives
 					else output("are ");
 					
 					kGAMECLASS.clearList();
-					if (target.vaginas[0].type != GLOBAL.TYPE_FELINE)
+					if (target.vaginas[0].type != GLOBAL.TYPE_FELINE && target.vaginaTypeUnlocked(x, GLOBAL.TYPE_FELINE))
 						kGAMECLASS.addToList("thin-lipped")
 					if (target.vaginas[x].vaginaColor != "pink")
 						kGAMECLASS.addToList("pink")
 					output(kGAMECLASS.formatList() + " now!</b>.");
 					
-					//Go through the list of unpink vags and make 'em pink!
 					if (target.vaginas[x].type != GLOBAL.TYPE_FELINE && target.vaginaTypeUnlocked(x, GLOBAL.TYPE_FELINE)) {
 						target.shiftVagina(x, GLOBAL.TYPE_FELINE); // need support everywhere to actually work... feline vaginas are generally nearly lipless
+						target.vaginas[x].clits = 1;
 					}
 					target.vaginas[x].vaginaColor = "pink";
 					changes++;
@@ -511,15 +510,14 @@ package classes.Items.Transformatives
 			}
 			
 			var maxSize:int = target.hasVagina() ? 2 : 0;
-			//if (target.isTaur() && target.isHerm()) maxSize += 2; // chakat legacy, disabled, since not lore friendly
+			//if (target.isTaur() && target.isHerm()) maxSize += 2; // chakat legacy, disabled, since not actually lore friendly - my version is quite flat
 			
 			//Breasts down to B-cup/flats, and, unlike Nepeta, you won't get any - this is animalistic TF, and animals, unlike that freaky homos, normally are flat unless lactating
 			if(target.breastRows.length > 0 && target.breastRows[0].breastRatingRaw > maxSize && target.breastRatingUnlocked(0, maxSize))
 			{
-				var tittyDrop:int = 0;
-				if(target.breastRows[0].breastRatingRaw >= 12) tittyDrop += target.breastRows[0].breastRatingRaw * .25;
-				else if(target.breastRows[0].breastRatingRaw >= 8) tittyDrop += rand(3);
-				tittyDrop += 1;
+				var tittyDrop:int = 1 + rand(target.breastRows[0].breastRatingRaw / 5 + 1) + target.breastRows[0].breastRatingRaw / 5;
+				if (tittyDrop > target.breastRows[0].breastRatingRaw - maxSize) tittyDrop = target.breastRows[0].breastRatingRaw - maxSize;
+				
 				if (target.breastRatingUnlocked(0, target.breastRows[0].breastRatingRaw - tittyDrop))
 				{
 					output("\n\nTipping backwards, you flail your arms frantically to keep your balance. Once you right, you realize what happened;  <b>your [pc.chest] have lost a bit of weight, dropping you down to " );
@@ -533,11 +531,11 @@ package classes.Items.Transformatives
 						if(target.breastRows[x].breastRatingRaw > maxSize)
 						{
 							//Figure out how much dat row will change!
-							if(target.breastRows[x].breastRatingRaw >= 12) tittyDrop += target.breastRows[x].breastRatingRaw * .25;
-							else if(target.breastRows[x].breastRatingRaw >= 8) tittyDrop += rand(3);
-							tittyDrop += 1;
+							tittyDrop = 1 + rand(target.breastRows[0].breastRatingRaw / 5 + 1) + target.breastRows[0].breastRatingRaw / 5;
+							if (tittyDrop > target.breastRows[0].breastRatingRaw - maxSize) tittyDrop = target.breastRows[0].breastRatingRaw - maxSize;
+							
 							//If that row is unlocked!
-							if (target.breastRatingUnlocked(0, target.breastRows[x].breastRatingRaw - tittyDrop))
+							if (target.breastRatingUnlocked(x, target.breastRows[x].breastRatingRaw - tittyDrop))
 							{
 								bonusRowsTFed++;
 								target.breastRows[x].breastRatingRaw -= tittyDrop;
@@ -550,9 +548,9 @@ package classes.Items.Transformatives
 			}
 			
 			// inverted nipples
-			for (x = 1; x < target.breastRows.length; x++) {
-				var nipLocked:Boolean = false;
-				var nipChanged:Boolean = false;
+			var nipLocked:Boolean = false;
+			var nipChanged:Boolean = false;
+			for (x = 0; x < target.breastRows.length; x++) {
 				
 				if (target.breastRows[x].nippleType != GLOBAL.NIPPLE_TYPE_INVERTED) {
 					if (target.nippleTypeUnlocked(x, GLOBAL.NIPPLE_TYPE_INVERTED)) {
@@ -560,23 +558,23 @@ package classes.Items.Transformatives
 						target.breastRows[x].nippleType = GLOBAL.NIPPLE_TYPE_INVERTED;
 					} else nipLocked = true;
 				}
-				
-				if(nipChanged) {
-					output("\n\nAn unpleasent twinge of nerves brings your attention to your [pc.nipples].");
-					if(!target.isChestExposed())
-						output(" You quickly undress to investigate...");
-					output(" They go numb as a slick goo engulfs them. A few tingles replace the feeling and you reflexively wipe the gunk away to reveal that your nipples are gone, but you find what looks pinched holes in their place. Momentary panic subsides when a bit of rubbing has them poking out. <b>Your nipples are now inverted!</b>");
-					changes++;
-				}
-				else if(nipLocked) output("\n\n" + target.nippleTypeLockedMessage());
 			}
+			if(nipChanged) {
+				output("\n\nAn unpleasent twinge of nerves brings your attention to your [pc.nipples].");
+				if(!target.isChestExposed())
+					output(" You quickly undress to investigate...");
+				output(" They go numb as a slick goo engulfs them. A few tingles replace the feeling and you reflexively wipe the gunk away to reveal that your nipples are gone, but you find what looks pinched holes in their place. Momentary panic subsides when a bit of rubbing has them poking out. <b>Your nipples are now inverted!</b>");
+				if(nipLocked) output(" At least, part of them are.");
+				changes++;
+			}
+			else if(nipLocked) output("\n\n" + target.nippleTypeLockedMessage());
 			
 			//Masculine TFs
 			//Get a feline dick
 			maxSize = 4; // big dicks aren't really what cats are about
-			if (target.isTaur()) maxSize += 8; // unless we are talking about cat-taurs, ofc
-			if (target.hasPerk("Hung")) maxSize *= 1.5; // 6/18
-			if (target.hasPerk("Mini")) maxSize *= 0.75; // 4/9
+			if (target.isTaur()) maxSize += 8; // unless we are talking about cat-taurs, ofc... who am I kidding, foot long is considered small here
+			if (target.hasPerk("Hung")) maxSize *= 1.5; // 6/18... okay, at least something not to be embarassed with...
+			if (target.hasPerk("Mini")) maxSize *= 0.75; // 3/9... well, fetish for someone too, right?
 			
 			for(x = 0; x < target.cockTotal(); x++)
 			{
@@ -590,30 +588,28 @@ package classes.Items.Transformatives
 						else if (!target.isCrotchExposed()) output("beneath your [pc.lowerGarments]");
 						else if(target.legCount == 1) output("on your [pc.leg]");
 						else output("between your [pc.legs]");
-						output(" and begins to transform. You double over in a sick twist of pain and pleasure");
+						output(" and begins to transform, drooling a [pc.cumVisc] [pc.cumColor] river from its engorged slit. You double over in a sick twist of pain and pleasure");
 						if(target.cocks[x].cockColor != "pink")
 							output("as the flesh of your cock shifts color to a pink hue");
 						if(!target.hasCockFlag(GLOBAL.FLAG_TAPERED)) output(", the skin melding strangely into a long, pointed shape, until the tip is barely wide enough to accommodate your urethra");
 						output(".");
 						
 						if(!target.hasCockFlag(GLOBAL.FLAG_NUBBY))
-							output(" Barbs begin to sprout from its flesh, if you can call the small, fleshy nubs barbs. They start out thick around the base and shrink towards the tip. The smallest are barely visible. They are angled towards you, so pulling out now should be even more intense than pushing in.");
+							output(" Barbs begin to sprout from its flesh, if you can call them barbs - they are not sharp enough to actually bruise. They start out thick around the base and shrink towards the tip. The smallest are barely visible. They are angled towards you, so pulling out now should be even more intense than pushing in.");
 						
 						//if cock was more than max size:
 						if(target.cockLengthUnlocked(x, maxSize)) {
 							if(target.cocks[x].cLengthRaw > maxSize) {
-								output(" Your prick shrinks. Well, big dicks aren't really what cats are known for.");
-								target.cocks[x].cLengthRaw -= Math.min(target.cocks[x].cLength() - maxSize, target.cocks[x].cLengthRaw / 5 + 2 + rand(4));
+								output(" Your prick shrinks. Well, big dicks aren't really what cats are known for, and you are quite sure that added stimulation from your barbs can easily make up for it.");
+								target.cocks[x].cLengthRaw = Math.round(target.cocks[x].cLengthRaw - Math.min(target.cocks[x].cLength() - maxSize, target.cocks[x].cLengthRaw / 5 + 1 + rand(target.cocks[x].cLengthRaw / 5 + 2)));
 							}
 							else if(target.cocks[x].cLengthRaw < maxSize) {
-								output(" Your prick grows longer! Looks like it is small even for cat...");
-								target.cocks[x].cLengthRaw += Math.min(maxSize - target.cocks[x].cLength(), target.cocks[x].cLengthRaw / 5 + 2 + rand(4));
+								output(" Your prick grows longer! Looks like it was small even for cat...");
+								target.cocks[x].cLengthRaw = Math.round(target.cocks[x].cLengthRaw + Math.min(maxSize - target.cocks[x].cLength(), target.cocks[x].cLengthRaw / 5 + 1 + rand(target.cocks[x].cLengthRaw / 5 + 2)));
 							}
 							
-							output(" It settles on a new length of " + num2Text(int(target.cocks[x].cLength())) + " inches.");
+							output(" It settles on a new length of <b>" + num2Text(int(target.cocks[x].cLength())) + " inches</b>.");
 						}
-						
-						output(" The tip jumps, drooling a [pc.cumVisc] [pc.cumColor] river from its engorged slit.");
 						
 						if (!target.hasCockFlag(GLOBAL.FLAG_SHEATHED) && !target.hasStatusEffect("Genital Slit"))
 							output(" Finally, a sheath begins forming around your cock's base, tightening and pulling your cock inside its depths.");
@@ -626,6 +622,7 @@ package classes.Items.Transformatives
 						target.cocks[x].cockColor = "pink";
 						target.cocks[x].knotMultiplier = 1;
 						target.cocks[x].cockFlags = [GLOBAL.FLAG_NUBBY, GLOBAL.FLAG_TAPERED, GLOBAL.FLAG_SHEATHED];
+						break; // only one major cock TF for dose
 					} else {
 						output(target.cockTypeLockedMessage());
 					}
@@ -635,15 +632,15 @@ package classes.Items.Transformatives
 				{
 					output("\n\nYour [pc.cock " + x + "] tingles, making your groin feel a little lighter. ");
 					
-					if(target.cocks[x].cLength() > maxSize) {
-						output("It <b>dwindles in size</b>, shrinking to its new length of ");
-						target.cocks[x].cLength( -Math.min(target.cocks[x].cLength() - maxSize, 1 + rand(3)));
-						output(num2Text(int(target.cocks[x].cLength())) + " inches. Well, big dicks aren't really what cats are known for.");
+					if(target.cocks[x].cLengthRaw > maxSize) {
+						output("It <b>dwindles in size</b>, shrinking to its new length of <b>");
+						target.cocks[x].cLengthRaw = Math.round(target.cocks[x].cLengthRaw - Math.min(target.cocks[x].cLength() - maxSize, target.cocks[x].cLengthRaw / 5 + 1 + rand(target.cocks[x].cLengthRaw / 5 + 2)));
+						output(num2Text(int(target.cocks[x].cLength())) + "</b> inches. Well, big dicks aren't really what cats are known for, and you are quite sure that added stimulation from your barbs can easily make up for it.");
 					}
-					else if(target.cocks[x].cLength() < maxSize) {
-						output(" Your prick <b>grows longer</b>, extending to its new size of ");
-						target.cocks[x].cLength( Math.min(maxSize - target.cocks[x].cLength(), 2 + rand(3)));
-						output(num2Text(int(target.cocks[x].cLength())) + " inches.");
+					else if(target.cocks[x].cLengthRaw < maxSize) {
+						output(" Your prick <b>grows longer</b>, extending to its new size of <b>");
+						target.cocks[x].cLengthRaw = Math.round(target.cocks[x].cLengthRaw + Math.min(maxSize - target.cocks[x].cLength(), target.cocks[x].cLengthRaw / 5 + 1 + rand(target.cocks[x].cLengthRaw / 5 + 2)));
+						output(num2Text(int(target.cocks[x].cLength())) + "</b> inches. Looks like it was small even for cat...");
 					}
 					changes++;
 					target.lust(10 + rand(5));
@@ -681,7 +678,8 @@ package classes.Items.Transformatives
 					}
 					if (target.hasStatusEffect("Uniball")) output(" like a vacuum-sealed bag");
 					target.ballSizeRaw = newSize;
-					output(". <b>You've got " + target.ballsDescript(false, true) + " now.</b>");
+					if (target.ballDiameter() > 1) output(". <b>You've got " + target.ballsDescript(false, true) + " now.</b>");
+					else output(". <b>Your balls are relatively small now.</b>");
 					
 					changes++;
 				}
@@ -757,7 +755,7 @@ package classes.Items.Transformatives
 					target.shiftVagina(0, GLOBAL.TYPE_FELINE);
 					target.clitLength = .25;
 					target.vaginas[0].vaginaColor = "pink";
-					target.vaginas[0].bonusCapacity = 200; // common taur bonus, and don't forget that elasticity gains
+					target.vaginas[0].bonusCapacity = 100; // and don't forget that elasticity gains
 					target.vaginas[0].hymen = false; // this is designed species, no useless, bad design shit here - comes all ready!
 					output(" <b>You’ve got a pretty, pink little pussy. </b> You’ll have to spend some quality time with it soon.");
 					
@@ -765,30 +763,12 @@ package classes.Items.Transformatives
 					surprise = true;
 				}
 				
-				//for (x = 0; i < target.breastRows.length;) {
-					//if (target.breastRows[x].breastRatingRaw > 0 && target.breastRatingUnlocked(x, 0)) break;
-					//i++;
-				//}
-				//if (changes == 0 && x > 0 && i != target.breastRows.length)
-				//{
-					//output("\n\nYour [pc.fullChest] are absorbed into your body!");
-					//
-					//for (x = 0; x < target.breastRows.length; x++)
-						//if(target.breastRatingUnlocked(x, 0)) target.breastRows[x].breastRatingRaw = 0;
-					//
-					//if (target.biggestTitSize() > 0) output(" All that remains is [pc.milkNoun]-swollen bubbles beneath your [pc.nipples], which would appear flat without being filled by [pc.milkNoun].");
-					//else output(" All that remains is unremarkable set of [pc.nipples].");
-					//
-					//changes++;
-					//surprise = true;
-				//}
-				
 				// since it is "legacy code" of species designed for frontier, gotta get good protection for vulnerable organs!
 				if (target.balls == 0 && target.hasGenitals() && !target.hasStatusEffect("Genital Slit"))
 				{
 					output("\n\nAn odd sensation overtakes you. Your entire body shivers as flesh is rippling around your [pc.crotch], forming a new... slit? After some experiments with internal muscles, you've found that you can pull your genitals in and push them out at will.");
 					if(target.hasCock() && target.hasFullSheaths()) output(" Strangely enough, you still have animalistic sheath, unlike reptiles.");
-					output(" Skin of your new folds is surprisingly taut when your genitals are retracted - looks like you have some good protection against low blows from now on!");
+					output(" Skin of your new folds are surprisingly taut when your genitals are retracted - looks like you have some good protection against low blows from now on!");
 					output(" <b>Your genitals are now hidden inside protective slit.</b>");
 					target.createStatusEffect("Genital Slit");
 					changes++;
@@ -860,6 +840,7 @@ package classes.Items.Transformatives
 				
 				output("\n\nYour [pc.tails] suddenly starts curling and twisting, growing even longer and notably thicker. <b>You [pc.tails] " + (target.tailCount > 1 ? "are" : "is") + " now prehensile.</b>");
 				
+				target.addTailFlag(GLOBAL.FLAG_LONG); // just in case
 				target.addTailFlag(GLOBAL.FLAG_PREHENSILE);
 				changes++;
 				
@@ -886,7 +867,7 @@ package classes.Items.Transformatives
 				if (target.earTypeUnlocked(GLOBAL.TYPE_FELINE))
 				{
 					if (InCollection(target.earType, [GLOBAL.TYPE_HUMAN, GLOBAL.TYPE_HUMANMASKED, GLOBAL.TYPE_SYLVAN]))
-						output("\n\nThe skin on the sides of your face stretches painfully as your ears migrate upwards, towards the top of your head. ");
+						output("\n\nThe skin on the sides of your [pc.face] stretches painfully as your ears migrate upwards, towards the top of your head. ");
 					else output("\n\n");
 					
 					output("Your ears begin to tingle. You reach up with one hand and gently rub them. Your ears twist and morph, growing a thin layer of " + target.furColor + " fur as they reshape into a pair of points, towering over your head. You experimentally move them, feeling them swivel about at your command. And you can hear so much better than before, every slight creak and rustle around you is so clear now! <b>You now have feline ears!</b>");
@@ -915,10 +896,9 @@ package classes.Items.Transformatives
 			{
 				if (target.armTypeUnlocked(GLOBAL.TYPE_FELINE))
 				{
-					if(!target.hasFur())
-					output("\n\nYou feel a powerful itch spread across your arms. You clutch at them, scratching violently as your hair grows and thickens, spreading out into a dark mat across your [pc.skin]. Within a few minutes, your arms are utterly covered in a thick, silky-smooth " + target.furColor + " fur! ");
-					else output("\n\n")
-					output("You ball a hand into a fist, only to feel the softest little pads pressing into your palm. Opening your digits, you marvel at the appearance of small, [pc.skinTone] pads on the tips of your fingers. A larger one stretches across the top of your palm. They’re soft as hell and might feel pretty good in certain... tender areas. <b>You’ve got paw-like feline arms, complete with retractable claws and padded palms!</b>");
+					output("\n\n")
+					if(!target.hasFur() && !target.hasArmFlag(GLOBAL.FLAG_FURRED)) output("You feel a powerful itch spread across your arms. You clutch at them, scratching violently as your hair grows and thickens, spreading out into a dark mat across your [pc.skin]. Within a few minutes, your arms are utterly covered in a thick, silky-smooth " + target.furColor + " fur! ");
+					output("You ball a hand into a fist, only to feel the softest little pads pressing into your palm. Opening your digits, you marvel at the appearance of small, [pc.skinTone] pads on the tips of your fingers. A larger one stretches across the top of your palm. They’re soft, sensitive and might feel pretty good in certain... tender areas. <b>You’ve got paw-like feline arms, complete with retractable claws and padded palms!</b>");
 					// actually, would be nice to have different color for pawpads... use nipple colors, maybe?
 					target.armType = GLOBAL.TYPE_FELINE;
 					target.clearArmFlags();
@@ -935,8 +915,8 @@ package classes.Items.Transformatives
 					target.addArmFlag(GLOBAL.FLAG_FURRED);
 					changes++;
 				}
-				if(!target.hasArmFlag(GLOBAL.FLAG_FURRED)) {
-					output("\n\nOpening your digits, you marvel at the appearance of small, [pc.skinTone] pads on the tips of your fingers. A larger one stretches across the top of your palm. They’re soft as hell and might feel pretty good in certain... tender areas. <b>You’ve got paw-like, padded feline arms!</b>");
+				if(!target.hasArmFlag(GLOBAL.FLAG_PAWS)) {
+					output("\n\nOpening your digits, you marvel at the appearance of small, [pc.skinTone] pads on the tips of your fingers. A larger one stretches across the top of your palm. They’re soft, sensitive and might feel pretty good in certain... tender areas. <b>You’ve got paw-like, padded feline arms!</b>");
 					target.addArmFlag(GLOBAL.FLAG_PAWS);
 					changes++;
 				}
@@ -1006,7 +986,7 @@ package classes.Items.Transformatives
 					}
 					else output("\n\nYou drop to the ground as your [pc.legs] go boneless. The jarring impact is enough to make you wince, but of far more concern is what's happening below your bruised bottom. Your [pc.legs] are changing!");
 					
-					output("\n\n Your joints feel very odd, and your soles reform into padded paws with toes tipped by sharp-looking claws. It'll take a little bit of practice to get used to walking with these. After few steps you've found pads of your new paws incredibly sensitive, almost like your tongue - even just feeling ground texture under you is exquisite. You feel a compulsion to walk barefoot from now on. <b>You’ve got digitigrade feline legs, complete with soft paw pads and retractable claws!</b>");
+					output("\n\n Your joints feel very odd, and your soles reform into padded paws with toes tipped by sharp-looking claws. It'll take a little bit of practice to get used to walking with these. After few steps you've found pads of your new paws incredibly sensitive, almost like your tongue - even just feeling ground texture under you is exquisite. <b>You’ve got digitigrade feline legs, complete with soft paw pads and retractable claws!</b>");
 					
 					target.legType = GLOBAL.TYPE_FELINE;
 					target.clearLegFlags();
@@ -1041,10 +1021,14 @@ package classes.Items.Transformatives
 					target.genitalSpot = 2;
 				}
 				
+				if (target.ass.bonusCapacity < 200) target.ass.bonusCapacity = 200; // Leithans have 500
+				for(var x:int = 0; x < target.totalVaginas(); x++)
+					if(target.vaginas[x].bonusCapacity < 200) target.vaginas[x].bonusCapacity = 200;
+				
 				output("\n\nYour forelegs aren't just legs - while not exactly prehensile, your toes are quite long and nimple, providing you with some portion of manual-like dexterity.");
-				output("\n\nThat part of your body between pairs of your legs is just a little longer than your body above waist, so you can sit on your butt comfortably while ‘standing’ on your forelegs.");
+				output("\n\nThat part of your body between pairs of your legs is not overly long, so you can sit on your butt comfortably while ‘standing’ on your forelegs.");
 				if (target.hasTail() && target.hasTailFlag(GLOBAL.FLAG_LONG)) output("You can't help but smile seeing your [pc.tails] instinctively wrapping your forelegs in adorably animalistic fashion while in such position.");
-				output("\n\nJoint point where your back bends is very flexible, as well as your spine generally - you can effortlessly reach any part of your body. At least you can wipe up your ass without outside help.");
+				output("\n\nJoint point where your back bends is very flexible, as well as your spine generally - you can effortlessly reach any part of your body... And not just with your hands, by the way.");
 				changes++;
 				
 				output("\n\nLooks like bypassing safety is not always good idea... Well, at least you are not reduced to a puddle of goo, right?");
@@ -1076,7 +1060,7 @@ package classes.Items.Transformatives
 						if (target.eyeColorUnlocked(color)) target.eyeColor = color;
 					}
 					
-					output("\n\nYour [pc.eyes] start to water, and no matter how much you blink, your vision just grows fuzzier and fuzzier for several moments before seeming to clear all of a sudden. You pull your Codex out and check your reflection: <b>a pair of [pc.eyeColor] cat-eyes stare back at you, slitted and brilliantly-bright!</b>");
+					output("\n\nYour [pc.eyes] start to water, and no matter how much you blink, your vision just grows fuzzier and fuzzier for several moments before seeming to become incredibly clear and bright all of a sudden. You pull your Codex out and check your reflection: <b>a pair of [pc.eyeColor] cat-eyes stare back at you, slitted and brilliantly-bright!</b>");
 					target.eyeType = GLOBAL.TYPE_FELINE;
 					changes++;
 				}
@@ -1100,7 +1084,7 @@ package classes.Items.Transformatives
 			//Grow fur
 			if(target.skinType != GLOBAL.SKIN_TYPE_FUR && target.skinTypeUnlocked(GLOBAL.SKIN_TYPE_FUR))
 			{
-				var catFurColors:/*String*/Array = ["brown", "chocolate", "auburn", "caramel", "orange", "sandy brown", "golden", "black", "jet black", "dark gray", "gray", "light gray", "silver gray", "white", "orange and white", "brown and white", "black and white", "gray and white"];
+				var catFurColors:/*String*/Array = ["hazel", "chocolate", "auburn", "caramel", "orange", "sandy brown", "golden", "black", "jet black", "dark gray", "gray", "light gray", "silver gray", "white", "orange and white", "brown and white", "black and white", "gray and white"];
 				if (!InCollection(target.furColor, catFurColors))
 				{
 					var color:String = RandomInCollection(catFurColors);
@@ -1111,6 +1095,10 @@ package classes.Items.Transformatives
 				if(target.skinType == GLOBAL.SKIN_TYPE_SCALES)
 				{
 					output("\n\nYou idly scratch at a loose scale, feeling it come loose under your fingers, but the one alongside it is also loose now. You flick it off just before you become aware that the sensation is spreading; scales are dropping like rain now, even without you touching them. Underneath, a lush carpet is springing up from your [pc.skin].");
+				}
+				else if(target.skinType == GLOBAL.SKIN_TYPE_FEATHERS)
+				{
+					output("\n\nYou idly scratch at a loose feather, feeling it come loose under your fingers, but the one alongside it is also loose now. You flick it off just before you become aware that the sensation is spreading; feathers are dropping like rain now, even without you touching them. Underneath, a lush carpet is springing up from your [pc.skin].");
 				}
 				//From skin
 				else
@@ -1153,7 +1141,7 @@ package classes.Items.Transformatives
 			}
 			else if (target.faceType == GLOBAL.TYPE_FELINE && !target.hasFaceFlag(GLOBAL.FLAG_MUZZLED))
 			{
-				output("\n\nYou suddenly feel your facial flesh and bones elongating and protruding forward. You check your appearance with your codex's holocorder. <b>Your face elongates into animalistic muzzle!</b>");
+				output("\n\nYou suddenly feel your facial flesh and bones elongating and protruding forward. You check your appearance with your codex's holocorder. <b>You've got a feline muzzle, complete with whiskers and moist nose!</b>");
 				target.addFaceFlag(GLOBAL.FLAG_MUZZLED);
 				changes++;
 			}
@@ -1179,16 +1167,16 @@ package classes.Items.Transformatives
 				{
 					output(" Strangely enough, it preserved it's former ");
 					
-					enum.clear();
+					kGAMECLASS.clearList();
 					if (wasLong) {
-						enum.push("length")
+						kGAMECLASS.addToList("length")
 						target.addTongueFlag(GLOBAL.FLAG_LONG);
 					}
 					if (wasPrehensile) {
-						enum.push("dexterity")
+						kGAMECLASS.addToList("dexterity")
 						target.addTongueFlag(GLOBAL.FLAG_PREHENSILE);
 					}
-					output(enum.toString() + ".");
+					output(kGAMECLASS.formatList() + ".");
 				}
 				target.lust(10 + rand(10));
 				changes++;
@@ -1221,7 +1209,7 @@ package classes.Items.Transformatives
 		protected function afterTF(target:Creature, usingCreature:Creature = null):void
 		{
 			//trace("After TF: " + counter + ", " + options.length)
-			if (options.length > 0 && counter > 0 && rand(counter + 1) == 0)
+			if (options.length > 0 && counter > 0 && rand(counter + 1) == 0 && counter < 4)
 			{
 				output("\n\n");
 				routeDefault(target, usingCreature);
@@ -1231,6 +1219,105 @@ package classes.Items.Transformatives
 				clearMenu();
 				addButton(0, "Next", kGAMECLASS.useItemFunction);
 			}
+		}
+		
+		// Below is copy-paste from Mutator, so it is not dependant on non-vanilla external modules.
+		
+		public static var buffer:String = "";
+		/**
+		 * Wrapper for Creature.modFem with some auto-ajust. Supports common Mutator buffer for suppressed output.
+		 * 
+		 * @param	pc target creature
+		 * @param	towards target feminity
+		 * @param	power desired amount to change, should be positive
+		 * @param	display show results of Creature.modFem in output
+		 * @return if something actually changed
+		 */
+		public static function modFem(pc:Creature, towards:Number, power:Number = 1, display:Boolean = true):Boolean {
+			buffer = "";
+			var changes:Number = 0;
+			
+			var current:Number = pc.femininity;
+			towards = Math.min(towards, pc.femininityMax());
+			towards = Math.max(towards, pc.femininityMin());
+			
+			if (current == towards) return changes > 0;
+			power = Math.abs(power); // failsafe
+			power = Math.min(power, Math.abs(current - towards));
+			if (current > towards) power *= -1;
+			if (!pc.femininityUnlocked(current + power)) {
+				buffer += "\n\n" + pc.femininityLockedMessage();
+			} else {
+				buffer += pc.modFem(power);
+				if(pc.femininity != current) changes++;
+			}
+			
+			if (display) output(buffer);
+			return changes > 0;
+		}
+		
+		/**
+		 * Wrapper for Creature.modThickness with some auto-ajust. Supports common Mutator buffer for suppressed output.
+		 * 
+		 * @param	pc target creature
+		 * @param	towards target thickness
+		 * @param	power desired amount to change, should be positive
+		 * @param	display show results of Creature.modThickness in output
+		 * @return if something actually changed
+		 */
+		public static function modThickness(pc:Creature, towards:Number, power:Number = 1, display:Boolean = true):Boolean {
+			buffer = "";
+			var changes:Number = 0;
+			
+			var current:Number = pc.thickness;
+			towards = Math.min(towards, pc.thicknessMax());
+			towards = Math.max(towards, pc.thicknessMin());
+			
+			if (current == towards) return changes > 0;
+			power = Math.abs(power); // failsafe
+			power = Math.min(power, Math.abs(current - towards));
+			if (current > towards) power *= -1;
+			if (!pc.thicknessUnlocked(current + power)) {
+				buffer += "\n\n" + pc.thicknessLockedMessage();
+			} else {
+				buffer += pc.modThickness(power);
+				if(pc.thickness != current) changes++;
+			}
+			
+			if (display) output(buffer);
+			return changes > 0;
+		}
+		
+		/**
+		 * Wrapper for Creature.modTone with some auto-ajust. Supports common Mutator buffer for suppressed output.
+		 * 
+		 * @param	pc target creature
+		 * @param	towards target tone
+		 * @param	power desired amount to change, should be positive
+		 * @param	display show results of Creature.modTone in output
+		 * @return if something actually changed
+		 */
+		public static function modTone(pc:Creature, towards:Number, power:Number = 1, display:Boolean = true):Boolean {
+			buffer = "";
+			var changes:Number = 0;
+			
+			var current:Number = pc.tone;
+			towards = Math.min(towards, pc.toneMax());
+			towards = Math.max(towards, pc.toneMin());
+			
+			if (current == towards) return changes > 0;
+			power = Math.abs(power); // failsafe
+			power = Math.min(power, Math.abs(current - towards));
+			if (current > towards) power *= -1;
+			if (!pc.toneUnlocked(current + power)) {
+				buffer += "\n\n" + pc.toneLockedMessage();
+			} else {
+				buffer += pc.modTone(power);
+				if(pc.tone != current) changes++;
+			}
+			
+			if (display) output(buffer);
+			return changes > 0;
 		}
 	}
 }

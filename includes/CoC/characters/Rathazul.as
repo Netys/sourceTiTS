@@ -351,6 +351,7 @@ private function rathShop():void {
 	shopkeep.keeperBuy = "What would you want to buy?\n\n";
 	shopkeep.inventory = [];
 	shopkeep.sellMarkup = 2;
+	if (amilyFollower() && !amilyCorrupt()) shopkeep.sellMarkup = 1.5;
 	if (flags["COC.RATHAZUL_DAYS_IN_CAMP"] >= 4)
 		shopkeep.inventory.push(new CoCReducto());
 	shopkeep.inventory.push(new CoCDyeAuburn(), new CoCDyeBlack(), new CoCDyeBlond(), new CoCDyeBrown(), new CoCDyeRed(), new CoCDye(), new CoCDyeGray());

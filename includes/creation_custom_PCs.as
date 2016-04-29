@@ -1013,7 +1013,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 		case "":
 			
 			break;
-		/*Etis is a nine-tails kitsune cyborg, who got best of two worlds, bost as in being herm and as in being a bridge between CoC and TiTS worlds. Mostly pure white with azure accents. Done hell op for purpose of testing overleveled CoC encounters. And to feel badass. Just 'cause I had the mood for procrastination, it has ton of details and even notably different tauric version for start as Leithan.*/
+		/*Etis is a nine-tails kitsune cyborg, who got best of two worlds, bost as in being herm and as in being a bridge between CoC and TiTS worlds. Mostly pure white with azure accents. Just 'cause I had the mood for procrastination, it has ton of details and even notably different tauric version for start as Leithan.*/
 		case "etis":
 			if(!TF) return true;
 			pc.originalRace = pc.isTaur() ? "kitsune-taur" : "kitsune"; // You've always been a kitsune. Always, I said!
@@ -1085,19 +1085,6 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			if (!pc.hasPerk("Enlightened Nine-tails")) pc.createPerk("Enlightened Nine-tails", 0, 0, 0, 0, "The mystical energy surges through you, filling you with cosmic power!");
 			if (!pc.hasPerk("Dragonfire")) pc.createPerk("Dragonfire", 0, 0, 0, 0, "You are much more dragon inside than outside."); // my hide is keeping explosion inside, not vice versa!
 			if (!pc.hasPerk("Androgyny")) pc.createPerk("Androgyny", 0, 0, 0, 0, "Your visage is always androgynous."); // not anthro enough for usual gender recognition patterns to really work
-			if (!pc.hasPerk("Hidden Loot")) pc.createPerk("Hidden Loot", 0, 0, 0, 0, "Two more inventory slots, granted by draconic greed."); // I know, class-specific perk descriptions would be overwritten
-			if (!pc.hasPerk("Leap Up")) pc.createPerk("Leap Up", 0, 0, 0, 0, "Who said that only cat will always land on its feet?");
-			if (!pc.hasPerk("Agility")) pc.createPerk("Agility", 0, 0, 0, 0, "Why take the blow, when you can sidestep it?");
-			if (!pc.hasPerk("Sharp Eyes")) pc.createPerk("Sharp Eyes", 0, 0, 0, 0, "You know too much about illusions to be easily deceived by them.");
-			if (!pc.hasPerk("Shield Booster")) pc.createPerk("Shield Booster", 0, 0, 0, 0, "You can channel your own energy through your shield generator.");
-			if (!pc.hasPerk("Attack Drone")) pc.createPerk("Attack Drone", 0, 0, 0, 0, "High-tech toys are so much fun!");
-			if (!pc.hasPerk("Bloodthirsty")) pc.createPerk("Bloodthirsty", 0, 0, 0, 0, "Whatever you are lacking in constitution, you can make up by enthusiasm!");
-			if (!pc.hasPerk("Implant: Iron Body"))				pc.createPerk("Implant: Iron Body",				10, 0.25, 0, 0, "System of implants in your musculoskeletal system, which can greatly improve your physique.");
-			if (!pc.hasPerk("Implant: Wired Reflexes"))			pc.createPerk("Implant: Wired Reflexes",		10, 0.25, 0, 0, "Partial electrical replacement for your nervous system, which can greatly improve your reflexes.");
-			if (!pc.hasPerk("Implant: Optical Analyzer"))		pc.createPerk("Implant: Optical Analyzer",		10, 0.25, 0, 0, "Complex of retinal and neural implants, which can greatly improve your aim.");
-			if (!pc.hasPerk("Implant: Cognitive Coprocessor"))	pc.createPerk("Implant: Cognitive Coprocessor",	10, 0.25, 0, 0, "Complex of neural implants, which can greatly improve your intellegence.");
-			if (!pc.hasPerk("Implant: Mental Shield"))			pc.createPerk("Implant: Mental Shield",			10, 0.25, 0, 0, "Complex of neural implants, which can greatly improve your willpower.");
-			if (!pc.hasPerk("Implant: Hormonal Controller"))	pc.createPerk("Implant: Hormonal Controller",	30,   30, 0, 0, "Complex of implants for your hormonal system, which can significantly improve your control over your sexual urges.");
 			if (!pc.hasStatusEffect("Tolerance"))		pc.createStatusEffect("Tolerance", 100, 0, 0, 0); // too lazy to code real immunity
 			if (!pc.hasStatusEffect("Genital Slit"))	pc.createStatusEffect("Genital Slit", 0, 0, 0, 0); // dangling all the time bits are not classy
 			if (!pc.hasStatusEffect("Uniball"))			pc.createStatusEffect("Uniball", 0, 0, 0, 0);
