@@ -10,6 +10,10 @@ public function dreamChances():Boolean
 	var dreams:Array = new Array();
 	if(flags["DREAM_CD"] == undefined) flags["DREAM_CD"] = 0;
 	//Special Dreams
+	if (flags["COC.CERULEAN_POTION_DOSES"] > 0 && (pc.hasCock() || !pc.hasVagina()) && currentLocation == "COC_CAMP") {
+		eventQueue.push(flags["COC.CERULEAN_POTION_DREAMS"] == undefined ? nightSuccubiFirstTime : nightSuccubiRepeat);
+		dreamed = true;
+	}
 	if (pc.hasStatusEffect("Queen Pregnancy State"))
 	{
 		if (pc.statusEffectv1("Queen Pregnancy State") > 0 && flags["Queen Message Supression"] == undefined && (flags["Queen Dream Last Day"] < days || flags["Queen Dream Last Day"] == undefined))

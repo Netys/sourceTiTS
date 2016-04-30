@@ -1,7 +1,3 @@
-/**
- * Created by aimozg on 03.01.14.
- */
-
 import classes.Characters.CoC.CoCBeeGirl;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
@@ -60,14 +56,15 @@ public function beeEncounter():void
 		//output("<b>New codex entry unlocked: Giant Bees!</b>\n\n")
 	//}
 	//Chance to avoid the bee or not if smart enough...
-	//if (pc.hasKeyItem("Traveler's Guide") >= 0 && pc.inte / 2 > rand(40)) {
-		//output("You suddenly remember a passage from the Traveler's Guide about monstrous bees that lay eggs in unmentionable places.  Of course, a brave champion would face any danger.\n\n<b>Do you proceed?</b>");
-		////Yes goes to beeEncounterLevel2(), no goes to camp
-		//simpleChoices("Yes", beeEncounterSelect, "", null, "", null, "", null, "Back", returnToCampUseOneHour);
-	//}
+	if (pc.hasKeyItem("Traveler's Guide") && pc.intelligence() > rand(40)) {
+		output("You suddenly remember a passage from the Traveler's Guide about monstrous bees that lay eggs in unmentionable places.  Of course, a brave champion would face any danger.\n\n<b>Do you proceed?</b>");
+		//Yes goes to beeEncounterLevel2(), no goes to camp
+		clearMenu();
+		addButton(0, "Yes", beeEncounterSelect);
+		addButton(1, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
+	}
 	//If not smart enough, proceed.
-	//else 
-		beeEncounterSelect(false);
+	else beeEncounterSelect(false);
 }
 
 private function beeEncounterSelect(clearScreen:Boolean = true):void {

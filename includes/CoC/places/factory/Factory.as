@@ -351,25 +351,25 @@ public function DemonFactoryPumpRoom():Boolean {
 public function DemonFactoryFurnaceRoom():Boolean {	
 	if(flags["COC.FACTORY_SHUTDOWN"] <= 0) {
 		output("The air inside this room is hot enough to coat your [pc.skinFurScales] in a fine sheen of sweat.  The eastern side of the chamber is more machine than wall, a solid mass of iron piping covered in small metal blast-doors through which fuel is to be fed.  A small transparent plate is riveted into the wall, allowing you to see some kind of pink crystalline fuel being burned by purple-white fire.  The few visible controls and gauges don't seem to be linked into anything important, and the machinery looks far too durable to damage with what you have.  The only exit is a heavy iron door on the west wall.  ");
+		
+		//Incubus is ALLLLIVE
+		if (!(flags["COC.FACTORY_INCUBUS_DEFEATED"] > 0)) {
+			//spriteSelect(30);
+			if(flags["COC.FACTORY_INCUBUS_BRIBED"] > 0) {
+				output("\n\nThe incubus mechanic is here, thumbing through a hentai comic and laughing to himself at the absurdity of it.  That doesn't stop him from stroking his half-hard member the whole time...");
+				addButton(0, "Fight", DemonFactoryDoFightIncubus);
+			}
+			else {
+				clearMenu();
+				output("\n\nA demonic mechanic lounges against the hot machinery, unperturbed by the high temperatures of the room.  He wears cut-off denim overalls, stained with grease in a few places.  They don't seem to be in good repair, and have a fair-sized hole at his groin, where a floppy foot-long member hangs free.  His skin is light purple and unblemished, as you would expect from a sexual demon.  He has a rugged handsome face and black hair tied back in a simple ponytail.  Two large curving horns protrude from his forehead, curving back along his skull and giving him a dangerous appearance.  A narrow goatee grows from his chin, about 3 inches long and braided skillfully.  He looks up and smiles, amused at your appearance.");
+				addButton(0, "Fight", DemonFactoryDoFightIncubus);
+				addButton(1, "Talk", DemonFactoryDoTalkIncubus);
+				return true;
+			}
+		}
 	}
 	else {
-		output("Despite the machinery being shut down, the air in this room is still hot enough to coat your [pc.skinFurScales] in a fine sheen of sweat.  The eastern side of the chamber is more machine than wall, a solid mass of iron piping covered in small metal blast-doors through which fuel is to be fed.  A small transparent plate is riveted into the wall, allowing you to see some the ashes of a previous fuel source.  The few visible controls and gauges don't seem to be linked into anything important, and the machinery looks far too durable to damage with what you have.  The only exit is a heavy iron door on the west wall.  ");			
-	}
-	
-	//Incubus is ALLLLIVE
-	if (!(flags["COC.FACTORY_INCUBUS_DEFEATED"] > 0)) {
-		//spriteSelect(30);
-		//if(flags[kFLAGS.FACTORY_INCUBUS_BRIBED] > 0) {
-			//output("\n\nThe incubus mechanic is here, thumbing through a hentai comic and laughing to himself at the absurdity of it.  That doesn't stop him from stroking his half-hard member the whole time...", false);
-			//addButton(0, "Fight", doFightIncubus);
-		//}
-		//else {
-			clearMenu();
-			output("\n\nA demonic mechanic lounges against the hot machinery, unperturbed by the high temperatures of the room.  He wears cut-off denim overalls, stained with grease in a few places.  They don't seem to be in good repair, and have a fair-sized hole at his groin, where a floppy foot-long member hangs free.  His skin is light purple and unblemished, as you would expect from a sexual demon.  He has a rugged handsome face and black hair tied back in a simple ponytail.  Two large curving horns protrude from his forehead, curving back along his skull and giving him a dangerous appearance.  A narrow goatee grows from his chin, about 3 inches long and braided skillfully.  He looks up and smiles, amused at your appearance.", false);
-			addButton(0, "Fight", DemonFactoryDoFightIncubus);
-			addButton(1, "Talk", DemonFactoryDoTalkIncubus);
-		//}
-		return true;
+		output("Despite the machinery being shut down, the air in this room is still hot enough to coat your [pc.skinFurScales] in a fine sheen of sweat.  The eastern side of the chamber is more machine than wall, a solid mass of iron piping covered in small metal blast-doors through which fuel is to be fed.  A small transparent plate is riveted into the wall, allowing you to see some the ashes of a previous fuel source.  The few visible controls and gauges don't seem to be linked into anything important, and the machinery looks far too durable to damage with what you have.  The only exit is a heavy iron door on the west wall.  ");
 	}
 	
 	return false;

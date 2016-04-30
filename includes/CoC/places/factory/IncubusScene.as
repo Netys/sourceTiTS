@@ -12,26 +12,26 @@ public function DemonFactoryDoTalkIncubus():void {
 	processTime(1);
 	
 	//spriteSelect(30);
-	//if(pc.hasKeyItem("Hentai Comic") >= 0) {
-		//output("The incubus speaks to you with calm deep voice, \"<i>And so the insect, heedless of it's path, stumbled directly into the spider's web.  Tiny insect... wait, what is that book you're carrying?  Is that hentai?  It IS!  Let me offer you a deal – I'm not really hungry or interested in fighting. So if you hand over the comic, I'll happily ignore your presence here. Though, I guess you could also just submit. Then I could put you to work and still get the comic.</i>\"", true);
-		//simpleChoices("Fight", DemonFactoryDoFightIncubus, "Submit", DemonFactoryDoSubmitIncubus, "Trade", doTradeIncubus, "", null, "", null);
-	//}
-	//else {
+	if(pc.hasKeyItem("Hentai Comic")) {
+		output("The incubus speaks to you with calm deep voice, \"<i>And so the insect, heedless of it's path, stumbled directly into the spider's web.  Tiny insect... wait, what is that book you're carrying?  Is that hentai?  It IS!  Let me offer you a deal – I'm not really hungry or interested in fighting. So if you hand over the comic, I'll happily ignore your presence here. Though, I guess you could also just submit. Then I could put you to work and still get the comic.</i>\"");
+		addButton(2, "Trade", DemonFactoryDoFightIncubus);
+	}
+	else {
 		output("The incubus speaks to you with calm, deep voice, \"<i>And so the insect, unaware of its path, stumbles directly into the spider's web.  Tiny insect, you have little to offer me, but everything to offer our facility.  Why don't you come along quietly?</i>\"");
-		
-		addButton(0, "Fight", DemonFactoryDoFightIncubus, null);
-		addButton(1, "Submit", DemonFactoryDoSubmitIncubus, null);
-	//}
+	}
+	addButton(0, "Fight", DemonFactoryDoFightIncubus);
+	addButton(1, "Submit", DemonFactoryDoSubmitIncubus);
 }
 
-//private function doTradeIncubus():void {
-//spriteSelect(30);
-	//output("You hand over the Hentai Comic tentatively to the male sex demon.  As soon as he has it in his grubby mits he sits down and starts thumbing through the pages, toying with his half-hard member the entire time.  He must really like porn.", true);
-	//if (flags[kFLAGS.NEW_GAME_PLUS_LEVEL] > 0) output("\n\n<b>You swear you can hear a clicking sound coming from the west.</b>");
-	//pc.removeKeyItem("Hentai Comic");
-	//flags[kFLAGS.FACTORY_INCUBUS_BRIBED] = 1;
-	//doNext(roomFurnaceRoom);
-//}
+private function DemonFactoryDoTradeIncubus():void {
+	//spriteSelect(30);
+	clearOutput();
+	output("You hand over the Hentai Comic tentatively to the male sex demon.  As soon as he has it in his grubby mits he sits down and starts thumbing through the pages, toying with his half-hard member the entire time.  He must really like porn.");
+	pc.removeKeyItem("Hentai Comic");
+	flags["COC.FACTORY_INCUBUS_BRIBED"] = 1;
+	processTime(2);
+	addNextButton();
+}
 
 public function DemonFactoryDoFightIncubus():void {
 	clearOutput();

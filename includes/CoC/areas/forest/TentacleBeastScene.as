@@ -49,7 +49,7 @@ ENFORCEMENT
 This license supercedes all previous licenses and remains in force.
 */
 
-public function tentacleBeastSceneencounter():void {
+public function tentacleBeastSceneEncounter():void {
 	//trace("Tentacle event here");
 	clearOutput();
 	userInterface.showName("TENTACLE\nBEAST");

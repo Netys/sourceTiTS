@@ -106,6 +106,7 @@ include "characters/ArianScene.as";
 include "characters/followerInteractions.as";
 include "characters/Hel.as";
 include "characters/IzmaScene.as";
+include "characters/jojoCorrupt.as";
 include "characters/JojoScene.as";
 include "characters/KihaScene.as";
 include "characters/milkWaifu.as";

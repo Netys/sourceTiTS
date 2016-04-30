@@ -62,27 +62,12 @@ public function clearOutputCodex():void
 	this.userInterface.clearOutputCodex();
 }
 
-public function num2Text(number:Number):String {
-	var returnVar:String = null;
-	var numWords:Array = new Array("zero","one","two","three","four","five","six","seven","eight","nine","ten");
-	if (number > 10 || int(number) != number) {
-		returnVar = "" + number;
-	} 
-	else {
-		returnVar = numWords[number];
-	}
-	return(returnVar);
+public function num2Text(number:Number, capitalize:Boolean = false):String {
+	return classes.Engine.Utility.num2Text(number, capitalize);
 }
+
 public function num2Text2(number:int):String {
-	var returnVar:String = null;
-	var numWords:Array = new Array("zero","first","second","third","fourth","fifth","sixth","seventh","eighth","ninth","tenth");
-	if (number > 10) {
-		returnVar = "" + number + "th";
-	} 
-	else {
-		returnVar = numWords[number];
-	}
-	return(returnVar);
+	return classes.Engine.Utility.num2Ordinal(number);
 }
 
 public function leftBarClear():void {

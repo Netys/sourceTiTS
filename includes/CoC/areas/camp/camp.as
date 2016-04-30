@@ -41,7 +41,7 @@ public function cocCampMenu():void {
 }
 
 public function doDebugFunction():void {
-	if (!pc.hasPerk("Magic Affinity")) pc.createPerk("Magic Affinity", 63, 0, 0, 0, "Grants you insight into mysteries of magic.");
+	giacomoEncounter();
 }
 
 public function hasCompanions():Boolean {
@@ -214,6 +214,11 @@ public function campEvent():Boolean
 	}
 	if (!pc.hasKeyItem("Super Reducto") && milkSlave() && flags["COC.RATHAZUL_IN_CAMP"] == 1 && flags["COC.RATHAZUL_DAYS_IN_CAMP"] >= 4) {
 		ratducto();
+		return true;
+	}
+	if (flags["COC.JOJO_EGGS_INCUBAATION"] <= timeAsStamp)
+	{
+		jojoLaysEggs();
 		return true;
 	}
 	return false;

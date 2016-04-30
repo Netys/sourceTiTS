@@ -76,8 +76,7 @@ package classes.Items.Transformatives
 			//Bump up size!
 			if (target.biggestTitSize() < 8) {
 				output("\n\n");
-				if (target.breastRows.length == 1) Mutator.growTits(target, (1 + rand(5)), 1, true, 1, 8);
-				else Mutator.growTits(target, 1 + rand(2), target.breastRows.length, true, 1, 8);
+				Mutator.growTits(target, target.breastRows.length * (1 + rand(2)), target.breastRows.length, true, 2, 8);
 			}
 			//Player doesn't lactate
 			if (!target.isLactating()) {

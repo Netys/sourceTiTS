@@ -2,6 +2,7 @@ import classes.Engine.Combat.applyDamage;
 import classes.Engine.Combat.DamageTypes.DamageFlag;
 import classes.Engine.Combat.DamageTypes.TypeCollection;
 import classes.GLOBAL;
+import classes.Items.Miscellaneous.CoCBlackChitin;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -31,7 +32,7 @@ public function exploreForest():void
 		addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 		return;
 	}
-
+	
 	var choice:Array = [];
 	var chance:Array = [];
 	
@@ -42,7 +43,7 @@ public function exploreForest():void
 	chance.push(1);
 	
 	// Jojo
-	if ((pc.cor() >= 25 || pc.level >= 4) && (flags["COC.JOJO_IN_CAMP"] == undefined || flags["COC.JOJO_IN_CAMP"] == 0)) {
+	if ((pc.cor() >= 25 || pc.level >= 4) && int(flags["COC.JOJO_IN_CAMP"]) == 0 && !campCorruptJojo()) {
 		choice.push(forestEventJojo);
 		chance.push(1);
 	}
@@ -56,27 +57,28 @@ public function exploreForest():void
 	//if (flags[kFLAGS.CORRUPTED_GLADES_DESTROYED] < 100 && rand(100) >= Math.round(flags[kFLAGS.CORRUPTED_GLADES_DESTROYED] * 0.75)) choice[choice.length] = 3;
 	 //Corrupted Glade
 	choice.push(forestCorruptedGlade);
-	chance.push(1);
+	chance.push(2);
 	
 	choice.push(forestRootTrip); //Trip on a root
-	chance.push(1);
+	chance.push(2);
 	
 	choice.push(beeEncounter); //Bee-girl encounter
 	chance.push(2); // semi-rare
 	
+	choice.push(forestLoot); // just find chitin plate
+	chance.push(5); // rare
+	
 	//if (rand(2) == 0) choice[choice.length] = 6; //Pigtail Truffle
-	//if (rand(4) == 0) // free chitin
 	//if (flags[kFLAGS.CAMP_CABIN_PROGRESS] >= 4 && flags[kFLAGS.CAMP_CABIN_WOOD_RESOURCES] < 100 && rand(2) == 0) choice[choice.length] = 7; //Gather woods
 	
 	choice.push(forestWastedTime); //Peaceful walk in woods
 	chance.push(1);
 	
 	//Essy is rare
-	if (pc.hasGenitals() && (flags["COC.ESSY_IN_DUNGEON"] == undefined || flags["COC.ESSY_IN_DUNGEON"] == 0)) {
+	if (pc.hasGenitals() && int(flags["COC.ESSY_IN_DUNGEON"]) == 0) {
 		choice.push(essrayleMeetingI);
 		chance.push(25);
 	}
-
 	
 	//Chance of dick-dragging! 10% + 10% per two foot up to 30%
 	//temp = 10 + (pc.longestCockLength() - pc.tallness) / 24 * 10;
@@ -113,22 +115,22 @@ public function forestTentaBeast():void {
 	clearOutput();
 	//Oh noes, tentacles!
 	//Tentacle avoidance chance due to dangerous plants
-	//if (pc.hasKeyItem("Dangerous Plants") >= 0 && pc.inte / 2 > rand(50)) {
-		//trace("TENTACLE'S AVOIDED DUE TO BOOK!");
-		//output("Using the knowledge contained in your 'Dangerous Plants' book, you determine a tentacle beast's lair is nearby, do you continue?  If not you could return to camp.\n\n", false);
-		//simpleChoices("Continue", tentacleBeastScene.encounter, "", null, "", null, "", null, "Leave", camp.returnToCampUseOneHour);
-		//return;
-	//}
-	//else {
-		tentacleBeastSceneencounter();
+	if (pc.hasKeyItem("Dangerous Plants") && pc.intelligence() > rand(50)) {
+		output("Using the knowledge contained in your 'Dangerous Plants' book, you determine a tentacle beast's lair is nearby, do you continue?  If not you could return to camp.\n\n");
+		addButton(0, "Continue", tentacleBeastSceneEncounter);
+		addButton(1, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 		return;
-	//}
+	}
+	else {
+		tentacleBeastSceneEncounter();
+		return;
+	}
 }
 
 public function forestEventJojo():void {
 	clearOutput();
-	if (flags["COC.JOJO_MET"] == undefined /*&& pc.findStatusAffect(StatusAffects.PureCampJojo) < 0*/) 
-	{	
+	if (flags["COC.JOJO_MET"] == undefined) 
+	{
 		if (pc.cor() < 25)
 		{
 			if (pc.level >= 4)
@@ -145,14 +147,15 @@ public function forestEventJojo():void {
 			return;
 		}
 	}
-	else if (flags["COC.JOJO_MET"] == 1) {
+	else if (flags["COC.JOJO_STATE"] == 1) {
 		repeatJojoEncounter();
 		return;
 	}
-	//else if (kGAMECLASS.monk >= 2) { //Angry/Horny Jojo
-		//corruptJojoEncounter();
-	//}
-	//// failsafe
+	else if (flags["COC.JOJO_STATE"] >= 2) { //Angry/Horny Jojo
+		corruptJojoEncounter();
+		return;
+	}
+	// failsafe
 	forestWastedTime();
 }
 
@@ -187,5 +190,18 @@ public function forestWastedTime():void {
 		pc.slowStatGain("l", 0.25);
 		pc.lust(pc.libido() / 5);
 	}
-	doNext(returnToCampUseOneHour);
+	processTime(30 + rand(20));
+	addNextButton();
+}
+
+private function forestLoot():void {
+	clearOutput();
+	
+	processTime(20 + rand(20));
+	itemScreen = function():*{ processTime(10 + rand(10)); mainGameMenu(); };
+	lootScreen = itemScreen;
+	useItemFunction = itemScreen;
+	
+	output("You find a large piece of insectile carapace obscured in the ferns to your left. It's mostly black with a thin border of bright yellow along the outer edge. There's still a fair portion of yellow fuzz clinging to the chitinous shard. It feels strong and flexible - maybe someone can make something of it. ");
+	itemCollect([new CoCBlackChitin()]);
 }

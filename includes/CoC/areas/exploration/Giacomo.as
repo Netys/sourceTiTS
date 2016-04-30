@@ -1,45 +1,61 @@
 import classes.Characters.CoC.CoCTrader;
+import classes.Engine.Combat.applyDamage;
+import classes.Engine.Combat.DamageTypes.TypeCollection;
 import classes.GLOBAL;
+import classes.Items.Drinks.CoCCeruleanPotion;
 import classes.Items.Miscellaneous.*;
 import classes.Items.Transformatives.*;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
+public function GiacomoTimePassedNotify():void {
+	if (flags["COC.CERULEAN_POTION_BAD_END_FUTA_COUNTER"] > 0) flags["COC.CERULEAN_POTION_BAD_END_FUTA_COUNTER"] -= 0.5;
+}
+
+private var GiacomoTimePassedNotifyHook: * = GiacomoTimePassedNotifyGrapple();
+private function GiacomoTimePassedNotifyGrapple():* { 
+		timeChangeListeners.push(GiacomoTimePassedNotify);
+	}
+
 public function giacomoEncounter():void {
-	//spriteSelect(23);
 	userInterface.showName("\nGIACOMO");
 	clearOutput();
 	if (flags["COC.GIACOMO_MET"] == undefined) {
 		giacomoFirstEncounter();
 	}
-	//else if (pc.findStatusAffect(StatusAffects.WormOffer) < 0 && pc.findStatusAffect(StatusAffects.Infested) >= 0) { //If infested && no worm offer yet
-		//output("Upon walking up to Giacomo's wagon, he turns to look at you and cocks an eyebrow in curiosity and mild amusement.\n\n");
-		//output("\"<i>Been playing with creatures best left alone, I see</i>,\" he chuckles.  \"<i>Infestations of any kind are annoying, yet your plight is quite challenging given the magnitude of corrupt creatures around here.  It is not the first time I have seen one infested with THOSE worms.</i>\"\n\n");
-		//output("You ask how he knows of your change and the merchant giggles heartily.\n\n");
-		//output("\"<i>Do not look at me as if I am a mystic,</i>\" Giacomo heckles lightly.  \"<i>Your crotch is squirming.</i>\"\n\n");
-		//output("Looking down, you realize how right he is and attempt to cover yourself in embarrassment.\n\n");
-		//output("\"<i>Fear not!</i>\" the purveyor jingles.  \"<i>I have something that will cure you of those little bastards.  Of course, there is also a chance that it will purge your system in general.  This potion is not cheap.  I will trade it for 175 gems.</i>\"\n\n");
-		//pc.createStatusAffect(StatusAffects.WormOffer, 0, 0, 0, 0);
-		//if (pc.gems < 175) { //Broke as a joke
-			//output("You realize you don't have enough gems for such a pricey potion, but perhaps there is something else in his inventory you can buy.");
-		//}
-		//else { //Can afford
-			//output("Do you purchase his cure?");
-			////Remove/No
-			////doYesNo(wormRemoval, giacomoFirstEncounter);
-			//return;
-		//}
-	//}
+	else if (flags["COC.GIACOMO_WORM_OFFER"] == undefined && pc.hasStatusEffect("Infested")) { //If infested && no worm offer yet
+		output("Upon walking up to Giacomo's wagon, he turns to look at you and cocks an eyebrow in curiosity and mild amusement.\n\n");
+		output("\"<i>Been playing with creatures best left alone, I see</i>,\" he chuckles.  \"<i>Infestations of any kind are annoying, yet your plight is quite challenging given the magnitude of corrupt creatures around here.  It is not the first time I have seen one infested with THOSE worms.</i>\"\n\n");
+		output("You ask how he knows of your change and the merchant giggles heartily.\n\n");
+		output("\"<i>Do not look at me as if I am a mystic,</i>\" Giacomo heckles lightly.  \"<i>Your crotch is squirming.</i>\"\n\n");
+		output("Looking down, you realize how right he is and attempt to cover yourself in embarrassment.\n\n");
+		output("\"<i>Fear not!</i>\" the purveyor jingles.  \"<i>I have something that will cure you of those little bastards.  Of course, there is also a chance that it will purge your system in general.  This potion is not cheap.  I will trade it for 175 gems.</i>\"\n\n");
+		flags["COC.GIACOMO_WORM_OFFER"] = 1;
+		if (pc.credits < 1750) { //Broke as a joke
+			output("You realize you don't have enough gems for such a pricey potion, but perhaps there is something else in his inventory you can buy.");
+		}
+		else { //Can afford
+			output("Do you purchase his cure?");
+			//Remove/No
+			clearMenu();
+			addButton(0, "Yes", wormRemoval);
+			addButton(1, "No", giacomoFirstEncounter);
+			return;
+		}
+	}
 	else { //Normal greeting
 		output("You spy the merchant Giacomo in the distance.  He makes a beeline for you, setting up his shop in moments.  ");
 		output("Giacomo's grin is nothing short of creepy as he offers his wares to you. What are you interested in?");
 	}
-	//var deworm:Function = (pc.findStatusAffect(StatusAffects.WormOffer) >= 0 && pc.findStatusAffect(StatusAffects.Infested) >= 0 ? wormRemovalOffer : null);
+	
 	//simpleChoices("Potions", giacomoPotionMenu, "Books", giacomoBookMenu, "Erotica", giacomoEroticaMenu, "Worm Cure", deworm, "Leave", returnToCampUseOneHour);
 	clearMenu();
-	addButton(0, "Shop", giacomoShop);
-	addButton(1, "Erotica", giacomoEroticaMenu);
+	addButton(0, "Potions", giacomoShop);
+	addButton(1, "Books", giacomoBookMenu);
+	addButton(2, "Erotica", giacomoEroticaMenu);
+	if (pc.hasStatusEffect("Infested") && pc.credits >= 1750) addButton(3, "Worm Cure", wormRemovalOffer);
+	else addDisabledButton(3, "Worm Cure");
 	addButton(14, "Leave", function():* { 
 		processTime(10 + rand(10));
 		mainGameMenu();
@@ -59,25 +75,36 @@ private function giacomoFirstEncounter():void {
 
 
 private function giacomoShop():void {
-	//spriteSelect(37);
 	shopkeep = new CoCTrader();
 	shopkeep.short = "Giacomo";
 	shopkeep.keeperBuy = "Giacomo's grin is nothing short of creepy as he offers his wares to you. What are you interested in?\n\n";
 	shopkeep.inventory = [new CoCVitalityTincture(), new CoCScholarsTea()];
+	if(pc.hasCock() || !pc.hasVagina()) shopkeep.inventory.push(new CoCCeruleanPotion());
 	shopkeepBackFunctor = giacomoEncounter;
 	buyItem();
 }
 
-//private function giacomoBookMenu():void {
-	////spriteSelect(23);
-	//clearOutput();
-	//output("Which book are you interested in perusing?");
-	//simpleChoices("Dangerous Plants", pitchDangerousPlantsBook, "Traveler's Guide", pitchTravellersGuide, "Hentai Comic", pitchHentaiComic,
-		//"Yoga Guide", (flags[kFLAGS.COTTON_UNUSUAL_YOGA_BOOK_TRACKER] > 0 ? pitchYogaGuide : null), "Back", giacomoEncounter);
-//}
+private function giacomoBookMenu():void {
+	userInterface.showName("\nGIACOMO");
+	clearOutput();
+	output("Which book are you interested in perusing?");
+	
+	clearMenu();
+	if (pc.hasKeyItem("Dangerous Plants")) addDisabledButton(0, "Danger.Plants", "Dangerous Plants", "You already own the book 'Dangerous Plants'.");
+	else addButton(0, "Danger.Plants", pitchDangerousPlantsBook);
+	
+	if (pc.hasKeyItem("Traveler's Guide")) addDisabledButton(1, "Travel.Guide", "Traveler's Guide", "You already own the book 'Traveler's Guide'.");
+	else addButton(1, "Travel.Guide", pitchTravellersGuide);
+	
+	if (pc.hasKeyItem("Hentai Comic")) addDisabledButton(2, "Hentai Comic", "Hentai Comic", "You already own the book 'Hentai Comic'.");
+	else addButton(2, "Hentai Comic", pitchHentaiComic);
+	
+	if (flags["COC.COTTON_UNUSUAL_YOGA_BOOK_TRACKER"] == 1 && !pc.hasKeyItem("Yoga Guide")) addButton(3, "Yoga Guide", pitchYogaGuide);
+	
+	addButton(14, "Back", giacomoEncounter);
+}
 
 private function giacomoEroticaMenu():void {
-	//spriteSelect(23);
 	clearOutput();
 	output("Giacomo's grin is nothing short of creepy as he offers his wares to you.  What are you interested in?");
 	clearMenu();
@@ -89,164 +116,89 @@ private function giacomoEroticaMenu():void {
 	//if (pc.hasCock()) addButton(4, "D Onahole", pitchDeluxeOnahole);
 	//if (pc.hasCock() && pc.hasVagina()) addButton(5, "Dual Belt", pitchDualStimulationBelt);
 	//if (pc.hasCock() && pc.hasVagina()) addButton(6, "AN Onahole", pitchAllNaturalOnahole);
-	//addButton(7, "Condom", pitchCondom);
 	addButton(14, "Back", giacomoEncounter);
 }
 
-//private function pitchCeruleanPotion():void {
-	////spriteSelect(23);
-	//clearOutput();
-	//output("Giacomo makes his comical over-the-shoulder search and holds up a sky-blue bottle.  He grins widely as he begins his pitch, \"<i>My friend, you truly have a discerning eye.  Even the most successful of men seek to attract more women for pleasure and status.  This, my friend, will attract the most discerning and aroused of women.  Women attracted by this fine unction will NEVER say no.  I GUARANTEE that she will want pleasure every time you demand pleasure!  A bit of a caution to you, brother.  Some say this works TOO well.  If you aren't man enough to handle the women this urn draws to you, you'd best say so now and I will offer something more to your liking.  However, if you have the heart for it, I can sell you this little gem for <b>75 gems</b></i>!\"  ");
-	////doYesNo(buyCeruleanPotion, potionMenu);
-//}
-//
-//private function buyCeruleanPotion():void {
-	////spriteSelect(23);
-	//if (pc.gems < 75) {
-		//clearOutput();
-		//output("\n\nGiacomo sighs, indicating you need " + String(75 - pc.gems) + " more gems to purchase this item.");
-		//doNext(potionMenu);
-	//}
-	//else {
-		//inventory.takeItem(consumables.CERUL_P, potionMenu);
-		//pc.gems -= 75;
-		//statScreenRefresh();
-	//}
-//}
-//
-//public function pitchCondom():void {
-	////spriteSelect(23);
-	//output("Giacomo holds up the packet and says, \"<i>Ah, yes! This is a condom. Just slip it on any cocks and have it penetrate any holes. It's guaranteed to prevent the spread of STDs and it will help to prevent pregnancy. I must warn you that it does not completely prevent pregnancy. Rarely, it will fail. However, it will work most of the time. So, <b>ten gems</b>. What do you say?</i>\"", true);
-	////doYesNo(buyCondom, eroticaMenu);
-//}
-//
-//public function buyCondom():void {
-	////spriteSelect(23);
-	//if (pc.gems < 10)
-	//{
-		//output("\n\nGiacomo sighs, indicating you need " + String(10 - pc.gems) + " more gems to purchase this item.", true);
-		//doNext(giacomoEroticaMenu);
-	//}
-	//else
-	//{
-		//pc.gems -= 10;
-		//inventory.takeItem(useables.CONDOM, giacomoEroticaMenu);
-		//statScreenRefresh();
-	//}
-//}
-//
-//private function pitchDangerousPlantsBook():void {
-	////spriteSelect(23);
-	//clearOutput();
-	//if (pc.hasKeyItem("Dangerous Plants") >= 0) {
-		//output("<b>You already own the book 'Dangerous Plants'.</b>");
-		//doNext(bookMenu);
-		//return;
-	//}
-	//output("Giacomo proudly holds up a small text.  The cover is plain and unadorned with artwork.  \"<i>According to the scholars,</i>\" Giacomo begins, \"<i>knowledge is power.  It is one of the few things that scholars say that I agree with.  You cannot survive in today's world without knowing something of it.  Beasts and men are not your only problems.  This book specializes in the dangerous plants of the realm.  There exists flora the likes of which will chew you up and spit you out faster than any pack of wolves or gang of thieves.  For the small price of 10 gems, you can benefit from this fine book on the nastiest blossoms in existence.  Care to broaden your learning?</i>\"");
-	////doYesNo(buyDangerousPlantsBook, bookMenu);
-//}
-//
-//private function buyDangerousPlantsBook():void {
-	////spriteSelect(23);
-	//clearOutput();
-	//if (pc.gems < 10) {
-		//output("\n\nGiacomo sighs, indicating you need " + String(10 - pc.gems) + " more gems to purchase this item.");
-		//doNext(bookMenu);
-	//}
-	//else {
-		//output("\n\nYou consider yourself fortunate to be quite literate in this day and age.  It certainly comes in handy with this book.  Obviously written by well-informed, but women-starved men, the narrative drearily states the various types of poisonous and carnivorous plants in the world.  One entry that really grabs you is the chapter on 'Violation Plants'.  The chapter drones on about an entire classification of specially bred plants whose purpose is to torture or feed off a human being without permanently injuring and killing them.  Most of these plants attempt to try breeding with humans and are insensitive to the intricacies of human reproduction to be of any value, save giving the person no end of hell.  These plants range from massive shambling horrors to small plant-animal hybrids that attach themselves to people.  As you finish the book, you cannot help but shiver at the many unnatural types of plants out there and wonder what sick bastard created such monstrosities. ");
-		//doNext(bookMenu);
-		//pc.gems -= 10;
-		//pc.createKeyItem("Dangerous Plants", 0, 0, 0, 0);
-		//statScreenRefresh();
-	//}
-//}
-//
-//private function pitchTravellersGuide():void {
-	////spriteSelect(23);
-	//clearOutput();
-	//if (pc.hasKeyItem("Traveler's Guide") >= 0) {
-		//output("<b>You already own the book 'Traveler's Guide'.</b>");
-		//doNext(bookMenu);
-		//return;
-	//}
-	//output("Giacomo holds up a humble pamphlet.  \"<i>While you may not find value in this as a seasoned traveler,</i>\", Giacomo opens, \"<i>you never know what you may learn from this handy, dandy information packet!  Geared to the novice, this piece of work emphasizes the necessary items and some good rules of thumb for going out into the world.  You may not need it, but you may know someone who does.  Why waste your time when the answers could be in this handy pamphlet!  I will offer the super-cheap price of 1 gem!</i>\"");
-	////doYesNo(buyTravellersGuide, bookMenu);
-//}
-//
-//private function buyTravellersGuide():void {
-	////spriteSelect(23);
-	//clearOutput();
-	//if (pc.gems < 1) {
-		//output("\n\nGiacomo sighs, indicating you need 1 gem to purchase this item.");
-		//doNext(bookMenu);
-	//}
-	//else {
-		//output("The crazy merchant said you might not need this and he was right.  Written at a simple level, this was obviously intended for a city-dweller who never left the confines of their walls.  Littered with childish illustrations and silly phrases, the book is informative in the sense that it does tell a person what they need and what to do, but naively downplays the dangers of the forest and from bandits.  Were it not so cheap, you would be pissed at the merchant.  However, he is right in the fact that giving this to some idiot ignorant of the dangers of the road saves time from having to answer a bunch of stupid questions.");
-		//doNext(bookMenu);
-		//pc.gems -= 1;
-		//pc.createKeyItem("Traveler's Guide", 0, 0, 0, 0);
-		//statScreenRefresh();
-	//}
-//}
-//
-//private function pitchHentaiComic():void {
-	////spriteSelect(23);
-	//clearOutput();
-	//if (pc.hasKeyItem("Hentai Comic") >= 0)
-	//{
-		//output("<b>You already own a Hentai Comic!</b>");
-		//doNext(bookMenu);
-		//return;
-	//}
-	//output("Giacomo takes out a colorfully written magazine from his bag.  The cover contains well-drawn, overly-endowed women in sexual poses.  \"<i>Perhaps your taste in reading is a bit more primal, my good " + pc.mfn("man", "lady", "...err, whatever you are") + "</i>,\" says Giacomo.  \"<i>Taken from the lands far to the east, this is a tawdry tale of a group of ladies seeking out endless pleasures.  With a half a dozen pictures on every page to illustrate their peccadilloes, you will have your passions inflamed and wish to join these fantasy vixens in their adventures!  Collectable and in high demand, and even if this is not to your tastes, you can easily turn a profit on it!  Care to adventure into the realm of fantasy?  It's only 10 gems and I am doing YOU a favor for such a price.</i>\"");
-	////doYesNo(buyHentaiComic, bookMenu);
-//}
-//
-//private function buyHentaiComic():void {
-	////spriteSelect(23);
-	//clearOutput();
-	//if (pc.gems < 10) {
-		//output("\n\nGiacomo sighs, indicating you need " + String(10 - pc.gems) + " more gems to purchase this item.");
-		//doNext(bookMenu);
-	//}
-	//else {
-		//output("You peruse the erotic book.  The story is one of a group of sisters who are all impossibly heavy-chested and equally horny getting into constant misadventures trying to satisfy their lust.  While the comic was entertaining and erotic to the highest degree, you cannot help but laugh at how over-the-top the story and all of the characters are.  Were the world as it was in the book, nothing would get done as humanity would be fucking like jackrabbits in heat for the rest of their lives.  While certainly a tempting proposition, everyone gets worn out sometime.  You place the book in your sack, well entertained and with a head filled with wilder perversions than what you woke up with this morning.");
-		//doNext(bookMenu);
-		//pc.gems -= 10;
-		//dynStats("lib", 2, "lus", 20);
-		//pc.createKeyItem("Hentai Comic", 0, 0, 0, 0);
-		//statScreenRefresh();
-	//}
-//}
-//
-//private function pitchYogaGuide():void {
-	////spriteSelect(23);
-	//clearOutput();
-	//output("Giacomo holds up the book with a small degree of reverence.  The cover is leather, with the lettering stitched in by hand.  \"<i>This, my friend,</i>\" begins Giacomo, \"<i>is a strange book indeed.  I traded for it in the east, where they practice a form of exercise known as yoga.  This volume in particular deals with those of, shall we say, unusual body shapes.  Because of its rarity and usefulness, I simply cannot let it go for less than 100 gems and believe me, at this price I'm practically cutting my own throat.  Care to broaden your horizons?</i>\"");
-	////doYesNo(buyYogaGuide, bookMenu);
-//}
-//
-//private function buyYogaGuide():void {
-	//clearOutput();
-	//if (pc.hasKeyItem("Yoga Guide") >= 0) {
-		//output("<b>You already own a yoga guide!</b>");
-	//}
-	//else if (pc.gems < 100) {
-		//output("You cannot afford a yoga guide!");
-	//}
-	//else {
-		//output("You exchange 100 gems for the tome.  Now you can finally enjoy a workout with Cotton!");
-		//pc.createKeyItem("Yoga Guide", 0, 0, 0, 0);
-		//pc.gems -= 100;
-		//statScreenRefresh();
-	//}
-	//doNext(bookMenu);
-//}
+private function pitchDangerousPlantsBook():void {
+	userInterface.showName("\nGIACOMO");
+	clearOutput();
+	output("Giacomo proudly holds up a small text.  The cover is plain and unadorned with artwork.  \"<i>According to the scholars,</i>\" Giacomo begins, \"<i>knowledge is power.  It is one of the few things that scholars say that I agree with.  You cannot survive in today's world without knowing something of it.  Beasts and men are not your only problems.  This book specializes in the dangerous plants of the realm.  There exists flora the likes of which will chew you up and spit you out faster than any pack of wolves or gang of thieves.  For the small price of 10 gems, you can benefit from this fine book on the nastiest blossoms in existence.  Care to broaden your learning?</i>\"");
+	clearMenu();
+	if (pc.credits < 100) addDisabledButton(0, "Yes", "Yes", "You need 10 gems to purchase this item.");
+	else addButton(0, "Yes", buyDangerousPlantsBook);
+	addButton(1, "No", giacomoBookMenu);
+}
+
+private function buyDangerousPlantsBook():void {
+	userInterface.showName("\nGIACOMO");
+	clearOutput();
+	output("\n\nYou consider yourself fortunate to be quite literate in this day and age.  It certainly comes in handy with this book.  Obviously written by well-informed, but women-starved men, the narrative drearily states the various types of poisonous and carnivorous plants in the world.  One entry that really grabs you is the chapter on 'Violation Plants'.  The chapter drones on about an entire classification of specially bred plants whose purpose is to torture or feed off a human being without permanently injuring and killing them.  Most of these plants attempt to try breeding with humans and are insensitive to the intricacies of human reproduction to be of any value, save giving the person no end of hell.  These plants range from massive shambling horrors to small plant-animal hybrids that attach themselves to people.  As you finish the book, you cannot help but shiver at the many unnatural types of plants out there and wonder what sick bastard created such monstrosities. ");
+	pc.credits -= 10;
+	pc.createKeyItem("Dangerous Plants", 0, 0, 0, 0);
+	addNextButton(giacomoBookMenu);
+}
+
+private function pitchTravellersGuide():void {
+	userInterface.showName("\nGIACOMO");
+	clearOutput();
+	output("Giacomo holds up a humble pamphlet.  \"<i>While you may not find value in this as a seasoned traveler,</i>\", Giacomo opens, \"<i>you never know what you may learn from this handy, dandy information packet!  Geared to the novice, this piece of work emphasizes the necessary items and some good rules of thumb for going out into the world.  You may not need it, but you may know someone who does.  Why waste your time when the answers could be in this handy pamphlet!  I will offer the super-cheap price of 1 gem!</i>\"");
+	clearMenu();
+	if (pc.credits < 10) addDisabledButton(0, "Yes", "Yes", "You need 1 gem to purchase this item.");
+	else addButton(0, "Yes", buyTravellersGuide);
+	addButton(1, "No", giacomoBookMenu);
+}
+
+private function buyTravellersGuide():void {
+	userInterface.showName("\nGIACOMO");
+	clearOutput();
+	output("The crazy merchant said you might not need this and he was right.  Written at a simple level, this was obviously intended for a city-dweller who never left the confines of their walls.  Littered with childish illustrations and silly phrases, the book is informative in the sense that it does tell a person what they need and what to do, but naively downplays the dangers of the forest and from bandits.  Were it not so cheap, you would be pissed at the merchant.  However, he is right in the fact that giving this to some idiot ignorant of the dangers of the road saves time from having to answer a bunch of stupid questions.");
+	pc.credits -= 10;
+	pc.createKeyItem("Traveler's Guide", 0, 0, 0, 0);
+	addNextButton(giacomoBookMenu);
+}
+
+private function pitchHentaiComic():void {
+	userInterface.showName("\nGIACOMO");
+	clearOutput();
+	output("Giacomo takes out a colorfully written magazine from his bag.  The cover contains well-drawn, overly-endowed women in sexual poses.  \"<i>Perhaps your taste in reading is a bit more primal, my good " + pc.mfn("man", "lady", "...err, whatever you are") + "</i>,\" says Giacomo.  \"<i>Taken from the lands far to the east, this is a tawdry tale of a group of ladies seeking out endless pleasures.  With a half a dozen pictures on every page to illustrate their peccadilloes, you will have your passions inflamed and wish to join these fantasy vixens in their adventures!  Collectable and in high demand, and even if this is not to your tastes, you can easily turn a profit on it!  Care to adventure into the realm of fantasy?  It's only 10 gems and I am doing YOU a favor for such a price.</i>\"");
+	clearMenu();
+	if (pc.credits < 100) addDisabledButton(0, "Yes", "Yes", "You need 10 gems to purchase this item.");
+	else addButton(0, "Yes", buyHentaiComic);
+	addButton(1, "No", giacomoBookMenu);
+}
+
+private function buyHentaiComic():void {
+	userInterface.showName("\nGIACOMO");
+	clearOutput();
+		output("You peruse the erotic book.  The story is one of a group of sisters who are all impossibly heavy-chested and equally horny getting into constant misadventures trying to satisfy their lust.  While the comic was entertaining and erotic to the highest degree, you cannot help but laugh at how over-the-top the story and all of the characters are.  Were the world as it was in the book, nothing would get done as humanity would be fucking like jackrabbits in heat for the rest of their lives.  While certainly a tempting proposition, everyone gets worn out sometime.  You place the book in your sack, well entertained and with a head filled with wilder perversions than what you woke up with this morning.");
+	pc.credits -= 100;
+	pc.slowStatGain("l", 2);
+	applyDamage(new TypeCollection( { tease : 20 } ), null, pc);
+	pc.createKeyItem("Hentai Comic", 0, 0, 0, 0);
+	addNextButton(giacomoBookMenu);
+}
+
+private function pitchYogaGuide():void {
+	userInterface.showName("\nGIACOMO");
+	clearOutput();
+	output("Giacomo holds up the book with a small degree of reverence.  The cover is leather, with the lettering stitched in by hand.  \"<i>This, my friend,</i>\" begins Giacomo, \"<i>is a strange book indeed.  I traded for it in the east, where they practice a form of exercise known as yoga.  This volume in particular deals with those of, shall we say, unusual body shapes.  Because of its rarity and usefulness, I simply cannot let it go for less than 100 gems and believe me, at this price I'm practically cutting my own throat.  Care to broaden your horizons?</i>\"");
+	clearMenu();
+	if (pc.credits < 1000) addDisabledButton(0, "Yes", "Yes", "You need 100 gems to purchase this item.");
+	else addButton(0, "Yes", buyYogaGuide);
+	addButton(1, "No", giacomoBookMenu);
+}
+
+private function buyYogaGuide():void {
+	userInterface.showName("\nGIACOMO");
+	clearOutput();
+	output("You exchange 100 gems for the tome.  Now you can finally enjoy a workout with Cotton!");
+	pc.createKeyItem("Yoga Guide", 0, 0, 0, 0);
+	pc.credits -= 1000;
+	addNextButton(giacomoBookMenu);
+}
 
 private function pitchDildo():void {
-	//spriteSelect(23);
+	userInterface.showName("\nGIACOMO");
 	clearOutput();
 	output("Giacomo takes out a slender tube roughly over half a foot in length.  \"<i>Since you seek pleasure, this is as simple and effective as it gets.  This dildo is a healthy seven inches long and is suitable for most women and even adventurous men.  Pick a hole, stick it in and work it to your heart's content or your partner's pleasure.  The single-piece construction makes it solid, sturdy and straightforward.  For 20 gems, you can take matters into your own hands.  How about it?</i>\"");
 	clearMenu();
@@ -256,18 +208,17 @@ private function pitchDildo():void {
 }
 	
 private function buyDildo():void {
-	//spriteSelect(23);
+	userInterface.showName("\nGIACOMO");
 	clearOutput();
 	output("After making the payment, Giacomo hands you the Dildo.");
 	pc.credits -= 200;
 	pc.createKeyItem("Dildo", 0, 0, 0, 0, "This dildo is a healthy seven inches long and is suitable for most women and even adventurous men.");
-	//statScreenRefresh();
 	clearMenu();
 	addButton(0, "Next", giacomoEncounter);
 }
 
 //private function pitchSelfStimulationBelt():void {
-	////spriteSelect(23);
+	////userInterface.showName("\nGIACOMO");
 	//clearOutput();
 	//if (pc.hasKeyItem("Self-Stimulation Belt") >= 0) {
 		//output("<b>You already own a Self-Stimulation Belt!</b>");
@@ -279,7 +230,7 @@ private function buyDildo():void {
 //}
 //
 //private function buySelfStimulationBelt():void {
-	////spriteSelect(23);
+	////userInterface.showName("\nGIACOMO");
 	//clearOutput();
 	//if (pc.gems < 30) {
 		//output("\n\nGiacomo sighs, indicating you need " + String(30 - pc.gems) + " more gems to purchase this item.");
@@ -293,7 +244,7 @@ private function buyDildo():void {
 //}
 //
 //private function pitchAllNaturalSelfStimulationBelt():void {
-	////spriteSelect(23);
+	////userInterface.showName("\nGIACOMO");
 	//clearOutput();
 	//if (pc.hasKeyItem("All-Natural Self-Stimulation Belt") >= 0) {
 		//output("<b>You already own an All-Natural Self-Stimulation Belt!</b>");
@@ -315,7 +266,7 @@ private function buyDildo():void {
 //}
 //
 //private function buyAllNaturalSelfStimulationBelt():void {
-	////spriteSelect(23);
+	////userInterface.showName("\nGIACOMO");
 	//clearOutput();
 	//if (pc.gems < 40) {
 		//output("\n\nGiacomo sighs, indicating you need " + String(40 - pc.gems) + " more gems to purchase this item.");
@@ -329,7 +280,7 @@ private function buyDildo():void {
 //}
 	//
 //private function pitchOnahole():void {
-	////spriteSelect(23);
+	////userInterface.showName("\nGIACOMO");
 	//clearOutput();
 	//if (pc.hasKeyItem("Plain Onahole") >= 0) {
 		//output("<b>You already own a Plain Onahole!</b>");
@@ -341,7 +292,7 @@ private function buyDildo():void {
 //}
 //
 //private function buyOnahole():void {
-	////spriteSelect(23);
+	////userInterface.showName("\nGIACOMO");
 	//clearOutput();
 	//if (pc.gems < 20) {
 		//output("\n\nGiacomo sighs, indicating you need " + String(20 - pc.gems) + " more gems to purchase this item.");
@@ -355,7 +306,7 @@ private function buyDildo():void {
 //}
 	//
 //private function pitchDeluxeOnahole():void {
-	////spriteSelect(23);
+	////userInterface.showName("\nGIACOMO");
 	//clearOutput();
 	//if (pc.hasKeyItem("Deluxe Onahole") >= 0) {
 		//output("<b>You already own a Deluxe Onahole!</b>");
@@ -367,7 +318,7 @@ private function buyDildo():void {
 //}
 //
 //private function buyDeluxeOnahole():void {
-	////spriteSelect(23);
+	////userInterface.showName("\nGIACOMO");
 	//clearOutput();
 	//if (pc.gems < 50) {
 		//output("\n\nGiacomo sighs, indicating you need " + String(50 - pc.gems) + " more gems to purchase this item.");
@@ -381,7 +332,7 @@ private function buyDildo():void {
 //}
 //
 //private function pitchAllNaturalOnahole():void {
-	////spriteSelect(23);
+	////userInterface.showName("\nGIACOMO");
 	//clearOutput();
 	//if (pc.hasKeyItem("All-Natural Onahole") >= 0) {
 		//output("<b>You already own an All-Natural Onahole!</b>");
@@ -400,7 +351,7 @@ private function buyDildo():void {
 //}
 //
 //private function buyAllNaturalOnahole():void {
-	////spriteSelect(23);
+	////userInterface.showName("\nGIACOMO");
 	//clearOutput();
 	//if (pc.gems < 150) {
 		//output("\n\nGiacomo sighs, indicating you need " + String(150 - pc.gems) + " more gems to purchase this item.");
@@ -414,7 +365,7 @@ private function buyDildo():void {
 //}
 //
 //private function pitchDualStimulationBelt():void {
-	////spriteSelect(23);
+	////userInterface.showName("\nGIACOMO");
 	//clearOutput();
 	//if (pc.hasKeyItem("Dual Belt") >= 0) {
 		//output("<b>You already own a Dual Belt!</b>");
@@ -426,7 +377,7 @@ private function buyDildo():void {
 //}
 //
 //private function buyDualStimulationBelt():void {
-	////spriteSelect(23);
+	////userInterface.showName("\nGIACOMO");
 	//clearOutput();
 	//if (pc.gems < 50) {
 		//output("\n\nGiacomo sighs, indicating you need " + String(50 - pc.gems) + " more gems to purchase this item.");
@@ -441,3 +392,314 @@ private function buyDildo():void {
 	//}
 	//doNext(giacomoEroticaMenu);
 //}
+
+private function wormRemoval():void {
+	userInterface.showName("\nGIACOMO");
+	clearOutput();
+	output("You toss the gems at the merchant, who calmly hands you the bottle. Gulping down the liquid, your guts light up as if you swallowed fire. Pain overwhelms your body and you drop to your knees convulsing. You curse the merchant for poisoning you, yet you can only choke out gibberish through your groans. The pain quickly focuses from your stomach to your crotch as the worms inside you are clearly NOT happy with what you have done. You fall onto your back as the thrashing overwhelms you. With an unexpected climax, every worm in your body fights to escape your gonads. The fat worm that resided deep in your sex lazily pushes itself out last.\n\n");
+	output("Upon seeing the fat worm, Giacomo displays a freakish celerity by jumping off his cart, grabbing an empty container and collecting the fat worm. Regaining your senses, you look at him with inquisitive shock at what he just did.\n\n");
+	output("\"<i>You have to realize that I AM a merchant, after all.</i>\", he calmly replies. \"<i>Hell for you is heaven for someone else. This bugger will easily fetch 10,000 gems to some noble looking for a quick buzz. Don't WE know better!</i>\"\n\n");
+	output("The merchant puts away his prize and comes back to help you up. \"<i>Here.</i>\", he says as he shoves a couple of bottles into your hand. \"<i>This is on the house. You probably need it after the shock of getting those things out.</i>\"\n\n");
+	//Add 1 tincture of vitality to inventory
+	//Infestation purged. Hit Points reduced to 10% of MAX. Corruption -20.
+	if (pc.HPQ() > 15)
+		pc.HPRaw = int(pc.maxHP() * .15);
+	//Maybe add a random chance of losing a random transformation with a smaller chance of losing ALL transformations except gender changes. This will probably be a bitch to implement.
+	pc.removeStatusEffect("Infested");
+	//dynStats("lib", -1, "lus", -99, "cor", -4);
+	pc.slowStatGain("l", -1);
+	pc.lust(pc.lustMin(), true);
+	pc.cor( -4);
+	pc.credits -= 1750;
+	
+	itemScreen = function():*{ processTime(10 + rand(10)); mainGameMenu(); };
+	lootScreen = itemScreen;
+	useItemFunction = itemScreen;
+	itemCollect([new CoCVitalityTincture(), new CoCVitalityTincture()]);
+}
+
+private function wormRemovalOffer():void {
+	userInterface.showName("\nGIACOMO");
+	output("\n\n\"<i>Been playing with creatures best left alone, I see</i>\", he chuckles, \"<i>Infestations of any kind are annoying, yet your plight is quite challenging given the magnitude of corrupt creatures around here. It is not the first time I have seen one infested with THOSE worms.</i>\"\n\n");
+	output("You ask how he knows of your change and the merchant giggles heartily.\n\n");
+	output("\"<i>Do not look at me as if I am a mystic.</i>\", Giacomo heckles lightly. \"<i>Your crotch is squirming.</i>\"\n\n");
+	output("Looking down, you realize how right he is and attempt to cover yourself in embarrassment.\n\n");
+	output("\"<i>Fear not!</i>\", the purveyor jingles. \"<i>I have something that will cure you of those little bastards. Of course, there is also a chance that it will purge your system in general. This potion is not cheap. I will trade it for 175 gems.</i>\"\n\n");
+	//Broke as a joke
+	if (pc.credits < 1750)
+	{
+		output("You realize you don't have enough gems for such a pricey potion, but perhaps there is something else in his inventory you can buy.");
+		addNextButton(giacomoEncounter);
+	}
+	//Can afford
+	else
+	{
+		output("Do you purchase his cure?");
+		//Remove/No
+		clearMenu();
+		addButton(0, "Yes", wormRemoval);
+		addButton(1, "No", giacomoEncounter);
+	}
+}
+
+private function nightSuccubiFirstTime():void {
+	userInterface.showName("CERULEAN\nSUCCUBUS");
+	flags["COC.CERULEAN_POTION_DREAMS"] = 1;
+	flags["COC.CERULEAN_POTION_DOSES"]--;
+	output("\nAs you sleep, your rest becomes increasingly disturbed.  You feel a great weight on top of you and you find it difficult to breathe.  Stirred to consciousness, your eyes are greeted by an enormous pair of blue tinged breasts.  The nipples are quite long and thick and are surrounded by large, round areola.  A deep, feminine voice breaks the silence.  \"<i>I was wondering if you would wake up.</i>\"  You turn your head to the voice to see the visage of a sharp-featured, attractive woman.  The woman grins mischievously and speaks again.  \"<i>I was hoping that idiot, Giacomo, did not dilute the 'potion' again.</i>\"  Your campfire reflects off the woman's face and her beauty contains some sharply contrasting features.  The pupils of her eyes are slit like a cat's.  As she grins, she bares her teeth, which contain two pairs of long and short fangs.  This woman is clearly NOT human!  In shock, you attempt to get up, only prompting the woman to prove her inhuman nature by grabbing your shoulders and pinning you to the ground.  You see that each finger on her hand also contains a fourth joint, further proving her status.  Before you can speak a word, the woman begins mocking your fear and places her face in front of yours.  Her face is almost certainly demonic in nature.\n\n");
+	if (!pc.hasGenitals()) {
+		output("She quickly moves down to your crotch... only to discover no organs down there.\n\n");
+		output("*record scratch*\n\n");
+		output("\"<i>Wait a fucking minute,</i>\" the Succubus says, \"<i>Where's your dick?!</i>\"\n\n");
+		output("As you state your genderless nature, the succubus hops off and from nowhere pulls out a large folder marked \"<i>Corruption of Champions-Script</i>\" and begins thumbing through the pages.  After finding the page she is looking for, she reads it and looks off into the distance in disgust.\n\n");
+		output("\"<i>Hey Fenoxo and Dxasmodeus!!!!!!</i>\" the Succubus crows, \"<i>The goddamn script says that I should be milking someone's DICK!!!  Man, futa, herm, I don't give a shit.  YOUR OWN FUCKING SCRIPT SAYS I SHOULD BE MOUNTING AND MILKING A COCK!!!!  THIS IS A SEX GAME!!!!!!  THAT MEANS FUCKING!  WHAT THE HELL AM I SUPPOSED TO FUCK???!!!</i>\"\n\n");
+		output("The Succubus looks at you with utter contempt, \"<i>THIS motherfucker doesn't have a DAMN thing!  What am I supposed to do?!  I can't exactly order a fucking Happy Meal!!!!!</i>\"\n\n");
+		output("Throwing the script down in an utter rage, the tantrum continues, \"<i>Goddammit!  I can't believe this shit!  HEY!!!!!  INTERN!!!!  Bring me my robe, aspirins and cancer sticks!!!!</i>\"\n\n");
+		output("The Succubus walks a few paces away where a plain-dressed woman with a clipboard hands the Succubus a pack of cigarettes and a small bottle of aspirin.  She takes a fistful of the painkillers and immediately lights up a smoke.  The Succubus takes a couple of drags off the cig and rubs her temples.\n\n");
+		output("\"<i>You two are killing me!</i>\" she groans in clear frustration, \"<i>I come to work for you perverts based off the promise of MORE perverts to feed from and you do THIS to me!  I can't work like this!</i>\"\n\n");
+		output("The plain woman hands the Succubus a robe, which she crudely puts on as she storms off into the night.\n\n");
+		output("\"<i>I will discuss this horseshit with my agent,</i>\" the Succubus continues bitching, \"<i>THIS was NOT in my contract.</i>\"\n\n");
+		output("The Succubus stops, turns and points to you in derision.  \"<i>And YOU!  You no-cock, no-cunt having pissant!  Take your ass back to the lab before they find out you escaped!!!!!</i>\"\n\n");
+		output("The Succubus resumes her stormy exit.  You look at the bottle of Cerulean Potion and wonder if it REALLY had some psychotropics in it.  What the hell just happened?!");
+		flags["COC.CERULEAN_POTION_NEUTER_ATTEMPTED"] = 1;
+		addNextButton();
+		return;
+	}
+	
+	if (pc.hasCock() && !pc.hasVagina())
+		output("\"<i>Awwww!  Did my blue skin and pointy teeth scare you?</i>\" she says in a childish voice.  \"<i>Believe me stud, if I wanted to harm you, I would not have let you wake up at all.  I am here because you have 'called' me.</i>\"  She teases you with the empty blue bottle you bought from the merchant.  \"<i>My essence is in this bottle.  Any man who drinks this, I am compelled to return the pleasure by drinking his.</i>\"  The demon woman reaches her skinny hand down to your crotch where you see you have become fiercely erect.  The demon gently strokes your cock until you begin oozing generous amounts of your own natural lubricants.  The demon takes one of her massive breasts and teases you with her fat nipples.  \"<i>Open your mouth,</i>\" she demands.  \"<i>Take me into your mouth as I will soon take you into mine.</i>\"\n\n");
+	else if (pc.isHerm()) {
+		IncrementFlag("COC.CERULEAN_POTION_FUTA_USES");
+		output("\nIt is obvious that you have been confronted by a succubus.  As the fire illuminates your captor, her grin widens broadly.\n\n");
+		output("\"<i>Well, well, well!</i>\" the Succubus jingles.  \"<i>What have we here?!  A little girl with a big cock!</i>\"\n\n");
+		output("As the Succubus looks down at your " + pc.cockDescript(0) + ", you have quickly achieved one of the healthiest erections you have ever had.  The succubus quickly poises her hairy hole over your member and allows her weight to force your dick into her womb.  The demoness rests her weight in her lap as she allows you to fully penetrate her.  Her womb is hot and wet and her muscles have your prick in one of the strongest grips imaginable.  Even if you went totally limp, withdrawal would be an impossibility.  Wincing at the sudden crushing force of her vaginal muscles, the succubus giggles inhumanly.\n\n");
+		output("\"<i>Quit whimpering,</i>\" the Succubus orders.  \"<i>I hope the rumors about you futas are true.  I need a good, fiery load of cum to get me going.  I haven't had one in a while and as much as I LOVE men, they can only feed me so much.</i>\"\n\n");
+		output("You quickly try to struggle, but find the Succubus to be utterly dominating.  She wraps her arms around your back and entwines her lean legs around your hips.  The Succubus playfully licks your lips and grins.\n\n");
+		output("\"<i>You are getting your dick milked,</i>\" the Succubus says flatly, \"<i>Accept it.  Trust me, when I am done, you will want more of me, anyway.</i>\"\n\n");
+		output("As the Succubus finishes her ultimatum, you feel churning vaginal contractions stroking your massive cock.  Heavy, powerful, coordinated undulations work your dick as surely as the best handjob.  You quickly moan in shock and pleasure at such rough treatment.");
+	}
+	pc.lust(35);
+	addNextButton(ceruleanSuccubusEncounterPart2);
+}
+
+private function ceruleanSuccubusEncounterPart2():void {
+	clearOutput();
+	userInterface.showName("CERULEAN\nSUCCUBUS");
+	if (pc.hasCock() && !pc.hasVagina()) {
+		output("Your natural instincts immediately take over and you open your mouth and allow her nipple inside.  Immediately, your mouth has a mind of its own as you press your head firmly into her breast and begin suckling the unnaturally long teat like a starving baby.  The demon-woman laughs in satisfaction.  \"<i>To think, that you believed me to do you harm!</i>\" she taunts.  \"<i>Drink, little man.  Feed your lust as you will soon feed mine.</i>\"  Immediately, you feel her milk flood your mouth.  Its taste immediately reminds you of the potion you got from Giacomo.  You realize the potion was not a potion at all, but this demon's breast milk!  Concerned only for your blind libido, the suction of your mouth coaxes torrents of the devil's fluid into your mouth and down your throat.  She continues teasing your cock only enough to maintain your erection.  In time, your stomach signals that you are full and you break the seal from her tit, making a loud 'pop'.  She briefly hoses you down with milk, soaking you.\n\n");
+		output("The demon has a satisfied look on her face.  \"<i>Did I taste good?  Was I wholesome and fulfilling?</i>\" she asks.  \"<i>Since you have fed from my life-milk, it is only fair that I do the same.  To be fair, 'yes', I am as fierce as I look and I will leave you sore and insensible.  However, I do so to pleasure you and feed myself.  Accept it and be happy.</i>\"  She gives you another inhumanly toothy grin and kisses you deeply.  A small pang of fear still shoots through you as you feel the sharpness of her teeth.  She breaks away from your lips and sighs in excitement.  \"<i>Now, I FEED!</i>\" she utters jubilantly.");
+		pc.milkInMouth();
+	}
+	else {
+		output("\"<i>See,</i>\" the Succubus says triumphantly, \"<i>You are already enjoying it.  You don't even have to hump.  My cunt does all the work.  Try THAT with a human woman.  Good fucking luck.  Half of them don't even know how to keep a prick hard once it's inside them and then they bitch because THEY didn't cum.</i>\"\n\n");
+		output("The fierce milking continues for several minutes until you reflexively buck your hips as your inner organs fill with the white, milky life-water the demoness demands in order to slake her thirst.  Quick to take notice of your muscular reaction, the succubus snickers.\n\n");
+		output("\"<i>Ready to burst, are you?</i>\" the Succubus playfully challenges.  \"<i>Well, then.  No reason for you to hold back.</i>\"");
+	}
+	//dynStats("tou", .3, "lib", .5, "sen", .5, "lus", 5, "cor", 1);
+	pc.slowStatGain("p", 0.3);
+	pc.slowStatGain("l", 0.5);
+	pc.lust(5);
+	pc.cor(1);
+	addNextButton(ceruleanSuccubusEncounterPart3);
+}
+	
+private function ceruleanSuccubusEncounterPart3():void {
+	clearOutput();
+	userInterface.showName("CERULEAN\nSUCCUBUS");
+	if (pc.hasCock() && !pc.hasVagina()) {
+		output("Rotating herself into a 69 position, she seizes your throbbing member and effortlessly begins deep throating.  Her thighs wrap around your head and confront you with her surprisingly hairy pussy.  Her clitoris is long and erect, begging for attention and the smell of her pheromones enslaves you.  You bury your face into her furry mound, ignoring your normal revulsion to such an unshaved state and begin eating her as well as any woman you have ever pleased.  The demon takes your cock out of her mouth to cry in delight.  \"<i>YES, LITTLE MAN!</i>\" she screams.  \"<i>LICK ME!  TEASE ME!  LOVE MY WOMB WITH YOUR TONGUE!</i>\"  She responds by clamping her mouth around the head of your penis and sucking smartly.  A sharp pain in your ass signals the entry of her bony fingers working their way to your inner manhood.  Finding the root of your sex easily, she mashes down to force you to cum.\n\n");
+		output("Finding it impossible to resist such pleasure, you immediately begin cumming.  Glob after glob, stream after stream of your semen shoots into the woman's mouth.  Her timed sucking ensures that she swallows each drop as you launch it into her.  While you have been proud of the ability to cum in a woman for over a minute, you are wracked with both pain and pleasure as your ejaculations continue for almost ten.  Once you have spent your last, the demon releases your penis to bear down on your face with her thighs and unloads a massive squirting orgasm.  Your face is soaked with pussy juice as you see her cunt spasm from the force of her pleasure.  The sight of her rhythmic muscles is hypnotic.  She then promptly removes her finger from your ass.");
+	}
+	else {
+		output("The Succubus rears up and pins your shoulders firmly to the ground.  The speed of her vaginal contractions becomes impossibly fast.  As you look down at the Succubus' crotch, you can clearly see her contractions working your penis despite the massive growth of fur between your legs.  The pressure deep behind your cock is crushing.  With one last spasmodic push, you release a thick, superhuman gout of semen deep in the Succubus' cunt.  She lets out an inhuman howl of pleasure as her womb clamps down upon you like a vise.  She literally squeezes each stream and drop of cum out of you.\n\n");
+		output("After a couple of minutes, you feel your dick weaken and begin going limp.  Satisfied, you feel the Succubus' grip on your prick release and you quickly fall out of her womb.  Much to your surprise, despite the massive load you released, not a single drop of cum falls out or is left on your prick.  The Succubus begins rubbing herself all over, clearly in post-orgasmic ecstasy from absorbing your fluids.  After a couple of chain-orgasms, the Succubus sits down next to the empty jar.\n\n");
+		output("She places the mouth of the jar next to one of her fat nipples and begins milking her tit into the jar, filling it back up with her fluids.  She places the jar next to you and stands up.\n\n");
+		output("\"<i>It has been a long time since I soaked up a load that good,</i>\" she says, \"<i>Anytime you want more of that, just drink my milk again.  It's only fair.  I take your milk, you take mine.</i>\"\n\n");
+		output("She smiles and flies off, leaving you with a fresh bottle of \"Cerulean Potion\".  As pleasing as the experience was, it has left you thoroughly exhausted.");
+			//[Mechanics: Corruption increase same as male counterpart. No hit point recover for that night. When fatigue model is implemented, no fatigue recovery and add 25 points]
+	}
+	pc.energy( -20);
+	pc.orgasm();
+	pc.slowStatGain("l", 0.5);
+	addNextButton(ceruleanSuccubusEncounterPart4);
+}
+
+private function ceruleanSuccubusEncounterPart4():void {
+	userInterface.showName("CERULEAN\nSUCCUBUS");
+	if (pc.hasCock() && !pc.hasVagina()) {
+		clearOutput();
+		output("She stands up and helps you to your [pc.feet].  While dazed, ");
+		if (pc.tallness < 80)
+			output("you see that she towers over you.  She must stand well over seven feet in height.  ");
+		if (pc.tallness >= 80 && pc.tallness < 90)
+			output("you see she is about as tall as you - around seven feet in height.  ");
+		if (pc.tallness >= 90)
+			output("you see she's definitely shorter than you, only about seven feet tall.  ");
+		output("She braces you against a tree and picks up the empty potion bottle.  Grabbing the tit you ignored during the unholy tryst, she pokes her nipple into the bottle and squeezes for about a minute.  Satisfied, she corks the bottle and hands it to you.  She begins licking her nectar off your face.  \"<i>You have pleased me, little man,</i>\" she coos.  \"<i>It is a rare thing indeed for one of my meals to pleasure me so.  If you ever desire for me again, all you need is to drink my milk.  I will appear forthwith to let you suckle me and I will suckle you! We will feed each other and grow stronger for the effort!</i>\"  ");
+		output("She gives a giggle and disappears before your eyes.  At that moment the fatigue from the massive fucking you received catches up with you and you pass out in a slump.");
+		//dynStats("str", .5,"lus", 4);
+		pc.slowStatGain("p", 0.5);
+		pc.lust(4);
+	}
+	
+	itemScreen = mainGameMenu;
+	lootScreen = mainGameMenu;
+	useItemFunction = mainGameMenu;
+	itemCollect([new CoCCeruleanPotion()]);
+}
+		
+private function nightSuccubiRepeat():void {
+	clearOutput();
+	userInterface.showName("CERULEAN\nSUCCUBUS");
+	flags["COC.CERULEAN_POTION_DREAMS"]++;
+	flags["COC.CERULEAN_POTION_DOSES"]--;
+	if (!pc.hasGenitals()) {
+		if (int(flags["COC.CERULEAN_POTION_NEUTER_ATTEMPTED"]) == 0) {
+			output("As you sleep, your rest becomes increasingly disturbed. You feel a great weight on top of you and you find it difficult to breathe. Stirred to consciousness, your eyes are greeted by an enormous pair of blue-tinged breasts. The nipples are quite long and thick and are surrounded by large, round areola. A deep, feminine voice breaks the silence, \"<i>I was wondering if you would wake up.</i>\" You turn your head to the voice to see the visage of a sharp featured, attractive woman. The woman grins mischievously and speaks again, \"<i>I was hoping that idiot, Giacomo, did not dilute the 'potion' again.</i>\" Your campfire reflects off the woman's face and her beauty contains some sharply contrasting features. The pupils of her eyes are slit like a cat's. As she grins, she bares her teeth, which contain two pairs of long and short fangs. This woman is clearly NOT human! In shock, you attempt to get up, only prompting the woman to prove her inhuman nature by grabbing your shoulders and pinning you to the ground. You see that each finger on her hand also contains a fourth joint, further proving her status. Before you can speak a word, the woman begins mocking your fear and places her face in front of yours. Her face is almost certainly demonic in nature.\n\n");
+			output("She quickly moves down to your crotch...only to discover no organs down there.\n\n");
+			output("*record scratch*\n\n");
+	
+			output("\"<i>Wait a fucking minute.</i>\", the Succubus says, \"<i>Where's your dick?!</i>\"\n\n");
+	
+			output("As you state your genderless nature, the succubus hops off and from nowhere pulls out a large folder marked \"<i>Corruption of Champions-Script</i>\" and begins thumbing through the pages. After finding the page she is looking for, she reads it and looks off into the distance in disgust.\n\n");
+	
+			output("\"<i>Hey Fenoxo and Dxasmodeus!!!!!!</i>\", the Succubus crows, \"<i>The goddamn script says that I should be milking someone's DICK!!! Man, futa, herm, I don't give a shit. YOUR OWN FUCKING SCRIPT SAYS I SHOULD BE MOUNTING AND MILKING A COCK!!!! THIS IS A SEX GAME!!!!!! THAT MEANS FUCKING! WHAT THE HELL AM I SUPPOSED TO FUCK???!!!</i>\"\n\n");
+	
+			output("The Succubus looks at you with utter contempt, \"<i>THIS motherfucker doesn't have a DAMN thing! What am I supposed to do?! I can't exactly order a fucking Happy Meal!!!!!</i>\"\n\n"); 
+	
+			output("Throwing the script down in an utter rage, the tantrum continues, \"<i>Goddammit! I can't believe this shit! HEY!!!!! INTERN!!!! Bring me my robe, aspirins and cancer sticks!!!!</i>\"\n\n");
+	
+			output("The Succubus walks a few paces away where a plain-dressed woman with a clipboard hands the Succubus a pack of cigarettes and a small bottle of aspirin. She takes a fistful of the painkillers and immediately lights up a smoke. The Succubus takes a couple of drags off the cig and rubs her temples.\n\n");
+	
+			output("\"<i>You two are killing me!</i>\", she groans in clear frustration, \"<i>I come to work for you perverts based off the promise of MORE perverts to feed from and you do THIS to me! I can't work like this!</i>\"\n\n");
+	
+			output("The plain woman hands the Succubus a robe, which she crudely puts on as she storms off into the night.\n\n");
+	
+			output("\"<i>I will discuss this horseshit with my agent.</i>\", the Succubus continues bitching, \"<i>THIS was NOT in my contract.</i>\"\n\n");
+	
+			output("The Succubus stops, turns and points to you in derision. \"<i>And YOU! You no-cock, no-cunt having pissant! Take your ass back to the lab before they find out you escaped!!!!!</i>\"\n\n");
+	
+			output("The Succubus resumes her stormy exit. You look at the bottle of Cerulean Potion and wonder if it REALLY had some psychotropics in it. What the hell just happened?!");
+			flags["COC.CERULEAN_POTION_NEUTER_ATTEMPTED"] = 1;
+		}
+		//REPEAT
+		else {
+			output("\nAs you begin to relax, you hear footsteps behind you, expecting the unholy interloper and pray for a better... and more understanding... encounter.\n\n");
+
+			output("You turn around, hoping for an exciting encounter only to find a rather short, plain-faced woman with horned-rim glasses and a purple dress on. She appears to be holding a stack of papers in her hand.\n\n");
+
+			output("\"<i>Ahem.</i>\", the woman says meekly, \"<i>I hate to bother you, but I was sent by the CoC writers and staff to hand you this.</i>\"\n\n");
+
+			output("Scratching your head, you inquire what the document is. The woman smiles shyly and hands it to you.\n\n");
+
+			output("\"<i>This is the script and production notes for Corruption of Champions,</i>\" she says with a small bit of pride, \"<i>Apparently, you need to read the highlighted sections. They are important.</i>\"\n\n");
+
+			output("You take the script, scratching your head at the surreal nature of the moment. You thumb through the pages, finding virtually every aspect of your life and encounters written as if foreseen by great mystics. The accuracy is nothing short of horrifying. You find a highlighted section that appears to be what the woman is referring to. The note is terse and outright blunt.\n\n");
+			
+			output("\"<i>GENDER NEUTRAL CHARACTERS ARE BUTT-MONKEYS. IF THE ENCOUNTER INVOLVES SEX, EXPECT SOMETHING FUCKED UP TO HAPPEN INSTEAD. ACTORS WHO PLAY NEUTER CHARACTERS SHOULD EXPECT TO PLAY ONLY FOR LULZ</i>.\"\n\n");
+
+			output("The shock is overwhelming. The script basically says that you will never catch a break. As this reality drapes about you, the script disappears and you hear a cacophony of mocking laughter in all directions. The woman is nowhere to be found.\n\n");
+
+			output("As the cacophony fades, you only hear one facetiously toned word,\n\n");
+
+			output("\"<i><b>Problem?</b></i>\"");
+		}
+		addNextButton();
+		return;
+	}
+	pc.orgasm();
+	pc.cor(2);
+	pc.milkInMouth();
+	if (pc.hasCock() && !pc.hasVagina()) {
+		if (pc.cor() < 66) {
+			output("Against your better judgment, you've again partaken of the cerulean elixir and fallen asleep. You are quickly awakened by a thick nipple being thrust into your mouth and torrents of breast milk gushing down your throat as the succubus returns to have her way with you. Looking up, your eyes meet hers as a hungry manipulative grin stretches across her blue face. Unable to control your lust, your prick jumps to attention, which prompts the demoness to ");
+			if (pc.isTaur()) output(" crouch between your legs and impale herself on your " + pc.cockDescript(0) + " with a wet sound caused by her well-lubricated vulva. Y");
+			else output(" open her womb and quickly consume your " + pc.cockDescript(0) + ". She embraces you, entrapping your head in her cleavage as y");
+			output("ou quickly feel her superhuman vaginal muscles work and stroke your " + pc.cockDescript(0) + " better than any human woman or pair of hands could ever hope to accomplish. You are helpless as your unholy embrace milks the both of you in an infernal symphony of debauchery. The familiar cramp of an impending ejaculation grips you and your twitching signals the succubus of your approaching climax.\n\n");
+			if (pc.isTaur()) output("Pushing on your forelegs, she engulfs even more of your " + pc.cockDescript(0));
+			else output("Almost crushing your pelvis, she wraps her legs around your body");
+			output(" and her muscles churn mercilessly demanding that you release your 'milk' as freely as she has released hers into you. Stimulated beyond any human ability to maintain control, you bear down and release a milky flood of your own inside the succubus. Moaning in ecstasy, she ");
+			if (pc.isTaur()) output("arches under your belly as you feel your " + pc.cockDescript(0) + " bending pleasurably inside her, and");
+			else output("releases you from her grip, allowing you to finally breathe deeply, and leans back, arching high to reveal your joined genitals in the moonlight. You visibly see");
+			output(" her contractions milking your " + pc.cockDescript(0) + " as fiercely as a maid milks a cow! Another torrent of cum pushes its way out of your body and you let out a moan of pleasure and exhaustion.\n\n");
+			output("As you are passing out, you feel a deep kiss upon your lips from the succubus. \"You taste better each time we join. Call upon me soon, lest I take what I want from you anyway,\", says the lustful creature.\n\n");
+			output("Fatigue takes you and you collapse into a deep sleep.  ");
+		}
+		else {
+			output("Knowing the succubus will come, you do not even bother trying to sleep. Instead, you prepare a little surprise for her. You briefly jerk off and start edging yourself, preparing a massive batch to unload inside her. Hopefully, she will be the one to get more than she bargained for.\n\n");
+			output("The succubus comes, as you predicted. Despite her obvious strength and size difference to you, you grab her and push her down to the ground and immediately push your angry cock into her hairy hole. The succubus, surprised and enthralled, laughs at your aggression.\n\n");
+			output("\"<i>I thought I was the hungry one.</i>\", she chuckles. \"I am all yours, little man. FEED ME!\"\n\n");
+			output("You begin bucking your ");
+			if (pc.isTaur()) output("flanks");
+			else output("hips");
+			output(" in the all-too-familiar rhythm, hammering away at the succubus' cunt. Impressed with your initiative, she chooses to remain submissive as you work up an impressive load of spunk. Trying with all of your might, you continue to hold off your orgasm, painfully, as you continue stimulating your inhuman lover.\n\n");
+			output("However, she senses your control and immediately brings her own muscles into the little love game. With one good squeeze, she breaks down any control and resistance you have. Sensing you are about to explode, she ");
+			if (pc.isTaur()) output("pushes on your forelegs, impaling herself even deeper on your " + pc.cockDescript(0));
+			else output("wraps her legs around your hips and bears down");
+			output(". You feel the head of your prick push past the dilated opening in her cervix, which immediately contracts around your head. Your penis is literally trapped and caught in her womb!\n\n");
+			output("Groaning loudly, long muscle spasms release the painfully stored semen into the deepest parts of the succubus. The sensation of your hot cum so deep inside her body triggers her peak. ");
+			
+			if (pc.isTaur()) output("She moans inhumanly, and reflexively digs her claws into your forelegs. Searing with lust, the pain means little to you as you only feel the sensation of your body forcing your fluids out of your body and into hers. You press your " + pc.cockDescript(0) + " into her");
+			else output("She embraces you, moaning inhumanly, and reflexively digs her claws into your back. Searing with lust, the pain means little to you as you only feel the sensation of your body forcing your fluids out of your body and into hers. You slam your pelvis into hers");
+			output(", as if to force yourself to cum harder than you already are capable of, prompting an equally pleasurable reaction from her.\n\n");
+			output("For the first time since you have had your 'visits', the succubus appears winded. Without another word, her muscles release your manhood, which she quickly licks clean of your intermingled juices.  She tongues your face in lustful approval and flies away. You quickly fall asleep, utterly spent.  ");
+			//dynStats("lib", -1);
+			pc.slowStatGain("l", -1);
+		}
+	}
+	else if (pc.isHerm()) {
+		//Bad End-Cerulean Succubus Futa/herm
+		//[Conditions: Corruption >50. Drink 10 Cerulean potions over the course of 20 Days. (Other stipulations as required that prevent interference with other events-to be determined)]
+		if (flags["COC.CERULEAN_POTION_BAD_END_FUTA_COUNTER"] > 10 && pc.cor() > 50) {
+			output("As the Succubus mounts you, an uncontrollable urge takes over your mind and body. Without any thought, you quickly thrust one of her nipples in your mouth and begin suckling wildly like a newborn child. The Succubus cries in shock and pleasure as you begin feeding from her and quickly begins her ritualistic milking of your dong. The warm milk passes into your mouth and down your throat, where it settles peacefully in your stomach. The sensation of fulfillment from her tits is only eclipsed by the massive load of semen you feel cramping your prostate.");
+			
+			//[ (Herm-Dickgirl variant only)
+			if (pc.balls > 0) output("  Even your nuts are unbearably sore.");
+			output("  As the milk begins to dry out of the Succubus' tit, you release it from your control and launch an impossible load of cum into the succubus. The demoness releases her hold of your cock and hops off your crotch and jumps to place her mouth over your erupting penis. Reflexively grabbing her head, you push your cock as deep as you can in her mouth and for minutes, pump stream after stream of hot lust into her gullet. After the last load leaves your dong, you pass out.\n\n");
+
+			output("After a short time, you wake up sore from head to toe. The Succubus is sitting next to you with an utterly satisfied look on her face.\n\n");
+
+			output("\"<i>Well, this was unexpected.</i>\", she says, \"<i>I did not expect you to change. Normally, men are susceptible to my milk, but apparently it works on herms, too.</i>\"\n\n"); 
+
+			output("As you stand, you feel awkward as your body does not feel right. You look at the Succubus and she no longer appears as large as she once was. Quick to realize a problem, you look at your reflection in a small bucket at your campsite. Other than your own unique facial features, you see ANOTHER Cerulean Succubus looking back at you! You ARE a Cerulean Succubus!");
+			//[(if the player has a large number of transformations) 
+			if (pc.humanScore() < 3) output("  All of the other corruptions and changes to your body have faded away as your new form has taken shape.");
+			output("  As the reality soaks in, you feel a sharp pain in your stomach and your cock. You NEED to feed. Cum, milk, it doesn't matter. Likewise, your dick is hard and you need to cum. Despite your need, you cannot bring yourself to masturbate. You want ANOTHER'S attention.\n\n");
+
+			output("Without further acknowledgement, you take up your on your demonic wings to find your first \"meal\". The Succubus left behind simply giggles as she sees another of her kind take up the night in search for more meals and pleasure.");
+			badEnd();
+			return;
+		}
+		else {
+			IncrementFlag("COC.CERULEAN_POTION_FUTA_USES");
+			IncrementFlag("COC.CERULEAN_POTION_BAD_END_FUTA_COUNTER");
+			output("\nAs you begin to relax from a long day of adventuring, the succubus returns and lands squarely in your lap, just missing your throbbing erection. The succubus growls in arousal as she thrusts one of her fat nipples into your mouth. Reflexively, you begin suckling the teat with neither shame nor restraint. Milk floods into your mouth as you sense the weight of the succubus descend upon your cock. The familiar warmth and snugness of her cunt greet your hungry prick as her muscles begin the savory churning to coax your body into producing the 'milk' she needs to sate her own hunger. Your eyes roll back into your head as the torrent of milk pouring down your throat increases the sensitivity in all of your organs, compelling your hips to reflexively buck to press your dick deeper.\n\n");
+			
+			output("The Succubus restrains you without missing a stroke or disrupting your breastfeeding as the pangs of orgasmic pleasure swell up at the base of your cock. You wrap your arms forcefully around the succubus as you bear down upon your crotch, releasing the painfully stockpiled load of lust into the demoness' cunt for her own sustenance. The succubus lets out an inhuman howl of pleasure as her own orgasm begins to crush your cock, draining every last drop out of you.\n\n");
+
+			output("Your consciousness begins to fade as the orgasm subsides. The succubus pops her tit out of your mouth and squeezes more of her essence into the empty bottle. She licks your lips and flies away just in time for you to pass out.  ");
+			//Clear out any queue'ed events if bad-end
+			//coming.  PC has to dig his own grave.
+			if (flags["COC.CERULEAN_POTION_BAD_END_FUTA_COUNTER"] > 10) {
+				flags["COC.CERULEAN_POTION_DOSES"] = undefined;
+			}
+			pc.energy( -20);
+			pc.cumMultiplierRaw++;
+			//[Maintain first encounter mechanics. New variable to keep track of subsequent encounters within a specific time period]
+		}
+	}
+	output("\n");
+	pc.orgasm();
+	//dynStats("str", rand(2),"tou", rand(2), "spe", rand(2), "int", rand(2), "cor", 1);
+	pc.slowStatGain("p", rand(2));
+	pc.slowStatGain("r", rand(2));
+	pc.slowStatGain("a", rand(2));
+	pc.slowStatGain("i", rand(2));
+	pc.slowStatGain("w", rand(2));
+	pc.cor(1);
+	
+	itemScreen = mainGameMenu;
+	lootScreen = mainGameMenu;
+	useItemFunction = mainGameMenu;
+	itemCollect([new CoCCeruleanPotion()]);
+}

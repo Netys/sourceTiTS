@@ -1061,5 +1061,5 @@ private function acceptTamaniFacesits():void {
 }
 
 public function encounterTamaniPosible():Boolean {
-	return Flag("COC.TAMANI_DEFEATS") < 10 && pc.hasGenitals() /*flags[kFLAGS.TAMANI_TIME_OUT] == 0 && */ && (pc.hasCock() || !pc.hasKeyItem("Deluxe Dildo"));
+	return int(flags["COC.TAMANI_DEFEATS"]) < 10 && pc.hasGenitals() && int(flags["COC.TAMANI_TIME_OUT"]) == 0 && (pc.hasCock() || !pc.hasKeyItem("Deluxe Dildo"));
 }

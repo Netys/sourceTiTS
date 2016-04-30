@@ -138,19 +138,21 @@ private function willOWispKitsune():void
 	output("As you explore deeper into the dense wood, you are abruptly aware that your surroundings have grown darker without warning.  The back of your neck tingles lightly with a sense of foreboding, and you instinctively [pc.readyWeapon], feeling uneasy.  Wracked with paranoia, you find yourself swiveling to face toward every random noise, and you could <i>swear</i> you just heard a voice through the trees.  There it was again!  As the ghostly, feminine laughter fills your ears, you are positive that it can't just be your imagination.  You turn left, then right, trying to pinpoint its source, but it truly sounds as though it is all around you now.\n\n");
 	output("Catching a glimpse of motion out of the corner of your eye, you whip around to face it, but are surprised to see that the only thing there is a small, pale blue flame, flitting about idly.  It dances around hypnotically, and as you stare into its ghostly light, you find your conscious mind growing hazy.  Your concerns suddenly seem trivial, and you find yourself relaxing gradually as the ethereal wisp glides along your arms, leaving behind a cool tingle where it touches you.\n\n");
 	output("It seems to be beckoning you to follow it.");
-	//If player has Traveler's Guide
-	//if (pc.hasKeyItem("Traveler's Guide") >= 0) {
-		//output("\n\nYour mind is jogged out of its haze when you remember a note from the Traveler's Guide.  It warned about mysterious flames in the forest that lead hapless adventurers astray.  You hesitate now, wondering what to do.");
-		////[Turn Back] [Follow] //automatically follow without traveler's guide.
-		//simpleChoices("Turn Back", turnBackFromWillOWisp, "Follow", followTheWillOWisp, "", null, "", null, "", null);
-	//}
-	//else 
+	
 	clearMenu();
-	addButton(0, "Next", followTheWillOWisp);
-	if (pc.willpower() >= 30) {
-		output("\n\nYou shake off haze from your mind.  Mysterious flames in the forest?  You hesitate now, wondering what to do.");
+	//If player has Traveler's Guide
+	if (pc.hasKeyItem("Traveler's Guide") && pc.willpower() >= 10) {
+		output("\n\nYour mind is jogged out of its haze when you remember a note from the Traveler's Guide.  It warned about mysterious flames in the forest that lead hapless adventurers astray.  You hesitate now, wondering what to do.");
 		addButton(0, "Follow", followTheWillOWisp);
 		addButton(1, "Turn Back", turnBackFromWillOWisp);
+	}
+	else {
+		addButton(0, "Next", followTheWillOWisp);
+		if (pc.willpower() >= 30) {
+			output("\n\nYou shake off haze from your mind.  Mysterious flames in the forest?  You hesitate now, wondering what to do.");
+			addButton(0, "Follow", followTheWillOWisp);
+			addButton(1, "Turn Back", turnBackFromWillOWisp);
+		}
 	}
 }
 

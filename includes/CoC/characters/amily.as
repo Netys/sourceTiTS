@@ -4870,7 +4870,7 @@ private function corruptAmilysPussyGetsMotherfuckingFucked():void {
 
 	output("\"<i>Torturing myself you say? I think you're right. Maybe I should see if ");
 	//[(if Jojo's corrupt)
-	if (flags["COC.JOJO_STATE"] >= 5 && flags["COC.JOJO_DEAD_OR_GONE"] == 0) output("Jojo wants to play,");
+	if (campCorruptJojo()) output("Jojo wants to play,");
 	//(else)
 	else output("I can't find someone else to play with,");
 	output("</i>\" you say, nonchalantly attempting to pull away from her. \"<i>No!</i>\" Amily screams; her legs tighten about your waist with such force that she actually lifts herself off of the ground in her eagerness to plant herself firmly against your crotch, rubbing her slavering pussy against you. \"<i>Mine! My fuck! Mine!</i>\" she squeaks indignantly. You laugh at how far you've pushed your little mouse slave.  Sliding your " + pc.cockDescript(0) + " against her pussy, you bend down and grope her breasts roughly, drawing a desperate moan from her; slowly you get closer to her ears, then whisper, \"<i>Go ahead,</i>\" while humping against her to further excite her.\n\n");

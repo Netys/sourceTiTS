@@ -128,7 +128,7 @@ public function meditate():void {
 	output("You find a comfortable and secluded place to sit down on and meditate.  As always, meditation brings a sense of peace and calm to you, but it eats up two hours of the day.");
 	
 	pc.cor( -0.3); // Cleanse some corruption.
-	if(pc.libido() > 5) pc.slowStatGain("l", -0.25); // Small libdo loss.
+	if(pc.libidoRaw > 5) pc.slowStatGain("l", -0.25); // Small libdo loss.
 	pc.slowStatGain("w", 0.25); // Small willpower training.
 	pc.lust(pc.lustMin(), true); // Calm as much as possible.
 	pc.energy(pc.energyMax() / 4); // You are basically resting, so energy restoration is appropriate.
