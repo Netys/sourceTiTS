@@ -683,6 +683,7 @@ package classes.GameData
 			AFL.TooltipTitle = "AFL";
 			AFL.TooltipBody = "Bring out your final argument.";
 			AFL.Implementor = AFLImpl;
+			AFL.RequiresTarget = false;
 			a.push(AFL);
 		}
 		

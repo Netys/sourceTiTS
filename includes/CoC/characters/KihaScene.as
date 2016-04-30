@@ -10,37 +10,37 @@ import classes.Engine.Utility.*;
 public function encounterKiha():void {
 	clearOutput();
 	//spriteSelect(72);
-	//if(kihaFollower.followerKiha() && flags[kFLAGS.KIHA_NEEDS_TO_REACT_TO_HORSECOCKING] == 1) {
-		//kihaFollower.kihaReactsToHorseDicking();
-		//return;
-	//}
+	if(followerKiha() && flags["COC.KIHA_NEEDS_TO_REACT_TO_HORSECOCKING"] == 1) {
+		kihaReactsToHorseDicking();
+		return;
+	}
 	//kihaBitchesOutCorruptPCs()
-	//if(flags[kFLAGS.KIHA_AFFECTION_LEVEL] > 0 && (cor() >= (66 + cor()ruptionTolerance()) && flags[kFLAGS.MEANINGLESS_CORRUPTION] <= 0) && flags[kFLAGS.KIHA_CORRUPTION_BITCH] != 1) {
-		//kihaFollower.kihaBitchesOutCorruptPCs();
-		//return;
-	//}
+	if(flags["COC.KIHA_AFFECTION_LEVEL"] > 0 && pc.cor() >= 66 && flags["COC.KIHA_CORRUPTION_BITCH"] != 1) {
+		kihaBitchesOutCorruptPCs();
+		return;
+	}
 	//kihaUnBitchesOutCorruptPCs()
-	//if(cor() < 66 && flags[kFLAGS.KIHA_CORRUPTION_BITCH] == 1) {
-		//kihaFollower.kihaUnbitchesUncorruptedFolks();
-		//return;
-	//}
+	if(pc.cor() < 66 && flags["COC.KIHA_CORRUPTION_BITCH"] == 1) {
+		kihaUnbitchesUncorruptedFolks();
+		return;
+	}
 	//Friendly+ meeting
-	//if(flags[kFLAGS.KIHA_AFFECTION_LEVEL] >= 1 && flags[kFLAGS.KIHA_CORRUPTION_BITCH] != 1) {
-		//if(flags[kFLAGS.KIHA_AFFECTION_LEVEL] == 2 && flags[kFLAGS.KIHA_AFFECTION] >= 100 && flags[kFLAGS.KIHA_MOVE_IN_OFFER] == 0) {
-			//kihaFollower.kihaOffersToMoveIn();
-			//return;
-		//}
-		//kihaFollower.kihaFriendlyGreeting();
-		//return;
-	//}
+	if(flags["COC.KIHA_AFFECTION_LEVEL"] >= 1 && flags["COC.KIHA_CORRUPTION_BITCH"] != 1) {
+		if(flags["COC.KIHA_AFFECTION_LEVEL"] == 2 && flags["COC.KIHA_AFFECTION"] >= 100 && int(flags["COC.KIHA_MOVE_IN_OFFER"]) == 0 && allowFollowers()) {
+			kihaOffersToMoveIn();
+			return;
+		}
+		kihaFriendlyGreeting();
+		return;
+	}
 	//If currently paid up on toll, don't run into her!
 	//Count meetings
 	IncrementFlag("COC.TIMES_MET_KIHA");
 	//PLOT FIGHT TIME!
-	//if(cor() < 66 && flags[kFLAGS.KIHA_AFFECTION_LEVEL] == 0 && flags["COC.KIHA_TALK_STAGE"] >= 3 && pc.gender > 0) {
-		//kihaFollower.kihaSpiderEventIntro();
-		//return;
-	//}
+	if(pc.cor() < 66 && int(flags["COC.KIHA_AFFECTION_LEVEL"]) == 0 && flags["COC.KIHA_TALK_STAGE"] >= 3 && pc.hasGenitals()) {
+		kihaSpiderEventIntro();
+		return;
+	}
 	
 	//First time
 	if(flags["COC.TIMES_MET_KIHA"] == 1) {
@@ -54,7 +54,7 @@ public function encounterKiha():void {
 		addButton(0, "Fight", meetKihaAndFight, null, "Fight", "Fight the dragoness!");
 		addButton(1, "Ask Why", askWhy, null, "Ask Why", "Ask Kiha why she's trying to drive you off.");
 		//addButton(2, "Buy Passage", offerToBuyPassageFromKiha, null, null, null, "Try to offer Kiha 200 gems to buy passage.");
-		addButton(4, "Leave", leaveWhenMeetingAgressiveKiha);
+		addButton(14, "Leave", leaveWhenMeetingAgressiveKiha);
 	}
 	//*Repeat Encounter - PC WAS VICTORIOUS LAST FIGHT 
 	else if(flags["COC.PC_WIN_LAST_KIHA_FIGHT"] == 1) {
@@ -103,13 +103,13 @@ public function encounterKiha():void {
 		output("\"<i>Don't even start,</i>\" she commands, advancing on you as she continues, \"<i>I told you to avoid my domain and yet you ignored my imperative and returned.  You may be a fucking masochist or a retard, but trust me, you won't enjoy this.</i>\"\n\n");
 		
 		//if(flags[kFLAGS.KIHA_TOLL] == 0) {
-			output("If you hurry, you might get a word in edge-wise.  What do you do?", false);
+			output("If you hurry, you might get a word in edge-wise.  What do you do?");
 			//[Fight] [Ask Why][Buy Passage][Leave]
 			clearMenu();
 			addButton(0, "Fight", meetKihaAndFight, null, "Fight", "Fight the dragoness!");
 			addButton(1, "Ask Why", askWhy, null, "Ask Why", "Ask Kiha why she's trying to drive you off.");
 			//addButton(2, "Buy Passage", offerToBuyPassageFromKiha, null, null, null, "Try to offer Kiha 200 gems to buy passage.");
-			addButton(4, "Leave", leaveWhenMeetingAgressiveKiha);
+			addButton(14, "Leave", leaveWhenMeetingAgressiveKiha);
 			//simpleChoices("Fight",meetKihaAndFight,"Ask Why",askWhy,"Buy Passage",offerToBuyPassageFromKiha,"",0,"Leave",leaveWhenMeetingAgressiveKiha);
 		//}
 		//else {

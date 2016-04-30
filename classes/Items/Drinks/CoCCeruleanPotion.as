@@ -79,7 +79,7 @@ package classes.Items.Drinks
 				//First timer huh?
 				else output("You do not notice any real effects.  Did the merchant con you?");
 			}
-			if (kGAMECLASS.flags["COC.CERULEAN_POTION_DOSES"] == undefined) kGAMECLASS.flags["COC.CERULEAN_POTION_DOSES"]++;
+			if (kGAMECLASS.flags["COC.CERULEAN_POTION_DOSES"] == undefined) kGAMECLASS.flags["COC.CERULEAN_POTION_DOSES"] = 0;
 			if (kGAMECLASS.flags["COC.CERULEAN_POTION_DOSES"] < 3) kGAMECLASS.flags["COC.CERULEAN_POTION_DOSES"]++;
 			
 			return false;

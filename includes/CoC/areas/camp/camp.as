@@ -30,7 +30,7 @@ public function cocCampMenu():void {
 	//campLoversButton();
 	//campSlavesButton();
 	
-	addButton(5, "Debug", doDebugFunction);
+	//addButton(5, "Debug", doDebugFunction);
 	
 	// TODO: camp stash
 	if (hasShipStorage()) addButton(3, "Stash", shipStorageMenuRoot);
@@ -40,8 +40,12 @@ public function cocCampMenu():void {
 	addButton(7, "Portal", abortIAmNotBloodyChampion, undefined, "Portal", "Exit simulation.");
 }
 
+public function inCamp():Boolean
+{
+	return currentLocation == "COC_CAMP";
+}
+
 public function doDebugFunction():void {
-	giacomoEncounter();
 }
 
 public function hasCompanions():Boolean {
@@ -104,7 +108,7 @@ public function loversCount():int {
 	//if(isabellaFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_ISABELLA] == 0) counter++;
 	//if(player.findStatusAffect(StatusAffects.CampMarble) >= 0 && flags[kFLAGS.FOLLOWER_AT_FARM_MARBLE] == 0) counter++;
 	if(amilyFollower() && !amilyCorrupt()) counter++;
-	//if(followerKiha()) counter++;
+	if(followerKiha()) counter++;
 	//if(flags[kFLAGS.NIEVE_STAGE] == 5) counter++;
 	//if(flags[kFLAGS.ANT_WAIFU] > 0) counter++;
 	return counter;
@@ -137,7 +141,7 @@ public function slavesCount():int {
 	var counter:Number = 0;
 	//if(latexGooFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_LATEXY] == 0) counter++;
 	//if(vapulaSlave() && flags[kFLAGS.FOLLOWER_AT_FARM_VAPULA] == 0) counter++;
-	//if(campCorruptJojo() && flags[kFLAGS.FOLLOWER_AT_FARM_JOJO] == 0) counter++;
+	if(campCorruptJojo() && int(flags["COC.FOLLOWER_AT_FARM_JOJO"]) == 0) counter++;
 	if(amilyFollower() && amilyCorrupt() && flags["COC.FOLLOWER_AT_FARM_AMILY"] == undefined) counter++;
 	////Bimbo sophie
 	//if(bimboSophie() && flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] == 0) counter++;
@@ -219,6 +223,10 @@ public function campEvent():Boolean
 	if (flags["COC.JOJO_EGGS_INCUBAATION"] <= timeAsStamp)
 	{
 		jojoLaysEggs();
+		return true;
+	}
+	if (followerKiha() && flags["COC.KIHA_CHILD_MATURITY_COUNTER"] == 144) {
+		kihaTellsChildrenStory();
 		return true;
 	}
 	return false;

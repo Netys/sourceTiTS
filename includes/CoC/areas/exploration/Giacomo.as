@@ -132,7 +132,7 @@ private function pitchDangerousPlantsBook():void {
 private function buyDangerousPlantsBook():void {
 	userInterface.showName("\nGIACOMO");
 	clearOutput();
-	output("\n\nYou consider yourself fortunate to be quite literate in this day and age.  It certainly comes in handy with this book.  Obviously written by well-informed, but women-starved men, the narrative drearily states the various types of poisonous and carnivorous plants in the world.  One entry that really grabs you is the chapter on 'Violation Plants'.  The chapter drones on about an entire classification of specially bred plants whose purpose is to torture or feed off a human being without permanently injuring and killing them.  Most of these plants attempt to try breeding with humans and are insensitive to the intricacies of human reproduction to be of any value, save giving the person no end of hell.  These plants range from massive shambling horrors to small plant-animal hybrids that attach themselves to people.  As you finish the book, you cannot help but shiver at the many unnatural types of plants out there and wonder what sick bastard created such monstrosities. ");
+	output("You consider yourself fortunate to be quite literate in this day and age.  It certainly comes in handy with this book.  Obviously written by well-informed, but women-starved men, the narrative drearily states the various types of poisonous and carnivorous plants in the world.  One entry that really grabs you is the chapter on 'Violation Plants'.  The chapter drones on about an entire classification of specially bred plants whose purpose is to torture or feed off a human being without permanently injuring and killing them.  Most of these plants attempt to try breeding with humans and are insensitive to the intricacies of human reproduction to be of any value, save giving the person no end of hell.  These plants range from massive shambling horrors to small plant-animal hybrids that attach themselves to people.  As you finish the book, you cannot help but shiver at the many unnatural types of plants out there and wonder what sick bastard created such monstrosities. ");
 	pc.credits -= 10;
 	pc.createKeyItem("Dangerous Plants", 0, 0, 0, 0);
 	addNextButton(giacomoBookMenu);
@@ -170,7 +170,7 @@ private function pitchHentaiComic():void {
 private function buyHentaiComic():void {
 	userInterface.showName("\nGIACOMO");
 	clearOutput();
-		output("You peruse the erotic book.  The story is one of a group of sisters who are all impossibly heavy-chested and equally horny getting into constant misadventures trying to satisfy their lust.  While the comic was entertaining and erotic to the highest degree, you cannot help but laugh at how over-the-top the story and all of the characters are.  Were the world as it was in the book, nothing would get done as humanity would be fucking like jackrabbits in heat for the rest of their lives.  While certainly a tempting proposition, everyone gets worn out sometime.  You place the book in your sack, well entertained and with a head filled with wilder perversions than what you woke up with this morning.");
+	output("You peruse the erotic book.  The story is one of a group of sisters who are all impossibly heavy-chested and equally horny getting into constant misadventures trying to satisfy their lust.  While the comic was entertaining and erotic to the highest degree, you cannot help but laugh at how over-the-top the story and all of the characters are.  Were the world as it was in the book, nothing would get done as humanity would be fucking like jackrabbits in heat for the rest of their lives.  While certainly a tempting proposition, everyone gets worn out sometime.  You place the book in your sack, well entertained and with a head filled with wilder perversions than what you woke up with this morning.");
 	pc.credits -= 100;
 	pc.slowStatGain("l", 2);
 	applyDamage(new TypeCollection( { tease : 20 } ), null, pc);
@@ -443,6 +443,7 @@ private function wormRemovalOffer():void {
 }
 
 private function nightSuccubiFirstTime():void {
+	clearOutput();
 	userInterface.showName("CERULEAN\nSUCCUBUS");
 	flags["COC.CERULEAN_POTION_DREAMS"] = 1;
 	flags["COC.CERULEAN_POTION_DOSES"]--;
@@ -541,6 +542,7 @@ private function ceruleanSuccubusEncounterPart4():void {
 		pc.slowStatGain("p", 0.5);
 		pc.lust(4);
 	}
+	output("\n\n");
 	
 	itemScreen = mainGameMenu;
 	lootScreen = mainGameMenu;
@@ -688,7 +690,7 @@ private function nightSuccubiRepeat():void {
 			//[Maintain first encounter mechanics. New variable to keep track of subsequent encounters within a specific time period]
 		}
 	}
-	output("\n");
+	output("\n\n");
 	pc.orgasm();
 	//dynStats("str", rand(2),"tou", rand(2), "spe", rand(2), "int", rand(2), "cor", 1);
 	pc.slowStatGain("p", rand(2));

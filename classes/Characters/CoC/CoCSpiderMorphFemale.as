@@ -21,6 +21,8 @@ package classes.Characters.CoC
 			this.long = "The female spider-morph is completely nude, save for her thigh-high stockings and forearm-length gloves, which upon closer inspection, appear to be actually be part of her body - her exoskeleton.  Her exposed skin is pale as the full moon, save for the dusky skin of her nipples and the black-skinned delta of her sex.  Her breasts and ass are both full and well-rounded, and just above her ass-cheeks there's a bulbous spider-abdomen.  The spider-girl is currently eyeing you with a strange expression and her fangs bared.";
 			this.customDodge = "";
 			this.customBlock = "";
+			isUniqueInFight = false;
+			btnTargetText = "F.Spider";
 			
 			this.meleeWeapon.attack = 1;
 			this.meleeWeapon.longName = "dagger";

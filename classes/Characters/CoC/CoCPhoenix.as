@@ -42,6 +42,9 @@ package classes.Characters.CoC
 			baseHPResistances.pheromone.resistanceValue = 30.0;
 			baseHPResistances.tease.resistanceValue = 30.0;
 			
+			baseHPResistances.burning.resistanceValue = 75;
+			baseHPResistances.freezing.resistanceValue = -50;
+			
 			this.armor.longName = "chainmail";
 			this.armor.defense = 5;
 			this.armor.hasRandomProperties = true;

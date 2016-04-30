@@ -1,5 +1,6 @@
 package classes.Characters.CoC 
 {
+	import classes.Characters.PlayerCharacter;
 	import classes.Creature;
 	import classes.Engine.Combat.applyDamage;
 	import classes.Engine.Combat.combatMiss;
@@ -27,13 +28,13 @@ package classes.Characters.CoC
 			if(target.reflexes() >= 2 && rand(2) == 0) {
 				spiderMorphWebAttack(target);
 			}
-			else if(!target.hasStatusEffect("Web Silence") && rand(3) == 0) {
+			else if(target is PlayerCharacter && !target.hasStatusEffect("Web Silence") && rand(3) == 0) {
 				spiderSilence(target);
 			}
-			else if(!target.hasStatusEffect("Disarmed") && target.hasEquippedWeapon() && rand(3) == 0) {
+			else if(target is PlayerCharacter && !target.hasStatusEffect("Disarmed") && target.hasEquippedWeapon() && rand(3) == 0) {
 				spiderDisarm(target);
 			}
-			else if(rand(2) == 0 || target.reflexes() < 2) getBitten(target);
+			else if(target is PlayerCharacter && (rand(2) == 0 || target.reflexes() < 2)) getBitten(target);
 			else CombatAttacks.MeleeAttack(this, target);
 		}
 		
@@ -101,30 +102,36 @@ package classes.Characters.CoC
 		public function spiderMorphWebAttack(target:Creature = null):void
 		{
 			if (target == null) target = kGAMECLASS.pc;
-			output("Turning to the side, " + a + short + " raises " + mf("his", "her") + " abdomen and unleashes a spray of webbing in your direction!  ");
+			if (target is PlayerCharacter) output("Turning to the side, " + a + short + " raises " + mf("his", "her") + " abdomen and unleashes a spray of webbing in your direction!  ");
+			else  output("Turning to the side, " + a + short + " raises " + mf("his", "her") + " abdomen and unleashes a spray of webbing in " + possessive(target.a + target.short) + " direction!  ");
 			//Blind dodge change
 			if (hasStatusEffect("Blinded") && rand(3) < 2) {
-				output(capitalA + short + " misses completely due to their blindness.");
+				output(capitalA + short + " misses completely due to " + mf("his", "her") + " blindness.");
 			}
 			//Determine if dodged!
 			else if (rangedCombatMiss(this, target)) {
-				output("You dodge away, avoiding the sticky strands!");
+				if (target is PlayerCharacter) output("You dodge away, avoiding the sticky strands!");
+				else output(target.capitalA + target.short + " dodges away, avoiding the sticky strands!");
 			}
 			//Got hit
 			else {
 				var amount:Number = (target.reflexesMax() * 0.25) - target.physique() / 10;
 				if (amount <= 0) { // 250 physique?
-					output("The silky strands hit you, webbing around you, but with your ultimate strength you tear it apart!");
+					if (target is PlayerCharacter) output("The silky strands hit you, webbing around you, but with your ultimate strength you tear it apart!");
+					else output("The silky strands hit " + target.a + target.short + ", " + target.mf("his", "her") + " ultimate strength " + target.mf("he", "she") + " tear it apart!");
 					return;
 				}
 				if (!target.hasStatusEffect("Web")) {
-					output("The silky strands hit you, webbing around you and making it hard to move with any degree of speed.");
-					if (target.canFly()) output("  Your wings struggle uselessly in the bindings, no longer able to flap fast enough to aid you.");
-					output("\n");
+					if (target is PlayerCharacter) {
+						output("The silky strands hit you, webbing around you and making it hard to move with any degree of speed.");
+						if (target.canFly()) output("  Your wings struggle uselessly in the bindings, no longer able to flap fast enough to aid you.");
+						output("\n");
+					} else output("The silky strands hit " + target.a + target.short + ", webbing around " + target.mf("him", "her") + " and making it hard to move with any degree of speed.");
 					target.createStatusEffect("Web", 0, 0, 0, 0, false, "Icon_Slow", "You are strandled by spider web!");
 				}
 				else {
-					output("The silky strands hit you, weighing you down and restricting your movement even further.\n");
+					if (target is PlayerCharacter) output("The silky strands hit you, weighing you down and restricting your movement even further.\n");
+					else  output("The silky strands hit " + target.a + target.short + ", weighing " + target.mf("him", "her") + " down and restricting " + target.mf("his", "her") + " movement even further.\n");
 				}
 				//Only apply as much speed slow as necessary.
 				if (target.reflexes() - amount < 1) {

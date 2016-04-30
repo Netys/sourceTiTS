@@ -1,9 +1,11 @@
 package classes.Characters.CoC 
 {
+	import classes.Characters.PlayerCharacter;
 	import classes.Creature;
 	import classes.Engine.Combat.applyDamage;
 	import classes.Engine.Combat.combatMiss;
 	import classes.Engine.Combat.DamageTypes.TypeCollection;
+	import classes.GameData.CombatAttacks;
 	import classes.GLOBAL;
 	import classes.Items.Miscellaneous.CoCToughSpiderSilk;
 	import classes.Items.Miscellaneous.EmptySlot;
@@ -27,6 +29,8 @@ package classes.Characters.CoC
 			this.long = "This particular spider-woman is a drider - a creature with a humanoid top half and the lower body of a giant arachnid.  From a quick glance, you can tell that this one has fallen deeply to corruption.  She is utterly nude, exposing her four well-rounded, D-cup breasts with their shiny black nipples.  " + (this.nipplesPierced ? "Gold piercings and chains link the curvy tits together, crossing in front of her four mounds in an 'x' pattern.  " : "") + "On her face and forehead, a quartet of lust-filled, [enemy.skinTone] eyes gaze back at you.  Behind her, the monster-girl's [enemy.hairColor] hair drapes down her back like a cloak.  The drider's lips seem to shine with a light all their own, and a steady trickle of purple, reflective fluid beads and drips from them.  At her waist, there's a juicy looking snatch with a large, highly visible clit.  From time to time it pulsates and grows, turning part-way into a demon-dick.  Her spider-half has eight spindly legs with black and [enemy.hairColor] stripes - a menacing display if ever you've seen one.";
 			this.customDodge = "";
 			this.customBlock = "";
+			isUniqueInFight = false;
+			btnTargetText = "Drider";
 			
 			this.meleeWeapon.attack = 1;
 			this.meleeWeapon.longName = "claws";
@@ -185,14 +189,17 @@ package classes.Characters.CoC
 			if (lust() > 70 && rand(4) == 0) {
 				driderMasturbate(target);
 			}
-			else if(!target.hasStatusEffect("Web Silence") && rand(4) == 0) {
+			else if(target is PlayerCharacter && !target.hasStatusEffect("Web Silence") && rand(4) == 0) {
 				spiderSilence(target);
 			}
-			else if(!target.hasStatusEffect("Disarmed") && target.hasEquippedWeapon() && rand(4) == 0) {
+			else if(target is PlayerCharacter && !target.hasStatusEffect("Disarmed") && target.hasEquippedWeapon() && rand(4) == 0) {
 				spiderDisarm(target);
 			}
 			else if(target.reflexes() >= 2 || rand(2) == 0) {
 				spiderMorphWebAttack(target);
+			}
+			else if (!(target is PlayerCharacter)) {
+				CombatAttacks.MeleeAttack(this, target);
 			}
 			else driderKiss(target);
 		}

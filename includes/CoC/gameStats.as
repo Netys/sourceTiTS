@@ -121,6 +121,8 @@ public function displayEncounterLogCoCVarious():int
 					enum.push(StatTracking.getStat("coc/pregnancy/izma tigersharks") + " tigersharks");
 				output2(enum.toString() + ".");
 			}
+			if (StatTracking.getStat("coc/pregnancy/kiha") > 0)
+				output2("\n<b>* Fathered, Kiha Children: </b>" + StatTracking.getStat("coc/pregnancy/kiha"));
 			if(StatTracking.getStat("coc/pregnancy/tamani daughters") > 0)
 				output2("\n<b>* Fathered, Tamani Daughters: </b>" + StatTracking.getStat("coc/pregnancy/tamani daughters"));
 			if(StatTracking.getStat("coc/pregnancy/sheila joeys") > 0)
@@ -212,6 +214,27 @@ public function displayEncounterLogCoCVarious():int
 			else if (flags["COC.HEL_FUCKBUDDY"] == 1) output2(" Fuckbuddy");
 			else if (followerHel() && flags["COC.HEL_FOLLOWER_LEVEL"] == 2) output2(" Lover");
 			else  output2(" Undecided");
+		}
+	}
+	
+	if(flags["COC.EXPLORED_SWAMP"] > 0) {
+		output2("\n\n" + blockHeader("Encounters: Swamp", false));
+		if(flags["COC.TIMES_MET_KIHA"] > 0) {
+			output2("\n<b><u>Kiha</u></b>");
+			output2("\n<b>* Times Met: </b>" + flags["COC.TIMES_MET_KIHA"]);
+			if(kihaAffection() > 0) output2("\n<b>* Affection: </b>" + kihaAffection());
+			output2("\n<b>* Attitude: </b>");
+			if (flags["COC.KIHA_AFFECTION_LEVEL"] == -1) output2(" Hostile");
+			else if (flags["COC.KIHA_AFFECTION_LEVEL"] == 1) output2(" Warm");
+			else if (flags["COC.KIHA_AFFECTION_LEVEL"] == 2) output2(" Lover");
+			else  output2(" Undecided");
+			if (urtaKids() > 0) {
+				enum.clear();
+				if (int(flags["COC.KIHA_CHILDREN_BOYS"]) > 0) enum.push(int(flags["COC.KIHA_CHILDREN_BOYS"]) + (int(flags["COC.KIHA_CHILDREN_BOYS"]) > 1 ? " boys" : " boy"))
+				if (int(flags["COC.KIHA_CHILDREN_GIRLS"]) > 0) enum.push(int(flags["COC.KIHA_CHILDREN_GIRLS"]) + (int(flags["COC.KIHA_CHILDREN_GIRLS"]) > 1 ? " girls" : " girls"))
+				if (int(flags["COC.KIHA_CHILDREN_HERMS"]) > 0) enum.push(int(flags["COC.KIHA_CHILDREN_HERMS"]) + (int(flags["COC.KIHA_CHILDREN_HERMS"]) > 1 ? " herms" : " herms"))
+				output2("\n<b>* Children: </b> " + enum.toString());
+			}
 		}
 	}
 	

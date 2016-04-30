@@ -1,5 +1,6 @@
 package classes.Characters.CoC 
 {
+	import classes.Characters.PlayerCharacter;
 	import classes.Creature;
 	import classes.Engine.Combat.applyDamage;
 	import classes.Engine.Combat.calculateDamage;
@@ -11,6 +12,8 @@ package classes.Characters.CoC
 	import classes.Engine.Combat.rangedCombatMiss;
 	import classes.Engine.Interfaces.*;
 	import classes.Engine.Utility.*;
+	import classes.GameData.CombatAttacks;
+	import classes.GameData.CombatManager;
 	import classes.GLOBAL;
 	import classes.Items.Miscellaneous.CoCDragonScale;
 	import classes.Items.Miscellaneous.EmptySlot;
@@ -45,6 +48,9 @@ package classes.Characters.CoC
 			//baseHPResistances.drug.resistanceValue = 60.0;
 			//baseHPResistances.pheromone.resistanceValue = 60.0;
 			//baseHPResistances.tease.resistanceValue = 60.0;
+			
+			baseHPResistances.burning.resistanceValue = 75;
+			baseHPResistances.freezing.resistanceValue = -50;
 			
 			this.armor.longName = "thick scales";
 			this.armor.defense = 30;
@@ -188,13 +194,31 @@ package classes.Characters.CoC
 				removeStatusEffect("Blinded");
 			}
 			
-			var select:Number = rand(5);
-			if (select <= 1) eAttack(target);
-			else if (select == 2) {
-				kihaFirePunch(target);
+			if(CombatManager.hasEnemyOfClass(PlayerCharacter)) {
+				var select:Number = rand(5);
+				if (select <= 1) eAttack(target);
+				else if (select == 2) {
+					kihaFirePunch(target);
+				}
+				else if (select == 3) kihaFireBreath(target);
+				else kihaTimeWaster(target);
 			}
-			else if (select == 3) kihaFireBreath(target);
-			else kihaTimeWaster(target);
+			else // quest spider mob fight
+			{
+				if (rand(2) == 0) kihaSPOIDAHAI(target);
+				else if if (rand(2) == 0) CombatAttacks.MeleeAttack(this, target);
+				else kihaFireBreath(target);
+			}
+		}
+
+		private function kihaSPOIDAHAI(target:Creature):void {
+			//game.spriteSelect(72);
+			output("While they're tangled up with you, however, Kiha takes the opportunity to get in a few shallow swings with her axe, to the accompaniment of crunching chitin. ");
+			
+			var d:TypeCollection = this.meleeDamage();
+			d.add(new TypeCollection( { burning : level + rand(6) } ));
+			damageRand(d, 15);
+			var damageResult:DamageResult = calculateDamage(d, this, target, "melee");
 		}
 		
 		protected function eAttack(target:Creature):void
@@ -250,9 +274,11 @@ package classes.Characters.CoC
 		
 		//Fire breath
 		private function kihaFireBreath(target:Creature):void {
-			output("Kiha throws her arms back and roars, exhaling a swirling tornado of fire directly at you!  ");
+			output("Kiha throws her arms back and roars, exhaling a swirling tornado of fire");
+			if (target is PlayerCharacter) output(" directly at you!  ");
+			else output(" at " + target.a + target.uniqueName + "!  ");
 			//Miss:
-			if (rangedCombatMiss(this, target)) {
+			if (target is PlayerCharacter && rangedCombatMiss(this, target)) {
 				output("You manage to sidestep the flames in the nick of time; much to the dragoness' displeasure.  ");
 			}
 			else {
@@ -262,8 +288,10 @@ package classes.Characters.CoC
 				if(damageResult.hpDamage <= 0) {
 					if(damageResult.shieldDamage > 0) output("Your shield crackles but holds.  ");
 					else output("You are fireproof!  ");
-				} else
-					output("You try to avoid the flames, but you're too slow!  The inferno slams into you, setting you alight!  You drop and roll on the ground, putting out the fires as fast as you can.  As soon as the flames are out, you climb back up, smelling of smoke and soot.  ");
+				} else {
+					if (target is PlayerCharacter) output("You try to avoid the flames, but you're too slow!  The inferno slams into you, setting you alight!  You drop and roll on the ground, putting out the fires as fast as you can.  As soon as the flames are out, you climb back up, smelling of smoke and soot.  ");
+					else output(target.capitalA + target.uniqueName + " is badly burned!");
+				}
 				outputDamage(damageResult);
 			}
 		}

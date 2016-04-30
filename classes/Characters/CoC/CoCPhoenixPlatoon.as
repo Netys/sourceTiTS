@@ -45,6 +45,9 @@ package classes.Characters.CoC
 			baseHPResistances.pheromone.resistanceValue = 60.0;
 			baseHPResistances.tease.resistanceValue = 60.0;
 			
+			baseHPResistances.burning.resistanceValue = 75;
+			baseHPResistances.freezing.resistanceValue = -50;
+			
 			this.armor.longName = "feathers";
 			this.armor.defense = 5;
 			this.armor.hasRandomProperties = true;

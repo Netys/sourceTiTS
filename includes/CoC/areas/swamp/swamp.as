@@ -49,8 +49,10 @@ public function exploreSwamp():void {
 	choice.push(driderEncounter);
 	chance.push(1);
 	
-	choice.push(encounterKiha);
-	chance.push(2);
+	if(!followerKiha()) {
+		choice.push(encounterKiha);
+		chance.push(2);
+	}
 	
 	if (flags["COC.ROGAR_DISABLED"] != 1 && !(flags["COC.ROGAR_PHASE"] >= 3)) {
 		choice.push(encounterRogarSwamp);
