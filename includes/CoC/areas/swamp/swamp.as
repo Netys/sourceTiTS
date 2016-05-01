@@ -25,15 +25,15 @@ public function exploreSwamp():void {
 	//}
 	
 	/*  SPECIAL SCENE OVERWRITES */
+	if (int(flags["COC.TOOK_EMBER_EGG"]) == 0 && int(flags["COC.EGG_BROKEN"]) == 0 && flags["COC.TIMES_EXPLORED_SWAMP"] > 0 && (flags["COC.TIMES_EXPLORED_SWAMP"] % 40 == 0)) {
+		findEmbersEgg();
+		return;
+	}
 	//KIHA X HEL THREESOME!
-	//if (!kGAMECLASS.kihaFollower.followerKiha() && cor() < 60 && flags[kFLAGS.KIHA_AFFECTION_LEVEL] >= 1 && flags[kFLAGS.HEL_FUCKBUDDY] > 0 && pc.hasCock() && flags[kFLAGS.KIHA_AND_HEL_WHOOPIE] == 0) {
-		//kGAMECLASS.kihaFollower.kihaXSalamander();
-		//return;
-	//}
-	//if (flags[kFLAGS.TOOK_EMBER_EGG] == 0 && flags[kFLAGS.EGG_BROKEN] == 0 && flags[kFLAGS.TIMES_EXPLORED_SWAMP] > 0 && (flags[kFLAGS.TIMES_EXPLORED_SWAMP] % 40 == 0)) {
-		//kGAMECLASS.emberScene.findEmbersEgg();
-		//return;
-	//}
+	if (!followerKiha() && pc.cor() < 60 && flags["COC.KIHA_AFFECTION_LEVEL"] >= 1 && flags["COC.HEL_FUCKBUDDY"] > 0 && pc.hasCock() && int(flags["COC.KIHA_AND_HEL_WHOOPIE"]) == 0) {
+		kihaXSalamander();
+		return;
+	}
 	
 	/*  STANDARD SCENE SELECTION  */
 	

@@ -6,6 +6,7 @@ import classes.Engine.Utility.*;
 public function doExplore():void
 {
 	userInterface.setLocation("\nCAMPSITE", "EXPLORATION", "PLANET: MARETH");
+	clearOutput();
 	
 	if (flags["COC.EXPLORED"] == undefined || flags["COC.EXPLORED"] == 1) {
 		tryDiscover();

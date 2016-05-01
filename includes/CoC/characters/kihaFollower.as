@@ -60,7 +60,8 @@ public function KihaTimePassedNotify():void
 			eventQueue.push(kihaGivesBirth);
 			flags["COC.KIHA_INCUBATION"] = undefined; //Clear Pregnancy
 		}
-		if (flags["COC.KIHA_INCUBATION"] <= -48 * 60) {
+		if (flags["COC.KIHA_INCUBATION"] <= -48 * 60) { // Birth without player
+			kihaGivesBirth();
 			flags["COC.KIHA_INCUBATION"] = undefined; //Clear Pregnancy
 		}
 	}
@@ -2233,15 +2234,16 @@ public function kihaGivesBirth():void {
 		//return;
 	//}
 	//Scene time!
-	output("A fierce howling scream splits the night air, jostling you from your rest. As you wonder just what the bloody hell that was, it echoes out again, coming unquestionably from Kiha's part of the camp. Looks like she's gone into labor...");
-	output("\n\n\"<i>Do something, Doofus!</i>\" Kiha yells. You grab Kiha by her clawed hand and assure her that you're here to assist her.");
-	output("\n\nYou give her vagina a lick in an attempt to coax the fertilized eggs out. Kiha blushes when you're licking her womb and says, \"<i>Don't you stop, [pc.name]!</i>\" Her legs lock around you as if she wants you to keep licking her.");
-	output("\n\nEventually, she orgasms, coating your face in her femspunk. You revel in the taste of her feminine juices. Kiha spreads her legs, her vagina seems to part as the surface of the egg comes into view. Thanks to the wetness of her passage, the egg finally slips out with no problem. \"<i>That's only one of the eggs, Idiot! I've got more coming up!</i>\" Kiha announces. She continues to push and the second egg comes out.");
-	if (eggCounter > 2) output("\n\nThe process repeats until Kiha's belly finally flattens.");
-	output("\n\nYou count the eggs; there are " + num2Text(eggCounter) + " of them.");
-	output("\n\n\"<i>Look at that! They're beautiful. They're going to hatch real soon. Thank you, [pc.name].</i>\" Kiha smiles and delivers a kiss to your lips.");
-	output("\n\nBut wait a minute! The eggs are shaking already! It's only a few minutes and already they're going to hatch.");
-	output("\n\nCracks form in the eggs and they're getting bigger and bigger. Eventually, the eggs burst and draconic heads poke out of the eggs. Aren't they cute? You and Kiha spend time peeling off the egg-shells and analyze the little dragon-morphs.");
+	var buffer:String = "";
+	buffer += ("A fierce howling scream splits the night air, jostling you from your rest. As you wonder just what the bloody hell that was, it echoes out again, coming unquestionably from Kiha's part of the camp. Looks like she's gone into labor...");
+	buffer += ("\n\n\"<i>Do something, Doofus!</i>\" Kiha yells. You grab Kiha by her clawed hand and assure her that you're here to assist her.");
+	buffer += ("\n\nYou give her vagina a lick in an attempt to coax the fertilized eggs out. Kiha blushes when you're licking her womb and says, \"<i>Don't you stop, [pc.name]!</i>\" Her legs lock around you as if she wants you to keep licking her.");
+	buffer += ("\n\nEventually, she orgasms, coating your face in her femspunk. You revel in the taste of her feminine juices. Kiha spreads her legs, her vagina seems to part as the surface of the egg comes into view. Thanks to the wetness of her passage, the egg finally slips out with no problem. \"<i>That's only one of the eggs, Idiot! I've got more coming up!</i>\" Kiha announces. She continues to push and the second egg comes out.");
+	if (eggCounter > 2) buffer += ("\n\nThe process repeats until Kiha's belly finally flattens.");
+	buffer += ("\n\nYou count the eggs; there are " + num2Text(eggCounter) + " of them.");
+	buffer += ("\n\n\"<i>Look at that! They're beautiful. They're going to hatch real soon. Thank you, [pc.name].</i>\" Kiha smiles and delivers a kiss to your lips.");
+	buffer += ("\n\nBut wait a minute! The eggs are shaking already! It's only a few minutes and already they're going to hatch.");
+	buffer += ("\n\nCracks form in the eggs and they're getting bigger and bigger. Eventually, the eggs burst and draconic heads poke out of the eggs. Aren't they cute? You and Kiha spend time peeling off the egg-shells and analyze the little dragon-morphs.");
 	//Initial children for variants.
 	var oldTotal:int = totalKihaChildren();
 	//Check out the little dragons.
@@ -2270,10 +2272,13 @@ public function kihaGivesBirth():void {
 		flags["COC.KIHA_CHILDREN_HERMS"] += hermCount;
 	}
 	StatTracking.track("coc/pregnancy/kiha", eggCounter);
-	output("\n\nThere are " + enum.toString() + ". \"<i>I'm going to train them to be strong warriors when they reach adulthood. I must rest for now,</i>\" Kiha says. The newborn dragon-morphs take turn suckling milk from Kiha's breasts.");
-	if (oldTotal > 0) output("\n\nThe older draconic children look at the newborns in awe and some express signs of jealousy and excitement.");
-	processTime(25 + eggCounter * 3);
-	addNextButton();
+	buffer += ("\n\nThere are " + enum.toString() + ". \"<i>I'm going to train them to be strong warriors when they reach adulthood. I must rest for now,</i>\" Kiha says. The newborn dragon-morphs take turn suckling milk from Kiha's breasts.");
+	if (oldTotal > 0) buffer += ("\n\nThe older draconic children look at the newborns in awe and some express signs of jealousy and excitement.");
+	if (inCamp()) {
+		output(buffer);
+		processTime(25 + eggCounter * 3);
+		addNextButton();
+	}
 }
 
 private function kihaBreastfeedingTime():void {

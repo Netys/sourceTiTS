@@ -192,8 +192,11 @@ package classes.GameData
 		 */
 		private function postHostileTurnActions():Boolean
 		{
-			for (var i:int = 0; i < _hostiles.length; i++)
-				if (_hostiles[i].hasOwnProperty("postHostileTurnActions")) _hostiles[i].postHostileTurnActions();
+			for (var i:int = 0; i < _hostiles.length; i++) {
+				if (_hostiles[i].hasOwnProperty("postHostileTurnActions")) {
+					if (_hostiles[i].postHostileTurnActions()) return true;
+				}
+			}
 				
 			// seductionChance()
 			if (pc.hasStatusEffect("Attempt Seduction"))

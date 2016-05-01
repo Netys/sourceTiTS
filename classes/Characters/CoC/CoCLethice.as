@@ -381,7 +381,7 @@ package classes.Characters.CoC
 			}
 		}
 		
-		public function postHostileTurnActions():void {
+		public function processHostileGroupActions():void {
 			var pc:PlayerCharacter = kGAMECLASS.pc;
 			
 			if (pc.hasStatusEffect("LethicesRapeTentacles") && pc.statusEffectv3("LethicesRapeTentacles") > 0 && !(pc.hasArmor() && pc.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT))) {

@@ -281,7 +281,7 @@ package classes.Characters.CoC
 			}
 		}
 		
-		public function postHostileTurnActions():void {
+		public function processHostileGroupActions():void {
 			var pc:PlayerCharacter = kGAMECLASS.pc;
 			
 			if (pc.hasArmor() && pc.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)) return;

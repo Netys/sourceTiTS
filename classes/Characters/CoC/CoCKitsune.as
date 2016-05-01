@@ -224,7 +224,7 @@ package classes.Characters.CoC
 			moves[rand(moves.length)](target);
 		}
 		
-		public function postHostileTurnActions():void {
+		public function processHostileGroupActions():void {
 			var pc:PlayerCharacter = kGAMECLASS.pc;
 			
 			if (pc.hasStatusEffect("Sealed")) {

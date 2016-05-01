@@ -2178,31 +2178,33 @@ package classes.GameData
 			else output(attacker.capitalA + attacker.uniqueName + " roars, exhaling a swirling tornado of fire directly at " + target.a + possessive(target.uniqueName) + "!");
 			
 			if (rangedCombatMiss(attacker, target, -1, 0.33)) {
-				if (attacker is PlayerCharacter) output("You manage to sidestep the flames in the nick of time.  ");
-				else if (target is PlayerCharacter) output("  Despite the heavy impact caused by your roar, " + target.a + target.uniqueName + " manages to take it at an angle and is ready to keep fighting.");
+				if (target is PlayerCharacter) output("You manage to sidestep the flames in the nick of time.  ");
+				else if (attacker is PlayerCharacter) output("  Despite the heavy impact caused by your roar, " + target.a + target.uniqueName + " manages to take it at an angle and is ready to keep fighting.");
 				else output("  Despite the heavy impact caused by " + attacker.a + possessive(attacker.uniqueName) + " roar, " + target.a + target.uniqueName + " manages to take it at an angle and is ready to keep fighting.");
 				return;
 			}
 			
 			var d:int = 25 + attacker.level * 8 + rand(10);
+			if (attacker.hasStatusEffect("DragonBreathBoost")) d *= 1.25;
 			
 			if(target.hasStatusEffect("Sandstorm")) {
 				output("  <b>Breath is massively dissipated by the swirling vortex, causing it to hit with far less force!</b>");
 				d *= 0.2;
 			}
 			
-			var damage:TypeCollection = damageRand(new TypeCollection( { burning: d * attacker.spellMod() / 2, kinetic : d * attacker.spellMod() / 2 }, DamageFlag.EXPLOSIVE ), 15);
+			var damage:TypeCollection = damageRand(new TypeCollection( { kinetic : d }, DamageFlag.EXPLOSIVE, DamageFlag.BYPASS_SHIELD ), 15);
 			
 			if (attacker is PlayerCharacter) output("  " + target.capitalA + target.short + " reels as your wave of force slams into " + target.mfn("him", "her", "it") + " like a ton of rock!  ");
 			else if (target is PlayerCharacter) output("  You reel as " + attacker.a + possessive(attacker.uniqueName) + " wave of force slams into you like a ton of rock!  ");
 			else output("  " + target.capitalA + target.short + " reels as " + attacker.a + possessive(attacker.uniqueName) + " wave of force slams into " + target.mfn("him", "her", "it") + " like a ton of rock!  ");
 			
-			if(!target.hasStatusEffect("Stun Immune")) {
+			if(!target.hasStatusEffect("Stun Immune") && (attacker.hasStatusEffect("DragonBreathBoost") || rand(5) != 0)) {
 				output("  The impact sends " + target.mfn("him", "her", "it") + " crashing to the ground, too dazed to strike back.  ");
-				target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Cannot take a turn.", true, 0, 0xFF0000);
+				target.createStatusEffect("Stunned", attacker.hasStatusEffect("DragonBreathBoost") ? 3 : 2, 0, 0, 0, false, "Stun", "Cannot take a turn.", true, 0, 0xFF0000);
 			}
 			
 			applyDamage(damage, attacker, target);
+			attacker.removeStatusEffect("DragonBreathBoost")
 		}
 		
 		public static var Whisper:SingleCombatAttack;

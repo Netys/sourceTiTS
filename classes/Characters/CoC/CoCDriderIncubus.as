@@ -516,7 +516,7 @@ package classes.Characters.CoC
 			}
 		}
 		
-		public function postHostileTurnActions():void {
+		public function processHostileGroupActions():void {
 			var pc:PlayerCharacter = kGAMECLASS.pc;
 			
 			if (pc.hasStatusEffect("Tainted Mind")) {

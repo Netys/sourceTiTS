@@ -53,8 +53,8 @@ private function victoriaShopList():void {
 private function flirtWithVictoria():void {
 	clearOutput();
 	showVictoria();
-	var x:Number = pc.cockThatFits(70);
-	if(x < 0) x = pc.smallestCockIndex();
+	var x:Number = pc.cockThatFits(cockVolume(70));
+	//if(x < 0) x = pc.smallestCockIndex();
 	output("You take the clothes from her and give them a look over.  Setting them on the counter, you tell her that they're quite nice, but if she's interested you might have something that could fit her quite nicely as well in the back.");
 
 	if(x < 0) {

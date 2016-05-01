@@ -103,6 +103,7 @@ include "places/teladre/TelAdre.as";
 include "characters/amily.as";
 include "characters/AnemoneScene.as";
 include "characters/ArianScene.as";
+include "characters/ember.as";
 include "characters/followerInteractions.as";
 include "characters/Hel.as";
 include "characters/IzmaScene.as";

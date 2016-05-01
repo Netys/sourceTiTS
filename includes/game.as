@@ -610,6 +610,17 @@ public function sleep(outputs:Boolean = true):void {
 			}
 		}
 	}
+	if (inCamp() && outputs)
+	{
+		if (followerEmber() && emberAffection() >= 75 && flags["COC.SLEEP_WITH"] == "Ember" && hours >= 20 || hours < 4)
+		{
+			sleepWithEmber();
+		}
+		if (arianFollower() && flags["COC.SLEEP_WITH"] == "Arian" && (hours >= 17 || hours < 1))
+		{
+			sleepWithArian(true);
+		}
+	}
 	if(outputs) output("You lie down and sleep for about " + num2Text(Math.round(minutes/60)) + " hours.");
 	
 	sleepHeal();
@@ -641,6 +652,19 @@ public function sleep(outputs:Boolean = true):void {
 		if (tryProcDommyReahaTime(minutes - rand(301)))
 		{
 			addButton(0, "Next", reahaDommyFuxTime);
+			return;
+		}
+	}
+	if (inCamp())
+	{
+		if (flags["COC.EMBER_MORNING"] == 1)
+		{
+			addButton(0, "Next", postEmberSleep);
+			return;
+		}
+		if (flags["COC.ARIAN_MORNING"] == 1)
+		{
+			addButton(0, "Next", wakeUpAfterArianSleep);
 			return;
 		}
 	}

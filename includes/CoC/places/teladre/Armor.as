@@ -24,14 +24,14 @@ public function TelAdreArmorShop():void {
 	addButton(0, "Buy", yvonneShopList);
 	addButton(1, "Flirt", yvonneFlirt);
 	
-	//var egg:Function =null;
-	//if(pc.hasKeyItem("Dragon Eggshell") >= 0) {
-		//output("\n\nThough the pieces on display have their arguable attractions, none of them really interest you.  Yvonne taps her foot impatiently.  \"<i>Well, I could make you something to order... if you have any decent materials, cutie.  200 gems.</i>\"");
-		//if(pc.gems < 200) {
-			//output("\n\nYou can't afford that!");
-		//}
-		//else addButton(10, "Eggshell", kGAMECLASS.emberScene.getSomeStuff);
-	//}
+	if(pc.hasKeyItem("Dragon Eggshell") >= 0) {
+		output("\n\nThough the pieces on display have their arguable attractions, none of them really interest you.  Yvonne taps her foot impatiently.  \"<i>Well, I could make you something to order... if you have any decent materials, cutie.  200 gems.</i>\"");
+		if(pc.credits < 2000) {
+			output("\n\nYou can't afford that!");
+			addDisabledButton(2, "Eggshell", "Eggshell", "You can't afford that!");
+		}
+		else addButton(2, "Eggshell", getSomeStuff);
+	}
 	addButton(14, "Leave", telAdreMenu);
 }
 
@@ -58,7 +58,7 @@ private function yvonneFlirt():void {
 	pc.lust(10 + pc.libido() / 10);
 	
 	// Brain no want to work out the boolean logic shit here, broken out to ensure it will work as intended.
-	if (pc.cockThatFits(75) == -1 || pc.tallness > 65)
+	if (pc.cockThatFits(cockVolume(75)) == -1 || pc.tallness > 65)
 	{
 		output("Sorry, but you don't look like you'd be much fun.");
 		output("</i>\"");
@@ -90,7 +90,7 @@ private function fuckYvonneInZeBlacksmith():void {
 	showYvonne();
 	clearOutput();
 	//X = cock that fits!
-	var x:Number = pc.cockThatFits(75);
+	var x:Number = pc.cockThatFits(cockVolume(75));
 	if(x < 0) x = 0;
 	output("You walk over to the door and find a sign hanging in front of the window.  The side facing indoors has 'out' on it.  There's also a 'closed' sign hanging to the side of the doorframe.  You take the simple wood plaque in hand and flip it over - can't have anybody walking in on your sexual hijinks, can you?");
 	output("\n\nA fuzzy, calloused hand grabs you by the scuff of the neck, lifts you off the ground and pushes you against the wall, slamming you into it forcefully enough that some weapons hanging nearby rattle dangerously.  A hot puff of breath hits your cheek, Yvonne's wet, canine nose bumping against your [pc.ear] as she pants in your [pc.face].  She closes, and you feel her bare, sweat-soaked breasts sliding up and down your back, holding you up as firmly as her iron grip.  Yvonne's long, smooth tongue licks you from collarbone to chin, lapping up the sweat that's already starting to bead, the heat of the simmering forge-fires and your companion's well-warmed, powerful frame long since getting to you.");

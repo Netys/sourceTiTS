@@ -111,6 +111,10 @@ public function displayEncounterLogCoCVarious():int
 				output2("\n<b>* Fathered, Amily Litters: </b>" + StatTracking.getStat("coc/pregnancy/amily"));
 			if (StatTracking.getStat("coc/pregnancy/cotton") > 0)
 				output2("\n<b>* Fathered, Cotton Children: </b>" + StatTracking.getStat("coc/pregnancy/cotton"));
+			if (StatTracking.getStat("coc/pregnancy/ember") > 0)
+				output2("\n<b>* Fathered, Ember Children: </b>" + StatTracking.getStat("coc/pregnancy/ember"));
+			if (StatTracking.getStat("coc/pregnancy/ember eggs") > 0)
+				output2("\n<b>* Fathered, Ember Eggs: </b>" + StatTracking.getStat("coc/pregnancy/ember eggs"));
 			if (StatTracking.getStat("coc/pregnancy/izma sharkgirls") + StatTracking.getStat("coc/pregnancy/izma tigersharks") > 0)
 			{
 				output2("\n<b>* Fathered, Izma Daughters: </b>");
@@ -195,8 +199,8 @@ public function displayEncounterLogCoCVarious():int
 		if (urtaKids() > 0) {
 			enum.clear();
 			if (int(flags["COC.URTA_KIDS_MALES"]) > 0) enum.push(int(flags["COC.URTA_KIDS_MALES"]) + (int(flags["COC.URTA_KIDS_MALES"]) > 1 ? " boys" : " boy"))
-			if (int(flags["COC.URTA_KIDS_FEMALES"]) > 0) enum.push(int(flags["COC.URTA_KIDS_FEMALES"]) + (int(flags["COC.URTA_KIDS_FEMALES"]) > 1 ? " girls" : " girls"))
-			if (int(flags["COC.URTA_KIDS_HERMS"]) > 0) enum.push(int(flags["COC.URTA_KIDS_HERMS"]) + (int(flags["COC.URTA_KIDS_HERMS"]) > 1 ? " herms" : " herms"))
+			if (int(flags["COC.URTA_KIDS_FEMALES"]) > 0) enum.push(int(flags["COC.URTA_KIDS_FEMALES"]) + (int(flags["COC.URTA_KIDS_FEMALES"]) > 1 ? " girls" : " girl"))
+			if (int(flags["COC.URTA_KIDS_HERMS"]) > 0) enum.push(int(flags["COC.URTA_KIDS_HERMS"]) + (int(flags["COC.URTA_KIDS_HERMS"]) > 1 ? " herms" : " herm"))
 			output2("\n<b>* Children: </b> " + enum.toString());
 		}
 	}
@@ -219,6 +223,22 @@ public function displayEncounterLogCoCVarious():int
 	
 	if(flags["COC.EXPLORED_SWAMP"] > 0) {
 		output2("\n\n" + blockHeader("Encounters: Swamp", false));
+		if(followerEmber()) {
+			output2("\n<b><u>Ember</u></b>");
+			output2("\n<b>* Gender: </b> ");
+			if (ember.isHerm()) output2(" Herm");
+			else if (ember.hasCock()) output2(" Male");
+			else output2(" Female");
+			output2("\n<b>* Affection: </b>" + emberAffection());
+			if (emberChildren() > 0) {
+				enum.clear();
+				if (int(flags["COC.EMBER_CHILDREN_MALES"]) > 0) enum.push(int(flags["COC.EMBER_CHILDREN_MALES"]) + (int(flags["COC.EMBER_CHILDREN_MALES"]) > 1 ? " boys" : " boy"))
+				if (int(flags["COC.EMBER_CHILDREN_FEMALES"]) > 0) enum.push(int(flags["COC.EMBER_CHILDREN_FEMALES"]) + (int(flags["COC.EMBER_CHILDREN_FEMALES"]) > 1 ? " girls" : " girl"))
+				if (int(flags["COC.EMBER_CHILDREN_HERMS"]) > 0) enum.push(int(flags["COC.EMBER_CHILDREN_HERMS"]) + (int(flags["COC.EMBER_CHILDREN_HERMS"]) > 1 ? " herms" : " herm"))
+				if (int(flags["COC.EMBER_EGGS"]) > 0) enum.push(int(flags["COC.EMBER_EGGS"]) + (int(flags["COC.EMBER_EGGS"]) > 1 ? " eggs" : " egg"))
+				output2("\n<b>* Children: </b> " + enum.toString());
+			}
+		}
 		if(flags["COC.TIMES_MET_KIHA"] > 0) {
 			output2("\n<b><u>Kiha</u></b>");
 			output2("\n<b>* Times Met: </b>" + flags["COC.TIMES_MET_KIHA"]);
@@ -228,11 +248,11 @@ public function displayEncounterLogCoCVarious():int
 			else if (flags["COC.KIHA_AFFECTION_LEVEL"] == 1) output2(" Warm");
 			else if (flags["COC.KIHA_AFFECTION_LEVEL"] == 2) output2(" Lover");
 			else  output2(" Undecided");
-			if (urtaKids() > 0) {
+			if (totalKihaChildren() > 0) {
 				enum.clear();
 				if (int(flags["COC.KIHA_CHILDREN_BOYS"]) > 0) enum.push(int(flags["COC.KIHA_CHILDREN_BOYS"]) + (int(flags["COC.KIHA_CHILDREN_BOYS"]) > 1 ? " boys" : " boy"))
-				if (int(flags["COC.KIHA_CHILDREN_GIRLS"]) > 0) enum.push(int(flags["COC.KIHA_CHILDREN_GIRLS"]) + (int(flags["COC.KIHA_CHILDREN_GIRLS"]) > 1 ? " girls" : " girls"))
-				if (int(flags["COC.KIHA_CHILDREN_HERMS"]) > 0) enum.push(int(flags["COC.KIHA_CHILDREN_HERMS"]) + (int(flags["COC.KIHA_CHILDREN_HERMS"]) > 1 ? " herms" : " herms"))
+				if (int(flags["COC.KIHA_CHILDREN_GIRLS"]) > 0) enum.push(int(flags["COC.KIHA_CHILDREN_GIRLS"]) + (int(flags["COC.KIHA_CHILDREN_GIRLS"]) > 1 ? " girls" : " girl"))
+				if (int(flags["COC.KIHA_CHILDREN_HERMS"]) > 0) enum.push(int(flags["COC.KIHA_CHILDREN_HERMS"]) + (int(flags["COC.KIHA_CHILDREN_HERMS"]) > 1 ? " herms" : " herm"))
 				output2("\n<b>* Children: </b> " + enum.toString());
 			}
 		}

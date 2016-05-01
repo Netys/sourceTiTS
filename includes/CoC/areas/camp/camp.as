@@ -1,3 +1,4 @@
+import classes.Creature;
 import classes.GLOBAL;
 import classes.Items.Transformatives.Catnip;
 import classes.Items.Transformatives.CoCReptilum;
@@ -40,12 +41,12 @@ public function cocCampMenu():void {
 	addButton(7, "Portal", abortIAmNotBloodyChampion, undefined, "Portal", "Exit simulation.");
 }
 
+public function doDebugFunction():void {
+}
+
 public function inCamp():Boolean
 {
 	return currentLocation == "COC_CAMP";
-}
-
-public function doDebugFunction():void {
 }
 
 public function hasCompanions():Boolean {
@@ -228,6 +229,17 @@ public function campEvent():Boolean
 	if (followerKiha() && flags["COC.KIHA_CHILD_MATURITY_COUNTER"] == 144) {
 		kihaTellsChildrenStory();
 		return true;
+	}
+	if (followerEmber() && int(flags["COC.EMBER_NAPPING"]) <= 0 && int(flags["COC.EMBER_FUCK_COOLDOWN"]) <= 0) {
+		//Ember get's a whiff of fuckscent and knocks up PC!
+		if (pc.hasVagina() && pc.hasStatusEffect("Heat") && pc.findEmptyPregnancySlot(Creature.PREGSLOT_VAG) >= 0 && rand(10) == 0 && ember.hasCock()) {
+			emberRapesYourHeatness();
+			return true;
+		}
+		else if (pc.hasCock() && pc.hasStatusEffect("Rut") && flags["COC.EMBER_INCUBATION"] == undefined && rand(10) == 0 && ember.hasVagina()) {
+			emberRapesYourHeatness();
+			return true;
+		}
 	}
 	return false;
 }

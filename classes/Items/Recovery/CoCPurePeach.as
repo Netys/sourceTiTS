@@ -68,7 +68,7 @@ package classes.Items.Recovery
 			}
 			else
 			{
-				output(target.capitalA + target.short + " bite into the sweet, juicy peach, feeling a sensation of energy sweeping through body and mind\n");
+				output(target.capitalA + target.short + " bite into the sweet, juicy peach, feeling a sensation of energy sweeping through body and mind.\n");
 			}
 			
 			target.energy(15);

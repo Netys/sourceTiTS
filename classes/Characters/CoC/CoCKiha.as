@@ -206,7 +206,7 @@ package classes.Characters.CoC
 			else // quest spider mob fight
 			{
 				if (rand(2) == 0) kihaSPOIDAHAI(target);
-				else if if (rand(2) == 0) CombatAttacks.MeleeAttack(this, target);
+				else if (rand(2) == 0) CombatAttacks.MeleeAttack(this, target);
 				else kihaFireBreath(target);
 			}
 		}
