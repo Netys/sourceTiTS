@@ -59,7 +59,8 @@ package classes.Characters.CoC
 			this.libidoRaw = 50;
 			this.energyRaw = 100;
 			this.lustRaw = 30;
-
+			this.personality = 35;
+			
 			this.femininity = 15;
 			this.eyeType = GLOBAL.TYPE_DEMONIC;
 			this.eyeColor = "amber";

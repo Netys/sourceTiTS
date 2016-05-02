@@ -65,7 +65,8 @@ package classes.Characters.CoC
 			this.libidoRaw = 60;
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
-			this.lustRaw = 20;	
+			this.lustRaw = 20;
+			this.personality = 45;
 			
 			this.femininity = 5;
 			this.eyeType = GLOBAL.TYPE_HUMAN;

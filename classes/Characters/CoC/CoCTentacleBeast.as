@@ -67,7 +67,8 @@ package classes.Characters.CoC
 			this.libidoRaw = 90;
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
-			this.lustRaw = 10;			
+			this.lustRaw = 10;
+			this.personality = 100;
 			
 			this.femininity = 50;
 			this.tallness = rand(9) + 70;

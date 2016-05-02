@@ -62,6 +62,7 @@ package classes.Characters.CoC
 			this.lustRaw = 45;
 			this.HPRaw = this.HPMax();
 			this.shieldsRaw = this.shieldsMax();
+			this.personality = 0;
 
 			this.femininity = 85;
 			this.eyeType = GLOBAL.TYPE_BEE;

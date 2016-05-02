@@ -21,6 +21,7 @@ package classes.Characters.CoC
 			this.hipRatingRaw = 2;
 			this.buttRatingRaw = 2;
 			this.breastRows[0].breastRatingRaw = 1; // A
+			this.personality = 15;
 			
 			this._isLoading = false;
 		}

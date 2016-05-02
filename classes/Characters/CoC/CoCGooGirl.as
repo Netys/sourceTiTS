@@ -48,12 +48,15 @@ package classes.Characters.CoC
 			this.intelligenceRaw = 4;
 			this.willpowerRaw = 4;
 			this.libidoRaw = 50;
-			this.personality = 10;
 			this.HPMod = 40;
 			this.shieldsRaw = 0;
 			this.HPRaw = this.HPMax();
 			this.energyRaw = 100;
 			this.lustRaw = 10;
+			
+			this.personality = 10;
+			if (int(kGAMECLASS.flags["COC.FACTORY_SHUTDOWN"]) == 0) this.personality = 40;
+			if (int(kGAMECLASS.flags["COC.FACTORY_SHUTDOWN"]) == 2) this.personality = 80;
 			
 			baseHPResistances = new TypeCollection();
 			baseHPResistances.kinetic.resistanceValue = 75.0;

@@ -51,6 +51,7 @@ package classes.Characters.CoC
 			this.lustRaw = 25;
 			this.HPMod = 25;
 			this.HPRaw = this.HPMax();
+			this.personality = 100;
 			
 			this.femininity = 20;
 			this.eyeType = GLOBAL.TYPE_CANINE;

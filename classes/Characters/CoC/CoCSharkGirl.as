@@ -59,6 +59,7 @@ package classes.Characters.CoC
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
 			this.lustRaw = 40;
+			this.personality = 40;
 			
 			this.femininity = 75;
 			this.eyeType = GLOBAL.TYPE_SHARK;

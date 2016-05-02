@@ -71,6 +71,7 @@ package classes.Characters.CoC
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
 			this.lustRaw = 5;
+			this.personality = 80;
 			
 			this.femininity = 10;
 			this.eyeType = GLOBAL.TYPE_SNAKE;

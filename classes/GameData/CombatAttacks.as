@@ -1,6 +1,8 @@
 package classes.GameData 
 {
 	import classes.Characters.Celise;
+	import classes.Characters.CoC.CoCJojo;
+	import classes.Characters.CoC.CoCLivingStatue;
 	import classes.Characters.Cockvine;
 	import classes.Characters.GrayGoo;
 	import classes.Characters.Kaska;
@@ -560,6 +562,22 @@ package classes.GameData
 				return (target.perkv1("Magic Affinity") & kGAMECLASS.KBIT_SPELL_MIGHT) > 0;
 			}
 			a.push(Might);
+			
+			// Fox Fire - single target burning damage
+			CleansingPalm = new SingleCombatAttack();
+			CleansingPalm.ButtonName = "C. Palm";
+			CleansingPalm.EnergyCost = 30;
+			CleansingPalm.RequiresPerk = "Cleansing Palm";
+			CleansingPalm.DisabledIfEffectedBy = [];
+			CleansingPalm.TooltipTitle = "Cleansing Palm";
+			CleansingPalm.TooltipBody = "Unleash the power of your cleansing aura! More effective against corrupted opponents. Doesn't work on the pure.";
+			CleansingPalm.Implementor = CleansingPalmImpl;
+			CleansingPalm.SetAttackTypeFlags(SingleCombatAttack.ATF_MAGIC);
+			CleansingPalm.RequiresTarget = true;
+			CleansingPalm.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
+				return kGAMECLASS.inMareth();
+			}
+			a.push(CleansingPalm);
 			
 			// Dragon Breath - AoE stun + damage
 			DragonFire = new SingleCombatAttack();
@@ -2157,6 +2175,54 @@ package classes.GameData
 				attacker.createStatusEffect("Might", Math.max(attacker.intelligence() / 2, 10), Math.max(attacker.intelligence(), 20), 0, 0, false, "OffenseUp", "Infused with power of desire!", true, 0, 0x00FF00);
 				attacker.HP(Math.max(attacker.intelligence(), 20));
 			}
+			
+			output(kGAMECLASS.onSpellCast(attacker));
+		}
+		
+		public static var CleansingPalm:SingleCombatAttack;
+		private static function CleansingPalmImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
+		{
+			if (attacker.hasCombatDrone())
+			{
+				attacker.droneTarget = target;
+			}
+			
+			var corruptionMulti:Number = (target.personality - 20) / 25;
+			if (corruptionMulti > 1.5) {
+				corruptionMulti = 1.5;
+				corruptionMulti += (target.personality / 100); //The increase to multiplier is diminished.
+			}
+			
+			if (attacker is PlayerCharacter) {
+				if (target is CoCJojo && target.personality == 0) {
+					output("You thrust your palm forward, sending a blast of pure energy towards Jojo. At the last second he sends a blast of his own against yours canceling it out.");
+					output(kGAMECLASS.onSpellCast(attacker));
+					return;
+				}
+				if (target is CoCLivingStatue) {
+					output("You thrust your palm forward, causing a blast of pure energy to slam against the giant stone statue- to no effect!");
+					output(kGAMECLASS.onSpellCast(attacker));
+					return;
+				}
+				if (corruptionMulti == 0) {
+					output("You thrust your palm forward, causing a blast of pure energy to slam against " + target.a + target.uniqueName + ", which " + (target.isPlural ? "they" : target.mfn("he", "she", "it")) + " ignore. It is probably best you don’t use this technique against the pure.");
+					output(kGAMECLASS.onSpellCast(attacker));
+					return;
+				}
+				output("You thrust your palm forward, causing a blast of pure energy to slam against " + target.a + target.uniqueName + ", tossing " + (target.isPlural ? "them" : target.mfn("him", "her", "it")) + " back a few feet.");
+				if (kGAMECLASS.silly && corruptionMulti >= 1.75) output(" It's super effective!");
+			}
+			else if (target is PlayerCharacter) output(attacker.capitalA + attacker.uniqueName + " thrusts " + target.mfn("his", "her", "its") + " palm forward, causing a blast of pure energy towards you!");
+			else output(attacker.capitalA + attacker.uniqueName + " thrusts " + attacker.mfn("his", "her", "its") + " palm forward, causing a blast of pure energy towards " + target.a + target.uniqueName + "!");
+			
+			
+			// 10+(player.inte/3 + rand(player.inte/2)) * spellMod()
+			var d:int = attacker.intelligence() / 4 + rand(attacker.intelligence() / 3);
+			d *= attacker.spellMod();
+			d *= corruptionMulti;
+			var damage:TypeCollection = damageRand(new TypeCollection( { truedamage : d } ), 15);
+			
+			applyDamage(damage, attacker, target, "minimal");
 			
 			output(kGAMECLASS.onSpellCast(attacker));
 		}

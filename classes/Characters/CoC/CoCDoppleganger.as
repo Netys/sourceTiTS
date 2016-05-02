@@ -24,6 +24,7 @@ package classes.Characters.CoC
 		{
 			this._isLoading = false;
 			this.loadSaveObject(kGAMECLASS.pc.getSaveObject());
+			this.personality = kGAMECLASS.pc.cor();
 			this.a = "";
 			this.capitalA = "";
 			this.inventory = [];

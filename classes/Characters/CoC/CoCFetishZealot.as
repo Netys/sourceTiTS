@@ -59,6 +59,7 @@ package classes.Characters.CoC
 			this.HPMod = 20;
 			this.shieldsRaw = this.shieldsMax();
 			this.HPRaw = this.HPMax();
+			this.personality = 90;
 			
 			this.physiqueRaw = 35 / 20 * this.level;
 			this.reflexesRaw = 30 / 20 * this.level;

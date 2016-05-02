@@ -77,7 +77,8 @@ package classes.Characters.CoC
 			this.libidoRaw = 40;
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
-			this.lustRaw = 40;	
+			this.lustRaw = 40;
+			this.personality = 75;
 			
 			this.femininity = 10 + Flag("COC.KELT_BREAK_LEVEL") * 25;
 			this.eyeType = GLOBAL.TYPE_HUMAN;

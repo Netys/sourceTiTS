@@ -65,6 +65,7 @@ package classes.Characters.CoC
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
 			this.lustRaw = Math.min(30 + Flag("COC.TIMES_PC_DEFEATED_VALA") * 10, 80);
+			this.personality = 50;
 			
 			this.femininity = 75;
 			this.eyeType = GLOBAL.TYPE_HUMAN;

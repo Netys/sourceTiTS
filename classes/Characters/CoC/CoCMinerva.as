@@ -69,7 +69,8 @@ package classes.Characters.CoC
 			this.libidoRaw = 30;
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
-			this.lustRaw = 20;	
+			this.lustRaw = 20;
+			this.personality = 45;
 			
 			this.femininity = 75;
 			this.eyeType = GLOBAL.TYPE_BEE; // black sclera
