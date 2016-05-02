@@ -495,7 +495,7 @@
 		public var beardStyle: Number = 0;
 		public function beardStyleUnlocked(newBeardStyle:Number):Boolean
 		{
-			if (beardStyle == 11 && faceType == GLOBAL.TYPE_FELINE) return; // lynx sideburns are not exactly beard
+			if (beardStyle == 11 && faceType == GLOBAL.TYPE_FELINE) return false; // lynx sideburns are not exactly beard
 			return true;
 		}
 		public function beardStyleLockedMessage():String
@@ -8097,6 +8097,12 @@
 					vaginas[slot].wetnessRaw = 3;
 					vaginas[slot].minLooseness = 3;
 					break;
+				case GLOBAL.TYPE_FELINE:
+					vaginas[slot].clits = 1;
+					vaginas[slot].vaginaColor = "pink";
+					vaginas[slot].wetnessRaw = 1;
+					vaginas[slot].minLooseness = 1;
+					break;
 				case GLOBAL.TYPE_SIREN:
 					vaginas[slot].vaginaColor = RandomInCollection(["blue", "aquamarine"]);
 					vaginas[slot].addFlag(GLOBAL.FLAG_NUBBY);
@@ -11022,6 +11028,13 @@
 					if (foxScore() > 4) {
 						desc = desc.replace("dog", "fox");
 					}
+				}
+				else if (type == GLOBAL.TYPE_FELINE)
+				{
+					if (!simple)
+						desc += RandomInCollection(["feline gash", "small-lipped vagina", "animalistic cunny", "feline honeypot", "feline snatch", "feline cunt", "animalistic pussy", "subtle pussy", "discreet cat-cunt"]);
+					else
+						desc += RandomInCollection(["cat-pussy", "cat-cunt", "fuck-hole", "cat-twat", "animal-twat", "animal-pussy", "cat-pussy", "cat-cunt", "pussy", "box"]);
 				}
 				else if (type == GLOBAL.TYPE_SIREN || type == GLOBAL.TYPE_ANEMONE)
 				{

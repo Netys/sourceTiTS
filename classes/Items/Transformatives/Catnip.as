@@ -464,20 +464,18 @@ package classes.Items.Transformatives
 						output(" You peek down there to see what’s going on");
 						if (!target.isCrotchExposed()) output(", taking special care to move your [pc.lowerGarments] out of the way");
 					}
-					output(". <b>[pc.EachVagina] ");
-					if(target.totalVaginas() == 1) output("is ");
-					else output("are ");
-					
-					kGAMECLASS.clearList();
-					if (target.vaginas[0].type != GLOBAL.TYPE_FELINE && target.vaginaTypeUnlocked(x, GLOBAL.TYPE_FELINE))
-						kGAMECLASS.addToList("thin-lipped")
-					if (target.vaginas[x].vaginaColor != "pink")
-						kGAMECLASS.addToList("pink")
-					output(kGAMECLASS.formatList() + " now!</b>.");
+					output(". Your <b>[pc.vagina " + x + "] is now ");
 					
 					if (target.vaginas[x].type != GLOBAL.TYPE_FELINE && target.vaginaTypeUnlocked(x, GLOBAL.TYPE_FELINE)) {
-						target.shiftVagina(x, GLOBAL.TYPE_FELINE); // need support everywhere to actually work... feline vaginas are generally nearly lipless
-						target.vaginas[x].clits = 1;
+						output("small, pink, almost featureless hole with vestigial labia");
+						if (target.hasFur()) output(", barely visible under your " + target.skinFurScales(true));
+					}
+					else if (target.vaginas[x].vaginaColor != "pink")
+						output("pink")
+					output("</b>!");
+					
+					if (target.vaginas[x].type != GLOBAL.TYPE_FELINE && target.vaginaTypeUnlocked(x, GLOBAL.TYPE_FELINE)) {
+						target.shiftVagina(x, GLOBAL.TYPE_FELINE);
 					}
 					target.vaginas[x].vaginaColor = "pink";
 					changes++;
@@ -505,6 +503,8 @@ package classes.Items.Transformatives
 					target.lust(10 + rand(4));
 					changes++;
 				}
+				
+				if (changes > 0) break; // only change one vagina per dose
 			}
 			
 			var maxSize:int = target.hasVagina() ? 2 : 0;
@@ -583,17 +583,18 @@ package classes.Items.Transformatives
 					{
 						output("\n\nYour [pc.cock " + x + "] throbs suddenly ");
 						if (target.cocks[x].hasFlag(GLOBAL.FLAG_SHEATHED)) output("in it's sheath");
+						else if (target.hasStatusEffect("Genital Slit")) output("in it's slit");
 						else if (!target.isCrotchExposed()) output("beneath your [pc.lowerGarments]");
 						else if(target.legCount == 1) output("on your [pc.leg]");
 						else output("between your [pc.legs]");
-						output(" and begins to transform, drooling a [pc.cumVisc] [pc.cumColor] river from its engorged slit. You double over in a sick twist of pain and pleasure");
+						output(" and begins to transform, drooling a river of pre from its engorged slit. You double over in a sick twist of pain and pleasure");
 						if(target.cocks[x].cockColor != "pink")
-							output("as the flesh of your cock shifts color to a pink hue");
+							output(" as the flesh of your cock shifts color to a pink hue");
 						if(!target.hasCockFlag(GLOBAL.FLAG_TAPERED)) output(", the skin melding strangely into a long, pointed shape, until the tip is barely wide enough to accommodate your urethra");
 						output(".");
 						
 						if(!target.hasCockFlag(GLOBAL.FLAG_NUBBY))
-							output(" Barbs begin to sprout from its flesh, if you can call them barbs - they are not sharp enough to actually bruise. They start out thick around the base and shrink towards the tip. The smallest are barely visible. They are angled towards you, so pulling out now should be even more intense than pushing in.");
+							output(" Barbs begin to sprout from its flesh, if you can call them barbs - despite the wicked look, they are not sharp enough to actually bruise. They start out thick around the base and shrink towards the tip. The smallest are barely visible. They are angled towards you, so pulling out now should be even more intense than pushing in.");
 						
 						//if cock was more than max size:
 						if(target.cockLengthUnlocked(x, maxSize)) {
@@ -609,9 +610,9 @@ package classes.Items.Transformatives
 							output(" It settles on a new length of <b>" + num2Text(int(target.cocks[x].cLength())) + " inches</b>.");
 						}
 						
-						if (!target.hasCockFlag(GLOBAL.FLAG_SHEATHED) && !target.hasStatusEffect("Genital Slit"))
+						if (!target.hasCockFlag(GLOBAL.FLAG_SHEATHED, x) && !target.hasStatusEffect("Genital Slit"))
 							output(" Finally, a sheath begins forming around your cock's base, tightening and pulling your cock inside its depths.");
-							
+						
 						output("\n\nYou spend a few moments collecting yourself, cleaning the spunk off your <b>" + (target.cocks[x].cType != GLOBAL.TYPE_FELINE ? "new" : "improved") + " kitty pecker</b>.");
 						target.lust(20 + rand(20));
 						changes++;
@@ -998,7 +999,7 @@ package classes.Items.Transformatives
 			else if (target.armType == GLOBAL.TYPE_FELINE && (!target.hasLegFlag(GLOBAL.FLAG_FURRED) || !target.hasLegFlag(GLOBAL.FLAG_DIGITIGRADE) || !target.hasLegFlag(GLOBAL.FLAG_PAWS)))
 			{
 				if (!target.hasLegFlag(GLOBAL.FLAG_FURRED) && !target.hasFur()) output("\n\nYou feel a powerful itch spread across your [pc.legs]. You clutch at them, scratching violently as your hair grows and thickens, spreading out into a [pc.furColor] mat across your [pc.skin]. Within a few minutes, your legs are utterly covered in a thick, silky-smooth [pc.furColor] fur! ");
-				if (!target.hasLegFlag(GLOBAL.FLAG_PAWS) || !target.hasLegFlag(GLOBAL.FLAG_DIGITIGRADE)) output("\n\n Your joints feel very odd, and your soles reform into padded paws with toes tipped by sharp-looking claws. It'll take a little bit of practice to get used to walking with these. <b>You’ve got digitigrade feline legs, complete with soft paw pads and retractable claws!</b>");
+				if (!target.hasLegFlag(GLOBAL.FLAG_PAWS) || !target.hasLegFlag(GLOBAL.FLAG_DIGITIGRADE)) output("\n\nYour joints feel very odd, and your soles reform into padded paws with toes tipped by sharp-looking claws. It'll take a little bit of practice to get used to walking with these. <b>You’ve got digitigrade feline legs, complete with soft paw pads and retractable claws!</b>");
 				target.addLegFlag(GLOBAL.FLAG_DIGITIGRADE);
 				target.addLegFlag(GLOBAL.FLAG_PAWS);
 				target.addLegFlag(GLOBAL.FLAG_FURRED);

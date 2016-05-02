@@ -2570,6 +2570,13 @@ public function vaginaBonusForAppearance(forTarget:Creature = null, x:int = 0, e
 		if(!eachOne) output2(" The exterior lips are that of a bitch and have a tendency to swell when in heat, giving it a very animalistic bent.");
 		else output2("\nEach vagina’s exterior lips are that of a bitch and have a tendency to swell when in heat, giving them a very animalistic bent.");
 	}
+	//Kitty flavor
+	else if(target.vaginas[x].type == GLOBAL.TYPE_FELINE) {
+		if(!eachOne) output2(" The exterior lips are vestigial and featureless, making your entrace quite modest");
+		else output2("\nEach vagina’s exterior lips are vestigial and featureless, making your entraces quite modest");
+		if (target.hasFur()) output2(" and barely visible under your " + target.skinFurScales(true));
+		output2(".");
+	}
 	//Siren flavor
 	else if(target.vaginas[x].type == GLOBAL.TYPE_SIREN) {
 		if(!eachOne) output2(" The exterior opening is framed in writhing tentacles and the interior is lined with aphrodisiac-laced cilia.");
