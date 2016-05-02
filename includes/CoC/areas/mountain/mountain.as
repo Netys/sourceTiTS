@@ -71,16 +71,16 @@ public function exploreMountain():void {
 
 	//Rarer 'nice' Ceraph encounter
 	//Overlaps half the old encounters once pierced.
-	//if (!ceraphIsFollower() && pc.level > 2 && (pc.exploredMountain % 30 == 0) && flags["COC.PC_FETISH"] > 0) {
-		//friendlyNeighborhoodSpiderManCeraph();
-		//return;
-	//}
+	if (!ceraphIsFollower() && pc.level > 2 && (flags["COC.EXPLORED_MOUNTAIN"] % 30 == 0) && flags["COC.PC_FETISH"] > 0) {
+		friendlyNeighborhoodSpiderManCeraph();
+		return;
+	}
 	
 	//15% chance of Ceraph
-	//if (!ceraphIsFollower() && pc.level > 2 && (pc.exploredMountain % 15 == 0) && flags["COC.PC_FETISH"] != 1) {
-		//encounterCeraph();
-		//return;
-	//}
+	if (!ceraphIsFollower() && pc.level > 2 && (flags["COC.EXPLORED_MOUNTAIN"] % 15 == 0) && flags["COC.PC_FETISH"] != 1) {
+		encounterCeraph();
+		return;
+	}
 	
 	//10% chance of hairdresser encounter if not found yet
 	if (flags["COC.GOBLIN_SALON_FOUND"] != 1) {

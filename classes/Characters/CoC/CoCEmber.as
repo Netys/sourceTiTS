@@ -161,7 +161,7 @@ package classes.Characters.CoC
 			var gender:int = int(kGAMECLASS.flags["COC.EMBER_GENDER"]);
 			if (gender == 1 || gender == 3) {
 				this.createCock(16);
-				if (int(kGAMECLASS.flags["COC.EMBER_INTERNAL_DICK"]) != 0 || roundface) this.shiftCock(0, GLOBAL.TYPE_DRACONIC);
+				if (int(kGAMECLASS.flags["COC.EMBER_INTERNAL_DICK"]) != 0 || !roundface) this.shiftCock(0, GLOBAL.TYPE_DRACONIC);
 				else {
 					this.cocks[0].addFlag(GLOBAL.FLAG_KNOTTED);
 					this.cocks[0].knotMultiplier = 1.25;

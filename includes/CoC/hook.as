@@ -82,13 +82,6 @@ public function enterCocVrPod():void {
 	clearMenu();
 	addButton(0, "Enter portal", EnterVRIAmYourBloodyChampionYouVapidCunt, null, "Enter portal", "Bring it on!");
 	addButton(4, "Abort", abortIAmNotBloodyChampion, null, "Abort", "You are not ready now.");
-	
-	if (pc.short != "Etis") return; // Debug mode for dummies
-	
-	if (flags["COC_VR_UNLIMITED"] == undefined)
-		addButton(10, "Safety Off", enableFullVRMode, undefined, "Safety Off", "Fully disengage already lax safety protocols. This non-canon mode disables some limitations, including camp followers restrictions. It can't be disabled once enabled, and it can lead to some consequences later.");
-	else addDisabledButton(10, "Safety Off", "Safety Off", "The artifical limitations are lifted.");
-	//addDisabledButton(11, "Reset", "Reset", "Not implemented yet."); // not sure ever would be, since resetting would allow recollection of unique loot
 }
 
 public function abortIAmNotBloodyChampion():void {
@@ -126,11 +119,6 @@ public function EnterVRIAmYourBloodyChampionYouVapidCunt():void {
 	} else {
 		move("COC_CAMP");
 	}
-}
-
-public function enableFullVRMode():void {
-	flags["COC_VR_UNLIMITED"] = 1;
-	addDisabledButton(10, "Safety Off", "Safety Off", "The artifical limitations are lifted.");
 }
 
 //////////////////////////////////////////

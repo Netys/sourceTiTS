@@ -146,8 +146,8 @@ public function slavesCount():int {
 	if(amilyFollower() && amilyCorrupt() && flags["COC.FOLLOWER_AT_FARM_AMILY"] == undefined) counter++;
 	////Bimbo sophie
 	//if(bimboSophie() && flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] == 0) counter++;
-	//if(ceraphIsFollower()) counter++;
-	//if(milkSlave() && flags[kFLAGS.FOLLOWER_AT_FARM_BATH_GIRL] == 0) counter++;
+	if(ceraphIsFollower()) counter++;
+	if(milkSlave() && int(flags["COC.FOLLOWER_AT_FARM_BATH_GIRL"]) == 0) counter++;
 	return counter;
 }
 public function campSlavesButton():void {

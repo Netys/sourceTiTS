@@ -3982,7 +3982,7 @@ private function highAffectionEmberLustFuck():void
 	clearOutput();
 	var x:int = pc.cockThatFits(ember.hasVagina() ? ember.vaginalCapacity() : ember.analCapacity());
 	if (x < 0) x = pc.smallestCockIndex();
-	var y:int = pc.cockThatFits2(ember.analCapacity());
+	var y:int = ember.hasVagina() ? pc.cockThatFits2(ember.analCapacity()) : -1;
 	
 	output("You");
 	if(!pc.isNude()) output(" strip your [pc.gear] and");

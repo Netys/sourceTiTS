@@ -259,7 +259,6 @@ package classes.Characters.CoC
 				}
 				//FIRE!
 				else {
-					removeStatusEffect("Uber");
 					//(Avoid!)
 					if (statusEffectv3("Uber") > 0) {
 						output("She throws her hands out, palms facing you, and a rush of pink flame washes towards you.  Thanks to your decision to wait, it's easy to avoid the onrushing flames and her attack.\n\n");
@@ -270,6 +269,7 @@ package classes.Characters.CoC
 						output("She throws her hands out, palms facing you, and a rush of pink flame washes towards you.  Too busy with your own attack to effectively dodge, you're hit full on by the pink fire.  Incredibly, it doesn't burn.  The fire actually seems to flow inside you, disappearing into your skin.  You stumble, confused for a second, but then it hits you.  Every inch of your body is buzzing with pleasure, practically squirming and convulsing with sexual delight.  You collapse, twitching and heaving, feeling the constant sensation of sexual release running from your head to your [pc.feet].  Too horny and pleasured to resist, you lie down and tremble, occasionally rubbing yourself to enhance the bliss.");
 						target.lust(target.lustMax(), true);
 					}
+					removeStatusEffect("Uber");
 				}
 			}
 		}
@@ -278,7 +278,7 @@ package classes.Characters.CoC
 		{
 			clearOutput();
 			output("Unsure what she is up to, you are assuming defensive stance.");
-			addStatusValue("Level", 3, 1);
+			addStatusValue("Uber", 3, 1);
 			CombatManager.processCombat();
 		}
 		

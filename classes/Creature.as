@@ -8616,8 +8616,8 @@
 			}
 			if (sharkScore() >= 3) race = "shark-morph";
 			if (dragonScore() >= 5) race = faceType == GLOBAL.TYPE_DRACONIC ? "dragon-morph" : mf("dragon-man", "dragon-girl");
-			if (foxScore() >= 4) race = faceType == GLOBAL.TYPE_VULPINE ? "fox-morph" : mf("fox-man", "fox-girl");
-			if (kitsuneScore() >= 5 && (race.indexOf("fox") == -1 || tailCount > 1)) race = "kitsune";
+			if (foxScore() >= 4) race = "vulpine-morph";
+			if (kitsuneScore() >= 5 && (race.indexOf("vulpine") == -1 || tailCount > 1)) race = "kitsune";
 			if (ovirScore() >= 3 && race == "human") race = "half-ovir";
 			if (ausarScore() >= 2 && race == "human") race = "half-ausar"; // Fucking Ausar forever overriding other shit. EXTERMINATUS.
 			if (kaithritScore() >= 3 && race == "human") race = "half-kaithrit";
@@ -8629,7 +8629,7 @@
 			if (raskvelScore() >= 4) race = "raskvel-morph";
 			if (pandaScore() >= 4) race = "panda-morph";
 			if (ausarScore() >= 4) race = "ausar"
-			if (canineScore() >= 4 && race != "ausar") race = faceType == GLOBAL.TYPE_CANINE ? "dog-morph" : mf("dog-man", "dog-girl");
+			if (canineScore() >= 4 && race != "ausar") race = "canine-morph";
 			if (demonScore() >= 5) race = "demon-morph";
 			if (gabilaniScore() >= 5) race = "gabilani";
 			if (frogScore() >= 5) race = "kerokoras";
@@ -8637,8 +8637,7 @@
 			if (felineScore() >= 5 && race != "kaithrit") {
 				if (hasTail(GLOBAL.TYPE_FELINE) && tailCount > 1) race = "nekomata";
 				else if (dragonScore() >= 4)  race = "dragonne";
-				else if (faceType == GLOBAL.TYPE_FELINE) race = "cat-morph";
-				else race = rawmfn(mf("cat-man", "cat-boy"), "cat-girl", "feline");
+				else race = "feline-morph";
 			}
 			if (leithanScore() >= 6) race = "leithan";
 			if (nukiScore() >= 6) race = "kui-tan";
@@ -8660,7 +8659,7 @@
 			if (horseScore() >= 3 && isCentaur()) race = taurRace(equineRace());
 			else if (bovineScore() >= 3 && isTaur()) race = rawmfn("bull", "cow", "bovine") + "-taur";
 			else if (race == "human" && isCentaur()) race = "centaur";
-			else if (race == "cat-morph" && isTaur() && isHerm()) race = "chakat";
+			else if (race == "feline-morph" && isTaur() && isHerm()) race = "chakat";
 			else if (isTaur()) race = taurRace(race); // Other taurs
 			// Naga-morphs
 			if (naleenScore() >= 5 && isNaga()) race = "naleen";

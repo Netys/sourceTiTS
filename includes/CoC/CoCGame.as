@@ -103,6 +103,7 @@ include "places/teladre/TelAdre.as";
 include "characters/amily.as";
 include "characters/AnemoneScene.as";
 include "characters/ArianScene.as";
+include "characters/ceraphFollower.as";
 include "characters/ember.as";
 include "characters/followerInteractions.as";
 include "characters/Hel.as";
@@ -125,7 +126,7 @@ public function inMareth():Boolean {
 	return rooms[currentLocation].system == "PLANET: MARETH";
 }
 public function allowFollowers():Boolean {
-	return flags["COC_VR_UNLIMITED"] == 1;
+	return true;
 }
 
 public function cor(arg:Number = 0, apply:Boolean = false): Number 
