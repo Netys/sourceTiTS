@@ -449,11 +449,11 @@ private function beardMenu():void {
 	clearOutput();
 	clearMenu();
 	output("\<i>I can help you with your beard-related needs,</i>\" Lynnette says.")
-	if (pc.hasBeard() && pc.beardLength > 0.5) addButton(0, "Cut Beard", cutBeard);
-	if (pc.hasBeard() && pc.beardLength < 6) addButton(1, "Lengthen Beard", growBeard, 0);
-	if (!pc.hasBeard()) addButton(1, "Grow Beard", growBeard, 1);
-	if (pc.hasBeard() && pc.beardLength >= 0.5) addButton(2, "Beard Style", changeBeardStyle);
-	if (pc.hasBeard()) addButton(3, "Remove Beard", removeBeard);
+	if (pc.hasBeard() && pc.beardLength > 0.5 && pc.beardLengthUnlocked(0.5)) addButton(0, "Cut Beard", cutBeard);
+	if (pc.hasBeard() && pc.beardLength < 6 && pc.beardLengthUnlocked(6)) addButton(1, "Lengthen Beard", growBeard, 0);
+	if (!pc.hasBeard() && pc.beardLengthUnlocked(1)) addButton(1, "Grow Beard", growBeard, 1);
+	if (pc.hasBeard() && pc.beardLength >= 0.5 && pc.beardStyleUnlocked()) addButton(2, "Beard Style", changeBeardStyle);
+	if (pc.hasBeard() && pc.beardLengthUnlocked(0)) addButton(3, "Remove Beard", removeBeard);
 	addButton(14, "Back", hairDressingMainMenu);
 }
 

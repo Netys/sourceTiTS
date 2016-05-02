@@ -256,8 +256,8 @@ package classes.Characters.CoC
 					//his wings and kick up dust, blinding the PC 
 					//next turn and dealing light damage. - 
 					output("The imp leaps into the air with a powerful spring, beating his wings hard to suspend himself in the center of his bedchamber.  Dust kicks up into the air from the force of his flight and turns the room into a blinding tornado!  Small objects smack off of you, causing little damage ");
-					if (target.hasArmor() && target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)) {
-						output(", but your sealed armor protects your eyes from dust cloud!  ");
+					if (target.hasBlindImmunity() || target.hasArmor() && target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)) {
+						output(", but you are protected from such attacks!");
 					} else {
 						output("while the dust gets into your eyes, temporarily blinding you!  ");
 						target.createStatusEffect("Blind", 2, 0, 0, 0, false, "Blind", "You're blinded and cannot see! Accuracy is reduced, and ranged attacks are far more likely to miss.", true, 0);

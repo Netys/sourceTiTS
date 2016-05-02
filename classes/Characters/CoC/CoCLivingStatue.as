@@ -234,9 +234,9 @@ package classes.Characters.CoC
 			var pc:PlayerCharacter = kGAMECLASS.pc;
 			output("The animated sculpture brings its right foot around, dragging it through the gardens at a high enough speed to tear a half score of bushes out by the root. A cloud of shrubbery and dirt washes over you!");
 			
-			if (pc.hasArmor() && pc.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT))
+			if (pc.hasBlindImmunity() || pc.hasArmor() && pc.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT))
 			{
-				output(" Your armor keeps it out of your eyes!");
+				output(" You are protected from such attacks!");
 			}
 			//blind
 			if (rand(2) == 0 && !pc.hasStatusEffect("Blinded"))

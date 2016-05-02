@@ -495,6 +495,7 @@
 		public var beardStyle: Number = 0;
 		public function beardStyleUnlocked(newBeardStyle:Number):Boolean
 		{
+			if (beardStyle == 11 && faceType == GLOBAL.TYPE_FELINE) return; // lynx sideburns are not exactly beard
 			return true;
 		}
 		public function beardStyleLockedMessage():String
@@ -4567,6 +4568,9 @@
 				case 10:
 					bStyle = "goatee";
 					break;
+				case 11:
+					bStyle = "sideburns";
+					break;
 			}
 			return bStyle;
 		}
@@ -8369,7 +8373,7 @@
 			if (tone > 70) weighting -= 10;
 			if (tone < 30) weighting += 10;
 			if (lipRating() > 1) weighting += lipRating() * 3;
-			if (hasBeard()) weighting -= 100;
+			if (hasBeard() && (beardStyle != 11 || faceType != GLOBAL.TYPE_FELINE)) weighting -= 100; // lynx sideburns are not exactly a beard and have no m/f weight
 			//trace("Femininity Rating = " + weighting);
 			//Neuters first!
 			if (neuter != "") {

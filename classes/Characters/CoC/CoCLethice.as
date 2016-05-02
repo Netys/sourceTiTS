@@ -471,11 +471,11 @@ package classes.Characters.CoC
 		{
 			var pc:PlayerCharacter = kGAMECLASS.pc;
 			output("Lethice flutters toward a burning brazier and flaps her wings, causing the flames to flare and thick gusts of smoke to flow past the assembled demons, straight at you!");
-			if (pc.hasArmor() && pc.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT))
+			if (pc.hasBlindImmunity() || pc.hasArmor() && pc.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT))
 			{
-				output(" Your armor keeps it out of your eyes!");
+				output(" You are protected from such attacks!");
 			}
-			if (rangedCombatMiss(this, pc))
+			else if (rangedCombatMiss(this, pc))
 			{
 				output(" You manage to slide under the waves of smoke.");
 			}

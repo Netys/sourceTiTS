@@ -204,7 +204,7 @@ package classes.Characters.CoC
 			if (this.hasStatusEffect("Sandstorm"))
 				if(!(target.hasArmor() && target.armor.hasFlag(GLOBAL.ITEM_FLAG_AIRTIGHT)))
 				{
-					if(rand(4) == 0) {
+					if(rand(4) == 0 && !target.hasBlindImmunity()) {
 						output("You eyes are full of sand and you barely can see!");
 						target.createStatusEffect("Blinded", 2, 0, 0, 0, false, "Blind", "You're blinded by sand and cannot see! Accuracy is reduced, and ranged attacks are far more likely to miss.", true, 0);
 						output("\n");

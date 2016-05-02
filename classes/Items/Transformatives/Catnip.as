@@ -271,8 +271,6 @@ package classes.Items.Transformatives
 			output("Executing route: body complexion.");
 			var changes:int = 0;
 			
-			// should get rid of facial hair also
-			
 			// decrease thicknes
 			if (target.thickness >= 20 && modThickness(target, 20, 10, false))
 			{
@@ -1144,6 +1142,19 @@ package classes.Items.Transformatives
 				output("\n\nYou suddenly feel your facial flesh and bones elongating and protruding forward. You check your appearance with your codex's holocorder. <b>You've got a feline muzzle, complete with whiskers and moist nose!</b>");
 				target.addFaceFlag(GLOBAL.FLAG_MUZZLED);
 				changes++;
+			}
+			
+			// short facial hair blends into fur
+			if (target.beardLength > 0 && (target.beardLength < 1 || !target.hasFur()) && target.beardLengthUnlocked(0)) {
+				kGAMECLASS.output("\n\nAn irritating sensation centers on your chin and you can't help but to scratch the itch with your [pc.fingers]. You notice that pieces of what was once your [pc.beard] are now littering your hands and falling to your [pc.feet]. <b>You no longer have a beard!</b>");
+				target.removeBeard();
+			}
+			// or, if you have enough beard, something more original?
+			else if (target.hasFur() && target.beardLength >= 1 && target.beardStyleUnlocked(11)) {
+				kGAMECLASS.output("\n\nAn irritating sensation centers on your chin and cheeks and you can't help but to scratch the itch with your [pc.fingers]. Looks like <b>you have lynx-like sideburns instead of your [pc.beard]!</b>");
+				target.beardStyle = 11;
+				if (target.beardLength < 2) target.beardLength = 2;
+				if (target.beardLength > target.tallness / 12) target.beardLength = target.tallness / 12;
 			}
 			
 			// feline tongue

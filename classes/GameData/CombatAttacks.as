@@ -563,7 +563,7 @@ package classes.GameData
 			}
 			a.push(Might);
 			
-			// Fox Fire - single target burning damage
+			// Cleansing Palm - single target unresistable magic damage, based on target corruption
 			CleansingPalm = new SingleCombatAttack();
 			CleansingPalm.ButtonName = "C. Palm";
 			CleansingPalm.EnergyCost = 30;
