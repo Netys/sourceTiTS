@@ -397,7 +397,7 @@ package classes.Items.Transformatives
 			var maxSize:Number = 4; // big dicks aren't really what cats are about
 			if (target.isTaur()) maxSize += 8; // unless we are talking about cat-taurs, ofc
 			if (target.hasPerk("Hung")) maxSize *= 1.5; // 6/18
-			if (target.hasPerk("Mini")) maxSize *= 0.75; // 4/9
+			if (target.hasPerk("Mini")) maxSize *= 0.75; // 3/9
 			
 			// Get a feline dick and change it's size towards target
 			for(var x:int = 0; x < target.cockTotal(); x++)
@@ -430,7 +430,7 @@ package classes.Items.Transformatives
 			
 			maxSize = target.hasVagina() ? 2 : 0;
 			
-			for (x = 1; x < target.breastRows.length; x++) {
+			for (x = 0; x < target.breastRows.length; x++) {
 				if (target.breastRows[x].breastRatingRaw > maxSize && target.breastRatingUnlocked(x, maxSize))  changes++;
 				if (target.breastRows[x].nippleType != GLOBAL.NIPPLE_TYPE_INVERTED && target.nippleTypeUnlocked(x, GLOBAL.NIPPLE_TYPE_INVERTED)) changes++
 			}
