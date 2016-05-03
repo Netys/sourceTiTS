@@ -64,6 +64,7 @@ package classes.Engine.Combat
 		if (target.hasPerk("Easy")) damMulti += 0.2;
 		
 		if (target.hasPerk("Omnibus' Gift")) damMulti *= 0.85;
+		if (target.hasPerk("Luststick Adapted")) damMulti *= 0.9;
 		if (target.hasPerk("Bimbo Body") || target.hasStatusEffect("Bimbo Champagne") || target.hasPerk("Bro Body") || target.hasPerk("Futa Form")) damMulti *= 0.75;
 		if (target.hasPerk("Purity Blessing")) damMulti *= 0.85; // originally 0.75 but it is kinda op for perk without side effect
 		

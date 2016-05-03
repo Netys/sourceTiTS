@@ -3419,6 +3419,10 @@
 			if (hasPerk("Black Latex")) bonus += 10;
 			if (hasStatusEffect("Sexy Costume")) bonus += statusEffectv1("Sexy Costume");
 			if (hasPerk("Implant: Hormonal Controller")) bonus += perkv1("Implant: Hormonal Controller");
+			if (hasPerk("Luststick Adapted")) {
+				if (bonus < 50) bonus += 10;
+				else bonus += 5;
+			}
 			if (hasPerk("Bimbo Body") || hasPerk("Bro Body") || hasPerk("Futa Form")) {
 				if(bonus > 40) bonus += 10;
 				else if(bonus >= 20) bonus += 20;
@@ -3439,7 +3443,7 @@
 			if (hasStatusEffect("Pent Up")) bonus += statusEffectv1("Pent Up");
 			//Venom brings minimum up to 35.
 			if (bonus < 35 && hasStatusEffect("Red Myr Venom")) bonus = 35;
-			if (bonus < 35 && hasStatusEffect("Luststick")) bonus = 35;
+			if (bonus < 35 && hasStatusEffect("Luststick") && !hasPerk("Luststick Adapted")) bonus = 35;
 			return Math.max((0 + bonus), 0);
 		}
 		public function physiqueMax(): Number {

@@ -667,6 +667,18 @@ public function sleep(outputs:Boolean = true):void {
 			addButton(0, "Next", wakeUpAfterArianSleep);
 			return;
 		}
+		if (flags["COC.SLEEP_WITH"] == "Sophie" && pc.hasCock() && inCamp() && hours < 7) {
+			if (bimboSophie() && int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) == 0 && rand(2) == 0 && pc.cockThatFits(sophieCapacity()) >= 0) {
+				output("\n<b><u>Something odd happens that morning...</u></b>");
+				if (sophiePregnancyEvent() >= 2) fuckYoPregnantHarpyWaifu(true);
+				else sophieFenCraftedSex(true);
+				return;
+			}
+			if (sophieFollower() && pc.lust() >= 50 && pc.smallestCockVolume() <= cockVolume(5) && int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) == 0) {
+				sophieSmallDongTeases();
+				return;
+			}
+		}
 	}
 	
 	addButton(0, "Next", mainGameMenu);

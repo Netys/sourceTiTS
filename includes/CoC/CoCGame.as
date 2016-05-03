@@ -117,6 +117,9 @@ include "characters/Rathazul.as";
 include "characters/SheilaScene.as";
 include "characters/shouldra.as";
 include "characters/Sophie.as";
+include "characters/sophieBimbo.as";
+include "characters/sophieFollower.as";
+include "characters/vapula.as";
 
 public function initCoCJunk():void {
 	if (flags["COC.CORRUPTION"] == undefined) flags["COC.CORRUPTION"] = int(pc.personality / 2.1) + 10;

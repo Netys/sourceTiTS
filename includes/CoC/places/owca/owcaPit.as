@@ -446,9 +446,10 @@ private function subdueVapula():void {
 	addButton(0, "Disband", disbandHorde);
 	
 	addDisabledButton(1, "JustFuckEm", "Just Fuck Them", "This scene requires you to have genitals and sufficient arousal.");
+	addDisabledButton(2, "EnslaveVapula", "Enslave Vapula", "This option requires you to have genitals, sufficient arousal and enough corruption.")
 	
-	if(pc.hasGenitals() && pc.lust() >= 33) addButton(1, "JustFuckEm", rapeZeVapula);
-	if(pc.hasGenitals() && pc.cor() >= 66 && 9999 == 0) addButton(2, "EnslaveVapula", enslaveVapulaWithYourWang);
+	if (pc.hasGenitals() && pc.lust() >= 33) addButton(1, "JustFuckEm", rapeZeVapula);
+	if (pc.hasGenitals() && pc.cor() >= 66) addButton(2, "EnslaveVapula", enslaveVapulaWithYourWang);
 	
 	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); CombatManager.genericVictory(); } );
 }

@@ -36,7 +36,7 @@ public function EventsAdopterHellNotify():void {
 			//pc.ballSizeRaw = 3 * Math.PI;
 		//}
 		tmp = pc.hasPerk("Futa Faculties") ? 5 : 3;
-		if (pc.breastRows.length > 0 && pc.breastRows[0].breastRatingRaw < tmp && !pc.hasStatusEffect("Gel Body")) { //Tits!
+		if (!pc.hasStatusEffect("Gel Body") && pc.breastRows.length > 0 && pc.breastRows[0].breastRatingRaw < tmp) { //Tits!
 			pc.breastRows[0].breastRatingRaw = tmp;
 			if (pc.isBimbo())
 				eventBuffer += "\n\n<b>Your tits get nice and full again.  You'll have lots of fun now that your breasts are back to being big, swollen knockers!</b>";
@@ -69,7 +69,7 @@ public function EventsAdopterHellNotify():void {
 			pc.shiftVagina(0, Mutator.guessVagType(pc));
 			if (pc.isBimbo())
 				eventBuffer += "\n\n<b>Your crotch is like, all itchy an' stuff.  Omigawsh!  There's a wet little slit opening up, and it's all tingly!  It feels so good, maybe like, someone could put something inside there!</b>";
-			else eventBuffer += "\n\n<b>Your crotch tingles for a second, and when you reach down to feel, your " + pc.legs() + " fold underneath you, limp.  You've got a vagina - the damned thing won't go away and it feels twice as sensitive this time.  Fucking bimbo liquer.</b>";
+			else eventBuffer += "\n\n<b>Your crotch tingles for a second, and when you reach down to feel, your " + pc.legs() + " fold underneath you, limp.  You've got a [pc.vagina] - the damned thing won't go away and it feels twice as sensitive this time.  Fucking bimbo liquer.</b>";
 		}
 		tmp = pc.hasPerk("Bimbo Brains") ? 12 : 9;
 		if (pc.hipRatingRaw < tmp && !pc.hasStatusEffect("Gel Body")) {
@@ -94,7 +94,7 @@ public function EventsAdopterHellNotify():void {
 		//pc.removePerk(PerkLib.Feeder);
 		tmp = pc.hasPerk("Bro Brains") ? 10 : 6;
 		if (!pc.hasCock() && !pc.hasStatusEffect("Goo Crotch")) { //(Dick regrowth) 
-			pc.createCock(10);
+			pc.createCock(tmp);
 			pc.shiftCock(0, Mutator.guessCockType(pc));
 			eventBuffer += "\n\n<b>As time passes, your loins grow itchy for a moment.  A split-second later, a column of flesh erupts from your crotch.  Your new, " + tmp + "-inch cock pulses happily.";
 			if (pc.balls == 0) {
@@ -105,11 +105,11 @@ public function EventsAdopterHellNotify():void {
 			eventBuffer += "</b>";
 		}
 		tmp = pc.hasPerk("Bro Brains") ? 8 : 6;
-		if (pc.cocks[0].cLength() < 8 && !pc.hasStatusEffect("Goo Crotch")) { //(Dick rebiggening)
-			eventBuffer += "\n\n<b>As time passes, your cock engorges, flooding with blood and growing until it's at " + tmp + " inches long.  ";
+		if (!pc.hasStatusEffect("Goo Crotch") && pc.longestCockLength() < tmp) { //(Dick rebiggening)
+			eventBuffer += "\n\n<b>As time passes, your [pc.cock] engorges, flooding with blood and growing until it's at " + tmp + " inches long.  ";
 			if (pc.isBro()) eventBuffer += "Goddamn, that thing is almost as tough as you!  ";
 			eventBuffer += "You really have no control over your dick.</b>";
-			pc.cocks[pc.longestCockIndex()].cLength(8, true);
+			pc.cocks[pc.longestCockIndex()].cLength(tmp, true);
 			if (pc.cocks[pc.longestCockIndex()].cThicknessRatio() < 1) pc.cocks[pc.longestCockIndex()].cThicknessRatio(1, true);
 		}
 		tmp = pc.hasPerk("Bro Brains") ? 3 : 2;
@@ -133,7 +133,7 @@ public function EventsAdopterHellNotify():void {
 	///////////////////////////////////////
 	////    HEAT AND RUT PROCESSORS    ////
 	///////////////////////////////////////
-	if ((pc.hasVaginaType(GLOBAL.TYPE_CANINE) || pc.hasVaginaType(GLOBAL.TYPE_FELINE)) // regulars heats for appropriate morphs... should be actually some function
+	if ((pc.hasVaginaType(GLOBAL.TYPE_CANINE) || pc.hasVaginaType(GLOBAL.TYPE_FELINE) || pc.hasVaginaType(GLOBAL.TYPE_EQUINE) || pc.hasVaginaType(GLOBAL.TYPE_LEITHAN)) // regulars heats for appropriate morphs... should be actually some function
 		&& pc.fertility() > 0 && (days % 30 == 0 || pc.fertility() >= 2 && days % (30 / int(pc.fertility())) == 0) && !pc.isPregnant() && flags["HEAT_LAST_CYCLE"] != days) { // same schedule with oviposition for correct overlaps
 		if (Mutator.goIntoHeat(pc, true, pc.fertility())) flags["HEAT_LAST_CYCLE"] = days;
 	}

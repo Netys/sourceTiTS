@@ -184,15 +184,16 @@ package classes.Characters.CoC
 			var target:Creature = selectTarget(hostileCreatures);
 			if (target == null) return;
 			
-			if (hasStatusEffect("Level") || rand(2) == 0) {
-				harpyUberCharge(target);
-				return;
-			}
 			
 			var options:Array = [];
 			
 			//Update attacks for girls/neuters
-			if (!target.hasCock()/* || findStatusAffect(StatusAffects.BimboBrawl) >= 0*/) {
+			if (!target.hasCock() || hasStatusEffect("BimboBrawl")) {
+				if (hasStatusEffect("Level") || rand(2) == 0) {
+					harpyUberCharge(target);
+					return;
+				}
+				
 				options = [talonsSophie, batterAttackSophie];
 			}
 			//Dicks ahoy

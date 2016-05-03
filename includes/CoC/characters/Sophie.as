@@ -6,6 +6,11 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
+public function get sophie():CoCSophie
+{
+	return new CoCSophie();
+}
+
 //public var pregnancy:PregnancyStore;
 //
 //public function SophieScene()
@@ -15,125 +20,159 @@ import classes.Engine.Utility.*;
 										////Event: 0 (= not pregnant),  1,   2,   3,  4 (< 100)
 	//CoC.timeAwareClassAdd(this);
 //}
-//
+
+public function sophiePregnancyEvent():int {
+	if (flags["COC.SOPHIE_INCUBATION"] == undefined) return 0;
+	if (flags["COC.SOPHIE_INCUBATION"] <= 100 * 60) return 4;
+	if (flags["COC.SOPHIE_INCUBATION"] <= 120 * 60) return 3;
+	if (flags["COC.SOPHIE_INCUBATION"] <= 150 * 60) return 2;
+	return 1;
+}
+
 //private var checkedSophie:int; //Make sure we test this event just once in timeChangeLarge
-//
-////Implementation of TimeAwareInterface
-//public function timeChange():Boolean
-//{
-	//if (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00283] > 0) return false; //Nothing can happen if she's been kicked out or disappeared off into the mountains
-	//var needNext:Boolean = false;
+
+//Implementation of TimeAwareInterface
+public function SophieTimePassedNotify():void
+{
+	if (flags["COC.UNKNOWN_FLAG_NUMBER_00285"] >= 50 && !pc.hasPerk("Luststick Adapted")) { //Luststick resistance unlock
+		eventQueue.push(unlockLuststickResistance);
+	}
+	
+	if (flags["COC.SOPHIE_INCUBATION"] != undefined && flags["COC.SOPHIE_INCUBATION"] > 0) flags["COC.SOPHIE_INCUBATION"]--;
+	
+	if (minutes != 0) return;
+	
+	if (flags["COC.UNKNOWN_FLAG_NUMBER_00283"] > 0) return; //Nothing can happen if she's been kicked out or disappeared off into the mountains
+	var needNext:Boolean = false;
 	//checkedSophie = 0;
 	//pregnancy.pregnancyAdvance();
 	//trace("\nSophie time change: Time is " + model.time.hours + ", incubation: " + pregnancy.incubation + ", event: " + pregnancy.event);
-	//if (flags[kFLAGS.SOPHIE_ANGRY_AT_PC_COUNTER] > 0) flags[kFLAGS.SOPHIE_ANGRY_AT_PC_COUNTER]--;
-	//if (flags[kFLAGS.SOPHIES_DAUGHTERS_DEBIMBOED] == 1 && sophieFollowerScene.sophieFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] == 0) {
-		//sophieFollowerScene.sophieDaughterDebimboUpdate();
-		//needNext = true;
-	//}
-	//if (!sophieAtCamp()) { //Could be at the farm or still in the wild
-		//if (flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] == 0 && pregnancy.isPregnant && pregnancy.incubation == 0) { //As long as she's not at the farm it's alright to lay eggs
-			//flags[kFLAGS.SOPHIE_EGGS_LAID]++; //Before she moves in she just produces harpies in the mountains
-			//pregnancy.knockUpForce(); //Clear Pregnancy
-		//}
-	//}
-	//else { //She might be a bimbo, debimboed or normal, but she's a follower and presently at camp
-		//if (flags[kFLAGS.SOPHIE_CAMP_EGG_COUNTDOWN] > 0) { //Maturation of the egg she laid
-			//flags[kFLAGS.SOPHIE_CAMP_EGG_COUNTDOWN]--;
-			//if (flags[kFLAGS.SOPHIE_CAMP_EGG_COUNTDOWN] == 0) {
-				//sophieBimbo.sophiesEggHatches();
-				//needNext = true;
-			//}
-		//}
-		//if (flags[kFLAGS.SOPHIE_DAUGHTER_MATURITY_COUNTER] > 0) { //Maturation of her daughter into an adult
-			//flags[kFLAGS.SOPHIE_DAUGHTER_MATURITY_COUNTER]--;
-			//if (flags[kFLAGS.SOPHIE_DAUGHTER_MATURITY_COUNTER] < 1) {
-				//flags[kFLAGS.SOPHIE_DAUGHTER_MATURITY_COUNTER] = 1;
-			//}
-			//else {
-				//switch (flags[kFLAGS.SOPHIE_DAUGHTER_MATURITY_COUNTER]) {
-					//case 100:
-					//case 200:
-					//case 325: sophiesDaughterDescript(); //At these three times we need to output a message about her daughters
-							//needNext = true;
-					//default:
-				//}
-			//}
-		//}
-		//if (pregnancy.isPregnant) {
+	if (flags["COC.SOPHIE_ANGRY_AT_PC_COUNTER"] > 0) flags["COC.SOPHIE_ANGRY_AT_PC_COUNTER"]--;
+	if (flags["COC.SOPHIES_DAUGHTERS_DEBIMBOED"] == 1 && sophieFollower() && flags["COC.FOLLOWER_AT_FARM_SOPHIE"] == 0) {
+		eventQueue.push(sophieDaughterDebimboUpdate);
+		needNext = true;
+	}
+	if (!sophieAtCamp()) { //Could be at the farm or still in the wild
+		if (int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) == 0 && flags["COC.SOPHIE_INCUBATION"] != undefined && flags["COC.SOPHIE_INCUBATION"] <= 0) { //As long as she's not at the farm it's alright to lay eggs
+			flags["COC.SOPHIE_EGGS_LAID"]++; //Before she moves in she just produces harpies in the mountains
+			flags["COC.SOPHIE_INCUBATION"] == undefined; //Clear Pregnancy
+		}
+	}
+	else { //She might be a bimbo, debimboed or normal, but she's a follower and presently at camp
+		if (flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"] > 0) { //Maturation of the egg she laid
+			flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"]--;
+			if (flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"] == 0) {
+				eventQueue.push(sophiesEggHatches);
+				needNext = true;
+			}
+		}
+		if (flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"] > 0) { //Maturation of her daughter into an adult
+			flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"]--;
+			if (flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"] < 1) {
+				flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"] = 1;
+			}
+			else {
+				switch (flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"]) {
+					case 100:
+					case 200:
+					case 325: eventQueue.push(sophiesDaughterDescript); //At these three times we need to output a message about her daughters
+							needNext = true;
+					default:
+				}
+			}
+		}
+		if (flags["COC.SOPHIE_INCUBATION"] != undefined) {
 			//if (pregnancy.type == PregnancyStore.PREGNANCY_PLAYER) {
-				//var triggeredEvent:int = pregnancy.eventTriggered();
+				//var triggeredEvent:int = sophiePregnancyEvent();
 				//switch (triggeredEvent) {
 					//case 1:
 					//case 2:
 					//case 3: sophiesPregnancyDescript(triggeredEvent);
 							//needNext = true;
 							//break;
-					//default: if (pregnancy.incubation == 0) {
-								//sophieBimbo.sophieBirthsEgg();
-								//pregnancy.knockUpForce(); //Clear Pregnancy 
-								//flags[kFLAGS.SOPHIE_CAMP_EGG_COUNTDOWN] = 150 + rand(30); //This long till that egg hatches
-								//flags[kFLAGS.SOPHIE_HEAT_COUNTER] = 551; //After pregnancy she waits 23 days before going into heat again
-								//needNext = true;
-							//}
-				//}	
-			//}
-			//if (flags[kFLAGS.SOPHIE_HEAT_COUNTER] >= 552) { //She got knocked up while in heat
-				//if (sophieBimbo.bimboSophie()) sophieBimbo.sophieGotKnockedUp();
-				//else sophieFollowerScene.sophieFertilityKnockedUpExpired();
-				//flags[kFLAGS.SOPHIE_HEAT_COUNTER] = 551;
-				//needNext = true;
-			//}
-		//}
-		//else { //She's in camp and not pregnant
-			//if (flags[kFLAGS.SOPHIE_HEAT_COUNTER] == 0) { //Tick over into heat if appropriate
-				//if (pc.hasCock() && (!prison.inPrison && flags[kFLAGS.IN_INGNAM] == 0)) {
-					//if (sophieBimbo.bimboSophie()) sophieBimbo.sophieGoesIntoSeason();
-					//else sophieFollowerScene.sophieFollowerGoesIntoSeas();
-					//flags[kFLAGS.SOPHIE_HEAT_COUNTER] = 720;
-					//needNext = true;
+					//default: 
+							if (flags["COC.SOPHIE_INCUBATION"] <= 0) {
+								eventQueue.push(sophieBirthsEgg);
+								flags["COC.SOPHIE_INCUBATION"] = undefined; //Clear Pregnancy 
+								flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"] = 150 + rand(30); //This long till that egg hatches
+								flags["COC.SOPHIE_HEAT_COUNTER"] = 551; //After pregnancy she waits 23 days before going into heat again
+								needNext = true;
+							}
 				//}
 			//}
-			//else {
-				//flags[kFLAGS.SOPHIE_HEAT_COUNTER]--;
-				//if (flags[kFLAGS.SOPHIE_HEAT_COUNTER] == 552 && !prison.inPrison) { //Expire heat if it counts down to 552
-					//if (sophieBimbo.bimboSophie()) sophieBimbo.sophieSeasonExpiration();
-					//else sophieFollowerScene.sophieFertilityExpired();
-					//needNext = true;
-				//}
-				//if (model.time.hours == 10 && (pc.findPerk(PerkLib.LuststickAdapted) < 0 || rand(3) == 0) && sophieBimbo.bimboSophie() && !sophieBimbo.sophieIsInSeason() && flags[kFLAGS.SOPHIE_CAMP_EGG_COUNTDOWN] == 0 && !prison.inPrison) {
-					//sophieBimbo.bimboSophieLustStickSurprise();
-					//needNext = true;
-				//}
-			//}
-		//}
-	//}
-	//return needNext;
-//}
-//
-//public function timeChangeLarge():Boolean {
-	//if (checkedSophie++ == 0 && model.time.hours == 6) {
-		//if (flags[kFLAGS.NO_PURE_SOPHIE_RECRUITMENT] == 0 && flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] == 0 && flags[kFLAGS.SOPHIE_FOLLOWER_PROGRESS] >= 5 && !pregnancy.isPregnant && pc.hasCock() && !sophieAtCamp()) {
-			//sophieFollowerScene.sophieFollowerIntro();
-			//return true;
-		//}
-		//if (flags[kFLAGS.SLEEP_WITH] == "Sophie" && pc.hasCock() && !prison.inPrison) {
-			//if (sophieBimbo.bimboSophie() && flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] == 0 && rand(2) == 0 && pc.cockThatFits(sophieBimbo.sophieCapacity()) >= 0) {
-				//output("\n<b><u>Something odd happens that morning...</u></b>");
-				//if (pregnancy.event >= 2) sophieBimbo.fuckYoPregnantHarpyWaifu(true);
-				//else sophieBimbo.sophieFenCraftedSex(true);
-				//return true;
-			//}
-			//if (sophieFollowerScene.sophieFollower() && pc.lust >= 50 && pc.smallestCockArea() <= 5 && flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] == 0) {
-				//sophieFollowerScene.sophieSmallDongTeases();
-				//return true;
-			//}
-		//}
-	//}
-	//return false;
-//}
-////End of Interface Implementation
-//
+			if (flags["COC.SOPHIE_HEAT_COUNTER"] >= 552) { //She got knocked up while in heat
+				if (bimboSophie()) eventQueue.push(sophieGotKnockedUp);
+				else eventQueue.push(sophieFertilityKnockedUpExpired);
+				flags["COC.SOPHIE_HEAT_COUNTER"] = 551;
+				needNext = true;
+			}
+		}
+		else { //She's in camp and not pregnant
+			if (flags["COC.SOPHIE_HEAT_COUNTER"] == 0) { //Tick over into heat if appropriate
+				if (pc.hasCock() && inCamp()) {
+					if (bimboSophie()) eventQueue.push(sophieGoesIntoSeason);
+					else eventQueue.push(sophieFollowerGoesIntoSeas);
+					flags["COC.SOPHIE_HEAT_COUNTER"] = 720;
+					needNext = true;
+				}
+			}
+			else {
+				flags["COC.SOPHIE_HEAT_COUNTER"]--;
+				if (flags["COC.SOPHIE_HEAT_COUNTER"] == 552 && inCamp()) { //Expire heat if it counts down to 552
+					if (bimboSophie()) eventQueue.push(sophieSeasonExpiration);
+					else eventQueue.push(sophieFertilityExpired);
+					needNext = true;
+				}
+				if (hours == 10 && (!pc.hasPerk("Luststick Adapted") < 0 || rand(3) == 0) && bimboSophie() && !sophieIsInSeason() && int(flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"]) == 0 && flags["COC.SOPHIE_LUSTSTICK_SURPRISE_LAST"] != days && inCamp()) {
+					eventQueue.push(bimboSophieLustStickSurprise);
+					needNext = true;
+				}
+			}
+		}
+	}
+}
+
+public function followerCampMenuBlurbSophie(showInteractButton:Boolean):void {
+	if (sophieFollower() && int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) == 0) {
+		if (rand(5) == 0) output("Sophie is sitting by herself, applying yet another layer of glittering lip gloss to her full lips.\n\n");
+		else if (rand(4) == 0) output("Sophie is sitting in her nest, idly brushing out her feathers.  Occasionally, she looks up from her work to give you a sultry wink and a come-hither gaze.\n\n");
+		else if (rand(3) == 0) output("Sophie is fussing around in her nest, straightening bits of straw and grass, trying to make it more comfortable.  After a few minutes, she flops down in the middle and reclines, apparently satisfied for the moment.\n\n");
+		else if (rand(2) == 0 || int(flags["COC.SOPHIE_ADULT_KID_COUNT"]) == 0) {
+			if (flags["COC.UNKNOWN_FLAG_NUMBER_00282"] > 0) output("Your platinum-blonde harpy, Sophie, is currently reading a book - a marked change from her bimbo-era behavior.  Occasionally, though, she glances up from the page and gives you a lusty look.  Some things never change....\n\n");
+			else output("Your pink harpy, Sophie, is currently reading a book.  She seems utterly absorbed in it, though you question how she obtained it.  Occasionally, though, she'll glance up from the pages to shoot you a lusty look.\n\n");
+		}
+		else {
+			output("Sophie is sitting in her nest, ");
+			if (flags["COC.SOPHIE_ADULT_KID_COUNT"] < 5) {
+				output("across from your daughter");
+				if (flags["COC.SOPHIE_ADULT_KID_COUNT"] > 1) output("s");
+			}
+			else output("surrounded by your daughters");
+			output(", apparently trying to teach ");
+			if (flags["COC.SOPHIE_ADULT_KID_COUNT"] == 1) output("her");
+			else output("them");
+			output(" about hunting and gathering techniques.  Considering their unusual upbringing, it can't be as easy for them...\n\n");
+		}
+		addButton(followerBtnNum++, "Sophie", function():* { processTime(2); followerSophieMainScreen() }, undefined, "Sophie", "Check up on Sophie the harpy.");
+	}
+	harpyDaughtersCampDesc();
+}
+
+public function slaveCampMenuBlurbSophie(showInteractButton:Boolean):void {
+	if (bimboSophie() && int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) == 0) {
+		sophieCampLines();
+		addButton(followerBtnNum++, "Sophie", function():* { processTime(2); approachBimboSophieInCamp() });
+	}
+	harpyDaughtersCampDesc();
+}
+
+private var SophieTimePassedNotifyHook: * = SophieTimePassedNotifyGrapple();
+private function SophieTimePassedNotifyGrapple():* { 
+		timeChangeListeners.push(SophieTimePassedNotify);
+		followerCampMenuBlurb.push(followerCampMenuBlurbSophie);
+		slaveCampMenuBlurb.push(slaveCampMenuBlurbSophie);
+	}
+
 //Harpy MILF.  Hellzyeah
 //-More fertile than average harpy.
 //-In 'Upper Mountain' area (High Mountain?)
@@ -169,69 +208,69 @@ Lasts 4-8 hours.
 //}
 
 public function sophieAtCamp():Boolean { //Whether she's a bimbo or not
-	//if (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00283] > 0) return false;
-	//if (flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] != 0) return false;
-	//if (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00282] > 0) return true;
-	//if (flags[kFLAGS.SOPHIE_RECRUITED_PURE] > 0) return true;
+	if (flags["COC.UNKNOWN_FLAG_NUMBER_00283"] > 0) return false;
+	if (int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) != 0) return false;
+	if (flags["COC.UNKNOWN_FLAG_NUMBER_00282"] > 0) return true;
+	if (flags["COC.SOPHIE_RECRUITED_PURE"] > 0) return true;
 	return false;
 }
 
-//public function sophiesDaughterDescript():void {
-	//if (flags[kFLAGS.SOPHIE_DAUGHTER_MATURITY_COUNTER] == 325) {
-		//output("\nYour cute little harpy is still just a little chick.  Her body is small and childlike, and her feathers are fluffy and poofy, making your little girl look like she has puffballs for arms and legs.  Already looking to be four or five years old, the baby harpy is just as energetic as a human child of that age.  She flutters around and scrambles from one thing to another. Thankfully, the rambunctious little darling runs out of explosive energy quickly, suddenly falling to the ground into a fluffy heap for a quick nap.\n");
-	//}
-	//if (flags[kFLAGS.SOPHIE_DAUGHTER_MATURITY_COUNTER] == 200) {
-		//output("\nYour sweet little harpy is starting to grow up!  Her body is much bigger than it was before, though her baby fat has spread out over her larger form and looks more lean and lanky then the big-butted harpies you're used to seeing.  Her feathers have even started to smooth out, though she is still quite the fluffball.  You're sure that it won't be too long before the curves harpies are known for start to appear.  The energy she exuded as a little chick still drives her to 'terrorize' your camp, scampering around, fluttering from place to place and getting into all kinds of things.  Your fluffy daughter seems to be able to stay active for longer than before, though you still see her curl up for a nap every so often.\n");
-	//}
-	//if (flags[kFLAGS.SOPHIE_DAUGHTER_MATURITY_COUNTER] == 100) {
-		//output("\nLooking around for your developing daughter, you find that she and your ");
-		//if(sophieBimbo.bimboSophie()) output("boisterous bimbo ");
-		//else output("mature harpy ");
-		//output("are spending some quality mother-daughter time together.  Sophie is helping the young girl with her make up, showing her how to use that golden luststick that her people are so fond of.  You're not too sure how appropriate that is for your daughter, but then again, this is what harpies do right?  Aside from the lusty lipstick, your live-in");
-		//if(sophieBimbo.bimboSophie()) output(" bimbo ");
-		//else output(", avian girlfriend ");
-		//output("moves on to her hair and nails, all the while gabbing on and on about you, and about all the daughters she plans to have.");
-		//output("\n\nYour daughter is growing up so fast!  Already, her body is developing, breasts budding into supple bumps on her chest.  Her hips are starting to swell into the trademark birthing hips and round grabbable ass harpies are famous for.\n");
-	//}
-//}
+public function sophiesDaughterDescript():void {
+	if (flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"] == 325) {
+		output("\nYour cute little harpy is still just a little chick.  Her body is small and childlike, and her feathers are fluffy and poofy, making your little girl look like she has puffballs for arms and legs.  Already looking to be four or five years old, the baby harpy is just as energetic as a human child of that age.  She flutters around and scrambles from one thing to another. Thankfully, the rambunctious little darling runs out of explosive energy quickly, suddenly falling to the ground into a fluffy heap for a quick nap.\n");
+	}
+	if (flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"] == 200) {
+		output("\nYour sweet little harpy is starting to grow up!  Her body is much bigger than it was before, though her baby fat has spread out over her larger form and looks more lean and lanky then the big-butted harpies you're used to seeing.  Her feathers have even started to smooth out, though she is still quite the fluffball.  You're sure that it won't be too long before the curves harpies are known for start to appear.  The energy she exuded as a little chick still drives her to 'terrorize' your camp, scampering around, fluttering from place to place and getting into all kinds of things.  Your fluffy daughter seems to be able to stay active for longer than before, though you still see her curl up for a nap every so often.\n");
+	}
+	if (flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"] == 100) {
+		output("\nLooking around for your developing daughter, you find that she and your ");
+		if(bimboSophie()) output("boisterous bimbo ");
+		else output("mature harpy ");
+		output("are spending some quality mother-daughter time together.  Sophie is helping the young girl with her make up, showing her how to use that golden luststick that her people are so fond of.  You're not too sure how appropriate that is for your daughter, but then again, this is what harpies do right?  Aside from the lusty lipstick, your live-in");
+		if(bimboSophie()) output(" bimbo ");
+		else output(", avian girlfriend ");
+		output("moves on to her hair and nails, all the while gabbing on and on about you, and about all the daughters she plans to have.");
+		output("\n\nYour daughter is growing up so fast!  Already, her body is developing, breasts budding into supple bumps on her chest.  Her hips are starting to swell into the trademark birthing hips and round grabbable ass harpies are famous for.\n");
+	}
+}
 
-//public function sophiesPregnancyDescript(triggeredEvent:int):void {
-	//if (triggeredEvent == 1) {
-		//if (sophieBimbo.bimboSophie()) {
-			//output("\nSophie sits by herself on your comfy bedroll.  The feathery female seems to have taken a liking to your place of rest.  Your bird-brained love-slave clearly desires to be close to you, or at least your fatherly scent, as much as possible.  Lost in her lusty fantasies, she caresses the gentle bump in her belly, the telltale sign that your virile seed has worked its magic on her egg-bearing womb.  One of her hands idly slips between her legs, fingers gently playing with her wet snatch as her other rubs her tummy.");
-			//output("\n\nFinally noticing your gaze on her body, Sophie looks up at you with an amorous smile, her thick, fertile thighs spreading and showing off her tight puffy pussy to you.  The blond bimbo puts her pregnant body on display for you, to show you the result of your virility and to entice you into playing with her hot, lusty form.\n");
-		//}
-		//else {
-			//output("\nSophie sits by herself on your comfy bedroll.  The feathery female seems to have taken a liking to your place of rest.  Your well-endowed monster-girl lover clearly desires to be as close to you, or at least your fatherly scent, as much as possible.  Lost in her lusty fantasies, she caresses the gentle bump in her belly, the telltale sign that your virile seed has worked its magic on her egg-bearing womb.  One of her hands idly slips between her legs, fingers gently playing with her wet snatch as her other rubs her tummy.");
-			//output("\n\nFinally noticing your gaze on her body, Sophie looks up at you with an amorous smile, her thick, fertile thighs spreading and showing off her tight puffy pussy to you.  The matron puts her pregnant body on display for you, to show you the result of your virility and to entice you into playing with her hot, lusty form.\n");
-		//}
-		//dynStats("lus", 3);
-	//}
-	////Medium Bump*
-	//else if (triggeredEvent == 2) {
-		//if (sophieBimbo.bimboSophie()) {
-			//output("\nAs usual, Sophie is laying on your bedroll.  Each day the fertile swell in her stomach seems to grow bigger with the egg inside.  The positively pregnant woman idly strokes her egg-bearing belly with motherly affection.  She even coos to the growing bump as she caresses her body, clearly loving the fact that she is pregnant with another egg.  It's not long before she catches sight of you; a big silly smile breaking across her puffy lips as she hurriedly gets up from your blankets and bounds over to you.  With each step, her voluptuous body jiggles and bounces, her big bountiful bosom heaving and shaking, her ripe round rump quivering like jelly as she sways her fecund hips for you.");
-			//output("\n\n\"<i>There you are [pc.name]!  Like, look at me!  Your egg is getting <b>soooo</b> big inside me!  Like, just look at how big and sexy I am!</i>\"  the bimbo brained woman tweets as she presses her curvaceous body against you, making sure you can feel her big soft tits and growing baby bump.  From how her body feels, you're sure her already bountiful bimbo-like breasts have only gotten bigger thanks to her pregnancy.  \"<i>Thanks for getting me all pregnant and stuff!</i>\"\n");
-		//}
-		//else {
-			//output("\nAs usual, Sophie is laying on your bedroll.  Each day the fertile swell in her stomach seems to grow bigger with the egg inside.  The positively pregnant woman idly strokes her egg-bearing belly with motherly affection.  She even coos to the growing bump as she caresses her body, clearly loving the fact that she is pregnant with another egg.  It's not long before she catches sight of you; a big silly smile breaking across her lips as she hurriedly gets up from your blankets and bounds over to you.  With each step, her voluptuous body jiggles and bounces, her big bountiful bosom heaving and shaking, her ripe round rump quivering like jelly as she sways her fecund hips for you.");
-			//output("\n\n\"<i>Hey there [pc.name].  Look at me!  That egg has gotten so big inside me.  You have no idea how good this feels,</i>\" the confident woman tweets as she presses her curvaceous body against you, making sure you can feel her big soft tits and growing baby bump.  From how her body feels, you're sure her already bountiful breasts have only gotten bigger thanks to her pregnancy.  \"<i>Maybe in a month or so, I'll let you do it all over again...</i>\"\n");
-		//}
-		//dynStats("lus", 5);
-	//}
-	////Big Belly Bump*
-	//else if (triggeredEvent == 3) {
-		//if (sophieBimbo.bimboSophie()) {
-			//output("\nOnce again, your pregnant bimbo lounges on your bedroll, her face buried in your pillow and taking deep breaths of your scent.  Even with her in such a - vulnerable... position, face down and ass up, you can clearly see the big, round bulge of her egg-laden belly.  With your feathery slut so gravid, you're sure it won't be long until she lays that womb-straining egg.  As if sensing your gaze, Sophie starts to sway her round spankable ass, her legs seeming to spread a little wider as well.  Your suspicions prove correct when she looks back at you; her plump bimbo lips blowing you a kiss as she looks at you with lusty eyes.");
-			//output("\n\nThe amorous harpy practically leaps out of your bed, her voluptuous body bouncing with each step as she bounds over to you.  Despite her heavily pregnant state, Sophie seems to carry herself well, the milfy harpy well adapted at being heavy with egg.  Taking advantage of your momentary distraction, the excited, happy bimbo flounces at you, tackling you and cuddling you happily.  She presses her egg-heavy belly and massive, perky tits against you and says, \"<i>Ohhh!  It's gonna be soon, momma Sophie's gonna like, lay this nice big egg for you, babe!</i>\"  Leaning in, she plants a big wet kiss on your cheek before sliding her hands down to her round bulging belly.  \"<i>It's going to be a really big egg too!  Don't worry, I'm good at laying eggs, and my pussy's going to stay niiice and tight for you, babe!</i>\"\n");
-		//}
-		//else {
-			//output("\nOnce again, your pregnant harpy lounges on your bedroll, her face buried in your pillow and taking deep breaths of your scent.  Even with her in such a - vulnerable... position, face down and ass up, you can clearly see the big, round bulge of her egg-laden belly.  With the feathery slut so gravid, you're sure it won't be long until she lays that womb-straining egg.  As if sensing your gaze, Sophie starts to sway her round spankable ass, her legs seeming to spread a little wider as well.  Your suspicions prove correct when she looks back at you; her pursed lips blowing you a kiss as she looks at you with lusty eyes.");
-			//output("\n\nThe amorous harpy practically leaps out of your bed, her voluptuous body bouncing with each step as she bounds over to you.  Despite her heavily pregnant state, Sophie seems to carry herself well, the milfy harpy well adapted at being heavy with egg.  Taking advantage of your momentary distraction, she flounces at you, tackling you and cuddling you happily.  She presses her egg-heavy belly and massive, perky tits against you and says, \"<i>It's gonna be time soon...  Before you know it, I'll be popping out this big, swollen egg, and you'll be right there to see it!</i>\"  Leaning in, she plants a big wet kiss on your cheek before sliding her hands down to her round bulging belly.  \"<i>It's going to be a really big egg too!  Don't worry, I'm good at laying eggs, and my pussy is going to be ready for you as soon as it comes out!</i>\"\n");
-		//}
-		//dynStats("lus", 5);
-	//}
-//}
+public function sophiesPregnancyDescript(triggeredEvent:int):void {
+	if (triggeredEvent == 1) {
+		if (bimboSophie()) {
+			output("\nSophie sits by herself on your comfy bedroll.  The feathery female seems to have taken a liking to your place of rest.  Your bird-brained love-slave clearly desires to be close to you, or at least your fatherly scent, as much as possible.  Lost in her lusty fantasies, she caresses the gentle bump in her belly, the telltale sign that your virile seed has worked its magic on her egg-bearing womb.  One of her hands idly slips between her legs, fingers gently playing with her wet snatch as her other rubs her tummy.");
+			output("\n\nFinally noticing your gaze on her body, Sophie looks up at you with an amorous smile, her thick, fertile thighs spreading and showing off her tight puffy pussy to you.  The blond bimbo puts her pregnant body on display for you, to show you the result of your virility and to entice you into playing with her hot, lusty form.\n");
+		}
+		else {
+			output("\nSophie sits by herself on your comfy bedroll.  The feathery female seems to have taken a liking to your place of rest.  Your well-endowed monster-girl lover clearly desires to be as close to you, or at least your fatherly scent, as much as possible.  Lost in her lusty fantasies, she caresses the gentle bump in her belly, the telltale sign that your virile seed has worked its magic on her egg-bearing womb.  One of her hands idly slips between her legs, fingers gently playing with her wet snatch as her other rubs her tummy.");
+			output("\n\nFinally noticing your gaze on her body, Sophie looks up at you with an amorous smile, her thick, fertile thighs spreading and showing off her tight puffy pussy to you.  The matron puts her pregnant body on display for you, to show you the result of your virility and to entice you into playing with her hot, lusty form.\n");
+		}
+		pc.lust(3);
+	}
+	//Medium Bump*
+	else if (triggeredEvent == 2) {
+		if (bimboSophie()) {
+			output("\nAs usual, Sophie is laying on your bedroll.  Each day the fertile swell in her stomach seems to grow bigger with the egg inside.  The positively pregnant woman idly strokes her egg-bearing belly with motherly affection.  She even coos to the growing bump as she caresses her body, clearly loving the fact that she is pregnant with another egg.  It's not long before she catches sight of you; a big silly smile breaking across her puffy lips as she hurriedly gets up from your blankets and bounds over to you.  With each step, her voluptuous body jiggles and bounces, her big bountiful bosom heaving and shaking, her ripe round rump quivering like jelly as she sways her fecund hips for you.");
+			output("\n\n\"<i>There you are [pc.name]!  Like, look at me!  Your egg is getting <b>soooo</b> big inside me!  Like, just look at how big and sexy I am!</i>\"  the bimbo brained woman tweets as she presses her curvaceous body against you, making sure you can feel her big soft tits and growing baby bump.  From how her body feels, you're sure her already bountiful bimbo-like breasts have only gotten bigger thanks to her pregnancy.  \"<i>Thanks for getting me all pregnant and stuff!</i>\"\n");
+		}
+		else {
+			output("\nAs usual, Sophie is laying on your bedroll.  Each day the fertile swell in her stomach seems to grow bigger with the egg inside.  The positively pregnant woman idly strokes her egg-bearing belly with motherly affection.  She even coos to the growing bump as she caresses her body, clearly loving the fact that she is pregnant with another egg.  It's not long before she catches sight of you; a big silly smile breaking across her lips as she hurriedly gets up from your blankets and bounds over to you.  With each step, her voluptuous body jiggles and bounces, her big bountiful bosom heaving and shaking, her ripe round rump quivering like jelly as she sways her fecund hips for you.");
+			output("\n\n\"<i>Hey there [pc.name].  Look at me!  That egg has gotten so big inside me.  You have no idea how good this feels,</i>\" the confident woman tweets as she presses her curvaceous body against you, making sure you can feel her big soft tits and growing baby bump.  From how her body feels, you're sure her already bountiful breasts have only gotten bigger thanks to her pregnancy.  \"<i>Maybe in a month or so, I'll let you do it all over again...</i>\"\n");
+		}
+		pc.lust(5);
+	}
+	//Big Belly Bump*
+	else if (triggeredEvent == 3) {
+		if (bimboSophie()) {
+			output("\nOnce again, your pregnant bimbo lounges on your bedroll, her face buried in your pillow and taking deep breaths of your scent.  Even with her in such a - vulnerable... position, face down and ass up, you can clearly see the big, round bulge of her egg-laden belly.  With your feathery slut so gravid, you're sure it won't be long until she lays that womb-straining egg.  As if sensing your gaze, Sophie starts to sway her round spankable ass, her legs seeming to spread a little wider as well.  Your suspicions prove correct when she looks back at you; her plump bimbo lips blowing you a kiss as she looks at you with lusty eyes.");
+			output("\n\nThe amorous harpy practically leaps out of your bed, her voluptuous body bouncing with each step as she bounds over to you.  Despite her heavily pregnant state, Sophie seems to carry herself well, the milfy harpy well adapted at being heavy with egg.  Taking advantage of your momentary distraction, the excited, happy bimbo flounces at you, tackling you and cuddling you happily.  She presses her egg-heavy belly and massive, perky tits against you and says, \"<i>Ohhh!  It's gonna be soon, momma Sophie's gonna like, lay this nice big egg for you, babe!</i>\"  Leaning in, she plants a big wet kiss on your cheek before sliding her hands down to her round bulging belly.  \"<i>It's going to be a really big egg too!  Don't worry, I'm good at laying eggs, and my pussy's going to stay niiice and tight for you, babe!</i>\"\n");
+		}
+		else {
+			output("\nOnce again, your pregnant harpy lounges on your bedroll, her face buried in your pillow and taking deep breaths of your scent.  Even with her in such a - vulnerable... position, face down and ass up, you can clearly see the big, round bulge of her egg-laden belly.  With the feathery slut so gravid, you're sure it won't be long until she lays that womb-straining egg.  As if sensing your gaze, Sophie starts to sway her round spankable ass, her legs seeming to spread a little wider as well.  Your suspicions prove correct when she looks back at you; her pursed lips blowing you a kiss as she looks at you with lusty eyes.");
+			output("\n\nThe amorous harpy practically leaps out of your bed, her voluptuous body bouncing with each step as she bounds over to you.  Despite her heavily pregnant state, Sophie seems to carry herself well, the milfy harpy well adapted at being heavy with egg.  Taking advantage of your momentary distraction, she flounces at you, tackling you and cuddling you happily.  She presses her egg-heavy belly and massive, perky tits against you and says, \"<i>It's gonna be time soon...  Before you know it, I'll be popping out this big, swollen egg, and you'll be right there to see it!</i>\"  Leaning in, she plants a big wet kiss on your cheek before sliding her hands down to her round bulging belly.  \"<i>It's going to be a really big egg too!  Don't worry, I'm good at laying eggs, and my pussy is going to be ready for you as soon as it comes out!</i>\"\n");
+		}
+		pc.lust(5);
+	}
+}
 		
 //[Discovery]
 public function meetSophie():void {
@@ -282,7 +321,7 @@ public function meetSophieRepeat():void {
 	//(Has dick)
 	if(pc.hasCock()) {
 		//(Random Rape) 
-		if(rand(2) == 0 /*&& !pregnancy.isPregnant*/) {
+		if(rand(2) == 0 && flags["COC.SOPHIE_INCUBATION"] == undefined) {
 			output("During your exploration of the mountains you wind up passing close to the harpy nests again, and Sophie flaps her way over to you.  Her breasts jiggle pleasantly and she hooks her talons through the belt you use to hold your pouches before you can stop her.  The force of her flapping wings pulls you off the mountain, suspending you hundreds of feet above the ground as she flies you back towards her nest.  ");
 			if(pc.tallness > 72) output("The harpy struggles with your weight and is clearly out of breath by the time she gets you up to her nest.");
 			else output("The flight is thankfully brief, and she actually gives you a good view of the mountain-side as she brings you up to her nest.");
@@ -311,8 +350,8 @@ public function meetSophieRepeat():void {
 			if(pc.tallness > 72) output("The harpy struggles with your weight and is clearly out of breath by the time she gets you up to her nest.");
 			else output("The flight is thankfully brief, and she actually gives you a good view of the mountain-side as she brings you up to her nest.");
 			output("  Sophie releases you and flops down across from you, clearly tired.  She asks, \"<i>Did you climb all the way up here to see me?  That's sooo sweet!  ");
-			//if (pregnancy.isPregnant) output("I still haven't laid your egg, but if you want it might be fun to take care of your naughty little urges.");
-			//else output("I already laid your last egg, so why don't you come over her and give momma some sugar?");
+			if (flags["COC.SOPHIE_INCUBATION"] != undefined) output("I still haven't laid your egg, but if you want it might be fun to take care of your naughty little urges.");
+			else output("I already laid your last egg, so why don't you come over her and give momma some sugar?");
 			output("</i>\"  Her thighs spread apart, inviting you back for more of her pleasure.\n\n");
 		}
 		//(Haven't sexed)  
@@ -632,7 +671,7 @@ private function consensualHotSophieDickings():void {
 	//sophieBimbo.sophieSprite();
 	clearOutput();
 	IncrementFlag("COC.SOPHIE_FOLLOWER_PROGRESS");
-	var x:Number = pc.cockThatFits(232);
+	var x:Number = pc.cockThatFits(cockVolume(232));
 
 	output("With her spread thighs beckoning you so invitingly, there's no way you could resist.  You tear off your [pc.gear] and jump into her nest with her, hardening delightfully from your close proximity to the well-endowed woman.  Sophie places a hand ");
 	if(pc.biggestTitSize() < 1) output("on your chest");
@@ -646,16 +685,16 @@ private function consensualHotSophieDickings():void {
 		else output("her breasts pressing against your stomach");
 	}
 	output(", [pc.eachCock] begins to poke and prod against her crotch and slightly parted slit.  ");
-	if(pc.cockVolume(x) <= 6) {
+	if(pc.cockVolume(x) <= cockVolume(6)) {
 		output("She frowns and asks, \"<i>Is that all there is?  You're so small you may as well get rid of it and become a girl!  You'd be a cute little girl, you know that?</i>\"");
 	}
-	else if(pc.cockVolume(x) < 150) {
+	else if(pc.cockVolume(x) < cockVolume(150)) {
 		output("She grins and teases, \"<i>What are you waiting for?  You aren't intimidated by how big my pussy is, are you?  Trust me, my muscles will make it plenty tight for you.  What you should be concerned about is how you're taking advantage of a needy older woman, you pig.</i>\"");
 	}
 	else {
 		output("Her eyes widen in delight, but she teases you anyway, \"<i>Oh by Marae, you're quite the big boy aren't you?  Are you sure I can take that?  Forcing such a huge, delicious member on a poor old woman, you should be ashamed!</i>\"");
 	}
-	if(pc.cockTotal() > 1 && pc.biggestCockVolume() > 232) {
+	if(pc.cockTotal() > 1 && pc.biggestCockVolume() > cockVolume(232)) {
 		output("  Her hands push away the bloated flesh of your " + pc.cockDescript(pc.biggestCockIndex()) + " in an effort to better get at your [pc.cock " + x + "].  She grunts, \"<i>Tempting, but too much of a good thing.</i>\"");
 	}
 	output("\n\n");
@@ -669,8 +708,8 @@ private function consensualHotSophieDickings():void {
 	output(".  I've been milking cute " + (pc.isHerm() ? "herms" : "studs") + " like you since the demons took over, and you're my latest conquest.  That's okay with you, right?  You don't mind me relieving all your pressure for my needy eggs do you?  Of course you don't.</i>\"  Her words carry more weight than they ought to, chasing away any reluctance or worries from your mind and replacing them with acceptance.  Sophie really knows what she's doing.  She's seduced you to the point of penetration.  Being a conquest isn't that bad; you'll get to fuck this confident older woman until you're squirting all over her eggs.\n\n");
 
 	output("Sophie coos, \"<i>Go on " + pc.mf("boy", "girl") + ", give your [pc.cock " + x + "] a taste.</i>\"  You oblige her request by rocking your hips forward, ");
-	if(pc.cockVolume(x) <= 6) output("plunging your [pc.cock " + x + "] inside the oversized vagina.");
-	else if(pc.cockVolume(x) <= 150) output("burying your [pc.cock " + x + "] deep into her massive gash.");
+	if(pc.cockVolume(x) <= cockVolume(6)) output("plunging your [pc.cock " + x + "] inside the oversized vagina.");
+	else if(pc.cockVolume(x) <= cockVolume(150)) output("burying your [pc.cock " + x + "] deep into her massive gash.");
 	else output("slowly working your [pc.cock " + x + "] into her massive gash, finding it barely big enough for you.");
 	output("  Her warm, feathery thighs close around behind you, locking their talons together to hold your [pc.cock " + x + "] in the squelching wet walls of her pussy.  The act of her 'imprisoning' you causes the slippery walls to squeeze tightly about your girth, just as she promised.  Your hips rock with an ingrown need that's thwarted by Sophie's muscular thighs.  There is no thrusting, no repeated penetration.  There is only the slow rhythm of her muscles as they squeeze and massage your [pc.cock " + x + "].\n\n");
 	
@@ -881,9 +920,9 @@ private function consensualSophieSexNoFit():void {
 
 private function sophieFucked(dicked:Boolean = true):void {
 	//knock up if not knocked up
-	//if (!pregnancy.isPregnant && dicked) {
-		//pregnancy.knockUpForce(PregnancyStore.PREGNANCY_PLAYER, 48 + rand(48));
-	//}
+	if (flags["COC.SOPHIE_INCUBATION"] == undefined && pc.virility() > 0 && dicked) {
+		flags["COC.SOPHIE_INCUBATION"] = (48 + rand(48)) * 60;
+	}
 	//if forced to lesbosecks
 	if (!dicked) {
 		IncrementFlag("COC.TIMES_FUCKED_SOPHIE_LESBIAN");
@@ -907,6 +946,7 @@ public function luststickApplication(power:Number = 4):void {
 	if (pc.hasPerk("Luststick Adapted")) return;
 	if (!pc.hasCock()) return;
 	
+	flags["COC.UNKNOWN_FLAG_NUMBER_00285"] = int(flags["COC.UNKNOWN_FLAG_NUMBER_00285"]) + Math.floor(hours / 2);
 	power *= 60; // hours to minutes
 	power *= (100 - pc.getLustResistances().drug.resistanceValue) / 100; // drug resistance
 	
@@ -1309,4 +1349,41 @@ private function SophieLossRapeNoDonguuuu():void {
 	
 	processTime(90 + rand(20));
 	CombatManager.genericLoss();
+}
+
+private function harpyDaughtersCampDesc():void 
+{
+	//HARPY ROOKERY
+	if (flags["COC.SOPHIE_ADULT_KID_COUNT"] > 0) {
+		//Rookery Descriptions (Short)
+		//Small (1 mature daughter)
+		if (flags["COC.SOPHIE_ADULT_KID_COUNT"] == 1) {
+			output("There's a smallish harpy nest that your daughter has built up with rocks piled high near the fringes of your camp.  It's kind of pathetic, but she seems proud of her accomplishment.  ");
+		}
+		//Medium (2-3 mature daughters)
+		else if (flags["COC.SOPHIE_ADULT_KID_COUNT"] <= 3) {
+			output("There's a growing pile of stones built up at the fringes of your camp.  It's big enough to be considered a small hill by this point, dotted with a couple small harpy nests just barely big enough for two.  ");
+		}
+		//Big (4 mature daughters)
+		else if (flags["COC.SOPHIE_ADULT_KID_COUNT"] <= 4) {
+			output("The harpy rookery at the edge of camp has gotten pretty big.  It's taller than most of the standing stones that surround the portal, and there's more nests than harpies at this point.  Every now and then you see the four of them managing a boulder they dragged in from somewhere to add to it.  ");
+		}
+		//Large (5-10 mature daughters)
+		else if (flags["COC.SOPHIE_ADULT_KID_COUNT"] <= 10) {
+			output("The rookery has gotten quite large.  It stands nearly two stories tall at this point, dotted with nests and hollowed out places in the center.  It's surrounded by the many feathers the assembled harpies leave behind.  ");
+		}
+		//Giant (11-20 mature daughters)
+		else if (flags["COC.SOPHIE_ADULT_KID_COUNT"] <= 20) {
+			output("A towering harpy rookery has risen up at the fringes of your camp, filled with all of your harpy brood.  It's at least three stories tall at this point, and it has actually begun to resemble a secure structure.  These harpies are always rebuilding and adding onto it.  ");
+		}
+		//Massive (21-50 mature daughters)
+		else if (flags["COC.SOPHIE_ADULT_KID_COUNT"] <= 50) {
+			output("A massive harpy rookery towers over the edges of your camp.  It's almost entirely built out of stones that are fit seamlessly into each other, with many ledges and overhangs for nests.  There's a constant hum of activity over there day or night.  ");
+		}
+		//Immense (51+ Mature daughters)
+		else {
+			output("An immense harpy rookery dominates the edge of your camp, towering over the rest of it.  Innumerable harpies flit around it, always working on it, assisted from below by the few sisters unlucky enough to be flightless.  ");
+		}
+		output("\n\n");
+	}
 }

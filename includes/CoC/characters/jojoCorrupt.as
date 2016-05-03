@@ -73,7 +73,7 @@ public function tentacleJojo():Boolean {
 }
 
 public function campCorruptJojo():Boolean {
-	return flags["COC.JOJO_STATE"] >= 5 && int(flags["COC.JOJO_DISABLED"]) == 0 && int(flags["COC.JOJO_DEAD_OR_GONE"]) == 0;// && pc.findStatusEffect(StatusEffects.NoJojo) < 0 && flags[kFLAGS.JOJO_DEAD_OR_GONE] == 0;
+	return flags["COC.JOJO_STATE"] >= 5 && int(flags["COC.JOJO_DISABLED"]) == 0 && int(flags["COC.JOJO_DEAD_OR_GONE"]) == 0 && flags["COC.JOJO_DISABLED"] == undefined && int(flags["COC.JOJO_DEAD_OR_GONE"]) == 0;
 }
 
 private function jojoMutationOffer():void {

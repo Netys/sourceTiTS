@@ -86,15 +86,15 @@ private function KihaTimePassedNotifyGrapple():* {
 	}
 
 public function kihaPregnancyEvent():int {
-	if (flags["COC.URTA_INCUBATION"] == undefined) return 0;
-	if (flags["COC.URTA_INCUBATION"] <= 48 * 60 + timeAsStamp) return 9;
-	if (flags["COC.URTA_INCUBATION"] <= 96 * 60 + timeAsStamp) return 8;
-	if (flags["COC.URTA_INCUBATION"] <= 144 * 60 + timeAsStamp) return 7;
-	if (flags["COC.URTA_INCUBATION"] <= 192 * 60 + timeAsStamp) return 6;
-	if (flags["COC.URTA_INCUBATION"] <= 240 * 60 + timeAsStamp) return 5;
-	if (flags["COC.URTA_INCUBATION"] <= 288 * 60 + timeAsStamp) return 4;
-	if (flags["COC.URTA_INCUBATION"] <= 336 * 60 + timeAsStamp) return 3;
-	if (flags["COC.URTA_INCUBATION"] <= 358 * 60 + timeAsStamp) return 2;
+	if (flags["COC.KIHA_INCUBATION"] == undefined) return 0;
+	if (flags["COC.KIHA_INCUBATION"] <= 48 * 60 + timeAsStamp) return 9;
+	if (flags["COC.KIHA_INCUBATION"] <= 96 * 60 + timeAsStamp) return 8;
+	if (flags["COC.KIHA_INCUBATION"] <= 144 * 60 + timeAsStamp) return 7;
+	if (flags["COC.KIHA_INCUBATION"] <= 192 * 60 + timeAsStamp) return 6;
+	if (flags["COC.KIHA_INCUBATION"] <= 240 * 60 + timeAsStamp) return 5;
+	if (flags["COC.KIHA_INCUBATION"] <= 288 * 60 + timeAsStamp) return 4;
+	if (flags["COC.KIHA_INCUBATION"] <= 336 * 60 + timeAsStamp) return 3;
+	if (flags["COC.KIHA_INCUBATION"] <= 358 * 60 + timeAsStamp) return 2;
 	return 1;
 }
 
@@ -1932,14 +1932,14 @@ private function kihaCampAppearance():void {
 	output("\n\nShe has a pair of dusky, soft D-cup tits, with a single 0.5 inch nipple on each breast.");
 	output("\n\nKiha has a loose twat between her legs which constantly drips a warm, wet lubricant that stains her thighs.");
 	output("\n\nBetween her gropable butt-cheeks, Kiha has a single tight asshole, right where it belongs.");
-	if (flags["COC.URTA_INCUBATION"] != undefined) {
+	if (flags["COC.KIHA_INCUBATION"] != undefined) {
 		output("\n\n");
-		if (flags["COC.URTA_INCUBATION"] > 288 * 60) output("<b>Her belly appears to be a bit swollen.</b>");
-		else if (flags["COC.URTA_INCUBATION"] > 240 * 60 && flags["COC.URTA_INCUBATION"] <= 288 * 60) output("<b>Her belly is comparable to being six months into pregnant.</b>");
-		else if (flags["COC.URTA_INCUBATION"] > 192 * 60 && flags["COC.URTA_INCUBATION"] <= 240 * 60) output("<b>Her belly is comparable to being eight months into pregnancy.</b>");
-		else if (flags["COC.URTA_INCUBATION"] > 144 * 60 && flags["COC.URTA_INCUBATION"] <= 192 * 60) output("<b>Her belly is comparable to being nine months into pregnancy. It wouldn't take very long until she eventually lays a clutch of eggs.</b>");
-		else if (flags["COC.URTA_INCUBATION"] > 72 * 60 && flags["COC.URTA_INCUBATION"] <= 144 * 60) output("<b>Her belly is even bigger than the average belly size at end of a typical human pregnancy.</b>");
-		else if (flags["COC.URTA_INCUBATION"] <= 72 * 60) output("<b>It's impossible to not notice her pregnancy. The size of her belly has taken its toll on her. She is about to lay a clutch of eggs soon.</b>");
+		if (flags["COC.KIHA_INCUBATION"] > 288 * 60) output("<b>Her belly appears to be a bit swollen.</b>");
+		else if (flags["COC.KIHA_INCUBATION"] > 240 * 60 && flags["COC.KIHA_INCUBATION"] <= 288 * 60) output("<b>Her belly is comparable to being six months into pregnant.</b>");
+		else if (flags["COC.KIHA_INCUBATION"] > 192 * 60 && flags["COC.KIHA_INCUBATION"] <= 240 * 60) output("<b>Her belly is comparable to being eight months into pregnancy.</b>");
+		else if (flags["COC.KIHA_INCUBATION"] > 144 * 60 && flags["COC.KIHA_INCUBATION"] <= 192 * 60) output("<b>Her belly is comparable to being nine months into pregnancy. It wouldn't take very long until she eventually lays a clutch of eggs.</b>");
+		else if (flags["COC.KIHA_INCUBATION"] > 72 * 60 && flags["COC.KIHA_INCUBATION"] <= 144 * 60) output("<b>Her belly is even bigger than the average belly size at end of a typical human pregnancy.</b>");
+		else if (flags["COC.KIHA_INCUBATION"] <= 72 * 60) output("<b>It's impossible to not notice her pregnancy. The size of her belly has taken its toll on her. She is about to lay a clutch of eggs soon.</b>");
 	}
 	addNextButton(encounterKiha);
 }

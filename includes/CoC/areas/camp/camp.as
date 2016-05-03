@@ -241,5 +241,27 @@ public function campEvent():Boolean
 			return true;
 		}
 	}
+	//Amily and/or Jojo freakout about Vapula!!
+	if (vapulaSlave() && ((flags["COC.JOJO_IN_CAMP"] == 1 && int(flags["COC.KEPT_PURE_JOJO_OVER_VAPULA"]) <= 0) || (amilyFollower() && !amilyCorrupt() && int(flags["COC.KEPT_PURE_AMILY_OVER_VAPULA"]) <= 0))) {
+		//Jojo but not Amily (Must not be bimbo!)
+		if ((flags["COC.JOJO_IN_CAMP"] == 1) && !(amilyFollower() && !amilyCorrupt()) && flags["COC.KEPT_PURE_JOJO_OVER_VAPULA"] == 0)
+			mouseWaifuFreakout(false, true);
+		//Amily but not Jojo
+		else if ((amilyFollower() && !amilyCorrupt()) && flags["COC.JOJO_IN_CAMP"] != 1 && flags["COC.KEPT_PURE_AMILY_OVER_VAPULA"] == 0) {
+			mouseWaifuFreakout(true, false);
+		}
+		//Both
+		else
+			mouseWaifuFreakout(true, true);
+		return true;
+	}
+	if (flags["COC.VAPULA_FOLLOWER"] >= 2.5 && hours == 6 && int(flags["COC.FOLLOWER_AT_FARM_VAPULA"]) == 0) {
+		femaleVapulaRecruitmentPartII();
+		return true;
+	}
+	if (hours == 2 && vapulaSlave() && int(flags["COC.FOLLOWER_AT_FARM_VAPULA"]) == 0 && flags["COC.VAPULA_DAYS_SINCE_FED"] >= 5 && (pc.hasCock() || (pc.hasKeyItem("Demonic Strap-On") && pc.hasVagina()))) {
+		vapulaForceFeeds();
+		return true;
+	}
 	return false;
 }

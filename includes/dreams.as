@@ -10,8 +10,12 @@ public function dreamChances():Boolean
 	var dreams:Array = new Array();
 	if(flags["DREAM_CD"] == undefined) flags["DREAM_CD"] = 0;
 	//Special Dreams
-	if (flags["COC.CERULEAN_POTION_DOSES"] > 0 && (pc.hasCock() || !pc.hasVagina()) && currentLocation == "COC_CAMP") {
-		eventQueue.push(flags["COC.CERULEAN_POTION_DREAMS"] == undefined ? nightSuccubiFirstTime : nightSuccubiRepeat);
+	if (!dreamed && flags["COC.CERULEAN_POTION_DOSES"] > 0 && (pc.hasCock() || !pc.hasVagina()) && inCamp()) {
+		if(int(flags["COC.CERULEAN_POTION_DREAMS"]) == 0)
+			eventQueue.push(nightSuccubiFirstTime);
+		else if (vapulaSlave() && pc.hasCock() && flags["COC.VAPULA_THREESOMES"] > 0 && int(flags["COC.FOLLOWER_AT_FARM_VAPULA"]) == 0) //VapulaSurprise
+			eventQueue.push(vapulaAssistsCeruleanSuccubus);
+		else eventQueue.push(nightSuccubiRepeat);
 		dreamed = true;
 	}
 	if (pc.hasStatusEffect("Queen Pregnancy State"))
@@ -32,16 +36,22 @@ public function dreamChances():Boolean
 			dreams.push(angelDreamGo);
 		}
 	}
-	if (kidAXP() >= 40 && flags["COC.HAD_KID_A_DREAM"] == undefined && pc.hasGenitals() && rand(4) == 0 && currentLocation == "COC_CAMP") {
+	if (!dreamed && kidAXP() >= 40 && flags["COC.HAD_KID_A_DREAM"] == undefined && pc.hasGenitals() && rand(4) == 0 && inCamp()) {
 		dreams.push(kidADreams);
 	}
-	if (flags["COC.SHOULDRA_SILLY_ENCOUNTER_FOLLOWUP_TIMER"] < timeAsStamp && 
+	if (!dreamed && flags["COC.SHOULDRA_SILLY_ENCOUNTER_FOLLOWUP_TIMER"] < timeAsStamp && 
 		!(pc.cockTotal() > 1 || pc.faceType != GLOBAL.TYPE_HUMAN || pc.legType != GLOBAL.TYPE_HUMAN || pc.hasTail() || pc.hasHorns() || pc.cor() > 15 || pc.longestCockLength() > 10 || pc.tallness < 65 || pc.tallness > 78 || pc.hasVagina())
-		&& pc.hasGenitals() && rand(4) == 0 && currentLocation == "COC_CAMP") {
+		&& pc.hasGenitals() && rand(4) == 0 && inCamp()) {
 		dreams.push(paladinModeFollowup);
 	}
-	if ((flags["COC.DOMINIKA_AGREEMENT"] == 1 || flags["COC.DOMINIKA_AGREEMENT"] == 2) && pc.hasGenitals() && rand(4) == 0 && currentLocation == "COC_CAMP") {
+	if (!dreamed && (flags["COC.DOMINIKA_AGREEMENT"] == 1 || flags["COC.DOMINIKA_AGREEMENT"] == 2) && pc.hasGenitals() && rand(4) == 0 && inCamp()) {
 		dreams.push(fellatrixDream);
+	}
+	if (!dreamed && (flags["COC.DOMINIKA_AGREEMENT"] == 1 || flags["COC.DOMINIKA_AGREEMENT"] == 2) && pc.hasGenitals() && rand(4) == 0 && inCamp()) {
+		dreams.push(fellatrixDream);
+	}
+	if (!dreamed && (flags["COC.SLEEP_WITH"] == undefined || flags["COC.SLEEP_WITH"] == "") && int(flags["COC.NO_PURE_SOPHIE_RECRUITMENT"]) == 0 && int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) == 0 && flags["COC.SOPHIE_FOLLOWER_PROGRESS"] >= 5 && flags["COC.SOPHIE_INCUBATION"] == undefined && pc.hasCock() && !sophieAtCamp() && inCamp()) {
+		dreams.push(sophieFollowerIntro);
 	}
 	if(dreams.length > 0) 
 	{
