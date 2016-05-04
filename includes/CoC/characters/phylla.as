@@ -56,6 +56,21 @@ import classes.Engine.Utility.*;
 	//CoC.timeAwareClassAdd(this);
 //}
 
+
+public function followerCampMenuBlurbPhylla(showInteractButton:Boolean):void {
+	if (phyllaWaifu()) {
+		output("You see Phylla's anthill in the distance.  Every now and then you see");
+		//If PC has children w/ Phylla:
+		if (flags["COC.ANT_KIDS"] > 0 && flags["COC.ANT_KIDS"] <= 250) output(" one of your children exit the anthill to unload some dirt before continuing back down into the colony.  It makes you feel good knowing your offspring are so productive.");
+		if (flags["COC.ANT_KIDS"] > 250 && flags["COC.ANT_KIDS"] <= 1000) output(" few of your many children exit the anthill to unload some dirt before vanishing back inside.  It makes you feel good knowing your offspring are so productive.");
+		if (flags["COC.ANT_KIDS"] > 1000) output(" some of your children exit the anthill using main or one of the additionally entrances to unload some dirt. Some of them instead of unloading dirt coming out to fulfill some other task that their mother gave them.  You feel a little nostalgic seeing how this former small colony grown to such a magnificent size.");
+		else output(" Phylla appear out of the anthill to unload some dirt.  She looks over to your campsite and gives you an excited wave before heading back into the colony.  It makes you feel good to know she's so close.");
+		output("\n\n");
+		
+		if (showInteractButton) addButton(followerBtnNum++, "Phylla", function():* { processTime(8); introductionToPhyllaFollower() } );
+	}
+}
+
 public function PhyllaTimePassedNotify():void
 {
 	//pregnancy.pregnancyAdvance();
@@ -74,6 +89,7 @@ public function PhyllaTimePassedNotify():void
 private var PhyllaTimePassedNotifyHook: * = PhyllaTimePassedNotifyGrapple();
 private function PhyllaTimePassedNotifyGrapple():* { 
 		timeChangeListeners.push(PhyllaTimePassedNotify);
+		followerCampMenuBlurb.push(followerCampMenuBlurbPhylla);
 	}
 
 public function phyllaWaifu():Boolean
@@ -348,6 +364,7 @@ private function antColiseumFight():void
 		output("\n\nYou're fighting a tentacle beast!");
 		var tenta:CoCTentacleBeast = new CoCTentacleBeast();
 		tenta.inventory = [];
+		tenta.credits = 0;
 		CombatManager.setHostileCharacters(tenta);
 		CombatManager.victoryScene(phyllaTentacleDefeat);
 		CombatManager.lossScene(phyllaTentaclePCLoss);
@@ -361,6 +378,7 @@ private function antColiseumFight():void
 		var mino:CoCMinotaur = new CoCMinotaur();
 		mino.meleeWeapon = new CoCMinotaurAxe();
 		mino.inventory = [];
+		mino.credits = 0;
 		CombatManager.setHostileCharacters(mino);
 		CombatManager.victoryScene(phyllaBeatAMino);
 		CombatManager.lossScene(phyllaPCLostToMino);
@@ -375,6 +393,7 @@ private function antColiseumFight():void
 		output("\n\nYou're fighting a gnoll!");
 		var gnoll:CoCGnoll = new CoCGnoll();
 		gnoll.inventory = [];
+		gnoll.credits = 0;
 		CombatManager.setHostileCharacters(gnoll);
 		CombatManager.victoryScene(phyllaPCBeatsGnoll);
 		CombatManager.lossScene(phyllaGnollBeatsPC);
@@ -389,7 +408,7 @@ private function antColiseumFight():void
 //(Tentacle Beast - Win) Standard Tentacle Beast Win Scene. (Again we're going to need to adapt the ending so the PC does not go back to camp.)
 public function phyllaTentacleDefeat():void
 {
-	output("\n\nAs you leave the arena, you are met by Princess Phylla and a large group of warrior ants; the princess is looking at the ground and twiddling her lower set of thumbs.  As you clear your throat to announce yourself she jumps and makes a strange noise that sounds like a mix between a click and 'EEP!'.  She blushes and looks at the ground again, searching for something to say.");
+	output("As you leave the arena, you are met by Princess Phylla and a large group of warrior ants; the princess is looking at the ground and twiddling her lower set of thumbs.  As you clear your throat to announce yourself she jumps and makes a strange noise that sounds like a mix between a click and 'EEP!'.  She blushes and looks at the ground again, searching for something to say.");
 	output("\n\n\"<i>I'm happy you won,</i>\" she finally manages, more to the rocky earth than to you.  \"<i>Let me help you recover, I mean, if you want...</i>\"");
 	output("\n\nYou give her a nod and she sets to work. She nervously dresses your wounds by using some strange paste and strips of cloth.  You try to make small talk but find it awkward under heavy guard.  Clearly you're still not welcome here.  Once Phylla's done, all but one of the guards disappear with her into the tunnels.");
 	output("\n\nYou recognize the remaining guard as the guide from your first time here. At least, so you think - the only distinguishing factor is the old rusty blade he holds.  He waits patiently as you redress, then leads you out of the colony.");
@@ -461,7 +480,7 @@ public function phyllaPCBeatsGnoll():void
 		output("\n\nGingerly, you raise a finger and put it to her lips, shushing her, then flash her a wink and a grin.  She blushes slightly and returns the smile.  There's no time for more than that, as two guards arrive; one to reclaim her and the other - your rust-wielding guide - to escort you out.");
 		IncrementFlag("COC.ANTS_PC_BEAT_GNOLL");
 	}
-	else if (flags["COC.ANT_ARENA_WINS"] - flags["COC.ANT_ARENA_LOSSES"] >= 2 && flags["COC.ANT_ARENA_WINS"] >= 3 && pc.hasGenitals()) {
+	else if (int(flags["COC.ANT_ARENA_WINS"]) - int(flags["COC.ANT_ARENA_LOSSES"]) >= 2 && flags["COC.ANT_ARENA_WINS"] >= 3 && pc.hasGenitals()) {
 		CombatManager.abortCombat();
 		IncrementFlag("COC.ANT_ARENA_WINS");
 		antGirlGoodEnd();
@@ -1130,7 +1149,7 @@ public function introductionToPhyllaFollower():void
 	addButton(0, "Talk", phyllaTalkChoices);
 	if (pc.lust() >= 33) addButton(1, "Sex", phyllaSexMenu);
 	else addDisabledButton(1, "Sex");
-	if (flags["COC.PHYLLA_EGG_LAYING"] == 0) addButton(2, "Lay Eggs", phyllaLaysEggsToggle);
+	if (int(flags["COC.PHYLLA_EGG_LAYING"]) == 0) addButton(2, "Lay Eggs", phyllaLaysEggsToggle);
 	else addButton(2, "No Eggs", phyllaLaysEggsToggle);
 	if (flags["COC.ANT_KIDS"] > 0) addButton(3, "Children", phyllasKidsChildren);
 	else addDisabledButton(3, "Children");

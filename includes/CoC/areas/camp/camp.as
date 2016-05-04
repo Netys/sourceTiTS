@@ -23,7 +23,9 @@ public function cocCampMenu():void {
 	
 	output("Your campsite is fairly simple at the moment.  Your tent and bedroll are set in front of the rocks that lead to the portal.  You have a small fire pit as well.  "); // there are no actual counter for time in Mareth...
 	output("You have a number of traps surrounding your makeshift home, but they are fairly simple and may not do much to deter a demon.  ");
-	output("The portal shimmers in the background as it always does, looking menacing and reminding you of why you came.\n\n");
+	output("The portal shimmers in the background as it always does, looking menacing and reminding you of why you came.");
+	if (flags["COC.ANT_KIDS"] > 1000) outputText("  Really close to the portal there is a small entrance to the underground maze created by your ant children. And due to Phylla wish from time to time one of your children coming out this entrance to check on the situation near portal. You feel a little more safe now knowing that it will be harder for anyone to go near the portal without been noticed or...if someone came out of the portal.");
+	output("\n\n");
 	
 	showExplorationButton(); // as well as places
 	
@@ -111,7 +113,7 @@ public function loversCount():int {
 	if(amilyFollower() && !amilyCorrupt()) counter++;
 	if(followerKiha()) counter++;
 	//if(flags[kFLAGS.NIEVE_STAGE] == 5) counter++;
-	//if(flags[kFLAGS.ANT_WAIFU] > 0) counter++;
+	if(phyllaWaifu()) counter++;
 	return counter;
 }
 public function campLoversButton():void {
