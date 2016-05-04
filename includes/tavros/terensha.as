@@ -20,43 +20,52 @@ public function showTerensha():void
 {
 	showName("\nTERENSHA");
 	showBust("TERENSHA");
+	if(silly) author("Savinbuns");
+	else author("Savin");
 }
 //Room Descripts & Such
 
 //Obv. all need to be below description of active dancer, if any. 
 
-public function terenshaAdditionalBonus():void
+public function terenshaIsDancing():Boolean
 {
 	//Make her dance from 10-15 hours, I guess? Savin didn't give me much to go on.
-	var dances:Boolean = (hours >= 2 && hours < 16 && flags["MET_TERENSHA"] != undefined);
+	if(hours >= 2 && hours < 16) return true;
+	return false;
+}
+public function terenshaAdditionalBonus():void
+{
 	if(flags["MET_TERENSHA"] == undefined)
 	{
 		//Dances are On; not met:
-		if(dances)
+		if(terenshaIsDancing())
 		{
 			output("\n\nA green-haired woman in a skin-tight bodysuit is making rounds between the various tables near the dancer’s stage. She’s clearly not human: horns poke out from her brow, a swishing reptilian tail coils behind her, and a hefty cock is put proudly on display through her suit. Every so often, one of the spectators will grab her plump behind or flash her a credit chit, which invariably ends in her slinking into their lap. She rises a minute later, flushed and smiling. When you look closer, you can see tell-tale smears of white cream on her thighs that quickly disappear - maybe into the suit itself?");
+			addDisabledButton(1,"Dragon-Girl","Dragon-Girl","She looks busy at the moment...");
 		}
 		//Dances off; not met:
 		else
 		{
 			output("\n\nA green-haired woman is sitting at a table off to one side of the bar, near enough that she draws plenty of lustful gazes from the other patrons while they order. She’s clearly not human, with lustrous green hair and bestial horns poking up from a brow of cream-pale skin. The woman appears to be wearing a skin-tight bodysuit, showing off a pair of breasts so voluptuous that she’s got little choice but to rest them on the table in front of her - much to the delight of the customers.");
 			output("\n\nEvery so often, someone slides into the booth across from her and you see credits being exchanged. It’s too dark to see what exactly transpires, but her customers always seem to leave with a flush on their cheeks and a smile.");
+			addButton(1,"Dragon-Girl",meetingTerensha);
 		}
 	}
 	else
 	{
 		//Dances on; met:
-		if(dances) output("\n\nThe green-haired latex queen, Terensha, is working the crowded tables near the dancer’s stage. Her overly large breasts and bobbing reptilian dick are on full display, enticing more than a few of your fellow spacers to grab her ass or flash her a credit chit, enticing her over. Invariably, she ends up crawling into their lap or they into hers. A minute later and Terensha leaves flushed in the cheeks and smiling... and usually with a stain of white cream between her thighs that her bodysuit quickly absorbs.");
+		if(terenshaIsDancing())
+		{
+			output("\n\nThe green-haired latex queen, Terensha, is working the crowded tables near the dancer’s stage. Her overly large breasts and bobbing reptilian dick are on full display, enticing more than a few of your fellow spacers to grab her ass or flash her a credit chit, enticing her over. Invariably, she ends up crawling into their lap or they into hers. A minute later and Terensha leaves flushed in the cheeks and smiling... and usually with a stain of white cream between her thighs that her bodysuit quickly absorbs.");
+		}
 		//Dances off; met:
 		else 
 		{
 			output("\n\nTerensha, Beth’s resident green-haired latex queen, is relaxing at a table off to one side of the bar, near enough that she draws plenty of lustful gazes from the other patrons while they order. Her signature skin-tight bodysuit overtly emphasizes her breasts, so voluptuous that she’s got little choice but to rest them on the table in front of her - much to the delight of the customers.");
 			output("\n\nEvery so often, someone slides into the booth across from her and you see credits being exchanged. It’s too dark to see what exactly transpires, but her customers always seem to leave with a flush on their cheeks and a smile.");
 		}
+		addButton(1,"Terensha",meetingTerensha);
 	}
-	//if(dances) addButton(1,"Terensha",);
-	//else 
-	addButton(1,"Terensha",meetingTerensha);
 }
 
 //Meeting Terensha
@@ -88,15 +97,16 @@ public function meetingTerensha():void
 		if(flags["BETHS_TIMES_WHORED"] != undefined) output(", the same as you");
 		output(". And seemingly doing good business, too.");
 		output("\n\n<i>“Interested?”</i> Ren inquires sweetly, batting her long lashes at you. Shifting her tightly-held bust a bit, she adds, <i>“Trust me: this suit and I can make you feel things you wouldn’t believe. ");
-		if(pc.hasCock()) output("For a few credits, I’d be happy to make you spill every drop of cum you’ve got all over my feet... or for a little more, we can take this bottle of lube back to my room, slick your business up, and let you put it anywhere you please. The feeling of a firm prick gliding through slick, tight latex is absolutely heavenly. Guaranteed.”</i>");
-		else output("<i>“For a few credits, I’ll let you sit in my lap and play with the surprise I’ve got waiting under the table for you. A little more, and you and I can go back to my room... no promises you’ll be able to walk out, though!”</i>");
+		if(pc.hasCock()) output("For a few credits, I’d be happy to make you spill every drop of cum you’ve got all over my feet... or for a little more, we can take this bottle of lube back to my room, slick your business up, and let you put it anywhere you please. The feeling of a firm prick gliding through slick, tight latex is absolutely heavenly. Guaranteed.");
+		else output("For a few credits, I’ll let you sit in my lap and play with the surprise I’ve got waiting under the table for you. A little more, and you and I can go back to my room... no promises you’ll be able to walk out, though!");
+		output("”</i>");
 		output("\n\nWhat");
 		if(silly || pc.isBro()) output(", or more likely, <i>who</i>");
 		output(" will you do?");
 		processTime(3);
 	}
 	//Repeat Meeting: Dancer Hours
-	else if(hours < 6 || hours >= 10)
+	else if(terenshaIsDancing())
 	{
 		output("Terensha’s apparently working at the moment. Why not go over and see if you can snag a dragon-girl quicky? You guess you’ll end up 100 credits in the hole for a little fun.");
 		if(pc.exhibitionism() < 33 && !pc.isBimbo() && !pc.isBro()) 
@@ -318,10 +328,10 @@ public function rideTerenshaBunbunbunbuuuuuuuuuuuuuuuuuuuuuuasdasdadajsdlajdklaj
 		else output("channel");
 		output(" until my suit’s absorbed a good bit of it.”</i>");
 		output("\n\nYou gulp, realizing that with its sheer volume, Ren’s cum-filled suit is acting like a giant knot, tying you together from the inside. As if that bulbous shaft of hers wasn’t enough!");
-		output("\n\n<i>“Easy, honey. You don’t pay by the hour,”</i> Ren purrs, urging you to rest against her. <i>“Just lay real still so I don’t cum any more, and let’s enjoy each other’s company, hmm? Unless you want me to bloat that belly of yours like a horny kui-tan on Throb, that is.”</i>");
-		output("\n\nYou smile, saying that sounds nice and all, but you’ve can’t exactly spend the rest of the day being Ren’s personal cum-dump.”</i>");
+		output("\n\n<i>“Easy, honey. You don’t pay by the hour,”</i> Ren purrs, urging you to rest against her. <i>“Just lay real still so I don’t cum any more, and let’s enjoy each other’s company, hmm? Unless you want me to bloat that belly of yours like a horny kui-tan on Throbb, that is.”</i>");
+		output("\n\nYou smile, saying that sounds nice and all, but you’ve can’t exactly spend the rest of the day being Ren’s personal cum-dump.");
 		output("\n\nShe sighs, pulling you close. <i>“Oh well. Maybe next time. Still, we’ve got a while to relax with each other...”</i>");
-		output("\n\nThat’s true enough, you suppose. You don’t exactly have a choice, considering how full of spunk you are right now. You wrap your arms around Ren and nestle in, figuring you’ve earned the right to use those beautiful tits of hers as a pillow... right up until you feel her thob and spurt again.");
+		output("\n\nThat’s true enough, you suppose. You don’t exactly have a choice, considering how full of spunk you are right now. You wrap your arms around Ren and nestle in, figuring you’ve earned the right to use those beautiful tits of hers as a pillow... right up until you feel her throb and spurt again.");
 		output("\n\n<i>“S-sorry. Last one, I swear!”</i> she blushes, shivering with delight.");
 		output("\n\nMaybe this is going to take longer than you thought...");
 		processTime(35);
@@ -421,7 +431,7 @@ public function missionaryWithRensa():void
 	}
 	output("\n\n<i>“All yours,”</i> she offers, using both hands to cup her fat ballsack, hefting the weighty orbs out of the way and showing off her pretty puss. You’re sure it must be her kaithrit side coming out, making the broad gulf of her twat seem so appealing, so easy to slide right into. There’s no evidence of a clit, just smooth, thick lips sitting in a puffy mound. Ren’s grip on you draws you in, even if your own mounting lusts didn’t demand you follow her; your hands grab the sheets on either side of her head, looming over her and letting the whore’s tail guide your [pc.cockOrStrapon " + x + "] towards her sex. The way her suit bends and stretches as your crown presses against it gives you just enough resistance to force you to use your [pc.legs], thrusting in hard.");
 	output("\n\nRen’s breath catches, stifling a gasp of pleasure as your [pc.cockOrStrapon " + x + "] pushes in. The latex of her suit gives more easily after a moment, conforming like a condom both to your shape and that of Terensha’s pussy. And what a pussy it is: she makes up for lacking a clit on the outside with what feels like hundreds of small bumps ringing around every inch of her twat’s walls, grinding through the latex against your dick. Every one of them must be as sensitive as any clitoris could be, because you’ve barely sunk two inches of cockmeat into Ren’s quim before she cries out, arching her back and thrusting her sheathed prick into the air like a flagpole. The trip throbs, then bloats with a liquid bubble. You grin, watching her balls clench and contract, emptying into the crown of her suit. All that, and you’ve barely gotten started.");
-	pc.cockChange();
+	if(x >= 0) pc.cockChange();
 	output("\n\n<i>“S-sorry,”</i> Ren laughs, rolling her head back and running her hands across her horns. <i>“Stupid suit. As if having a hundred clitties wasn’t enough on its own... what? Don’t stop on my account; I couldn’t get soft with you in me like this even if... even if I wanted to!”</i>");
 	output("\n\nThe breathy gasps of pleasure that punctuate her words are enough of an invitation for you to keep thrusting, pushing nice and slow into the cavernous embrace of Ren’s sex. You’re almost sure she cums again before you’ve got ");
 	if(x >= 0) output("every inch");
@@ -508,7 +518,7 @@ public function pitchAnalRensa():void
 
 	output("\n\nWhile you turn your attention to the selection on hand, Ren twists around onto her hands and knees and crawls up the heart-shaped bed. Her arms come to rest on the curvy headboard, making sure to leave her breasts where they can sway for you later, and nestles her chin into her hands, watching you with a playful smile. You make your choice in a hurry");
 	//hugedick + Kiro fucked: 
-	if(pc.cocks[x].thickness >= 4 && flags["MET_KIRO"] != undefined) output(", happy to find some of the same elasticizing lube Kiro uses on hand,");
+	if(x >= 0 && pc.cocks[x].thickness() >= 4 && flags["MET_KIRO"] != undefined) output(", happy to find some of the same elasticizing lube Kiro uses on hand,");
 	output(" and mount the bed after her. Ren’s tail curls up her back, getting out of the way of your unrestricted access to the hermaphroditic whore’s backside. She gives you an enticing wiggle, making her full cheeks jiggle - and letting the hefty pillar of meat between her legs sway.");
 
 	output("\n\nYou’re not interested in that for now, though. Your gaze is firmly fixes on the full, soft cheeks of Terensha’s ass. The way the latex hugs her skin makes her seem almost doll-like, too perfectly sculpted to be real. When you sink your fingers into it, though, her ass yields to your touch, soft and pliant, readily pulled open to reveal her twinned holes. You squirt a generous load of lube directly into the cleft between her cheeks, eliciting a gasp from the whorish halfbreed and making her ass wink at you as the lube splatters across it.");
@@ -517,7 +527,7 @@ public function pitchAnalRensa():void
 
 	if(flags["RENSA_FUCKED"] == undefined) 
 	{
-		output("\n\nI’m still half gryvain, after all,”</i> she murmurs, reaching a hand between her legs to stroke herself. <i>“Balls on the outside, more sacks inside... just in case I ever need to cum a few gallons, I guess.”</i>");
+		output("\n\n<i>“I’m still half gryvain, after all,”</i> she murmurs, reaching a hand between her legs to stroke herself. <i>“Balls on the outside, more sacks inside... just in case I ever need to cum a few gallons, I guess.”</i>");
 	}
 	output("\n\nRen giggles, squeezing back down around your probing digit until you’re buried to the hilt, pumping her ass with as much lube as she’ll take. Once you’re satisfied, you start using your other fingers to massage the rest of the slick lube around her crack and cheeks, giving Ren’s behind a glistening sheen before you’re done.");
 	output("\n\n<i>“Mmm, talented fingers,”</i> she purrs, brushing her tail across your cheek. <i>“Keep teasing me and I’m gonna cum before you even get the crown in!”</i>");
@@ -527,13 +537,13 @@ public function pitchAnalRensa():void
 	output("\n\nYou just grin, using two fingers to push down the crown of your [pc.cockOrStrapon " + x + "] until its pressing into the tight ring of her ass. Ren’s cock jumps at the slightest bit of pressure, but her asshole is so stuffed with lube that it opens like a lover’s mouth, eagerly inviting your cockhead in and gripping it with all the sultry firmness her latex-clad body can muster.");
 	output("\n\nA full body shudder rocks through you as your [pc.cockOrStrapon " + x + "] is wrapped inside Ren’s tight hole, gripped by slicked-up latex and pushing hard against the stretchy tip. Her suit is elastic, but not so much so that it doesn’t resist you stretching it deep into its wearer’s ass. So for now, you’re forced to take it slow, easing yourself inside inch by vice-tight inch. Terensha’s breath comes husky and ragged as you progress, her back and tail both arching for you.");
 	output("\n\nBy the time you");
-	if(pc.cockVolume(x) >= 600 && pc.hasCock()) output("’ve buried yourself to the hilt in Ren’s plush behind");
+	if(x < 0 || pc.cockVolume(x) < 600) output("’ve buried yourself to the hilt in Ren’s plush behind");
 	else output(" have Ren so stuffed with cock that her belly bulges, completely incapable of taking any more of your mammoth member");
 	output(", she’s a panting, gasping mess. The cum-bubble swaying under her is half as big as one of her hefty G-cups, bobbing the same way her tits are with every husky breath. Her ass twitches around your length, probably to the same beat of her ejaculation, since it doesn’t look like she’s stopping any time while your cock is spearing her ass open and putting all that pressure on her extra cum-sacks.");
-	pc.cockChange();
+	if(x >= 0) pc.cockChange();
 	output("\n\nYou give her a moment to get adjusted, or at least stop squeezing around your dick so hard that you can barely move; just gently rock your [pc.hips] against her ass until she finally manages to relax a little bit. But just a little - where’s the fun otherwise?");
 	output("\n\nAs soon as you can move again, you shift your hands forward, grabbing one of Ren’s huge boobs in each and using them as leverage to pull out to the tip. The latex squeaks, drooling lube back around your shaft and starting to tighten up again - right up until you thrust back in at full force, ");
-	if(pc.cockVolume(x) < 600 || x < 0) output("hilting yourself back where you belong");
+	if(x < 0 || pc.cockVolume(x) < 600) output("hilting yourself back where you belong");
 	else output("filling up Ren’s bowels with every inch of cock her whorish body can take");
 	output(". She screams with pleasure, body bucking forward with the force of your hips ramming into her butt, but your handholds on her tits keeps her right where you want her.");
 
@@ -580,7 +590,7 @@ public function pitchAnalRensa():void
 			output("\n\nYou just can’t say no to that.");
 		}
 		//All non-huge cum/non knots combine:
-		if(pc.cumQ() < 5000)
+		if(x < 0 || pc.cumQ() < 5000)
 		{
 			output("\n\nTerensha sighs heavily, rolling onto her back and resting her head in her hands. <i>“I’m looking forward to next time, cow[pc.boyGirl],”</i> she murmurs. <i>“C’mon, snuggle up for a while? It’s not like I can walk back onto the floor any time soon anyway, the way you just destroyed my ass. Time’s free, and for you: so are cuddles and boob-pillows.”</i>");
 			output("\n\nWell, that’s one offer that’s hard to turn down, especially with how exhausted that rough ass-play’s left you. You give her a smile and crawl up beside her, taking full advantage of those huge, soft G-cups of hers and nestling your head into her cleavage.");
@@ -882,7 +892,7 @@ public function terenshaDancingEpilog():void
 		output(" deep inside, pulsing and squirting so much in the blink of an eye that a veritable waterfall of wasted seed pours out around your cock, even as tightly gripped as it is by Ren’s pussy. Even better, though, you can feel the latex sheath she’s made of her twat distend and bulge, just like it is around her own cockhead, but angled into the egg-bearing channel of her womb. Her eyes go wide as she feels what’s going on, and her hands leap to her belly. While she was ever-so-slightly thick around the middle before, you can both see that’s rapidly changing - her belly is growing, expanding around the massive load you’re pumping into her.");
 		output("\n\nThe halfbreed’s cock leaps to full attention, standing straight up in the air and blowing its own bubble bigger as the pleasure of expansion rocks her body. She’s panting and gasping for breath, barely able to keep from crying out as your ungodly load swells inside her body. By the time you’re finally squirting nothing but thin ribbons of [pc.cumNoun], she looks several months pregnant; Ren’s hands are planted firmly on her stretched-out belly, and her cock is completely pinned between your [pc.belly] and hers, looking like the balloon at its crown is ready to pop.");
 		output("\n\n<i>“O-oh wow,”</i> she breathes, barely able to form the words thanks to the shudders of climactic pleasure still shaking her body. <i>“I know you space jockeys get pent up, but this... ");
-		if(pc.race() == "kui-tan" || pc.race() == "half kui-tan") output("shoulda expected it from a kui-tan!");
+		if(pc.race().indexOf("kui-tan") != -1) output("shoulda expected it from a kui-tan!");
 		else output("are you sure you’re not a kui-tan in disguise?");
 		output("”</i>");
 

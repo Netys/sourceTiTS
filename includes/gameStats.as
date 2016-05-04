@@ -2378,7 +2378,7 @@ public function displayEncounterLog(showID:String = "All"):void
 				if(flags["MET_TERENSHA"] != undefined)
 				{
 					output2("\n<b>* Terensha:</b> Met her");
-					if(hours >= 6 && hours < 10) output2(", Currently performing");
+					if(terenshaIsDancing()) output2(", Currently performing");
 					if(flags["RENSA_FUCKED"] != undefined) output2("\n<b>* Terensha, Times Sexed: </b>" + flags["RENSA_FUCKED"]);
 				}
 				// Vaande
@@ -4415,7 +4415,7 @@ public function displayEncounterLog(showID:String = "All"):void
 				if(StatTracking.getStat("contests/kiro drinkoff losses") + StatTracking.getStat("contests/kiro drinkoff wins") > 0) output2("\n<b>* Kiro, Drinking Contest, Win/Loss Ratio: </b>" + StatTracking.getStat("contests/kiro drinkoff wins") + "/" + StatTracking.getStat("contests/kiro drinkoff losses") + ", of " + (StatTracking.getStat("contests/kiro drinkoff losses") + StatTracking.getStat("contests/kiro drinkoff wins")) + " games");
 			}
 			output2("\n<b>* Kiro, Testicle Size: </b>" + prettifyLength(chars["KIRO"].ballDiameter()) + " across, " + prettifyLength(chars["KIRO"].ballSize()) + " around, each");
-			if(flags["KIRO_FUCKED_DURING_RESCUE"] != undefined || flags["KIRO_DEEPTHROATED_YOU"] != undefined || flags["KIRO_BALLJOBBED_YOU"] != undefined || flags["KIRO_X_SAEN_HAPPENED"] != undefined || flags["PUMPED_KIRO_PUSSY"] != undefined)
+			if(flags["KIRO_FUCKED_DURING_RESCUE"] != undefined || flags["KIRO_DEEPTHROATED_YOU"] != undefined || flags["KIRO_BALLJOBBED_YOU"] != undefined || flags["KIRO_X_SAEN_HAPPENED"] != undefined || flags["PUMPED_KIRO_PUSSY"] != undefined || flags["KIRO_ORGIED"] != undefined)
 			{
 				output2("\n<b>* Kiro, Sexual Organs: </b>");
 				if(chars["KIRO"].hasCock())
