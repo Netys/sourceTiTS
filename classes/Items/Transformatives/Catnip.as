@@ -1109,7 +1109,7 @@ package classes.Items.Transformatives
 				if (rand(3) == 0) target.addSkinFlag(GLOBAL.FLAG_FLUFFY);
 				changes++;
 				output(" <b>You’re growing " + target.skinFurScales(true, true) + ".</b> You pet yourself,");
-				if(target.race().indexOf("cat") == -1) output(" almost");
+				if(target.felineScore() < 5) output(" almost");
 				output(" purring from the suddenly pleasant sensation.");
 			}
 			

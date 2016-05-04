@@ -57,13 +57,13 @@ public function companionsCount():Number {
 }
 public function followersCount():int {
 	var counter:Number = 0;
-	//if(emberScene.followerEmber()) counter++;
+	if(followerEmber()) counter++;
 	//if(flags[kFLAGS.VALARIA_AT_CAMP] == 1) counter++;
 	if(flags["COC.JOJO_IN_CAMP"] == 1) counter++;
 	if(flags["COC.RATHAZUL_IN_CAMP"] == 1) counter++;
 	if(flags["COC.ANEMONE_KID"] > 0) counter++;
 	//if(followerShouldra()) counter++;
-	//if(sophieFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] == 0) counter++;
+	if(sophieFollower() && int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) == 0) counter++;
 	//if(helspawnFollower()) counter++;
 	return counter;
 }
@@ -103,9 +103,9 @@ public function campFollowersMenu(descOnly:Boolean = false):void {
 public function loversCount():int {
 	var counter:Number = 0;
 	if(arianFollower()) counter++;
-	//if(followerHel()) counter++;
-	////Izma!
-	//if(flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00238] == 1 && flags[kFLAGS.FOLLOWER_AT_FARM_IZMA] == 0) counter++;
+	if(followerHel()) counter++;
+	//Izma!
+	if(izmaFollower()) counter++;
 	//if(isabellaFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_ISABELLA] == 0) counter++;
 	//if(player.findStatusAffect(StatusAffects.CampMarble) >= 0 && flags[kFLAGS.FOLLOWER_AT_FARM_MARBLE] == 0) counter++;
 	if(amilyFollower() && !amilyCorrupt()) counter++;
@@ -141,11 +141,11 @@ public function campLoversMenu(descOnly:Boolean = false):void {
 public function slavesCount():int {
 	var counter:Number = 0;
 	//if(latexGooFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_LATEXY] == 0) counter++;
-	//if(vapulaSlave() && flags[kFLAGS.FOLLOWER_AT_FARM_VAPULA] == 0) counter++;
+	if(vapulaSlave() && int(flags["COC.FOLLOWER_AT_FARM_VAPULA"]) == 0) counter++;
 	if(campCorruptJojo() && int(flags["COC.FOLLOWER_AT_FARM_JOJO"]) == 0) counter++;
 	if(amilyFollower() && amilyCorrupt() && flags["COC.FOLLOWER_AT_FARM_AMILY"] == undefined) counter++;
 	////Bimbo sophie
-	//if(bimboSophie() && flags[kFLAGS.FOLLOWER_AT_FARM_SOPHIE] == 0) counter++;
+	if(bimboSophie() && int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) == 0) counter++;
 	if(ceraphIsFollower()) counter++;
 	if(milkSlave() && int(flags["COC.FOLLOWER_AT_FARM_BATH_GIRL"]) == 0) counter++;
 	return counter;

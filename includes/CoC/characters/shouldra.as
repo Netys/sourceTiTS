@@ -118,12 +118,11 @@ internal function shouldraGreeting():void {
 	}
 	//(after three encounters with her)
 	else {
-		if (flags["COC.TIMES_BEATEN_SHOULDRA"] >= 3 && flags["COC.TIMES_MET_SHOULDRA"] % 10 == 0 && allowFollowers()) {
+		//if (flags["COC.TIMES_BEATEN_SHOULDRA"] >= 3 && flags["COC.TIMES_MET_SHOULDRA"] % 10 == 0 && allowFollowers()) {
 			//initialShouldersRecruitment();
-			addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
-			IncrementFlag("COC.TIMES_MET_SHOULDRA");
-			return;
-		}
+			//IncrementFlag("COC.TIMES_MET_SHOULDRA");
+			//return;
+		//}
 		output("You step into the ruins of the village cautiously, zigzagging through passageways and searching for anything worth pocketing. A now-familiar sound from inside one of the half-collapsed cottages gives you pause, and you're not surprised when a normal-looking girl steps out and faces you. She plants her hands on her hips, cocking her head curiously. \"<i>You again?</i>\" she asks amiably, the beginnings of a grin playing across her freckled features. \"<i>Now, you couldn't have come back just to see me.</i>\"\n\n");
 		
 		output("Before you can either confirm or deny her suspicions, she falls into a fighting crouch, beaming at you from behind her raised fists. \"<i>What say we have a friendly little brawl?</i>\" she asks. \"<i>I win, I get to play with you.</i>\"  With a nod, you [pc.readyWeapon] and get ready for a fight.  \"<i>You don't stand a ghost of a chance,</i>\" she teases.\n\n");
