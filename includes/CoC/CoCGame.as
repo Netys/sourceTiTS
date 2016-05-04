@@ -113,6 +113,7 @@ include "characters/JojoScene.as";
 include "characters/kihaFollower.as";
 include "characters/KihaScene.as";
 include "characters/milkWaifu.as";
+include "characters/phylla.as";
 include "characters/Rathazul.as";
 include "characters/SheilaScene.as";
 include "characters/shouldra.as";

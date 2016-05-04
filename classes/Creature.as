@@ -3608,7 +3608,6 @@
 			while (arg > 0) {
 				mod = Math.min(arg, 0.1); // breaking into multiple iterations for more smooth distribution
 				arg -= mod;
-				else change += .1;
 				if(arg < 0) arg = 0;
 				if (statCurrent + change < 0.30 * statMax) mod *= 1;
 				else if (statCurrent + change < 0.40 * statMax) mod *= .9;

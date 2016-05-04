@@ -108,7 +108,7 @@ private function startTentacleBeastCombat():void {
 	CombatManager.setHostileCharacters(new CoCTentacleBeast());
 	CombatManager.victoryScene(CoCTentacleBeastPCVictory);
 	CombatManager.lossScene(CoCTentacleBeastPCLoss);
-	CombatManager.displayLocation("TENTACLE\nBEAST");
+	CombatManager.displayLocation("TENTABEAST");
 
 	CombatManager.beginCombat();
 }

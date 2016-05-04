@@ -30,7 +30,7 @@ package classes.Characters.CoC
 			
 			this.meleeWeapon.attackVerb = "punch";
 			this.meleeWeapon.longName = "fist";
-			this.meleeWeapon.baseDamage.kinetic.damageValue = 10;
+			this.meleeWeapon.baseDamage.kinetic.damageValue = 6;
 			this.meleeWeapon.hasRandomProperties = true;
 			
 			this.armor.longName = "thick fur";

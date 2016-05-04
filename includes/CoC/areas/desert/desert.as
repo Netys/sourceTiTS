@@ -8,7 +8,6 @@ import classes.Engine.Utility.*;
 // exgartuan
 // camp chest
 // bigJunkDesertScene
-// Phylla
 public function exploreDesert():void
 {
 	if (helSexualAmbush()) return;
@@ -28,16 +27,16 @@ public function exploreDesert():void
 		return;
 	}
 	
+	//Ant colony debug chances
+	if (pc.level >= 5 && flags["COC.ANT_WAIFU"] == undefined && flags["COC.EXPLORED_DESERT"] % 8 == 0 && int(flags["COC.ANTS_PC_FAILED_PHYLLA"]) == 0 && flags["COC.ANT_COLONY_KEPT_HIDDEN"] == undefined) {
+		antColonyEncounter();
+		return;
+	}
+	
 	if ((pc.level >= 4 || flags["COC.EXPLORED_DESERT"] > 45) && Flag("COC.DISCOVERED_WITCH_DUNGEON") == 0) {
 		choice.push(TravelToDesertCave);
 		chance.push(5);
 	}
-	
-	//Ant colony debug chances
-	//if (pc.level >= 5 && flags["COC.ANT_WAIFU"] == undefined && flags["COC.EXPLORED_DESERT"] % 8 == 0 && flags["COC.ANTS_PC_FAILED_PHYLLA"] == 0 && flags["COC.ANT_COLONY_KEPT_HIDDEN"] == undefined) {
-		//antColonyEncounter();
-		//return;
-	//}
 	
 	//int over 50?  Chance of alice encounter!
 	if (pc.intelligence() >= 15 && flags["COC.FOUND_WIZARD_STAFF"] == undefined) {
