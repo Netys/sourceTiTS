@@ -2981,7 +2981,7 @@
 				if(exhibitionismRaw < 0) exhibitionismRaw = 0;
 			}
 			trace("Final reported exhibition level: " + exhibitionismRaw);
-			return exhibitionismRaw; // FIXME: return corruption value, if higher? make use of fetish from Ceraph?
+			return (kGAMECLASS.flags["COC.PC_FETISH"] > 0 && kGAMECLASS.inMareth()) ? 100 : exhibitionismRaw;
 		}
 		
 		public static const DEPENDANT_ANY:uint = 0;

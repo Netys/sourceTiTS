@@ -92,6 +92,7 @@ private function tamaniGivesBirth():void {
 		StatTracking.track("coc/pregnancy/tamani daughters", flags["COC.TAMANI_PREGNANCY_COUNT"]);
 		StatTracking.track("coc/pregnancy/total offsprings", flags["COC.TAMANI_PREGNANCY_COUNT"]);
 	//}
+	flags["COC.TAMANI_NUMBER_OF_DAUGHTERS"] = int(flags["COC.TAMANI_NUMBER_OF_DAUGHTERS"]) + int(flags["COC.TAMANI_PREGNANCY_COUNT"]);
 	flags["COC.TAMANI_PREGNANCY_COUNT"] = undefined;
 	flags["COC.INCUBATION_TAMANI"] = undefined;
 	
@@ -718,7 +719,7 @@ private function tamaniPregnantFuck():void {
 		output("You cum with near-painful intensity.  Tamani is actually pushed back a bit by your first blast, getting splattered from her chest down as jizz tries to escape her suddenly fluid-filled cunt.  She lunges forwards, grinding her pregnancy-bloated body against your pole, using her arms and legs like tight cock-rings.  Her gash and hard little clit spread her fragrant wetness as she orgasms with you, feeling each wave of your spunk pass underneath her.   With no receptacle, you end up drenched in a puddle of the stuff.  While it does eventually end, your sore body is a clear indication that some drug in her lipstick probably helped you push out such a ludicrous volume.\n\n");
 
 		output("Tamani grinds on you a bit longer before staggering up and stretching.  She pauses to get a narrow bottle and abruptly jams the end into your urethra.  With one practiced motion, she squeezes your [pc.cock] from bottom to top, squeezing the last of your spoo into the container.  She pops it free, corks it, and pockets it.  She pats her pockets and explains, \"<i>A few of the girls back home aren't pregnant, and I thought you might like to help contribute to the local slut population.  Don't worry though baby, I'll always own your cock.</i>\"\n\n");
-		flags["COC.TAMANI_NUMBER_OF_DAUGHTERS"] += 3;
+		flags["COC.TAMANI_NUMBER_OF_DAUGHTERS"] = int(flags["COC.TAMANI_NUMBER_OF_DAUGHTERS"]) + 3;
 
 		output("Tamani comes over to you and gives you a sloppy goodbye kiss, sending an immediate surge of hardness and desire to your groin.  She looks back and giggles, then waddles off, patting her pouches and dripping with your spooge.");
 	}
@@ -786,8 +787,9 @@ internal function tamaniKnockUp():void {
 }
 
 public function encounterTamani():void {
-	//if (pc.hasCock && flags[kFLAGS.TAMANI_DAUGHTER_PREGGO_COUNTDOWN] == 0 && flags["COC.TAMANI_NUMBER_OF_DAUGHTERS"] >= 24) {
-	//tamaniDaughtersScene.encounterTamanisDaughters();
+	if (pc.hasCock() && int(flags["COC.TAMANI_DAUGHTER_PREGGO_COUNTDOWN"]) == 0 && flags["COC.TAMANI_NUMBER_OF_DAUGHTERS"] >= 24) {
+		encounterTamanisDaughters();
+	}
 	
 	//Fems:
 	if (!pc.hasCock()) {
@@ -806,7 +808,7 @@ public function encounterTamani():void {
 //TAMANI HYPNO SHIT
 
 //[GIVE IN TO TAMANI'S HYPNO SHENANIGANS]
-internal function getRapedByTamaniYouHypnoSlut():void {
+public function getRapedByTamaniYouHypnoSlut():void {
 	showTamani();
 	clearOutput();
 	//Find a dick that fits
@@ -951,7 +953,7 @@ internal function getRapedByTamaniYouHypnoSlut():void {
 	
 }
 
-internal function tamaniAnalShits():void {
+public function tamaniAnalShits():void {
 	flags["COC.TAMANI_DEFEATS"] = 0;
 	showTamani();
 	var x:Number = pc.cockThatFits(enemy.analCapacity());
@@ -1012,7 +1014,7 @@ internal function tamaniAnalShits():void {
 //}
 	
 //Butts McGee Facesitting Tamaniz
-private function preferTamaniFemdom():void {
+public function preferTamaniFemdom():void {
 	clearOutput();
 	//Tamani Facesit
 	//===========Tamani============
@@ -1024,8 +1026,9 @@ private function preferTamaniFemdom():void {
 	addButton(0,"Accept",acceptTamaniFacesits);
 	addButton(1,"Refuse",declineZeFacesits);
 }
+
 //(("Refuse" choice))
-private function declineZeFacesits():void {
+public function declineZeFacesits():void {
 	clearOutput();
 	output("You tell her you're not interested.");
 	output("\n\nThe curvy goblin kicks you with a snarl.  \"<i>Fine, bitch. Have it your way. But if I find you taking <b>my</b> cocks again, you're going to be in trouble!</i>\"  She darts off before you can get a word in edgewise, leaving you alone.");
@@ -1036,7 +1039,7 @@ private function declineZeFacesits():void {
 }
 
 //(("Accept" choice))
-private function acceptTamaniFacesits():void {
+public function acceptTamaniFacesits():void {
 	clearOutput();
 	output("You eye the goblin's wide hips again before you nod, anticipating the idea.");
 	output("\n\nTamani's impish smirk blooms into a wide grin, and the little goblin gently shoves you.  \"<i>Lay down, then!</i>\" she tells you.  You decide to comply, reaching for your [armor] - but she stops your hand.  \"<i>No need to strip, skank. Just lay down,</i>\" she tells you, pushing again.  You shrug and comply with her request, finding a comfortable spot on the ground to lay on, and then look over at her.");

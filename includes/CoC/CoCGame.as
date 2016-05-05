@@ -53,6 +53,7 @@ include "areas/forest/BeeGirlScene.as";
 include "areas/forest/CorruptedGlade.as";
 include "areas/forest/Essrayle.as";
 include "areas/forest/forest.as";
+include "areas/forest/tamaniDaughters.as";
 include "areas/forest/TamaniScene.as";
 include "areas/forest/tentacleBeastScene.as";
 include "areas/highmountain/BasiliskScene.as";

@@ -287,10 +287,10 @@ package classes.Characters.CoC
 		}
 			
 		protected function goblinTeaseAttack(target:Creature):void {
-			//if (this is CoCTamani && flags["COC.TAMANI_TIMES_HYPNOTISED"] != undefined) {
-				//tamaniHypnoTease()
-				//return;
-			//}
+			if (this is CoCTamani && int(kGAMECLASS.flags["COC.TAMANI_TIMES_HYPNOTISED"]) > 0) {
+				(this as CoCTamani).tamaniHypnoTease(target)
+				return;
+			}
 			var det:Number = rand(3);
 			if (short == "goblin" || short == "goblin assassin") {
 				if (det == 0) output(capitalA + short + " runs her hands along her leather-clad body and blows you a kiss. \"<i>Why not walk on the wild side?</i>\" she asks.");
