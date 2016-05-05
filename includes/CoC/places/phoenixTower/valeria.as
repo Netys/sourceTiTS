@@ -128,12 +128,13 @@ public function beatUpGooArmor():void {
 
 	output("\n\nWell, that's certainly an interesting offer. Do you take the goo-girl armor with you?");
 	//(Display Options: [Take Her] [Refuse Her])
-	clearMenu();
-	addDisabledButton(0, "Take Her", "Take Her", "This option is not implemented.");
-	//addButton(0, "Take Her", takeGooArmorAndWearIt, undefined,"Take Her", armors.GOOARMR.description);
-	addButton(1, "Refuse Her", refuseGooArmorOffer, undefined, "Refuse Her", "Refuse the goo armor offer. You don't want her after all! However, you might not be able to get her for some time.");
-	addButton(2, "Refuse Polite", refuseGooArmorOfferPolitely, undefined, "Refuse Polite", "Politely decline the goo armor offer. You don't want her for now.");
+	
 	flags["COC.WON_GOO_ARMOR_FIGHT"] = 1;
+	
+	clearMenu();
+	addOverrideItemButton(0, new CoCGooArmor(), "Take Her", takeGooArmorAndWearIt);
+	addButton(1, "Refuse Her", refuseGooArmorOffer, undefined, "Refuse Her", "Refuse the goo armor offer. You don't want her after all! However, you might not be able to get her for some time.");
+	addButton(2, "2Camp", refuseGooArmorOfferPolitely, undefined, "Invite To Camp", "Politely decline the goo armor offer. You don't want her for now.");
 }
 
 //[Refuse Her]
@@ -162,15 +163,21 @@ public function refuseGooArmorOfferPolitely():void {
 	//spriteSelect(79);
 	clearOutput();
 	//In Tower of the Phoenix
-	if (flags["COC.VALERIA_FOUND_IN_GLACIAL_RIFT"] == undefined) {
-		output("You tell her that... no thanks, not now -- you don't need armor right now.");
-		output("\n\nShe huffs indignantly and scrambles to her feet.  \"<i>Well fine, maybe you can take me later, " + pc.mf("sir", "madam") + "?</i>\"  After a moment, she hesitantly adds, \"<i>But if you change your mind later... Well, we'll see if you live through this place without me! But if you need me later, I'll be at Glacial Rift.</i>\"  Before you can stop her, she ducks out the front door and off to... Wherever goo-armor-girl-things would go, you guess.  Still, to your surprise, you feel rather invigorated after the battle, and rolling your shoulders, you turn your attention back to the dungeon ahead.");
-	}
-	//The Glacial Rift
-	else {
-		output("You tell her that... no thanks, not now -- you don't need armor right now.");
-		output("\n\nShe huffs indignantly and scrambles to her feet.  \"<i>Well fine, maybe you can take me later, " + pc.mf("sir", "madam") + "?</i>\"  After a moment, she hesitantly adds, \"<i>But if you change your mind later... You know where to find me, right?</i>\"  You give her a nod as you make your way back to your camp.");
-	}
+	//if (flags["COC.VALERIA_FOUND_IN_GLACIAL_RIFT"] == undefined) {
+		//output("You tell her that... no thanks, not now -- you don't need armor right now.");
+		//output("\n\nShe huffs indignantly and scrambles to her feet.  \"<i>Well fine, maybe you can take me later, " + pc.mf("sir", "madam") + "?</i>\"  After a moment, she hesitantly adds, \"<i>But if you change your mind later... Well, we'll see if you live through this place without me! But if you need me later, I'll be at Glacial Rift.</i>\"  Before you can stop her, she ducks out the front door and off to... Wherever goo-armor-girl-things would go, you guess.  Still, to your surprise, you feel rather invigorated after the battle, and rolling your shoulders, you turn your attention back to the dungeon ahead.");
+	//}
+	////The Glacial Rift
+	//else {
+		//output("You tell her that... no thanks, not now -- you don't need armor right now.");
+		//output("\n\nShe huffs indignantly and scrambles to her feet.  \"<i>Well fine, maybe you can take me later, " + pc.mf("sir", "madam") + "?</i>\"  After a moment, she hesitantly adds, \"<i>But if you change your mind later... You know where to find me, right?</i>\"  You give her a nod as you make your way back to your camp.");
+	//}
+	
+	output("You tell her that... no thanks, not now -- you don't need armor right now.");
+	output("\n\nShe huffs indignantly and scrambles to her feet.  \"<i>Well fine, maybe you can take me later, " + pc.mf("sir", "madam") + "?</i>\"  After a moment, she hesitantly adds, \"<i>But if you change your mind later... Well, we'll see if you live through this place without me!</i>\"  Before you can stop her, she ducks out the front door.  Still, to your surprise, you feel rather invigorated after the battle, and rolling your shoulders, you turn your attention back to the dungeon ahead.");
+	
+	flags["COC.TOOK_GOO_ARMOR"] = 1;
+	flags["COC.VALARIA_AT_CAMP"] = 1;
 	
 	pc.HP(pc.maxHP());
 	output("\n\n");
@@ -182,31 +189,19 @@ public function refuseGooArmorOfferPolitely():void {
 public function takeGooArmorAndWearIt():void {
 	//spriteSelect(79);
 	clearOutput();
-	//armors.GOOARMR.useText();
-	//pc.armor.removeText();
-	//(\"<i>You gained ValeriaArmor!</i>\")
-	//combat.cleanupAfterCombat();
 	
-	//output("\n\n");
+	
+	//Set flags
+	//flags["COC.VALERIA_FLUIDS"] = 80;
+	flags["COC.TOOK_GOO_ARMOR"] = 1;
+	flags["COC.VALARIA_AT_CAMP"] = 0;
+	takeValeria();
+	output("\n\nTo your surprise, you feel rather invigorated after the battle, thanks to Valeria's strange healing properties, and with a smirk, you turn your attention back to the adventures ahead.\n\n");
+	
+	//(PC regains HP)
+	pc.maxOutHP();
 	processTime(15 + rand(5));
 	CombatManager.genericVictory();
-	//(\"<i>You put a (previous armorName) in your X pouch)
-	output("\n\nTo your surprise, you feel rather invigorated after the battle, thanks to Valeria's strange healing properties, and with a smirk, you turn your attention back to the adventures ahead.\n\n");
-	//Set flags
-	flags["COC.MET_VALERIA"] = 1;
-	flags["COC.VALERIA_FLUIDS"] = 80;
-	pc.HP(pc.maxHP());
-	flags["COC.TOOK_GOO_ARMOR"] = 1;
-	//(PC regains HP)
-	//var item:Armor = pc.setArmor(armors.GOOARMR); //Item is now the player's old armor
-	//if (item == null) {
-		//if (flags[kFLAGS.VALERIA_FOUND_IN_GLACIAL_RIFT] == 0) doNext(roomGuardHall);
-		//else doNext(returnToCampUseOneHour);
-	//}
-	//else {
-		//if (flags[kFLAGS.VALERIA_FOUND_IN_GLACIAL_RIFT] == 0) inventory.takeItem(item, roomGuardHall);
-		//else inventory.takeItem(item, returnToCampUseOneHour);
-	//}
 	addButton(0, "Next", mainGameMenu);
 }
 

@@ -59,7 +59,7 @@ public function companionsCount():Number {
 public function followersCount():int {
 	var counter:Number = 0;
 	if(followerEmber()) counter++;
-	//if(flags[kFLAGS.VALARIA_AT_CAMP] == 1) counter++;
+	if(flags["COC.VALARIA_AT_CAMP"] == 1) counter++;
 	if(flags["COC.JOJO_IN_CAMP"] == 1) counter++;
 	if(flags["COC.RATHAZUL_IN_CAMP"] == 1) counter++;
 	if(flags["COC.ANEMONE_KID"] > 0) counter++;
@@ -264,6 +264,10 @@ public function campEvent():Boolean
 		vapulaForceFeeds();
 		return true;
 	}
+	//if (isabellaFollower() && flags["COC.VALARIA_AT_CAMP"] > 0 && flags["COC.ISABELLA_VALERIA_SPARRED"] != 1) {
+		//isabellaAndValeriaSpar();
+		//return;
+	//}
 	return false;
 }
 

@@ -713,7 +713,7 @@
 			
 			// Do GUI stuff with the compareItem string -- can probably mangle a call together a call to addButton() to do the needful
 			// if we have any null arguments at this point rather than throwing an error and shit.
-			userInterface.addItemButton(slot, buttonName, 1, func, arg, itemHeader, itemBody, comparisonString);
+			userInterface.addItemButton(slot, buttonName, item.quantity > 1 ? item.quantity : 0, func, arg, itemHeader, itemBody, comparisonString);
 		}
 		
 		public function removeButton(slot:int):void

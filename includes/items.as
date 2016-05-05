@@ -766,22 +766,22 @@ public function itemDisabledMessage(msg:String = "", clearScreen:Boolean = true)
 public function unequip(arg:String, next:Boolean = true):void 
 {
 	// Renamed from lootList so I can distinguish old vs new uses
-	var unequippedItems:Array = new Array();
+	var removedItem:ItemSlotClass;
 
 	if(arg == "bra") {
-		unequippedItems[unequippedItems.length] = pc.upperUndergarment;
+		removedItem = pc.upperUndergarment;
 		pc.upperUndergarment = new classes.Items.Miscellaneous.EmptySlot();
 	}
 	else if(arg == "underwear") {
-		unequippedItems[unequippedItems.length] = pc.lowerUndergarment;
+		removedItem = pc.lowerUndergarment;
 		pc.lowerUndergarment = new classes.Items.Miscellaneous.EmptySlot();
 	}
 	else if(arg == "shield") {
-		unequippedItems[unequippedItems.length] = pc.shield;
+		removedItem = pc.shield;
 		pc.shield = new classes.Items.Miscellaneous.EmptySlot();
 	}
 	else if(arg == "accessory") {
-		unequippedItems[unequippedItems.length] = pc.accessory;
+		removedItem = pc.accessory;
 		pc.accessory = new classes.Items.Miscellaneous.EmptySlot();
 	}
 	else if(arg == "armor") {
@@ -790,22 +790,32 @@ public function unequip(arg:String, next:Boolean = true):void
 			itemDisabledMessage(pc.getStatusTooltip("Armor Slot Disabled"));
 			return;
 		}
-		unequippedItems[unequippedItems.length] = pc.armor;
+		removedItem = pc.armor;
 		pc.armor = new classes.Items.Miscellaneous.EmptySlot();
 	}
 	else if(arg == "mWeapon") {
-		unequippedItems[unequippedItems.length] = pc.meleeWeapon;
+		removedItem = pc.meleeWeapon;
 		pc.meleeWeapon = new classes.Items.Melee.Rock();
 	}
 	else if(arg == "rWeapon") {
-		unequippedItems[unequippedItems.length] = pc.rangedWeapon;
+		removedItem = pc.rangedWeapon;
 		pc.rangedWeapon = new classes.Items.Melee.Rock();
 	}
 	
-	unequippedItems[unequippedItems.length - 1].onRemove(pc);
-	
 	clearOutput();
-	itemCollect(unequippedItems);
+	
+	removedItem.onRemove(pc);
+	
+	if(removedItem.shortName != "Rock" && removedItem.shortName != "" && removedItem.quantity > 0) 
+	{
+		output(" ");
+		itemCollect([removedItem]);
+	}
+	else 
+	{
+		clearMenu();
+		addButton(0,"Next",itemScreen);
+	}
 }
 
 // atm, no equippable items have a stacksize > 1, so there is never a possibility that we'd have to split an item stack to equip an item the player holds in their inventory.

@@ -121,6 +121,7 @@ include "characters/shouldra.as";
 include "characters/Sophie.as";
 include "characters/sophieBimbo.as";
 include "characters/sophieFollower.as";
+include "characters/valeria.as";
 include "characters/vapula.as";
 
 public function initCoCJunk():void {

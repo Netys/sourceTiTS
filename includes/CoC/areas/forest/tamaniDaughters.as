@@ -1081,7 +1081,7 @@ private function loseToDaughtersWithTamaniThere():void {
 	pc.slowStatGain("i", -0.5);
 	pc.slowStatGain("l", 1);
 	pc.cor(1);
-	if (inCombat) {
+	if (inCombat()) {
 		output("\n\n");
 		processTime(15 + rand(5));
 		CombatManager.genericLoss();
