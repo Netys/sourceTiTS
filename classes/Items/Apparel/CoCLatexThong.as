@@ -16,7 +16,7 @@ package classes.Items.Apparel
 			this.type = GLOBAL.LOWER_UNDERGARMENT;
 			
 			//Used on inventory buttons
-			this.shortName = "LatexShorts";
+			this.shortName = "LatexThong";
 			
 			//Regular name
 			this.longName = "latex thong";

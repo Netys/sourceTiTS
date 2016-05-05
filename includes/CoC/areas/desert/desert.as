@@ -45,16 +45,15 @@ public function exploreDesert():void
 	}
 	
 	//Possible chance of boosting camp space!
-	//if (pc.hasKeyItem("Camp - Chest") < 0 && (rand(100) < 10)) {
-		//output("While wandering the trackless sands of the desert, you break the silent monotony with a loud 'thunk'.  You look down and realize you're standing on the lid of an old chest, somehow intact and buried in the sand.  Overcome with curiosity, you dig it out, only to discover that it's empty.  It would make a nice addition to your campsite.\n\nYou decide to bring it back to your campsite.  ", true);
-		//for (var i:int = 0; i < 6; i++) {
-			//inventory.createStorage();
-		//}
-		//pc.createKeyItem("Camp - Chest", 0, 0, 0, 0);
-		//output("<b>You now have " + num2Text(inventory.itemStorageDirectGet().length) + " storage item slots at camp.</b>");
-		//doNext(returnToCampUseOneHour);
-		//return;
-	//}
+	if (flags["COC.CAMP_STORAGE_CONSUMABLES"] == undefined && (rand(100) < 10)) {
+		output("While wandering the trackless sands of the desert, you break the silent monotony with a loud 'thunk'.  You look down and realize you're standing on the lid of an old chest, somehow intact and buried in the sand.  Overcome with curiosity, you dig it out, only to discover that it's empty, but somehow ice cold inside.  It would make a nice addition to your campsite.\n\nYou decide to bring it back to your campsite.  ");
+		flags["COC.CAMP_STORAGE_CONSUMABLES"] = 10;
+		output("<b>You now have " + flags["COC.CAMP_STORAGE_CONSUMABLES"] + " storage slots for consumables at camp.</b>");
+		processTime(60 + rand(60));
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
+		return;
+	}
 	
 	//Chance of dick-dragging! 10% + 10% per two foot up to 30%
 	//temp = 10 + (pc.longestCockLength() - pc.tallness) / 24 * 10;

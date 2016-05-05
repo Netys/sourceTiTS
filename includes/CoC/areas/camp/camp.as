@@ -35,9 +35,8 @@ public function cocCampMenu():void {
 	
 	//addButton(5, "Debug", doDebugFunction);
 	
-	// TODO: camp stash
-	if (hasShipStorage()) addButton(3, "Stash", shipStorageMenuRoot);
-	else addDisabledButton(3, "Stash");
+	if (hasCampStorage()) addButton(3, "Stash", campStorageMenuRoot);
+	else addDisabledButton(3, "Stash", "Stash", "You have no place to store your items.");
 	
 	addButton(4, "Stream", swimInStream, undefined, "Stream", "Swim in nearby stream."); // COC:TODO: stream scene
 	addButton(7, "Portal", abortIAmNotBloodyChampion, undefined, "Portal", "Exit simulation.");
@@ -266,4 +265,52 @@ public function campEvent():Boolean
 		return true;
 	}
 	return false;
+}
+
+public function hasCampStorage():Boolean
+{
+	if (flags["COC.CAMP_STORAGE_WARDROBE"] != undefined) return true;
+	if (flags["COC.CAMP_STORAGE_EQUIPMENT"] != undefined) return true;
+	if (flags["COC.CAMP_STORAGE_CONSUMABLES"] != undefined) return true;
+	if (flags["COC.CAMP_STORAGE_VALUABLES"] != undefined) return true;
+	
+	return false;
+}
+
+public function campStorageMenuRoot():void
+{
+	clearOutput();
+	output("You turn to your camp's storage.");
+	
+	clearMenu();
+	
+	if (flags["COC.CAMP_STORAGE_WARDROBE"] != undefined) 
+	{
+		 output(" You have a wardrobe closet where you can keep your clothes, outfits and armors.");
+		 addButton(0, "Wardrobe", shipStorageMenuType, "WARDROBE");
+	}
+	else addDisabledButton(0, "Wardrobe");
+	
+	if (flags["COC.CAMP_STORAGE_EQUIPMENT"] != undefined)
+	{
+		output(" An weapon racs designates the equipment area.");
+		addButton(1, "Equipment", shipStorageMenuType, "EQUIPMENT");
+	}
+	else addDisabledButton(1, "Equipment");
+	
+	if (flags["COC.CAMP_STORAGE_CONSUMABLES"] != undefined)
+	{
+		output(" An ever-cold chest with multiple compartments is located below, meant for storing consumable items.");
+		addButton(2, "Consumables", shipStorageMenuType, "CONSUMABLES");
+	}
+	else addDisabledButton(2, "Consumables");
+	
+	if (flags["COC.CAMP_STORAGE_VALUABLES"] != undefined)
+	{
+		output(" You have a safebox used to store valuable or important items.");
+		addButton(3, "Valuables", shipStorageMenuType, "VALUABLES");
+	}
+	else addDisabledButton(3, "Valuables");
+	
+	addButton(14, "Back", mainGameMenu);
 }

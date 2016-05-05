@@ -194,8 +194,8 @@ public function amilySprite():void {
 
 private function rackCount():int {
 	var temp:int = 0;
-	if (pc.hasKeyItem("Equipment Rack - Armor")) temp++;
-	if (pc.hasKeyItem("Equipment Rack - Weapons")) temp++;
+	if (flags["COC.CAMP_STORAGE_WARDROBE"] != undefined) temp++;
+	if (flags["COC.CAMP_STORAGE_EQUIPMENT"] != undefined) temp++;
 	return temp;
 }
 
@@ -242,63 +242,55 @@ public function exploreVillageRuin():void {
 	
 	clearOutput();
 	//50% chance of ghost-girl
-	if ((flags["COC.SHOULDRA_SILLY_ENCOUNTER_FOLLOWUP_TIMER"] == undefined && flags["COC.AMILY_VILLAGE_EXPLORED"] > 15 && /*rackCount() >= 2 &&*/ rand(10) <= 3) && !followerShouldra()) {
+	if ((flags["COC.SHOULDRA_SILLY_ENCOUNTER_FOLLOWUP_TIMER"] == undefined && flags["COC.AMILY_VILLAGE_EXPLORED"] > 10 && rackCount() >= 2 && rand(10) <= 3) && !followerShouldra()) {
 		shouldraGreeting();
 		return;
 	}
 	//20% chance of playing with a rack
-	//if (rand(5) == 0 && rackCount() < 3) {
-		//var rack:Number = 0;
-		//var rackArray:Array = [];
-		//if (pc.hasKeyItem("Equipment Rack - Armor") < 0) rackArray[rackArray.length] = 0;
-		//if (pc.hasKeyItem("Equipment Rack - Weapons") < 0) rackArray[rackArray.length] = 1;
-		//if (pc.hasKeyItem("Equipment Rack - Shields") < 0) rackArray[rackArray.length] = 2;
-		//rack = rackArray[rand(rackArray.length)];
-		//output("While picking through the ruined houses and abandoned structures of this dilapidated village, you manage to find something useful!  There's an intact but empty ", false);
-		//switch(rack) {
-			//case 0:
-				//output("armor");
-				//break;
-			//case 1:
-				//output("weapon");
-				//break;
-			//case 2:
-				//output("shield");
-				//break;
-			//default:
-				//output("undefined");
-		//}
-		//output(" rack here.  It looks like it could hold nine different ", false);
-		//switch(rack) {
-			//case 0:
-				//output("armors");
-				//break;
-			//case 1:
-				//output("weapons");
-				//break;
-			//case 2:
-				//output("shields");
-				//break;
-			//default:
-				//output("undefined");
-		//}
-		//output(".  You check it over and spot an easy way to fold it up for transport.  This would be a fine addition to your camp, so you pack it up and haul it back.", false);
-		//switch(rack) {
-			//case 0:
-				//pc.createKeyItem("Equipment Rack - Armor",0,0,0,0);
-				//break;
-			//case 1:
-				//pc.createKeyItem("Equipment Rack - Weapons",0,0,0,0);
-				//break;
-			//case 2:
-				//pc.createKeyItem("Equipment Rack - Shields",0,0,0,0);
-				//break;
-			//default:
-				//output("  <b>Please let Kitteh6660 know about this bug.</b>");
-		//}
-		//doNext(returnToCampUseOneHour);
-		//return;
-	//}
+	if (rand(5) == 0 && rackCount() < 2) {
+		var rack:Number = 0;
+		var rackArray:Array = [];
+		if (flags["COC.CAMP_STORAGE_WARDROBE"] == undefined) rackArray[rackArray.length] = 0;
+		if (flags["COC.CAMP_STORAGE_EQUIPMENT"] == undefined) rackArray[rackArray.length] = 1;
+		rack = rackArray[rand(rackArray.length)];
+		output("While picking through the ruined houses and abandoned structures of this dilapidated village, you manage to find something useful!  There's an intact but empty ");
+		switch(rack) {
+			case 0:
+				output("armor");
+				break;
+			case 1:
+				output("weapon");
+				break;
+			default:
+				output("  <b>WTF??? It is a bug, report it!</b>");
+		}
+		output(" rack here.  It looks like it could hold dozen different ");
+		switch(rack) {
+			case 0:
+				output("armors");
+				break;
+			case 1:
+				output("weapons");
+				break;
+			default:
+				output("  <b>WTF??? It is a bug, report it!</b>");
+		}
+		output(".  You check it over and spot an easy way to fold it up for transport.  This would be a fine addition to your camp, so you pack it up and haul it back.");
+		switch(rack) {
+			case 0:
+				flags["COC.CAMP_STORAGE_WARDROBE"] = 10;
+				break;
+			case 1:
+				flags["COC.CAMP_STORAGE_EQUIPMENT"] = 10;
+				break;
+			default:
+				output("  <b>WTF??? It is a bug, report it!</b>");
+		}
+		processTime(60 + rand(60));
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
+		return;
+	}
 	//Initialize saved gender:
 	if (flags["COC.AMILY_MET"] == undefined) flags["COC.AMILY_PC_GENDER"] = gender(pc);
 	//Amily gone/hiding super hard

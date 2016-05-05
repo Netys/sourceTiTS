@@ -92,7 +92,7 @@ private function pierceMenu():void {
 	if (pc.nosePierced == 0) addButton(btn++, "Nose", nosePierce);
 	else addDisabledButton(btn++, "Nose", "Nose", "Your nose is already pierced.");
 	
-	if (pc.nosePierced == 0) addButton(btn++, "Tongue", tonguePierce);
+	if (pc.tonguePierced == 0) addButton(btn++, "Tongue", tonguePierce);
 	else addDisabledButton(btn++, "Tongue", "Tongue", "Your tongue is already pierced.");
 	
 	addButton(14, "Back", piercingStudio);
@@ -598,7 +598,7 @@ private function piercingRemove():void {
 	if (pc.eyebrowPierced > 0) addButton(btn++, "Eyebrow", removeEyebrowPierce);
 	else addDisabledButton(btn++, "Eyebrow", "Eyebrow", "Your eyebrows are not pierced.");
 	
-	if (pc.eyebrowPierced > 0) addButton(btn++, "Lip", removeLipPierce);
+	if (pc.lipPierced > 0) addButton(btn++, "Lip", removeLipPierce);
 	else addDisabledButton(btn++, "Lip", "Lip", "Your lips are not pierced.");
 	
 	if(pc.hasNipples()) {
@@ -609,7 +609,7 @@ private function piercingRemove():void {
 	if (pc.nosePierced > 0) addButton(btn++, "Nose", removeNosePierce);
 	else addDisabledButton(btn++, "Nose", "Nose", "Your nose is not pierced.");
 	
-	if (pc.nosePierced > 0) addButton(btn++, "Tongue", removeTonguePierce);
+	if (pc.tonguePierced > 0) addButton(btn++, "Tongue", removeTonguePierce);
 	else addDisabledButton(btn++, "Tongue", "Tongue", "Your tongue is not pierced.");
 	
 	addButton(14, "Back", piercingStudio);
