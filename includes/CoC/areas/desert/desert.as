@@ -4,10 +4,6 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-// TODO:
-// exgartuan
-// camp chest
-// bigJunkDesertScene
 public function exploreDesert():void
 {
 	if (helSexualAmbush()) return;
@@ -59,7 +55,7 @@ public function exploreDesert():void
 	//temp = 10 + (pc.longestCockLength() - pc.tallness) / 24 * 10;
 	//if (temp > 30) temp = 30;
 	//if (temp > rand(100) && pc.longestCockLength() >= pc.tallness && pc.totalCockThickness() >= 12) {
-		//kGAMECLASS.exploration.bigJunkDesertScene();
+		//bigJunkDesertScene();
 		//return;
 	//}
 
@@ -145,4 +141,66 @@ private function encounterAliseInDesert():void
 	lootScreen = mainGameMenu;
 	useItemFunction = mainGameMenu;
 	itemCollect([new CoCWizardStaff()]);
+}
+
+public function bigJunkDesertScene():void
+{
+	clearOutput();
+	var x:Number = pc.longestCockIndex();
+	//PARAGRAPH 1
+	output("Walking along the sandy dunes of the desert you find yourself increasingly impeded by the bulk of your " + pc.cockDescript(x) + " dragging along the sandscape behind you.  The incredibly hot surface of the desert causes your loins to sweat heavily and fills them with relentless heat.");
+
+	if (pc.cocks.length == 1) output("  As it drags along the dunes, the sensation forces you to imagine the rough textured tongue of a monstrous animal sliding along the head of your [pc.cockNoun " + x + "].");
+	else if (pc.cocks.length >= 2) output("  With all of your [pc.multiCocks] dragging through the sands they begin feeling as if the rough textured tongues of " + num2Text(pc.cockTotal()) + " different monstrous animals were slobbering over each one.");
+	output("\n\n");
+
+	//PARAGRAPH 2
+
+	//FOR NON-CENTAURS]
+	if (!pc.isTaur()) {
+		output("The impending erection can't seem to be stopped.  Your sexual frustration forces stiffness into your [pc.cocks], which forces your torso to the ground.  Normally your erection would merely raise itself skyward but your genitals have grown too large and heavy for your " + pc.hipDescript() + " to hold them aloft.  Instead you feel your body forcibly pivoting at the hips until your torso is compelled to rest face down on top of your obscene [pc.multiCocks].");
+
+		//IF CHARACTER HAS GIANT BREASTS ADD SENTENCE
+		if (pc.biggestTitSize() >= 35)  output("  Your " + pc.allBreastsDescript() + " hang lewdly off your torso to rest on the desert sands, seeming to bury the dunes on either side of you.  Their immense weight anchors your body, further preventing your torso from lifting itself up.  The burning heat of the desert teases your [pc.nipples] mercilessly as they grind in the sand.");
+		//IF CHARACTER HAS A BALLS ADD SENTENCE
+		if (pc.balls > 0) output("  Your [pc.sack] rests beneath your raised " + pc.buttDescript() + ".  The fiery warmth of the desert caresses it, causing your [pc.balls] to pulse with the need to release their sperm through your [pc.multiCocks].");
+		//IF CHARACTER HAS A VAGINA ADD SENTENCE
+		if (pc.hasVagina()) {
+			output("  Your [pc.vagina] and " + pc.clitDescript() + " are thoroughly squashed between the bulky flesh where your male genitals protrude from between your hips and the " + pc.buttDescript() + " above.");
+			//IF CHARACTER HAS A DROOLING PUSSY ADD SENTENCE
+			if (pc.isSquirter()) output("  Juices stream from your womanhood and begin pooling on the hot sand beneath you.  Wisps of steam rise up into the air only to tease your genitals further.  ");
+		}
+	}
+	//FOR CENTAURS
+	else {
+		output("The impending erection can't seem to be stopped.  Your sexual frustration forces stiffness into your [pc.multiCocks], which forces the barrel of your horse-like torso to the ground.  Normally your erection would merely hover above the ground in between your centaurian legs, but your genitals have grown too large and heavy for your [pc.hips] to hold them aloft.  Instead, you feel your body being forcibly pulled down at your hindquarters until you rest atop your [pc.multiCocks].");
+		//IF CHARACTER HAS GIANT BREASTS ADD SENTENCE
+		if (pc.biggestTitSize() >= 35)  output("  Your " + pc.allBreastsDescript() + " pull your human torso forward until it also is forced to rest facedown, just like your horse half.  Your tits rest, pinned on the desert sand to either side of you.  Their immense weight anchors you, further preventing any part of your equine body from lifting itself up.  The burning heat of the desert teases your [pc.nipples] incessantly.");
+		//IF CHARACTER HAS A BALLS ADD SENTENCE
+		if (pc.balls > 0) output("  Your [pc.sack] rests beneath your raised " + pc.buttDescript() + ".  The airy warmth of the desert teases it, causing your [pc.balls] pulse with the need to release their sperm through your [pc.multiCocks].");
+		//IF CHARACTER HAS A VAGINA ADD SENTENCE
+		if (pc.vaginas.length >= 1) {
+			output("  Your [pc.vagina] and " + pc.clitDescript() + " are thoroughly squashed between the bulky flesh where your male genitals protrude from between your hips and the " + pc.buttDescript() + " above.");
+			//IF CHARACTER HAS A DROOLING PUSSY ADD SENTENCE
+			if (pc.isSquirter()) output("  The desert sun beats down on your body, its fiery heat inflaming the senses of your vaginal lips.  Juices stream from your womanhood and begin pooling on the hot sand beneath you.");
+		}
+	}
+	output("\n\n");
+	//PARAGRAPH 3
+	output("You realize you are effectively trapped here by your own body.");
+	//CORRUPTION BASED CHARACTER'S VIEW OF SITUATION
+	if (pc.cor() < 33) output("  Panic slips into your heart as you realize that if any dangerous predator were to find you in this state, you'd be completely defenseless.  You must find a way to regain your mobility immediately!");
+	else if (pc.cor() < 66) output("  You realize that if any dangerous predator were to find you in this state you'd be completely defenseless.  You must find a way to regain your mobility... yet there is a certain appeal to imagining how pleasurable it would be for a sexual predator to take advantage of your obscene body.");
+	else output("  Your endowments have rendered you completely helpless should any predators find you.  Somewhere in your heart, you're exhilarated at the prospect.  The idea of being a helpless fucktoy for a wandering beast is unusually inviting to you.  Were it not for the thought that you might die of thirst in the desert, you'd be incredibly tempted to remain right where you are.");
+
+	//SCENE END = IF CHARACTER HAS FULL WINGS ADD SENTENCE
+	if (pc.canFly()) output("  You extend your wings and flap as hard as you can, until at last you manage to lighten the bulk of your body somewhat - enough to allow yourself to drag your genitals across the hot sands and back to camp.  The ordeal takes nearly an hour.");
+	//SCENE END IF CHARACTER HAS CENTAUR BODY
+	else if (pc.isTaur()) output("  You struggle and work your equine legs against the surface of the dune you are trapped on.  Your " + pc.feet() + " have consistent trouble finding footing, the soft sand failing to provide enough leverage to lift your bulk.  You breath in deeply and lean from side to side, trying to find some easier vertical leverage.  Eventually, with a crude crawl, your legs manage to push the bulk of your body onto more solid ground.  With great difficulty, you spend the next hour shuffling your genitals across the sandscape and back to camp.");
+	//SCENE END = FOR ALL OTHER CHARACTERS
+	else output("  You struggle and push with your [pc.legs] as hard as you can, but it's no use.  You do the only thing you can and begin stroking your [pc.multiCocks] with as much vigor as you can muster.  Eventually your body tenses and a light load of jizz erupts from your body, but the orgasm is truly mild compared to what you need.  You're simply too weary from struggling to give yourself the masturbation you truly need, but you continue to try.  Nearly an hour later [pc.eachCock] softens enough to allow you to stand again, and you make your way back to camp, still dragging your genitals across the warm sand.");
+	processTime(50 + rand(20));
+	pc.lust(25 + rand(pc.cor() / 5));
+	pc.energy( -5);
+	addNextButton();
 }

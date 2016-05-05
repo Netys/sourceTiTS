@@ -10,13 +10,24 @@ public function dreamChances():Boolean
 	var dreams:Array = new Array();
 	if(flags["DREAM_CD"] == undefined) flags["DREAM_CD"] = 0;
 	//Special Dreams
-	if (!dreamed && flags["COC.CERULEAN_POTION_DOSES"] > 0 && (pc.hasCock() || !pc.hasVagina()) && inCamp()) {
+	if (!dreamed && flags["COC.CERULEAN_POTION_DOSES"] > 0 && (pc.hasCock() || !pc.hasVagina()) && hours < 8 && inCamp()) {
 		if(int(flags["COC.CERULEAN_POTION_DREAMS"]) == 0)
 			eventQueue.push(nightSuccubiFirstTime);
 		else if (vapulaSlave() && pc.hasCock() && flags["COC.VAPULA_THREESOMES"] > 0 && int(flags["COC.FOLLOWER_AT_FARM_VAPULA"]) == 0) //VapulaSurprise
 			eventQueue.push(vapulaAssistsCeruleanSuccubus);
 		else eventQueue.push(nightSuccubiRepeat);
 		dreamed = true;
+	}
+	if (!dreamed && pc.hasStatusEffect("Exgartuan") && pc.statusEffectv2("Exgartuan") == 0 && (flags["COC.SLEEP_WITH"] == undefined || flags["COC.SLEEP_WITH"] == "") && hours < 6 && inCamp() && pc.minutesSinceCum >= 24 * 60) {
+		//Exgartuan must be present, must be awake and it must be night time
+		if (pc.hasCock() && pc.statusEffectv1("Exgartuan") == 1 && rand(3) == 0) { //Exgartuan night time surprise!
+			eventQueue.push(exgartuanSleepSurprise);
+			dreamed = true;
+		}
+		if (pc.statusEffectv1("Exgartuan") == 2 && rand(3) == 0) { //Boobgartuan night time surprise!
+			eventQueue.push(boobGartuanSURPRISE);
+			dreamed = true;
+		}
 	}
 	if (pc.hasStatusEffect("Queen Pregnancy State"))
 	{

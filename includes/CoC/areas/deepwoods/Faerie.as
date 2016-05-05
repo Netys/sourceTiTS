@@ -1,4 +1,6 @@
 import classes.GLOBAL;
+import classes.Items.Armor.CoCGooArmor;
+import classes.Items.Armor.GooArmor;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -305,7 +307,7 @@ private function faerieCaptureHJ():void {
 		//[Normal amount of cum:
 		else if(pc.cumQ() < 200) output("Your [pc.cum] washes into her face and she loses her grip on your [pc.cockHead " + smallCock + "]. She falls with a splat onto the pre soaked ground and you spray her with periodic spurts of fresh [pc.cum].\n\n");
 		//[Huge amount of cum:
-		else output("Your [pc.cum] collides with her face and she is propelled off of your cock onto the pre soaked ground. Your [pc.balls] continue pumping out cum like a hose until she's almost swimming in it.\n\n");
+		else output("Your [pc.cum] collides with her face and she is propelled off of your cock onto the pre soaked ground. Your [pc.balls] continue pumping out [pc.cumNoun] like a hose until she's almost swimming in it.\n\n");
 		pc.orgasm();
 	}
 	//Non-taurs
@@ -324,13 +326,13 @@ private function faerieCaptureHJ():void {
 		
 		output("Though she can only stimulate a few inches of you at a time, it feels really good – better than it should, and a budding warmth on the edge of release builds inside you.  ");
 		
-		if (pc.isCrotchGarbed()) output("Too late you realize you should have gotten at least partially undressed.  You cum before you can do anything about it, splattering your [pc.gear] with seed and leaving a wet patch on the crotch.  You can feel it dripping back onto you and the faerie as more [pc.cum] squirts out, soaking the tiny girl in spooge as the wet spot grows.  ");
+		if (pc.isCrotchGarbed()) output("Too late you realize you should have gotten at least partially undressed.  You cum before you can do anything about it, splattering your [pc.lowerGarment] with seed and leaving a wet patch on the crotch.  You can feel it dripping back onto you and the faerie as more [pc.cum] squirts out, soaking the tiny girl in spooge as the wet spot grows.  ");
 		else("Good thing your junk is exposed as otherwise you would have ended up jizzing in your pants. You cum, splattering the faerie with [pc.cum]. This continues until the tiny girl is soaked in spooge.  ");
 		
 		if(pc.cumQ() > 250) {
 			output("You cum uncontrollably, ");
 			if (pc.isCrotchGarbed()) output("regretting your virility as your body paints the inside of your [pc.lowerGarments] with goopy [pc.cumColor].  ");
-			else("painting the ground with goopy whiteness.  ");			
+			else("painting the ground with goopy whiteness.  ");
 			if(pc.cumQ() > 500) output("  The proof of your release forms a puddle around you as your legs give out and y");
 			else output("  Falling backwards as your legs give out, y");
 		}
@@ -343,9 +345,12 @@ private function faerieCaptureHJ():void {
 		output(", giggling drunkenly.\n\n");
 
 		//if(pc.findStatusAffect(StatusAffects.Jizzpants) < 0 && pc.armor.name != "nothing" && pc.armor != armors.LTHCARM && pc.armor != armors.GOOARMR) pc.createStatusAffect(StatusAffects.Jizzpants,1,0,0,0);
-		if (!pc.isCrotchGarbed() || pc.hasArmor() && pc.armor.shortName == "Goo Armor") {
+		if (pc.isCrotchExposed()) {} // nothing
+		else if (pc.hasArmor() && (pc.armor is CoCGooArmor || pc.armor is GooArmor)) {
 			output("Fortunately, your jizz gets absorbed into the goo covering your body.\n\n");
-			//getGame().valeria.feedValeria(pc.cumQ() / 10);
+			feedValeria(pc.cumQ() / 10);
+		} else {
+			applyCumSoaked(pc);
 		}
 	}
 	
@@ -354,7 +359,7 @@ private function faerieCaptureHJ():void {
 	
 	//Epilogue!
 	if(flags["COC.FAERIE_FUCKED"] < 10) output("The faerie burps and giggles again before glaring up at you, accusing you with a mildly unfocused glare and asking, \"<i>Did you know we get drunk on cum?  Caushe I TRY SO HARRD not to get meshed up like this.</i>\"\n\n");
-	else if(flags["COC.FAERIE_FUCKED"] < 15) output("The faerie burps and laughs drunkenly, patting the side of your [pc.leg] and slurring, \"<i>Oh by Marae's ripe titsh!  I needed that.  Do you thhink you could catsch me again?  I love feeling your [pc.cum] coating my body.</i>\"\n\n", false);
+	else if(flags["COC.FAERIE_FUCKED"] < 15) output("The faerie burps and laughs drunkenly, patting the side of your [pc.leg] and slurring, \"<i>Oh by Marae's ripe titsh!  I needed that.  Do you thhink you could catsch me again?  I love feeling your [pc.cum] coating my body.</i>\"\n\n");
 	else output("The faerie burps and begins openly masturbating, panting and slurring happily, \"<i>Yush I-gasp-uh feel great!  MMMmmmhm, it makesh my twat so sensitive.  I'm gonna fly home and schtuff it full, then play with my clit till I fall ashleep!</i>\"\n\n");
 	if(flags["COC.FAERIE_FUCKED"] < 15) output("She licks her fingers and rolls around laughing, \"<i>Hehe, who caresh!  I'm happy! WHEEEEE!</i>\"\n\n");
 	output("The faerie takes off, still dripping, and flying in something less than a straight line...");

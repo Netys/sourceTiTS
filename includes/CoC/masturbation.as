@@ -56,7 +56,19 @@ public function getCoCFapOptions(faps:Array, roundTwo:Boolean):void {
 		faps.push(fap);
 	}
 	
-	if(pc.hasKeyItem("Fake Mare") && pc.hasCock() && pc.isTaur() && currentLocation == "COC_CAMP")
+	if(pc.hasStatusEffect("Exgartuan")  && pc.statusEffectv2("Exgartuan") == 0 && inCamp())
+	{
+		fap = new FapCommandContainer();
+		fap.text = "Exgartuan";
+		fap.ttHeader = "Exgartuan"
+		fap.ttBody = "Het some action with Exgartuan.";
+		fap.func = exgartuanMasturbation;
+		fap.ignoreRandomSelection = false;
+		fap.ignorePublic = false;
+		faps.push(fap);
+	}
+	
+	if(pc.hasKeyItem("Fake Mare") && pc.hasCock() && pc.isTaur() && inCamp())
 	{
 		fap = new FapCommandContainer();
 		fap.text = "Fake Mare";
@@ -68,7 +80,7 @@ public function getCoCFapOptions(faps:Array, roundTwo:Boolean):void {
 		faps.push(fap);
 	}
 	
-	if(pc.hasKeyItem("Centaur Pole") && pc.isTaur() && currentLocation == "COC_CAMP")
+	if(pc.hasKeyItem("Centaur Pole") && pc.isTaur() && inCamp())
 	{
 		fap = new FapCommandContainer();
 		fap.text = "Cent. Pole";
@@ -80,8 +92,6 @@ public function getCoCFapOptions(faps:Array, roundTwo:Boolean):void {
 		faps.push(fap);
 	}
 	
-	trace(pc.hasKeyItem("Dildo"));
-	trace(pc.genitalLocation());
 	if(pc.hasKeyItem("Dildo") && pc.genitalLocation() <= 1)
 	{
 		fap = new FapCommandContainer();

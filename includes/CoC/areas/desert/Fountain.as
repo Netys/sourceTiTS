@@ -32,12 +32,17 @@ private function drinkFountainEndowment():void {
 		pc.XP(pc.XPMax() / 4);
 	});
 	
+	if (!pc.hasStatusEffect("Exgartuan") && rand(2) == 0) {
+		if (pc.hasCock() && pc.cockVolume(pc.biggestCockIndex()) >= cockVolume(100)) options.push(exgartuanInfestDick);
+		if (pc.biggestTitSize() >= 12) options.push(exgartuanInfestTits);
+	}
+	
 	//(+Big Tits)
 	if (pc.biggestTitSize() >= 1 && pc.smallestTitSize() < 30)
 		options.push(function():* {
 			output("\n\nYour [pc.fullChest] balloon, each growing about four bra-sizes larger... they feel so... jiggly and sensitive.  Even your nipples seem to grow with them!  Your [pc.gear] feels tighter than ever!");
 			pc.nippleLengthRatio += .3;
-			Mutator.growTits(pc, pc.breastRows.length * 4, -1, false, 1, 30);
+			Mutator.growTits(pc, pc.breastRows.length * 4, pc.breastRows.length, false, 1, 30);
 		});
 	
 	//(+Big dick)

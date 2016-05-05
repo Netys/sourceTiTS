@@ -106,6 +106,7 @@ include "characters/AnemoneScene.as";
 include "characters/ArianScene.as";
 include "characters/ceraphFollower.as";
 include "characters/ember.as";
+include "characters/exgartuan.as";
 include "characters/followerInteractions.as";
 include "characters/Hel.as";
 include "characters/IzmaScene.as";
