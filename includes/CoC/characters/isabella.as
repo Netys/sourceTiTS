@@ -457,8 +457,8 @@ public function nomOnMommaIzzysTits():void {
 	else if(flags["COC.ISABELLA_MILKED_YET"] > 0) flags["COC.ISABELLA_MILKED_YET"] = 0;
 	pc.loadInMouth(isabella);
 	//(Chance of thickening body to 75, chance of softening body if PC has a vag)
-	if (rand(2) == 0 && pc.thickness < 75) output(pc.modThickness(75, 4));
-	if (rand(2) == 0 && pc.hasVagina()) output(pc.modTone(0, 4));
+	if (rand(2) == 0 && pc.thickness < 75) Mutator.modThickness(pc, 75, 4);
+	if (rand(2) == 0 && pc.hasVagina()) Mutator.modTone(pc, 0, 4);
 	processTime(60 + rand(20));
 	clearMenu();
 	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );

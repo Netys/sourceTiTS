@@ -1216,6 +1216,8 @@ package classes.GameData
 				}
 				else {
 					output("It doesn’t work!");
+					for (var i:int = 0; i < _hostiles.length; i++)
+						if (_hostiles[i].hasOwnProperty("runAwayFail")) _hostiles[i].runAwayFail();
 					processCombat();
 				}
 			}

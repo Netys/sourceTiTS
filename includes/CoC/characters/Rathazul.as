@@ -920,7 +920,7 @@ private function craftDragonscaleArmorForReal(type:int = 0):void {
 	//showRathazul();
 	//clearOutput();
 	//output("Rathazul nods and produces a mallet and chisel from his robes.  With surprisingly steady hands for one so old, he holds the chisel against the crystal and taps it, easily cracking off a large shard.  Rathazul gathers it into his hands before slamming it down into the dirt, until only the smallest tip of the crystal is visible.  He produces vials of various substances from his robe, as if by magic, and begins pouring them over the crystal.  In a few seconds, he finishes, and runs back towards his equipment.\n\n\"<i>You may want to take a step back,</i>\" he warns, but before you have a chance to do anything, a thick trunk covered in thorny vines erupts from the ground.  Thousands of vine-like branches split off the main trunk as it reaches thirty feet in the air, radiating away from the trunk and intertwining with their neighbors as they curve back towards the ground.  In the span of a few minutes, your camp gained a thorn tree and a thick mesh of barbed vines preventing access from above.");
-	//pc.createStatusAffect(StatusAffects.DefenseCanopy, 0, 0, 0, 0);
+	//flags["COC.DEFENSE_CANOPY"] = 1
 	//pc.addKeyValue("Marae's Lethicite", 1, -1);
 	//doNext(playerMenu);
 //}

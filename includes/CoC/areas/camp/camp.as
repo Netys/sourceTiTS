@@ -113,6 +113,7 @@ public function loversCount():int {
 	if(followerKiha()) counter++;
 	//if(flags[kFLAGS.NIEVE_STAGE] == 5) counter++;
 	if(phyllaWaifu()) counter++;
+	if(flags["COC.FUCK_FLOWER_LEVEL"] > 0 && flags["COC.FUCK_FLOWER_KILLED"] != 1) counter++;
 	return counter;
 }
 public function campLoversButton():void {
@@ -262,6 +263,40 @@ public function campEvent():Boolean
 	}
 	if (hours == 2 && vapulaSlave() && int(flags["COC.FOLLOWER_AT_FARM_VAPULA"]) == 0 && flags["COC.VAPULA_DAYS_SINCE_FED"] >= 5 && (pc.hasCock() || (pc.hasKeyItem("Demonic Strap-On") && pc.hasVagina()))) {
 		vapulaForceFeeds();
+		return true;
+	}
+	if (int(flags["COC.FUCK_FLOWER_KILLED"]) == 0 && flags["COC.CORRUPT_MARAE_FOLLOWUP_ENCOUNTER_STATE"] > 0 && inCamp()) {
+		if (int(flags["COC.FUCK_FLOWER_LEVEL"]) == 0 && flags["COC.FUCK_FLOWER_GROWTH_COUNTER"] >= 8) {
+			getASprout();
+			return true;
+		}
+		if (flags["COC.FUCK_FLOWER_LEVEL"] == 1 && flags["COC.FUCK_FLOWER_GROWTH_COUNTER"] >= 7) {
+			fuckPlantGrowsToLevel2();
+			return true;
+		}
+		if (flags["COC.FUCK_FLOWER_LEVEL"] == 2 && flags["COC.FUCK_FLOWER_GROWTH_COUNTER"] >= 25) {
+			flowerGrowsToP3();
+			return true;
+		}
+		//Level 4 growth
+		if (flags["COC.FUCK_FLOWER_LEVEL"] == 3 && flags["COC.FUCK_FLOWER_GROWTH_COUNTER"] >= 40) {
+			treePhaseFourGo();
+			return true;
+		}
+	}
+	//Jojo treeflips!
+	if (flags["COC.FUCK_FLOWER_LEVEL"] >= 4 && int(flags["COC.FUCK_FLOWER_KILLED"]) == 0 && flags["COC.JOJO_IN_CAMP"] == 1 && int(flags["COC.JOJO_BIMBO_STATE"]) < 3) {
+		JojoTransformAndRollOut();
+		return true;
+	}
+	//Amily flips out
+	if (amilyFollower() && !amilyCorrupt() && flags["COC.FUCK_FLOWER_LEVEL"] >= 4 && int(flags["COC.FUCK_FLOWER_KILLED"]) == 0) {
+		amilyHatesTreeFucking();
+		return true;
+	}
+	if (int(flags["COC.FUCK_FLOWER_KILLED"]) == 1 && flags["COC.AMILY_TREE_FLIPOUT"] == 1 && !amilyFollower() && int(flags["COC.AMILY_VISITING_URTA"]) == 0) {
+		amilyComesBack();
+		flags["COC.AMILY_TREE_FLIPOUT"] = 2;
 		return true;
 	}
 	if (isabellaFollower() && flags["COC.VALARIA_AT_CAMP"] > 0 && flags["COC.ISABELLA_VALERIA_SPARRED"] != 1) {

@@ -1282,7 +1282,7 @@ private function acceptCowpology():void {
 	processTime(30 + rand(10));
 	pc.orgasm();
 	//dynStats("sen", -1);
-	addNextButton;
+	addNextButton();
 }
 
 //Get Licked in Return (seems incompatible with centaurs/driders due to lap-sitting)

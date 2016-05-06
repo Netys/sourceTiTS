@@ -109,6 +109,7 @@ include "characters/ember.as";
 include "characters/exgartuan.as";
 include "characters/followerInteractions.as";
 include "characters/Hel.as";
+include "characters/holli.as";
 include "characters/isabella.as";
 include "characters/isabellaFollower.as";
 include "characters/IzmaScene.as";
@@ -219,7 +220,7 @@ public const KBIT_SPELL_WHITEFIRE:uint	= 32;
 public function getKnownFireMagic():String {
 	if (pc.hasPerk("Enlightened Nine-tails")) return "ethereal fire";
 	if (pc.hasPerk("Corrupted Nine-tails")) return "ghostly flame";
-	if ((pc.perkv1("Psionic Affinity") & KBIT_SPELL_WHITEFIRE) > 0) return "whitefire";
+	if ((pc.perkv1("Magic Affinity") & KBIT_SPELL_WHITEFIRE) > 0) return "whitefire";
 	if (pc.hasPerk("Fire Lord")) return "terrestreal fire";
 	if (pc.hasPerk("Hellfire")) return "hellfire";
 	return null;
