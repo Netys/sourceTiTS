@@ -19,18 +19,12 @@ public function heliaTailVolume():Number {
 	return tail.effectiveVolume();
 }
 
-// NO VAI.
 public function followerHel():Boolean {
 	if(flags["COC.HEL_FOLLOWER_LEVEL"] == 2) return true;
 	//This is a temporary fix
 	// It would be FOREVER. @Etis
 	if(flags["COC.HEL_HARPY_QUEEN_DEFEATED"] != undefined) return false;
 	if(flags["COC.HEL_FOLLOWER_LEVEL"] == 1) return true;
-	return false;
-}
-
-// PLACEHOLDER
-public function isabellaAccent():Boolean {
 	return false;
 }
 
@@ -212,7 +206,7 @@ internal function loseToSalamander():void {
 
 		output("You feel a sudden tickle against the lips of your [pc.vagina].  You gasp at the spark of pleasure as her tail slips across your pleasure bud, then begins wriggling past the lips of your cunt.  Your lover smiles down at you and cups her own breasts, freeing you to resume your ministrations.  Every few licks, you're forced to stop and gasp or shudder as her tail works its way into your [pc.vagina], fucking you like a cock and a skilled finger at once, not pistoning in and out, but writhing within your depths like a tentacle.");
 		pc.cuntChange(0, 20, true, true, false);
-		output("\n\n", false);
+		output("\n\n");
 
 		output("All good things must come to an end, however, and soon the salamander's hot cunt contracts around your tongue as she cums, squirting girl-juice all over your face and neck.  You give her a last good tongue-fucking, picking up the pace and bringing her to a screaming, shuddering climax.  The power of her orgasm has a welcome side effect, as her tail begins to thrash wildly within you, battering your cunt and bringing you, too, to a massive, mind-numbing climax");
 		if(pc.hasCock()) output(", your cock shooting a massive rope of spunk onto her face as your vag cums from the tailfucking");
@@ -237,7 +231,7 @@ internal function loseToSalamander():void {
 
 		output("You gasp as you feel a sudden pressure against the rim of your [pc.asshole].  Your eyes widen, but your fiery lover only smiles and increases the pressure against your asshole until you force yourself to relax, admitting the tip of her tail into your ass.  Every few licks, you're forced to stop and gasp or shudder as her tail works its way into your [pc.asshole], fucking you like a cock and a skilled finger at once, not pistoning in and out, but writhing within your depths like a tentacle.");
 		pc.buttChange(20, true, true, false);
-		output("\n\n", false);
+		output("\n\n");
 
 		output("All good things must come to an end, however, and soon the salamander's hot cunt contracts around your tongue as she cums, squirting girl-juice all over your face and neck.  You give her a last good tongue-fucking, picking up the pace and bringing her to a screaming, shuddering climax.  The power of her orgasm has a welcome side effect, as her tail begins to thrash wildly within you, battering your ass and bringing you, too, to a massive, mind-numbing climax.\n\n");
 
@@ -658,7 +652,7 @@ private function nagaCoilsUpHel():void {
 
 	output("You're not quite done yet, though.  As soon as her orgasm subsides, you draw her off your shaft and turn her upside down in your tail's grasp.  You lower her head until it's even with your [pc.cock " + x + "], and her bare cunt is vulnerable before you.  Without encouragement, she takes your shaft into her mouth, using her tits to pump it into her welcoming maw as you set to work on her twat, tongue fucking her while you slip one, two, three fingers into her ass, eliciting a deep moan of pleasure from her with the dual stimulation.\n\n");
 
-	output("But you can soon feel your orgasm coming as she continues to titfuck you and suck your cock head.  Feeling the impending climax, she quickens her pace to an almost-maddening tempo, but still you hold on... until she slips her long, slender tongue straight into your urethra.  The incredible, piercing sensation sends you over the edge; you buck your hips into her face and cum, hard, shooting thick ropes of jism into her waiting mouth.  She sucks your seed down eagerly as you pump more and more into her mouth, continuing to tongue fuck her and finger her ass until she cums again, screaming and writhing in your tail's firm grasp, spitting drops of your seed to the ground as she dangles.\n\n", false);
+	output("But you can soon feel your orgasm coming as she continues to titfuck you and suck your cock head.  Feeling the impending climax, she quickens her pace to an almost-maddening tempo, but still you hold on... until she slips her long, slender tongue straight into your urethra.  The incredible, piercing sensation sends you over the edge; you buck your hips into her face and cum, hard, shooting thick ropes of jism into her waiting mouth.  She sucks your seed down eagerly as you pump more and more into her mouth, continuing to tongue fuck her and finger her ass until she cums again, screaming and writhing in your tail's firm grasp, spitting drops of your seed to the ground as she dangles.\n\n");
 
 	output("Exhausted by the ");
 	if(flags["COC.HEL_FUCKBUDDY"] == 0) output("battle and ");
@@ -1069,7 +1063,7 @@ private function postMinoThreesomeDecisionTime():void {
 private function bugOutAfterHelMinoThreesome():void {
 	clearOutput();
 	//spriteSelect(68);
-	output("On second thought, you'd rather keep it simple for now, even if it means battling back her future advances with force of arms instead of words.  You kiss her once more and give her breasts a squeeze for the road, then wordlessly get up and take your leave.\n\n", false);
+	output("On second thought, you'd rather keep it simple for now, even if it means battling back her future advances with force of arms instead of words.  You kiss her once more and give her breasts a squeeze for the road, then wordlessly get up and take your leave.\n\n");
 	//(reset Helgate to 0)
 	flags["COC.HEL_AFFECTION"] = 0;
 	processTime(30 + rand(10));
@@ -1341,63 +1335,63 @@ private function skipTownOnIsabellaAndHelsFight():void {
 
 //Isabella x salamander Threesome – Camp Version Intro (edited)
 //(Play at ~02:00 AM, after Isabella arrives at camp. PC must have reached \"<i>Fuck Buddy</i>\" status with Hel)
-//public function followrIzzyxSallyThreesomePretext():void {
-	////spriteSelect(68);
-	//output("\n<b>Something odd happens during the night...</b>\n");
-	//output("You've only been asleep for a few hours when you hear a sudden and alarming THWACK just outside camp.  You jump to your feet and try to gather your equipment while trying to make sure everything and everyone in camp is present and accounted for.  It only takes you a moment to notice that Isabella is nowhere to be found!\n\n");
-	//
-	//output("You make your way out of the camp, hearing another and another thwack, getting louder as you approach.\n\n");
-//
-	//output("You pick up the pace, and soon come to your camp's perimeter.  There, Isabella is standing stark naked save for her shield, facing down an opponent wreathed in darkness but for the long, curved blade he or she wields.\n\n");
-//
-	//output("\"<i>" + pc.short + "!</i>\" Isabella gasps, relieved to see you approach. \"<i>", false);
-	//if(isabellaAccent()) output("Good, now ve can take ze fight to zis uncouth barbarian!</i>\"\n\n", false);
-	//else output("Good, now we can take the fight to this uncouth barbarian!</i>\"\n\n", false);
-//
-	//output("You raise your " + pc.weaponName + " and prepare to fight the shadowy villain... only to see Hel the salamander step forward, staring at you with wide eyes.\n\n", false);
-//
-	//output("\"<i>" + pc.short + "!  What the fuck!?</i>\" Hel demands, looking from you to the redheaded cow-girl.\n\n", false);
-	//
-	//output("Taken off guard, you start to introduce Hel to your companion.  Scowling, Isabella says, ", false);
-	//if(isabellaAccent()) output("\"<i>I know ze little beech, " + pc.short + ".</i>\"\n\n", false);
-	//else output("\"<i>I know the little bitch, " + pc.short + ".</i>\"\n\n", false);
-//
-	//output("Hel sneers, \"<i>Well, you damn well better, cow.  We've been at this for months.  Now, give me back my mother's bandanna or I am going to shove my clawed foot right up your fat ass!</i>\"\n\n", false);
-//
-	//output("Isabella raises her shield and gives the ground a menacing kick with her hoof as Hel readies her sword for action.  Realizing this could quickly escalate into bloodshed, you quickly interpose yourself between the two redheads before they get the chance to beat the shit out of each other.\n\n", false);
-//
-	//output("\"<i>" + pc.short + "!</i>\" they both shout, frustrated at their inability to close the distance with their opponent without going through you.\n\n", false);
-//
-	//output("Now that you have their undivided attention, you demand an explanation that's so sorely lacking.\n\n", false);
-//
-	//output("Glaring at Isabella, Hel says, \"<i>This... cow... stole my bandanna a few months ago and won't give it back.</i>\"\n\n", false);
-//
-	//output("Isabella makes an indignant huff and turns her nose up at the salamander. ", false);
-	//if(isabellaAccent()) output("\"<i>Do not listen to ze little liar, " + pc.short + ".  I found it in ze hands of ze gnolls, and most certainly did not steal it.</i>\"\n\n", false);
-	//else output("\"<i>Do not listen to the little liar, " + pc.short + ".  I found it in the hands of the gnolls, and most certainly did not steal it.</i>\"\n\n", false);
-//
-	//output("\"<i>Yes you fucking well did!</i>\" Hel snaps, waving her sword around.  \"<i>" + pc.short + ", why the hell are you protecting that fat cow, huh?  Lemme at her!</i>\"\n\n", false);
-//
-	//output("You roll your eyes and explain that Isabella is your companion now, and that as much as you like Hel, you can't abide violence coming to your friends.  It takes a couple of minutes to penetrate the salamander's combat-high mind, but when it does, she slowly backs down and lowers her sword.  Cautiously, Isabella lowers her shield to match.\n\n", false);
-//
-	//if(isabellaAccent()) output("\"<i>So,</i>\" Isabella finally says, shifting her gaze from you to the salamander. \"<i>You two are... lovers, ja?  And here I vas about to thrash you!</i>\"\n\n", false);
-	//else output("\"<i>So,</i>\" Isabella finally says, shifting her gaze from you to the salamander. \"<i>You two are... lovers, huh?  And here I was about to thrash you!</i>\"\n\n", false);
-//
-	//output("\"<i>Yeah,</i>\" Hel answers with a little scoff, \"<i>And, I guess if you're " + pc.short + "'s friend... you're probably all right.</i>\"\n\n", false);
-//
-	//output("A dopey smile spreads across your face as Hel offers Isabella her hand.  Warily, the cow-girl shakes it.  Competitively, the girls increase the tempo of the handshake until both their pairs of massive tits are jiggling.\n\n", false);
-//
-	//output("\"<i>Oh, here,</i>\" Isabella says, breaking the ", false);
-	//if(silly()) output("(milk)", false);
-	//else output("hand", false);
-	//output("shake to pull the blue bow from her tail and hand it over to Hel.  With a happy gasp, Hel grabs it and ties it around her forehead – making herself look like some kind of half-naked commando in the process – though it's quickly hidden under her long red hair.\n\n", false);
-//
-	//output("\"<i>Yeah.  You're all right.</i>\" Hel says, finally sheathing her sword.  \"<i>Thanks for giving me my mom's bandana back.</i>\"\n\n", false);
-//
-	//output("\"<i>You are... welcome,</i>\" Isabella says as Hel disappears into the night.  Heaving a relieved sigh, you return to the camp proper and try to get some shut-eye before the sun rises.", false);
-	//flags[kFLAGS.HEL_ISABELLA_THREESOME_ENABLED] = 1;
-	//doNext(playerMenu);
-//}
+public function followrIzzyxSallyThreesomePretext():void {
+	//spriteSelect(68);
+	output("\n<b>Something odd happens during the night...</b>\n");
+	output("You've only been asleep for a few hours when you hear a sudden and alarming THWACK just outside camp.  You jump to your feet and try to gather your equipment while trying to make sure everything and everyone in camp is present and accounted for.  It only takes you a moment to notice that Isabella is nowhere to be found!\n\n");
+	
+	output("You make your way out of the camp, hearing another and another thwack, getting louder as you approach.\n\n");
+
+	output("You pick up the pace, and soon come to your camp's perimeter.  There, Isabella is standing stark naked save for her shield, facing down an opponent wreathed in darkness but for the long, curved blade he or she wields.\n\n");
+
+	output("\"<i>" + pc.short + "!</i>\" Isabella gasps, relieved to see you approach. \"<i>");
+	if(isabellaAccent()) output("Good, now ve can take ze fight to zis uncouth barbarian!</i>\"\n\n");
+	else output("Good, now we can take the fight to this uncouth barbarian!</i>\"\n\n");
+
+	output("You [pc.readyWeapon] and prepare to fight the shadowy villain... only to see Hel the salamander step forward, staring at you with wide eyes.\n\n");
+
+	output("\"<i>" + pc.short + "!  What the fuck!?</i>\" Hel demands, looking from you to the redheaded cow-girl.\n\n");
+	
+	output("Taken off guard, you start to introduce Hel to your companion.  Scowling, Isabella says, ");
+	if(isabellaAccent()) output("\"<i>I know ze little beech, " + pc.short + ".</i>\"\n\n");
+	else output("\"<i>I know the little bitch, " + pc.short + ".</i>\"\n\n");
+
+	output("Hel sneers, \"<i>Well, you damn well better, cow.  We've been at this for months.  Now, give me back my mother's bandanna or I am going to shove my clawed foot right up your fat ass!</i>\"\n\n");
+
+	output("Isabella raises her shield and gives the ground a menacing kick with her hoof as Hel readies her sword for action.  Realizing this could quickly escalate into bloodshed, you quickly interpose yourself between the two redheads before they get the chance to beat the shit out of each other.\n\n");
+
+	output("\"<i>" + pc.short + "!</i>\" they both shout, frustrated at their inability to close the distance with their opponent without going through you.\n\n");
+
+	output("Now that you have their undivided attention, you demand an explanation that's so sorely lacking.\n\n");
+
+	output("Glaring at Isabella, Hel says, \"<i>This... cow... stole my bandanna a few months ago and won't give it back.</i>\"\n\n");
+
+	output("Isabella makes an indignant huff and turns her nose up at the salamander. ");
+	if(isabellaAccent()) output("\"<i>Do not listen to ze little liar, " + pc.short + ".  I found it in ze hands of ze gnolls, and most certainly did not steal it.</i>\"\n\n");
+	else output("\"<i>Do not listen to the little liar, " + pc.short + ".  I found it in the hands of the gnolls, and most certainly did not steal it.</i>\"\n\n");
+
+	output("\"<i>Yes you fucking well did!</i>\" Hel snaps, waving her sword around.  \"<i>" + pc.short + ", why the hell are you protecting that fat cow, huh?  Lemme at her!</i>\"\n\n");
+
+	output("You roll your eyes and explain that Isabella is your companion now, and that as much as you like Hel, you can't abide violence coming to your friends.  It takes a couple of minutes to penetrate the salamander's combat-high mind, but when it does, she slowly backs down and lowers her sword.  Cautiously, Isabella lowers her shield to match.\n\n");
+
+	if(isabellaAccent()) output("\"<i>So,</i>\" Isabella finally says, shifting her gaze from you to the salamander. \"<i>You two are... lovers, ja?  And here I vas about to thrash you!</i>\"\n\n");
+	else output("\"<i>So,</i>\" Isabella finally says, shifting her gaze from you to the salamander. \"<i>You two are... lovers, huh?  And here I was about to thrash you!</i>\"\n\n");
+
+	output("\"<i>Yeah,</i>\" Hel answers with a little scoff, \"<i>And, I guess if you're " + pc.short + "'s friend... you're probably all right.</i>\"\n\n");
+
+	output("A dopey smile spreads across your face as Hel offers Isabella her hand.  Warily, the cow-girl shakes it.  Competitively, the girls increase the tempo of the handshake until both their pairs of massive tits are jiggling.\n\n");
+
+	output("\"<i>Oh, here,</i>\" Isabella says, breaking the ");
+	if(silly) output("(milk)");
+	else output("hand");
+	output("shake to pull the blue bow from her tail and hand it over to Hel.  With a happy gasp, Hel grabs it and ties it around her forehead – making herself look like some kind of half-naked commando in the process – though it's quickly hidden under her long red hair.\n\n");
+
+	output("\"<i>Yeah.  You're all right.</i>\" Hel says, finally sheathing her sword.  \"<i>Thanks for giving me my mom's bandana back.</i>\"\n\n");
+
+	output("\"<i>You are... welcome,</i>\" Isabella says as Hel disappears into the night.  Heaving a relieved sigh, you return to the camp proper and try to get some shut-eye before the sun rises.");
+	flags["COC.HEL_ISABELLA_THREESOME_ENABLED"] = 1;
+	addNextButton();
+}
 
 //Isabella x Hel Threesome Scene – Beginning in the Plains (edited)
 public function isabellaXHelThreeSomePlainsStart():void {
@@ -1420,16 +1414,16 @@ public function isabellaXHelThreeSomePlainsStart():void {
 //(Has a 10% chance to play when the player chooses [Sleep] while Isabella is at camp)
 //public function isabellaXHelThreeSomeCampStart():void {
 	////spriteSelect(68);
-	//output("\n<b>Something odd happens during the night...</b>\n", false);
-	//output("As you settle in to sleep for the night, you notice that Isabella's wandered off out of the camp.  Mildly concerned for the busty cow-girl's safety, you set out for the camp perimeter.  It doesn't take you long to find her, thanks to a soft, throaty mooing coming from the brush near camp.\n\n", false);
+	//output("\n<b>Something odd happens during the night...</b>\n");
+	//output("As you settle in to sleep for the night, you notice that Isabella's wandered off out of the camp.  Mildly concerned for the busty cow-girl's safety, you set out for the camp perimeter.  It doesn't take you long to find her, thanks to a soft, throaty mooing coming from the brush near camp.\n\n");
 //
-	//output("You push the scrub aside, revealing the cow-girl sitting on the ground, running a hand through the hair of Hel the salamander, who's currently sitting on the cow-girl's lap, her hands on Isabella's hefty breasts and one of the quad-nipples locked in her mouth.  Seeing you approach, Isabella lifts her hand from Hel's head and gives you a somewhat-abashed wave.\n\n", false);
+	//output("You push the scrub aside, revealing the cow-girl sitting on the ground, running a hand through the hair of Hel the salamander, who's currently sitting on the cow-girl's lap, her hands on Isabella's hefty breasts and one of the quad-nipples locked in her mouth.  Seeing you approach, Isabella lifts her hand from Hel's head and gives you a somewhat-abashed wave.\n\n");
 //
-	//output("\"<i>" + pc.short + "... it is –moo– good to see youuuuu.</i>\"  She trails off into a long, ecstatic moan as Hel continues to suckle from her massive teat, acknowledging your presence only with a little waggle of her tail and a wink.  ", false);
-	//if(isabellaAccent()) output("\"<i>Perhaps you vould like a drink as vell, no?</i>\" Isabella offers, patting the chocolate-colored tit that Hel is not actively suckling from.\n\n", false);
-	//else output("\"<i>Perhaps you would like a drink as well, no?</i>\" Isabella offers, patting the chocolate-colored tit that Hel is not actively suckling from.\n\n", false);
+	//output("\"<i>" + pc.short + "... it is –moo– good to see youuuuu.</i>\"  She trails off into a long, ecstatic moan as Hel continues to suckle from her massive teat, acknowledging your presence only with a little waggle of her tail and a wink.  ");
+	//if(isabellaAccent()) output("\"<i>Perhaps you vould like a drink as vell, no?</i>\" Isabella offers, patting the chocolate-colored tit that Hel is not actively suckling from.\n\n");
+	//else output("\"<i>Perhaps you would like a drink as well, no?</i>\" Isabella offers, patting the chocolate-colored tit that Hel is not actively suckling from.\n\n");
 //
-	//output("You certainly do feel thirsty, and Isabella's invitation is certainly... enticing, and is made all the more exciting by the busty salamander you'll be sharing a meal with.", false);
+	//output("You certainly do feel thirsty, and Isabella's invitation is certainly... enticing, and is made all the more exciting by the busty salamander you'll be sharing a meal with.");
 	////(Display Options: [Drink] [Leave])
 	//simpleChoices("Drink", nomOnIzzyTitWithSallyMancer, "", null, "", null, "", null, "Leave", playerMenu);
 //}
@@ -1790,7 +1784,7 @@ internal function foxyFluffGirlsFuckSex():void {
 
 	output("You scream in pleasure as your cunt's lips are stretched wide, your tunnel having to expand greatly to accommodate the massive intruder.  Now knotted, Mai is restricted to short, hard thrusts into you, smashing her hips into your groin until your thighs are coated with her free-leaking fem-juice.  As Mai starts to roughly pound you, Hel lets go of your hand and flips Miko onto her back beside you, switching places with her lover and riding her cock.  The salamader lets out a loud yell of pleasure as she grabs the fox-girl's hefty tits and starts to bounce on her knotted cock.\n\n");
 
-	output("Not wanting to be left behind, you grab Mai and throw her onto the bed, putting you on top with her knot buried all the way inside you.  You grab her soft, firm breasts for support as you start to grind your hips against hers, making the girl moan like a whore as you assault her thick prick.  Mai can only lean over and grab her sister's hand, much as you had taken Hel's.  The twins hold on to each other as you and Hel ride them raw, soon turning the fox-girls into a pair of panting, squirming animals that buck their hips wildly into you, slamming more doggy cock inside you than you ever thought possible.  Grinning at you, Hel slips her tail around your waist, hugging you tightly as the girls come ever closer to orgasm -- and so do you.\n\n", false); 
+	output("Not wanting to be left behind, you grab Mai and throw her onto the bed, putting you on top with her knot buried all the way inside you.  You grab her soft, firm breasts for support as you start to grind your hips against hers, making the girl moan like a whore as you assault her thick prick.  Mai can only lean over and grab her sister's hand, much as you had taken Hel's.  The twins hold on to each other as you and Hel ride them raw, soon turning the fox-girls into a pair of panting, squirming animals that buck their hips wildly into you, slamming more doggy cock inside you than you ever thought possible.  Grinning at you, Hel slips her tail around your waist, hugging you tightly as the girls come ever closer to orgasm -- and so do you.\n\n"); 
 
 	output("Suddenly, Miko lets out a sharp cry and slams her hips into Hel's.  You can only see the looks on both her face and Hel's as they cum in unison, white fox-spunk dribbling out of the slamander's hot snatch.  \"<i>Gonna... Gonna cum...</i>\" Mai whimpers, giving you only a moment to prepare before she grabs your arms and pulls you down onto her chest, burying your face between her heavy tits.  She jackhammers your now-exposed cunt.  ramming her knot in and out of you until you can't think straight.  You cum, your [pc.vagina] clamping down on her doggy cock.  Waves of explosive pleasure shoot through you, making you spasm in the fox-herm's arms, only barely aware of her shooting her load deep inside you, coating your walls with thick, hot spunk.  You ride out the orgasm buried in Mai's chest, shuddering and gasping as she kisses you over and over, letting her thick knot deflate inside you until her own cum leaks out, staining her smooth thighs and legs.");
 	pc.orgasm();

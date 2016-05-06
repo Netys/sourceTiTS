@@ -1,5 +1,6 @@
 import classes.Characters.PregnancyPlaceholder;
 import classes.GLOBAL;
+import classes.Items.Armor.CoCGooArmor;
 import classes.StringUtil;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
@@ -447,14 +448,14 @@ private function communalBath():void {
 	//output(images.showImage("communal-bath"));
 	output("As you relax in the tub, you decide it's hardly fair to have all this milk and just hog it to yourself.  You sit up and give a sharp whistle, getting the attention of the rest of camp.  \"<i>Jump on in, everyone!</i>\" you shout, quickly grabbing [bathgirl.short] by the waist and dragging her in.  She tumbles into her own lactation with a sharp cry of surprise, breaching a moment later with a splutter.");
 	//If PC has Isabella: 
-	//if (isabellaFollowerScene.isabellaFollower()) {
-		//output("\n\nA moment later, the towering form of Isabella saunters over, already tossing aside her skirts.  \"<i>");
-		//if (isabellaFollowerScene.isabellaAccent()) output("Vhat, ist Isabella's milk not gut enough fur you, [pc.name].  Still, I could be using with a bath.");
-		//else output("What, is my milk not good enough for you, [pc.name]?  Still, I could use a bath.");
-		//output("</i>\"");
-	//}
+	if (isabellaFollower()) {
+		output("\n\nA moment later, the towering form of Isabella saunters over, already tossing aside her skirts.  \"<i>");
+		if (isabellaAccent()) output("Vhat, ist Isabella's milk not gut enough fur you, [pc.name].  Still, I could be using with a bath.");
+		else output("What, is my milk not good enough for you, [pc.name]?  Still, I could use a bath.");
+		output("</i>\"");
+	}
 	//If PC has Sophie:
-	//if (sophieFollowerScene.sophieFollower()) output("\n\n\"<i>Oh, fresh milk!</i>\" Sophie exclaims cheerily.  She drops down by the edge of the pool and scoops up a handful, bringing the thick, creamy milk up to her lips.  Her wings flutter happily as she laps it up, rubbing more into her fair skin between clumps of downy feathers.");
+	if (sophieFollower()) output("\n\n\"<i>Oh, fresh milk!</i>\" Sophie exclaims cheerily.  She drops down by the edge of the pool and scoops up a handful, bringing the thick, creamy milk up to her lips.  Her wings flutter happily as she laps it up, rubbing more into her fair skin between clumps of downy feathers.");
 	
 	//If PC has Pure!Jojo:
 	if (flags["COC.JOJO_IN_CAMP"] == 1) output("\n\nThe white-furred monk Jojo approaches the pool with some hesitation, eyeing the tub full of cream.  \"<i>How...  lewd.  Though it would be a shame for such a bounty to go to waste.</i>\"  Slowly, the monk disrobes down to his undergarments, and lowers himself into the pool nearby.");
@@ -463,10 +464,10 @@ private function communalBath():void {
 	//if (latexGirl.latexGooFollower()) output("\n\nYou wave over your ebony-skinned latex goo, telling her to drink up.  \"<i>M-[master]?</i>\" she says, pausing at the poolside.  You repeat your command, patting the surface of the milky waves.  It looks like her primal hunger takes over a moment later as she slips into the vast sea of lactation, soaking it up.");
 	
 	//{If PC has Valeria:
-	//if (flags[kFLAGS.VALARIA_AT_CAMP] == 1 || pc.armor == armors.GOOARMR) {
-		//output("\n\nThe gooey mass of Valeria materializes a few feet away, assuming her human shape as she surveys the milkbath awaiting her.  \"<i>Damn, [pc.name].  This girl's got some faucets on her.  Ought to get some of the girls from the lake on up here to finish the job when we're done.</i>\"  Chuckling, Val slips into the pool, turning a brighter shade of blue as cream rushes through her porous body.");
-		//valeria.feedValeria(100);
-	//}
+	if (flags["COC.VALARIA_AT_CAMP"] == 1 || pc.armor is CoCGooArmor) {
+		output("\n\nThe gooey mass of Valeria materializes a few feet away, assuming her human shape as she surveys the milkbath awaiting her.  \"<i>Damn, [pc.name].  This girl's got some faucets on her.  Ought to get some of the girls from the lake on up here to finish the job when we're done.</i>\"  Chuckling, Val slips into the pool, turning a brighter shade of blue as cream rushes through her porous body.");
+		feedValeria(100);
+	}
 	
 	//If PC has Pure!Amily:
 	if (amilyFollower() && !amilyCorrupt()) output("\n\nThe mouse-girl, Amily, is quick to respond to your call.  Happy for the luxury of a simple bath, even a milky one, she quickly tosses her clothes aside and dives in beside you, laughing and splashing playfully even as her brown hair is soaked.");
@@ -478,13 +479,13 @@ private function communalBath():void {
 	if (izmaFollower()) output("\n\nYou didn't even notice Izma getting into the pool.  The first sign of her is the sudden appearance of a bright red fin sticking above the water, closing in on you.  She breaches at the last moment, laughing gaily as she gives her alpha a kiss.");
 	
 	//{If PC has Ember:
-	//if (emberScene.followerEmber()) output("\n\nEmber approaches the pool, reptilian tail swishing eagerly.  " + emberScene.emberMF("He","She") + " lowers " + emberScene.emberMF("himself","herself") + " in with ease, sighing contentedly as milk washes over " + emberScene.emberMF("his","her") + " scaled body.  \"<i>Is this how you humans bathe normally?</i>\"  " + emberScene.emberMF("He","She") + " muses.  \"<i>How bizarre.</i>\"");
+	if (followerEmber()) output("\n\nEmber approaches the pool, reptilian tail swishing eagerly.  " + ember.mf("He","She") + " lowers " + ember.mf("himself","herself") + " in with ease, sighing contentedly as milk washes over " + ember.mf("his","her") + " scaled body.  \"<i>Is this how you humans bathe normally?</i>\"  " + ember.mf("He","She") + " muses.  \"<i>How bizarre.</i>\"");
 	
 	//{If PC has Kiha:
-	//if (kihaFollower.followerKiha()) {
-		//output("\n\nKiha, your dear dusky dragoness, wanders over to see what the commotion is, but turns her nose up at the sight of you bathing in breastmilk.  \"<i>Ew.  How the hell can you just...  wallow in that?  Disgusting!</i>\"");
-		//if (silly() && pc.str > 80 && pc.spe > 80) output("  Without warning Kiha, you grab her. \"<i>HEY, what are you doing, doofus?</i>\" she yells as you finally pull her into the milky bath. \"<i>What have you done, idiot!? Fine, I'll bathe. Are you happy? Baka!</i>\" she grumbles.")
-	//}
+	if (followerKiha()) {
+		output("\n\nKiha, your dear dusky dragoness, wanders over to see what the commotion is, but turns her nose up at the sight of you bathing in breastmilk.  \"<i>Ew.  How the hell can you just...  wallow in that?  Disgusting!</i>\"");
+		if (silly && pc.bodyStrength() / 2 > pc.fullBodyWeight() + kiha.fullBodyWeight() && pc.reflexes() >= 40) output("  Without warning Kiha, you grab her. \"<i>HEY, what are you doing, doofus?</i>\" she yells as you finally pull her into the milky bath. \"<i>What have you done, idiot!? Fine, I'll bathe. Are you happy? Baka!</i>\" she grumbles.")
+	}
 	
 	//[Combine]
 	output("\n\nSurrounded by friends and lovers, you relax in the pool, leaning your arms back over the rim and closing your eyes, sighing contentedly.  Your friends splash and play with each other, happy to enjoy a few blissful, normal moments away from the cares of the world, away from the demons, and the monsters, and the horror their world has become.  The waves displace beside you, milk parting as a pair of giant jugs move over to you; you look down to see [bathgirl.short] curling up in your arm.  Her giant teats float atop the waters, boyantly swaying with a strange grace atop the sea of their own making.");
@@ -493,7 +494,6 @@ private function communalBath():void {
 	
 	output("\n\nThe lot of you carry on like this for nearly an hour, enjoying what little relaxation you're able to get in these dark times.  Eventually, though, you know you must return to your duties.  You and your companions one by one pull yourselves out of the pool, stopping to help [bathgirl.short] and her bloated breasts; towels are passed around between joking and flirting hands, a few are even cracked over bare skin, making girls scream and yelp.  The camp is soon a mess of laughing and playing, with you in the center of it, teasing your lovers between shameless gropes and playful caresses.");
 	//pc.refillHunger(50);
-	//pc.changeFatigue(-40);
 	pc.energy(40);
 	//HPChange(pc.maxHP()*.33,false);
 	pc.HP(pc.HPMax() / 3);

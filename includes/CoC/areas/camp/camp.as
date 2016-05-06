@@ -107,7 +107,7 @@ public function loversCount():int {
 	if(followerHel()) counter++;
 	//Izma!
 	if(izmaFollower()) counter++;
-	//if(isabellaFollower() && flags[kFLAGS.FOLLOWER_AT_FARM_ISABELLA] == 0) counter++;
+	if(isabellaFollower() && int(flags["COC.FOLLOWER_AT_FARM_ISABELLA"]) == 0) counter++;
 	//if(player.findStatusAffect(StatusAffects.CampMarble) >= 0 && flags[kFLAGS.FOLLOWER_AT_FARM_MARBLE] == 0) counter++;
 	if(amilyFollower() && !amilyCorrupt()) counter++;
 	if(followerKiha()) counter++;
@@ -264,10 +264,10 @@ public function campEvent():Boolean
 		vapulaForceFeeds();
 		return true;
 	}
-	//if (isabellaFollower() && flags["COC.VALARIA_AT_CAMP"] > 0 && flags["COC.ISABELLA_VALERIA_SPARRED"] != 1) {
-		//isabellaAndValeriaSpar();
-		//return;
-	//}
+	if (isabellaFollower() && flags["COC.VALARIA_AT_CAMP"] > 0 && flags["COC.ISABELLA_VALERIA_SPARRED"] != 1) {
+		isabellaAndValeriaSpar();
+		return true;
+	}
 	return false;
 }
 

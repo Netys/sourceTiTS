@@ -11,10 +11,10 @@ package classes.Items.Drinks
 	import classes.Engine.Interfaces.*;
 	import classes.Engine.Combat.inCombat;
 	
-	public class CoCSheepMilk extends ItemSlotClass
+	public class CoCIsabellaMilk extends ItemSlotClass
 	{
 		//constructor
-		public function CoCSheepMilk()
+		public function CoCIsabellaMilk()
 		{
 			this._latestVersion = 1;
 			
@@ -22,23 +22,23 @@ package classes.Items.Drinks
 			this.stackSize = 10;
 			this.type = GLOBAL.FOOD;
 			//Used on inventory buttons
-			this.shortName = "SheepMk";
+			this.shortName = "IzyMilk";
 			//Regular name
-			this.longName = "bottle of sheep milk";
+			this.longName = "bottle of Isabella's milk";
 			
 			TooltipManager.addFullName(this.shortName, StringUtil.toTitleCase(this.longName));
 			
 			//Longass shit, not sure what used for yet.
-			this.description = "a bottle of sheep milk";
+			this.description = "a bottle of Isabella's milk";
 			//Displayed on tooltips during mouseovers
-			this.tooltip = "This bottle of sheep milk is said to have corruption-fighting properties.  It may be useful.";
+			this.tooltip = "This is a bottle of Isabella's milk.  Isabella seems fairly certain it will invigorate you.";
 			
 			TooltipManager.addTooltip(this.shortName, this.tooltip);
 			
 			this.attackVerb = "";
 			
 			//Information
-			this.basePrice = 600;
+			this.basePrice = 60;
 			this.attack = 0;
 			this.defense = 0;
 			this.shieldDefense = 0;
@@ -58,15 +58,11 @@ package classes.Items.Drinks
 		override public function useFunction(target:Creature, usingCreature:Creature = null):Boolean
 		{
 			clearOutput();
-			output("You gulp the bottle's contents, and its sweet taste immediately invigorates you, making you feel calm and concentrated. ");
-			//-30 fatigue, -2 libido, -10 lust]
+			output("You swallow down the bottle of Isabella's milk.");
 			var healing:int = target.energy();
-			target.energy(30);
+			target.energy(33);
 			healing = int(target.energy() - healing);
 			if (healing > 0) output(" <b>+" + healing + " Energy</b>");
-			target.slowStatGain("l", -0.25);
-			target.lust( -10);
-			target.cor( -0.5);
 			return false;
 		}
 	}

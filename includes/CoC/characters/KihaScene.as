@@ -6,6 +6,10 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
+public function get kiha():CoCKiha {
+	return new CoCKiha();
+}
+
 //Encounter Dragon-Gal 
 public function encounterKiha():void {
 	clearOutput();

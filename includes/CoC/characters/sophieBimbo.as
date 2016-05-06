@@ -170,13 +170,13 @@ private function acceptBimboSophie():void {
 	{
 		output("  Afterwards, she offers to suck Jojo's cock.  The chaste mouse's jaw drops, but when he picks it up, he answers, \"<i>Never.  My body is as pure as my soul!</i>\"");
 	}
-	//else if (isabellaFollower())
-	//{
-		//output("  Afterwards, she offers to lick Isabella's cunt.  Isabella answers sternly, ");
-		//if (isabellaAccent()) output("\"<i> Nein!  But you can drink mein milk from time to time.</i>\"");
-		//else output("“<i>No! But you can still drink my milk from time to time.</i>”");
-		//output("  The cow-girl is blushing hotly.  You've no doubt after a few nipple-licks she'll be spreading her thick thighs for the bimbo harpy.");
-	//}
+	else if (isabellaFollower())
+	{
+		output("  Afterwards, she offers to lick Isabella's cunt.  Isabella answers sternly, ");
+		if (isabellaAccent()) output("\"<i> Nein!  But you can drink mein milk from time to time.</i>\"");
+		else output("“<i>No! But you can still drink my milk from time to time.</i>”");
+		output("  The cow-girl is blushing hotly.  You've no doubt after a few nipple-licks she'll be spreading her thick thighs for the bimbo harpy.");
+	}
 	output("\n\n");
 	output("Well, you know where to find her any time you want to fuck the motherly bimbo.\n<b>(Bimbo Sophie has been added to your slaves!)</b>");
 	output("\n\n");
