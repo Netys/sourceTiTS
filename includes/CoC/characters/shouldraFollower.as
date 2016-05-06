@@ -1,4 +1,3 @@
-import classes.Characters.CoC.CoCEmber;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
 import classes.Items.Transformatives.CoCEctoplasm;
