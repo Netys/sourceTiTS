@@ -3054,6 +3054,11 @@
 		//XP!
 		public function XP(arg:int = 0):Number
 		{
+			var bMulti:Number = 1.0;
+			if (hasStatusEffect("Shrike!")) bMulti += 0.2;
+			
+			arg *= bMulti;
+			
 			XPRaw += arg;
 			if (XPRaw >= XPMax()) XPRaw = XPMax();
 			else if (XPRaw <= 0) XPRaw = 0;
@@ -3471,6 +3476,7 @@
 			if (hasStatusEffect("Pent Up")) bonus += statusEffectv1("Pent Up");
 			//Venom brings minimum up to 35.
 			if (bonus < 35 && hasStatusEffect("Red Myr Venom")) bonus = 35;
+			if (bonus < 20 && hasStatusEffect("Paradise!")) bonus = 20;
 			if (bonus < 35 && hasStatusEffect("Luststick") && !hasPerk("Luststick Adapted")) bonus = 35;
 			return Math.max((0 + bonus), 0);
 		}
@@ -3861,7 +3867,8 @@
 			var temp: int = 5;
 			if (melee) temp += meleeWeapon.critBonus;
 			else temp += rangedWeapon.critBonus;
-			if(hasPerk("Critical Blows")) temp += 10;
+			if (hasPerk("Critical Blows")) temp += 10;
+			if (hasStatusEffect("Quaramarta!")) temp += 15;
 			temp += armor.critBonus + upperUndergarment.critBonus + lowerUndergarment.critBonus + accessory.critBonus + shield.critBonus;
 			if(temp > 50) temp = 50;
 			return temp;
@@ -8563,6 +8570,7 @@
 			if(!hasVagina())
 			{
 				removePerk("Sterile");
+				removeStatusEffect("Vaginally-Filled");
 			}
 		}
 		public function removeVaginaUnlocked(arraySpot:int = 0, totalRemoved:int = 1):Boolean
@@ -13366,7 +13374,7 @@
 			if(hole >= 0 && hole < 3)
 			{
 				// Pregnant vaginas can't get cumflated?
-				if(isPregnant(hole)) fluidVolume = 0;
+				if(!hasVagina() || isPregnant(hole)) fluidVolume = 0;
 				if(fluidVolume <= 0) return;
 				
 				if(!hasStatusEffect("Vaginally-Filled")) createStatusEffect("Vaginally-Filled",fluidVolume,fluidVolume,fluidType,0,false,"Icon_Vagina","You've got some fluids inside you, leftovers from a recent lover.",false,0,0xB793C4);

@@ -234,6 +234,13 @@ package classes.GameData
 				}
 			}
 			
+			if (pc.hasStatusEffect("Trigger Game Over"))
+			{
+				clearMenu();
+				kGAMECLASS.badEnd("GAME OVER.");
+				return true;
+			}
+			
 			return false;
 		}
 		
@@ -2952,19 +2959,36 @@ package classes.GameData
 			if(target is HandSoBot) output("\n\nWhilst your teases have some effect on synthetics designed for sex, you sense there is no point whatsoever trying it on with what amounts to a bipedal forklift truck.");
 		}
 		
-		private function checkForLoss():Boolean
+		private function checkForLoss(atEndOfRound:Boolean = false):Boolean
 		{
 			var tEnemy:Creature;
 			
-			var lossCondition:Boolean = playerLossCondition();
+			var bLossCond:Boolean = playerLossCondition(atEndOfRound);
 			
 			// Naleen special loss handling
-			if (!lossCondition)
+			if (!bLossCond)
 			{
-				lossCondition = (hasEnemyOfClass(Naleen) || hasEnemyOfClass(NaleenMale)) && (pc.hasStatusEffect("Naleen Venom") && (pc.physique() == 0 || pc.willpower() == 0));
+				bLossCond = (hasEnemyOfClass(Naleen) || hasEnemyOfClass(NaleenMale)) && (pc.hasStatusEffect("Naleen Venom") && (pc.physique() == 0 || pc.willpower() == 0));
 			}
 			
-			if (lossCondition)
+			if (bLossCond && lossCondition == CombatManager.ESCAPE && atEndOfRound)
+			{
+				tEnemy = _hostiles[0];
+				
+				CombatManager.showCombatUI();
+				clearMenu();
+				
+				addButton(0, "Defeat", function(t_enemy:Creature, t_lossFunctor:Function):Function {
+					return function():void {
+						clearOutput();
+						kGAMECLASS.setEnemy(t_enemy);
+						CombatManager.showCombatUI();
+						t_lossFunctor();
+					}
+				}(tEnemy, _lossFunction));
+				return true;
+			}
+			else if (bLossCond)
 			{
 				if (victoryCondition == CombatManager.SPECIFIC_TARGET_DEFEATED)
 				{
@@ -3018,9 +3042,9 @@ package classes.GameData
 			return false;
 		}
 		
-		private function checkForVictory():Boolean
+		private function checkForVictory(atEndOfRound:Boolean = false):Boolean
 		{
-			if (playerVictoryCondition())
+			if (playerVictoryCondition(atEndOfRound))
 			{
 				// TODO Here is where we could potentially need some indirection, depending
 				// on author intenent.
@@ -3779,8 +3803,8 @@ package classes.GameData
 		public function endCombatRound():void
 		{
 			// Early-out if the players group lost
-			if (checkForVictory()) return;
-			if (checkForLoss()) return;
+			if (checkForVictory(true)) return;
+			if (checkForLoss(true)) return;
 			
 			_roundCounter++;
 			
@@ -3862,7 +3886,7 @@ package classes.GameData
 			}
 		}
 		
-		private function playerVictoryCondition():Boolean
+		private function playerVictoryCondition(atEndOfRound:Boolean = false):Boolean
 		{
 			if (victoryCondition == CombatManager.ENTIRE_PARTY_DEFEATED)
 			{
@@ -3872,7 +3896,7 @@ package classes.GameData
 				}
 				return true;
 			}
-			else if (victoryCondition == CombatManager.SURVIVE_WAVES)
+			else if (victoryCondition == CombatManager.SURVIVE_WAVES && atEndOfRound)
 			{
 				if (isNaN(victoryArgument) || victoryArgument <= 0) throw new Error("Wave survival declared as a win condition, with no target waves defined.");
 				if (_roundCounter >= victoryArgument) return true;
@@ -3888,7 +3912,7 @@ package classes.GameData
 			return false;
 		}
 		
-		private function playerLossCondition():Boolean
+		private function playerLossCondition(atEndOfRound:Boolean = false):Boolean
 		{
 			if (lossCondition == CombatManager.ENTIRE_PARTY_DEFEATED)
 			{
@@ -3898,7 +3922,7 @@ package classes.GameData
 				}
 				return true;
 			}
-			else if (lossCondition == CombatManager.SURVIVE_WAVES)
+			else if (lossCondition == CombatManager.SURVIVE_WAVES && atEndOfRound)
 			{
 				if (isNaN(lossArgument) || lossArgument <= 0) throw new Error("Wave limit declared as a loss condition, with no target defined.");
 				if (_roundCounter >= lossArgument) return true;
@@ -3908,6 +3932,12 @@ package classes.GameData
 			{
 				if (lossArgument == null || _friendlies.indexOf(lossArgument) == -1) throw new Error("Unique target for loss as a win condition, with no target defined.");
 				if (lossArgument.isDefeated()) return true;
+				return false;
+			}
+			else if (lossCondition == CombatManager.ESCAPE && atEndOfRound)
+			{
+				if (lossArgument == null) throw new Error("Loss argument unset for loss condition setting.");
+				if (_roundCounter >= lossArgument) return true;
 				return false;
 			}
 			

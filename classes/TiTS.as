@@ -248,6 +248,7 @@
 		include "../includes/myrellion/embassy.as";
 		include "../includes/myrellion/embry.as";
 		include "../includes/myrellion/emmy.as";
+		include "../includes/myrellion/fazian.as";
 		include "../includes/myrellion/fungus.as";
 		include "../includes/myrellion/genesmods.as";
 		include "../includes/myrellion/irellia.as";
@@ -395,7 +396,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.51";
+			version = "0.6.52";
 
 			//temporary nonsense variables.
 			temp = 0;
