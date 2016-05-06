@@ -28,68 +28,36 @@ public function shouldraSprite(ghost:Boolean = false):void {
 	else showName("\nPLAIN GIRL");
 }
 
-public function followerShouldra():Boolean {
-	return flags["COC.SHOULDRA_FOLLOWER_STATE"] == 1;
+//Implementation of TimeAwareInterface
+public function ShouldraTimePassedNotify():void
+{
+	if (minutes != 0) return; // once per hour
+	
+	if (flags["COC.SHOULDRA_MAGIC_COOLDOWN"] >= 1) flags["COC.SHOULDRA_MAGIC_COOLDOWN"]--;
+	if (followerShouldra()) {
+		if (pc.statusEffectv1("Exgartuan") == 1 && pc.hasCock() && rand(10) == 0) {
+			if (flags["COC.SHOULDRA_EXGARTUDRAMA"] == 1) {
+				eventQueue.push(exgartumonAndShouldraFightPartII);
+			}
+			else if (flags["COC.SHOULDRA_EXGARTUDRAMA"] == 2) {
+				eventQueue.push(exgartumonAndShouldraFightPartIII);
+			}
+		}
+		flags["COC.SHOULDRA_SLEEP_TIMER"]--;
+		shouldersWarnings();
+		if (flags["COC.SHOULDRA_SLEEP_TIMER"] == 0 || (flags["COC.SHOULDRA_SLEEP_TIMER"] < 0 && flags["COC.SHOULDRA_SLEEP_TIMER"] % 16 == 0)) {
+			shouldraWakesUpOrPokesPCsForShitsAndGigglesIdunnoHowLongCanIMakeThisFunctionNameQuestionMark();
+		}
+		if (flags["COC.SHOULDRA_PLOT_COUNTDOWN"] > 0 && hours == 3) flags["COC.SHOULDRA_PLOT_COUNTDOWN"]--;
+	}
 }
+//End of Interface Implementation
 
-		////Implementation of TimeAwareInterface
-		//public function timeChange():Boolean
-		//{
-			//var needNext:Boolean = false;
-			//if (flags[kFLAGS.SHOULDRA_MAGIC_COOLDOWN] >= 1) flags[kFLAGS.SHOULDRA_MAGIC_COOLDOWN]--;
-			//if (shouldraFollower.followerShouldra()) {
-				//if (pc.statusEffectv1(StatusEffects.Exgartuan) == 1 && pc.hasCock() && rand(10) == 0) {
-					//if (flags[kFLAGS.SHOULDRA_EXGARTUDRAMA] == 1) {
-						//shouldraFollower.exgartumonAndShouldraFightPartII();
-						//needNext = true;
-					//}
-					//else if (flags[kFLAGS.SHOULDRA_EXGARTUDRAMA] == 2) {
-						//shouldraFollower.exgartumonAndShouldraFightPartIII();
-						//needNext = true;
-					//}
-				//}
-				//flags[kFLAGS.SHOULDRA_SLEEP_TIMER]--;
-				//if (shouldraFollower.shouldersWarnings()) needNext = true;
-				//if (flags[kFLAGS.SHOULDRA_SLEEP_TIMER] == 0 || (flags[kFLAGS.SHOULDRA_SLEEP_TIMER] < 0 && flags[kFLAGS.SHOULDRA_SLEEP_TIMER] % 16 == 0)) {
-					//shouldraFollower.shouldraWakesUpOrPokesPCsForShitsAndGigglesIdunnoHowLongCanIMakeThisFunctionNameQuestionMark();
-					//needNext = true;
-				//}
-				//if (flags[kFLAGS.SHOULDRA_PLOT_COUNTDOWN] > 0 && getGame().model.time.hours == 3) flags[kFLAGS.SHOULDRA_PLOT_COUNTDOWN]--;
-			//}
-			//return needNext;
-		//}
-	//
-		//public function timeChangeLarge():Boolean {
-			//if (shouldraFollower.followerShouldra() && flags[kFLAGS.SHOULDRA_PLOT_COUNTDOWN] == 0 && getGame().model.time.hours == 3) {
-				//flags[kFLAGS.SHOULDRA_PLOT_COUNTDOWN] = -1;
-				//shouldraFollower.shouldraDream1();
-				//return true;
-			//}
-			////Ghostgirl recruitment priority
-			//if (flags[kFLAGS.SHOULDRA_FOLLOWER_STATE] == .5 && model.time.hours == 6) {
-				//getGame().shouldraFollower.morningShouldraAlert();
-				//return true;
-			//}
-			////Ghostgirl pissed off dreams
-			//if (shouldraFollower.followerShouldra() && flags[kFLAGS.SHOULDRA_SLEEP_TIMER] <= -236 && model.time.hours == 3 && pc.gender > 0 && !prison.inPrison) {
-				//getGame().shouldraFollower.nightTimeShouldraRapesThePC();
-				//return true;
-			//}
-			////Ghostgirl madness
-			//if (flags["COC.SHOULDRA_SILLY_ENCOUNTER_FOLLOWUP_TIMER"] > 0) {
-				//if (pc.cockTotal() > 1 || pc.faceType != FACE_HUMAN || pc.lowerBody != LOWER_BODY_TYPE_HUMAN || pc.tailType > TAIL_TYPE_NONE || pc.horns > 0 || cor() > 15 || pc.longestCockLength() > 10 || pc.tallness < 65 || pc.tallness > 78 || pc.hasVagina())
-					//flags["COC.SHOULDRA_SILLY_ENCOUNTER_FOLLOWUP_TIMER"] = 0;
-				//else {
-					//flags["COC.SHOULDRA_SILLY_ENCOUNTER_FOLLOWUP_TIMER"]--;
-					//if (flags["COC.SHOULDRA_SILLY_ENCOUNTER_FOLLOWUP_TIMER"] == 0) {
-						//paladinModeFollowup();
-						//return true;
-					//}
-				//}
-			//}
-			//return false;
-		//}
-		////End of Interface Implementation
+private var ShouldraTimePassedNotifyHook: * = ShouldraTimePassedNotifyGrapple();
+private function ShouldraTimePassedNotifyGrapple():* { 
+		timeChangeListeners.push(ShouldraTimePassedNotify);
+		followerCampMenuBlurb.push(followerCampMenuBlurbShouldra);
+	}
 
 //Intro
 internal function shouldraGreeting():void {
@@ -118,11 +86,11 @@ internal function shouldraGreeting():void {
 	}
 	//(after three encounters with her)
 	else {
-		//if (flags["COC.TIMES_BEATEN_SHOULDRA"] >= 3 && flags["COC.TIMES_MET_SHOULDRA"] % 10 == 0 && allowFollowers()) {
-			//initialShouldersRecruitment();
-			//IncrementFlag("COC.TIMES_MET_SHOULDRA");
-			//return;
-		//}
+		if (flags["COC.TIMES_BEATEN_SHOULDRA"] >= 3 && flags["COC.TIMES_MET_SHOULDRA"] % 10 == 0 && allowFollowers()) {
+			initialShouldersRecruitment();
+			IncrementFlag("COC.TIMES_MET_SHOULDRA");
+			return;
+		}
 		output("You step into the ruins of the village cautiously, zigzagging through passageways and searching for anything worth pocketing. A now-familiar sound from inside one of the half-collapsed cottages gives you pause, and you're not surprised when a normal-looking girl steps out and faces you. She plants her hands on her hips, cocking her head curiously. \"<i>You again?</i>\" she asks amiably, the beginnings of a grin playing across her freckled features. \"<i>Now, you couldn't have come back just to see me.</i>\"\n\n");
 		
 		output("Before you can either confirm or deny her suspicions, she falls into a fighting crouch, beaming at you from behind her raised fists. \"<i>What say we have a friendly little brawl?</i>\" she asks. \"<i>I win, I get to play with you.</i>\"  With a nod, you [pc.readyWeapon] and get ready for a fight.  \"<i>You don't stand a ghost of a chance,</i>\" she teases.\n\n");

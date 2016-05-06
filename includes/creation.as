@@ -17,6 +17,7 @@ public function hasIllegalInput(sText:String = ""):Boolean
 		else if(sText == "idclev") eventQueue.push(Cheats.RoomTeleport);
 		else if(sText == "marcopolo") eventQueue.push(Cheats.exploreUnlock);
 		else if(sText == "motherlode") eventQueue.push(Cheats.XPToLevel);
+		else if(sText == "forcenext") mainGameMenu();
 	}
 	return r.test(sText);
 }

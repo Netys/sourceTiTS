@@ -1584,6 +1584,9 @@ package classes.Engine.Utility
 			
 			//if (growthType == 4 && pc.breastRows.length == 1) growthType = 3;
 			
+			if (rowsGrown == -1) rowsGrown = pc.breastRows.length;
+			if (amount == -1) amount = pc.breastRows.length;
+			if (growthType == -1) growthType = 2;
 			var temp:Number = pc.breastRows.length;
 			var currentRow:Number = 0;
 			var result:Number = 0;

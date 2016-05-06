@@ -29,6 +29,21 @@ public function dreamChances():Boolean
 			dreamed = true;
 		}
 	}
+	if (!dreamed && followerShouldra() && int(flags["COC.SHOULDRA_PLOT_COUNTDOWN"]) == 0 && hours < 8 && inCamp()) {
+		flags["COC.SHOULDRA_PLOT_COUNTDOWN"] = -1;
+		eventQueue.push(shouldraDream1);
+		dreamed = true;
+	}
+	//Ghostgirl recruitment priority
+	if (!dreamed && flags["COC.SHOULDRA_FOLLOWER_STATE"] == .5 && hours < 8 && inCamp()) {
+		eventQueue.push(morningShouldraAlert);
+		dreamed = true;
+	}
+	//Ghostgirl pissed off dreams
+	if (!dreamed && followerShouldra() && flags["COC.SHOULDRA_SLEEP_TIMER"] <= -236 && pc.hasGenitals() > 0 && hours < 8 && inCamp()) {
+		eventQueue.push(nightTimeShouldraRapesThePC);
+		dreamed = true;
+	}
 	if (pc.hasStatusEffect("Queen Pregnancy State"))
 	{
 		if (pc.statusEffectv1("Queen Pregnancy State") > 0 && flags["Queen Message Supression"] == undefined && (flags["Queen Dream Last Day"] < days || flags["Queen Dream Last Day"] == undefined))

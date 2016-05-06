@@ -3535,6 +3535,11 @@
 			if(hasPerk("Slut Stamp")) bonus += perkv2("Slut Stamp");
 			// Slave collar increases minimum by set level.
 			if(hasStatusEffect("Psi Slave Collar")) bonus += statusEffectv3("Psi Slave Collar");
+			if (kGAMECLASS.inMareth()) { // a bit different rules there
+				bonus = Math.max(bonus, 15); // at least 15 min libido without pure perks
+				if (hasPerk("Purity Blessing")) bonus -= 5;
+				if ((hasPerk("Enlightened") || hasPerk("History: Religious")) && cor() < 10) bonus -= 5;
+			}
 			return (0 + bonus);
 		}
 		/**
@@ -3555,28 +3560,28 @@
 			}
 			// Normal
 			if (stat == "physique" || stat == "p") {
-				statCurrent = physique();
+				statCurrent = _physiqueRaw;
 				statMax = physiqueMax();
 			}
 			else if (stat == "reflexes" || stat == "r") {
-				statCurrent = reflexes();
+				statCurrent = reflexesRaw;
 				statMax = reflexesMax();
 			}
 			else if (stat == "aim" || stat == "a") {
-				statCurrent = aim();
+				statCurrent = aimRaw;
 				statMax = aimMax();
 			}
 			else if (stat == "intelligence" || stat == "i") {
-				statCurrent = intelligence();
+				statCurrent = _intelligenceRaw;
 				statMax = intelligenceMax();
 			}
 			else if (stat == "willpower" || stat == "w") {
-				statCurrent = willpower();
+				statCurrent = _willpowerRaw;
 				statMax = willpowerMax();
 			}
 			else if (stat == "libido" || stat == "l") {
 				if (hasPerk("Purity Blessing") && arg > 0) arg *= 0.75;
-				statCurrent = libido();
+				statCurrent = _libidoRaw;
 				statMax = libidoMax();
 			}
 			else {

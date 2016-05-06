@@ -55,7 +55,7 @@ import classes.Engine.Utility.*;
 private var checkedExgartuan:int;
 
 //Implementation of TimeAwareInterface
-public function timeChange():void {
+public function ExgartuanTimePassedNotify():void {
 	if (minutes != 0) return; // once per hour
 	
 	checkedExgartuan = 0; //Make sure we test just once in timeChangeLarge
@@ -109,6 +109,11 @@ public function timeChange():void {
 		}
 	}
 }
+
+private var ExgartuanTimePassedNotifyHook: * = ExgartuanTimePassedNotifyGrapple();
+private function ExgartuanTimePassedNotifyGrapple():* { 
+		timeChangeListeners.push(ExgartuanTimePassedNotify);
+	}
 
 private function exgartuanInfestDick():void {
 	//spriteSelect(15);

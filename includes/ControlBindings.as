@@ -250,6 +250,14 @@
 		},
 		true);
 		
+	inputManager.AddBindableControl(
+		"Force Next",
+		"Forces main game menu to appear.",
+		function():void {
+			mainGameMenu();
+		},
+		true);
+		
 	inputManager.BindCheatSequence("Give ZilRations", 38, 40, 37, 39);
 	inputManager.BindCheatSequence("Room Transport", "idclev");
 	inputManager.BindCheatSequence("Scene Execute", "impulse");
@@ -258,6 +266,7 @@
 	inputManager.BindCheatSequence("Toggle Debug", "fuckyou");
 	inputManager.BindCheatSequence("Destinations Unlocked", "marcopolo");
 	inputManager.BindCheatSequence("Runamode Bess", "insaneinthemembrane");
+	inputManager.BindCheatSequence("Force Next", "forcenext");
 	
 	// Insert the default bindings
 	inputManager.BindKeyToControl(49, "Button 1");             // case 49: pressButton(0);

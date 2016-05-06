@@ -242,7 +242,7 @@ public function exploreVillageRuin():void {
 	
 	clearOutput();
 	//50% chance of ghost-girl
-	if ((flags["COC.SHOULDRA_SILLY_ENCOUNTER_FOLLOWUP_TIMER"] == undefined && flags["COC.AMILY_VILLAGE_EXPLORED"] > 10 && rackCount() >= 2 && rand(10) <= 3) && !followerShouldra()) {
+	if ((flags["COC.SHOULDRA_SILLY_ENCOUNTER_FOLLOWUP_TIMER"] == undefined && flags["COC.AMILY_VILLAGE_EXPLORED"] > 10 && rackCount() >= 2 && rand(10) <= 3) && int(flags["COC.SHOULDRA_FOLLOWER_STATE"]) <= 0) {
 		shouldraGreeting();
 		return;
 	}

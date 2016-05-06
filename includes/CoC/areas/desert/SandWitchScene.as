@@ -680,9 +680,9 @@ public function beatSandwitch():void {
 	addButton(0, "Yes", sandwitchRaped);
 	//if(pc.hasKeyItem("Deluxe Dildo")) addButton(1, "Dildo Rape", sandwitchGetsDildoed);
 	if(silly && enemy.HP() <= 1) addButton(2, "Use 3i@-", missingoSex);
-	//"Use Shouldra" if(kGAMECLASS.shouldraFollower.followerShouldra() && pc.gender > 0) shouldra = kGAMECLASS.shouldraFollower.sandWitchGetsGhostly;
+	if (followerShouldra() && pc.hasGenitals()) addButton(3, "Use Shouldra" , sandWitchGetsGhostly);
 	//"Lay Eggs" if(pc.gender > 0 && pc.canOviposit()) ovi = ovipositSandWitches;
-	addButton(5, "Taunt Her", sandwitchSpanking);	
+	addButton(5, "Taunt Her", sandwitchSpanking);
 }
 
 //This is a bonus scene for those who are playing Corruption of Champions with Silly Mode activated and defeat the Sand Witch by dropping her hit points and have the option of having their way with her. A special third(?) option appears that begins the encounter. The idea is that it breaks the 4th wall and gives the player the impression that they've stumbled upon a glitchy, incomplete scene. As a special note to anyone who does coding: all code tags (anything like \" + cockDescript(0) + \" but not my usual {code brackets} for example) are meant to be printed in game exactly as they were written on this document, pushing the idea that the player \"broke the game\".
@@ -711,6 +711,7 @@ public function missingoSex():void {
 	clearMenu();
 	addButton(0, "N*xt", missingoSex2);
 }
+
 //{Next Page}
 private function missingoSex2():void {
 	//spriteSelect(50);
@@ -773,6 +774,7 @@ private function missingoSex5():void {
 	clearMenu();
 	addButton(0, "Restore", missingoSex6);
 }
+
 //{Next Page}
 private function missingoSex6():void {
 	//spriteSelect(50);

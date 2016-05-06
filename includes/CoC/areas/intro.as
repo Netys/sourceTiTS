@@ -28,6 +28,7 @@ public function cocMainIntroScene1():void {
 
 	pc.lust(40);
 	pc.cor(2);
+	if (pc.libidoRaw < 15) pc.libidoRaw = 15;
 	
 	output("You wake with a splitting headache and a body full of burning desire.  A shadow darkens your view momentarily and your training kicks in.  You roll to the side across the bare ground and leap to your [pc.legs].  A surprised looking imp stands a few feet away, holding an empty vial.  He's completely naked, an improbably sized pulsing red cock hanging between his spindly legs.  You flush with desire as a wave of lust washes over you, your mind reeling as you fight ");
 	if (pc.hasVagina())

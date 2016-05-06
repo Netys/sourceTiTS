@@ -119,6 +119,7 @@ include "characters/phylla.as";
 include "characters/Rathazul.as";
 include "characters/SheilaScene.as";
 include "characters/shouldra.as";
+include "characters/shouldraFollower.as";
 include "characters/Sophie.as";
 include "characters/sophieBimbo.as";
 include "characters/sophieFollower.as";
