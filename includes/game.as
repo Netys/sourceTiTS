@@ -612,7 +612,7 @@ public function sleep(outputs:Boolean = true):void {
 	}
 	if (inCamp() && outputs)
 	{
-		if (followerEmber() && emberAffection() >= 75 && flags["COC.SLEEP_WITH"] == "Ember" && hours >= 20 || hours < 4)
+		if (followerEmber() && emberAffection() >= 75 && flags["COC.SLEEP_WITH"] == "Ember" && (hours >= 20 || hours < 4))
 		{
 			sleepWithEmber();
 		}

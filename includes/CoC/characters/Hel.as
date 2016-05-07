@@ -104,13 +104,18 @@ public function encounterAJerkInThePlains():void {
 	addButton(0, "Next", startHelCombat);
 }
 
-private function startHelCombat():void {
+private function startHelCombat(sparring:Boolean = false):void {
+	var _hel:CoCHel = new CoCHel();
+	if(sparring) {
+		_hel.credits = 0;
+		_hel.inventory = [];
+	}
 	CombatManager.newGroundCombat();
 	CombatManager.setFriendlyCharacters(pc);
-	CombatManager.setHostileCharacters(new CoCHel());
-	//CombatManager.victoryScene(pc.hasStatusEffect("Sparring") ? PCBeatsUpSalamanderSparring : beatUpHel); // follower part
+	CombatManager.setHostileCharacters(_hel);
+	CombatManager.victoryScene(sparring ? PCBeatsUpSalamanderSparring : beatUpHel); // follower part
 	CombatManager.victoryScene(beatUpHel);
-	//CombatManager.lossScene(pc.hasStatusEffect("Sparring") ? loseToSparringHeliaLikeAButtRapedChump : loseToSalamander); // follower part
+	CombatManager.lossScene(sparring ? loseToSparringHeliaLikeAButtRapedChump : loseToSalamander); // follower part
 	CombatManager.lossScene(loseToSalamander);
 	CombatManager.displayLocation(kGAMECLASS.flags["COC.HEL_TALKED_ABOUT_HER"] == 1 ? "HEL" : "SALAMANDER");
 
@@ -1907,26 +1912,6 @@ private function pussyOutOfHelSexAmbush():void {
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 	helAffection(-20);
-}
-
-public function helAffection(diff:Number = 0):Number {
-	if (flags["COC.HEL_AFFECTION_FOLLOWER"] == undefined) flags["COC.HEL_AFFECTION_FOLLOWER"] = 0;
-	if (flags["COC.HEL_BONUS_POINTS"] == undefined) flags["COC.HEL_BONUS_POINTS"] = 0;
-	
-	if (flags["COC.HEL_AFFECTION_FOLLOWER"] > 70 && flags["COC.HEL_HARPY_QUEEN_DEFEATED"] == undefined) flags["COC.HEL_AFFECTION_FOLLOWER"] = 70;
-	if (flags["COC.HEL_AFFECTION_FOLLOWER"] < 100 || (flags["COC.HEL_BONUS_POINTS"] == undefined && diff < 0)) {
-		flags["COC.HEL_AFFECTION_FOLLOWER"] += diff;
-		if (flags["COC.HEL_AFFECTION_FOLLOWER"] >= 100) flags["COC.HEL_AFFECTION_FOLLOWER"] = 100;
-		if (flags["COC.HEL_AFFECTION_FOLLOWER"] < 0) flags["COC.HEL_AFFECTION_FOLLOWER"] = 0;
-	}
-	else if (followerHel()) {
-		flags["COC.HEL_AFFECTION_FOLLOWER"] = 100;
-		flags["COC.HEL_BONUS_POINTS"] += diff * 3;
-		if (diff > 0) if (flags["COC.HEL_BONUS_POINTS"] > 150) flags["COC.HEL_BONUS_POINTS"] = 150;
-		else if (diff < 0) if (flags["COC.HEL_BONUS_POINTS"] < 0) flags["COC.HEL_BONUS_POINTS"] = 0;
-	}
-	return flags["COC.HEL_AFFECTION_FOLLOWER"];
-	trace("HEL AFFECTION" + flags["COC.HEL_AFFECTION_FOLLOWER"]);
 }
 
 public function followerCampMenuBlurbHelia(showInteractButton:Boolean):void {

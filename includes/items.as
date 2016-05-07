@@ -1085,6 +1085,10 @@ public function hasShipStorage():Boolean
 
 public function shipStorageMenuRoot():void
 {
+	if (inMareth()) {
+		campStorageMenuRoot();
+		return;
+	}
 	clearOutput();
 	output("You turn to your ship's storage.");
 	

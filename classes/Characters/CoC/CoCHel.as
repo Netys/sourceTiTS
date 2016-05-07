@@ -198,6 +198,16 @@ package classes.Characters.CoC
 			this._isLoading = false;
 		}
 		
+		override public function vaginalCapacity(arg:int = 0):Number 
+		{
+			return kGAMECLASS.helCapacity();
+		}
+		
+		override public function analCapacity():Number 
+		{
+			return kGAMECLASS.helAnalCapacity();
+		}
+		
 		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void
 		{
 			var target:Creature = selectTarget(hostileCreatures);
