@@ -3,14 +3,14 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "Brooke.as";
-include "Cotton.as";
-include "Heckel.as";
-include "Ifris.as";
-include "Jasun.as";
-include "Loppe.as";
-include "Lottie.as";
-include "SexMachine.as";
+include "brooke.as";
+include "cotton.as";
+include "heckel.as";
+include "ifris.as";
+include "jasun.as";
+include "loppe.as";
+include "lottie.as";
+include "sexMachine.as";
 
 public function TelAdreGymDesc():void {
 	showName("\nGYM");

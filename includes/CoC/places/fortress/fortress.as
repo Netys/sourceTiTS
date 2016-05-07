@@ -6,15 +6,15 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "DopplegangerScenes.as";
-include "DriderIncubusScenes.as";
-include "HermCentaurScenes.as";
-include "IncubusMechanicScenes.as";
-include "JeanClaudeScenes.as";
-include "LethiceScenes.as";
-include "LivingStatueScenes.as";
-include "MinotaurKingScenes.as";
-include "SuccubusGardenerScenes.as";
+include "doppleganger.as";
+include "driderIncubus.as";
+include "hermCentaur.as";
+include "incubusMechanic.as";
+include "jeanClaude.as";
+include "lethice.as";
+include "livingStatue.as";
+include "minotaurKing.as";
+include "succubusGardener.as";
 
 public function discoverD3():Boolean
 {

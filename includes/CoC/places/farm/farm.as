@@ -9,8 +9,8 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "KeltScene.as";
-include "KellyScene.as";
+include "kelt.as";
+include "kelly.as";
 
 // PLACEHOLDER
 public function whitneyCorrupt():Boolean {

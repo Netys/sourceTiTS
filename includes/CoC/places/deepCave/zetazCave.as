@@ -6,11 +6,11 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "FungalPodScene.as"
-include "ImpHordeScene.as"
-include "SeanScene.as"
-include "ValaScene.as"
-include "ZetazScene.as"
+include "fungalPod.as";
+include "impHorde.as";
+include "sean.as";
+include "vala.as";
+include "zetaz.as";
 
 // TODO: Vala
 public function ZetazCaveEnter():void {

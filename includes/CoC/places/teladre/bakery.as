@@ -7,8 +7,8 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "Maddie.as";
-include "Frosty.as";
+include "maddie.as";
+include "frosty.as";
 
 public function showTelAdreBakery():void {
 	userInterface.showName("TEL'ADRE\nBAKERY");

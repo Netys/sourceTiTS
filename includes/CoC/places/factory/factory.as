@@ -5,9 +5,9 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "SuccubusScene.as";
-include "IncubusScene.as";
-include "OmnibusScene.as";
+include "succubus.as";
+include "incubus.as";
+include "omnibus.as";
 
 public function DemonFactoryEnter():void {
 	clearOutput();

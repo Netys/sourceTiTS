@@ -5,34 +5,34 @@ import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
 // Main places
-include "BakeryScene.as";
-include "Gym.as";
-include "Library.as";
-include "Pawn.as";
-include "WetBitch.as";
+include "bakery.as";
+include "gym.as";
+include "library.as";
+include "pawn.as";
+include "wetBitch.as";
 
 // Shops
-include "Armor.as";
-include "Jewels.as";
-include "Piercing.as";
-include "Tailor.as";
-include "UmasShop.as";
-include "Weapon.as";
+include "armor.as";
+include "jewels.as";
+include "piercing.as";
+include "tailor.as";
+include "uma.as";
+include "weapon.as";
 
 // NPCs
-include "AuntNancy.as";
+include "auntNancy.as";
 include "dominika.as";
-include "Edryn.as";
-include "Katherine.as";
+include "edryn.as";
+include "katherine.as";
 include "katherineEmployment.as";
 include "katherineThreesome.as";
-include "Niamh.as";
+include "niamh.as";
 include "scylla.as";
-include "Urta.as";
+include "urta.as";
 include "urtaHeatRut.as";
 include "urtaPregs.as";
 include "urtaQuest.as";
-include "UrtaSex.as";
+include "urtaSex.as";
 
 public function discoverTelAdre():void {
 	clearOutput();

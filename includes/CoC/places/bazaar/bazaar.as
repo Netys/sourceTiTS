@@ -3,14 +3,14 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "BazaarEvents.as";
-include "Benoit.as";
-include "Cinnabar.as";
-include "FapArena.as";
-include "Greta.as";
-include "Lilium.as";
-include "Roxanne.as";
-include "SlipperySqueeze.as";
+include "bazaarEvents.as";
+include "benoit.as";
+include "cinnabar.as";
+include "fapArena.as";
+include "greta.as";
+include "lilium.as";
+include "roxanne.as";
+include "slipperySqueeze.as";
 
 public function showBazaar():void
 {

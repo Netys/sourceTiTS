@@ -5,13 +5,13 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "Sanura.as";
-include "WitchMob.as";
-include "CumWitch.as";
-include "PharmacyNursery.as";
-//include "SandWitchPregs.as"; // TODO. Maybe.
-include "MilkBath.as";
-include "SandMother.as";
+include "cumWitch.as";
+include "milkBath.as";
+include "pharmacyNursery.as";
+include "sandMother.as";
+//include "sandWitchPregs.as"; // TODO. Maybe.
+include "sanura.as";
+include "witchMob.as";
 
 // TODO:
 // take lactaid/labova from sand mother
