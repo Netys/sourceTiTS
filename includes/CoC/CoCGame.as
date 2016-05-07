@@ -119,6 +119,7 @@ include "characters/jojoCorrupt.as";
 include "characters/JojoScene.as";
 include "characters/kihaFollower.as";
 include "characters/KihaScene.as";
+//include "characters/marble.as"; // maybe, one time... too many obsolete code to rewrite, and too little enthusiasm
 include "characters/milkWaifu.as";
 include "characters/phylla.as";
 include "characters/Rathazul.as";

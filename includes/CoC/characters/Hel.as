@@ -11,6 +11,95 @@ public function get helia():CoCHel {
 	return new CoCHel();
 }
 
+public function HelTimePassedNotify():void {
+	//checkedHeliaIsabellaThreesome = 0; //Make sure we test just once in timeChangeLarge
+	//pregnancy.pregnancyAdvance();
+	//trace("\nHelia time change: Time is " + model.time.hours + ", incubation: " + pregnancy.incubation + ", event: " + pregnancy.event, false);
+	if (hours == 0 && minutes == 0) {
+		if (flags["COC.HELSPAWN_GROWUP_COUNTER"] > 0) flags["COC.HELSPAWN_GROWUP_COUNTER"]++;
+		//if (flags["COC.HEL_RAPED_TODAY"] == 1) flags["COC.HEL_RAPED_TODAY"] = 0; // using days as flag now
+	}
+	//if (hours == 3 && minutes == 0 && followerHel() && flags["COC.SLEEP_WITH"] == "Helia" && rand(10) == 0 && inCamp()) {
+		//sleepyNightMareHel();
+		//return true;
+	//}
+	
+	if (flags["COC.HEL_PREGNANCY_INCUBATION"] != undefined) {
+		switch (helPregnancyEvent()) {
+			case 2:
+					if(flags["COC.HEL_PREGNANCY_EVENT_1"] != 1 && eventQueue.indexOf(bulgyCampNotice) == -1) {
+						flags["COC.HEL_PREGNANCY_EVENT_1"] = 1;
+						eventQueue.push(bulgyCampNotice);
+					}
+					return;
+			case 3:
+					if(flags["COC.HEL_PREGNANCY_EVENT_2"] != 1 && eventQueue.indexOf(bulgyCampNotice) == -1) {
+						flags["COC.HEL_PREGNANCY_EVENT_2"] = 1;
+						eventQueue.push(heliaSwollenNotice);
+					}
+					return;
+			case 4:
+					if(flags["COC.HEL_PREGNANCY_EVENT_3"] != 1 && eventQueue.indexOf(bulgyCampNotice) == -1) {
+						flags["COC.HEL_PREGNANCY_EVENT_3"] = 1;
+						eventQueue.push(heliaGravidity);
+					}
+					return;
+			default:
+					if (flags["COC.HEL_PREGNANCY_INCUBATION"] < timeAsStamp && (hours == 6 || hours == 7) && inCamp() && eventQueue.indexOf(heliaBirthtime) == -1) {
+						flags["COC.HEL_PREGNANCY_INCUBATION"] = undefined;
+						eventQueue.push(heliaBirthtime);
+						return;
+					}
+		}
+	}
+	
+	//Helia's morning surprise!
+	if (hours == 0 && minutes == 0 && eventQueue.indexOf(heliaBonusPointsAward) == -1 && inCamp() && followerHel() && flags["COC.HEL_BONUS_POINTS"] >= 150 && int(flags["COC.HELIA_KIDS_CHAT"]) == 0) {
+		eventQueue.push(heliaBonusPointsAward);
+		return;
+	}
+	if (hours == 8 && minutes == 0 && eventQueue.indexOf(helGotKnockedUp) == -1 && inCamp() && followerHel() && flags["COC.HEL_NTR_TRACKER"] == 1) {
+		eventQueue.push(helGotKnockedUp);
+		return;
+	}
+	if (flags["COC.HEL_FOLLOWER_LEVEL"] == 1 && flags["COC.HEL_HARPY_QUEEN_DEFEATED"] > 0 && helAffection() >= 100 &&
+		int(flags["COC.HELIA_FOLLOWER_DISABLED"]) == 0 && hours == 2 && minutes == 0 && eventQueue.indexOf(heliaFollowerIntro) == -1 && inCamp()) {
+		trace("WSEGF43TFG");
+		eventQueue.push(heliaFollowerIntro);
+		return;   
+	}
+	// done as next
+	//if (flags["COC.HEL_FOLLOWER_LEVEL"] == -1 && hours == 6 && minutes = 0 && eventQueue.indexOf(morningAfterHeliaDungeonAgreements) == -1 && inCamp()) {
+		//eventQueue.push(morningAfterHeliaDungeonAgreements);
+		//return true;
+	//}
+	//Helspawn night smex!
+	if (flags["COC.HELSPAWN_AGE"] == 2 && (hours == 2 || hours == 3 || hours == 4) && minutes == 0 && eventQueue.indexOf(helspawnIsASlut) == -1 && flags["COC.HELSPAWN_GROWUP_COUNTER"] == 7 && int(flags["COC.HELSPAWN_FUCK_INTERRUPTUS"]) == 0 && inCamp()) {
+		helspawnIsASlut();
+		return;
+	}
+	//Chance of threesomes!
+	if (flags["COC.HEL_FUCKBUDDY"] == 1 && isabellaFollower() && hours == 2 && minutes == 0 && days % 11 == 0 && eventQueue.indexOf(followrIzzyxSallyThreesomePretext) == -1 && eventQueue.indexOf(isabellaXHelThreeSomeCampStart) == -1 && int(flags["COC.FOLLOWER_AT_FARM_ISABELLA"]) == 0 && inCamp()) {
+		trace("ISABELLA/HELL TEST");
+		if (int(flags["COC.HEL_ISABELLA_THREESOME_ENABLED"]) == 0) { //Hell/Izzy threesome intro
+			//spriteSelect(31);
+			followrIzzyxSallyThreesomePretext();
+			return;
+		}
+		else if (flags["COC.HEL_ISABELLA_THREESOME_ENABLED"] == 1) { //Propah threesomes here!
+			//spriteSelect(31);
+			isabellaXHelThreeSomeCampStart();
+			return;
+		}
+	}
+	return;
+}
+
+private var HelTimePassedNotifyHook: * = HelTimePassedNotifyGrapple();
+private function HelTimePassedNotifyGrapple():* { 
+		timeChangeListeners.push(HelTimePassedNotify);
+	}
+
 public function heliaTailVolume():Number {
 	var tail:CockClass = new CockClass();
 	tail.addFlag(GLOBAL.FLAG_TAPERED);
@@ -1415,23 +1504,26 @@ public function isabellaXHelThreeSomePlainsStart():void {
 	addButton(0, "Drink", nomOnIzzyTitWithSallyMancer);
 	addButton(14, "Leave", leaveIsabellaSallyBehind);
 }
+
 //Isabella x Hel Threesome Scene – Beginning at Camp (edited)
 //(Has a 10% chance to play when the player chooses [Sleep] while Isabella is at camp)
-//public function isabellaXHelThreeSomeCampStart():void {
-	////spriteSelect(68);
-	//output("\n<b>Something odd happens during the night...</b>\n");
-	//output("As you settle in to sleep for the night, you notice that Isabella's wandered off out of the camp.  Mildly concerned for the busty cow-girl's safety, you set out for the camp perimeter.  It doesn't take you long to find her, thanks to a soft, throaty mooing coming from the brush near camp.\n\n");
-//
-	//output("You push the scrub aside, revealing the cow-girl sitting on the ground, running a hand through the hair of Hel the salamander, who's currently sitting on the cow-girl's lap, her hands on Isabella's hefty breasts and one of the quad-nipples locked in her mouth.  Seeing you approach, Isabella lifts her hand from Hel's head and gives you a somewhat-abashed wave.\n\n");
-//
-	//output("\"<i>" + pc.short + "... it is –moo– good to see youuuuu.</i>\"  She trails off into a long, ecstatic moan as Hel continues to suckle from her massive teat, acknowledging your presence only with a little waggle of her tail and a wink.  ");
-	//if(isabellaAccent()) output("\"<i>Perhaps you vould like a drink as vell, no?</i>\" Isabella offers, patting the chocolate-colored tit that Hel is not actively suckling from.\n\n");
-	//else output("\"<i>Perhaps you would like a drink as well, no?</i>\" Isabella offers, patting the chocolate-colored tit that Hel is not actively suckling from.\n\n");
-//
-	//output("You certainly do feel thirsty, and Isabella's invitation is certainly... enticing, and is made all the more exciting by the busty salamander you'll be sharing a meal with.");
-	////(Display Options: [Drink] [Leave])
-	//simpleChoices("Drink", nomOnIzzyTitWithSallyMancer, "", null, "", null, "", null, "Leave", playerMenu);
-//}
+public function isabellaXHelThreeSomeCampStart():void {
+	//spriteSelect(68);
+	output("\n<b>Something odd happens during the night...</b>\n");
+	output("As you settle in to sleep for the night, you notice that Isabella's wandered off out of the camp.  Mildly concerned for the busty cow-girl's safety, you set out for the camp perimeter.  It doesn't take you long to find her, thanks to a soft, throaty mooing coming from the brush near camp.\n\n");
+
+	output("You push the scrub aside, revealing the cow-girl sitting on the ground, running a hand through the hair of Hel the salamander, who's currently sitting on the cow-girl's lap, her hands on Isabella's hefty breasts and one of the quad-nipples locked in her mouth.  Seeing you approach, Isabella lifts her hand from Hel's head and gives you a somewhat-abashed wave.\n\n");
+
+	output("\"<i>" + pc.short + "... it is –moo– good to see youuuuu.</i>\"  She trails off into a long, ecstatic moan as Hel continues to suckle from her massive teat, acknowledging your presence only with a little waggle of her tail and a wink.  ");
+	if(isabellaAccent()) output("\"<i>Perhaps you vould like a drink as vell, no?</i>\" Isabella offers, patting the chocolate-colored tit that Hel is not actively suckling from.\n\n");
+	else output("\"<i>Perhaps you would like a drink as well, no?</i>\" Isabella offers, patting the chocolate-colored tit that Hel is not actively suckling from.\n\n");
+
+	output("You certainly do feel thirsty, and Isabella's invitation is certainly... enticing, and is made all the more exciting by the busty salamander you'll be sharing a meal with.");
+	//(Display Options: [Drink] [Leave])
+	clearMenu();
+	addButton(0, "Drink", nomOnIzzyTitWithSallyMancer);
+	addButton(14, "Leave", mainGameMenu);
+}
 
 //[Leave]
 private function leaveIsabellaSallyBehind():void {
@@ -1915,9 +2007,23 @@ private function pussyOutOfHelSexAmbush():void {
 }
 
 public function followerCampMenuBlurbHelia(showInteractButton:Boolean):void {
-	if (followerHel() && flags["COC.HEL_FOLLOWER_LEVEL"] == 1) {
-		output("Helia is sticking around, should you decide to assault Phoenix Tower.\n\n");
-		if (showInteractButton) addButton(followerBtnNum++, "Helia", function():* { processTime(10); heliaTempFollowerMenu() } , null, "Talk", "Go find Helia to talk about her quest.");
+	if (!followerHel()) return;
+	
+	if (flags["COC.HEL_FOLLOWER_LEVEL"] == 2) {
+		//Hel @ Camp: Follower Menu
+		//(6-7) 
+		if (hours <= 7) output("Hel is currently sitting at the edge of camp, surrounded by her scraps of armor, sword, and a few half-empty bottles of vodka.  By the way she's grunting and growling, it looks like she's getting ready to flip her shit and go running off into the plains in her berserker state.\n\n");
+		//(8a-5p) 
+		else if (hours <= 17) output("Hel's out of camp at the moment, adventuring on the plains.  You're sure she'd be on hand in moments if you needed her, though.\n\n");
+		//5-7) 
+		else if (hours <= 19) output("Hel's out visiting her family in Tel'Adre right now, though you're sure she's only moments away if you need her.\n\n");
+		//(7+)
+		else output("Hel is fussing around her hammock, checking her gear and sharpening her collection of blades.  Each time you glance her way, though, the salamander puts a little extra sway in her hips and her tail wags happily.\n\n");
+		if (showInteractButton) addButton(followerBtnNum++, "Helia", function():* { processTime(10); heliaFollowerMenu() });
+	}
+	else if (flags["COC.HEL_FOLLOWER_LEVEL"] == 1 && flags["COC.HEL_HARPY_QUEEN_DEFEATED"] != 1) {
+		output("You see the salamander Helia pacing around camp, anxiously awaiting your departure to the harpy roost. Seeing you looking her way, she perks up, obviously ready to get underway.\n\n");
+		if (showInteractButton) addButton(followerBtnNum++, "Helia", function():* { processTime(10); heliaTempFollowerMenu() });
 	}
 }
 

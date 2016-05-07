@@ -59,7 +59,7 @@ public function ExgartuanTimePassedNotify():void {
 	if (minutes != 0) return; // once per hour
 	
 	checkedExgartuan = 0; //Make sure we test just once in timeChangeLarge
-	if (pc.hasStatusEffect("Exgartuan") >= 0) { //Update Exgartuan stuff
+	if (pc.hasStatusEffect("Exgartuan")) { //Update Exgartuan stuff
 		trace("EXGARTUAN V1: " + pc.statusEffectv1("Exgartuan") + " V2: " + pc.statusEffectv2("Exgartuan"));
 		if (pc.statusEffectv1("Exgartuan") == 1 && (!pc.hasCock() || pc.cockVolume(0) < 100)) { //If too small dick, remove him
 			eventBuffer += "\n\n<b>You suddenly feel the urge to urinate, and stop over by some appropriate place.  It takes wayyyy longer than normal, and once you've finished, you realize you're alone with yourself for the first time in a long time.  Perhaps you got too small for Exgartuan to handle?</b>";

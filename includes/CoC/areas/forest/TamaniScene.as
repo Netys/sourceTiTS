@@ -757,7 +757,7 @@ private function tamaniPoopsOutBabies():void {
 	}
 	output("  She looks up at you and whispers breathily, \"<i>Come fuck me a little later, I'll give you even more beautiful little girls.  These " + num2Text(flags["COC.TAMANI_PREGNANCY_COUNT"]) + " will be fully grown in a week or two and out man-hunting, but none of them will please you like me, I promise.</i>\"\n\n");
 	output("Tamani sighs and relaxes, enjoying the breastfeeding and waving you away.  You shrug and head back to camp, more than a little aroused.");
-	applyDamage(new TypeCollection( { tease : 5 + target.libido() / 10 + pc.cor() / 10 } ), tamani, pc);
+	applyDamage(new TypeCollection( { tease : 5 + pc.libido() / 10 + pc.cor() / 10 } ), tamani, pc);
 	tamaniGivesBirth();
 	processTime(40 + rand(10));
 	clearMenu();

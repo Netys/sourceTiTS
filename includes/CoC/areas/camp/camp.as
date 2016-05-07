@@ -33,7 +33,7 @@ public function cocCampMenu():void {
 	//campLoversButton();
 	//campSlavesButton();
 	
-	//addButton(5, "Debug", doDebugFunction);
+	addButton(5, "Debug", doDebugFunction);
 	
 	if (hasCampStorage()) addButton(3, "Stash", campStorageMenuRoot);
 	else addDisabledButton(3, "Stash", "Stash", "You have no place to store your items.");
@@ -43,6 +43,7 @@ public function cocCampMenu():void {
 }
 
 public function doDebugFunction():void {
+	helAffection(100);
 }
 
 public function inCamp():Boolean
@@ -226,6 +227,16 @@ public function campEvent():Boolean
 	if (flags["COC.JOJO_EGGS_INCUBAATION"] <= timeAsStamp)
 	{
 		jojoLaysEggs();
+		return true;
+	}
+	//Go through Helia's first time move in interactions if  you haven't yet.
+	if (flags["COC.HEL_FOLLOWER_LEVEL"] == 2 && followerHel() && int(flags["COC.HEL_INTROS_LEVEL"]) == 0) {
+		helFollowersIntro();
+		return true;
+	}
+	//If you've gone through Hel's first time actions and Issy moves in without being okay with threesomes.
+	if (flags["COC.HEL_INTROS_LEVEL"] > 9000 && followerHel() && isabellaFollower() && int(flags["COC.HEL_ISABELLA_THREESOME_ENABLED"]) == 0) {
+		angryHelAndIzzyCampHelHereFirst();
 		return true;
 	}
 	if (followerKiha() && flags["COC.KIHA_CHILD_MATURITY_COUNTER"] == 144) {
