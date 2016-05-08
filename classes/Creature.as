@@ -764,7 +764,7 @@
 		public var tailType: Number = 0;
 		public function tailTypeUnlocked(newTailType:Number):Boolean
 		{
-			if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9 && (hasPerk("Enlightened Nine-tails") || hasPerk("Corrupted Nine-tails"))) return false;
+			//if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9 && (hasPerk("Enlightened Nine-tails") || hasPerk("Corrupted Nine-tails"))) return false;
 			if (tailType == GLOBAL.TYPE_CUNTSNAKE) return false;
 			if (tailType == GLOBAL.TYPE_COCKVINE) return false;
 			return true;
@@ -772,13 +772,13 @@
 		public function tailTypeLockedMessage():String
 		{
 			var msg:String = "";
-			if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9 && (hasPerk("Enlightened Nine-tails") || hasPerk("Corrupted Nine-tails"))) {
-				msg += "You are startled by sudden burst of dazzling ";
-				if (hasPerk("Enlightened Nine-tails")) msg += "azure";
-				else msg += "lavender";
-				msg += " sparks from your [pc.tails], but nothing is changed.";
-				return msg;
-			}
+			//if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9 && (hasPerk("Enlightened Nine-tails") || hasPerk("Corrupted Nine-tails"))) {
+				//msg += "You are startled by sudden burst of dazzling ";
+				//if (hasPerk("Enlightened Nine-tails")) msg += "azure";
+				//else msg += "lavender";
+				//msg += " sparks from your [pc.tails], but nothing is changed.";
+				//return msg;
+			//}
 			if (tailType == GLOBAL.TYPE_CUNTSNAKE || tailType == GLOBAL.TYPE_COCKVINE)
 			{
 				msg = "The creature masquerading as a tail seems pretty spooked about something all of a sudden;";
@@ -14850,6 +14850,7 @@
 			var cost:Number = attack.EnergyCost;
 			if (attack.GetAttackTypeFlags()["isMagic"] != undefined) {
 				cost *= Math.max(100 - perkv3("Magic Affinity"), 10) / 100;
+				if (hasPerk("History: Scholar")) cost *= 0.8;
 			}
 			return cost;
 		}

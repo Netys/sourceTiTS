@@ -258,6 +258,14 @@
 		},
 		true);
 		
+	inputManager.AddBindableControl(
+		"Key of the Twillight",
+		"Call for the Key of the Twillight!",
+		function():void {
+			Cheats.toggleKeyOfTheTwillight();
+		},
+		true);
+		
 	inputManager.BindCheatSequence("Give ZilRations", 38, 40, 37, 39);
 	inputManager.BindCheatSequence("Room Transport", "idclev");
 	inputManager.BindCheatSequence("Scene Execute", "impulse");
@@ -267,6 +275,7 @@
 	inputManager.BindCheatSequence("Destinations Unlocked", "marcopolo");
 	inputManager.BindCheatSequence("Runamode Bess", "insaneinthemembrane");
 	inputManager.BindCheatSequence("Force Next", "forcenext");
+	inputManager.BindCheatSequence("Key of the Twillight", "keyofthetwillight");
 	
 	// Insert the default bindings
 	inputManager.BindKeyToControl(49, "Button 1");             // case 49: pressButton(0);

@@ -28,6 +28,7 @@ package classes.GameData
 			ConfigureMercenaryPerks();
 			ConfigureSmugglerPerks();
 			ConfigureEngineerPerks();
+			ConfigureAdventurerPerks();
 		}
 		
 		private function ConfigureMercenaryPerks():void
@@ -574,6 +575,126 @@ package classes.GameData
 			secondShot.perkName = "Second Shot";
 			secondShot.perkDescription = "Allows you to make a second, low-accuracy attack whenever you shoot a ranged weapon.";
 			insertPerkData(secondShot);
+		}
+		
+		
+		private function ConfigureAdventurerPerks():void
+		{
+			// LEVEL 2
+			var tough:PerkData = new PerkData();
+			tough.classLimit = GLOBAL.CLASS_ADVENTURER;
+			tough.levelLimit = 2;
+			tough.perkName = "Tough";
+			tough.perkDescription = "Resistance to Kinetic damage increased by 10%."
+			tough.applicationFunction = function():void {
+				kGAMECLASS.pc.baseHPResistances.kinetic.resistanceValue += 10.0;
+				kGAMECLASS.pc.baseShieldResistances.kinetic.resistanceValue += 10.0;
+			}
+			insertPerkData(tough);
+			
+			var lucky:PerkData = new PerkData();
+			lucky.classLimit = GLOBAL.CLASS_ADVENTURER;
+			lucky.levelLimit = 2;
+			lucky.perkName = "Lucky Breaks";
+			lucky.perkDescription = "Grants you an additional 10% evasion chance.";
+			insertPerkData(lucky);
+			
+			// LEVEL 3
+			var lowBlow:PerkData = new PerkData();
+			lowBlow.classLimit = GLOBAL.CLASS_ADVENTURER;
+			lowBlow.levelLimit = 3;
+			lowBlow.perkName = "Low Blow";
+			lowBlow.perkDescription = "Grants the ability to perform a melee strike with a high chance of stunning the target.";
+			insertPerkData(lowBlow);
+			
+			var quickDraw:PerkData = new PerkData();
+			quickDraw.classLimit = GLOBAL.CLASS_ADVENTURER;
+			quickDraw.levelLimit = 3;
+			quickDraw.perkName = "Quickdraw";
+			quickDraw.perkDescription = "Equipping a new weapon no longer consumes your turn in combat.";
+			insertPerkData(quickDraw);
+			
+			// Level 4
+			var criticalBlows:PerkData = new PerkData();
+			criticalBlows.classLimit = GLOBAL.CLASS_ADVENTURER;
+			criticalBlows.levelLimit = 4;
+			criticalBlows.autoGained = true;
+			criticalBlows.perkName = "Critical Blows";
+			criticalBlows.perkDescription = "Your strikes and shots gain a 10% chance of inflicting double damage on normal melee and ranged attacks.";
+			insertPerkData(criticalBlows);
+			
+			var agility:PerkData = new PerkData();
+			agility.classLimit = GLOBAL.CLASS_ADVENTURER;
+			agility.levelLimit = 4;
+			agility.autoGained = true;
+			agility.perkName = "Agility";
+			agility.perkDescription = "Increases evasion granted via items by 50%, or provides a flat 10% evasion boost, whichever is higher.";
+			insertPerkData(agility);
+			
+			// Level 5
+			var riposte:PerkData = new PerkData();
+			riposte.classLimit = GLOBAL.CLASS_ADVENTURER;
+			riposte.levelLimit = 5;
+			riposte.perkName = "Riposte";
+			riposte.perkDescription = "Grants increased evasion after any melee attack made for the remainder of the combat round.";
+			insertPerkData(riposte);
+			
+			var juggernaut:PerkData = new PerkData();
+			juggernaut.classLimit = GLOBAL.CLASS_ADVENTURER;
+			juggernaut.levelLimit = 5;
+			juggernaut.autoGained = true;
+			juggernaut.perkName = "Juggernaut";
+			juggernaut.perkDescription = "Grants a 25% chance to overcome any paralysis or stun effect every combat round.";
+			insertPerkData(juggernaut);
+			
+			//Level 6
+
+			var cleave:PerkData = new PerkData();
+			cleave.classLimit = GLOBAL.CLASS_ADVENTURER;
+			cleave.levelLimit = 6;
+			cleave.perkName = "Cleave";
+			cleave.perkDescription = "Grants an extra, low-accuracy swing when fighting groups of enemies or \"plural\" type foes.";
+			insertPerkData(cleave);
+			
+			var improvedAgility:PerkData = new PerkData();
+			improvedAgility.classLimit = GLOBAL.CLASS_ADVENTURER;
+			improvedAgility.levelLimit = 6;
+			improvedAgility.perkName = "Improved Agility";
+			improvedAgility.perkDescription = "Increases your evasion by an additional 10%.";
+			insertPerkData(improvedAgility);
+			
+			// Level 7
+			
+			var heroicReserves:PerkData = new PerkData();
+			heroicReserves.classLimit = GLOBAL.CLASS_ADVENTURER;
+			heroicReserves.levelLimit = 7;
+			heroicReserves.perkName = "Heroic Reserves";
+			heroicReserves.perkDescription = "Raises your maximum energy reserves by 33, allowing you to use more special attacks before tiring.";
+			insertPerkData(heroicReserves);
+			
+			var burstOfEnergy:PerkData = new PerkData();
+			burstOfEnergy.classLimit = GLOBAL.CLASS_ADVENTURER;
+			burstOfEnergy.levelLimit = 7;
+			burstOfEnergy.perkName = "Burst of Energy";
+			burstOfEnergy.perkDescription = "Allows you to recover 60 energy, once per combat encounter.";
+			insertPerkData(burstOfEnergy);
+			
+			// Level 8
+			
+			var secondAttack:PerkData = new PerkData();
+			secondAttack.classLimit = GLOBAL.CLASS_ADVENTURER;
+			secondAttack.levelLimit = 8;
+			secondAttack.perkName = "Second Attack";
+			secondAttack.perkDescription = "Allows you to make a second, low-accuracy attack whenever you perform a melee attack. Can stack with \"Cleave.\"";
+			insertPerkData(secondAttack);
+			
+			var secondShot:PerkData = new PerkData();
+			secondShot.classLimit = GLOBAL.CLASS_ADVENTURER;
+			secondShot.levelLimit = 8;
+			secondShot.perkName = "Second Shot";
+			secondShot.perkDescription = "Allows you to make a second, low-accuracy attack whenever you shoot a ranged weapon.";
+			insertPerkData(secondShot);
+			
 		}
 		
 		public function getPlayerClassPerksList():Vector.<PerkData>

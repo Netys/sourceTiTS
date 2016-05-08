@@ -1304,7 +1304,6 @@ private function centaurOnImpResults(iNum:Number):void {
 //}
 public function CoCImpPCLoss():void {
 	clearOutput();
-	
 	if (pc.isBimbo() && !pc.isTaur() && pc.hasVagina()) {
 		output("You sink to the ground, assuming a position that feels all too natural to you now, leaning forward to let your [pc.fullChest] hang down slightly. The imp looks you up and down, wickedly eyeing your ready, slightly open lips. He drops his loin-cloth to reveal a hardening [enemy.cockNounComplex]. Your eyes bulge as it grows larger... and larger... and larger! The imp's [enemy.cock] finally bulges to a full twelve inches... and it's moving closer. You struggle to think... but you just can't! You want that in your mouth, like, so bad!\n\n");
 		output("Your [pc.vagina] drips in anticipation, and you find yourself involuntarily moving your knees farther apart to prepare yourself to be filled. He smiles and presses his cock against your [pc.vagina], pushing you back to get a better angle. You try to make words, but your brain can only think of so much at once! Right now, it's thinking of cock, which, naturally, makes you open your mouth and let out a slutty moan.\n\n");
@@ -1411,7 +1410,7 @@ public function CoCImpPCLoss():void {
 	}
 	//HP or insta-loss
 	else {
-		output("\n<b>You fall, defeated by the imp!</b>\nThe last thing you see before losing consciousness is the creature undoing its crude loincloth to reveal a rather disproportionately-sized [enemy.cock].");
+		output("<b>You fall, defeated by the imp!</b>\n\nThe last thing you see before losing consciousness is the creature undoing its crude loincloth to reveal a rather disproportionately-sized [enemy.cock].");
 		pc.buttChange(enemy.cockVolume(0));
 		pc.loadInAss(enemy);
 		pc.cor(1);

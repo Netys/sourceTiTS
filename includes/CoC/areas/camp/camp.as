@@ -43,7 +43,6 @@ public function cocCampMenu():void {
 }
 
 public function doDebugFunction():void {
-	helAffection(100);
 }
 
 public function inCamp():Boolean

@@ -1,3 +1,4 @@
+import classes.Characters.PlayerCharacter;
 import classes.Engine.Combat.DamageTypes.DamageFlag;
 import classes.GameData.TooltipManager;
 import classes.GLOBAL;
@@ -7,7 +8,7 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "../CoC/CoCGame.as"; // all other includes are there
+include "../coc/coc.as"; // all other includes are there
 
 // This is deprecated function. It can be removed and is only left to not screw saves within removed VR Pod room.
 public function cockyVrJunctionMenu():Boolean {	
@@ -92,14 +93,18 @@ public function abortIAmNotBloodyChampion():void {
 	
 	output("System shutdown...\n\n");
 	output("Pod lid is opened, and you are free to get out.");
-	if (!pc.gills) output("  You just need some time to cough out this liquid...");
 	output("\n\n");
 	
-	if (flags["COC_VR_OUTRO_SEEN"] == undefined && flags["COC_INTRO_SEEN"] != undefined) { // actually, this would be better to use when something is actually changed, but detection would be overcomplicated
+	if (pc.hasKeyItem("Key of the Twillight") && flags["COC_VR_OUTRO_SEEN"] == undefined && flags["COC_INTRO_SEEN"] != undefined /*&& chars["PC"] == chars["PC_COC"]*/) { // have no idea how comparation works in AS3
 		flags["COC_VR_OUTRO_SEEN"] = 1;
 		output("Wait, what... Your body is by one hundred percent like one you had upon exiting simulation! And... Why you are not surprised? Contents of an item box are exactly like your possessions from simulation, too.\n\n");
 		output("Who knew that remark about \"not limited feedback\" should be taken so literally?\n\n");
 		output("And... Was it REALLY just simulation?\n\n");
+	}
+	
+	if (!pc.hasKeyItem("Key of the Twillight") && chars["PC_COC"] != undefined && chars["PC_TITS"] != undefined) {
+		chars["PC_COC"] = chars["PC"];
+		chars["PC"] = chars["PC_TITS"];
 	}
 	
 	processTime(5);
@@ -112,6 +117,16 @@ public function EnterVRIAmYourBloodyChampionYouVapidCunt():void {
 	author("Etis");
 	clearOutput();
 	clearMenu();
+	
+	if (!pc.hasKeyItem("Key of the Twillight")) {
+		if (chars["PC_COC"] == undefined) createYourChampion();
+		else {
+			chars["PC_TITS"] = chars["PC"];
+			chars["PC"] = chars["PC_COC"];
+			move("COC_CAMP");
+		}
+		return;
+	}
 	
 	if (flags["COC_INTRO_SEEN"] == undefined) {
 		flags["COC_INTRO_SEEN"] = 1;

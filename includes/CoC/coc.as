@@ -18,6 +18,7 @@ public function notifyVariableRoomUpdateListenerss():void {
 	for each (var name:* in variableRoomUpdateListeners) name();
 }
 
+include "creation.as";
 include "events.as";
 include "gameStats.as";
 include "masturbation.as";
@@ -133,9 +134,10 @@ include "characters/valeria.as";
 include "characters/vapula.as";
 
 public function initCoCJunk():void {
-	if (flags["COC.CORRUPTION"] == undefined) flags["COC.CORRUPTION"] = int(pc.personality / 2.1) + 10;
+	//if (flags["COC.CORRUPTION"] == undefined) flags["COC.CORRUPTION"] = int(pc.personality / 2.1) + 10;
 	if (flags["COC.TIMES_TRANSFORMED"] == undefined) flags["COC.TIMES_TRANSFORMED"] = 0;
 }
+
 public function inMareth():Boolean {
 	return rooms[currentLocation].system == "PLANET: MARETH";
 }

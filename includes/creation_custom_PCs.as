@@ -1015,8 +1015,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			break;
 		/*Etis is a nine-tails kitsune cyborg, who got best of two worlds, bost as in being herm and as in being a bridge between CoC and TiTS worlds. Mostly pure white with azure accents. Just 'cause I had the mood for procrastination, it has ton of details and even notably different tauric version for start as Leithan.*/
 		case "etis":
-			if(!TF) return true;
-			pc.originalRace = pc.isTaur() ? "kitsune-taur" : "kitsune"; // You've always been a kitsune. Always, I said!
+			if (!TF) return true;
 			pc.tallness = pc.isTaur() ? 12 * 6 + 6 : 12 * 4 + 9; // small and dainty anthro foxes are adorable, but small taurs? taurs should be big!
 			pc.tone = pc.isTaur() ? 100 : 20;
 			pc.thickness = pc.isTaur() ? 70 : 10;
@@ -1031,6 +1030,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			pc.hairColor = "pure white";
 			pc.hairType = GLOBAL.HAIR_TYPE_REGULAR;
 			pc.furColor = "pure white"; // fun fact: "arctic fox" in Russian is euphemism for obscene synonym of "disaster"
+			pc.scaleColor = "white";
 			pc.eyeColor = "luminous celeste"; // unfathomable and serene, like clear summer sky...
 			pc.skinTone = "albino";
 			if (!pc.hasStatusEffect("Vanae Markings")) pc.createStatusEffect("Vanae Markings"); // everyone loves them!
@@ -1054,9 +1054,10 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			pc.tailGenital = GLOBAL.TAIL_GENITAL_COCK; // but in soviet TiTS fluffy tails touch YOU!
 			pc.tailGenitalArg = GLOBAL.TYPE_VULPINE;
 			pc.tailGenitalColor = "azure";
-			pc.tailFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_FLUFFY, GLOBAL.FLAG_PREHENSILE, GLOBAL.FLAG_TAILCOCK, GLOBAL.FLAG_KNOTTED, GLOBAL.FLAG_TAPERED, GLOBAL.FLAG_SHEATHED];
+			pc.tailFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_FLUFFY, GLOBAL.FLAG_PREHENSILE, GLOBAL.FLAG_TAILCOCK, GLOBAL.FLAG_KNOTTED, GLOBAL.FLAG_NUBBY, GLOBAL.FLAG_TAPERED, GLOBAL.FLAG_SHEATHED];
 			if (!pc.hasCock()) pc.createCock(); // must have one here, since no one loves tail-mounted ones...
 			pc.shiftCock(0, GLOBAL.TYPE_VULPINE); // like canine, but better!
+			pc.cocks[0].addFlag(GLOBAL.FLAG_NUBBY);
 			pc.cocks[0].cLengthRaw = pc.isTaur() ? 16 : 8;
 			pc.cocks[0].knotMultiplier = 1.5;
 			pc.cocks[0].cockColor = "azure";
@@ -1076,7 +1077,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			pc.breastRows[0].nippleType = GLOBAL.NIPPLE_TYPE_INVERTED;
 			pc.nippleColor = "azure";
 			pc.milkType = GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK; // have no idea why
-			pc.milkStorageMultiplier = 4; // really no idea
+			pc.milkStorageMultiplier = 8; // really no idea
 			pc.balls = pc.isTaur() ? 4 : 0; // futas with balls? better no, but in case of taurs I'm not sure...
 			pc.ballSizeRaw = (pc.isTaur() ? 3 : 6) * Math.PI; // high math, ho!
 			pc.refractoryRate = pc.balls > 0 ? 4 : 20;
@@ -1092,6 +1093,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			if (!pc.hasStatusEffect("Genital Slit"))	pc.createStatusEffect("Genital Slit", 0, 0, 0, 0); // dangling all the time bits are not classy
 			if (!pc.hasStatusEffect("Uniball"))			pc.createStatusEffect("Uniball", 0, 0, 0, 0);
 			if (!pc.hasStatusEffect("Infertile"))		pc.createStatusEffect("Infertile", 0, 0, 0, 0); // here to have fun, nothing more!
+			pc.originalRace = pc.race(); // You've always been a kitsune. Always, I said!
 			pc.unspentStatPoints = 999; // I saw all sorts of shit in my former lives
 			pc.armor = new IllusoryAttire(); // clothes? fur furevar!
 			pc.meleeWeapon = new CoCLethiceWhip();
