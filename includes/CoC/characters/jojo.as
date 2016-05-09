@@ -589,7 +589,7 @@ public function jojoTalkYourOrigin():void // Prob tack on some interaction count
 		output("You tell Jojo about how you're lucky and you've made quite a bit of money.  When the monk asks how, you shrug and tell him it's just plain luck.\n\n");
 	}
 	else
-		output("Somehow, you don’t seem to have a defined history...\n\n");
+		output("Somehow, you don’t seem to have a defined history... At least one you want to share.\n\n");
 
 	output("Jojo smiles now that he has gotten to know you a little better. After a little bit more small talk, the two of you decide the conversation is over and part ways.\n\n");
 

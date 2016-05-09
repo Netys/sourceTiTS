@@ -76,9 +76,10 @@ public function DesertCaveEntrance():Boolean {
 	
 	if (flags["COC.BEATEN_SANURA_COUNT"] == 0 && flags["COC.SANURA_DISABLED"] == 0) {
 		addButton(14, "Leave", TravelFromDesertCave); // not defeated - button in corner
+		setNavDisabled(NAV_NORTH_DISABLE);
 		return true;
 	} else addButton(7, "Leave", TravelFromDesertCave); // defeated - button in navigation block
-		
+	
 	return false;
 }
 
@@ -111,7 +112,8 @@ public function DesertCaveCommons():Boolean {
 	else output("The women you defeated before have returned to their tasks, casting wary glances your way from time to time but no longer threatening.");
 	output("  Cave tunnels lead in to the east and west into more underground chambers.  A path leads south towards the exit.");
 
-	if(flags["COC.SANDWITCH_THRONE_UNLOCKED"] == undefined) {
+	if (flags["COC.SANDWITCH_THRONE_UNLOCKED"] == undefined) {
+		setNavDisabled(NAV_NORTH_DISABLE);
 		output("\n\nA huge stone doorway blocks the path north.  You cannot see a way to open it.");
 	}
 	else {

@@ -1326,7 +1326,7 @@ public function CoCImpPCLoss():void {
 	//Lust loss
 	if(pc.HP() > 1) {
 		//50% chance of sprocket rape for super-thick people. 
-		if(pc.hasCock() && rand(2) == 0 && pc.cocks[pc.thickestCock()].thickness() >= 4) {
+		if(pc.hasCock() && rand(2) == 0 && pc.cocks[pc.thickestCock()].thickness() >= 4 && enemy.bodyStrength() > enemy.fullBodyWeight() + pc.fullBodyWeight()) {
 			sprocketImp();
 			return;
 		}

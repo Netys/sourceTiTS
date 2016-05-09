@@ -1094,7 +1094,7 @@ private function shouldraGrowsYoClit():void {
 	flags["COC.SHOULDRA_MAGIC_COOLDOWN"] = 72;
 	clearOutput();
 	shouldraSprite();
-	output("\"<i>Looking to give your joy buzzer a little jumpstart?</i>\" Shouldra teases, your hands sliding down to your inviting [cunt].  Your fingers tease your [pc.clit] while the ghost girl spouts her arcane tongue from your mouth.  ");
+	output("\"<i>Looking to give your joy buzzer a little jumpstart?</i>\" Shouldra teases, your hands sliding down to your inviting [pc.vagina].  Your fingers tease your [pc.clit] while the ghost girl spouts her arcane tongue from your mouth.  ");
 	//clitLength + 1
 	pc.clitLength += 1;
 	output("She welcomes the new inch with a quick flick.  The sensitive [pc.clit] twitches happily in response, confirming the success of the spell.");
@@ -1462,7 +1462,7 @@ public function nightTimeShouldraRapesThePC():void {
 	}
 	//if PC has no cock, but has vagina
 	else if (pc.hasVagina()) {
-		output("\n\nThe calculated shade bends her way down to your [cunt], a vacant expression dominating her face.  You're unsure just what that means, but your concern is quickly forgotten as the spirit grasps your vaginal walls with both hands!  Oddly enough, you feel nothing.  No pain, but no pleasure either.  This soon becomes a blessing when the eidolon works her way around your canal, shaping it into a gaping wide hole!  Once its large enough, she casually slips inside and disappears into your depths.  It all happened so fast, nothing really had time to register.  You try and touch your stretched cunt, only to discover that it's sealed shut and rock solid.  Like, literally made of stone!");
+		output("\n\nThe calculated shade bends her way down to your [pc.vagina], a vacant expression dominating her face.  You're unsure just what that means, but your concern is quickly forgotten as the spirit grasps your vaginal walls with both hands!  Oddly enough, you feel nothing.  No pain, but no pleasure either.  This soon becomes a blessing when the eidolon works her way around your canal, shaping it into a gaping wide hole!  Once its large enough, she casually slips inside and disappears into your depths.  It all happened so fast, nothing really had time to register.  You try and touch your stretched cunt, only to discover that it's sealed shut and rock solid.  Like, literally made of stone!");
 	}
 	output("\n\nYour groggy daze isn't helping matters much as you panic, hands exploring your solidified genitalia.  It doesn't feel any more dense or heavier than before, but there's a disconcerting texture alongside impossible rigidity.  \"<i>Tonight we're focusing on something of my own design,</i>\" Shouldra says, her voice reverberating in your head.  Her tone mirrors the stony-eyed demeanor you witnessed earlier.  Whatever she has in store probably won't be too kosher.");
 	output("\n\nEyes now alit with a bright yellow tinge, Shouldra reigns over your body's will.  She holds your right hand in front of your face while directing the floating illumination to move in closer.  \"<i>I did some prep work while you were napping.</i>\"  No wonder your hand felt weird; your fingers are all swollen, each slender digit resembling stout little sausages rubbing against one another, your joints hardly visible.  \"<i>I decided to save the rest of the spell for when you were awake, though.</i>\"  You try to wiggle the puffy pointers, but your body refuses to obey you.  Rather, it transitions into Shouldra's arcane magic, your mouth reciting the final phrases to finish her spell.");
@@ -1478,7 +1478,7 @@ public function nightTimeShouldraRapesThePC():void {
 	output("\n\nThankfully, the ghost seems to be in her own personal heaven, still filling your gullet full of cream, lightening her grasp in-between each pulse.  Finally, she finishes and lazily drags your soaked hand from your mouth, dangling the twitching members wearily in the air.");
 	output("\n\n\"<i>That felt even better than I imagined it would,</i>\" the satisfied spirit finally proclaims, leaning back on your left hand.  She lifts your flaccid fingers over your own petrified sex, dripping cum all over it.  It doesn't really surprise you as the jism soaks into your ");
 	if (pc.hasCock()) output("[pc.cock]");
-	else output("[cunt]");
+	else output("[pc.vagina]");
 	output(", softening the ");
 	if (pc.hasCock()) output("magically enlarged member");
 	else output("magically gaped snatch");

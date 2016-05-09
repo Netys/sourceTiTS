@@ -618,7 +618,6 @@ package classes.GameData
 			var criticalBlows:PerkData = new PerkData();
 			criticalBlows.classLimit = GLOBAL.CLASS_ADVENTURER;
 			criticalBlows.levelLimit = 4;
-			criticalBlows.autoGained = true;
 			criticalBlows.perkName = "Critical Blows";
 			criticalBlows.perkDescription = "Your strikes and shots gain a 10% chance of inflicting double damage on normal melee and ranged attacks.";
 			insertPerkData(criticalBlows);
@@ -626,7 +625,6 @@ package classes.GameData
 			var agility:PerkData = new PerkData();
 			agility.classLimit = GLOBAL.CLASS_ADVENTURER;
 			agility.levelLimit = 4;
-			agility.autoGained = true;
 			agility.perkName = "Agility";
 			agility.perkDescription = "Increases evasion granted via items by 50%, or provides a flat 10% evasion boost, whichever is higher.";
 			insertPerkData(agility);
@@ -642,7 +640,6 @@ package classes.GameData
 			var juggernaut:PerkData = new PerkData();
 			juggernaut.classLimit = GLOBAL.CLASS_ADVENTURER;
 			juggernaut.levelLimit = 5;
-			juggernaut.autoGained = true;
 			juggernaut.perkName = "Juggernaut";
 			juggernaut.perkDescription = "Grants a 25% chance to overcome any paralysis or stun effect every combat round.";
 			insertPerkData(juggernaut);

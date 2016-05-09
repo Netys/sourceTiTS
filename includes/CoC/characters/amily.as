@@ -502,7 +502,7 @@ public function exploreVillageRuin():void {
 				return;
 			}
 			//Amily totally grows a wang for you once she loves you
-			if (flags["COC.AMILY_CONFESSED_LESBIAN"] == 2 && flags["COC.AMILY_WANG_LENGTH"] == undefined) {
+			if (flags["COC.AMILY_CONFESSED_LESBIAN"] == 2 && int(flags["COC.AMILY_WANG_LENGTH"]) == 0) {
 				amilyPostConfessionGirlRemeeting();
 				return;
 			}
@@ -5209,7 +5209,7 @@ public function hermilyOnFemalePC():void {
 
 	output("You smile at her, and indicate that she may want to remove her own clothing. Looking a bit embarrassed, Amily strips herself down, revealing her perky breasts and her straining, eager cock for your own perusal. You step close and reach out to gently stroke the hot, pulsing member, eliciting a pleased groan from the futanari mouse, which entices you to use your grip around it to lead her to the makeshift bed, where you sink down onto your back and spread your ");
 	if (pc.isBiped()) output(pc.legs() + " in readiness for her.");
-	else output(" [cunt] in readiness for her.");
+	else output(" [pc.vagina] in readiness for her.");
 	output(" Amily kneels down in between them, easily able to tell what you want.\n\n");
 
 	//(If first time:

@@ -3079,6 +3079,8 @@
 			if (hasStatusEffect("Might")) bonus += statusEffectv2("Might");
 			
 			var hitPoints: Number = 15 + (level - 1) * 15 + HPMod + bonus;
+			if (characterClass == GLOBAL.CLASS_ADVENTURER)
+				hitPoints += level * 10;
 			if (characterClass == GLOBAL.CLASS_MERCENARY)
 				hitPoints += level * 5;
 			if (characterClass == GLOBAL.CLASS_ENGINEER)

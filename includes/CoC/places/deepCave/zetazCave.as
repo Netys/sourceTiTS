@@ -81,6 +81,11 @@ public function ZetazCaveGatheringHall():Boolean {
 		return true;
 	}
 	
+	if (flags["COC.ZETAZ_DOOR_UNLOCKED"] == undefined) {
+		output("\n\n<b>A massive door block the path north.  You cannot see a way to open it.</b>");
+		setNavDisabled(NAV_NORTH_DISABLE);
+	}
+	
 	return false;
 }
 

@@ -2414,7 +2414,7 @@ private function getPenetratedByArianAndHisHitlerMustache():void {
 	if (arian.cockTotal() > 1) output("s");
 	output(" unlike anything else.  You praise the lizan on being a quick study, letting go of [arian.eir] tail and grabbing onto [arian.eir] scaly shoulders instead, giving [arian.em] a few more directions so [arian.ey] can catch your most sensitive spots.");
 	
-	output("\n\nArian suddenly clenches and gasps, moaning several times and arching [arian.eir] back before [arian.ey] can't hold it back anymore and climaxes inside of you, filling your [cunt] ");
+	output("\n\nArian suddenly clenches and gasps, moaning several times and arching [arian.eir] back before [arian.ey] can't hold it back anymore and climaxes inside of you, filling your [pc.vagina] ");
 	if (arian.cockTotal() > 1) output("and [pc.ass] ");
 	output("with [arian.eir] sticky wet seed.");
 	

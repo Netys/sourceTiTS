@@ -51,7 +51,7 @@ private function followerCampMenuBlurbRathazulGrapple():* {
 }
 
 public function RathazulTimePassedNotify():void {
-	if (hours == 0) {
+	if (hours == 0 && flags["COC.RATHAZUL_MET"] != undefined) {
 		if (flags["COC.RATHAZUL_MET"] == 1) IncrementFlag("COC.RATHAZUL_DAYS_KNOWN");
 		if (flags["COC.RATHAZUL_IN_CAMP"] == 1) IncrementFlag("COC.RATHAZUL_DAYS_IN_CAMP");
 	}

@@ -272,6 +272,7 @@ private function LethiceFortressNorthCourtyardRoomFunc():Boolean
 		output("The seal appears to be broken. You could move north and attempt to defeat Lethice for once and for all. Or you can move east and west through the courtyard, if you like.");
 	}
 	else {
+		setNavDisabled(NAV_NORTH_DISABLE);
 		output("If only the door would open. For some reason, it’s still sealed closed. You can still move east and west through the courtyard, if you like.");
 	}
 	return false;
