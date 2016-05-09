@@ -38,6 +38,7 @@ package classes.Engine.Combat
 		
 		if (lustDamage.tease.damageValue > 0 && attacker != null) lustDamage.tease.damageValue += attacker.sexiness() / 2;
 		if (lustDamage.tease.damageValue > 0 && attacker != null && (attacker.hasPerk("Bimbo Body") || attacker.hasStatusEffect("Bimbo Champagne") || attacker.hasPerk("Bro Body") || attacker.hasPerk("Futa Form"))) lustDamage.tease.damageValue *= 1.1;
+		if (lustDamage.tease.damageValue > 0 && attacker != null && attacker.hasPerk("History: Whore")) lustDamage.tease.damageValue *= 1.15;
 		if (lustDamage.tease.damageValue > 0 && attacker != null && attacker.hasPerk("Pheromone Cloud")) lustDamage.pheromone.damageValue += 1 + rand(4);
 		if (lustDamage.tease.damageValue > 0 && target != null && target.hasCock() && attacker != null && attacker.hasStatusEffect("Cum Soaked")) 
 		{

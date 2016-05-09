@@ -319,6 +319,7 @@
 			if (!(upperUndergarment is EmptySlot)) r.combineResistances(upperUndergarment.resistances);
 			if (!(accessory is EmptySlot)) r.combineResistances(accessory.resistances);
 			
+			if (hasPerk("History: Smith") && r.kinetic.resistanceValue > 0) r.kinetic.resistanceValue *= 1.2;
 			// Effect: Boosts max HP and poison resistance by 10% for 24 hours
 			if (hasStatusEffect("Heart Tea")) r.poison.damageValue = r.poison.damageValue * 1.1;
 			
@@ -3068,7 +3069,9 @@
 			return level * level * 100;
 		}
 		//HP
-		public function HP(arg: Number = 0): Number {			
+		public function HP(arg: Number = 0): Number {
+			if (arg > 0 && hasPerk("History: Healer")) arg *= 1.2;
+			
 			HPRaw += arg;
 			if (HPRaw > HPMax()) HPRaw = HPMax();
 			return HPRaw;
@@ -3102,6 +3105,7 @@
 		}
 		//ENERGY
 		public function energy(arg: Number = 0): Number {
+			if (arg > 0 && hasPerk("History: Slacker")); arg *= 1.2;
 			if(arg > 0 && hasStatusEffect("Sore")) arg /= 2;
 			energyRaw += arg;
 			if (energyRaw > energyMax()) energyRaw = energyMax();
@@ -3778,6 +3782,7 @@
 					modifiedDamage.unresistable_hp.damageValue += statusEffectv1("Concentrated Fire"); 
 				}
 			}
+			if (hasPerk("History: Fighter")) modifiedDamage.multiply(1.2);
 			
 			modifiedDamage.add(armor.baseDamage);
 			modifiedDamage.add(upperUndergarment.baseDamage);
@@ -3785,7 +3790,6 @@
 			modifiedDamage.add(accessory.baseDamage);
 			modifiedDamage.add(shield.baseDamage);
 			
-
 			if(hasStatusEffect("Charge Weapon"))
 				modifiedDamage.add(new TypeCollection( { electric : modifiedDamage.getTotal() * statusEffectv1("Charge Weapon") / 100 } ));
 			//Add bonus to both melee and ranged attacks
@@ -3798,15 +3802,16 @@
 			temp += meleeWeapon.defense;
 			temp += rangedWeapon.defense;
 			temp += armor.defense + upperUndergarment.defense + lowerUndergarment.defense + accessory.defense + shield.defense;
+			if (hasPerk("History: Smith")) temp *= 1.2;
 			if (hasStatusEffect("Harden")) temp += 1;
-			if (hasPerk("Armor Tweaks")) temp += Math.round(armor.defense * .2);
+			if (hasPerk("Armor Tweaks")) temp += armor.defense * .2;
 			if (hasStatusEffect("Crystal Coated")) temp += 4;
 			if (hasStatusEffect("Burning")) 
 			{
 				temp -= 5;
 				if(temp < 0) temp = 0;
 			}
-			return temp;
+			return Math.round(temp);
 		}
 		public function shieldDefense(): Number 
 		{

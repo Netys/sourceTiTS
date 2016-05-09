@@ -114,7 +114,7 @@ public function DesertCaveCommons():Boolean {
 
 	if (flags["COC.SANDWITCH_THRONE_UNLOCKED"] == undefined) {
 		setNavDisabled(NAV_NORTH_DISABLE);
-		output("\n\nA huge stone doorway blocks the path north.  You cannot see a way to open it.");
+		output("\n\n<b>A huge stone doorway blocks the path north.  You cannot see a way to open it.</b>");
 	}
 	else {
 		output("\n\nAn open doorway opens up to the north.  You can faintly see some kind of altar beyond it.");

@@ -265,7 +265,10 @@ private function DemonFactoryDoBadEndTension():void {
 public function DemonFactoryFoyer():Boolean {	
 	output("Glancing around, you find yourself in some kind of stylish foyer, complete with works of art and a receptionist's desk.  Looking closer at the paintings on the wall quickly reveals their tainted and demonic nature: One appears at first to be a painting of a beautiful smiling woman, except you notice dripping tentacles coiling around the hem of her dress.  Behind the receptionist's desk, the second painting is even less discreet, openly depicting a number of imps gang-raping a vaguely familiar-looking woman.  Luckily, whatever demon is employed as the receptionist is away at the moment.  Behind the desk on the northern wall stands a secure-looking iron door.  On the western wall, is a door. A sign on the door indicates that it leads to the factory restroom.  On the eastern wall is a simple wooden door, though the color of the wood itself is far darker and redder than any of the hard woods from your homeland.  Behind you to the south is the rusty iron entry door.");
 	
-	if (!pc.hasKeyItem("Factory Iron Key")) setNavDisabled(NAV_NORTH_DISABLE);
+	if (!pc.hasKeyItem("Factory Iron Key")) {
+		output("\n\n<b>The door to north is closed.</b>");
+		setNavDisabled(NAV_NORTH_DISABLE);
+	}
 	
 	addButton(7, "Leave", DemonFactoryGetOut);
 	
@@ -417,7 +420,7 @@ public function DemonFactoryMainChamber():Boolean {
 
 public function DemonFactoryForemanOffice():Boolean {
 	//Foreman's Office
-	output("This office provides an excellent view of the 'factory floor' through a glass wall along the north side.  Towards the south side of the room is a simple desk with an even simpler chair behind it.  The desk's surface is clear of any paperwork, and only has a small inkwell and quill on top of it.  There are a few statues of women and men posted at the corners of the room.  All are nude and appear to be trapped in mid-orgasm.  You wonder if they're statues or perhaps some kind of perverted petrified art.  The north has a glass door leading back to the factory.  There are two other doors, both made of very solid looking metal.  One is on the east wall and another is on the south, behind the desk.  The one behind the desk is marked 'Premium Storage' (though it appears to be locked).");
+	output("This office provides an excellent view of the 'factory floor' through a glass wall along the north side.  Towards the south side of the room is a simple desk with an even simpler chair behind it.  The desk's surface is clear of any paperwork, and only has a small inkwell and quill on top of it.  There are a few statues of women and men posted at the corners of the room.  All are nude and appear to be trapped in mid-orgasm.  You wonder if they're statues or perhaps some kind of perverted petrified art.  The north has a glass door leading back to the factory.  There are two other doors, both made of very solid looking metal.  One is on the east wall and another is on the south, behind the desk.  The one behind the desk is marked 'Premium Storage'.");
 
 	if (!(flags["COC.FACTORY_OMNIBUS_DEFEATED"] > 0)) {
 		clearMenu();
@@ -437,6 +440,7 @@ public function DemonFactoryForemanOffice():Boolean {
 	}
 	
 	if (!pc.hasKeyItem("Factory Supervisor's Key")) {
+		output("\n\n<b>The doors are locked.</b>");
 		setNavDisabled(NAV_SOUTH_DISABLE);
 		setNavDisabled(NAV_EAST_DISABLE);
 	}

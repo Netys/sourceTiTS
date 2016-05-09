@@ -483,10 +483,10 @@ private function confirmHistory(choice:String):void {
 		case "History: Slacker":
 			pc.createPerk(choice, 0, 0, 0, 0, "Your energy comes back 20% faster.");
 			break;
-		case "History: Slut":
+		case "History: Slut": // no specific handler, start as non virgin, grants 0.5 to elasticity and 20 to initial capacity
 			pc.createPerk(choice, 0, 0, 0, 0, "Your body is a bit more resistant to penetrative stretching, and has a higher upper limit on what exactly can be inserted.");
 			break;
-		case "History: Smith":
+		case "History: Smith": // grants bonus to both armor and kinetic resistance
 			pc.createPerk(choice, 0, 0, 0, 0, "You've learned how to fit armor for maximum protection.");
 			break;
 		case "History: Whore":
@@ -502,14 +502,14 @@ private function confirmHistory(choice:String):void {
 		if (pc.hasVagina()) {
 			pc.vaginalVirgin = false;
 			pc.vaginas[0].hymen = false;
-			pc.vaginas[0].loosenessRaw = 3;
-			if(choice == "History: Whore") pc.vaginas[0].bonusCapacity = 20;
+			pc.vaginas[0].bonusCapacity = 20;
+			if (choice == "History: Whore") pc.vaginas[0].loosenessRaw = 3;
 		}
 		if (pc.hasCock()) pc.cockVirgin = false;
 		pc.analVirgin = false;
-		pc.ass.loosenessRaw = 2;
-		if(choice == "History: Whore") pc.ass.bonusCapacity = 20;
-		if(choice == "History: Slut") pc.elasticity += 0.5;
+		pc.ass.bonusCapacity = 20;
+		if (choice == "History: Whore") pc.ass.loosenessRaw = 2;
+		if (choice == "History: Slut") pc.elasticity += 0.5;
 	}
 	if (choice == "History: Fighter" || choice == "History: Whore") {
 		pc.credits += 500;

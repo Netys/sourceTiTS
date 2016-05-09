@@ -4042,6 +4042,8 @@ package classes.GameData
 				}
 			}
 			
+			if (pc.hasPerk("History: Fortune")) sumCredits = Math.round(sumCredits * 1.15);
+			
 			pc.credits += sumCredits;
 			
 			//Roshan Blue gives 25% more xp and lowers willpower by 30% until next rest
