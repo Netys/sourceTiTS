@@ -3105,7 +3105,7 @@
 		}
 		//ENERGY
 		public function energy(arg: Number = 0): Number {
-			if (arg > 0 && hasPerk("History: Slacker")); arg *= 1.2;
+			if (arg > 0 && hasPerk("History: Slacker")) arg *= 1.2;
 			if(arg > 0 && hasStatusEffect("Sore")) arg /= 2;
 			energyRaw += arg;
 			if (energyRaw > energyMax()) energyRaw = energyMax();

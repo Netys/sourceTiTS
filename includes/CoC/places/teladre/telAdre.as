@@ -239,7 +239,10 @@ public function TelAdreHouses():void {
 			//output("\n\nYou remember Raphael's offer about the Orphanage, but you might want to see about shaping yourself more to his tastes first.  He is a picky fox, after all, and you doubt he would take well to seeing you in your current state.");
 		//}
 	//}
-	if (flags["COC.ARIAN_PARK"] >= 4 && !arianFollower()) addButton(0, "Arian's", visitAriansHouse);
+	if (flags["COC.ARIAN_PARK"] >= 4) 
+		if (arianFollower()) addDisabledButton(0, "Arian's", "Arian's", "Arian has moved to your camp.");
+		else addButton(0, "Arian's", visitAriansHouse);
+	
 	//addButton(1,"Orphanage",orphanage);
 	if (urtaKids() > 0 && pc.hasKeyItem("Spare Key to Urta's House"))
 		addButton(2, "Urta's House", (kathIsAt(KLOC_URTAS_HOME) ? katherineAtUrtas : visitTheHouse));

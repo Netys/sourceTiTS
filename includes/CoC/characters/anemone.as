@@ -68,8 +68,8 @@ public function AnemoneSceneTimeChange():void
 {
 	if (flags["COC.ANEMONE_KID"] > 0) {
 		//if (flags[kFLAGS.KID_ITEM_FIND_HOURS] < 20) flags[kFLAGS.KID_ITEM_FIND_HOURS]++;
-		if (flags["COC.KID_SITTER"] == 0 && flags["COC.MARBLE_KIDS"] >= 5 && hours > 10 && hours < 18 && rand(4) == 0) {
-			kidABabysitsCows();
+		if (int(flags["COC.KID_SITTER"]) == 0 && flags["COC.MARBLE_KIDS"] >= 5 && hours > 10 && hours < 18 && minutes == 0 && rand(4) == 0) {
+			eventQueue.push(kidABabysitsCows);
 		}
 		if (flags["COC.KID_SITTER"] == 1 && hours > 10 && hours < 18 && rand(4) == 0) {
 			flags["COC.KID_SITTER"] = 2;
@@ -1923,7 +1923,8 @@ public function kidADreams():void
 //set Kidsitter flag = 1; 'unlocks' repeat babysitting, making Kid A unavailable with a 25% chance during daylight hours
 public function kidABabysitsCows():void
 {
-	output("\n<b>\"<i>Come on, get out of your little hole and help!</i>\"</b>");
+	clearOutput();
+	output("<b>\"<i>Come on, get out of your little hole and help!</i>\"</b>");
 	output("\n\nThe sound of a voice being raised in frustration turns your head.  Marble is standing in front of your occupied water barrel with several of your rambunctious children in tow, berating the anemone cornered inside.  You advance a few feet and the blue girl turns toward you beseechingly, but Marble starts talking again before you're close enough to say anything.");
 
 	output("\n\n\"<i>...no idea why you're so shy and immature,</i>\" the cow-girl continues, no less insistent for her quieter tone.  \"<i>You're almost two feet taller than any of these kids, so why don't you stop acting like one and behave like an adult?  There's work to be done around here and not enough hands to do it!</i>\"");
@@ -1938,8 +1939,9 @@ public function kidABabysitsCows():void
 
 	output("\n\nHuffing, Marble seats herself on a flat stone and removes some torn childrens' clothing from a pouch, along with a crude needle and some sinew.  \"<i>Whatever.  Don't bring it next time.</i>\"  She turns to her assembled rabble as the anemone absorbs the implications of 'next time'.");
 
-	output("\n\n\"<i>The blue barbarian here will take care of you while I sew up your overalls.  You behave, now.</i>\"  No sooner is the admonition out than one cow kid grabs the anemone by the hand and pulls her away, good behavior clearly the furthest thing from mind.\n");
+	output("\n\n\"<i>The blue barbarian here will take care of you while I sew up your overalls.  You behave, now.</i>\"  No sooner is the admonition out than one cow kid grabs the anemone by the hand and pulls her away, good behavior clearly the furthest thing from mind.");
 	flags["COC.KID_SITTER"] = 1;
+	addNextButton();
 }
 
 //Cow repeat

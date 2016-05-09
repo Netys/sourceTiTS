@@ -63,13 +63,15 @@ public function statisticsScreen(showID:String = "All"):void
 		else if(pc.hasStatusEffect("Force Male Gender")) output2("\n<b>* Gender Preference:</b> Male");
 		else output2("\n<b>* Gender Alignment: </b>" + pc.mfn("Male","Female",pc.mf("Androgynous (Male Pronouns)","Androgynous (Female Pronouns)")));
 		output2("\n<b>* Femininity</b> <i>(Negative is Masculine)</i><b>: </b>" + Math.round((pc.femininity - 50) * 2) + " %");
-		output2("\n<b>* Personality Score: </b>" + Math.round(pc.personality));
-		if(pc.isNice()) output2(", Kind");
-		if(pc.isMischievous()) output2(", Mischievous");
-		if(pc.isAss()) output2(", Hard");
+		if (!kGAMECLASS.inMareth()) {
+			output2("\n<b>* Personality Score: </b>" + Math.round(pc.personality));
+			if(pc.isNice()) output2(", Kind");
+			if(pc.isMischievous()) output2(", Mischievous");
+			if(pc.isAss()) output2(", Hard");
+		}
+		else output2("\n<b>* Corruption: </b>" + Math.round(pc.cor()));
 		if(pc.isBimbo()) output2(", Ditz");
 		if(pc.isBro()) output2(", Brute");
-		if(kGAMECLASS.inMareth()) output2("\n<b>* Corruption: </b>" + Math.round(pc.cor()));
 		output2("\n<b>* Alcohol Tolerance: </b>" + pc.tolerance() + "/100");
 		output2("\n<b>* Exhibitionism: </b>" + formatFloat(pc.exhibitionism(), 1) + "/100");
 		output2("\n<b>* Carry Threshold: </b>" + prettifyWeight(pc.bodyStrength()));

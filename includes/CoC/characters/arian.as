@@ -122,6 +122,18 @@ Corruption Path (Arian's body is drastically altered, but [arian.eir] personalit
 		//}
 		////End of Interface Implementation
 
+public function followerCampMenuBlurbArian(showInteractButton:Boolean):void {
+	if (!arianFollower()) return;
+	
+	outputText("Arian's tent is here, if you'd like to go inside.\n\n");
+	
+	if (showInteractButton) addButton(followerBtnNum++, "Arian", function():* { processTime(3); visitAriansHouse() } );
+}
+
+private var ArianSceneHook: * = ArianSceneGrapple();
+private function ArianSceneGrapple():* { 
+	followerCampMenuBlurb.push(followerCampMenuBlurbArian);
+}
 
 public function set arian(_arian:CoCArian):void
 {
@@ -1479,7 +1491,7 @@ public function arianSexMenu(showOutput:Boolean = true):void {
 		//Docking
 		//ArianCockSize needs to be below 3. (ArianDblCock does not affect this decision.) 
 		//PC cock area must be <= 30.
-		if (pc.cockThatFits(30) >= 0 && arian.biggestCockLength() < ARIAN_COCK_SIZE_3 && arian.hasCock()) addButton(7,"Docking",arianDocking);
+		if (pc.cockThatFits(cockVolume(30)) >= 0 && arian.biggestCockLength() < ARIAN_COCK_SIZE_3 && arian.hasCock()) addButton(7,"Docking",arianDocking);
 	}
 	//Get Anal:
 	//Arian must have a cock.

@@ -179,7 +179,6 @@ package classes.Characters.CoC
 			this.ass.bonusCapacity = 15;
 			
 			this.createStatusEffect("Disarm Immune");
-			this.createStatusEffect("Flee Disabled", 0, 0, 0, 0, true, "", "", false, 0);
 			
 			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.REALLY_LIKES_SEXPREF);
 			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.REALLY_LIKES_SEXPREF);
