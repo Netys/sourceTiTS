@@ -100,7 +100,7 @@ package classes.Items.Transformatives
 			if(target is PlayerCharacter) {
 				output("Pressing the activation stud is all it will take. You hold the tip against your arm and brace yourself, pushing the button.");
 				if (kGAMECLASS.flags["CATNIP_USED"] == undefined) {
-					output(" A quiet-sounding 'snick' hits your ears, but nothing else. Did it even work? You look where you had the pen held. There's a tiny red mark and nothing else. The pen's label displays the word ‘inactive’ in bold red text. It must have a built in painkiller. Suddenly, your codex beeps responding to connection request from injected nanobots.");
+					output(" A quiet-sounding 'snick' hits your ears, but nothing else. Did it even work? You look where pen touched your skin. There's a tiny red mark and nothing else. The pen's label displays the word ‘inactive’ in bold red text. It must have a built in painkiller. Suddenly, your codex beeps responding to connection request from injected nanobots.");
 					
 					output("\n\nDetected feedback-compatible Biosign Monitor device. Aborting automated route. Debug mode activated. System is awaiting input. Please select specific route or confirm default settings. Please note: targeted route is less effective than automated, since it forces override of optimization algorithm.");
 					
@@ -484,7 +484,7 @@ package classes.Items.Transformatives
 				// tighten to 1 and dry up to 2
 				if (target.vaginas[x].minLooseness > 1 && target.loosenessUnlocked(x, target.vaginas[x].minLooseness - 1) || target.vaginas[x].wetnessRaw > 2 && target.wetnessUnlocked(x, target.vaginas[x].wetnessRaw - 1))
 				{
-					output("\n\nYou feel a strange half-pleasure sensation spreading up from your [pc.vagina " + x + "]. <b>Giving your muff an experimental poke, your find it ");
+					output("\n\nYou feel a strange pleasure sensation spreading up from your [pc.vagina " + x + "]. <b>Giving your muff an experimental poke, your find it ");
 					
 					kGAMECLASS.clearList();
 					if (target.vaginas[x].minLooseness > 1 && target.loosenessUnlocked(x, target.vaginas[x].minLooseness - 1)) {
@@ -603,7 +603,7 @@ package classes.Items.Transformatives
 								target.cocks[x].cLengthRaw = Math.round(target.cocks[x].cLengthRaw - Math.min(target.cocks[x].cLength() - maxSize, target.cocks[x].cLengthRaw / 5 + 1 + rand(target.cocks[x].cLengthRaw / 5 + 2)));
 							}
 							else if(target.cocks[x].cLengthRaw < maxSize) {
-								output(" Your prick grows longer! Looks like it was small even for cat...");
+								output(" Your prick grows longer! Looks like it was small even for a cat...");
 								target.cocks[x].cLengthRaw = Math.round(target.cocks[x].cLengthRaw + Math.min(maxSize - target.cocks[x].cLength(), target.cocks[x].cLengthRaw / 5 + 1 + rand(target.cocks[x].cLengthRaw / 5 + 2)));
 							}
 							
@@ -639,7 +639,7 @@ package classes.Items.Transformatives
 					else if(target.cocks[x].cLengthRaw < maxSize) {
 						output(" Your prick <b>grows longer</b>, extending to its new size of <b>");
 						target.cocks[x].cLengthRaw = Math.round(target.cocks[x].cLengthRaw + Math.min(maxSize - target.cocks[x].cLength(), target.cocks[x].cLengthRaw / 5 + 1 + rand(target.cocks[x].cLengthRaw / 5 + 2)));
-						output(num2Text(int(target.cocks[x].cLength())) + "</b> inches. Looks like it was small even for cat...");
+						output(num2Text(int(target.cocks[x].cLength())) + "</b> inches. Looks like it was small even for a cat...");
 					}
 					changes++;
 					target.lust(10 + rand(5));
