@@ -8666,7 +8666,7 @@
 			if (kaithritScore() >= 6) race = "kaithrit";
 			if (felineScore() >= 5 && race != "kaithrit") {
 				if (hasTail(GLOBAL.TYPE_FELINE) && tailCount > 1) race = "nekomata";
-				else if (dragonScore() >= 4)  race = "dragonne";
+				else if (dragonScore() >= 4 && hasScales())  race = "dragonne";
 				else race = "feline-morph";
 			}
 			if (leithanScore() >= 6) race = "leithan";
@@ -8689,7 +8689,7 @@
 			if (horseScore() >= 3 && isCentaur()) race = taurRace(equineRace());
 			else if (bovineScore() >= 3 && isTaur()) race = rawmfn("bull", "cow", "bovine") + "-taur";
 			else if (race == "human" && isCentaur()) race = "centaur";
-			else if (race == "feline-morph" && isTaur() && isHerm()) race = "chakat";
+			else if (InCollection(race, "feline-morph", "nekomata") && isTaur() && isHerm()) race = "chakat";
 			else if (isTaur()) race = taurRace(race); // Other taurs
 			// Naga-morphs
 			if (naleenScore() >= 5 && isNaga()) race = "naleen";

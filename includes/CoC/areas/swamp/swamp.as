@@ -25,7 +25,7 @@ public function exploreSwamp():void {
 	//}
 	
 	/*  SPECIAL SCENE OVERWRITES */
-	if (int(flags["COC.TOOK_EMBER_EGG"]) == 0 && int(flags["COC.EGG_BROKEN"]) == 0 && flags["COC.TIMES_EXPLORED_SWAMP"] > 0 && (flags["COC.TIMES_EXPLORED_SWAMP"] % 40 == 0)) {
+	if (int(flags["COC.TOOK_EMBER_EGG"]) == 0 && int(flags["COC.EGG_BROKEN"]) == 0 && flags["COC.EXPLORED_SWAMP"] > 0 && (flags["COC.EXPLORED_SWAMP"] % 40 == 0)) {
 		findEmbersEgg();
 		return;
 	}
