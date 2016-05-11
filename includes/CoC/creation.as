@@ -531,6 +531,12 @@ private function completeCharacterCreation():void {
 	else pc.lowerUndergarment = new CoCLoincloth();
 	if (pc.biggestTitSize() >= 1) pc.upperUndergarment = new CoCBra();
 	
+	if(pc.affinity == "intelligence") pc.intelligenceRaw++;
+	if(pc.affinity == "physique") pc.physiqueRaw++;
+	if(pc.affinity == "reflexes") pc.reflexesRaw++;
+	if(pc.affinity == "aim") pc.aimRaw++;
+	if(pc.affinity == "willpower") pc.willpowerRaw++;
+	
 	pc.removeStatusEffect("In Creation");
 	
 	userInterface.showTime()

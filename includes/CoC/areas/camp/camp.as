@@ -1,7 +1,5 @@
 import classes.Creature;
 import classes.GLOBAL;
-import classes.Items.Transformatives.Catnip;
-import classes.Items.Transformatives.CoCReptilum;
 import classes.ItemSlotClass;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
@@ -33,7 +31,7 @@ public function cocCampMenu():void {
 	//campLoversButton();
 	//campSlavesButton();
 	
-	addButton(5, "Debug", doDebugFunction);
+	//addButton(5, "Debug", doDebugFunction);
 	
 	if (hasCampStorage()) addButton(3, "Stash", campStorageMenuRoot);
 	else addDisabledButton(3, "Stash", "Stash", "You have no place to store your items.");
@@ -43,6 +41,7 @@ public function cocCampMenu():void {
 }
 
 public function doDebugFunction():void {
+	new Catnip(); // temp to make it compile
 }
 
 public function inCamp():Boolean

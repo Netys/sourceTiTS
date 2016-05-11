@@ -1,18 +1,21 @@
+import classes.Characters.CoC.CoCWorms;
+import classes.GameData.CombatManager;
 import classes.GLOBAL;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-// TODO: actually implement. Maybe. Sometimes. Just have to get a vomit bucket first ©Etis
+public function showWorms():void {
+	userInterface.showName("\nWORMS");
+}
+
 public function wormEncounter():void {
-	//spriteSelect(76);
 	clearOutput();
 	clearMenu();
 	
-	var canEncounterWorms:Boolean = false;
+	var canEncounterWorms:Boolean = true;
 	if (pc.hasStatusEffect("Worms Infested")) canEncounterWorms = false;
 	if (flags["COC.WORMS_ENABLED"] == -1) canEncounterWorms = false; // disabled
-	canEncounterWorms = false; // since it is not actually here
 	
 	if (!canEncounterWorms || flags["COC.WORMS_ENABLED"] == 1 && rand(2) == 1 /* half chance */)
 	{	
@@ -28,112 +31,143 @@ public function wormEncounter():void {
 		pc.slowStatGain("p", 0.25);
 		pc.slowStatGain("r", 0.25);
 
-		processTime(15 + rand(30));
-		addButton(0, "Next", mainGameMenu);
+		clearMenu();
+		addButton(0, "Next", function():*{ processTime(40 + rand(10)); mainGameMenu(); } );
 		return;
 	}
-	//if (pc.findStatusAffect(StatusAffects.MetWorms) < 0) { //First encounter
-		//output("As you are exploring, a rather pungent, peaty smell assails your nostrils. You hear a strange rustling and an off-kilter squishing noise in the distance. As you explore the area you come upon a most grotesque sight. Before you is a cohesive mass of writhing, wriggling worms! While normally solitary creatures, these appear to have coalesced into a monstrous living colony!\n\n");
-		//output("You have never before seen such a bizarre freak of nature. You see the mass of annelids creep about across your path. It stops and spreads slightly in your direction before halting. The stench of the mass is indescribable and a thick, viscous slime covers each of the countless worms forming the collective.\n\n");
-		//output("You stop dead in your tracks, wondering what this swarm will do. After a few tense moments, the mass crawls away in a direction opposite of both you and your current path. You breathe a sigh of relief as you are confident that no good could have come from confronting such a zoological travesty.");
-		//dynStats("lus", -10);
-		//pc.createStatusAffect(StatusAffects.MetWorms, 0, 0, 0, 0);
-		//doNext(returnToCampUseOneHour);
-	//}
-	//else if (pc.hasCock()) {
-		//output("Minding your own business, you make your way through the mountain and you find yourself stopped by another mass of the sickly worms. The collective stops, apparently sensing your presence and briefly ebbs in your direction. After a few tense moments, the mass begins moving again... straight towards you at an alarming rate!\n\n");
-		//output("What do you do?");
-		//simpleChoices("Confront", wormsConfront, "Do Nothing", wormsDoNothing, "", null, "", null, "Run", wormsRun);
-	//}
-	//else {
-		//output("Making your way, you stumble on another gross mass of worms. The countless struggling creatures bar the path before you. Again, you freeze in place as the horror gropes about on the ground. It appears to have no real interest in your presence and it makes its way in a direction other than yours, much to your relief.");
-		//doNext(returnToCampUseOneHour);
-	//}
 	
-	processTime(15 + rand(30));
-	addButton(0, "Next", mainGameMenu);
+	showWorms();
+	if (flags["COC.WORMS_MET"] == undefined) { //First encounter
+		output("As you are exploring, a rather pungent, peaty smell assails your nostrils. You hear a strange rustling and an off-kilter squishing noise in the distance. As you explore the area you come upon a most grotesque sight. Before you is a cohesive mass of writhing, wriggling worms! While normally solitary creatures, these appear to have coalesced into a monstrous living colony!\n\n");
+		output("You have never before seen such a bizarre freak of nature. You see the mass of annelids creep about across your path. It stops and spreads slightly in your direction before halting. The stench of the mass is indescribable and a thick, viscous slime covers each of the countless worms forming the collective.\n\n");
+		output("You stop dead in your tracks, wondering what this swarm will do. After a few tense moments, the mass crawls away in a direction opposite of both you and your current path. You breathe a sigh of relief as you are confident that no good could have come from confronting such a zoological travesty.");
+		pc.lust( -10);
+		flags["COC.WORMS_MET"] = 1;
+		clearMenu();
+		addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+	}
+	else if (pc.hasCock()) {
+		output("Minding your own business, you make your way through the mountain and you find yourself stopped by another mass of the sickly worms. The collective stops, apparently sensing your presence and briefly ebbs in your direction. After a few tense moments, the mass begins moving again... straight towards you at an alarming rate!\n\n");
+		output("What do you do?");
+		clearMenu();
+		addButton(0, "Confront", wormsConfront);
+		addButton(1, "Do Nothing", wormsDoNothing);
+		addButton(2, "Run", wormsRun);
+	}
+	else {
+		output("Making your way, you stumble on another gross mass of worms. The countless struggling creatures bar the path before you. Again, you freeze in place as the horror gropes about on the ground. It appears to have no real interest in your presence and it makes its way in a direction other than yours, much to your relief.");
+		clearMenu();
+		addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+	}
 }
 
-//public function wormToggle():void {
-	//spriteSelect(76);
-	//clearOutput();
-	//output("While wandering, you come across a crudely illustrated sign.  It depicts an imp in obvious discomfort, covered in white little worms.  It looks as if one of them is even crawling into the imp's penis!\n\nHow do you feel about that?");
-	//simpleChoices("Aroused", wormsOn, "Grossed Out", wormsOff, "Who Cares?", wormsPartiallyOn, "", null, "", null);
-//}
-//
-//private function wormsOn():void {
-	//clearOutput();
-	//output("You actually think it's kind of a hot idea, and wonder if such creatures actually exist in this land as you make your way back to camp.");
-	//output("\n\n<b>If you ever change your mind, you can toggle from Fetishes menu in game settings.</b>");
-	//pc.createStatusAffect(StatusAffects.WormsOn, 0, 0, 0, 0);
-	//doNext(returnToCampUseOneHour);
-//}
-//
-//private function wormsPartiallyOn():void {
-	//clearOutput();
-	//output("You shrug and keep walking, not sure how you feel about the strange sign.");
-	//output("\n\n<b>If you ever change your mind, you can toggle from Fetishes menu in game settings.</b>");
-	//pc.createStatusAffect(StatusAffects.WormsOn, 0, 0, 0, 0);
-	//pc.createStatusAffect(StatusAffects.WormsHalf, 0, 0, 0, 0);
-	//doNext(returnToCampUseOneHour);
-//}
-//
-//private function wormsOff():void {
-	//clearOutput();
-	//output("You shudder in revulsion and figure the sign to be the result of someone's perverted fantasy.");
-	//output("\n\n<b>If you ever change your mind, you can toggle from Fetishes menu in game settings.</b>");
-	//pc.createStatusAffect(StatusAffects.WormsOff, 0, 0, 0, 0);
-	//doNext(returnToCampUseOneHour);
-//}
-	//
-//private function wormsConfront():void {
-	//spriteSelect(76);
-	//clearOutput();
-	//output("You turn to confront the worms and combat begins!");
-	//startCombat(new WormMass());
-//}
-//
-//private function wormsDoNothing():void {
-	//spriteSelect(76);
-	//clearOutput();
-	//output("You do nothing, allowing the worms to enter combat range!");
-	//startCombat(new WormMass());
-//}
-//
-//private function wormsRun():void {
-	//clearOutput();
-	//if(pc.spe > rand(35)) {
-		//output("Your instincts overwhelm you and you immediately turn around and run like hell in the opposite direction. You look behind you as your heart feels as if it is about to burst only to discover that the creature did not follow you. You take a moment to catch your breath and consider yourself fortunate.");
-		//doNext(returnToCampUseOneHour);
-	//}
-	//else {
-		//output("You turn to run, but before your " + pc.feet() + " can get you away, the worms are upon you!  You turn to face them, lest they launch onto your unprotected back.");
-		//startCombat(new WormMass());
-	//}
-//}
-//
-//public function infest1():void {
-	//spriteSelect(76);
-	//output("Trapped within the mass of worms, you are utterly helpless. The constant moving all over your body provides naught but unwanted stimulation. Your cock, not knowing any better, springs to attention, creating a peak in the mass. The worms immediately recognize what has happened to you. One particularly fat worm finds itself perched on top of your dick's throbbing glans. You feel it prodding about your urethral opening and come to a horrible realization that your precious penis is completely vulnerable to thousands of creatures capable of invading your body!!! Before you can react or curse your fate, the fat worm quickly forces open your urethra and begins to push its way inside your dick!\n\n", false);
-	//output("Crying out in shock, you feel the fat worm push its way, inch by inch, into your urethra. Your nerves light up like a Christmas tree as each individual cell tells you of the creature's presence and movement deeper into your body. The fat beast easily finds its way into your prostate and settles within the organ. As it settles, it begins flailing inside your sex. The sensations shift from shock to grotesque pleasure as your body only senses the stimulation conductive to orgasmic response. Your groin cramps and bloats quickly by the torrent of semen building within you and the invader's presence. Obviously sensitive to your fluids, you feel the worm thrash around some more, causing your body to respond by making more semen. The flopping creature quickly erodes any orgasmic discipline you are capable of and with a great shrill cry, you force lances of cum into the air, launching goo and worms alike in a sick display of forced pleasure. After you empty your body of spunk, the remaining worms become hyperaggressive.\n\n", false);
-	//output("Excited by the feel of your fluids on them, many smaller worms push their way into your penis. Your cock distends as the worms fight to get inside you and to the source of the milk that has so excited them. Your prostate quickly fills up with the squirming creatures. The discomfort in your bloated bludgeon and the ceaseless stimulation of your organs causes your body to produce more cum. However, you find yourself unable to climax as the invaders rest inside your body submerged in your salty lust. The rest of the colony disperses, having accomplished its true goal of infesting your body.\n\n", false);
-	//if(cor() < 25) {
-		//dynStats("cor", 1);
-		//cor() = 25;
-	//}
-	//trace("GET INFESTED HERE");
-	//if(pc.findStatusAffect("Infested") >= 0) {trace("BWUH?");}
-	//else {
-		//if(flags[kFLAGS.EVER_INFESTED] == 0) flags[kFLAGS.EVER_INFESTED] = 1;
-		//pc.createStatusAffect("Infested",0,0,0,0);
-		//dynStats("cor", 0);
-	//}
-	//cleanupAfterCombat();
-//}
+public function wormToggle():void {
+	//showWorms();
+	clearOutput();
+	output("While wandering, you come across a crudely illustrated sign.  It depicts an imp in obvious discomfort, covered in white little worms.  It looks as if one of them is even crawling into the imp's penis!\n\nHow do you feel about that?");
+	clearMenu();
+	addButton(0, "Aroused", wormsOn);
+	addButton(1, "Grossed Out", wormsOff);
+	addButton(2, "Who Cares?", wormsPartiallyOn);
+}
+
+private function wormsOn():void {
+	clearOutput();
+	output("You actually think it's kind of a hot idea, and wonder if such creatures actually exist in this land as you make your way back to camp.");
+	output("\n\n<b>If you ever change your mind, you can toggle from Fetishes menu in game settings.</b>");
+	flags["COC.WORMS_ENABLED"] = 0; // normal
+	doNext(returnToCampUseOneHour);
+}
+
+private function wormsPartiallyOn():void {
+	clearOutput();
+	output("You shrug and keep walking, not sure how you feel about the strange sign.");
+	output("\n\n<b>If you ever change your mind, you can toggle from Fetishes menu in game settings.</b>");
+	flags["COC.WORMS_ENABLED"] = 1; // half
+	clearMenu();
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+}
+
+private function wormsOff():void {
+	clearOutput();
+	output("You shudder in revulsion and figure the sign to be the result of someone's perverted fantasy.");
+	output("\n\n<b>If you ever change your mind, you can toggle from Fetishes menu in game settings.</b>");
+	flags["COC.WORMS_ENABLED"] = -1; // none
+	clearMenu();
+	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+}
+
+private function fightWorms():void {
+	CombatManager.newGroundCombat();
+	CombatManager.setFriendlyCharacters(pc);
+	CombatManager.setHostileCharacters(new CoCWorms());
+	CombatManager.victoryScene(function():*{
+		processTime(15 + rand(5));
+		CombatManager.genericVictory();
+	});
+	CombatManager.lossScene(infest1);
+	CombatManager.displayLocation("WORMS");
+	CombatManager.beginCombat();
+}
+	
+private function wormsConfront():void {
+	showWorms();
+	clearOutput();
+	output("You turn to confront the worms and combat begins!");
+	addNextButton(fightWorms);
+}
+
+private function wormsDoNothing():void {
+	showWorms();
+	clearOutput();
+	output("You do nothing, allowing the worms to enter combat range!");
+	addNextButton(fightWorms);
+}
+
+private function wormsRun():void {
+	clearOutput();
+	if (pc.canFly()) {
+		output("You beat your [pc.wings] quickly and burst into the air! Wasting no time you fly away.");
+		addNextButton(function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+	}
+	else if(pc.reflexes() > rand(35)) {
+		output("Your instincts overwhelm you and you immediately turn around and run like hell in the opposite direction. You look behind you as your heart feels as if it is about to burst only to discover that the creature did not follow you. You take a moment to catch your breath and consider yourself fortunate.");
+		processTime(5);
+		addNextButton(function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+	}
+	else {
+		output("You turn to run, but before your " + pc.feet() + " can get you away, the worms are upon you!  You turn to face them, lest they launch onto your unprotected back.");
+		addNextButton(fightWorms);
+	}
+}
+
+public function infest1():void {
+	showWorms();
+	clearOutput();
+	
+	output("Overcome by your " + (pc.HP() < 1 ? "wounds" : "lust") + ", you sink to your knees as the colony of worms swarms all over your body...\n\n");
+	
+	output("Trapped within the mass of worms, you are utterly helpless. The constant moving all over your body provides naught but unwanted stimulation. [pc.EachCock], not knowing any better, springs to attention, creating a peak in the mass. The worms immediately recognize what has happened to you. One particularly fat worm finds itself perched on top of your dick's throbbing glans. You feel it prodding about your urethral opening and come to a horrible realization that your precious penis is completely vulnerable to thousands of creatures capable of invading your body!!! Before you can react or curse your fate, the fat worm quickly forces open your urethra and begins to push its way inside your dick!\n\n");
+	
+	output("Crying out in shock, you feel the fat worm push its way, inch by inch, into your urethra. Your nerves light up like a Christmas tree as each individual cell tells you of the creature's presence and movement deeper into your body. The fat beast easily finds its way into your prostate and settles within the organ. As it settles, it begins flailing inside your sex. The sensations shift from shock to grotesque pleasure as your body only senses the stimulation conductive to orgasmic response. Your groin cramps and bloats quickly by the torrent of semen building within you and the invader's presence. Obviously sensitive to your fluids, you feel the worm thrash around some more, causing your body to respond by making more semen. The flopping creature quickly erodes any orgasmic discipline you are capable of and with a great shrill cry, you force lances of cum into the air, launching goo and worms alike in a sick display of forced pleasure. After you empty your body of spunk, the remaining worms become hyperaggressive.\n\n");
+	
+	output("Excited by the feel of your fluids on them, many smaller worms push their way into your penis. Your cock distends as the worms fight to get inside you and to the source of the milk that has so excited them. Your prostate quickly fills up with the squirming creatures. The discomfort in your bloated bludgeon and the ceaseless stimulation of your organs causes your body to produce more cum. However, you find yourself unable to climax as the invaders rest inside your body submerged in your [pc.cumFlavor] lust. The rest of the colony disperses, having accomplished its true goal of infesting your body.\n\n");
+	
+	if(pc.cor() < 25) pc.cor(25, true);
+	trace("GET INFESTED HERE");
+	if(pc.hasStatusEffect("Infested")) {trace("BWUH?");}
+	else {
+		if(int(flags["COC.EVER_INFESTED"]) == 0) flags["COC.EVER_INFESTED"] = 1;
+		pc.createStatusEffect("Infested", 0, 0, 0, 0);
+	}
+	
+	processTime(15 + rand(5));
+	CombatManager.genericLoss();
+}
 
 //spontaneous orgasm - chance to avoid being raped by monsters who would care.
 public function infestOrgasm():void {
-	//spriteSelect(76);
+	//showWorms();
 	output("The ceaseless squirming of your uninvited guests send your body into paroxysms. Collapsing to your knees, you immediately begin pushing gouts of dick milk out of your body. You feel tremendous pressure in your pelvis and in your cock as you realize that you are pushing worms out with each torrent of cum! Stream upon stream of cum breaks free from the prison of your body, carrying some of the worms inside you with it. Once the orgasm passes, you collapse to the ground, totally spent. Before you pass out, you feel the unfortunate presence of the fat worm still in your body.");
 	pc.orgasm();
 	//Check infestation and update it
@@ -163,7 +197,7 @@ public function infestOrgasm():void {
 }
 
 //public function playerInfest():void {
-	//spriteSelect(76);
+	//showWorms();
 	////Keep logic sane if this attack brings victory
 ////Gone	menuLoc = 0;
 	//if(pc.fatigue + kGAMECLASS.physicalCost(40) > pc.maxFatigue()) {
@@ -189,7 +223,7 @@ public function infestOrgasm():void {
 	//if(monster.findStatusAffect(StatusAffects.TwuWuv) >= 0) {
 		//output("You expose yourself and attempt to focus on expelling your squirming pets toward Sheila but as you picture launching a flood of parasites from [eachCock], the fantasy she sent returns to you, breaking your concentration!  Your hand darts automatically to your crotch, stroking [oneCock] as you imagine unloading into her cunt... only with effort do you pull it away!\n\n");
 		//output("\"<i>Oh, my,</i>\" the demon teases.  \"<i>You don't have to masturbate yourself, [name]... I'll be happy to do it for you.</i>\"\n\n");
-		//dynStats("lus", 5 + pc.sens/10, "resisted", false);
+		//dynStats("lus", 5 + pc.sens/10, "resisted");
 		//enemyAI();
 		//return;
 	//}
@@ -198,13 +232,13 @@ public function infestOrgasm():void {
 	////Viable target?
 	//if(monster.short == "minotaur" || monster.short == "imp") {
 		//if(monster.lust > 70) {
-			//output("Your load washes over the " + monster.short + " and " + monster.pronoun1 + " stops dead in " + monster.pronoun3 + " tracks as " + monster.pronoun1 + " chokes and sputters to clear the cum from " + monster.pronoun3 + " face and nose to breathe. The " + monster.short + " stumbles, attempting to stand in your fresh cum puddle and quickly busts its ass on the ground. The worms quickly take over and swarm around the " + monster.short + "' s " + monster.cockDescriptShort(0) + ". With wild hunger, the worms easily push into the " + monster.short + "'s urethra and begin venturing into your victim's body. The " + monster.short + " begins to convulse wildly as " + monster.pronoun3 + " body begins to react to the squirming invaders. The " + monster.short + " quickly peaks and cum flies in all directions, along with some worms. You laugh hysterically as the " + monster.short + " must now endure the endless orgasms your new pets provide. You choose to unload one last batch on your fallen foe to ensure a good infestation and walk away to leave the " + monster.short + " in the hell of endless pleasure.\n", false);
+			//output("Your load washes over the " + monster.short + " and " + monster.pronoun1 + " stops dead in " + monster.pronoun3 + " tracks as " + monster.pronoun1 + " chokes and sputters to clear the cum from " + monster.pronoun3 + " face and nose to breathe. The " + monster.short + " stumbles, attempting to stand in your fresh cum puddle and quickly busts its ass on the ground. The worms quickly take over and swarm around the " + monster.short + "' s " + monster.cockDescriptShort(0) + ". With wild hunger, the worms easily push into the " + monster.short + "'s urethra and begin venturing into your victim's body. The " + monster.short + " begins to convulse wildly as " + monster.pronoun3 + " body begins to react to the squirming invaders. The " + monster.short + " quickly peaks and cum flies in all directions, along with some worms. You laugh hysterically as the " + monster.short + " must now endure the endless orgasms your new pets provide. You choose to unload one last batch on your fallen foe to ensure a good infestation and walk away to leave the " + monster.short + " in the hell of endless pleasure.\n");
 			//monster.lust = 100;
 			//cleanupAfterCombat();
 			//return;
 		//}
 		//else {
-			//output("The monster watches your display as they step out of the way, a little grossed out by your actions.\n", false);
+			//output("The monster watches your display as they step out of the way, a little grossed out by your actions.\n");
 			//monster.lust+=5;
 		//}
 	//}
@@ -213,7 +247,7 @@ public function infestOrgasm():void {
 	//}
 	//else if(monster.short == "anemone") {
 		////Infest vs. anemone:
-		//output("The white mess takes the anemone square in the torso, and the worms nearest her blue shaft waste no time in heading for it.  You both watch curiously as the lead worms ascend her dick, only to run headlong into the tentacles and slip off, stunned.  Eyes twinkling, the girl scoops up a handful of the squirming load still on her stomach and slurps it down greedily.  She smacks her lips and says, \"<i>Chewy!</i>\"\n", false);
+		//output("The white mess takes the anemone square in the torso, and the worms nearest her blue shaft waste no time in heading for it.  You both watch curiously as the lead worms ascend her dick, only to run headlong into the tentacles and slip off, stunned.  Eyes twinkling, the girl scoops up a handful of the squirming load still on her stomach and slurps it down greedily.  She smacks her lips and says, \"<i>Chewy!</i>\"\n");
 		//monster.HP += 20;
 		////(minus PC lust, of course)
 	//}

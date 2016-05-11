@@ -42,19 +42,19 @@ public function boatExplore():void
 		choice.push(talkToMaraeAboutMinervaPurification);
 		chance.push(10);
 	}
-	if (flags["COC.FACTORY_SHUTDOWN"] == 1 && flags["COC.MARAE_QUEST_COMPLETE"] >= 1 && flags["COC.MINERVA_PURIFICATION_MARAE_TALKED"] != 1 && flags["COC.LETHICE_DEFEATED"] > 0 && flags["COC.PURE_MARAE_ENDGAME"] < 2 && pc.level >= 30) {
-		choice.push(encounterPureMaraeEndgame);
-		chance.push(10);
-	}
+	//if (flags["COC.FACTORY_SHUTDOWN"] == 1 && flags["COC.MARAE_QUEST_COMPLETE"] >= 1 && flags["COC.MINERVA_PURIFICATION_MARAE_TALKED"] != 1 && flags["COC.LETHICE_DEFEATED"] > 0 && flags["COC.PURE_MARAE_ENDGAME"] < 2 && pc.level >= 30) {
+		//choice.push(encounterPureMaraeEndgame);
+		//chance.push(10);
+	//}
 	//10% chance of corrupt Marae followups
-	if ((debug || rand(10) == 0) && flags["COC.CORRUPT_MARAE_FOLLOWUP_ENCOUNTER_STATE"] == undefined && flags["COC.MET_MARAE_CORRUPTED"] > 0 && pc.hasGenitals() && flags["COC.CORRUPTED_MARAE_KILLED"] == undefined) {
+	if ((debug || rand(5) == 0) && int(flags["COC.CORRUPT_MARAE_FOLLOWUP_ENCOUNTER_STATE"]) == 0 && flags["COC.MET_MARAE_CORRUPTED"] > 0 && pc.hasGenitals() && flags["COC.CORRUPTED_MARAE_KILLED"] == undefined) {
 		choice.push(level2MaraeEncounter);
-		chance.push(20);
+		chance.push(1);
 	}
 	////Done to allow player who has both perks to fight Marae.
-	if ((debug || rand(10) == 0) && flags["COC.CORRUPT_MARAE_FOLLOWUP_ENCOUNTER_STATE"] == 2 && flags["COC.MET_MARAE_CORRUPTED"] > 0 && pc.hasGenitals() > 0 && flags["COC.CORRUPTED_MARAE_KILLED"] == undefined) {
+	if ((debug || rand(5) == 0) && flags["COC.CORRUPT_MARAE_FOLLOWUP_ENCOUNTER_STATE"] == 2 && flags["COC.MET_MARAE_CORRUPTED"] > 0 && pc.hasGenitals() > 0 && flags["COC.CORRUPTED_MARAE_KILLED"] == undefined) {
 		choice.push(level3MaraeEncounter);
-		chance.push(20);
+		chance.push(1);
 	}
 	
 	if (flags["COC.FACTORY_SHUTDOWN"] > 0 && pc.level > 2) {

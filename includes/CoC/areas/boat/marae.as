@@ -114,7 +114,7 @@ public function encounterMarae():void {
 				addButton(0, "Run", runFromPervertedGoddess, null, "Run", "Get the hell out of here! Because even the hell is probably safer place.");
 				addButton(1, "Lethicite", maraeStealLethicite, null, "Steal Lethicite", "Any demon would sell his OWN soul for goddess lethicite, you have to try this!");
 				addButton(2, "Accept", maraeBadEnd, "Accept", "You have offer of literally divine pleasure, who would turn it down?");
-				addButton(3, "FIGHT!", promptFightMarae1, "FIGHT!", "Engage in a fight with corrupt goddess? What can possibly go wrong?");
+				//addButton(3, "FIGHT!", promptFightMarae1, "FIGHT!", "Engage in a fight with corrupt goddess? What can possibly go wrong?");
 			}
 			//Repeat corrupt meeting
 			else {
@@ -122,7 +122,7 @@ public function encounterMarae():void {
 				//Yes - accept, No- run
 				addButton(0, "Accept", maraeBadEnd, "Accept", "You have offer of literally divine pleasure, who would turn it down?");
 				addButton(1, "Run", runFromPervertedGoddess, null, "Run", "Get the hell out of here! Because even the hell is probably safer place.");
-				addButton(2, "FIGHT!", promptFightMarae1, "FIGHT!", "Engage in a fight with corrupt goddess? What can possibly go wrong?");
+				//addButton(2, "FIGHT!", promptFightMarae1, "FIGHT!", "Engage in a fight with corrupt goddess? What can possibly go wrong?");
 			}
 		}
 	}
@@ -234,7 +234,6 @@ public function winAgainstMarae():void {
 		flags["COC.PURE_MARAE_ENDGAME"] = 2;
 	}
 	CombatManager.genericVictory();
-	doNext(returnToCampUseOneHour);
 }	
 
 private function maraeBadEnd():void {
@@ -338,20 +337,20 @@ private function maraeStealLethicite():void {
 			}
 			else output(pc.vaginaDescript(0) + ".  ");
 			output("She guides the tentacle forwards, letting it brush your nether-lips.  Without any guidance from its mistress, the bulbous plant-member buries itself inside you, sliding in easily until it's pushing hard against your womb.  A quick blast of fluid sends cramps spasming up your gut, forcing your cervix to dilate.  It wastes no time, flowing into your unprotected womb.  As soon as it reaches the back of your womb, thick bulges begin sliding down the exposed portion of the tentacle.  It stretches you wide, almost painfully so, as they pass through your lips and work up your passage.  They begin exploding in your cunt, one after the other, cum-bombs bursting in your womb, filling you to the brink.  Your belly swells out, giving you the appearance of a pregnant woman.  Finished with its nasty work, the plant-prick pulls free leaving your puffy pussy lips slightly agape.  A small runner of a thick green substance slowly slides out.");
-			pc.cuntChange(0,20,true,true,false);
+			pc.cuntChange(0, cockVolume(20), true, true, false);
 			output("\n\n");
 			output("Marae winks, \"<i>Sorry about making you look so pregnant my dear, it's a necessary part of the process.  All that sloshing seed is going to flow right into your tender little mortal ovaries, and remake them.  You'll be so fertile just looking at a hard cock could knock you up!</i>\"\n\n");
 			output("She giggles at your expression of horror, \"<i>No, not literally, but it won't take much to make you a mommy, and you'll find the gestation to be quite a bit... shorter.  Now get out of here before I change my mind and lock in an orgasm for the rest of your life.</i>\"\n\n");
 			output("You are dropped from the tree, and with little choice, you waddle to your boat, doing your best to cover up your violated " + pc.vaginaDescript(0) + ".");
 			pc.createPerk("Marae's Gift: Fertility", 0, 0, 0, 0, "Greatly increases fertility and halves base pregnancy speed.");
-			doNext(returnToCampUseOneHour);
+			doNext(mainGameMenu);
 		}
 	}
 }
 
 public function level2MaraeEncounter():void {
 	//spriteSelect(40);
-	flags["PC.CORRUPT_MARAE_FOLLOWUP_ENCOUNTER_STATE"] = 1;
+	flags["COC.CORRUPT_MARAE_FOLLOWUP_ENCOUNTER_STATE"] = 1;
 	clearOutput();
 	clearMenu();
 	//output(images.showImage("marae-second-encounter"));
@@ -399,7 +398,7 @@ public function level2MaraeEncounter():void {
 	}
 	
 	addButton(0, "Stay", MaraeIIStageII);
-	addButton(3, "FIGHT!", promptFightMarae2);
+	//addButton(3, "FIGHT!", promptFightMarae2);
 }
 
 private function MaraeIIStageII():void {
@@ -461,7 +460,7 @@ private function MaraeIIStageII():void {
 		output("Marae extends her arms, and the twin tentacles crawl forward like snakes as they wriggle down her appendages.  You thrust your crotch forwards, presenting it to the goddess, and only wonder why for a brief second before you toss away the nagging, useless thought.  Why would anything but pleasuring the living goddess before you matter?  Her corruptive aura floats in the air, filling you with the desire to submit to your queen and obey her every whim.  " + pc.cocksDescriptLight() + " twitches and starts to drip pre-cum, itching to fulfill your deity's desires.\n\n");
 
 		output("The tentacle on her right arm convulses, then splits open along four joints.  The tip folds open to reveal a pink, wriggling interior that promises pleasures mortal minds weren't meant to comprehend.  Meanwhile, while you're distracted by the eager plant-hole, the other tentacle slips behind you and climbs up your " + pc.leg() + ", leaving a trail of slime in its wake.   It slides between your cheeks and prods at your " + pc.assholeDescript() + ".  You jerk forwards in surprise, but Marae pushes your " + pc.hipDescript() + " back, allowing it to work its way inside.");
-		pc.buttChange(12,true,true,false);
+		pc.buttChange(cockVolume(12), true, true, false);
 		output("  The open plant-hole dives for your groin while you're distracted, hits your " + pc.cockDescript(0) + " and devours it with a greedy sluuuuurp.");
 		if(pc.cockTotal() == 2) output("  Another vine that may as well be the first's twin snakes from between the goddess' legs and jumps onto your " + pc.cockDescript(1) + ".");
 		else if(pc.cockTotal() > 2) output("  More 'open' vines shimmy forth from between Marae's legs and jump up onto your [pc.cocks].");
@@ -510,8 +509,8 @@ private function MaraeIIStageII():void {
 		else if(pc.vaginas[0].wetness() < 3) output("Drops of feminine arousal run down your thighs");
 		else output("Trails of viscous feminine fluid leak from your " + pc.vaginaDescript(0));
 		output(", reminding you of your unused femsex.  Marae grunts underneath you, and while at first you assume it's from the penetration, the prodding of two cock-like protrusions at your lusty holes corrects your misguided assumptions.  You pull back and begin to fuck her in earnest, and with each long rock back, you can see she's grown tentacles from underneath her ass, like two prehensile tails.  They push forwards and spear you, arresting your movement while you try to cope with the sudden stretching of two of your orifices.  Warmth radiates from the twin intruders along with a slippery fullness.  They're pumping something inside you that tingles and makes " + pc.cocksDescriptLight() + " bounce and drip.");
-		pc.cuntChange(0,12,true,true,false);
-		pc.buttChange(12,true,true,false);
+		pc.cuntChange(0, cockVolume(12), true, true, false);
+		pc.buttChange(cockVolume(12), true, true, false);
 		output("\n\n");
 
 		output("Marae laughs and teases, \"<i>If this is how you fuck it's no wonder I haven't met your children yet.  If you're going to be my disciple you need to fuck your partners hard until you're stuffing them with cum.  Then you need to do it again.  Alternatively you should be bouncing on their cock and milking it with your " + pc.vaginaDescript(0) + " until your womb is packed so full you can't walk.  Now show me how you'll do it, or I might keep you here until you're properly trained!</i>\"\n\n");

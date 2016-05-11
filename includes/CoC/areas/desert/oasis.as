@@ -88,15 +88,11 @@ private function oasisRunAway():void {
 	//Run away successfully if fast enough.  80 speed = autosuccess.
 	if (pc.canFly()) {
 		output("You beat your [pc.wings] quickly and burst into the air! Wasting no time you fly away.");
-		processTime(20 + rand(10));
-		clearMenu();
-		addButton(0, "Next", mainGameMenu);
+		addNextButton(function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 	}
 	else if (pc.reflexes() > 15 && pc.reflexes() > rand(40)) {
 		output("You bolt out from under your bush and scramble away over the sand. Before long the swishing sounds of pursuit fade away and looking back you see the few demons with the gusto to follow you tramping back to the oasis.");
-		processTime(20 + rand(10));
-		clearMenu();
-		addButton(0, "Next", mainGameMenu);
+		addNextButton(function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 	}
 	else {
 		output("You scramble away from the demons, but are too late. A swift demon with canine features tackles you to the ground.  Luckily he loses his grip as you tumble onto the sand and you slither free, stand up and wheel to face the host of leering demons which begin to advance with malicious intent.");
