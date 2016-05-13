@@ -52,8 +52,8 @@ package classes.Characters.CoC
 			baseHPResistances.pheromone.resistanceValue = sheilaDemon ? 85 : 60.0;
 			baseHPResistances.tease.resistanceValue = sheilaDemon ? 85 : 60.0;
 			
-			this.XPRaw = 1500;
 			this.level = 14;
+			this.XPRaw = normalXP();
 			this.credits = (rand(5) + 5) * 10;
 			this.HPMod = sheilaDemon ? 400 : 200;
 			this.shieldsRaw = this.shieldsMax();

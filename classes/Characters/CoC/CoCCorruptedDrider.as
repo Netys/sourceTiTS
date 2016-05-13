@@ -51,8 +51,8 @@ package classes.Characters.CoC
 			
 			this.rangedWeapon = new EmptySlot();
 			
-			this.XPRaw = 500;
 			this.level = this.nipplesPierced ? 15 : 14;
+			this.XPRaw = normalXP();
 			this.credits = this.nipplesPierced ? (rand(10) + 30) * 10 : (rand(10) + 20) * 10;
 			this.HPMod = this.nipplesPierced ? 325 : 250;
 			this.shieldsRaw = this.shieldsMax();

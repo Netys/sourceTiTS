@@ -29,6 +29,7 @@ package classes.Characters.CoC
 			this.capitalA = "";
 			this.inventory = [];
 			this.credits = 0;
+			this.XPRaw = bossXP();
 		}
 		
 		override public function get long():String

@@ -51,8 +51,8 @@ package classes.Characters.CoC
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
 			this.lustRaw = 40;
-			this.XPRaw = 20;
 			this.level = 1;
+			this.XPRaw = normalXP();
 			this.credits = (rand(5) + 5) * 10;
 			this.HPMod = 7;
 			this.HPRaw = this.HPMax();

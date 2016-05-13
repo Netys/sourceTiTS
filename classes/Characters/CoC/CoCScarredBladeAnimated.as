@@ -47,8 +47,8 @@ package classes.Characters.CoC
 			baseHPResistances.burning.resistanceValue = 80.0;
 			baseHPResistances.freezing.resistanceValue = -25.0;
 			
-			this.XPRaw = 1500;
 			this.level = 17;
+			this.XPRaw = normalXP();
 			this.credits = 0;
 			this.HPMod = 400;
 			this.shieldsRaw = this.shieldsMax();

@@ -49,8 +49,8 @@ package classes.Characters.CoC
 			
 			this.rangedWeapon = new EmptySlot();
 			
-			this.XPRaw = 500 / (Flag("COC.TIMES_PC_DEFEATED_VALA") + 1);
 			this.level = 11;
+			this.XPRaw = bossXP() / (Flag("COC.TIMES_PC_DEFEATED_VALA") + 1);
 			this.credits = (1) * 10;
 			this.HPMod = 350;
 			this.shieldsRaw = this.shieldsMax();

@@ -35,6 +35,7 @@ package classes.Characters.CoC
 			this.rangedWeapon = new EmptySlot();
 			
 			this.level = 4;
+			this.XPRaw = normalXP();
 			this.physiqueRaw = 40 / 20 * this.level;
 			this.reflexesRaw = 100 / 20 * this.level;
 			this.aimRaw = 70 / 20 * this.level;

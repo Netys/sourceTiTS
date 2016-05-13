@@ -52,8 +52,8 @@ package classes.Characters.CoC
 			baseHPResistances.kinetic.resistanceValue = 20.0;
 			baseHPResistances.burning.resistanceValue = -50.0;
 			
-			this.XPRaw = 250;
 			this.level = 6;
+			this.XPRaw = normalXP();
 			this.credits = (rand(15) + 5) * 10;
 			this.HPMod = 250;
 			this.shieldsRaw = this.shieldsMax();

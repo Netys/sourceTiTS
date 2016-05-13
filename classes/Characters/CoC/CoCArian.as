@@ -22,8 +22,8 @@ package classes.Characters.CoC
 			this.customDodge = "";
 			this.customBlock = "";
 			
-			this.XPRaw = 0;
 			this.level = 12;
+			this.XPRaw = normalXP();
 			this.credits = (rand(10) + 10) * 10;
 			this.HPMod = 0;
 			this.shieldsRaw = this.shieldsMax();

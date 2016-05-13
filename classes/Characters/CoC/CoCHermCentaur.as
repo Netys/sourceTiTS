@@ -56,8 +56,8 @@ package classes.Characters.CoC
 			this.armor.defense = 4;
 			this.armor.hasRandomProperties = true;
 			
-			this.XPRaw = 5000;
 			this.level = 22;
+			this.XPRaw = bossXP();
 			this.credits = (rand(50) + 75) * 10;
 			this.HPMod = 800;
 			this.shieldsRaw = this.shieldsMax();

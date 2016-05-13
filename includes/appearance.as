@@ -79,7 +79,7 @@ public function appearance(forTarget:Creature):void
 		if (target.isChestExposed() && target.isCrotchExposed() && target.isAssExposed()) {
 			if (target.armor is IllusoryAttire && IllusoryAttire.isActive(target)) output2(" Despite being actually exposed, you are covered behind illusion well enough to be considered decent without attentive inspection.");
 			else if (target.hasTail() && target.hasTailFlag(GLOBAL.FLAG_LONG) && target.hasTailFlag(GLOBAL.FLAG_FLUFFY) && target.hasTailFlag(GLOBAL.FLAG_FURRED) && pc.tailCount >= 6) output2(" Despite being actually exposed, you can cover yourself with your numerous [pc.tails] to hide this fact well enough to not attract attention from passers.");
-			else if(InCollection(target.wingType, GLOBAL.TYPE_DOVEFOUR, GLOBAL.TYPE_DOVESIX) && target.genitalLocation() <= 1) output2(" Despite being actually exposed, you can wrap yourself in your numerous [pc.wings] to hide this fact well enough to not attract attention from passers.");
+			else if(target.wingType == GLOBAL.TYPE_DOVE && target.wingCount >= 4 && target.genitalLocation() <= 1) output2(" Despite being actually exposed, you can wrap yourself in your numerous [pc.wings] to hide this fact well enough to not attract attention from passers.");
 			else if(target.exhibitionism() >= 100) output2(" You’re a shameless exhibitionist and proud of it, flaunting your naked body and giving the entire galaxy quite an eyeful!");
 			else if(target.exhibitionism() >= 66) output2(" Your naked body is like a second outfit for you, giving you naughty thoughts when in the public’s gaze.");
 			else if(target.exhibitionism() >= 50) output2(" Maybe you’re some kind of nudist, but it’s not like you mind being naked anyway.");

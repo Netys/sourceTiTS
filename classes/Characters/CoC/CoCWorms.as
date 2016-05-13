@@ -45,8 +45,8 @@ package classes.Characters.CoC
 			baseHPResistances.kinetic.resistanceValue = 75.0;
 			baseHPResistances.poison.resistanceValue = 100.0;
 			
-			this.XPRaw = 100;
 			this.level = 3;
+			this.XPRaw = normalXP();
 			this.credits = 0;
 			this.HPMod = 40;
 			this.HPRaw = this.HPMax();

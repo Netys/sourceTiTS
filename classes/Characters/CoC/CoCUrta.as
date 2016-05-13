@@ -38,8 +38,8 @@ package classes.Characters.CoC
 			this.armor.evasion = 10;
 			this.armor.hasRandomProperties = true;
 			
-			this.XPRaw = 250;
 			this.level = 15;
+			this.XPRaw = normalXP();
 			this.credits = 1830;
 			this.HPMod = 120;
 			this.shieldsRaw = this.shieldsMax();

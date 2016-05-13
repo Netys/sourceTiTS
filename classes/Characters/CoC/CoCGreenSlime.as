@@ -33,8 +33,8 @@ package classes.Characters.CoC
 			this.armor.defense = 0;
 			this.armor.hasRandomProperties = true;
 			
-			this.XPRaw = 50;
 			this.level = 2;
+			this.XPRaw = normalXP();
 			this.credits = rand(50) + 10;
 			
 			this.physiqueRaw = 4;

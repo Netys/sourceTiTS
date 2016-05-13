@@ -55,8 +55,8 @@ package classes.Characters.CoC
 			
 			this.rangedWeapon = new EmptySlot();
 			
-			this.XPRaw = 1000;
 			this.level = 12;
+			this.XPRaw = normalXP();
 			this.credits = (rand(10) + 10) * 10;
 			this.HPMod = 200;
 			this.shieldsRaw = this.shieldsMax();

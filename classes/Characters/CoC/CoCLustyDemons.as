@@ -47,8 +47,8 @@ package classes.Characters.CoC
 			baseHPResistances.pheromone.damageValue = 25.0;
 			baseHPResistances.psionic.damageValue = 25.0;
 			
-			this.XPRaw = 500;
 			this.level = 14;
+			this.XPRaw = bossXP();
 			this.credits = (150 + rand(100)) * 10;
 			this.HPMod = 680;
 			this.HPRaw = this.HPMax();

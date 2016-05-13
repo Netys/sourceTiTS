@@ -43,8 +43,8 @@ package classes.Characters.CoC
 			baseHPResistances.pheromone.resistanceValue = 35.0;
 			baseHPResistances.tease.resistanceValue = 35.0;
 			
-			this.XPRaw = 750;
 			this.level = 8 + (Math.floor(kGAMECLASS.flags["COC.TAMANI_NUMBER_OF_DAUGHTERS"] / 20));
+			this.XPRaw = bossXP();
 			this.credits = (rand(15) + 5) * 10;
 			this.HPMod = 50 + (int(kGAMECLASS.flags["COC.TAMANI_NUMBER_OF_DAUGHTERS"] / 2) * 15);
 			if (this.HPMod > 3350) this.HPMod = 3350;

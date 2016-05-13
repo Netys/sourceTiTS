@@ -59,8 +59,8 @@ package classes.Characters.CoC
 			
 			this.rangedWeapon = new EmptySlot();
 			
-			this.XPRaw = 1500;
 			this.level = 15 + Math.round(int(kGAMECLASS.flags["COC.EMBER_AFFECTION"]) / 20);
+			this.XPRaw = bossXP();
 			this.credits = 0;
 			this.HPMod = 550 + (int(kGAMECLASS.flags["COC.EMBER_AFFECTION"]) * 2);
 			this.shieldsRaw = this.shieldsMax();

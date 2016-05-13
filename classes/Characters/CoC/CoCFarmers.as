@@ -44,8 +44,8 @@ package classes.Characters.CoC
 			
 			this.isLustImmune = true;
 			
-			this.XPRaw = 1500;
 			this.level = 10;
+			this.XPRaw = bossXP();
 			this.credits = (rand(25) + 40) * 10;
 			this.HPMod = 500;
 			this.HPRaw = this.HPMax();

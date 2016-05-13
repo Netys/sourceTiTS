@@ -51,8 +51,8 @@ package classes.Characters.CoC
 			baseHPResistances.burning.resistanceValue = -50.0;
 			baseHPResistances.freezing.resistanceValue = -50.0;
 			
-			this.XPRaw = 5000;
 			this.level = 20;
+			this.XPRaw = bossXP();
 			this.credits = (rand(33) + 50) * 10;
 			this.HPMod = 600;
 			this.HPRaw = this.HPMax();

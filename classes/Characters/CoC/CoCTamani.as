@@ -29,8 +29,8 @@ package classes.Characters.CoC
 			this.hairLength = 16;
 			this.tallness = 40;
 			
-			this.XPRaw = 200;
 			this.level = 4;
+			this.XPRaw = normalXP();
 			this.credits = (rand(25) + 5) * 10;
 			this.HPMod = 40;
 			this.shieldsRaw = this.shieldsMax();

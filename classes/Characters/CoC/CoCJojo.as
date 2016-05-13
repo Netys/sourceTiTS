@@ -44,8 +44,8 @@ package classes.Characters.CoC
 			
 			this.meleeWeapon = new Fists();
 			
-			this.XPRaw = 200;
 			this.level = 4;
+			this.XPRaw = normalXP();
 			this.credits = (rand(5) + 2) * 10;
 			this.HPMod = 0;
 			this.shieldsRaw = this.shieldsMax();
