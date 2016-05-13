@@ -2625,33 +2625,33 @@ public function validatePlayerKitsuneElderColor():void {
 		if (pc.eyeType != GLOBAL.TYPE_HUMAN && pc.eyeType != GLOBAL.TYPE_VULPINE) {
 			pc.eyeType = GLOBAL.TYPE_HUMAN;
 			pc.eyeColor = RandomInCollection(elderKitsuneEyeColors);
-			output("\n\nYour eyes have changed! <b>They're now human-like with large [pc.eyeColor] irises</b>, unfathomable and serene, like clear summer sky.");
+			output("\n\nYour eyes have changed! <b>They're now human-like with large [pc.eyeColor] irises</b>, unfathomable and serene, like a clear summer sky.");
 		}
 		else if (!InCollection(pc.eyeColor, elderKitsuneEyeColors)) {
 			pc.eyeColor = RandomInCollection(elderKitsuneEyeColors);
-			output("\n\nYour eyes have changed color, <b>they're now [pc.eyeColor]</b>, unfathomable and serene, like clear summer sky.");
+			output("\n\nYour eyes have changed color, <b>they're now [pc.eyeColor]</b>, unfathomable and serene, like a clear summer sky.");
 		}
 			
 		if (!InCollection(pc.hairColor, elderKitsuneColors)) // wrong hair color
 			if (pc.skinType == GLOBAL.SKIN_TYPE_FUR && InCollection(pc.furColor, elderKitsuneColors)) { // right fur color
 				pc.hairColor = pc.furColor;
-				if(pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " hair</b> matching your fur, like true kitsune elder.");
+				if(pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " hair</b> matching your fur, like a true kitsune elder.");
 			}
 			else if (pc.skinType == GLOBAL.SKIN_TYPE_FUR) { // wrong fur color
 				pc.hairColor = RandomInCollection(elderKitsuneColors);
 				pc.furColor = pc.hairColor;
-				if (pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " fur and hair</b>, like true kitsune elder.");
-				else output("\n\nNow <b>you have " + pc.furColor + " fur</b>, like true kitsune elder.");
+				if (pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " fur and hair</b>, like a true kitsune elder.");
+				else output("\n\nNow <b>you have " + pc.furColor + " fur</b>, like a true kitsune elder.");
 			}
 			else { // no fur
 				pc.hairColor = RandomInCollection(elderKitsuneColors);
 				pc.furColor = pc.hairColor;
-				if (pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " hair</b>, like true kitsune elder.");
+				if (pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " hair</b>, like a true kitsune elder.");
 			}
 		else // right hair color
 			if (pc.skinType == GLOBAL.SKIN_TYPE_FUR && !InCollection(pc.furColor, elderKitsuneColors)) { // wrong fur color
 				pc.furColor = pc.hairColor;
-				output("\n\nNow <b>you have " + pc.furColor + " fur</b> matching your hair, like true kitsune elder.");
+				output("\n\nNow <b>you have " + pc.furColor + " fur</b> matching your hair, like a true kitsune elder.");
 			}
 		
 		if (pc.hasStatusEffect("Vanae Markings") && pc.skinAccent != "luminous azure") {
@@ -2664,11 +2664,11 @@ public function validatePlayerKitsuneElderColor():void {
 		if (pc.eyeType != GLOBAL.TYPE_HUMAN && pc.eyeType != GLOBAL.TYPE_VULPINE) {
 			pc.eyeType = GLOBAL.TYPE_HUMAN;
 			pc.eyeColor = RandomInCollection(corruptKitsuneEyeColors);
-			output("\n\nYour eyes have changed! <b>They're now human-like with large [pc.eyeColor] irises</b>, cold and dull, like cloudy winter sky.");
+			output("\n\nYour eyes have changed! <b>They're now human-like with large [pc.eyeColor] irises</b>, cold and dull, like a cloudy winter sky.");
 		}
 		else if (!InCollection(pc.eyeColor, corruptKitsuneEyeColors)) {
 			pc.eyeColor = RandomInCollection(corruptKitsuneEyeColors);
-			output("\n\nYour eyes have changed color, <b>they're now [pc.eyeColor]</b>, cold and dull, like cloudy winter sky.");
+			output("\n\nYour eyes have changed color, <b>they're now [pc.eyeColor]</b>, cold and dull, like a cloudy winter sky.");
 		}
 		
 		if (!InCollection(pc.hairColor, corruptKitsuneColors)) // wrong hair color

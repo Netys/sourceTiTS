@@ -2398,7 +2398,7 @@ package classes.GameData
 			
 			// 10+(player.inte/3 + rand(player.inte/2)) * spellMod()
 			var d:int = 10 + attacker.intelligence() + rand(attacker.intelligence());
-			//d *= 0.66 + target.cor() * 0.66 * 0.01; // 66% damage to fully pure, 132% to fully corrupt
+			if (kGAMECLASS.inMareth() && target.cor() > 50) d *= 0.66 + target.cor() * 0.66 * 0.01; // 66% damage to fully pure, 132% to fully corrupt
 			var damage:TypeCollection = damageRand(new TypeCollection( { burning: d * attacker.spellMod() } ), 15);
 			
 			applyDamage(damage, attacker, target);
@@ -2422,7 +2422,7 @@ package classes.GameData
 			
 			// 10+(player.inte/3 + rand(player.inte/2)) * spellMod()
 			var d:int = 10 + attacker.intelligence() + rand(attacker.intelligence());
-			//d *= 0.66 + (100 - target.cor()) * 0.66 * 0.01; // 66% damage to fully corrupt, 132% to fully pure
+			if (kGAMECLASS.inMareth() && target.cor() < 50) d *= 0.66 + (100 - target.cor()) * 0.66 * 0.01; // 66% damage to fully corrupt, 132% to fully pure
 			var damage:TypeCollection = damageRand(new TypeCollection( { burning: d * attacker.spellMod() } ), 15);
 			
 			applyDamage(damage, attacker, target);

@@ -186,5 +186,10 @@ package classes.Characters.CoC
 		public function arianChest():String {
 			return arianChestAdjective() + " " + arianChestNoun();
 		}
+		
+		override public function mf(male:String, female:String):String 
+		{
+			return hasVagina() ? female : male;
+		}
 	}
 }
