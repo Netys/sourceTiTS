@@ -18,6 +18,16 @@ public function isEquippableItem(item:ItemSlotClass):Boolean
 		);
 }
 
+public function itemConsume(item:ItemSlotClass):void
+{
+	item.quantity--;
+	//Remove from inventory array!
+	if (item.quantity <= 0 && pc.inventory.indexOf(item) != -1)
+	{
+		pc.inventory.splice(pc.inventory.indexOf(item), 1);
+	}
+}
+
 public function useItem(item:ItemSlotClass):Boolean {
 	if (item.isUsable == false)
 	{
@@ -109,11 +119,21 @@ public function combatUseItem(item:ItemSlotClass, targetCreature:Creature = null
 		// This is kinda bullshit. To save cheesing args for the function when called via a button,
 		// we're gonna rebuild sensible defaults if the args are absent. No args = assume the player
 		// pressed a button to invoke the call
+		
+		if (usingCreature == null)
+		{
+			usingCreature = pc;
+		}
+		
 		if (targetCreature == null)
 		{
 			if (item.targetsSelf == true)
 			{
 				targetCreature = pc;
+			}
+			else if (item.requiresTarget == false)
+			{
+				item.useFunction(null, usingCreature);
 			}
 			else
 			{
@@ -157,28 +177,27 @@ public function combatUseItem(item:ItemSlotClass, targetCreature:Creature = null
 			}
 		}
 		
-		if (usingCreature == null)
-		{
-			usingCreature = pc;
-		}
-		
 		item.useFunction(targetCreature, usingCreature);
 		
 		if (!infiniteItems() && !item.hasFlag(GLOBAL.NOT_CONSUMED_BY_DEFAULT))
 		{
 			item.quantity--;
-			if (item.quantity <= 0)
+			if (item.quantity <= 0 && usingCreature.inventory.indexOf(item) != -1)
 			{
 				usingCreature.inventory.splice(usingCreature.inventory.indexOf(item), 1);
 			}
 		}
 	}
-	if(pc.hasPerk("Quickdraw") && (item.type == GLOBAL.RANGED_WEAPON || item.type == GLOBAL.MELEE_WEAPON))
+	
+	if(usingCreature is PlayerCharacter && pc.hasPerk("Quickdraw") && (item.type == GLOBAL.RANGED_WEAPON || item.type == GLOBAL.MELEE_WEAPON))
 	{
 		clearMenu();
 		addButton(0,"Next",combatInventoryMenu);
 	}
-	else CombatManager.processCombat();
+	else if (usingCreature is PlayerCharacter)
+	{
+		CombatManager.processCombat();
+	}
 }
 
 public var shopkeepBackFunctor:Function = null;
@@ -229,6 +248,10 @@ public function buyItem():void {
 			{
 				temp = Math.round(temp * pc.keyItemv1(couponName));
 			}
+			else if(shopkeep is Lerris && pc.hasKeyItem("Coupon - TamaniCorp"))
+			{
+				temp = Math.round(temp * pc.keyItemv1("Coupon - TamaniCorp"));
+			}
 			
 			if(temp > pc.credits) output("<b>(Too Expensive)</b> ");
 			output(StringUtil.upperCase(shopkeep.inventory[x].description, false) + " - " + temp + " credits.");
@@ -267,6 +290,11 @@ public function buyItemOK(arg:ItemSlotClass):void
 	if(pc.hasKeyItem(couponName))
 	{
 		price = Math.round(price * pc.keyItemv1(couponName));
+		hasCoupon = true;
+	}
+	else if(shopkeep is Lerris && pc.hasKeyItem("Coupon - TamaniCorp"))
+	{
+		price = Math.round(price * pc.keyItemv1("Coupon - TamaniCorp"));
 		hasCoupon = true;
 	}
 	
@@ -317,6 +345,14 @@ public function buyItemGo(arg:ItemSlotClass):void {
 		usedCoupon = true;
 	}
 	if(usedCoupon) output("The coupon saved on your codex is used and instantly changes the final price. ");
+	else if(shopkeep is Lerris && pc.hasKeyItem("Coupon - TamaniCorp"))
+	{
+		price = Math.round(price * pc.keyItemv1("Coupon - TamaniCorp"));
+		pc.removeKeyItem(couponName);
+		usedCoupon = true;
+		output("The coupon saved on your codex is used and instantly changes the final price. ");
+		pc.removeKeyItem("Coupon - TamaniCorp");
+	}
 	
 	output("You purchase " + arg.description + " for " + num2Text(price) + " credits.\n\n");
 	pc.credits -= price;
@@ -500,9 +536,12 @@ public function sellItemGo(arg:ItemSlotClass):void {
 	pc.credits += price;
 	output("You sell " + arg.description + " for " + num2Text(price) + " credits.");
 	arg.quantity--;
-	if (arg.quantity == 0) pc.inventory.splice(pc.inventory.indexOf(arg), 1);
-	this.clearMenu();
-	this.addButton(0,"Next",sellItem);
+	if (arg.quantity <= 0 && pc.inventory.indexOf(arg) != -1)
+	{
+		pc.inventory.splice(pc.inventory.indexOf(arg), 1);
+	}
+	clearMenu();
+	addButton(0,"Next",sellItem);
 }
 
 // Special seller/item handling

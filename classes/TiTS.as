@@ -132,6 +132,7 @@
 		include "../includes/events/seraSexParty.as";
 
 		//Misc content
+		include "../includes/masturbation/bubbleBuddy.as";
 		include "../includes/rivalEncounters.as";
 		include "../includes/saendra.as";
 		include "../includes/travelEvents.as";
@@ -288,6 +289,7 @@
 		include "../includes/events/karaquest2/roomFunctions.as";
 		
 		// Uveto
+		include "../includes/uveto/kaede.as";
 		include "../includes/uveto/nayna.as";
 		include "../includes/uveto/nerrasa.as";
 		include "../includes/uveto/rooms.as";
@@ -396,7 +398,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.52";
+			version = "0.6.54";
 
 			//temporary nonsense variables.
 			temp = 0;

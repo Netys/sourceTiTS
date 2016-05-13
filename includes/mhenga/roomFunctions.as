@@ -209,12 +209,15 @@ public function jungleEncounterChances():Boolean {
 		choices.push(encounterCuntSnakeOnJungleLand);
 		choices.push(encounterCuntSnakeOnJungleLand);
 		choices.push(frogGirlsEncounter);
-		if(rand(3) == 0) choices.push(dryadMeeting);
-		//Fragrant ladies or cum-drenched folks find her more often~
-		if(dryadCanSmellPC())
+		if(dryadIsActive())
 		{
-			choices.push(dryadMeeting);
-			choices.push(dryadMeeting);
+			if(rand(3) == 0) choices.push(dryadMeeting);
+			//Fragrant ladies or cum-drenched folks find her more often~
+			if(dryadCanSmellPC())
+			{
+				choices.push(dryadMeeting);
+				choices.push(dryadMeeting);
+			}
 		}
 		//Run the event
 		choices[rand(choices.length)]();
@@ -256,12 +259,15 @@ public function jungleMiddleEncounters():Boolean {
 		choices[choices.length] = encounterRegularTentaclePitcherYouGay;
 		if(flags["ZODEE_GALOQUEST"] == undefined) choices.push(zodeeGivesFirstGalomax);
 		choices.push(frogGirlsEncounter);
-		if(rand(3) == 0) choices.push(dryadMeeting);
-		//Fragrant ladies or cum-drenched folks find her more often~
-		if(dryadCanSmellPC())
+		if(dryadIsActive())
 		{
-			choices.push(dryadMeeting);
-			choices.push(dryadMeeting);
+			if(rand(3) == 0) choices.push(dryadMeeting);
+			//Fragrant ladies or cum-drenched folks find her more often~
+			if(dryadCanSmellPC())
+			{
+				choices.push(dryadMeeting);
+				choices.push(dryadMeeting);
+			}
 		}
 		//Run the event
 		choices[rand(choices.length)]();
@@ -314,12 +320,9 @@ public function jungleDeepEncounters():Boolean {
 			}
 		}
 	}
-	if(rand(100) == 0 && !pc.hasItem(new StrangeEgg())) 
+	if(rand(100) == 0 && !pc.hasItem(new StrangeEgg()))
 	{
-		output("\n\nOh hey, there's a strange looking egg on the ground! Do you take it?\n");
-		clearMenu();
-		addButton(0,"Take It",quickLoot,new StrangeEgg());
-		addButton(1, "Don't", mainGameMenu);
+		findStrangeEgg();
 		return true;
 	}
 	var choices:Array = new Array();
@@ -344,12 +347,15 @@ public function jungleDeepEncounters():Boolean {
 		}
 		choices[choices.length] = encounterMimbrane;
 		choices[choices.length] = encounterMimbrane;
-		if(rand(3) == 0) choices.push(dryadMeeting);
-		//Fragrant ladies or cum-drenched folks find her more often~
-		if(dryadCanSmellPC())
+		if(dryadIsActive())
 		{
-			choices.push(dryadMeeting);
-			choices.push(dryadMeeting);
+			if(rand(3) == 0) choices.push(dryadMeeting);
+			//Fragrant ladies or cum-drenched folks find her more often~
+			if(dryadCanSmellPC())
+			{
+				choices.push(dryadMeeting);
+				choices.push(dryadMeeting);
+			}
 		}
 		//choices[choices.length] = encounterRegularTentaclePitcherYouGay;
 		if(flags["ZODEE_GALOQUEST"] == undefined) choices.push(zodeeGivesFirstGalomax);

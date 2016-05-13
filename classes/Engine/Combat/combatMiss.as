@@ -11,7 +11,7 @@ package classes.Engine.Combat
 	 */
 	public function combatMiss(attacker:Creature, target:Creature, overrideAttack:Number = -1, missModifier:Number = 1):Boolean 
 	{
-		if (overrideAttack == -1) overrideAttack = attacker.meleeWeapon.attack;
+		if (overrideAttack == -1) overrideAttack = attacker.attack(true);
 		
 		//Immune!
 		if (target.hasPerk("Melee Immune")) return true;

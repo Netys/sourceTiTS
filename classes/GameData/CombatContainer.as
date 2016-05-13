@@ -1058,7 +1058,8 @@ package classes.GameData
 			//GENERIC
 			else
 			{
-				output("You climb up onto your [pc.feet].");
+				if(pc.canFly() && pc.hasWings()) output("Moving your powerful [pc.wingsNoun], you manage to lift yourself up and get back onto your [pc.feet].");
+				else output("You climb up onto your [pc.feet].");
 				pc.removeStatusEffect("Tripped");
 			}
 			processCombat();
@@ -1068,8 +1069,25 @@ package classes.GameData
 		{
 			if (target.hasStatusEffect("Tripped"))
 			{
-				output(target.capitalA + target.uniqueName + " lifts themselves from the floor and gets their feet back under " + target.mfn("him", "her", "it") + "self.");
-				target.removeStatusEffect("Tripped");
+				if(target.statusEffectv1("Tripped") > 0 && !target.canFly())
+				{
+					output(target.capitalA + target.uniqueName + " struggles to get");
+					if(target.isPlural) output(" themselves");
+					else output(" " + target.mfn("him", "her", "it") + "self");
+					output(" up, but can’t.");
+					target.addStatusValue("Tripped", 1, -1);
+				}
+				else
+				{
+					if(target.canFly() && target.hasWings())
+					{
+						output("With " + target.mfn("his", "her", "its") + " " + target.wingsDescript(true) + " quickly flapping, ");
+					}
+					output(target.capitalA + target.uniqueName + " lifts");
+					if(target.isPlural) output(" themselves from the floor and gets their " + target.feet() + " back under themselves.");
+					else output(" " + target.mfn("him", "her", "it") + "self from the floor and gets " + target.mfn("him", "her", "its") + " " + target.feet() + " back under " + target.mfn("him", "her", "it") + "self.");
+					target.removeStatusEffect("Tripped");
+				}
 			}
 		}
 		
@@ -1768,11 +1786,11 @@ package classes.GameData
 			if(select == 0)
 			{
 				output("Turning away at an opportune moment, you slip down your clothes and reach back, slapping your [pc.butt] into a bounce before shaking it for " + target.a + target.uniqueName + ". Your technique has grown impeccable, and you bounce your [pc.butt] masterfully, even reaching back and spreading your cheeks, giving " + target.a + target.uniqueName + " an excellent view of your ");
-				enum.clear();
-				enum.push("[pc.asshole]");
-				if(pc.hasVagina()) enum.push("[pc.vaginas]");
-				if(pc.balls > 0) enum.push("[pc.balls]");
-				output(enum.toString() + ".");
+				kGAMECLASS.clearList();
+				kGAMECLASS.addToList("[pc.asshole]");
+				if(pc.hasVagina()) kGAMECLASS.addToList("[pc.vaginas]");
+				if(pc.balls > 0) kGAMECLASS.addToList("[pc.balls]");
+				output(kGAMECLASS.formatList() + ".");
 			}
 			//50+
 			else if(select == 1)
@@ -2341,7 +2359,8 @@ package classes.GameData
 			}
 			//4 Horsecock centaur tease
 			else if(select == 4) {
-				output("You let out a bestial whinny and stomp your [pc.feet] at your enemy. They prepare for an attack, but instead you kick your front [pc.feet] off the ground, revealing the hefty horsecock hanging beneath your belly. You let it flop around, quickly getting rigid and to its full erect length. You buck your hips as if you were fucking a mare in heat, letting your opponent know just what's in store for them if they surrender to pleasure...");			}
+				output("You let out a bestial whinny and stomp your [pc.feet] at your enemy. They prepare for an attack, but instead you kick your front [pc.feet] off the ground, revealing the hefty horsecock hanging beneath your belly. You let it flop around, quickly getting rigid and to its full erect length. You buck your hips as if you were fucking a mare in heat, letting your opponent know just what’s in store for them if they surrender to pleasure...");
+			}
 			//5 Cunt grind tease
 			else if(select == 5) {
 				output("You gallop toward your unsuspecting enemy, dodging their defenses and knocking them to the ground. Before they can recover, you slam your massive centaur ass down upon them, stopping just short of using crushing force to pin them underneath you. In this position, your opponent’s face is buried right in your girthy horsecunt. You grind your cunt into your target’s face for a moment before standing. When you do, you’re gratified to see your enemy covered in your lubricant and smelling powerfully of horsecunt.");
@@ -4049,11 +4068,14 @@ package classes.GameData
 			//Roshan Blue gives 25% more xp and lowers willpower by 30% until next rest
 			if(pc.hasStatusEffect("Roshan Blue")) sumXP += Math.floor(sumXP*0.25);
 			
+			/* DISABLED WITH NEW XP UPDATE
+			=======================================
 			// Add up XP, but don't permit the players current XP to overcap
 			if (sumXP + pc.XP() > pc.XPMax())
 			{
 				sumXP = pc.XPMax() - pc.XP();
 			}
+			=======================================*/
 			
 			pc.XP(sumXP);
 			

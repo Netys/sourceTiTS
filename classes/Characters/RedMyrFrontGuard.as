@@ -67,8 +67,8 @@
 			this.energyRaw = 100;
 			this.lustRaw = 25;		
 			
-			this.XPRaw = 200;
 			this.level = 5;
+			this.XPRaw = normalXP();
 			this.credits = 0;
 			this.HPMod = 50;
 			this.HPRaw = this.HPMax();
@@ -187,11 +187,9 @@
 			this.createPerk("Can Crit", 0, 0, 0, 0);
 			
 			isUniqueInFight = true;
-			btnTargetText = "Red Myr";
-					
-			sexualPreferences.setRandomPrefs(2 + rand(3),1);
+			btnTargetText = "Red Guard";
 			
-			_isMasked = rand(2) == 0;
+			sexualPreferences.setRandomPrefs(2 + rand(3),1);
 			
 			this._isLoading = false;
 		}

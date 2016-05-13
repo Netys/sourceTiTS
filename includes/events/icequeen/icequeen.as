@@ -275,7 +275,7 @@ public function iceQueenHelpHim():void
 	
 	output("\n\nHe runs off down the corridor, leaving you and the ausar woman alone in the steadily-more-oppressive clutch of engine smoke. She huffs as Zaalt brushes by her and cuts off the spray of chemicals from her device. A flick of the wrist cleans the last bits of foam off, and she turns to you.");
 	
-	output("\n\nPulling off her canid-shaped mask reveals a dark-skinned humanoid face with eyes bearing both the shape and color of almonds. Her bright pink hair is mussed and dirty after being exposed to whatever fuming blaze she’s been dealing with and her black jacket has been torn in several places, but that only accentuates that statuesque beauty on display. She seems like she’d be just at home in a pantheon as an engine room, even as she scowls.");
+	output("\n\nPulling off her canid-shaped mask reveals a dark-skinned humanoid face with eyes bearing both the shape and color of almonds. Her bright pink hair is mussed and dirty after being exposed to whatever fuming blaze she’s been dealing with and her black jacket has been torn in several places, but that only accentuates that statuesque beauty on display. She seems like she’d be just as at home in a pantheon as an engine room, even as she scowls.");
 	
 	output("\n\n<i>“I thought captains were supposed to go down with the ship and all that,”</i> she growls, ripping the spray-gun off her arm and tossing it angrily at the bulkhead at her feet. She glowers at you, dark eyes hardened. <i>“I hope you bring Zaalt back in one piece - I’m gonna be damn lucky if I can keep this frigid bitch together while he’s gone.”</i>");
 	
@@ -367,7 +367,7 @@ public function iceQueenLetsGoFlirt():void
 	output("\n\n<i>“That right?”</i> Zaalt says with a cocky half-smile, putting one of his big paws on your hip. <i>“Awful forward, aren’t ya?”</i>");
 	
 	if (pc.isBimbo()) output("\n\nYou just giggle and press your [pc.chest] against him, emphasizing your softness and curves ripe for his taking.");
-	else output("\n\nYou step closer, suddenly extra aware of the captain’s musky scent, the bristle of his fun as your fingers brush across it.");
+	else output("\n\nYou step closer, suddenly extra aware of the captain’s musky scent, the bristle of his fur as your fingers brush across it.");
 	
 	output("\n\nZaalt chuckles, but you can feel a stiffness growing, brushing against your thigh. You didn’t exactly expect a lot of opposition to your offer, after all...");
 	
@@ -582,7 +582,7 @@ public function iceQueenLossToZaalt():void
 	
 	output("\n\nHis claws dispose of your [pc.gear], baring your flesh... and his, a moment later, leaving a throbbing shaft of black masculinity hanging down from his pelt of orange-black fur, tumescent in his animalistic need. Snarling, the feral milodan grabs you by the waist and throws you over your pilot’s console, leaving your ass bare and vulnerable. He grabs your cheeks, squeezing hard enough to make you squeal as he spreads them open and thrusts unceremoniously into your [pc.vagOrAss].");
 	
-	output("\n\nYour eyes go wide as the thick black spear of cock brute forces its way into your unprepared hole. Zaalt grunts, clutching at your hips and leaning over you, breathing hot and heavy against your back and neck as he shoves himself inside. Your hole clenches desperately around his thick shaft, trying instinctively to repulse the invading appendage. Zaalt breathes hard, letting you feel his pounding, strong heartbeat through his chest and cock.");
+	output("\n\nYour eyes go wide as the thick, black spear of cock brute-forces its way into your unprepared hole. Zaalt grunts, clutching at your hips and leaning over you, breathing hot and heavy against your back and neck as he shoves himself inside. Your hole clenches desperately around his thick shaft, trying instinctively to repulse the invading appendage. Zaalt breathes hard, letting you feel his pounding, strong heartbeat through his chest and cock.");
 	
 	output("\n\nYou whine, giving one last, desperate struggle against the domineering beast, but he plants a strong hand on your back and forces you down, leaving you no choice but to submit as he");
 	if (pc.hasVagina()) output(" breeds");
@@ -605,6 +605,10 @@ public function iceQueenLossToZaalt():void
 		output(" you’re so stretched out already that he’s able to easily grind his knot into your [pc.vagOrAss], straining your hole open and making you spasm around the thick tie.");
 	}
 	else output(" he isn’t quite able to force himself inside you all the way, thanks to the way you’re clenching and squeezing down around his shaft. Zaalt growls in frustration, fucking you harder to try and force it in, to no avail.");
+
+	if (pc.hasVagina()) pc.cuntChange(0, enemy.cockVolume(0));
+	else pc.buttChange(enemy.cockVolume(0));
+	
 	output(" You moan as the knotty cat-man ruts you, claws raking your bare flesh and breath coming heavily against the nape of your neck.");
 	
 	output("\n\nSlowly, you realize that Zaalt’s reaching his climax.");
@@ -624,7 +628,8 @@ public function iceQueenLossToZaalt():void
 	flags["ICEQUEEN COMPLETE"] = -3;
 	flags["ZAALT_DISABLED"] = 1;
 
-	pc.loadInCunt(enemy, 0);
+	if (pc.hasVagina()) pc.loadInCunt(enemy, 0);
+	else pc.loadInAss(enemy);
 	pc.orgasm();
 	enemy.orgasm();
 
@@ -824,13 +829,13 @@ public function iceQueenNoKara():void
 	currentLocation = "UVI R32"; // 9999 Uveto cafe
 	addUvetoCold();
 
-	output("<i>“There’s our guy,”</i> Zaalt says, subtly nodding his head to where a young man is leaning back at a table against the far wall. He’s obviously not human, covered in a thin layer of navy blue fur culminating in a mop of dark red hair and a pair of perky, rabbit-like ears. Your contact’s dressed in a black flight jacket, unzipped to show off a blood red T-shirt with the words [<i>HEAVY METAL BAND</i>] inscribed across it in obviously ironic swirling font.");
-	if (pc.characterClass != GLOBAL.CLASS_ENGINEER) output(" You immediately notice the pair of holsters under the jacket, packed with a pair of holdout pistols, just barely large enough to print to your keen eyes.");
+	output("<i>“There’s our guy,”</i> Zaalt says, subtly nodding his head to where a young man is leaning back at a table against the far wall. He’s obviously not human, covered in a thin layer of navy blue fur culminating in a mop of dark red hair and a pair of perky, rabbit-like ears. Your contact’s dressed in a black flight jacket, unzipped to show off a blood red T-shirt with the words <i>HEAVY METAL BAND</i> inscribed across it in obviously ironic swirling font.");
+	if (pc.characterClass != GLOBAL.CLASS_ENGINEER) output(" You immediately notice the holsters under his jacket, packed with a pair of holdout pistols, likely imperceptible to eyes less keen than yours.");
 	output(" <i>“C’mon. Let’s get this done.”</i>");
 	
 	output("\n\nYou nod, letting Zaalt lead the way over to the lounging");
 	if (!CodexManager.entryUnlocked("Laquines")) output(" alien");
-	output(" laquine");
+	else output(" laquine");
 	output("’s table, and you both take a casual seat across from him, like old friends meeting for lunch. Zaalt puts his case down beside you both, as casual as can be. The figure’s eyes languidly roll open, glancing at you for a moment before a little smile breaks out on the man’s faintly-angular face.");
 	
 	output("\n\n<i>“" +pc.mf("Gentlemen", "‘Sup") +".”</i> He says by way of greeting. <i>“You two need something?”</i>");
@@ -993,8 +998,8 @@ public function iceQueenKaraShowsUpInterrupt():void
 	//[Sure] [Sex?] [No]
 	clearMenu();
 	addButton(0, "Sure", iceQueenKaraShowsUpInterruptSure, undefined, "Sure", "Sounds fair.");
-	addButton(0, "Sex?", iceQueenKaraShowsUpInterruptSex, undefined, "Sex?", "Credits and " + (flags["SEXED_KARA"] == undefined ? "letting Kara make good on her previous offers for a little post-danger recreation" : "another roll in the hay with Kara") + ", and you'll call it even.");
-	addButton(0, "No", iceQueenKaraShowsUpInterruptNo, undefined, "No", "No way. Fuck this. You're not letting this go easy!");
+	addButton(1, "Sex?", iceQueenKaraShowsUpInterruptSex, undefined, "Sex?", "Credits and " + (flags["SEXED_KARA"] == undefined ? "letting Kara make good on her previous offers for a little post-danger recreation" : "another roll in the hay with Kara") + ", and you'll call it even.");
+	addButton(2, "No", iceQueenKaraShowsUpInterruptNo, undefined, "No", "No way. Fuck this. You're not letting this go easy!");
 }
 
 public function iceQueenKaraShowsUpInterruptSure():void
@@ -1040,7 +1045,7 @@ public function iceQueenKaraShowsUpInterruptNo():void
 
 	output("<i>“No fucking way,”</i> you snarl, scowling as much at Kara now as Zaalt. After all you’ve done for her, and this is how she and her friends treat you!?");
 	
-	output("\n\nThe cat-girl squirms under your ireful gaze, rubbing at the small golden bell on her collar. <i>“I’m sorry, [pc.name]. Would that I’d known you’d get wrapped up in this, I’d have arranged to be on your leg the trip. But this is all just an accident - a big misunderstanding. Nobody’s </i>trying<i> to screw you. We-”</i>");
+	output("\n\nThe cat-girl squirms under your ireful gaze, rubbing at the small golden bell on her collar. <i>“I’m sorry, [pc.name]. Would that I’d known you’d get wrapped up in this, I’d have arranged to be on your leg of the trip. But this is all just an accident - a big misunderstanding. Nobody’s </i>trying<i> to screw you. We-”</i>");
 	
 	output("\n\nEnough! Whatever the two of them are doing, it’s too dangerous to just let slip. Not after what happened on your ship.");
 	
@@ -1109,6 +1114,7 @@ public function iceQueenKaraShowsUpInterruptSex():void
 	output("\n\nShe leans in and plants a kiss on your lips while Zaalt walks off, leaving you two to be oggled by the cafe’s other patrons until Kara takes you by the hand and leads you back down the docking arm...");
 
 	processTime(10 + rand(5));
+	pc.credits += 8000;
 
 	clearMenu();
 	addButton(0, "Next", iceQueenKaraSexytimes);

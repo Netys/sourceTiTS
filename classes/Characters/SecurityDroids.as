@@ -32,7 +32,7 @@ package classes.Characters
 			
 			// Originally a clone of the zilpack
 			// Needs a few things checked.
-			this.short = "security droids";
+			this.short = "security droid";
 			this.originalRace = "Automaton";
 			this.a = "the ";
 			this.capitalA = "The ";
@@ -70,8 +70,8 @@ package classes.Characters
 			baseHPResistances = new TypeCollection();
 			baseHPResistances.electric.damageValue = -40.0;
 			
-			this.XPRaw = 100;
 			this.level = 4;
+			this.XPRaw = normalXP();
 			this.credits = 0;
 			this.HPMod = 0;
 			this.shieldsRaw = this.shieldsMax();

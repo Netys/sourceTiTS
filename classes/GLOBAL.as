@@ -71,6 +71,7 @@
 		public static const FLAG_DOUBLE_HEADED:int							= 36;
 		public static const FLAG_GOOEY:int									= 37;
 		public static const FLAG_SPIKED:int									= 38;
+		public static const FLAG_ABSORBENT:int									= 39;
 		
 		public static const FLAG_NAMES:Array = [
 			"OFFSET -- INVALID",
@@ -112,6 +113,7 @@
 			"Double Headed",
 			"Gooey",
 			"Spiked",
+			"Absorbent",
 		];
 		
 		public static const VALID_SKIN_FLAGS:Array = [
@@ -121,6 +123,7 @@
 			FLAG_FLUFFY,
 			FLAG_SQUISHY,
 			FLAG_LUBRICATED,
+			FLAG_ABSORBENT,
 		];
 		
 		//TYPES
@@ -155,9 +158,12 @@
 		public static const TYPE_HUMANMASKED:int                            = 25;
 		public static const TYPE_MOUSE:int                                  = 26;
 		public static const TYPE_MOUSEMAN:int                               = 27;
+		/*
 		public static const TYPE_DOVETWO:int                                = 28;
 		public static const TYPE_DOVEFOUR:int                               = 29;
 		public static const TYPE_DOVESIX:int                                = 30;
+		*/
+		public static const TYPE_DOVE:int									= 28;
 		public static const TYPE_DRAGONFLY:int                              = 31;
 		public static const TYPE_MLP:int                                    = 32;
 		public static const TYPE_CUNTSNAKE:int                              = 33;
@@ -224,8 +230,8 @@
 			"Mouse",
 			"Mouseman",
 			"Dove",
-			"Quad-Dove",
-			"Hexa-Dove",
+			"UNUSED",
+			"UNUSED",
 			"Dragonfly",
 			"MLP",
 			"Cuntsnake",
@@ -338,6 +344,7 @@
 			FLAG_APHRODISIAC_LACED,
 			FLAG_GOOEY,
 			FLAG_STICKY,
+			FLAG_NUBBY,
 		];
 		
 		public static const VALID_EAR_TYPES:Array = [
@@ -395,6 +402,7 @@
 			FLAG_GOOEY,
 			FLAG_SPIKED,
 			FLAG_STICKY,
+			FLAG_PAWS,
 		];
 		
 		public static const VALID_LEG_TYPES:Array = [
@@ -482,9 +490,7 @@
 			TYPE_SYLVAN,
 			TYPE_DARK_SYLVAN,
 			TYPE_MYR,
-			TYPE_DOVETWO,
-			TYPE_DOVEFOUR,
-			TYPE_DOVESIX,
+			TYPE_DOVE,
 			TYPE_GRYVAIN,
 		];
 		
@@ -542,8 +548,10 @@
 			FLAG_SHEATHED,
 			FLAG_KNOTTED,
 			FLAG_RIBBED,
+			FLAG_NUBBY,
 			FLAG_GOOEY,
 			FLAG_STICKY,
+			FLAG_TAPERED,
 		];
 		
 		public static const TAIL_GENITAL_NONE:int 	= 0;
@@ -725,6 +733,8 @@
 			FLUID_TYPE_SPECIAL_GOO,
 			FLUID_TYPE_CHOCOLATE_CUM,
 			FLUID_TYPE_HRAD_CUM,
+			FLUID_TYPE_VANAE_CUM,
+			FLUID_TYPE_SPECIAL_CUMGOO,
 		];
 		
 		public static const VALID_GIRLCUM_TYPES:Array = [

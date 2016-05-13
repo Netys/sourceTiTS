@@ -61,7 +61,7 @@ public function statisticsScreen(showID:String = "All"):void
 		else output2("Sexless");
 		if(pc.hasStatusEffect("Force Fem Gender")) output2("\n<b>* Gender Preference:</b> Female");
 		else if(pc.hasStatusEffect("Force Male Gender")) output2("\n<b>* Gender Preference:</b> Male");
-		else output2("\n<b>* Gender Alignment: </b>" + pc.mfn("Male","Female",pc.mf("Androgynous (Male Pronouns)","Androgynous (Female Pronouns)")));
+		else output2("\n<b>* Gender Alignment: </b>" + pc.mfn("Male","Female",pc.mf("Androgynous, Male Pronouns","Androgynous, Female Pronouns")));
 		output2("\n<b>* Femininity</b> <i>(Negative is Masculine)</i><b>: </b>" + Math.round((pc.femininity - 50) * 2) + " %");
 		if (!kGAMECLASS.inMareth()) {
 			output2("\n<b>* Personality Score: </b>" + Math.round(pc.personality));
@@ -622,6 +622,27 @@ public function statisticsScreen(showID:String = "All"):void
 	// Other
 	if(showID == "Other" || showID == "All")
 	{
+		//======CORE STATISTICS=====//
+		output2("\n\n" + blockHeader("Core Statistics", false));
+		output2("\n<b><u>Active Stats</u></b>");
+		output2("\n<b>* " + StringUtil.capitalize(pc.shieldDisplayName) + ": </b>" + "0/" + pc.shieldsRaw + "/" + pc.shieldsMax());
+		output2("\n<b>* HP: </b>" + "0/" + pc.HP() + "/" + pc.HPMax());
+		output2("\n<b>* Lust: </b>" + pc.lustMin() + "/" + pc.lust() + "/" + pc.lustMax());
+		output2("\n<b>* Energy: </b>" + pc.energyMin() + "/" + pc.energy() + "/" + pc.energyMax());
+		output2("\n<b><u>Passive Stats</u></b>");
+		output2("\n<b>* Physique: </b>" + "0/" + pc.physique() + "/" + pc.physiqueMax());
+		if(pc.physiqueMod != 0) output2(" (" + StringUtil.printPlusMinus(formatFloat(pc.physiqueMod, 3)) + ")");
+		output2("\n<b>* Reflexes: </b>" + "0/" + pc.reflexes() + "/" + pc.reflexesMax());
+		if(pc.reflexesMod != 0) output2(" (" + StringUtil.printPlusMinus(formatFloat(pc.reflexesMod, 3)) + ")");
+		output2("\n<b>* Aim: </b>" + "0/" + pc.aim() + "/" + pc.aimMax());
+		if(pc.aimMod != 0) output2(" (" + StringUtil.printPlusMinus(formatFloat(pc.aimMod, 3)) + ")");
+		output2("\n<b>* Intelligence: </b>" + "0/" + pc.intelligence() + "/" + pc.intelligenceMax());
+		if(pc.intelligenceMod != 0) output2(" (" + StringUtil.printPlusMinus(formatFloat(pc.intelligenceMod, 3)) + ")");
+		output2("\n<b>* Willpower: </b>" + "0/" + pc.willpower() + "/" + pc.willpowerMax());
+		if(pc.willpowerMod != 0) output2(" (" + StringUtil.printPlusMinus(formatFloat(pc.willpowerMod, 3)) + ")");
+		output2("\n<b>* Libido: </b>" + pc.libidoMin() + "/" + pc.libido() + "/" + pc.libidoMax());
+		if(pc.libidoMod != 0) output2(" (" + StringUtil.printPlusMinus(formatFloat(pc.libidoMod, 3)) + ")");
+		
 		//======COMBAT STATISTICS=====//
 		output2("\n\n" + blockHeader("Combat Statistics", false));
 		// Physical Combat
@@ -1295,13 +1316,11 @@ public function displayQuestLog(showID:String = "All"):void
 		{
 			output2("\n<b><u>Myrellion</u></b>");
 			output2("\n<b>* Status:</b>");
-			if(reclaimedProbeMyrellion() || (flags["KQ2_MYRELLION_STATE"] == 1 && MailManager.isEntryUnlocked("danemyrellioncoords"))) output2(" Coordinates received");
-			else
+			if(nyreaDungeonFinished() || (flags["KQ2_MYRELLION_STATE"] == 1 && MailManager.isEntryUnlocked("danemyrellioncoords"))) output2(" Coordinates received");
+			else output2(" <i>In progress...</i>");
+			if(!reclaimedProbeMyrellion() && flags["KQ2_MYRELLION_STATE"] != 1)
 			{
-				output2(" <i>In progress...</i>");
-				output2("\n<b>* Probe Location:</b>");
-				if(nyreaDungeonFinished()) output2(" <i>Probe has been located.</i>");
-				else output2(" <i>Probe appears to be in some kind of royal throne room.</i>");
+				output2("\n<b>* Probe Location:</b> <i>Probe" + (metTaivra() ? " located in Taivra’s" : " appears to be in some kind of royal") + " throne room.</i>");
 			}
 			// Scout
 			if(flags["MYRELLION_EMBASSY_VISITED"] != undefined && flags["KQ2_MYRELLION_STATE"] == undefined)
@@ -1505,7 +1524,8 @@ public function displayQuestLog(showID:String = "All"):void
 				else output2("\n<b><u>Doctor Badger’s Big Mistake</u></b>");
 				// Bimbo Raygun
 				output2("\n<b>* Status:</b>");
-				if(flags["BADGER_QUEST"] == 1) output2(" <i>Find Penny!</i>");
+				if(flags["DR_BADGER_TURNED_IN"] != undefined) output2(" Reported Dr. Badger, Completed");
+				else if(flags["BADGER_QUEST"] == 1) output2(" <i>Find Penny!</i>");
 				else if(flags["PENNY_BADGER_WARNED"] != undefined)
 				{
 					output2(" Warned Penny");
@@ -1523,6 +1543,7 @@ public function displayQuestLog(showID:String = "All"):void
 				}
 				if(flags["BADGER_QUEST"] == 2) output2(" Zapped Penny, <i>Mission accomplished! Report to Dr. Badger!</i>");
 				else if(flags["BADGER_QUEST"] >= 3) output2(" Zapped Penny, Rewarded, Completed");
+				sideCount++;
 			}
 			// Deck 13
 			if(flags["ANNO_MISSION_OFFER"] != undefined)
@@ -2333,6 +2354,7 @@ public function displayEncounterLog(showID:String = "All"):void
 					output2(", Crew member");
 					if(celiseIsCrew()) output2(" (Onboard Ship)");
 					else if(flags["CELISE_ONBOARD"] == undefined) output2(" (At Tavros Station)");
+					if(flags["BUBBLED_CELISE"] != undefined) output2("\n<b>* Celise, Times Given Cum Bubble: </b>" + flags["BUBBLED_CELISE"]);
 					if(flags["TIMES_CELISE_IN_BALLS"] != undefined)
 					{
 						output2("\n<b>* Celise, Times She’s Stimulated</b>");
@@ -2455,6 +2477,7 @@ public function displayEncounterLog(showID:String = "All"):void
 				{
 					output2("\n<b>* Vaande:</b> Met her");
 					if(flags["ASKED_AFTER_THE_GIRLS"] != undefined && (hours == 10 || hours == 13 || hours == 16)) output2(", Currently performing");
+					if(flags["VAANDE_BUBBLED"] != undefined) output2("\n<b>* Vaande, Times Given Cum Bubble: </b>" + flags["VAANDE_BUBBLED"]);
 					if(flags["SEXED_VAANDE"] != undefined) output2("\n<b>* Vaande, Times Sexed: </b>" + flags["SEXED_VAANDE"]);
 				}
 				variousCount++;
@@ -3006,7 +3029,8 @@ public function displayEncounterLog(showID:String = "All"):void
 				if(flags["FLAHNE_EXHIBITIONISM_UNLOCKED"] != undefined) output2(", Into exhibitionism");
 				if(flags["HUGGED_FLAHNE"] != undefined) output2(", Hugged her");
 				if(flags["FLAHNE_TALKED_ABOUT_CUMSLUTPENNY"] != undefined) output2(", Talked about cum-slut Penny");
-				if(flags["FLAHNE_PISSED"] > 0) output2("\n<b>* Flahne, Interaction:</b> Pissed off for " + flags["FLAHNE_PISSED"] + " hours");
+				if(pc.hasStatusEffect("Flahne_Extra_Pissed")) output2("\n<b>* Flahne, Interaction:</b> Extra pissed off for " + prettifyMinutes(pc.getStatusMinutes("Flahne_Extra_Pissed")));
+				else if(flags["FLAHNE_PISSED"] > 0) output2("\n<b>* Flahne, Interaction:</b> Pissed off for " + flags["FLAHNE_PISSED"] + " hours");
 				if(flags["FLAHNE_LIKE_OVIPOSITOR"] != undefined)
 				{
 					output2("\n<b>* Flahne, Ovipositor:</b>");
@@ -3014,6 +3038,7 @@ public function displayEncounterLog(showID:String = "All"):void
 					else if(flags["FLAHNE_LIKE_OVIPOSITOR"] > 0) output2(" Exposed");
 					else output2(" <i>Unknown</i>");
 				}
+				if(flags["FLAHNE_BUBBLED"] != undefined) output2("\n<b>* Flahne, Times Given Cum Bubble: </b>" + flags["FLAHNE_BUBBLED"]);
 				if(flags["FLAHNE_SEXED"] != undefined) output2("\n<b>* Flahne, Times Sexed: </b>" + flags["FLAHNE_SEXED"]);
 				variousCount++;
 			}
@@ -3814,6 +3839,8 @@ public function displayEncounterLog(showID:String = "All"):void
 				if(flags["MET_EMMY"] != undefined) output2("\n<b>* Emmy:</b> Met her");
 				else if(flags["APPROACHED_EMMY"] != undefined) output2("\n<b>* Jackal Woman:</b> Met her");
 				else output2("\n<b>* Jackal Woman:</b> Seen her");
+				if(chars["EMMY"].hasStatusEffect("Massaging")) output2(", Being massaged");
+				if(chars["EMMY"].hasStatusEffect("Slow Fucking")) output2(", Being slow fucked");
 				if(flags["EMMY_BANNED"] != undefined || flags["EMMY_POLY"] != undefined || flags["EMMY_BF"] != undefined)
 				{
 					output2("\n<b>* Emmy, Relationship:</b>");
@@ -3821,7 +3848,7 @@ public function displayEncounterLog(showID:String = "All"):void
 					else if(flags["EMMY_POLY"] != undefined) output2(" You’ve both agreed to be polyamorous");
 					else if(flags["EMMY_BF"] != undefined) output2(" You’re her [pc.boy]friend");
 					else output2(" <i>Unknown</i>");
-					if(9999 == 9999 && flags["EMMY_CREW_REQUESTED"] != undefined) output2(", Asked her to join your crew");
+					if(flags["EMMY_CREW_REQUESTED"] != undefined) output2(", Asked her to join your crew");
 				}
 				if(flags["EMMY_ORALED"] != undefined) output2("\n<b>* Emmy, Times She Oral Sexed You: </b>" + flags["EMMY_ORALED"]);
 			}
@@ -4294,19 +4321,27 @@ public function displayEncounterLog(showID:String = "All"):void
 				if(flags["MET_COCKVINE_SEEDLING"] != undefined) output2("\n<b>* Cockvine Seedling, Times Encountered: </b>" + flags["MET_COCKVINE_SEEDLING"]);
 				if(flags["MET_GOLD_DESERTER"] != undefined)
 				{
-					output2("\n<b>*</b>");
-					if(flags["KNOW_GOLD_MYR_NAME"] == undefined) output2("<b> Gold Myr Deserter</b>");
-					else output2(" <b>Lys</b>");
+					var goldMyrDeserterName:String = "Gold Myr Deserter";
+					if(flags["KNOW_GOLD_MYR_NAME"] != undefined) goldMyrDeserterName = "Lys";
+					output2("\n<b>* " + goldMyrDeserterName + "</b>");
 					if(flags["GOLD_MYR_DESERTER_BEATEN"] != undefined && flags["GOLD_MYR_DESERTER_BEATEN"] >= 5) output2(" <b>(Non-hostile)</b>");
 					output2("<b>, Times Encountered: </b>" + flags["MET_GOLD_DESERTER"]);
+					if(flags["GAVE_LYS_FLOWER"] != undefined)
+					{
+						output2(", Gave her a flower");
+						if(flags["GAVE_LYS_FLOWER"] != 1) output2(" " + flags["GAVE_LYS_FLOWER"] + " times");
+					}
+					else if(pc.hasItem(new VenusBloom()) && flags["ENABLE_LYS_FLOWER"] != undefined) output2(", <i>Give her a flower!</i>");
+					if(flags["GOLD_DILDOED"] != undefined) output2("\n<b>* " + goldMyrDeserterName + ", Times Used Dildo: </b>" + flags["GOLD_DILDOED"]);
 				}
 				if(flags["MET_RED_DESERTER"] != undefined)
 				{
-					output2("\n<b>*</b>");
-					if(flags["KNOW_RED_MYR_NAME"] == undefined) output2("<b> Red Myr Deserter</b>");
-					else output2("<b> Briha</b>");
+					var redMyrDeserterName:String = "Red Myr Deserter";
+					if(flags["KNOW_GOLD_MYR_NAME"] != undefined) redMyrDeserterName = "Briha";
+					output2("\n<b>* " + redMyrDeserterName + "</b>");
 					if(flags["RED_MYR_DESERTER_BEATEN"] != undefined && flags["RED_MYR_DESERTER_BEATEN"] >= 5) output2(" <b>(Non-hostile)</b>");
 					output2("<b>, Times Encountered: </b>" + flags["MET_RED_DESERTER"]);
+					if(flags["RED_DILDOED"] != undefined) output2("\n<b>* " + redMyrDeserterName + ", Times Used Dildo: </b>" + flags["RED_DILDOED"]);
 				}
 				variousCount++;
 			}
@@ -4790,7 +4825,7 @@ public function displayEncounterLog(showID:String = "All"):void
 			miscCount++;
 		}
 		// Sexploration: The Sex Toys
-		if(flags["NIVAS_BIONAHOLE_USES"] != undefined || flags["SYRI_BIONAHOLE_USES"] != undefined || flags["TAMANI_HOLED"] != undefined || flags["GRAVCUFFS_USES"] != undefined || flags["HOVERHOLE_USES"] != undefined || flags["EGG_TRAINER_INSTALLED"] != undefined || pc.hasItem(new EggTrainer()))
+		if(flags["NIVAS_BIONAHOLE_USES"] != undefined || flags["SYRI_BIONAHOLE_USES"] != undefined || flags["TAMANI_HOLED"] != undefined || flags["GRAVCUFFS_USES"] != undefined || flags["HOVERHOLE_USES"] != undefined || flags["BUBBLE_BUDDIED"] != undefined || flags["EGG_TRAINER_INSTALLED"] != undefined || pc.hasItem(new EggTrainer()))
 		{
 			output2("\n<b><u>Sex Toys</u></b>");
 			// BionaHoles
@@ -4801,6 +4836,8 @@ public function displayEncounterLog(showID:String = "All"):void
 			if(flags["GRAVCUFFS_USES"] != undefined) output2("\n<b>* Grav-Cuffs, Times Used: </b>" + flags["GRAVCUFFS_USES"]);
 			// Hover Hole
 			if(flags["HOVERHOLE_USES"] != undefined) output2("\n<b>* Hovering Pocket-Pussy, Times Used: </b>" + flags["HOVERHOLE_USES"]);
+			// Bubble Buddy
+			if(flags["BUBBLE_BUDDIED"] != undefined) output2("\n<b>* TamaniCorp, Bubble Buddy, Times Used: </b>" + flags["BUBBLE_BUDDIED"]);
 			// Egg Trainer
 			if(flags["EGG_TRAINER_INSTALLED"] != undefined || pc.hasItem(new EggTrainer()))
 			{
