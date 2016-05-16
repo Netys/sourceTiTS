@@ -3595,6 +3595,8 @@
 			return Math.max((0 + bonus), 0);
 		}
 		public function physiqueMax(): Number {
+			var base:int = level * 5;
+			if (characterClass == GLOBAL.CLASS_ADVENTURER) base = 100;
 			var bonuses:int = 0;
 			if (hasStatusEffect("Quivering Quasar")) bonuses += 5;
 			if (hasStatusEffect("Might")) bonuses += statusEffectv1("Might");
@@ -3603,27 +3605,33 @@
 				bonuses += perkv1("Implant: Iron Body");
 				bonuses += level * 5 * perkv2("Implant: Iron Body");
 			}
-			return level * 5 + bonuses;
+			return base + bonuses;
 		}
 		public function reflexesMax(): Number {
+			var base:int = level * 5;
+			if (characterClass == GLOBAL.CLASS_ADVENTURER) base = 100;
 			var bonuses:int = 0;
 			if(hasStatusEffect("Perfect Simulant")) bonuses += 3;
 			if (hasPerk("Implant: Wired Reflexes")) {
 				bonuses += perkv1("Implant: Wired Reflexes");
 				bonuses += level * 5 * perkv2("Implant: Wired Reflexes");
 			}
-			return level * 5 + bonuses;
+			return base + bonuses;
 		}
 		public function aimMax(): Number {
+			var base:int = level * 5;
+			if (characterClass == GLOBAL.CLASS_ADVENTURER) base = 100;
 			var bonuses:int = 0;
 			if (hasStatusEffect("Perfect Simulant")) bonuses += 3;
 			if (hasPerk("Implant: Optical Analyzer")) {
 				bonuses += perkv1("Implant: Optical Analyzer");
 				bonuses += level * 5 * perkv2("Implant: Optical Analyzer");
 			}
-			return level * 5 + bonuses;
+			return base + bonuses;
 		}
 		public function intelligenceMax(): Number {
+			var base:int = level * 5;
+			if (characterClass == GLOBAL.CLASS_ADVENTURER) base = 100;
 			var bonuses:int = 0;
 			if(hasPerk("Cybernetic Synchronization")) bonuses += (perkv1("Cybernetic Synchronization") * cyborgScore());
 			if(hasStatusEffect("Perfect Simulant")) bonuses += 3;
@@ -3631,16 +3639,18 @@
 				bonuses += perkv1("Implant: Cognitive Coprocessor");
 				bonuses += level * 5 * perkv2("Implant: Cognitive Coprocessor");
 			}
-			return level * 5 + bonuses;
+			return base + bonuses;
 		}
 		public function willpowerMax(): Number {
+			var base:int = level * 5;
+			if (characterClass == GLOBAL.CLASS_ADVENTURER) base = 100;
 			var bonuses:int = 0;
 			if(hasStatusEffect("Perfect Simulant")) bonuses += 3;
 			if (hasPerk("Implant: Mental Shield")) {
 				bonuses += perkv1("Implant: Mental Shield");
 				bonuses += level * 5 * perkv2("Implant: Mental Shield");
 			}
-			return level * 5 + bonuses;
+			return base + bonuses;
 		}
 		public function libidoMax(): Number {
 			var bonuses:int = 0;

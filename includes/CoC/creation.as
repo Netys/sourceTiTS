@@ -26,10 +26,16 @@ public function createYourChampion():void {
 	pc.short = "Champion";
 	pc.credits = 0;
 	pc.personality = 0;
+	pc.cor(15);
 	
-	pc.maxOutHP();
+	pc.intelligenceRaw = 15;
+	pc.physiqueRaw = 15;
+	pc.reflexesRaw = 15;
+	pc.aimRaw = 15;
+	pc.willpowerRaw = 15;
+	pc.libidoRaw = 15;
 	
-	pc.addLegFlag(GLOBAL.FLAG_PLANTIGRADE);
+	pc.addLegFlag(GLOBAL.FLAG_PLANTIGRADE); // strangely enough, despite default creature being all-human, this flag is not set by default
 	
 	CombatManager.TerminateCombat();
 	userInterface.hideNPCStats();
@@ -76,7 +82,7 @@ private function genericGenderChoice():void {
 	clearMenu();
 	addButton(0, "Man", genderSet, 1);
 	addButton(1, "Woman", genderSet, 3);
-	addButton(2, "Herm", genderSet, 2);
+	//addButton(2, "Herm", genderSet, 2); // not actually available as starting option...
 }
 
 private function genderSet(sex:int = 1):void {
@@ -94,6 +100,9 @@ private function genderSet(sex:int = 1):void {
 			pc.buttRatingRaw = 2;
 			pc.tone = 65;
 			pc.hairLength = 1;
+			
+			pc.physiqueRaw += 3;
+			pc.willpowerRaw += 2;
 		}
 		//HERM!
 		else
@@ -105,6 +114,11 @@ private function genderSet(sex:int = 1):void {
 			pc.tone = 45;
 			pc.breastRows[0].breastRatingRaw = 3;
 			pc.hairLength = 6;
+			
+			pc.physiqueRaw += 1;
+			pc.willpowerRaw += 1;
+			pc.reflexesRaw += 1;
+			pc.intelligenceRaw += 1;
 		}
 	}
 	//Girls or herms? Cunt stuff
@@ -119,6 +133,9 @@ private function genderSet(sex:int = 1):void {
 			pc.tone = 45;
 			pc.breastRows[0].breastRatingRaw = 3;
 			pc.hairLength = 10;
+			
+			pc.reflexesRaw += 3;
+			pc.intelligenceRaw += 2;
 		}
 	}
 	
@@ -177,6 +194,9 @@ private function buildSet(type:int):void {
 			pc.buttRatingRaw = 3;
 			pc.hipRatingRaw = 6;
 			pc.tallness = 5 * 12 + 8;
+			
+			pc.physiqueRaw -= 1;
+			pc.reflexesRaw += 1;
 			break;
 		case 1: // F. Average
 			pc.femininity = 70;
@@ -193,6 +213,10 @@ private function buildSet(type:int):void {
 			pc.buttRatingRaw = 8;
 			pc.hipRatingRaw = 10;
 			pc.tallness = 5 * 12 + 8;
+			
+			pc.physiqueRaw += 1;
+			pc.willpowerRaw += 1;
+			pc.reflexesRaw -= 2;
 			break;
 		case 3: // F. Tomboy
 			pc.femininity = 56;
@@ -202,6 +226,9 @@ private function buildSet(type:int):void {
 			pc.buttRatingRaw = 2;
 			pc.hipRatingRaw = 2;
 			pc.tallness = 5 * 12 + 9; // taller than most womans
+			
+			pc.physiqueRaw += 1;
+			pc.reflexesRaw -= 1;
 			break;
 		// no case 4 here
 		case 5: // M. Lean
@@ -212,6 +239,9 @@ private function buildSet(type:int):void {
 			pc.buttRatingRaw = 2;
 			pc.hipRatingRaw = 2;
 			pc.tallness = 5 * 12 + 11;
+			
+			pc.physiqueRaw -= 1;
+			pc.reflexesRaw += 1;
 			break;
 		case 6: // M. Average
 			pc.femininity = 30;
@@ -229,6 +259,10 @@ private function buildSet(type:int):void {
 			pc.buttRatingRaw = 6;
 			pc.hipRatingRaw = 4;
 			pc.tallness = 5 * 12 + 11;
+			
+			pc.physiqueRaw += 2;
+			pc.willpowerRaw += 2;
+			pc.reflexesRaw -= 4;
 			break;
 		case 8: // M. Girly
 			pc.femininity = 50;
@@ -238,6 +272,9 @@ private function buildSet(type:int):void {
 			pc.buttRatingRaw = 3;
 			pc.hipRatingRaw = 2;
 			pc.tallness = 5 * 12 + 9; // smaller than most men
+			
+			pc.physiqueRaw -= 2;
+			pc.reflexesRaw += 2;
 			break;
 	}
 	chooseComplexion();
@@ -299,13 +336,13 @@ public function chooseAffinity():void {
 	clearMenu();
 	addButton(0, "Intelligence", setAffinity, "intelligence", "Intelligence", "Increases the effectiveness of magic attacks.");
 	addButton(1, "Physique", setAffinity, "physique", "Physique", "Increases your strength and endurance. It is especially useful for increasing the damage of any melee strikes you may land on an opponent.");
-	addButton(2, "Reflexes", setAffinity, "reflexes", "Reflexes", "Increases your reaction time. Comes in handy when having to avoid a surprise attack or trap.");
+	addButton(2, "Reflexes", setAffinity, "reflexes", "Reflexes", "Increases your reaction speed. Comes in handy when having to avoid a surprise attack or trap.");
 	addButton(3, "Aim", setAffinity, "aim", "Aim", "Increases your accuracy and how well you can use ranged weapons.");
-	addButton(4, "Willpower", setAffinity, "willpower", "Willpower", "Increases your ability to counter urges and addictions.");
+	addButton(4, "Willpower", setAffinity, "willpower", "Willpower", "Increases your ability to counter urges and addictions, as well as withstand pain.");
 	addButton(13, "None", setAffinity, "none", "No Affinity", "You will not have a natural affinity towards any certain attribute.");
 }
 
-public function setAffinity(arg:String = "intelligence"):void {
+public function setAffinity(arg:String = "physique"):void {
 	pc.affinity = arg;
 	chooseEndowment(true);
 }
@@ -524,7 +561,6 @@ private function confirmHistory(choice:String):void {
 }
 
 private function completeCharacterCreation():void {
-	pc.cor(15);
 	pc.meleeWeapon = new Rock();
 	pc.rangedWeapon = new Rock();
 	pc.armor = new ComfortableClothes();
@@ -533,11 +569,13 @@ private function completeCharacterCreation():void {
 	else pc.lowerUndergarment = new CoCLoincloth();
 	if (pc.biggestTitSize() >= 1) pc.upperUndergarment = new CoCBra();
 	
-	if(pc.affinity == "intelligence") pc.intelligenceRaw++;
-	if(pc.affinity == "physique") pc.physiqueRaw++;
-	if(pc.affinity == "reflexes") pc.reflexesRaw++;
-	if(pc.affinity == "aim") pc.aimRaw++;
-	if(pc.affinity == "willpower") pc.willpowerRaw++;
+	if(pc.affinity == "intelligence") pc.intelligenceRaw += 5;
+	if(pc.affinity == "physique") pc.physiqueRaw += 5;
+	if(pc.affinity == "reflexes") pc.reflexesRaw += 5;
+	if(pc.affinity == "aim") pc.aimRaw += 5;
+	if(pc.affinity == "willpower") pc.willpowerRaw += 5;
+	
+	pc.maxOutHP();
 	
 	pc.removeStatusEffect("In Creation");
 	
