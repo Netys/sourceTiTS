@@ -103,6 +103,9 @@ package classes.UIComponents.ContentModules
 			
 			if (!tarButton.isSelected)
 			{
+				if (kGAMECLASS.pc.characterClass == GLOBAL.CLASS_ADVENTURER)
+					_perkList.clearSelections();
+				
 				tarButton.setSelected();
 				if (buttonGroup.buttonOne == tarButton) buttonGroup.buttonTwo.removeSelected();
 				else buttonGroup.buttonOne.removeSelected();
@@ -140,6 +143,7 @@ package classes.UIComponents.ContentModules
 			
 			for (var ii:int = 0; ii < _selectedPerks.length; ii++)
 			{
+				if ((_targetCreature as PlayerCharacter).unclaimedClassPerks <= 0) break;
 				_selectedPerks[ii].applyTo(_targetCreature);
 				(_targetCreature as PlayerCharacter).unclaimedClassPerks--;
 				kGAMECLASS.eventBuffer += "\n\nLevel " + _selectedPerks[ii].levelLimit + " Selected Perk: <b>" + _selectedPerks[ii].perkName + "</b> - " + _selectedPerks[ii].perkDescription;

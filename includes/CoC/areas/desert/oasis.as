@@ -46,6 +46,8 @@ public function CoCOasisDemonsPCVictory():void
 	}
 	
 	output("\n\nDo you rape them?");
+	output("\n\n");
+	
 	clearMenu();
 	addButton(0, "Yes", rapeDemons);
 	addButton(1, "No", function():* { processTime(20 + rand(10)); CombatManager.genericVictory(); });

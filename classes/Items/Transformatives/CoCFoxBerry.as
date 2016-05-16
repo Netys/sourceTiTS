@@ -69,7 +69,7 @@ package classes.Items.Transformatives
 			//Used for dick and boob TFs
 			var counter:int = 0;
 			
-			if (pc.faceType == GLOBAL.TYPE_VULPINE && pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount < 9 && pc.earType == GLOBAL.TYPE_VULPINE && pc.legType == GLOBAL.TYPE_VULPINE && pc.armType == GLOBAL.TYPE_VULPINE && pc.vaginaTotal() == pc.vaginaTotal(GLOBAL.TYPE_VULPINE) && pc.cockTotal() == pc.cockTotal(GLOBAL.TYPE_VULPINE) && pc.hasFur() && rand(3) == 0 && !pc.hasPerk("Transformation Resistance")) {
+			if (pc.faceType == GLOBAL.TYPE_VULPINE && pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount < 9 && pc.earType == GLOBAL.TYPE_VULPINE && pc.legType == GLOBAL.TYPE_VULPINE && pc.armType == GLOBAL.TYPE_VULPINE && pc.vaginaTotal() == pc.vaginaTotal(GLOBAL.TYPE_CANINE) && pc.cockTotal() == pc.cockTotal(GLOBAL.TYPE_VULPINE) && pc.hasFur() && rand(3) == 0 && !pc.hasPerk("Transformation Resistance")) {
 				if (kGAMECLASS.flags["COC.FOX_BAD_END_WARNING"] == undefined) {
 					kGAMECLASS.output("\n\nYou get a massive headache and a craving to raid a henhouse.  Thankfully, both pass in seconds, but <b>maybe you should cut back on the vulpine items...</b>");
 					kGAMECLASS.flags["COC.FOX_BAD_END_WARNING"] = 1;
@@ -284,7 +284,7 @@ package classes.Items.Transformatives
 			
 			//[Grow Fur]
 			//FOURTH
-			var foxFurColors:Array = ["orange and white", "orange and white", "orange and white", "red and white", "black and white", "white", "tan", "brown"];
+			var foxFurColors:Array = ["orange and white", "orange and white", "orange and white", "red and white", "black and white", "white", "tan", "sable"];
 			var kitsuneFurColors:Array = foxFurColors.concat(kGAMECLASS.basicKitsuneFur, kGAMECLASS.elderKitsuneColors, kGAMECLASS.corruptKitsuneColors);
 			
 			if ((enhanced || pc.legType == GLOBAL.TYPE_VULPINE) && pc.skinType != GLOBAL.SKIN_TYPE_FUR && changes < changeLimit && rand(4) == 0) {

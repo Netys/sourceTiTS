@@ -37,7 +37,11 @@ public function wormEncounter():void {
 	}
 	
 	showWorms();
-	if (flags["COC.WORMS_MET"] == undefined) { //First encounter
+	if (flags["COC.WORMS_ENABLED"] == undefined) { // undefined for a reason
+		wormToggle();
+		return;
+	}
+	if (int(flags["COC.WORMS_MET"]) == 0) { //First encounter
 		output("As you are exploring, a rather pungent, peaty smell assails your nostrils. You hear a strange rustling and an off-kilter squishing noise in the distance. As you explore the area you come upon a most grotesque sight. Before you is a cohesive mass of writhing, wriggling worms! While normally solitary creatures, these appear to have coalesced into a monstrous living colony!\n\n");
 		output("You have never before seen such a bizarre freak of nature. You see the mass of annelids creep about across your path. It stops and spreads slightly in your direction before halting. The stench of the mass is indescribable and a thick, viscous slime covers each of the countless worms forming the collective.\n\n");
 		output("You stop dead in your tracks, wondering what this swarm will do. After a few tense moments, the mass crawls away in a direction opposite of both you and your current path. You breathe a sigh of relief as you are confident that no good could have come from confronting such a zoological travesty.");
@@ -62,7 +66,7 @@ public function wormEncounter():void {
 }
 
 public function wormToggle():void {
-	//showWorms();
+	showWorms();
 	clearOutput();
 	output("While wandering, you come across a crudely illustrated sign.  It depicts an imp in obvious discomfort, covered in white little worms.  It looks as if one of them is even crawling into the imp's penis!\n\nHow do you feel about that?");
 	clearMenu();
@@ -74,7 +78,7 @@ public function wormToggle():void {
 private function wormsOn():void {
 	clearOutput();
 	output("You actually think it's kind of a hot idea, and wonder if such creatures actually exist in this land as you make your way back to camp.");
-	output("\n\n<b>If you ever change your mind, you can toggle from Fetishes menu in game settings.</b>");
+	//output("\n\n<b>If you ever change your mind, you can toggle from Fetishes menu in game settings.</b>");
 	flags["COC.WORMS_ENABLED"] = 0; // normal
 	doNext(returnToCampUseOneHour);
 }
@@ -82,7 +86,7 @@ private function wormsOn():void {
 private function wormsPartiallyOn():void {
 	clearOutput();
 	output("You shrug and keep walking, not sure how you feel about the strange sign.");
-	output("\n\n<b>If you ever change your mind, you can toggle from Fetishes menu in game settings.</b>");
+	//output("\n\n<b>If you ever change your mind, you can toggle from Fetishes menu in game settings.</b>");
 	flags["COC.WORMS_ENABLED"] = 1; // half
 	clearMenu();
 	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
@@ -91,7 +95,7 @@ private function wormsPartiallyOn():void {
 private function wormsOff():void {
 	clearOutput();
 	output("You shudder in revulsion and figure the sign to be the result of someone's perverted fantasy.");
-	output("\n\n<b>If you ever change your mind, you can toggle from Fetishes menu in game settings.</b>");
+	//output("\n\n<b>If you ever change your mind, you can toggle from Fetishes menu in game settings.</b>");
 	flags["COC.WORMS_ENABLED"] = -1; // none
 	clearMenu();
 	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );

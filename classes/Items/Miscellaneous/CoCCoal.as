@@ -20,7 +20,7 @@ package classes.Items.Miscellaneous
 			
 			this.quantity = 1;
 			this.stackSize = 10;
-			this.type = GLOBAL.ALL;
+			this.type = GLOBAL.PILL;
 			//Used on inventory buttons
 			this.shortName = "Coal";
 			//Regular name

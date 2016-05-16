@@ -31,6 +31,7 @@ package classes.Engine.Combat
 		damageToHP.applyResistances(tarResistances);
 		
 		var damageAfterResistances:Number = damageToHP.getTotal();
+		if (attacker.hasPerk("Sadist") && !target.isLustImmune) damageAfterResistances *= 1.2; // let's consider that lust immune foes are not sexy enough to get a thrill from hitting them
 		
 		// Apply other defensive stats
 		var defReduction:Number = target.defense();
@@ -38,6 +39,14 @@ package classes.Engine.Combat
 		if (special == "ranged" && kGAMECLASS.pc.hasPerk("Armor Piercing") && !(target is PlayerCharacter))
 		{
 			if (defReduction > 0) defReduction -= (kGAMECLASS.pc.level + rand(3));
+			if (defReduction < 0) defReduction = 0;
+		}
+		
+		if (special == "melee" && attacker.hasPerk("Lunging Attacks") && target != attacker && defReduction > 0) defReduction /= 2;
+		
+		if (attacker.hasPerk("Precision") && target != attacker && defReduction > 0)
+		{
+			if (defReduction > 0) defReduction -= attacker.perkv1("Precision");
 			if (defReduction < 0) defReduction = 0;
 		}
 		
@@ -59,6 +68,9 @@ package classes.Engine.Combat
 			
 			damageResult.remainingDamage = new TypeCollection();
 			
+			if (target.hasPerk("Masochist") && !target.isLustImmune) damageResult.remainingLustDamage.add(new TypeCollection( { tease : Math.min(Math.max(damageAfterResistances / 10, 2), 20) } ));
+			if (attacker.hasPerk("Sadist") && !target.isLustImmune) attacker.lust(Math.min(Math.max(damageAfterResistances / 10, 3), 30)); // isLustImmune is checked for target rather than for attacker intentionally
+			
 			target.HP( -damageAfterResistances);
 			
 			return;
@@ -75,6 +87,9 @@ package classes.Engine.Combat
 			
 			damageResult.totalDamage += target.HP();
 			damageResult.typedTotalDamage.add(damageToHP);
+			
+			if (target.hasPerk("Masochist") && !target.isLustImmune) damageResult.remainingLustDamage.add(new TypeCollection( { tease : Math.min(Math.max(target.HP() / 10, 2), 20) } ));
+			if (attacker.hasPerk("Sadist") && !target.isLustImmune) attacker.lust(Math.min(Math.max(target.HP() / 10, 3), 30)); // isLustImmune is checked for target rather than for attacker intentionally
 			
 			target.HP( -target.HP());
 		}

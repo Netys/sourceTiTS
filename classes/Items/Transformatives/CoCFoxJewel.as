@@ -172,12 +172,20 @@ package classes.Items.Transformatives
 				else output("  <b>Your vagina is now capable of accepting even the most ludicrously sized insertions with no ill effects.</b>");
 				pc.vaginas[0].bonusCapacity = 9000;
 				if (pc.vaginas[0].loosenessRaw > 1) pc.vaginas[0].loosenessRaw = 1;
+				if (pc.vaginas[0].minLooseness > 1) pc.vaginas[0].minLooseness = 1;
+				
+				if (pc.ass.bonusCapacity < 500) {
+					output(" Your [pc.asshole] seems to be affected as well, though not as much.");
+					pc.ass.bonusCapacity = 500;
+				}
+				if (pc.ass.loosenessRaw > 1) pc.ass.loosenessRaw = 1;
+				if (pc.ass.minLooseness > 1) pc.ass.minLooseness = 1;
 				changes++;
 			}
 			
 			// Kitsune sisters have some, why you can't?
 			if (changes < changeLimit && rand(3) == 0 && Mutator.changeTongue(pc, -1, [GLOBAL.FLAG_LONG, GLOBAL.FLAG_PREHENSILE], null, null, false)) {
-				output("\n\nYour tongue suddenly falls out of your mouth and begins undulating as it grows longer.  For a moment it swings wildly, completely out of control; but then settles down and you find you can control it at will, almost like a limb.  You're able to stretch it to nearly 2 feet and retract it back into your mouth to the point it looks normally.  <b>You now have a long, prehensile tongue.</b>");
+				output("\n\nYour [pc.tongue] suddenly falls out of your mouth and begins undulating as it grows longer.  For a moment it swings wildly, completely out of control; but then settles down and you find you can control it at will, almost like a limb.  You're able to stretch it to nearly 2 feet and retract it back into your mouth to the point it looks normally.  <b>You now have a long, prehensile tongue.</b>");
 				changes++;
 			}
 			
@@ -230,7 +238,7 @@ package classes.Items.Transformatives
 			}
 			//[Grow Addtl. Fox Tail]
 			//(rare effect, up to max of 8 tails, requires PC level and int*10 = number of tail to be added)
-			else if (pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount < 8 && pc.tailCount + 1 <= pc.level && pc.tailCount + 1 <= pc.IQ() / 10 && pc.WQ() >= 33 && changes < changeLimit && ((mystic && rand(2) == 0) || (!mystic && rand(3) == 0))) {
+			else if (pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount < 8 && pc.tailCount < pc.level && pc.tailCount * 5 <= pc.intelligence() && pc.WQ() >= 33 && changes < changeLimit && ((mystic && rand(2) == 0) || (!mystic && rand(3) == 0))) {
 				//if PC has 1 fox tail
 				if (pc.tailCount == 1) {
 					output("\n\nA tingling pressure builds on your backside, and your bushy tail begins to glow with an eerie, ghostly light.  With a crackle of electrical energy, your tail splits into two!  <b>You now have a pair of fox-tails.</b>");
@@ -251,8 +259,8 @@ package classes.Items.Transformatives
 					&& pc.earType == GLOBAL.TYPE_VULPINE 
 					&& pc.hasTail(GLOBAL.TYPE_VULPINE) 
 					&& pc.tailCount == 8 
-					&& pc.tailCount <= pc.level 
-					&& pc.IQ() >= 90
+					&& pc.tailCount < pc.level 
+					&& pc.tailCount * 5 <= pc.intelligence()
 					&& pc.WQ() >= 33) {
 				if (!pc.hasPerk("Enlightened Nine-tails") && !pc.hasPerk("Corrupted Nine-tails"))
 				{
@@ -326,13 +334,14 @@ package classes.Items.Transformatives
 			}
 			//[Change Skin Color: add "Tattoos"]
 			//From Tan, Olive, or Light skin tones
-			else if (9999 == 0 && InCollection(pc.skinTone, tone) && changes < changeLimit) {
-				output("You feel a crawling sensation on the surface of your skin, starting at the small of your back and spreading to your extremities, ultimately reaching your face.  You are caught by surprise when you are suddenly assaulted by a blinding flash issuing from areas of your skin, and when the spots finally clear from your vision, an assortment of glowing tribal tattoos adorns your " + pc.skin() + ".  The glow gradually fades, but the distinctive ");
-				if (mystic) output("angular");
-				else output("curved");
-				output(" markings remain, as if etched into your skin.");
+			else if (!pc.hasStatusEffect("Vanae Markings") && InCollection(pc.skinTone, tone) && changes < changeLimit) {
+				pc.createStatusEffect("Vanae Markings");
+				pc.skinAccent = mystic ? "purple" : "blue";
+				output("\n\nYou feel a crawling sensation on the surface of your skin, starting at the small of your back and spreading to your extremities, ultimately reaching your face.  You are caught by surprise when you are suddenly assaulted by a blinding flash issuing from areas of your skin, and when the spots finally clear from your vision, an assortment of glowing tribal tattoos adorns your " + pc.skin() + ".  The glow gradually fades, but the distinctive ");
+				if (mystic) output("angular ");
+				else output("curved ");
+				output(pc.skinAccent + " markings remain, as if etched into your skin.");
 				changes++;
-				//9999 - pending tats system
 			}
 			if (changes == 0) {
 				output("\n\nOdd.  You don't feel any different.");

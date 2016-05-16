@@ -249,7 +249,13 @@ package classes.UIComponents.ContentModules
 			}
 			
 			// This is where we'd hook into the second stage of the levelling process
-			kGAMECLASS.userInterface.showLevelUpPerks(_targetCreature);
+			if((_targetCreature as PlayerCharacter).unclaimedClassPerks > 0)
+				kGAMECLASS.userInterface.showLevelUpPerks(_targetCreature);
+			else
+			{
+				kGAMECLASS.eventBuffer += "\n\nYou have gained a level. Your stats have increased and you have gained new abilities!";
+				kGAMECLASS.mainGameMenu();
+			}
 		}
 	}
 

@@ -569,7 +569,8 @@ public function sleep(outputs:Boolean = true):void {
 	}
 	if(outputs)
 	{
-		if ((pc.XPRaw >= pc.XPMax()) && pc.level < 8 && flags["LEVEL_UP_AVAILABLE"] == undefined)
+		var maxLevel:int = pc.characterClass == GLOBAL.CLASS_ADVENTURER ? 30 : 8;
+		if ((pc.XPRaw >= pc.XPMax()) && pc.level < maxLevel && flags["LEVEL_UP_AVAILABLE"] == undefined)
 		{
 			(pc as PlayerCharacter).unspentStatPoints += 13;
 			(pc as PlayerCharacter).unclaimedClassPerks += 1;
@@ -584,7 +585,7 @@ public function sleep(outputs:Boolean = true):void {
 			
 			eventBuffer += "\n\nA nights rest is just what you needed; you feel faster... stronger... harder....\n<b>Level Up is available!</b>";
 		}
-		else if (pc.level == 8)
+		else if (pc.level == maxLevel)
 		{
 			eventBuffer += "\n\n<b>You've already reached the current maximum level. It will be raised in future builds.</b>";
 		}
@@ -1495,6 +1496,7 @@ public function processTime(arg:int):void {
 	
 	//Half time.
 	else if (pc.hasPerk("Ice Cold")) productionFactor /= 2;
+	if (pc.hasPerk("Well Adjusted")) productionFactor /= 2;
 	
 	if (pc.hasStatusEffect("Leitha Charm"))
 	{

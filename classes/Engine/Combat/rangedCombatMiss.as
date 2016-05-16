@@ -29,6 +29,7 @@ package classes.Engine.Combat
 		if(target.hasStatusEffect("Taking Cover") && rand(100) + 1 < 90) return true;
 		//10% miss chance for lucky breaks!
 		if (target.hasPerk("Lucky Breaks") && rand(100) <= 9) return true;
+		if (target.hasPerk("Evade") && rand(100) <= 9) return true;
 		if (target.hasStatusEffect("GooCamo") && rand(3) <= 1) return true;
 		if (attacker.accessory.hasFlag(GLOBAL.ITEM_FLAG_REDUCED_ACCURACY) && rand(10) == 0) return true;
 		return false;

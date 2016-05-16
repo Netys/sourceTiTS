@@ -1194,9 +1194,12 @@ package classes.GameData
 				if(difficulty > 5) difficulty = 5;
 
 				//Lower difficulty for flight if enemy cant!
-				if(pc.canFly() && (!_hostiles[0].canFly() || _hostiles[0].isImmobilized())) difficulty--;
+				if (pc.canFly() && (!_hostiles[0].canFly() || _hostiles[0].isImmobilized())) difficulty--;
 				//Lower difficulty for immobilized foe
 				if(_hostiles[0].isImmobilized()) difficulty--;
+				// true escape mastery
+				if (pc.hasPerk("Incorporeality")) difficulty--;
+				if (pc.hasPerk("Runner")) difficulty -= 2;
 				//Easy mode is magic!
 				if(kGAMECLASS.easy)
 				{
@@ -3232,8 +3235,8 @@ package classes.GameData
 			_lossFunction = func;
 		}
 		
-		protected var _friendlies:Array = null;
-		protected var _hostiles:Array = null;
+		protected var _friendlies:/*Creature*/Array = null;
+		protected var _hostiles:/*Creature*/Array = null;
 		public var noImportProcess:Boolean = false;
 		
 		private function prepFriendlyForCombat(target:Creature):void
@@ -3810,6 +3813,12 @@ package classes.GameData
 					else output("\n\n" + _friendlies[i].capitalA + _friendlies[i].uniqueName + " falls to the ground,");
 					if (_friendlies[i].HP() <= 0) output(" defeated.");
 					else output(" stricken with lust.");
+				}
+				else
+				{
+					if (_friendlies[i].hasPerk("Regeneration")) _friendlies[i].HP(_friendlies[i].maxHP() * 0.01);
+					if (_friendlies[i].hasPerk("Regeneration 2")) _friendlies[i].HP(_friendlies[i].maxHP() * 0.01);
+					if (_friendlies[i].hasSock("viridian")) _friendlies[i].HP(_friendlies[i].maxHP() * 0.01);
 				}
 			}
 			

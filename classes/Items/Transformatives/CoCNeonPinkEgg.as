@@ -226,9 +226,9 @@ package classes.Items.Transformatives
 				pc.balls--;
 			}
 			//Boost cum production
-			if ((pc.balls > 0 || pc.hasCock()) && pc.cumMultiplierRaw < 10 && rand(3) == 0 && changeLimit > 1) {
+			if ((pc.balls > 0 || pc.hasCock()) && pc.cumMultiplierRaw < 100 && rand(3) == 0 && changeLimit > 1) {
 				changes++;
-				pc.cumMultiplierRaw += (3 + rand(7)) * 0.01;
+				pc.cumMultiplierRaw += (3 + rand(7)) * 0.1;
 				if (pc.cumQ() >= 250) pc.lust(3);
 				if (pc.cumQ() >= 750) pc.lust(4);
 				if (pc.cumQ() >= 2000) pc.lust(5);
@@ -252,7 +252,7 @@ package classes.Items.Transformatives
 						output("\n\nAn orgasmic contraction wracks your [pc.balls], shivering through the potent orbs and passing as quickly as it came.  ");
 						if (pc.hasCock()) output("A thick trail of slime leaks from [pc.eachCock] down your " + pc.leg() + ", pooling below you.");
 						else output("You grunt, feeling terribly pent-up and needing to release.  Maybe you should get a penis to go with these balls...");
-						output("  It's quite obvious that your cum production has gone up again.", false);
+						output("  It's quite obvious that your cum production has gone up again.");
 					}
 					//(XXL cum quantity)
 					else {
@@ -270,7 +270,7 @@ package classes.Items.Transformatives
 					//(large cum quantity) < 750
 					else if (pc.cumQ() < 750) output("\n\nA strong contraction passes through your body, almost painful in its intensity.  [pc.eachCock] leaks and dribbles pre-cum down your " + pc.legs() + " as your body's cum production kicks up even higher!  Wow, it feels kind of... good.", false);
 					//(XL cum quantity) < 2000
-					else if (pc.cumQ() < 2000) output("\n\nAn orgasmic contraction wracks your abdomen, shivering through your midsection and down towards your groin.  A thick trail of slime leaks from [pc.eachCock]  and trails down your " + pc.leg() + ", pooling below you.  It's quite obvious that your body is producing even more cum now.", false);
+					else if (pc.cumQ() < 2000) output("\n\nAn orgasmic contraction wracks your abdomen, shivering through your midsection and down towards your groin.  A thick trail of slime leaks from [pc.eachCock]  and trails down your " + pc.leg() + ", pooling below you.  It's quite obvious that your body is producing even more cum now.");
 					//(XXL cum quantity)
 					else output("\n\nA body-wrenching contraction thrums through your gut, bringing with it the orgasmic feeling of your body kicking into cum-production overdrive.  pre-cum explodes from [pc.eachCock], running down your " + pc.legs() + " and splattering into puddles that would shame the orgasms of lesser " + pc.mf("males", "persons") + ".  You rub yourself a few times, nearly starting to masturbate on the spot, but you control yourself and refrain for now.");
 				}

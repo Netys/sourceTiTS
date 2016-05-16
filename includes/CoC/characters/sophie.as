@@ -153,7 +153,7 @@ public function followerCampMenuBlurbSophie(showInteractButton:Boolean):void {
 			else output("them");
 			output(" about hunting and gathering techniques.  Considering their unusual upbringing, it can't be as easy for them...\n\n");
 		}
-		addButton(followerBtnNum++, "Sophie", function():* { processTime(2); followerSophieMainScreen() }, undefined, "Sophie", "Check up on Sophie the harpy.");
+		if (showInteractButton) addButton(followerBtnNum++, "Sophie", function():* { processTime(2); followerSophieMainScreen() }, undefined, "Sophie", "Check up on Sophie the harpy.");
 	}
 	harpyDaughtersCampDesc();
 }

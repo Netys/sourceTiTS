@@ -3495,6 +3495,7 @@ private function giveArianReptilum():void {
 		_arian.createCock();
 		_arian.shiftCock(1, GLOBAL.TYPE_SNAKE);
 		_arian.cocks[1].cLengthRaw = _arian.cocks[0].cLengthRaw;
+		arian = _arian;
 	}
 	else {
 		output("\n\n\"<i>I guess I did...</i>\"  [arian.ey] smiles tiredly at you.  \"<i>Thank you for the wonderful surprise, [pc.name].</i>\"");

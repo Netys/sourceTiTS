@@ -24,7 +24,7 @@ package classes.Items.Miscellaneous
 			this.shortName = "MinoCum";
 			
 			//Regular name
-			this.longName = "bottle of purified minotaur cum";
+			this.longName = "bottle of minotaur cum";
 			
 			TooltipManager.addFullName(this.shortName, StringUtil.toTitleCase(this.longName));
 			

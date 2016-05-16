@@ -546,9 +546,10 @@ public function DemonFactoryTakeGroPlus():void {
 }
 
 public function DemonFactoryCleared():Boolean {
-	return flags["COC.FACTORY_OMNIBUS_DEFEATED"] > 0 
-		&& flags["COC.FACTORY_SUCCUBUS_DEFEATED"] > 0 
-		&& flags["COC.FACTORY_INCUBUS_DEFEATED"] > 0;
+	//return flags["COC.FACTORY_OMNIBUS_DEFEATED"] > 0 
+		//&& flags["COC.FACTORY_SUCCUBUS_DEFEATED"] > 0 
+		//&& flags["COC.FACTORY_INCUBUS_DEFEATED"] > 0;
+	return flags["COC.FACTORY_SHUTDOWN"] > 0;
 }
 
 public function FactoryRoomUpdateNotify():void {
@@ -566,7 +567,7 @@ public function FactoryRoomUpdateNotify():void {
 		rooms["COC_FACTORY_PREMIUM_PRODUCTS"].removeFlags(GLOBAL.HAZARD, GLOBAL.NOFAP);
 	}
 	
-	if (flags["COC.FACTORY_INCUBUS_DEFEATED"] != 1) rooms["COC_FACTORY_FURNACE_ROOM"].addFlag(GLOBAL.NPC); // not objective here
+	if (flags["COC.FACTORY_INCUBUS_DEFEATED"] != 1 && int(flags["COC.FACTORY_SHUTDOWN"]) <= 0) rooms["COC_FACTORY_FURNACE_ROOM"].addFlag(GLOBAL.NPC); // not objective here
 	else rooms["COC_FACTORY_FURNACE_ROOM"].removeFlag(GLOBAL.NPC);
 	if (flags["COC.FACTORY_SUCCUBUS_DEFEATED"] != 1) rooms["COC_FACTORY_BREAK_ROOM"].addFlag(GLOBAL.OBJECTIVE);
 	else rooms["COC_FACTORY_BREAK_ROOM"].removeFlag(GLOBAL.OBJECTIVE);

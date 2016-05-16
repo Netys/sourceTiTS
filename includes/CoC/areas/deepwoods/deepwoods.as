@@ -61,7 +61,7 @@ public function exploreDeepwoods():void {
 	choice.push(kitsuneShrineEnter);
 	chance.push(2);
 	
-	if (flags["COC.ERLKING_DISABLED"] == undefined)
+	if (int(flags["COC.ERLKING_DISABLED"]) == 0)
 	{
 		choice.push(encounterWildHunt);
 		chance.push(2);

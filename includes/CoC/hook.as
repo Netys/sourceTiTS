@@ -45,17 +45,25 @@ public function enterCocVrPod():void {
 		output("\nSoftware: M.15.12 R1 Legacy, running in failsafe/minimal mode.");
 		output("\nUser sync system: fully functional.");
 		output("\nUser sync level: 87%, stable.");
-		output("\nPlayer avatar: scan-based. Manual configuration is not available.");
+		if(pc.hasKeyItem("Key of the Twillight"))
+			output("\nPlayer avatar: scan-based. Manual configuration is not available.");
+		else
+			output("\nPlayer avatar: pending creation.");
 		output("\nWorld init... ");
 		initCoCJunk();
 		output("Ready. Pre-defined world file loaded. Manual configuration is not available.");
 		output("\n\n");
 		output("World rules:");
 		output("\nAcces to user interface is limited.");
-		output("\nLocal and real currency transitions would be done seamlessly. Exchange rate: 1 \"gem\" = 10 credits.");
+		if(pc.hasKeyItem("Key of the Twillight"))
+			output("\nLocal and real currency transitions would be done seamlessly. Exchange rate: 1 \"gem\" = 10 credits.");
 		output("\nExit is possible from entry point only. Warning: this means you will remain inside until you reach entry point.");
-		output("\nFeedback power is not limited. Warning: this can include permanent physical and mental changes.");
-		output("\nUser's personal memory is suppressed during simulation.");
+		if(pc.hasKeyItem("Key of the Twillight"))
+			output("\nFeedback power is not limited. Warning: this can include permanent physical and mental changes.");
+		else
+			output("\nFeedback power is high. Warning: this can include permanent mental damage.");
+		if(pc.hasKeyItem("Key of the Twillight"))
+			output("\nUser's personal memory is suppressed during simulation.");
 		output("\n\nWould you kindly enter the portal to launch main sequence?\n\n");
 		processTime(20);
 	}

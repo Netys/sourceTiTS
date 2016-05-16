@@ -162,6 +162,18 @@ public function EventsAdopterHellNotify():void {
 		eventBuffer += "\n\n<b>Your rut is suddenly gone.</b>";
 		pc.removeStatusEffect("Rut");
 	}
+	
+	if (pc.hasPerk("Regeneration")) {
+		pc.HP(pc.maxHP() * .01 / 60);
+	}
+	
+	if (pc.hasPerk("Regeneration 2")) {
+		pc.HP(pc.maxHP() * .01 / 60);
+	}
+	
+	if (pc.hasPerk("Speedy Recovery")) {
+		pc.energy(1 / 15);
+	}
 }
 private var EventsAdopterHellNotifyHook: * = EventsAdopterHellNotifyGrapple();
 private function EventsAdopterHellNotifyGrapple():* { timeChangeListeners.push(EventsAdopterHellNotify); }

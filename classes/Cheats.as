@@ -209,7 +209,7 @@
 				kGAMECLASS.pc.removeKeyItem("Key of the Twillight");
 			} else {
 				kGAMECLASS.output("\n<b>You now possess the Key of the Twillight</b>.");
-				kGAMECLASS.pc.createKeyItem("Key of the Twillight", 0, 0, 0, 0, "Dream or reality? Same things, fore one who owns the Key of the Twillight.");
+				kGAMECLASS.pc.createKeyItem("Key of the Twillight", 0, 0, 0, 0, "Dream or reality? Same things, for the one who owns the Key of the Twillight.");
 			}
 		}
 	}

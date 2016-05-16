@@ -30,6 +30,7 @@ package classes.Characters.CoC
 			this.customBlock = "";
 			
 			this.meleeWeapon.attackVerb = "flame-whip";
+			this.meleeWeapon.attackNoun = "lash";
 			this.meleeWeapon.longName = "flaming whip";
 			this.meleeWeapon.baseDamage.kinetic.damageValue = 15;
 			this.meleeWeapon.hasRandomProperties = true;

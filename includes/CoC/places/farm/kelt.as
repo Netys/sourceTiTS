@@ -623,7 +623,7 @@ private function keltMainEncounter2():void {
 	}
 	//(Bow equipped)
 	else {
-		if (pc.hasItem(new PrimitiveBow()))
+		if (pc.hasItem(new CoCCentaurBow()))
 			output("Kelt sneers as he looks at your bow, \"<i>You're still using that rotten old thing?  Well, it will do.  We'll just have to shoot for the close targets.</i>\"\r\r");
 		else
 			output("Kelt sneers as he looks at your bow, \"<i>Got yourself fancy new bow?  Nah, won't make any difference if you have no skill.</i>\"\r\r");

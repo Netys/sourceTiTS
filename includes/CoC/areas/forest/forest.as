@@ -117,6 +117,7 @@ public function forestTentaBeast():void {
 	//Tentacle avoidance chance due to dangerous plants
 	if (pc.hasKeyItem("Dangerous Plants") && pc.intelligence() > rand(50)) {
 		output("Using the knowledge contained in your 'Dangerous Plants' book, you determine a tentacle beast's lair is nearby, do you continue?  If not you could return to camp.\n\n");
+		clearMenu();
 		addButton(0, "Continue", tentacleBeastSceneEncounter);
 		addButton(1, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 		return;
@@ -202,6 +203,6 @@ private function forestLoot():void {
 	lootScreen = itemScreen;
 	useItemFunction = itemScreen;
 	
-	output("You find a large piece of insectile carapace obscured in the ferns to your left. It's mostly black with a thin border of bright yellow along the outer edge. There's still a fair portion of yellow fuzz clinging to the chitinous shard. It feels strong and flexible - maybe someone can make something of it. ");
+	output("You find a large piece of insectile carapace obscured in the ferns to your left. It's mostly black with a thin border of bright yellow along the outer edge. There's still a fair portion of yellow fuzz clinging to the chitinous shard. It feels strong and flexible - maybe someone can make something of it.\n\n");
 	itemCollect([new CoCBlackChitin()]);
 }

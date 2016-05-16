@@ -580,118 +580,353 @@ package classes.GameData
 		
 		private function ConfigureAdventurerPerks():void
 		{
-			// LEVEL 2
-			var tough:PerkData = new PerkData();
-			tough.classLimit = GLOBAL.CLASS_ADVENTURER;
-			tough.levelLimit = 2;
-			tough.perkName = "Tough";
-			tough.perkDescription = "Resistance to Kinetic damage increased by 10%."
-			tough.applicationFunction = function():void {
-				kGAMECLASS.pc.baseHPResistances.kinetic.resistanceValue += 10.0;
-				kGAMECLASS.pc.baseShieldResistances.kinetic.resistanceValue += 10.0;
+			var ThunderousStrikes:PerkData = new PerkData();
+			ThunderousStrikes.classLimit = GLOBAL.CLASS_ADVENTURER;
+			ThunderousStrikes.perkName = "Thunderous Strikes";
+			ThunderousStrikes.perkDescription = "+20% 'Attack' damage while physique is at or above 80%.";
+			ThunderousStrikes.levelLimit = 6;
+			ThunderousStrikes.accessFunction = function():Boolean { return kGAMECLASS.pc.PQ() >= 80; };
+			insertPerkData(ThunderousStrikes);
+			
+			// There are no weapon types in TiTS...
+			//var WeaponMastery:PerkData = new PerkData();
+			//WeaponMastery.classLimit = GLOBAL.CLASS_ADVENTURER;
+			//WeaponMastery.perkName = "Weapon Mastery";
+			//WeaponMastery.perkDescription = "You choose the 'Weapon Mastery' perk, doubling the effectiveness of large weapons.";
+			//WeaponMastery.levelLimit = 6;
+			//WeaponMastery.accessFunction = function():Boolean { return kGAMECLASS.pc.PQ() >= 60; };
+			//insertPerkData(WeaponMastery);
+			
+			// TODO: inlict debuff on each hit
+			//var BrutalBlows:PerkData = new PerkData();
+			//BrutalBlows.classLimit = GLOBAL.CLASS_ADVENTURER;
+			//BrutalBlows.perkName = "Brutal Blows";
+			//BrutalBlows.perkDescription = "Reduces enemy armor with each hit.";
+			//BrutalBlows.levelLimit = 6;
+			//BrutalBlows.accessFunction = function():Boolean { return kGAMECLASS.pc.PQ() >= 75; };
+			//insertPerkData(BrutalBlows);
+			
+			// There are no brawl in TiTS...
+			//var IronFists:PerkData = new PerkData();
+			//IronFists.classLimit = GLOBAL.CLASS_ADVENTURER;
+			//IronFists.perkName = "Iron Fists";
+			//IronFists.perkDescription = "Hardens your fists to increase attack rating by 5.";
+			//IronFists.levelLimit = 6;
+			//IronFists.accessFunction = function():Boolean { return kGAMECLASS.pc.PQ() >= 50; };
+			//insertPerkData(IronFists);
+			
+			var Parry:PerkData = new PerkData();
+			Parry.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Parry.perkName = "Parry";
+			Parry.perkDescription = "Increases evasion chance by up to 10% while wielding a melee weapon.";
+			Parry.levelLimit = 6;
+			Parry.accessFunction = function():Boolean { return kGAMECLASS.pc.PQ() >= 50 && kGAMECLASS.pc.RQ() >= 50; };
+			insertPerkData(Parry);
+			
+			// TODO: implement ability
+			//var Berzerker:PerkData = new PerkData();
+			//Berzerker.classLimit = GLOBAL.CLASS_ADVENTURER;
+			//Berzerker.perkName = "Berzerker";
+			//Berzerker.perkDescription = "Grants 'Berserk' ability.";
+			//Berzerker.levelLimit = 12;
+			//Berzerker.accessFunction = function():Boolean { return kGAMECLASS.pc.PQ() >= 75; };
+			//insertPerkData(Berzerker);
+			
+			var HoldWithBothHands:PerkData = new PerkData();
+			HoldWithBothHands.classLimit = GLOBAL.CLASS_ADVENTURER;
+			HoldWithBothHands.perkName = "Hold With Both Hands";
+			HoldWithBothHands.perkDescription = "Gain +20% physique modifier with melee weapons when not using a ranged weapons.";
+			HoldWithBothHands.levelLimit = 12;
+			HoldWithBothHands.accessFunction = function():Boolean { return kGAMECLASS.pc.PQ() >= 80; };
+			insertPerkData(HoldWithBothHands);
+			
+			var Tank:PerkData = new PerkData();
+			Tank.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Tank.perkName = "Tank";
+			Tank.perkDescription = "Raises max HP by 50.";
+			Tank.levelLimit = -1;
+			Tank.accessFunction = function():Boolean { return kGAMECLASS.pc.WQ() >= 25; };
+			insertPerkData(Tank);
+			
+			var Regeneration:PerkData = new PerkData();
+			Regeneration.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Regeneration.perkName = "Regeneration";
+			Regeneration.perkDescription = "Regenerates 2% of max HP/hour and 1% of max HP/round.";
+			Regeneration.levelLimit = -1;
+			Regeneration.accessFunction = function():Boolean { return kGAMECLASS.pc.WQ() >= 50; };
+			insertPerkData(Regeneration);
+			
+			var Tank2:PerkData = new PerkData();
+			Tank2.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Tank2.perkName = "Fortitude";
+			Tank2.perkDescription = "+1 extra HP per point of willpower.";
+			Tank2.levelLimit = 6;
+			Tank2.accessFunction = function():Boolean { return kGAMECLASS.pc.WQ() >= 60 && kGAMECLASS.pc.hasPerk("Tank"); };
+			insertPerkData(Tank2);
+			
+			var Regeneration2:PerkData = new PerkData();
+			Regeneration2.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Regeneration2.perkName = "Regeneration 2";
+			Regeneration2.perkDescription = "Regenerates further 2% of max HP/hour and 1% of max HP/round.";
+			Regeneration2.levelLimit = 6;
+			Regeneration2.accessFunction = function():Boolean { return kGAMECLASS.pc.WQ() >= 70 && kGAMECLASS.pc.hasPerk("Regeneration"); };
+			insertPerkData(Regeneration2);
+			
+			var ImmovableObject:PerkData = new PerkData();
+			ImmovableObject.classLimit = GLOBAL.CLASS_ADVENTURER;
+			ImmovableObject.perkName = "Immovable Object";
+			ImmovableObject.perkDescription = "Grants 20% physical damage reduction.";
+			ImmovableObject.levelLimit = 6;
+			ImmovableObject.accessFunction = function():Boolean { return kGAMECLASS.pc.WQ() >= 75; };
+			ImmovableObject.applicationFunction = function():void {
+				kGAMECLASS.pc.baseHPResistances.kinetic.resistanceValue += 20.0;
+				kGAMECLASS.pc.baseHPResistances.electric.resistanceValue += 20.0;
+				kGAMECLASS.pc.baseHPResistances.burning.resistanceValue += 20.0;
+				kGAMECLASS.pc.baseHPResistances.freezing.resistanceValue += 20.0;
+				kGAMECLASS.pc.baseHPResistances.corrosive.resistanceValue += 20.0;
+				kGAMECLASS.pc.baseHPResistances.poison.resistanceValue += 20.0;
 			}
-			insertPerkData(tough);
+			insertPerkData(ImmovableObject);
 			
-			var lucky:PerkData = new PerkData();
-			lucky.classLimit = GLOBAL.CLASS_ADVENTURER;
-			lucky.levelLimit = 2;
-			lucky.perkName = "Lucky Breaks";
-			lucky.perkDescription = "Grants you an additional 10% evasion chance.";
-			insertPerkData(lucky);
+			var Resolute:PerkData = new PerkData();
+			Resolute.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Resolute.perkName = "Resolute";
+			Resolute.perkDescription = "Grants immunity to stuns and some statuses.";
+			Resolute.levelLimit = 12;
+			Resolute.accessFunction = function():Boolean { return kGAMECLASS.pc.WQ() >= 75; };
+			insertPerkData(Resolute);
 			
-			// LEVEL 3
-			var lowBlow:PerkData = new PerkData();
-			lowBlow.classLimit = GLOBAL.CLASS_ADVENTURER;
-			lowBlow.levelLimit = 3;
-			lowBlow.perkName = "Low Blow";
-			lowBlow.perkDescription = "Grants the ability to perform a melee strike with a high chance of stunning the target.";
-			insertPerkData(lowBlow);
+			var IronMan:PerkData = new PerkData();
+			IronMan.classLimit = GLOBAL.CLASS_ADVENTURER;
+			IronMan.perkName = "Iron Man";
+			IronMan.perkDescription = "Reduces the fatigue cost of physical specials by 50%.";
+			IronMan.levelLimit = 12;
+			IronMan.accessFunction = function():Boolean { return kGAMECLASS.pc.WQ() >= 60 };
+			insertPerkData(IronMan);
 			
-			var quickDraw:PerkData = new PerkData();
-			quickDraw.classLimit = GLOBAL.CLASS_ADVENTURER;
-			quickDraw.levelLimit = 3;
-			quickDraw.perkName = "Quickdraw";
-			quickDraw.perkDescription = "Equipping a new weapon no longer consumes your turn in combat.";
-			insertPerkData(quickDraw);
+			var Evade:PerkData = new PerkData();
+			Evade.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Evade.perkName = "Evade";
+			Evade.perkDescription = "Increases chances of evading enemy attacks by 10%.";
+			Evade.levelLimit = -1;
+			Evade.accessFunction = function():Boolean { return kGAMECLASS.pc.RQ() >= 25; };
+			insertPerkData(Evade);
 			
-			// Level 4
-			var criticalBlows:PerkData = new PerkData();
-			criticalBlows.classLimit = GLOBAL.CLASS_ADVENTURER;
-			criticalBlows.levelLimit = 4;
-			criticalBlows.perkName = "Critical Blows";
-			criticalBlows.perkDescription = "Your strikes and shots gain a 10% chance of inflicting double damage on normal melee and ranged attacks.";
-			insertPerkData(criticalBlows);
+			var Runner:PerkData = new PerkData();
+			Runner.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Runner.perkName = "Runner";
+			Runner.perkDescription = "Increases chances of escaping combat.";
+			Runner.levelLimit = -1;
+			Runner.accessFunction = function():Boolean { return kGAMECLASS.pc.RQ() >= 25; };
+			insertPerkData(Runner);
 			
-			var agility:PerkData = new PerkData();
-			agility.classLimit = GLOBAL.CLASS_ADVENTURER;
-			agility.levelLimit = 4;
-			agility.perkName = "Agility";
-			agility.perkDescription = "Increases evasion granted via items by 50%, or provides a flat 10% evasion boost, whichever is higher.";
-			insertPerkData(agility);
+			var DoubleAttack:PerkData = new PerkData();
+			DoubleAttack.classLimit = GLOBAL.CLASS_ADVENTURER;
+			DoubleAttack.perkName = "Double Attack";
+			DoubleAttack.perkDescription = "Allows you to perform two melee attacks per round, but halves physique bonus to damage.";
+			DoubleAttack.levelLimit = -1;
+			DoubleAttack.accessFunction = function():Boolean { return kGAMECLASS.pc.RQ() >= 50 && kGAMECLASS.pc.hasPerk("Runner") && kGAMECLASS.pc.hasPerk("Evade"); };
+			insertPerkData(DoubleAttack);
 			
-			// Level 5
-			var riposte:PerkData = new PerkData();
-			riposte.classLimit = GLOBAL.CLASS_ADVENTURER;
-			riposte.levelLimit = 5;
-			riposte.perkName = "Riposte";
-			riposte.perkDescription = "Grants increased evasion after any melee attack made for the remainder of the combat round.";
-			insertPerkData(riposte);
+			var SpeedyRecovery:PerkData = new PerkData();
+			SpeedyRecovery.classLimit = GLOBAL.CLASS_ADVENTURER;
+			SpeedyRecovery.perkName = "Speedy Recovery";
+			SpeedyRecovery.perkDescription = "Regain fatigue 50% faster.";
+			SpeedyRecovery.levelLimit = 6;
+			SpeedyRecovery.accessFunction = function():Boolean { return kGAMECLASS.pc.RQ() >= 60 && kGAMECLASS.pc.hasPerk("Evade"); };
+			insertPerkData(SpeedyRecovery);
 			
-			var juggernaut:PerkData = new PerkData();
-			juggernaut.classLimit = GLOBAL.CLASS_ADVENTURER;
-			juggernaut.levelLimit = 5;
-			juggernaut.perkName = "Juggernaut";
-			juggernaut.perkDescription = "Grants a 25% chance to overcome any paralysis or stun effect every combat round.";
-			insertPerkData(juggernaut);
+			// Using TiTS version of perk, there are no armor classes in TiTS anyways
+			var Agility:PerkData = new PerkData();
+			Agility.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Agility.perkName = "Agility";
+			Agility.perkDescription = "Increases evasion granted via items by 50%, or provides a flat 10% evasion boost, whichever is higher.";
+			Agility.levelLimit = 6;
+			Agility.accessFunction = function():Boolean { return kGAMECLASS.pc.RQ() >= 75 && kGAMECLASS.pc.hasPerk("Runner"); };
+			insertPerkData(Agility);
 			
-			//Level 6
-
-			var cleave:PerkData = new PerkData();
-			cleave.classLimit = GLOBAL.CLASS_ADVENTURER;
-			cleave.levelLimit = 6;
-			cleave.perkName = "Cleave";
-			cleave.perkDescription = "Grants an extra, low-accuracy swing when fighting groups of enemies or \"plural\" type foes.";
-			insertPerkData(cleave);
+			// There are no weapon classes in TiTS...
+			//var LightningStrikes:PerkData = new PerkData();
+			//LightningStrikes.classLimit = GLOBAL.CLASS_ADVENTURER;
+			//LightningStrikes.perkName = "Lightning Strikes";
+			//LightningStrikes.perkDescription = "Increases the attack damage for non-heavy weapons.";
+			//LightningStrikes.levelLimit = 6;
+			//LightningStrikes.accessFunction = function():Boolean { return kGAMECLASS.pc.RQ() >= 60; };
+			//insertPerkData(LightningStrikes);
 			
-			var improvedAgility:PerkData = new PerkData();
-			improvedAgility.classLimit = GLOBAL.CLASS_ADVENTURER;
-			improvedAgility.levelLimit = 6;
-			improvedAgility.perkName = "Improved Agility";
-			improvedAgility.perkDescription = "Increases your evasion by an additional 10%.";
-			insertPerkData(improvedAgility);
+			var LungingAttacks:PerkData = new PerkData();
+			LungingAttacks.classLimit = GLOBAL.CLASS_ADVENTURER;
+			LungingAttacks.perkName = "Lunging Attacks";
+			LungingAttacks.perkDescription = "Grants 50% armor penetration for melee attacks.";
+			LungingAttacks.levelLimit = 12;
+			LungingAttacks.accessFunction = function():Boolean { return kGAMECLASS.pc.RQ() >= 75; };
+			insertPerkData(LungingAttacks);
 			
-			// Level 7
+			//var Blademaster:PerkData = new PerkData();
+			//Blademaster.classLimit = GLOBAL.CLASS_ADVENTURER;
+			//Blademaster.perkName = "Blademaster";
+			//Blademaster.perkDescription = "Gain +5% to critical strike chance when wielding a sword and not using a shield.";
+			//Blademaster.levelLimit = 12;
+			//Blademaster.accessFunction = function():Boolean { return kGAMECLASS.pc.RQ() >= 80 && kGAMECLASS.pc.PQ() >= 60; };
+			//insertPerkData(Blademaster);
 			
-			var heroicReserves:PerkData = new PerkData();
-			heroicReserves.classLimit = GLOBAL.CLASS_ADVENTURER;
-			heroicReserves.levelLimit = 7;
-			heroicReserves.perkName = "Heroic Reserves";
-			heroicReserves.perkDescription = "Raises your maximum energy reserves by 33, allowing you to use more special attacks before tiring.";
-			insertPerkData(heroicReserves);
+			var Precision:PerkData = new PerkData();
+			Precision.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Precision.perkName = "Precision";
+			Precision.perkDescription = "Reduces enemy armor.";
+			Precision.levelLimit = -1;
+			Precision.setStorageValues(10);
+			Precision.accessFunction = function():Boolean { return kGAMECLASS.pc.IQ() >= 25; };
+			insertPerkData(Precision);
 			
-			var burstOfEnergy:PerkData = new PerkData();
-			burstOfEnergy.classLimit = GLOBAL.CLASS_ADVENTURER;
-			burstOfEnergy.levelLimit = 7;
-			burstOfEnergy.perkName = "Burst of Energy";
-			burstOfEnergy.perkDescription = "Allows you to recover 60 energy, once per combat encounter.";
-			insertPerkData(burstOfEnergy);
+			var Spellpower:PerkData = new PerkData();
+			Spellpower.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Spellpower.perkName = "Spellpower";
+			Spellpower.perkDescription = "Increases base spell strength by 50%.";
+			Spellpower.levelLimit = -1;
+			Spellpower.accessFunction = function():Boolean { return kGAMECLASS.pc.IQ() >= 50 && kGAMECLASS.hasSpells(); };
+			insertPerkData(Spellpower);
 			
-			// Level 8
+			var Mage:PerkData = new PerkData();
+			Mage.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Mage.perkName = "Mage";
+			Mage.perkDescription = "Increases base spell strength by 50%.";
+			Mage.levelLimit = -1;
+			Mage.accessFunction = function():Boolean { return kGAMECLASS.pc.IQ() >= 50 && kGAMECLASS.pc.hasPerk("Spellpower"); };
+			insertPerkData(Mage);
 			
-			var secondAttack:PerkData = new PerkData();
-			secondAttack.classLimit = GLOBAL.CLASS_ADVENTURER;
-			secondAttack.levelLimit = 8;
-			secondAttack.perkName = "Second Attack";
-			secondAttack.perkDescription = "Allows you to make a second, low-accuracy attack whenever you perform a melee attack. Can stack with \"Cleave.\"";
-			insertPerkData(secondAttack);
+			var Tactician:PerkData = new PerkData();
+			Tactician.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Tactician.perkName = "Tactician";
+			Tactician.perkDescription = "Increases critical hit chance by up to 10%.";
+			Tactician.levelLimit = 6;
+			Tactician.accessFunction = function():Boolean { return kGAMECLASS.pc.IQ() >= 50; };
+			insertPerkData(Tactician);
 			
-			var secondShot:PerkData = new PerkData();
-			secondShot.classLimit = GLOBAL.CLASS_ADVENTURER;
-			secondShot.levelLimit = 8;
-			secondShot.perkName = "Second Shot";
-			secondShot.perkDescription = "Allows you to make a second, low-accuracy attack whenever you shoot a ranged weapon.";
-			insertPerkData(secondShot);
+			var Channeling:PerkData = new PerkData();
+			Channeling.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Channeling.perkName = "Channeling";
+			Channeling.perkDescription = "Increases base spell strength by 50%.";
+			Channeling.levelLimit = 6;
+			Channeling.accessFunction = function():Boolean { return kGAMECLASS.pc.IQ() >= 60 && kGAMECLASS.pc.hasPerk("Spellpower") && kGAMECLASS.pc.hasPerk("Mage"); };
+			insertPerkData(Channeling);
 			
+			// Poisons have too much different mechanics, especially ones with debuffs, can get lots of weirdshit here...
+			//var Medicine:PerkData = new PerkData();
+			//Medicine.classLimit = GLOBAL.CLASS_ADVENTURER;
+			//Medicine.perkName = "Medicine";
+			//Medicine.perkDescription = "Grants 15% chance per round of cleansing poisons/drugs from your body. Increases HP restoration on rest.";
+			//Medicine.levelLimit = 6;
+			//Medicine.accessFunction = function():Boolean { return kGAMECLASS.pc.IQ() >= 60; };
+			//insertPerkData(Medicine);
+			
+			var Archmage:PerkData = new PerkData();
+			Archmage.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Archmage.perkName = "Archmage";
+			Archmage.perkDescription = "Increases base spell strength by 50%.";
+			Archmage.levelLimit = 12;
+			Archmage.accessFunction = function():Boolean { return kGAMECLASS.pc.IQ() >= 75 && kGAMECLASS.pc.hasPerk("Mage"); };
+			insertPerkData(Archmage);
+			
+			var ColdBlooded:PerkData = new PerkData();
+			ColdBlooded.classLimit = GLOBAL.CLASS_ADVENTURER;
+			ColdBlooded.perkName = "Cold Blooded";
+			ColdBlooded.perkDescription = "Reduces minimum lust by up to 20, down to min of 20. Caps min lust at 80.";
+			ColdBlooded.levelLimit = -1;
+			ColdBlooded.accessFunction = function():Boolean { return kGAMECLASS.pc.lustMin() > 20; };
+			insertPerkData(ColdBlooded);
+			
+			var HotBlooded:PerkData = new PerkData();
+			HotBlooded.classLimit = GLOBAL.CLASS_ADVENTURER;
+			HotBlooded.perkName = "Hot Blooded";
+			HotBlooded.perkDescription = "Raises minimum lust by up to 20.";
+			HotBlooded.levelLimit = -1;
+			HotBlooded.accessFunction = function():Boolean { return kGAMECLASS.pc.libido() >= 50; };
+			insertPerkData(HotBlooded);
+			
+			var WellAdjusted:PerkData = new PerkData();
+			WellAdjusted.classLimit = GLOBAL.CLASS_ADVENTURER;
+			WellAdjusted.perkName = "Well Adjusted";
+			WellAdjusted.perkDescription = "You gain half as much lust as time passes.";
+			WellAdjusted.levelLimit = 6;
+			WellAdjusted.accessFunction = function():Boolean { return kGAMECLASS.pc.libido() >= 60; };
+			insertPerkData(WellAdjusted);
+			
+			var Masochist:PerkData = new PerkData();
+			Masochist.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Masochist.perkName = "Masochist";
+			Masochist.perkDescription = "Take 20% less physical damage but gain lust when you take damage.";
+			Masochist.levelLimit = 6;
+			Masochist.accessFunction = function():Boolean { return kGAMECLASS.pc.libido() >= 60 && kGAMECLASS.pc.cor() >= 50; };
+			Masochist.applicationFunction = function():void {
+				kGAMECLASS.pc.baseHPResistances.kinetic.resistanceValue += 20.0;
+				kGAMECLASS.pc.baseHPResistances.electric.resistanceValue += 20.0;
+				kGAMECLASS.pc.baseHPResistances.burning.resistanceValue += 20.0;
+				kGAMECLASS.pc.baseHPResistances.freezing.resistanceValue += 20.0;
+				kGAMECLASS.pc.baseHPResistances.corrosive.resistanceValue += 20.0;
+				kGAMECLASS.pc.baseHPResistances.poison.resistanceValue += 20.0;
+			}
+			insertPerkData(Masochist);
+			
+			var CorruptedLibido:PerkData = new PerkData();
+			CorruptedLibido.classLimit = GLOBAL.CLASS_ADVENTURER;
+			CorruptedLibido.perkName = "Corrupted Libido";
+			CorruptedLibido.perkDescription = "Reduces lust gain by 10%.";
+			CorruptedLibido.levelLimit = -1;
+			CorruptedLibido.accessFunction = function():Boolean { return kGAMECLASS.pc.cor() >= 25; };
+			CorruptedLibido.applicationFunction = function():void {
+				kGAMECLASS.pc.baseHPResistances.psionic.resistanceValue += 10.0;
+				kGAMECLASS.pc.baseHPResistances.drug.resistanceValue += 10.0;
+				kGAMECLASS.pc.baseHPResistances.pheromone.resistanceValue += 10.0;
+				kGAMECLASS.pc.baseHPResistances.tease.resistanceValue += 10.0;
+			}
+			insertPerkData(CorruptedLibido);
+			
+			var Seduction:PerkData = new PerkData();
+			Seduction.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Seduction.perkName = "Seduction";
+			Seduction.perkDescription = "Upgrades your tease attack, making it more effective.";
+			Seduction.levelLimit = -1;
+			Seduction.accessFunction = function():Boolean { return kGAMECLASS.pc.cor() >= 50; };
+			insertPerkData(Seduction);
+			
+			var Nymphomania:PerkData = new PerkData();
+			Nymphomania.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Nymphomania.perkName = "Nymphomania";
+			Nymphomania.perkDescription = "Raises minimum lust by up to 30.";
+			Nymphomania.levelLimit = -1;
+			Nymphomania.accessFunction = function():Boolean { return kGAMECLASS.pc.cor() >= 75 && kGAMECLASS.pc.hasPerk("Corrupted Libido"); };
+			insertPerkData(Nymphomania);
+			
+			var Acclimation:PerkData = new PerkData();
+			Acclimation.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Acclimation.perkName = "Acclimation";
+			Acclimation.perkDescription = "Reduces lust gain by 15%.";
+			Acclimation.levelLimit = -1;
+			Acclimation.accessFunction = function():Boolean { return kGAMECLASS.pc.cor() >= 50 && kGAMECLASS.pc.hasPerk("Corrupted Libido") && kGAMECLASS.pc.lustMin() >= 20; };
+			Acclimation.applicationFunction = function():void {
+				kGAMECLASS.pc.baseHPResistances.psionic.resistanceValue += 15.0;
+				kGAMECLASS.pc.baseHPResistances.drug.resistanceValue += 15.0;
+				kGAMECLASS.pc.baseHPResistances.pheromone.resistanceValue += 15.0;
+				kGAMECLASS.pc.baseHPResistances.tease.resistanceValue += 15.0;
+			}
+			insertPerkData(Acclimation);
+			
+			var Sadist:PerkData = new PerkData();
+			Sadist.classLimit = GLOBAL.CLASS_ADVENTURER;
+			Sadist.perkName = "Sadist";
+			Sadist.perkDescription = "Deal 20% more damage, but gain lust at the same time.";
+			Sadist.levelLimit = 6;
+			Sadist.accessFunction = function():Boolean { return kGAMECLASS.pc.cor() >= 60 && kGAMECLASS.pc.hasPerk("Corrupted Libido"); };
+			insertPerkData(Sadist);
+			
+			var ArousingAura:PerkData = new PerkData();
+			ArousingAura.classLimit = GLOBAL.CLASS_ADVENTURER;
+			ArousingAura.perkName = "Arousing Aura";
+			ArousingAura.perkDescription = "Exude a lust-inducing aura, making your lust attacks more effective.";
+			ArousingAura.levelLimit = 6;
+			ArousingAura.accessFunction = function():Boolean { return kGAMECLASS.pc.cor() >= 70 && kGAMECLASS.pc.hasPerk("Corrupted Libido"); };
+			insertPerkData(ArousingAura);
 		}
 		
 		public function getPlayerClassPerksList():Vector.<PerkData>

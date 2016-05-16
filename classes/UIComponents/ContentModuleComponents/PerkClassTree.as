@@ -1,6 +1,8 @@
 package classes.UIComponents.ContentModuleComponents 
 {
+	import classes.Characters.PlayerCharacter;
 	import classes.Creature;
+	import classes.GLOBAL;
 	import fl.containers.ScrollPane;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -52,11 +54,35 @@ package classes.UIComponents.ContentModuleComponents
 			
 			_perkGroups = new Vector.<PerkButtonGroup>();
 			_perkData = kGAMECLASS.perkDB.getPlayerClassPerksList();
+			var pg:PerkButtonGroup = null;
 			
-			// Temporary level cap of... something, because we don't actually need more than 5 atm
-			for (var i:int = 2; i <= _maxButtonGroups; i++)
+			// perks for adventurer are working in other way, without "choose one" limit
+			if (kGAMECLASS.pc.characterClass == GLOBAL.CLASS_ADVENTURER) 
 			{
-				var pg:PerkButtonGroup = new PerkButtonGroup();
+				var perks:Vector.<PerkData> = kGAMECLASS.perkDB.getPlayerClassPerksList();
+				var counter:int = 0;
+				for each (var item:PerkData in perks) 
+				{
+					if (item.levelLimit > kGAMECLASS.pc.level) continue;
+					if (kGAMECLASS.pc.hasPerk(item.perkName)) continue; // don't show already claimed perks
+					if (!item.isAccessable) continue;
+					//trace("Perk: " + item.perkName);
+					counter++;
+					
+					pg = new PerkButtonGroup();
+					pg.groupLevel = counter;
+					pg.setPerkData(item);
+					pg.buttonOne.addEventListener(MouseEvent.CLICK, _perkButtonHandler);
+					_perkGroups.push(pg);
+					_content.addChild(pg);
+					pg.y = (counter - 2) * 45;
+					pg.x = (800 / 2) - pg.width / 2;
+				}
+			}
+			// Temporary level cap of... something, because we don't actually need more than 5 atm
+			else for (var i:int = 2; i <= _maxButtonGroups; i++)
+			{
+				pg = new PerkButtonGroup();
 				pg.groupLevel = i;
 				
 				var levelPerks:Vector.<PerkData> = kGAMECLASS.perkDB.getPerksForLevel(_perkData, i);
@@ -68,18 +94,20 @@ package classes.UIComponents.ContentModuleComponents
 				else if (levelPerks.length == 1)
 				{
 					pg.setPerkData(levelPerks[0]);
+					
+					pg.buttonOne.addEventListener(MouseEvent.CLICK, _perkButtonHandler);
 				}
 				else if (levelPerks.length == 2)
 				{
 					pg.setPerkData(levelPerks[0], levelPerks[1]);
+					
+					pg.buttonOne.addEventListener(MouseEvent.CLICK, _perkButtonHandler);
+					pg.buttonTwo.addEventListener(MouseEvent.CLICK, _perkButtonHandler);
 				}
 				else
 				{
 					throw new Error("Perk level filter fucked up, oops.");
 				}
-				
-				pg.buttonOne.addEventListener(MouseEvent.CLICK, _perkButtonHandler);
-				pg.buttonTwo.addEventListener(MouseEvent.CLICK, _perkButtonHandler);
 				
 				_perkGroups.push(pg);
 				
@@ -147,17 +175,26 @@ package classes.UIComponents.ContentModuleComponents
 			
 			for (var i:int = 0; i < _perkGroups.length; i++)
 			{
-				if (_perkGroups[i].buttonOne.isSelected && _perkGroups[i].buttonTwo.isAvailable)
+				if (_perkGroups[i].buttonOne.isSelected && _perkGroups[i].buttonOne.isAvailable)
 				{
 					selectedPerks.push(_perkGroups[i].buttonOne.perkReference);
 				}
-				else if (_perkGroups[i].buttonTwo.isSelected && _perkGroups[i].buttonOne.isAvailable)
+				else if (_perkGroups[i].buttonTwo.isSelected && _perkGroups[i].buttonTwo.isAvailable)
 				{
 					selectedPerks.push(_perkGroups[i].buttonTwo.perkReference);
 				}
 			}
 			
 			return selectedPerks;
+		}
+		
+		public function clearSelections():void
+		{
+			for (var i:int = 0; i < _perkGroups.length; i++)
+			{
+				_perkGroups[i].buttonOne.removeSelected();
+				_perkGroups[i].buttonTwo.removeSelected();
+			}
 		}
 	}
 }

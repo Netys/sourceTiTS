@@ -55,15 +55,16 @@ package classes.Items.Transformatives
 		
 		public static function useIt(target:Creature, drakesHeart:Boolean):Boolean
 		{
-			clearOutput();
-			
 			var temp:Number = 0;
 			var changes:int = 0;
 			var changeLimit:int = 2;
 			if (target.hasPerk("History: Alchemist")) changeLimit++;
 			if (target.hasPerk("Transformation Resistance")) changeLimit--;
 			
-			if(drakesHeart) output("You bring the flower up to your nose and smell it. It has exquisite smell. You suddenly have the strange desire to eat it. You pop the flower into your mouth and chew. It tastes like vanilla somehow.");
+			if (drakesHeart) {
+				clearOutput();
+				output("You bring the flower up to your nose and smell it. It has exquisite smell. You suddenly have the strange desire to eat it. You pop the flower into your mouth and chew. It tastes like vanilla somehow.");
+			}
 			
 			//Gain Dragon Dick
 			if (changes < changeLimit && target.totalCocks(GLOBAL.TYPE_DRACONIC) < target.totalCocks() && rand(3) == 0) {
@@ -254,34 +255,35 @@ package classes.Items.Transformatives
 				if (Flag("COC.EMBER_AFFECTION") >= 75 && !drakesHeart) output("\n\nEmber immediately dives back in to soothe your battered throat and mouth with another kiss.");
 				changes++;
 			}
-			if (target.dragonScore() >= 4 && rand(3) == 0 && target.hasGenitals()) {
-				output("\n\nA sudden swell of lust races through your [pc.crotch], making you wish " + (drakesHeart ? "you had a dragon to go with." : "Ember hadn't run you off") + ".  All you can think about now is fucking a dragon-morph; ");
-				if (target.hasCock() && kGAMECLASS.flags["COC.EMBER_GENDER"] >= 2) {
-					if (drakesHeart) {
-						output("filling a womb with your seed and fertilizing those eggs");
+			
+			if (target.dragonScore() >= 4 && rand(3) == 0) {
+				var rut:Boolean = (drakesHeart || kGAMECLASS.ember.hasVagina()) && target.hasCock() && Mutator.goIntoRut(target, false);
+				var heat:Boolean = (drakesHeart || kGAMECLASS.ember.hasCock()) && target.hasVagina() && Mutator.goIntoHeat(target, false);
+				
+				if(rut || heat) {
+					output("\n\nA sudden swell of lust races through your [pc.crotch], making you wish " + (drakesHeart ? "you had a dragon to go with." : "Ember hadn't run you off") + ".  All you can think about now is fucking a dragon-morph; ");
+					if (rut) {
+						if (drakesHeart || !kGAMECLASS.ember.hasVagina()) {
+							output("filling a womb with your seed and fertilizing those eggs");
+						}
+						else {
+							output("filling her womb with your seed and fertilizing her eggs");
+							if (heat) output(" even while ");
+						}
 					}
-					else {
-						output("filling her womb with your seed and fertilizing her eggs");
-						if (target.hasVagina() && kGAMECLASS.flags["COC.EMBER_GENDER"] == 3) output(" even while ");
+					if (heat) {
+						output("taking that hard, spurting cock inside your own [pc.vagina]");
 					}
-				}
-				if (target.hasVagina() && (kGAMECLASS.flags["COC.EMBER_GENDER"] == 3 || kGAMECLASS.flags["COC.EMBER_GENDER"] == 1)) {
-					output("taking that hard, spurting cock inside your own [pc.vagina]");
-				}
-				output("... too late, you realize that <b>" + (drakesHeart ? "the flower" : "Ember's blood") + " has sent your draconic body into ");
-				if (target.hasCock() && (kGAMECLASS.flags["COC.EMBER_GENDER"] >= 2 || drakesHeart) && (rand(2) == 0 || !target.hasVagina())) { //If hermaphrodite, the chance is 50/50.
-					output("rut");
+					output("... too late, you realize that <b>" + (drakesHeart ? "the flower" : "Ember's blood") + " has sent your draconic body into ");
+					enum.clear();
 					
-					Mutator.goIntoRut(target, false);
+					if (rut) enum.push("rut");
+					if (heat) enum.push("heat");
+					
+					output(enum.toString() + "</b>.");
+					
 					changes++;
 				}
-				else {
-					output("heat");
-					
-					Mutator.goIntoHeat(target, false);
-					changes++;
-				}
-				output("</b>.");
 			}
 			
 			IncrementFlag("COC.TIMES_TRANSFORMED");

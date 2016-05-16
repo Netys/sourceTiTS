@@ -133,7 +133,7 @@ private function buyDangerousPlantsBook():void {
 	userInterface.showName("\nGIACOMO");
 	clearOutput();
 	output("You consider yourself fortunate to be quite literate in this day and age.  It certainly comes in handy with this book.  Obviously written by well-informed, but women-starved men, the narrative drearily states the various types of poisonous and carnivorous plants in the world.  One entry that really grabs you is the chapter on 'Violation Plants'.  The chapter drones on about an entire classification of specially bred plants whose purpose is to torture or feed off a human being without permanently injuring and killing them.  Most of these plants attempt to try breeding with humans and are insensitive to the intricacies of human reproduction to be of any value, save giving the person no end of hell.  These plants range from massive shambling horrors to small plant-animal hybrids that attach themselves to people.  As you finish the book, you cannot help but shiver at the many unnatural types of plants out there and wonder what sick bastard created such monstrosities. ");
-	pc.credits -= 10;
+	pc.credits -= 100;
 	pc.createKeyItem("Dangerous Plants", 0, 0, 0, 0);
 	addNextButton(giacomoBookMenu);
 }

@@ -213,7 +213,7 @@ package classes.Characters.CoC
 			//SUCCESS
 			if (target.lustQ() < 50) {
 				output("The worm colony stands before you and begins secreting a significant amount of slime. Inexplicably, you find your [pc.cocks] already erect and is throbbing. The erection is quite meddlesome and you find yourself distracted by the unwanted arousal.");
-				applyDamage(new TypeCollection( { pheromones : 10 + target.libido() / 20 + target.cor() / 20 } ), this, target);
+				applyDamage(new TypeCollection( { pheromone : 10 + target.libido() / 20 + target.cor() / 20 } ), this, target);
 			}
 			else {
 				output("The worm colony shambles over to you and attempts to grapple you. Attempting to dodge, you fail to get away fast enough and fall to the ground engulfed by the mass. You are completely covered in the slimy worms!!! Incapable of avoiding any of their movements, you feel their slime coat every inch of your body and you feel the struggle and strain of each individual worm as they crawl all over you. You immediately begin flailing wildly as you cannot even breathe!");

@@ -1017,93 +1017,106 @@ public function customPCCheck(TF:Boolean = false):Boolean
 		case "":
 			
 			break;
-		/*Etis is a nine-tails kitsune cyborg, who got best of two worlds, bost as in being herm and as in being a bridge between CoC and TiTS worlds. Mostly pure white with azure accents. Just 'cause I had the mood for procrastination, it has ton of details and even notably different tauric version for start as Leithan.*/
+		/*Etis is a nine-tails kitsune, reincarnated in a new world. Mostly pure white with azure accents. Just 'cause I had the mood for procrastination, it has ton of details and even notably different tauric version for start as Leithan.*/
 		case "etis":
 			if (!TF) return true;
-			pc.tallness = pc.isTaur() ? 12 * 6 + 6 : 12 * 4 + 9; // small and dainty anthro foxes are adorable, but small taurs? taurs should be big!
-			pc.tone = pc.isTaur() ? 100 : 20;
-			pc.thickness = pc.isTaur() ? 70 : 10;
-			pc.buttRatingRaw = pc.isTaur() ? 6 : 2;
-			pc.hipRatingRaw = pc.isTaur() ? 6 : 2;
-			pc.hairLength = 0; // fur is just fine... had to fix appearance handling to not use word "bald", though
-			pc.femininity = 85; // Androgyny perk would change how it works
-			pc.lipMod = -4; // plump limps on fox muzzle? too cartoonish
-			pc.lipColor = "azure";
-			pc.exhibitionismRaw = 50; // with all that fur being naked is not exactly possible, so why bother?
-			pc.personality = 50; // say "fox" mean "trickster"
-			pc.hairColor = "pure white";
-			pc.hairType = GLOBAL.HAIR_TYPE_REGULAR;
-			pc.furColor = "pure white"; // fun fact: "arctic fox" in Russian is euphemism for obscene synonym of "disaster"
-			pc.scaleColor = "white";
-			pc.eyeColor = "luminous celeste"; // unfathomable and serene, like clear summer sky...
-			pc.skinTone = "albino";
-			if (!pc.hasStatusEffect("Vanae Markings")) pc.createStatusEffect("Vanae Markings"); // everyone loves them!
-			pc.skinAccent = "luminous azure"; // but with own flavor
-			pc.faceType = GLOBAL.TYPE_VULPINE; // and they called you crazy... and they were right...
-			pc.faceFlags = [GLOBAL.FLAG_MUZZLED];
-			pc.tongueType = GLOBAL.TYPE_DRACONIC; // 120 cm of strong, prehensile tongue? yes!
-			pc.tongueFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_PREHENSILE];
-			pc.wingType = GLOBAL.TYPE_DRACONIC; // I believe I can fly...
-			pc.wingCount = 2;
-			pc.earType = GLOBAL.TYPE_VULPINE; // I can hear you!
-			pc.armType = GLOBAL.TYPE_VULPINE; // pads and claws? that will do
-			pc.armFlags = [GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS];
-			pc.legType = GLOBAL.TYPE_VULPINE; // why digitigrade legs are so classy?
-			pc.legCount = pc.isTaur() ? 4 : 2;
-			pc.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS];
-			pc.skinType = GLOBAL.SKIN_TYPE_FUR; // soft... warm... luxurious...
-			pc.skinFlags = [];
-			pc.tailType = GLOBAL.TYPE_VULPINE; // they are so fluffy, you want to touch them!
-			pc.tailCount = 9;
-			pc.tailGenital = GLOBAL.TAIL_GENITAL_COCK; // but in soviet TiTS fluffy tails touch YOU!
-			pc.tailGenitalArg = GLOBAL.TYPE_VULPINE;
-			pc.tailGenitalColor = "azure";
-			pc.tailFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_FLUFFY, GLOBAL.FLAG_PREHENSILE, GLOBAL.FLAG_TAILCOCK, GLOBAL.FLAG_KNOTTED, GLOBAL.FLAG_NUBBY, GLOBAL.FLAG_TAPERED, GLOBAL.FLAG_SHEATHED];
-			if (!pc.hasCock()) pc.createCock(); // must have one here, since no one loves tail-mounted ones...
-			pc.shiftCock(0, GLOBAL.TYPE_VULPINE); // like canine, but better!
-			pc.cocks[0].addFlag(GLOBAL.FLAG_NUBBY);
-			pc.cocks[0].cLengthRaw = pc.isTaur() ? 16 : 8;
-			pc.cocks[0].knotMultiplier = 1.5;
-			pc.cocks[0].cockColor = "azure";
-			pc.cumType = GLOBAL.FLUID_TYPE_VANAE_CUM; // glowing! tasty!
-			if (!pc.hasVagina()) pc.createVagina(); // why not? more possibilities are always good, right?
-			pc.shiftVagina(0, GLOBAL.TYPE_CANINE); // let's go to the wild side!
-			pc.vaginas[0].wetnessRaw = 1;
-			pc.vaginas[0].loosenessRaw = 1;
-			pc.vaginas[0].bonusCapacity = 9000; // hammerspace, ho!
-			pc.vaginas[0].vaginaColor = "azure";
-			pc.girlCumType = GLOBAL.FLUID_TYPE_GIRLCUM; // eeeh, no fancy options here... FLUID_TYPE_SPECIAL_GOO is sort of cool, but it is green by default... why I am so much of a perfectionist?
-			pc.ass.bonusCapacity = 500;
-			pc.ass.wetnessRaw = 1;
-			pc.ass.loosenessRaw = 1;
-			pc.elasticity = 4; // bring it on!!!
-			pc.breastRows[0].breastRatingRaw = 1; // maleherms ain't cool, but breasts? meh...
-			pc.breastRows[0].nippleType = GLOBAL.NIPPLE_TYPE_INVERTED;
-			pc.nippleColor = "azure";
-			pc.milkType = GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK; // have no idea why
-			pc.milkStorageMultiplier = 8; // really no idea
-			pc.balls = pc.isTaur() ? 4 : 0; // futas with balls? better no, but in case of taurs I'm not sure...
-			pc.ballSizeRaw = (pc.isTaur() ? 3 : 6) * Math.PI; // high math, ho!
-			pc.refractoryRate = pc.balls > 0 ? 4 : 20;
-			pc.cumMultiplierRaw = 50;
-			pc.ballEfficiency = 50;
-			if (!pc.hasPerk("Enlightened Nine-tails")) pc.createPerk("Enlightened Nine-tails", 0, 0, 0, 0, "The mystical energy surges through you, filling you with cosmic power!");
-			if (!pc.hasPerk("Dragonfire")) pc.createPerk("Dragonfire", 0, 0, 0, 0, "You are much more dragon inside than outside."); // my hide is keeping explosion inside, not vice versa!
-			if (!pc.hasPerk("Androgyny")) pc.createPerk("Androgyny", 0, 0, 0, 0, "Your visage is always androgynous."); // not anthro enough for usual gender recognition patterns to really work
-			if (!pc.hasPerk("Magic Affinity")) pc.createPerk("Magic Affinity", 63, 0, 50, 0, "Grants you insight into mysteries of magic.");
+			if (pc.race() != "human") { // sometimes pure human is udeful for tests...
+				pc.tallness = pc.isTaur() ? 12 * 6 + 6 : 12 * 4 + 9; // small and dainty anthro foxes are adorable, but small taurs? taurs should be big!
+				pc.tone = pc.isTaur() ? 100 : 20;
+				pc.thickness = pc.isTaur() ? 70 : 10;
+				pc.buttRatingRaw = pc.isTaur() ? 6 : 2;
+				pc.hipRatingRaw = pc.isTaur() ? 6 : 2;
+				pc.hairLength = 0; // fur is just fine... had to fix appearance handling to not use word "bald", though
+				pc.femininity = 85; // Androgyny perk would change how it works
+				pc.lipMod = -4; // plump limps on fox muzzle? too cartoonish
+				pc.lipColor = "azure";
+				pc.exhibitionismRaw = 50; // with all that fur being naked is not exactly possible, so why bother?
+				pc.personality = 50; // say "fox" mean "trickster"
+				pc.hairColor = "pure white";
+				pc.hairType = GLOBAL.HAIR_TYPE_REGULAR;
+				pc.furColor = "pure white"; // fun fact: "arctic fox" in Russian is euphemism for obscene synonym of "disaster"
+				pc.scaleColor = "white";
+				pc.eyeColor = "luminous celeste"; // unfathomable and serene, like a clear summer sky...
+				pc.skinTone = "albino";
+				if (!pc.hasStatusEffect("Vanae Markings")) pc.createStatusEffect("Vanae Markings"); // everyone loves them!
+				pc.skinAccent = "luminous azure"; // but with own flavor
+				pc.faceType = GLOBAL.TYPE_VULPINE; // and they called you crazy... and they were right...
+				pc.faceFlags = [GLOBAL.FLAG_MUZZLED];
+				pc.tongueType = GLOBAL.TYPE_DRACONIC; // 120 cm of strong, prehensile tongue? yes!
+				pc.tongueFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_PREHENSILE];
+				pc.wingType = GLOBAL.TYPE_DRACONIC; // I believe I can fly...
+				pc.wingCount = 2;
+				pc.earType = GLOBAL.TYPE_VULPINE; // I can hear you!
+				pc.armType = GLOBAL.TYPE_VULPINE; // pads and claws? that will do
+				pc.armFlags = [GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS];
+				pc.legType = GLOBAL.TYPE_VULPINE; // why digitigrade legs are so classy?
+				pc.legCount = pc.isTaur() ? 4 : 2;
+				pc.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS];
+				pc.skinType = GLOBAL.SKIN_TYPE_FUR; // soft... warm... luxurious...
+				pc.skinFlags = [];
+				pc.tailType = GLOBAL.TYPE_VULPINE; // they are so fluffy, you want to touch them!
+				pc.tailCount = 9;
+				pc.tailGenital = GLOBAL.TAIL_GENITAL_COCK; // but in soviet TiTS fluffy tails touch YOU!
+				pc.tailGenitalArg = GLOBAL.TYPE_VULPINE;
+				pc.tailGenitalColor = "azure";
+				pc.tailFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_FLUFFY, GLOBAL.FLAG_PREHENSILE, GLOBAL.FLAG_TAILCOCK, GLOBAL.FLAG_KNOTTED, GLOBAL.FLAG_NUBBY, GLOBAL.FLAG_TAPERED, GLOBAL.FLAG_SHEATHED];
+				if (!pc.hasCock()) pc.createCock(); // must have one here, since no one loves tail-mounted ones...
+				pc.shiftCock(0, GLOBAL.TYPE_VULPINE); // like canine, but better!
+				pc.cocks[0].addFlag(GLOBAL.FLAG_NUBBY);
+				pc.cocks[0].cLengthRaw = pc.isTaur() ? 16 : 8;
+				pc.cocks[0].knotMultiplier = 1.5;
+				pc.cocks[0].cockColor = "azure";
+				//pc.cocks[1] = pc.cocks[0].makeCopy(); // who can say "no" to DP?
+				pc.cumType = GLOBAL.FLUID_TYPE_VANAE_CUM; // glowing! tasty!
+				if (!pc.hasVagina()) pc.createVagina(); // why not? more possibilities are always good, right?
+				pc.shiftVagina(0, GLOBAL.TYPE_CANINE); // let's go to the wild side!
+				pc.vaginas[0].wetnessRaw = 1;
+				pc.vaginas[0].loosenessRaw = 1;
+				pc.vaginas[0].bonusCapacity = 9000; // hammerspace, ho!
+				pc.vaginas[0].vaginaColor = "azure";
+				pc.girlCumType = GLOBAL.FLUID_TYPE_GIRLCUM; // eeeh, no fancy options here... FLUID_TYPE_SPECIAL_GOO is sort of cool, but it is green by default... why I am so much of a perfectionist?
+				pc.ass.bonusCapacity = 500;
+				pc.ass.wetnessRaw = 1;
+				pc.ass.loosenessRaw = 1;
+				pc.elasticity = 4; // bring it on!!!
+				pc.breastRows[0].breastRatingRaw = 1; // maleherms ain't cool, but breasts? meh...
+				pc.breastRows[0].nippleType = GLOBAL.NIPPLE_TYPE_INVERTED;
+				pc.nippleColor = "azure";
+				pc.milkType = GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK; // have no idea why
+				pc.milkStorageMultiplier = 8; // really no idea
+				pc.balls = pc.isTaur() ? 4 : 0; // futas with balls? better no, but in case of taurs I'm not sure...
+				pc.ballSizeRaw = (pc.isTaur() ? 3 : 6) * Math.PI; // high math, ho!
+				pc.refractoryRate = pc.balls > 0 ? 4 : 20;
+				pc.cumMultiplierRaw = 50;
+				pc.ballEfficiency = 50;
+				if (!pc.hasPerk("Enlightened Nine-tails")) pc.createPerk("Enlightened Nine-tails", 0, 0, 0, 0, "The mystical energy surges through you, filling you with cosmic power!");
+				if (!pc.hasPerk("Androgyny")) pc.createPerk("Androgyny", 0, 0, 0, 0, "Your visage is always androgynous."); // not anthro enough for usual gender recognition patterns to really work
+				if (!pc.hasStatusEffect("Genital Slit"))	pc.createStatusEffect("Genital Slit", 0, 0, 0, 0); // dangling all the time bits are not classy
+				if (!pc.hasStatusEffect("Uniball"))			pc.createStatusEffect("Uniball", 0, 0, 0, 0);
+				pc.armor = new IllusoryAttire(); // clothes? fur furevar!
+				pc.meleeWeapon = new CoCLethiceWhip();
+				IllusoryAttireTimePassedNotify(false); // validate the IllusoryAttire for kitsune
+			}
+			if (!pc.hasPerk("Dragonfire")) pc.createPerk("Dragonfire", 0, 0, 0, 0, "You are much more of a dragon inside than outside."); // my hide is keeping explosion inside, not vice versa!
 			if (!pc.hasPerk("Purity Blessing")) pc.createPerk("Purity Blessing", 0, 0, 0, 0, "Reduces the rate at which your libido and lust increase.");
 			if (!pc.hasPerk("Omnibus' Gift")) pc.createPerk("Omnibus' Gift", 0, 0, 0, 0, "Increases minimum lust but provides some lust resistance.");
+			if (!pc.hasPerk("Controlled Breath")) pc.createPerk("Controlled Breath", 0, 0, 0, 0, "Increases rate of energy regeneration.");
+			if (!pc.hasPerk("Enlightened")) pc.createPerk("Enlightened", 0, 0, 0, 0, "Grants the ability to meditate alone. White magic threshold reduced.");
+			// some of the cool things from CoC, 'cause reasons!
+			if (!pc.hasPerk("Magic Affinity")) pc.createPerk("Magic Affinity", KBIT_SPELL_AROUSE | KBIT_SPELL_HEAL, 200, 50, 0, "Grants you insight into mysteries of magic.");
+			if (!pc.hasPerk("Fortitude")) pc.createPerk("Fortitude", 0, 0, 0, 0, "+1 extra HP per point of willpower.");
+			if (!pc.hasPerk("Resolute")) pc.createPerk("Resolute", 0, 0, 0, 0, "Grants immunity to stuns and some statuses.");
+			if (!pc.hasPerk("Regeneration")) pc.createPerk("Regeneration", 0, 0, 0, 0, "Regenerates 2% of max HP/hour and 1% of max HP/round.");
+			if (!pc.hasPerk("Evade")) pc.createPerk("Evade", 0, 0, 0, 0, "Increases chances of evading enemy attacks by 10%.");
+			if (!pc.hasPerk("Runner")) pc.createPerk("Runner", 0, 0, 0, 0, "Increases chances of escaping combat.");
+			if (!pc.hasPerk("Speedy Recovery")) pc.createPerk("Speedy Recovery", 0, 0, 0, 0, "Regain fatigue 50% faster.");
+			if (!pc.hasPerk("Arousing Aura")) pc.createPerk("Arousing Aura", 0, 0, 0, 0, "Exude a lust-inducing aura, making your lust attacks more effective.");
 			if (!pc.hasStatusEffect("Tolerance"))		pc.createStatusEffect("Tolerance", 100, 0, 0, 0); // too lazy to code real immunity
-			if (!pc.hasStatusEffect("Genital Slit"))	pc.createStatusEffect("Genital Slit", 0, 0, 0, 0); // dangling all the time bits are not classy
-			if (!pc.hasStatusEffect("Uniball"))			pc.createStatusEffect("Uniball", 0, 0, 0, 0);
 			if (!pc.hasStatusEffect("Infertile"))		pc.createStatusEffect("Infertile", 0, 0, 0, 0); // here to have fun, nothing more!
 			pc.originalRace = pc.race(); // You've always been a kitsune. Always, I said!
 			pc.unspentStatPoints = 999; // I saw all sorts of shit in my former lives
-			pc.armor = new IllusoryAttire(); // clothes? fur furevar!
-			pc.meleeWeapon = new CoCLethiceWhip();
 			pc.lowerUndergarment = new EmptySlot();
 			pc.upperUndergarment = new EmptySlot();
-			IllusoryAttireTimePassedNotify(false); // validate the IllusoryAttire for kitsune
 			bonusTexts = "You are the only one who is aware of boundless potential hidden inside of your " + (pc.isTaur() ? "massive" : "small") + " and weird body... For now.";
 			break;
 		default:

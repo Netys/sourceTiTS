@@ -41,7 +41,6 @@ public function cocCampMenu():void {
 }
 
 public function doDebugFunction():void {
-	new Catnip(); // temp to make it compile
 }
 
 public function inCamp():Boolean
@@ -341,7 +340,7 @@ public function campStorageMenuRoot():void
 	
 	if (flags["COC.CAMP_STORAGE_EQUIPMENT"] != undefined)
 	{
-		output(" An weapon racs designates the equipment area.");
+		output(" An weapon rack designates the equipment area.");
 		addButton(1, "Equipment", shipStorageMenuType, "EQUIPMENT");
 	}
 	else addDisabledButton(1, "Equipment");

@@ -765,7 +765,7 @@
 		public var tailType: Number = 0;
 		public function tailTypeUnlocked(newTailType:Number):Boolean
 		{
-			//if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9 && (hasPerk("Enlightened Nine-tails") || hasPerk("Corrupted Nine-tails"))) return false;
+			if (kGAMECLASS.isNineTails(this)) return false;
 			if (tailType == GLOBAL.TYPE_CUNTSNAKE) return false;
 			if (tailType == GLOBAL.TYPE_COCKVINE) return false;
 			return true;
@@ -773,13 +773,13 @@
 		public function tailTypeLockedMessage():String
 		{
 			var msg:String = "";
-			//if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9 && (hasPerk("Enlightened Nine-tails") || hasPerk("Corrupted Nine-tails"))) {
-				//msg += "You are startled by sudden burst of dazzling ";
-				//if (hasPerk("Enlightened Nine-tails")) msg += "azure";
-				//else msg += "lavender";
-				//msg += " sparks from your [pc.tails], but nothing is changed.";
-				//return msg;
-			//}
+			if (kGAMECLASS.isNineTails(this)) {
+				msg += "You are startled by sudden burst of dazzling ";
+				if (hasPerk("Enlightened Nine-tails")) msg += "azure";
+				else msg += "lavender";
+				msg += " sparks from your [pc.tails], but nothing is changed.";
+				return msg;
+			}
 			if (tailType == GLOBAL.TYPE_CUNTSNAKE || tailType == GLOBAL.TYPE_COCKVINE)
 			{
 				msg = "The creature masquerading as a tail seems pretty spooked about something all of a sudden;";
@@ -3169,10 +3169,12 @@
 			var bonus:int = 0;
 			bonus = fortification();
 			if (hasStatusEffect("Might")) bonus += statusEffectv2("Might");
+			if (hasPerk("Tank")) bonus += 50;
+			if (hasPerk("Fortitude")) bonus += willpower();
 			
 			var hitPoints: Number = 15 + (level - 1) * 15 + HPMod + bonus;
 			if (characterClass == GLOBAL.CLASS_ADVENTURER)
-				hitPoints += level * 10;
+				hitPoints += level * 5 + willpower() * 2;
 			if (characterClass == GLOBAL.CLASS_MERCENARY)
 				hitPoints += level * 5;
 			if (characterClass == GLOBAL.CLASS_ENGINEER)
@@ -3195,6 +3197,7 @@
 		//ENERGY
 		public function energy(arg: Number = 0): Number {
 			if (arg > 0 && hasPerk("History: Slacker")) arg *= 1.2;
+			if (arg > 0 && hasPerk("Speedy Recovery")) arg *= 1.5;
 			if(arg > 0 && hasStatusEffect("Sore")) arg /= 2;
 			energyRaw += arg;
 			if (energyRaw > energyMax()) energyRaw = energyMax();
@@ -3543,6 +3546,7 @@
 		}
 		public function lustMin(): Number {
 			var bonus:int = 0;
+			// permanent effects
 			if (hasPerk("Drug Fucked")) bonus += 10;
 			if (hasPerk("Black Latex")) bonus += 10;
 			if (hasStatusEffect("Sexy Costume")) bonus += statusEffectv1("Sexy Costume");
@@ -3561,18 +3565,33 @@
 				else if(bonus >= 20) bonus += 20;
 				else bonus += 35;
 			}
+			if (hasPerk("Nymphomania")) {
+				if (bonus >= 40) bonus += 10;
+				else if (bonus >= 20) bonus += 15;
+				else bonus += 30;
+			}
+			if (hasPerk("Hot Blooded")) {
+				if(bonus > 0) bonus += 10;
+				else bonus += 20;
+			}
+			if (hasPerk("Pierced: Icestone")) bonus -= perkv1("Pierced: Icestone");
+			if (hasPerk("Pierced: Crimstone")) bonus += perkv1("Pierced: Crimstone");
+			if (hasPerk("Cold Blooded") && bonus > 20) bonus = Math.max(20, bonus - 20); // first Cold Blooded effect - suppress some permanent effects
+			
+			// temporary effects
 			if (hasStatusEffect("Ellie's Milk")) bonus += 33;
 			if (hasStatusEffect("Lane Detoxing Weakness"))
 			{
 				if (bonus < statusEffectv2("Lane Detoxing Weakness")) bonus = statusEffectv2("Lane Detoxing Weakness");
 			}
-			if (hasPerk("Pierced: Icestone")) bonus -= perkv1("Pierced: Icestone");
-			if (hasPerk("Pierced: Crimstone")) bonus += perkv1("Pierced: Crimstone");
 			if (hasStatusEffect("Pent Up")) bonus += statusEffectv1("Pent Up");
 			//Venom brings minimum up to 35.
 			if (bonus < 35 && hasStatusEffect("Red Myr Venom")) bonus = 35;
 			if (bonus < 20 && hasStatusEffect("Paradise!")) bonus = 20;
 			if (bonus < 35 && hasStatusEffect("Luststick") && !hasPerk("Luststick Adapted")) bonus = 35;
+			
+			if (hasPerk("Cold Blooded") && bonus > 80) bonus = 80; // second Cold Blooded effect - cap min lust at 80
+			
 			return Math.max((0 + bonus), 0);
 		}
 		public function physiqueMax(): Number {
@@ -3830,7 +3849,15 @@
 		public function meleeDamage():TypeCollection
 		{ 
 			var d:TypeCollection = damage(true); 
-			d.add(physique() / 2);
+			var physiqueMod:Number = physique() / 2;
+			if (characterClass == GLOBAL.CLASS_ADVENTURER) physiqueMod += physique();
+			if (hasPerk("History: Fighter")) physiqueMod /= 2;
+			if (hasPerk("Hold With Both Hands") && PQ() >= 80 && !hasRangedWeapon()) physiqueMod += physique() * 0.2;
+			d.add(physiqueMod);
+			
+			if (hasPerk("History: Fighter")) d.multiply(1.2);
+			if (hasPerk("Thunderous Strikes") && PQ() >= 80) d.multiply(1.2);
+			
 			return d;
 		}
 		public function rangedDamage():TypeCollection 
@@ -3871,7 +3898,6 @@
 					modifiedDamage.unresistable_hp.damageValue += statusEffectv1("Concentrated Fire"); 
 				}
 			}
-			if (hasPerk("History: Fighter")) modifiedDamage.multiply(1.2);
 			
 			modifiedDamage.add(armor.baseDamage);
 			modifiedDamage.add(upperUndergarment.baseDamage);
@@ -3964,6 +3990,7 @@
 			if (melee) temp += meleeWeapon.critBonus;
 			else temp += rangedWeapon.critBonus;
 			if (hasPerk("Critical Blows")) temp += 10;
+			if (hasPerk("Tactician")) temp += intelligence() / 10;
 			if (hasStatusEffect("Quaramarta!")) temp += 15;
 			temp += armor.critBonus + upperUndergarment.critBonus + lowerUndergarment.critBonus + accessory.critBonus + shield.critBonus;
 			if(temp > 50) temp = 50;
@@ -14965,12 +14992,17 @@
 				cost *= Math.max(100 - perkv3("Magic Affinity"), 10) / 100;
 				if (hasPerk("History: Scholar")) cost *= 0.8;
 			}
+			else if (hasPerk("Iron Man")) cost *= 0.8; // all specials which are not magic are considered physical
 			return cost;
 		}
 		
 		public function spellMod():Number
 		{
-			var mod:Number = (100 + perkv3("Magic Affinity")) / 100;
+			var mod:Number = (100 + perkv2("Magic Affinity")) / 100;
+			if (hasPerk("Spellpower")) mod += 0.5;
+			if (hasPerk("Mage")) mod += 0.5;
+			if (hasPerk("Channeling")) mod += 0.5;
+			if (hasPerk("Archmage")) mod += 0.5;
 			
 			var weaponMod:Number = 1;
 			if (meleeWeapon.baseDamage.getFlagsArray().indexOf(DamageFlag.AMPLIFYING) != -1)
@@ -15532,6 +15564,11 @@
 		public function hasBlindImmunity():Boolean
 		{
 			return (accessory is FlashGoggles);
+		}
+		
+		public function hasStunImmunity():Boolean
+		{
+			return hasStatusEffect("Stun Immune") || hasPerk("Resolute");
 		}
 		
 		public function onLeaveBuyMenu():void

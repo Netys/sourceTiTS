@@ -25,10 +25,10 @@ package classes.Items.Melee
 			TooltipManager.addFullName(this.shortName, StringUtil.toTitleCase(this.longName));
 			
 			//Longass shit, not sure what used for yet.
-			this.description = "a flaming whip once belonged to Lethice";
+			this.description = "a flaming whip";
 			
 			//Displayed on tooltips during mouseovers
-			this.tooltip = "This whip once belonged to Lethice who was defeated by your hands.";
+			this.tooltip = "This whip once belonged to Lethice, the demon queen.";
 			
 			TooltipManager.addTooltip(this.shortName, this.tooltip);
 			

@@ -330,7 +330,7 @@ private function emberSexMenu(display:Boolean = true):void
 	if (ember.hasVagina()) addButton(4, "Eat Her Out", slurpDraggieCunnies, undefined, "Eat Her Out", "Get a taste of Ember vagina!");
 	else addDisabledButton(4, "Eat Her Out", "Eat Her Out", "This option requires Ember to have vagina.");
 	if (pc.hasVagina()) addButton(5, "Get Eaten Out", getEatenOutByEmbra, undefined, "Get Eaten Out", "Ask Ember if [ember.heShe]'s willing to get a taste of your vagina.");
-	else addDisabledButton(3, "Get Eaten Out", "Get Eaten Out", "This option requires you to have vagina.");
+	else addDisabledButton(5, "Get Eaten Out", "Get Eaten Out", "This option requires you to have vagina.");
 	if (ember.hasVagina() && pc.hasCock()) addButton(6, "Penetrate Her", penetrateEmbrah, undefined, "Penetrate Her", "Penetrate Ember vaginally!");
 	else addDisabledButton(6, "Penetrate Her", "Penetrate Her", "This option requires you to have cock and Ember to have vagina.");
 	if (ember.hasCock() && pc.hasVagina()) addButton(7, "Get Penetrated", getPenetratedByEmberLastSexSceneWoooo, undefined, "Get Penetrated", "Ask Ember if [ember.heShe]'s willing to penetrate you vaginally with that cock of [ember.hisHers].");
@@ -1667,7 +1667,7 @@ private function drinkDeeplyOfDagronBlud():void
 		output("\n\nYou offer [ember.himHer] a helping hand.  Ember, surprisingly, accepts your help.  \"<i>Thanks.  I guess no more work for today... I need some food and a nap.</i>\"");
 	}
 	else {
-		output("\n\nYou decide to continue drinking Ember's blood; intent on acquiring all the power it can bring out from within you.");
+		output("You decide to continue drinking Ember's blood; intent on acquiring all the power it can bring out from within you.");
 		//output tf from below
 		CoCDrakeHeart.useIt(pc, false);
 		output("\n\nAs you break the kiss; Ember leans over, supporting [ember.himHer]self on your shoulders.  \"<i>Ugh... I guess we overdid it... I feel woozy.</i>\"");

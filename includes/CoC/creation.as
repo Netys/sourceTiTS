@@ -29,6 +29,8 @@ public function createYourChampion():void {
 	
 	pc.maxOutHP();
 	
+	pc.addLegFlag(GLOBAL.FLAG_PLANTIGRADE);
+	
 	CombatManager.TerminateCombat();
 	userInterface.hideNPCStats();
 	userInterface.leftBarDefaults();

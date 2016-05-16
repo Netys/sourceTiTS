@@ -2491,8 +2491,8 @@ private function meditateLikeAKitsuneEhQuestionMark():void
 		&& pc.earType == GLOBAL.TYPE_VULPINE
 		&& pc.hasTail(GLOBAL.TYPE_VULPINE) 
 		&& pc.tailCount < 9 
-		&& pc.tailCount <= pc.level 
-		&& pc.tailCount + 1 <= pc.IQ() / 10
+		&& pc.tailCount < pc.level 
+		&& pc.tailCount * 5 <= pc.intelligence()
 		&& pc.WQ() >= 33)
 	{
 		//20% chance if PC has fox ears, 1 or more fox tails, carries a Fox Jewel, and meets level & INT requirements for the next tail:
@@ -2718,8 +2718,8 @@ public function NineTailsTimePassedNotify():void {
 			eventBuffer += "\n\nYou have lost ";
 			eventBuffer += num2Text(9 - pc.tailCount);
 			eventBuffer += " of your Kitsune tails, and your boundless energy is gone.";
-			pc.removePerk("Enlightened Nine-tails");
-			pc.removePerk("Corrupted Nine-tails");
+			if (pc.hasPerk("Enlightened Nine-tails")) pc.removePerk("Enlightened Nine-tails");
+			if (pc.hasPerk("Corrupted Nine-tails")) pc.removePerk("Corrupted Nine-tails");
 		}
 		else pc.energy(0.25);
 	}

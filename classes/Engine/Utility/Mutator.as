@@ -1779,13 +1779,9 @@ package classes.Engine.Utility
 		* Third parameter: boolean indicating if this heat will end with pregnancy. If true, nothing would ever end it until it is gone over time, even lack of vagina.
 		*/
 		public static function goIntoHeat(pc:Creature, out:Boolean, intensity:Number = 1, forced:Boolean = false):Boolean {
-			var canVagPreg:Function = function():Boolean {
-				for (var i:int = 0; i < pc.vaginas.length; i++)
-					if (!pc.isPregnant(i)) return true;
-				return false;
-			}
+			var canVagPreg:Boolean = pc.findEmptyPregnancySlot(Creature.PREGSLOT_VAG) != -1;
 			
-			if(!forced && (!canVagPreg() || pc.fertility() <= 0)) {
+			if(!forced && (!canVagPreg || pc.fertility() <= 0)) {
 				return false; // No vagina or already pregnant, can't go into heat.
 			}
 			
