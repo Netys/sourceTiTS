@@ -387,7 +387,7 @@ private function genderlessShouldraMasturbation():void {
 	//if analLooseness >= 3
 	else {
 		output("\"<i>Looks as though you already get plenty of action back here, chief,</i>\" she jests.  Nevertheless, the rear revenant massages her \"jaw\" even more lax than you already are.  Even stranger, each gyration provides more and more pleasurable feedback");
-		if (cor() < 50) output(", which only serves to confuse you");
+		if (pc.cor() < 50) output(", which only serves to confuse you");
 		output(".");
 	}
 	output("\n\n\"<i>And now for the pièce de résistance.</i>\"");

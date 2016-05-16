@@ -1975,7 +1975,7 @@ private function sexGetABJFromDisMilfyLesboSlut():void
 	{
 		output("\n\nUma wipes her face off some of your seed.  \"<i>I’m fine.  Sorry about that, dear... but blowing is not really my thing, you know?  The only other person I did this for was Loppe’s father, and even then I didn’t like it so much... maybe you should have gone to Loppe instead?</i>\"");
 		output("\n\nYou tell her you’ll remember that, ");
-		if(cor() <= 40) output(" apologize, and ");
+		if(pc.cor() <= 40) output(" apologize, and ");
 		output("get up to start getting dressed before quietly heading back to camp.");
 	}
 	//Came on her face after second time:

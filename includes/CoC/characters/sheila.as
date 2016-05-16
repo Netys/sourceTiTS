@@ -2263,7 +2263,7 @@ private function sheilaMutualMasturbation():void {
 		output("\n\nHer lips seem to draw yours in when she comes, until it feels like you've been pressing them into her since time began; her chest rises as she sucks, and you can clearly see her breasts swelling up - it's too much to bear, and you grab one with your free hand and squeeze.  Sheila answers you by sticking her tongue even deeper into your mouth.");
 	}
 	//(else pc corr < sheila corruption)
-	else if (cor() < flags["COC.SHEILA_CORRUPTION"]) {
+	else if (pc.cor() < flags["COC.SHEILA_CORRUPTION"]) {
 		output("\n\nThe kiss breaks as the girl loses muscle control, and she leans forward, pressing her forehead into yours and looking up into your eyes with a smile and a  heavy-lidded stare.  She shivers again, and you can feel heat gathering in your face and fogging your brain even as she seems to curl up in your arms.");
 	}
 	//(else if equal corr but under 90)
@@ -4409,7 +4409,7 @@ private function clitSwellingDemonSheilaClitSoundingAnal():void {
 		
 		output("\n\nYour demon lover turns around again and, planting her hands once more against the ground, lifts her backside.  Her snubby spade plunges onto your rod with aplomb, going so fast that the lubrication begins to dissipate as quick strokes force fluid out of the tight confines.  Heat overtakes your clit again, not from chemicals but simply from your growing body temperatures and the friction between you.  Soon, you can feel the hot sensation of dry skin-on-skin contact closer to her tip, where the lube has been pushed out completely.  \"<i>God... yes... fuck you, fuck my filthy tail, fuck it raw, rub all my dirty cum out with your freaky clit, penetrate me, show me who's the man!</i>\"  Sheila's voice reaches the pitch of a scream as she finishes her demands.  \"<i>F-fuck!  I'm coming!</i>\"  She slumps forward as ");
 		//[(PC corr<50)
-		if (cor() < 50) {
+		if (pc.cor() < 50) {
 			output("her tail quakes and you feel something hot licking at the tip of your clitoris.  The spade pulls back and then sinks down again, and the heat gains several inches; she repeats this twice more until you can feel what must be her cum all the way down to her tail-tip, but as she attempts to pull back again and force her climax past the raw, hot skin at the edge, her tail simply jerks at your clit and she falls weakly onto the ground.");
 			
 			output("\n\n\"<i>N-no... no!  So close!</i>\"  The black stalk thrashes weakly as her body loses muscle control everywhere except the parts responsible for forcing her cum out of it.  She moans piteously and babbles as her tail swells around your clit and engulfs you in her liquid climax, doubling in thickness behind the spade from the mounting fluids.  It's too much for you to watch, this arrogant woman trying to use you to get off but only managing to tease herself while suffusing your clit with her hot fluid, and combined with the temperature, pushes you over the edge you'd been flirting with.  Your " + pc.vaginaDescript(0) + " squeezes and squirts, depositing your own orgasm onto the ");
@@ -4671,7 +4671,7 @@ private function missionaryForThePurposesOfCreatingImpsWithSheila():void {
 		
 		output("\n\n\"<i>Oh, <b>[pc.name]</b>!  Come with me!</i>\" Sheila screams, as she wraps her body around you again and a foreign wave of arousal washes over you.  ");
 		//[(PC corr <50)
-		if (cor() < 50) output("Her pussy convulses as she orgasms, and you feel a wave of heat overtaking your [pc.cock " + pc.biggestCockIndex() + "], starting at the tip and moving down the shaft.  As it reaches the base, a gush of her fluids breaches the seal her pussy makes around you, forcing your jizz out along with it in a mixed white and clear squirt.  The demon's vagina squeezes and drools for half a minute, pouring her tainted liquid love out against your tightly-held body until your crotch is soaked with her sticky heat and responds with its own.");
+		if (pc.cor() < 50) output("Her pussy convulses as she orgasms, and you feel a wave of heat overtaking your [pc.cock " + pc.biggestCockIndex() + "], starting at the tip and moving down the shaft.  As it reaches the base, a gush of her fluids breaches the seal her pussy makes around you, forcing your jizz out along with it in a mixed white and clear squirt.  The demon's vagina squeezes and drools for half a minute, pouring her tainted liquid love out against your tightly-held body until your crotch is soaked with her sticky heat and responds with its own.");
 		else output("Her pussy sucks you in as she climaxes, and you can feel larger and larger waves of precum being pulled from your shaft; it almost feels like she's tugging at your entire being.  It's not long before your cock twitches and begins giving her greedy sex a second helping of your semen.");
 		output("  She goes limp as her twitching cunt takes over and begins drinking every drop it can get from your dick to replace the goo you pushed out");
 		if (pc.cumQ() >= 500) output("; you nearly manage to fit it all into her this time, with your production still flagging from the last session");

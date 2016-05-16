@@ -22,7 +22,7 @@ public function introCorruptedGlade():void {
 		doNext(returnToCampUseOneHour);
 		//addButton(1, "Destroy Them", destroyTheCorruptedGladesChoice, null, null, null, "Attempt to destroy the perverted glade.");
 	}
-	else if (cor() <= 66) { //intrigued reaction
+	else if (pc.cor() <= 66) { //intrigued reaction
 		output("  You explore the glade with equal parts caution and curiosity.  ");
 		switch(rand(3)) {
 			case  0: //flowers...

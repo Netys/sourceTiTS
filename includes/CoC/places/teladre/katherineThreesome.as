@@ -433,9 +433,9 @@ private function pinAndFuckStuffKath():void { //Plays for any males and for herm
 	clearOutput();
 	output("When Kath flopped on top of Urta her legs spread apart and gave you a great view of " + (pc.cocks.length > 1 ? "three" : "two") + " things.  Her" + kath.CockMultiple("", " lower") + " knot, hot and hard, buried in Urta’s pussy" + kath.CockMultiple(" and her dripping slit", ", her dripping slit and her supple sphincter, both") + " waiting for your cock.  " + (pc.cocks.length > 1 ? "They look" : "It looks") + " so wet, so empty.  Neither Katherine nor Urta notice as you " + (pc.isNaga() ? "slither" : "step") + " around them, position yourself behind Kath, line up your dick" + (pc.cocks.length > 1 ? "s and feed them" : " and feed it") + " into Kath's body.\n\n");
 	output("Kath may be tired but she’s still in the mood.  She clenches her pussy " + (pc.cocks.length > 1 ? "and ass around your cocks" : "around your cock") + " and lets out a low moan.  You ");
-	if (cor() < 25)
+	if (pc.cor() < 25)
 		output("hold your cock" + (pc.cocks.length > 1 ? "s" : "") + " still for a moment, letting Kath adjust her hips so she’s in a more comfortable position.  You massage the base of her tail which draws even more moans of pleasure from Kath.  When you finally start to thrust again Kath weakly tries to push her hips back toward you and her pussy " + (pc.cocks.length > 1 ? "and ass do their" : "does its") + " best to pull you in deeper.");
-	else if (cor() < 75)
+	else if (pc.cor() < 75)
 		output("start to fuck her slowly and gently but quickly build to thrusting hard and fast as your base instincts take over.  It doesn’t seem to matter to Kath, she moans and purrs happily as long as your cock" + (pc.cocks.length > 1 ? "s are filling her holes." : " is filling her pussy."));
 	else
 		output("just start pounding in and out.  Kath tends to like it rough and right now you don’t really care if she enjoys it or not.");
@@ -874,9 +874,9 @@ public function doubleStuffKath():void { //Both Kath and Urta are drunk
 	}
 	else {
 		output("\n\nYou’re now spent and unfortunately you have to get back to camp.  You give both Kath and Urta a kiss and wrap Kath's arms around Urta and Urta's arms around Kath.  The girls sigh and snuggle together");
-		if (cor() < 33)
+		if (pc.cor() < 33)
 			output(", giving you a warm feeling in the bottom of your heart.");
-		else output(cor() < 66 ? ".  Despite having just cum you feel a little twitch from your cock." : ".  It's sickly sweet, but who cares as long as they keep fucking like that.");
+		else output(pc.cor() < 66 ? ".  Despite having just cum you feel a little twitch from your cock." : ".  It's sickly sweet, but who cares as long as they keep fucking like that.");
 	}
 	pc.orgasm();
 	kath.orgasm();
@@ -933,9 +933,9 @@ public function doublePenetrateKath():void { //Both Kath and Urta are drunk
 	else {
 		output("You knock the wind out of Kath as your cock explodes inside her anus.  This is not some lightweight supply of sperm, just enough to ensure reproduction.  No, this is a magic fueled tidal wave of cum and it has nowhere to go but in.  Kath’s hands try to pry yours off her hips, but your whole body has locked up, seized with the effort of forcing out such an unnatural volume of cum.\n\n");
 		output("Her hands get weaker and you can feel the skin of her hips stretching out as her body tries to provide her belly with more.  As the last of your cum is forced inside her she looks positively pregnant.  ");
-		if (cor() < 25)
+		if (pc.cor() < 25)
 			output("You hope you aren’t doing any permanent damage with such a big load.");
-		else if (cor() < 75)
+		else if (pc.cor() < 75)
 			output("You hope Kath is enjoying this as much as you are.");
 		else output("Secretly you try to force even more sperm from your " + (pc.balls > 0 ? "heavy balls" : "monstrous prostate") + ".  You want to see just how far you can stretch out your cat " + kath.catGirl("girl", "morph") + "’s belly.  Even more, you want to see if you can get her addicted to the feeling of being overfilled.");
 		output("\n\nKath whimpers at being so completely filled, but her tail is wagging.  You’re pretty sure she’s enjoying herself - and if not, well she can’t do anything about it anyway.");

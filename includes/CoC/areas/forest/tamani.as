@@ -149,7 +149,7 @@ private function tamaniFemaleYes():void {
 	clearOutput();
 	output("\"<i>That's what I thought,</i>\" says the goblin as she fishes around in her pouches, \"<i>but I'm not cruel, I'll give you my best dildo so you can keep your hot little box stuffed all the time.</i>\"\n\n");
 	output("She pulls out a long pink dick and tosses it to you.  You catch it and it flops around, nearly slapping you in the cheek.  ");
-	if(cor() < 50) output("Gross.\n\n");
+	if(pc.cor() < 50) output("Gross.\n\n");
 	else output("Getting cock-slapped would've been kind of hot...\n\n");
 	output("The goblin leaves you with a warning, \"<i>Be careful, it likes to leak aphrodisiacs like crazy.  Believe me, those are FUN to get addicted to.  Oh, and remember – Tamani owns all the cocks around here, so if you ever grow one, come pay your dues!</i>\"\n\n");
 	output("(<b>Deluxe Dildo acquired!</b>)");
@@ -909,8 +909,8 @@ public function getRapedByTamaniYouHypnoSlut():void {
 		output(pc.mf("strong man's","sexy lover's") + " [pc.cockNoun " + primary + "]?</i>\"\n\n");
 		
 		output("You assure her that they do like what she is doing – very much so – and ");
-		if(cor() < 33) output("beg");
-		else if(cor() < 66) output("ask");
+		if(pc.cor() < 33) output("beg");
+		else if(pc.cor() < 66) output("ask");
 		else output("command");
 		output(" her not to stop.  Tamani starts to giggle, but bursts into a moan as her fingers slide along her easily visible clit. She pants, \"<i>Hurry up and come for Tamani baby, I wanna feel you pumping your cum inside me!</i>\"\n\n");
 		

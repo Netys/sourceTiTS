@@ -114,7 +114,7 @@ public function spooderbuttGetsANewCockSleeveIII():void
 	output(". You’re drowning in those infinitely deep eyes, aware for once that even a champion cannot hold a candle to an immortal devourer of souls.");
 	output("\n\nThe pink-skinned queen lazy jostles her chalice of pink crystals, nodding. <i>“You see now, don’t you? The truth of it... You never had a chance against me. Your foolish crusade was as unimportant as the scrabbling of an ant, destined only to carry you to your inevitable fate.”</i> She smiles a smile that never quite reaches those ink-wrapped eyes of hers. <i>“Now that you’re here, I can begin your education.”</i>");
 	output("\n\nYou want to deny her, desperately so, but she’s right, isn’t she? Your elders sold you out to the demons. For all your fighting and struggling");
-	if (cor() >= 50)
+	if (pc.cor() >= 50)
 	{
 		output(", you’ve let yourself become corrupted");
 	}

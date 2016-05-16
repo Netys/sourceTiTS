@@ -348,7 +348,7 @@ internal function sharkLossRape():void {
 		if (pc.virility() > 0) flags["COC.SHARK_GIRLS_BAD_END_CD"]++;
 		pc.orgasm();
 		//dynStats("sen", 1);
-		if (cor() < 30) pc.cor(1);
+		if (pc.cor() < 30) pc.cor(1);
 		CombatManager.genericLoss();
 		return;
 	}

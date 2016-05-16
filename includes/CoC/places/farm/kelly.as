@@ -961,7 +961,7 @@ private function taurOnTaurSexKelly():void {
 	output("Thoroughly creamed, the centaur cum-dump sighs in satisfaction while you dismount her.");
 	
 	output("\n\nKelly starts to move, then immediately slips in the lubed mud below, legs flailing wildly.");
-	if(cor() < 50) output("  You feel a little bad for her and help her up - she did just milk your dick in the way that only a centaur can.");
+	if(pc.cor() < 50) output("  You feel a little bad for her and help her up - she did just milk your dick in the way that only a centaur can.");
 	else output("  You snicker and walk away - she's already served her purpose.");
 	kellyPreggers();
 	pc.orgasm();
@@ -1025,7 +1025,7 @@ private function tentaFuckKelly():void {
 	output("\n\n\"<i>Ahhh... that was a good cum-bath.  Thank you Master, you can't believe how happy I am!</i>\"");
 	
 	output("\n\nKelly is really hooked up to your seed; she lays to her side and wallows in the puddle of juices, wanting to feel even more of your filth covering her body.  Pleased to see you have such a potent effect on her, ");
-	if(cor() < 33) output("but also a bit disgusted to watch such shameless, wanton behavior, ");
+	if(pc.cor() < 33) output("but also a bit disgusted to watch such shameless, wanton behavior, ");
 	output("you walk away, letting the slut enjoy herself.");
 	kellyPreggers();
 	pc.orgasm();
@@ -1668,7 +1668,7 @@ public function kellyPopsOutARunt():void {
 	
 	output("\n\nSatisfied to see your offspring will grow strong and healthy for you, you pat Kelly's head, tell her she's a good breeding slut and walk away; the motherly centaur sighs at the compliment.  \"<i>Thank you, [pc.name]!  You were right, this really is my place, being used and breeding beautiful sluts for you.  I hope you will treat them as well as you treated me!</i>\"");
 	//[if corr > 80]
-	if(cor() > 80) output("\n\nYou grin as vivid pictures of how you'll be treating your soon-to-be-grown kids draw themselves in your mind. Right now they're still a little young, but someday...\n");
+	if(pc.cor() > 80) output("\n\nYou grin as vivid pictures of how you'll be treating your soon-to-be-grown kids draw themselves in your mind. Right now they're still a little young, but someday...\n");
 	if (flags["COC.KELLY_KIDS"] == 0) flags["COC.KELLY_FIRST_KID_GENDER"] = gender;
 	flags["COC.KELLY_KIDS"]++;
 	if (gender == 1) flags["COC.KELLY_KIDS_MALE"]++;
@@ -1732,7 +1732,7 @@ private function talkNHandToKelly():void {
 		output("imagining the symphony of feminine squeals and moans as you cum....  Kelly coos as you bark wordlessly, jizz surging powerfully out of your [pc.cocksLight].  She keeps masturbating you, pumping you with gentle, insistent pressure until you are spent.  Once you're done, she bends in and licks you clean, humming happily as she laps at your [pc.cockHead] with her soothing, seeking tongue.");
 		
 		output("\n\nAble to think slightly clearer with your blood settled, you decide against telling Kelly to go fetch her erstwhile harem - it's dangerous to send such a vulnerable slave wandering around in the wilderness for something that's probably long gone, and taking care of just one centaur cumslut is draining enough as it is.");
-		if(cor() < 70) output("  Plus, the thought of making Kelt's victims pay the price for his own crimes makes you feel uncomfortable.");
+		if(pc.cor() < 70) output("  Plus, the thought of making Kelt's victims pay the price for his own crimes makes you feel uncomfortable.");
 		output("  You tell Kelly you appreciate the thought as you pick yourself up and leave, but you think you need to save your energy and cum for the really special case that she is.  The centaur shivers with glee.");
 		
 		output("\n\n\"<i>Thank you so much, [pc.Master]!</i>\"");
@@ -2033,7 +2033,7 @@ private function giveKellyAppleSauce():void {
 	if(pc.isBiped()) output("giving at the knees, ");
 	output("your aching cock still weakly clenching.  In a beatific daze you listen to the sound of a tongue eagerly exploring every inch of a metal surface, before a bowl hits the ground.  A hand is offered to you and woozily you take it.  As soon as you are up Kelly pulls you into a fervent, passionate kiss, her soft lips pushing into yours.  The smell of apples envelops you.  You tense for a moment but decide to allow it.  It's her treat, after all.");
 	output("\n\nYou bend your head, sink your fingers into her hair and gently tangle your tongue with hers.  ");
-	if(cor() < 60) output("The taste of cum glazing her apple breath is off-putting but what did you really expect?");
+	if(pc.cor() < 60) output("The taste of cum glazing her apple breath is off-putting but what did you really expect?");
 	else output("You don't like to admit it but you do taste pretty good, even to yourself.  You push your tongue further into Kelly's mouth hungrily, working your jaw as you savage her mouth with your lips and tongue in search of that fruity, horny flavour, making her 'mmm' with delight and respond in kind.");
 	
 	//First:

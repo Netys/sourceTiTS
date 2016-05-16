@@ -360,8 +360,8 @@ public function ZetazCaveMalesZetazOver():void {
 	if(pc.HP() <= 1) output("beaten");
 	else output("teased");
 	output(" that you don't even resist as Zetaz calls in several friends.   You just lie there, meek and defeated as they carry you through the tunnels towards their dining room, but from the looks in the small demons' eyes, they aren't planning to feed you... not with food anyway.  The mob you defeated earlier seems to have returned, and gleeful hoots and catcalls ");
-	if(cor() < 33) output("shame");
-	else if(cor() < 66) output("confuse");
+	if(pc.cor() < 33) output("shame");
+	else if(pc.cor() < 66) output("confuse");
 	else output("arouse");
 	output(" you as you're thrown atop one of the tables and rolled onto your side.   You grunt as leather straps are produced and laid over your form to restrain you.  In the span of a minute you're completely immobilized from the neck down, and your " + pc.legs() + " are kept spread to allow easy access to [pc.multiCocks] and [pc.multiCocks].\n\n");
 	

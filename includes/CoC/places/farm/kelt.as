@@ -575,7 +575,7 @@ private function keltMainEncounterAfterNakedReq():void {
 				addButton(0, "Yes", keltReluctantlyGetNaked);
 				addButton(1, "No", keltRefuseNakedness);
 				addButton(4, "FIGHT!", fightToBeatKelt, null, "Fight", "Time to kick some arrogant ass.");
-				if (pc.WQ() > 40 && cor() > 70 && !pc.isTaur()) {
+				if (pc.WQ() > 40 && pc.cor() > 70 && !pc.isTaur()) {
 					output("\n\n<b>If you fight back and take him down a peg, you might never see him again...</b>");
 					addButton(2, "Fight Back", keltResistance, null, "Fight Back", "Turn tables and fuck him instead.");
 				}

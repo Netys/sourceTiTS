@@ -259,7 +259,7 @@ public function helFollowersIntro():void {
 			
 			output("\n\nYou spend the next few minutes explaining how you met each of the women in turn, receiving suspicious nods from Hel and Isabella.  Once you've explained yourself to the pair attempting to intimidate you, you ");
 			//(corruption = pussy)
-			if (cor() < 50) output("fall silent under their considering gazes.");
+			if (pc.cor() < 50) output("fall silent under their considering gazes.");
 			//(corruption = high enough to call bitches out when they're hypocrites)
 			else output("glower balefully at them, as if to challenge either to invite your opinion of their own sexual 'résumé' with an ill-considered comment.");
 			

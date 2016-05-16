@@ -3028,7 +3028,7 @@ private function inCampRideIzmasDickDongTheWitchIsDead():void {
 	output("Izma's cock twitches and she places her hands on your hips.  \"<i>Ah... I'm gonna...</i>\"  She grunts and bites her lip, trying to hang onto the moment.\n\n");
  
 	output("You laugh in delight, complimenting Izma on what a good beta she is; the alpha gets to cum first, after all.  ");
-	if (cor() < 33) output("Feeling merciful, you tell her that you're almost there... just a little more.  ");
+	if (pc.cor() < 33) output("Feeling merciful, you tell her that you're almost there... just a little more.  ");
 	output("Finally, the orgasm that's been hanging just out of reach, tantalizing you, flows free and you cry out in pleasure as [pc.girlCum] ");
 	if (pc.wetness() < 4) output("spatters");
 	else if (pc.wetness() < 5) output("gushes");

@@ -3665,7 +3665,7 @@
 			if(hasPerk("Slut Stamp")) bonus += perkv2("Slut Stamp");
 			// Slave collar increases minimum by set level.
 			if(hasStatusEffect("Psi Slave Collar")) bonus += statusEffectv3("Psi Slave Collar");
-			if (kGAMECLASS.inMareth()) { // a bit different rules there
+			if (characterClass == GLOBAL.CLASS_ADVENTURER) { // a bit different rules there
 				bonus = Math.max(bonus, 15); // at least 15 min libido without pure perks
 				if (hasPerk("Purity Blessing")) bonus -= 5;
 				if ((hasPerk("Enlightened") || hasPerk("History: Religious")) && cor() < 10) bonus -= 5;

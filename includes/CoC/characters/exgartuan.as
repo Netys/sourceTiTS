@@ -728,7 +728,7 @@ private function exgartuanSleepSurprise():void {
 		output("</i>\"\n\n");
 	
 		//(LOWCOR: 
-		if (cor() < 33) {
+		if (pc.cor() < 33) {
 			output("You grab hold of the perverse prick with both hands, not to stroke it, but to try and pry the invader from your oral cavity by force.  The surface is slick with sweat and pre-cum, and your hands slide inexorably towards the [pc.base] instead of pulling it free.  Your eyes cross from the feelings coming off your traitorous, possessed flesh after the accidental caress.  Both hands start to pump away, autonomously jacking the swollen demon-shaft into your mouth");
 			if (pc.biggestTitSize() >= 2) output(" and bouncing your " + pc.allBreastsDescript() + " around it");
 			output(".  Moans of pleasure vibrate the " + pc.cockHead() + " lodged in your throat while bubbles of wetness begin to slide down the lower half of your esophagus into your gullet.\n\n");
@@ -970,8 +970,8 @@ private function boobGartuanSURPRISE():void {
 		
 		output("\"<i>" + pc.short + "!</i>\" he shouts snidely, a sneer working its way across his face, \"<i>How long has it been?</i>\"\n\n");
 		output("\"<i>");
-		if (cor() < 33) output("Not long enough, Nemus, I'm afraid!");
-		else if (cor() < 66) output("Too long, honestly.  You've grown slow over the years, Nemus,");
+		if (pc.cor() < 33) output("Not long enough, Nemus, I'm afraid!");
+		else if (pc.cor() < 66) output("Too long, honestly.  You've grown slow over the years, Nemus,");
 		else output("I was worried you'd forgotten about me, Nemus.  You never write,");
 		output("</i>\" you reply, throwing back his sarcastic expression.\n\n");
 		
@@ -990,8 +990,8 @@ private function boobGartuanSURPRISE():void {
 		output("The first imp nods, his eyes still stricken with fear.  As he dashes for the odd contraption in the corner of the cell, you lunge for a leather whip resting against the wall beside you.  His feeble arm stops short of what looks like a trumpet mouthpiece in the wall, caught by your weapon.  In the blink of an eye, you yank the imp up into the air towards you, drop the whip in order to orient your fist towards him, and fire it into his ugly mug.  For a split second, you can make out his head attempting to wrap itself around your hand as it distorts from the sheer force of the blow.  The imp sails backwards head over heels careening into his friend, knocking the two of them out.\n\n");
 		
 		output("Pleased with your work, you rub your knuckles a little before wandering over to the table and scooping up the leather pouch.  It fits as well as it always has once you sling it around your body.  You turn and approach Nemus, the little bastard trying to scowl at you in between lingering spasms and clenching his head.  \"<i>");
-		if (cor() < 33) output("I always wondered where you kept this.");
-		else if (cor() < 66) output("This is one delivery that you'll just have to return to sender, I'm afraid.");
+		if (pc.cor() < 33) output("I always wondered where you kept this.");
+		else if (pc.cor() < 66) output("This is one delivery that you'll just have to return to sender, I'm afraid.");
 		else output("You scheme about as well as you fuck, Nemus.");
 		output("</i>\" you tease, bending down to scoop up the second idol and place it firmly in your leather pouch.  You quickly gesture goodbye to Nemus before bolting for the door.\n\n");
 	}
@@ -1012,9 +1012,9 @@ private function boobgartuanSurprise2():void {
 		output("However, this is no ordinary imp; if it was, you would have already pummeled the shit out of it.  Blocking the egress stands Teensy, an obviously ironic nickname for the seven foot tall, incredibly muscular, armor-plated behemoth.  Sporting armored padding along his extremities and head, this freak rocks an enormous ironclad chin, the resulting underbite dwarfing his otherwise miniscule head and beady eyes.  Other than the aforementioned armor running along his arms, knees and head, the brute is completely naked, his gigantic ballsack swaying in the breeze.  The lout is poised in the frame, legs bent and arms spread like a defensive lineman, denying you precious freedom.\n\n");
 		
 		output("\"<i>");
-		if (cor() < 33) output("Hey, Teensy, remember me?</i>\"");
+		if (pc.cor() < 33) output("Hey, Teensy, remember me?</i>\"");
 		//[if corruption ≥30 & <70]
-		else if (cor() < 66) output("I see you haven't gotten any prettier since last time we met, Teensy.</i>\"");
+		else if (pc.cor() < 66) output("I see you haven't gotten any prettier since last time we met, Teensy.</i>\"");
 		//[if corruption ≥70]
 		else output("Timed to get fucked, stud,</i>\"");
 		output(" you jest.  The mongrel merely snarls at you and tenses up, your attempt at coy negotiations deflecting off of his dull cranium.  The commotion behind you begins to grow louder; there isn't much more time until the cavalry arrives.  You begin quickly scanning the room, searching for anything you can use against the lummox.  Up above him, you spy several sizable barrels.  They appear ancient and low maintenance, judging by the rickety-looking wood and leaking liquid.\n\n");
@@ -1023,9 +1023,9 @@ private function boobgartuanSurprise2():void {
 		
 		output("The monster imp raises his arm-guards to project his maw, bracing for a blow that never comes.  Instead, the massive sword plows into the barrel overhead, drenching the goon and surrounding area in red wine.  You're left with no time to celebrate, though, as the encroaching imps have made it to your position.  You dash towards Teensy as the buffoon stumbles around in place, going into a dive feet-first and sailing right underneath him thanks to the wine-slicked floor.  ");
 		//[if corruption <30]
-		if (cor() < 33) output("Your " + pc.chestDesc() + " brush against the imp's enormous scrotum, causing him to eventually tumble over from the sensation, blocking the impeding entourage of imps behind you.");
+		if (pc.cor() < 33) output("Your " + pc.chestDesc() + " brush against the imp's enormous scrotum, causing him to eventually tumble over from the sensation, blocking the impeding entourage of imps behind you.");
 		//[if corruption ≥30 & <70]
-		else if (cor() < 66) output("As you coast under the beast, you take the opportunity to slap around his crown jewels, playing them as if they were a novelty pair of bongos.  The sensation causes him to tumble over, blocking the impeding entourage of imps behind you.");
+		else if (pc.cor() < 66) output("As you coast under the beast, you take the opportunity to slap around his crown jewels, playing them as if they were a novelty pair of bongos.  The sensation causes him to tumble over, blocking the impeding entourage of imps behind you.");
 		else output("A devilish smile cracks across your face as you coast under the lummox, delivering a quick peck of a kiss on his hanging ballsack.  The sensation causes him to tumble over in confusion, blocking the impeding entourage of imps behind you.");
 		output("\n\n");
 		
@@ -1081,7 +1081,7 @@ private function boobgartuanSurprise3():void {
 	//[if occurrence ≥8]
 	else output("Before another thought can cross your mind, your " + pc.chestDesc() + " fly up and smack you in the gob! \"<i>" + pc.short + ", it's that time again,</i>\" the eager demoness teases you.  You think she's grown to enjoy the torture she puts you through.  \"<i>If you insist on going day in and day out without spending quality time with these tits, then I'll just insist on instructing you otherwise.</i>\" Your beautiful bosom launches forward, throwing your mug right back in the dirt.");
 	output("  You lift your head enough to shake any clinging ground free, but stop shy of going any higher and giving the demoness another shot at tossing you around.  Grass becomes your anchor as your hands bind themselves to whatever they can.");
-	if (cor() < 50) output("  Exgartuan's tormenting has gone on long enough tonight.");
+	if (pc.cor() < 50) output("  Exgartuan's tormenting has gone on long enough tonight.");
 	else output("  You love foreplay just as much as any other creature, but this is getting ridiculous.");
 	output("\n\n");
 	
@@ -1105,14 +1105,14 @@ private function boobgartuanSurprise3():void {
 	else output("\"<i>I suppose that ends tonight's opening act,</i>\" Exgartuan goads, her voice as domineering as ever, \"<i>I know you're dying to get on to the grand finale.</i>\"");
 	output("  Your solid hold around your " + pc.chestDesc() + " slowly loosens, your tits perking up as they prepare for their much craved attention.  ");
 	//[if corruption <50]
-	if (cor() < 50) output("Though the mounting need to manhandle your mounds is slowly growing, you at least have the wherewithal to brush the mess of dirt and grass off your body before you begin.  You may be slowly succumbing to the evil corruption radiating from your dainty dumplings, but there's no reason you have to look the part, too.  A smooth rock at the edge of the clearing serves as your backrest once you relocate; you would like to at least try to keep from wallowing around in the earth any more tonight.  Even in the dark of the night, you can make out your " + pc.chestDesc() + ", defying gravity as they anxiously await your touch, their perky pomp silently degrading your resolve.");
+	if (pc.cor() < 50) output("Though the mounting need to manhandle your mounds is slowly growing, you at least have the wherewithal to brush the mess of dirt and grass off your body before you begin.  You may be slowly succumbing to the evil corruption radiating from your dainty dumplings, but there's no reason you have to look the part, too.  A smooth rock at the edge of the clearing serves as your backrest once you relocate; you would like to at least try to keep from wallowing around in the earth any more tonight.  Even in the dark of the night, you can make out your " + pc.chestDesc() + ", defying gravity as they anxiously await your touch, their perky pomp silently degrading your resolve.");
 	//[else]
 	else output("The thrashing now having ended, you gaze longingly at your majestic mountains.  You're able to at least hold off long enough from groping them to relocate to a smooth rock at the edge of the clearing; they're much easier to handle when you're upright after all.  You quickly brush off any dirt from them, having no regard for anything on the rest of your body.  All you care about right now is tending to your craving to cosset your cha-chas.");
 	output("\n\n");
 
 	output("As your hands rise to get to work, you feel your control over them slip away.  The demoness has rolled into the driver's seat as she tends to do.  ");
 	//[if corruption <50]
-	if (cor() < 50) output("It is becoming increasingly clear to you that she evidently just cannot seem to sit idly by when you actually do decide to pay her heed.");
+	if (pc.cor() < 50) output("It is becoming increasingly clear to you that she evidently just cannot seem to sit idly by when you actually do decide to pay her heed.");
 	//[else]
 	else output("You're glad to sit back and bask in the expert manhandling that only she can deliver you.");
 	output("  Your hands waste no time, caressing every square inch of your flesh.  They gently brush with the softest of grace; they squeeze with the exceptional skill of any expert masseur.  Any particularly sensitive spots get extra attention, eliciting soft moans from you as they only emanate more warmth throughout your body.  You feel as if you're melting into your supporting rock, the pleasure only mounting as your absent gaze goes skyward.");
@@ -1131,12 +1131,12 @@ private function boobgartuanSurprise3():void {
 	
 	output("Your gargantuan glands tremble as they begin to speak, \"<i>As always, you long for this just as I do.  It only begs the question as to how you could even think to ignore me.</i>\" You can feel your breasts plump up, seeming to be the demoness' not so subtle gesture of superiority, \"<i>Well, go ahead, champion.  Satiate your lust.</i>\"  Your hands hover over your [pc.nipples] as if waiting for you to take control.");
 	//[if corruption <50]
-	if (cor() < 50) output("  At this point you are too far gone to resist.");
+	if (pc.cor() < 50) output("  At this point you are too far gone to resist.");
 	//[else]
 	else output("  You wiggle your fingers in anxious anticipation.");
 	output("  You finally bear down and grasp onto... nothing?  <b>Your nipples are nowhere to be found!</b>  The passion is beginning to flatline as you confusedly grope around your " + pc.chestDesc() + ".  \"<i>What's wrong, champion?</i>\" Exgartuan asks knowingly, \"<i>Is this too hard for you?</i>\" The tips of your fingers comb around your areolas until you discover an inward bend in your " + pc.skin() + " where your nipples should be.  Apparently, Exgartuan isn't through having fun with you; the blasted seductress managed to suck your teats inward!  Before you can fathom just how she pulled it off without your knowledge, your humble howitzers start to tingle.  You feel an anxious quiver work its way up your spine before a familiar need begins to course through your being: the need to be milked!");
 	//[if corruption <50]
-	if (cor() < 50) output("  Brought on artificially or not, you cannot deny it; you would probably be cursing the wretched demoness if you were not already preoccupied contending with your mounting passion and desire.");
+	if (pc.cor() < 50) output("  Brought on artificially or not, you cannot deny it; you would probably be cursing the wretched demoness if you were not already preoccupied contending with your mounting passion and desire.");
 	output("  As you paw uselessly at the firm seal, you begin to feel moisture seeping out.");
 	//[if not lactating]
 	if (!pc.canLactate()) output("  <b>Your " + pc.chestDesc() + " have started to lactate profusely.</b>");
@@ -1190,7 +1190,7 @@ private function boobgartuanSurprise3():void {
 	
 	output("Your hands go to work on your nips, a tug here, a stroke there, your fingers exploring the ins and outs of your titantic teats.  You punch in just a scant number of moments before your faucets reach their crescendo, your hands holding on for all their worth as milk sprays out everywhere, your " + pc.chestDesc() + " writhing with each squirt.  It's hard to make out just how much or how far your cream has gone in the dark, but judging by what seemed like an eon of excitement, you're confident that you've made your mark.  You know that Exgartuan has fallen into her slumber when your otherwise perky pompoms succumb to the laws of gravity and return to their original state, soreness seeping in after a night of tossing, tugging and teasing.");
 	//[if corruption <50]
-	if (cor() < 50) output("  A heavy sigh escapes your lips as you feel the artificial pressure subside, replaced with the slight increase of lust all the excitement brought on.  You'll have to tend to that when you're nice and rested.  Unfortunately, your mighty milk fountain has drenched you and the surrounding countryside, turning dirt to mud and your desire to come out of this somewhat clean becoming a futile fantasy.  You scoop up what little pride you can find and wander back to camp, a trail of milk forming behind you.");
+	if (pc.cor() < 50) output("  A heavy sigh escapes your lips as you feel the artificial pressure subside, replaced with the slight increase of lust all the excitement brought on.  You'll have to tend to that when you're nice and rested.  Unfortunately, your mighty milk fountain has drenched you and the surrounding countryside, turning dirt to mud and your desire to come out of this somewhat clean becoming a futile fantasy.  You scoop up what little pride you can find and wander back to camp, a trail of milk forming behind you.");
 	//[else]
 	else output("  Your fingertips continue to sweep across your " + pc.skin() + ", seemingly in denial that the exciting night has drawn to a close.  You peer up at the ever-present moon, its crimson hue as foreboding as the day you first arrived in Mareth.  You stew on the prospect of apologizing to the demoness for your forgetfulness.  Though, be it for your pride or hers, you decide it better to just shelf the idea.  All Exgartuan cares about is attention and fucking, better to not go and try to turn her into a conversationalist.  Best to just tend to her every so often if you actually do care.  Once you've taken care of your own lust anyway.  You shake some sense back into your head, sending some dirt flying.  The \"<i>breast show on earth</i>\" left you soaked, your milk turning the dirt to mud around you.  You figure it best to worry about it once you're at camp.  You begin the trek back, a little smile growing on your face once you see the trail of milk you're leaving behind in your wake.");
 	//[corruption +2, lust +5] 
@@ -1209,21 +1209,21 @@ public function exgartuanNagaStoleMyMasturbation():void {
 	//spriteSelect(15);
 	clearOutput();
 	//[if corruption <15]
-	if (cor() < 15) output("You sheepishly find some rocks to hide in, where you remove your clothes.  \"Keeping me all to yourself, slut? Hide as much as you want, it'll never keep me down,\" Exgartuan gloats.\n\n");
+	if (pc.cor() < 15) output("You sheepishly find some rocks to hide in, where you remove your clothes.  \"Keeping me all to yourself, slut? Hide as much as you want, it'll never keep me down,\" Exgartuan gloats.\n\n");
 	
 	output("Irritating... ");
 	//[if corruption ≥15 & <30]
-	if (cor() <= 25) output("You make sure you are alone and strip naked.  Exgartuan chides, \"Yes, champion, wallow around in the shadows.  Keep pretending you can continue to hide my brilliance from the world.\"");
+	if (pc.cor() <= 25) output("You make sure you are alone and strip naked.  Exgartuan chides, \"Yes, champion, wallow around in the shadows.  Keep pretending you can continue to hide my brilliance from the world.\"");
 	//[if corruption ≥30 & <60]
-	else if (cor() <= 50) output("You happily remove your [pc.gear], eager to pleasure yourself.  Your possessed cock pulses happily as you remove the last article.");
+	else if (pc.cor() <= 50) output("You happily remove your [pc.gear], eager to pleasure yourself.  Your possessed cock pulses happily as you remove the last article.");
 	//[if corruption ≥60 & <80]
-	else if (cor() <= 75) output("You strip naked in an exaggerated fashion, hoping someone might be watching.  Exgartuan begins flooding you with lust in response to your willing inclination.");
+	else if (pc.cor() <= 75) output("You strip naked in an exaggerated fashion, hoping someone might be watching.  Exgartuan begins flooding you with lust in response to your willing inclination.");
 	//[if corruption ≥80]
 	else output("You strip naked, fondling your naughty bits as you do so and casting seductive looks around, hoping someone or something is nearby to fuck you.  Your demonic dong throbs happily from within you, anxious to move on with the festivities.");
 	output("\n\n");
 	
 	//[if corruption <33]
-	if (cor() < 33) {
+	if (pc.cor() < 33) {
 		output("Having grown weary of the demon's constant taunts, you finally decide to give in to his forced temptations.  May as well get this over with now rather than letting it get out of hand.  As satisfying as it feels to manhandle your man meat, your corrupt passenger always manages to make it feel wrong once you've regained your senses.  Your pondering quickly begins to dissolve once you feel your " + pc.cockDescript(0) + " slowly stretch its way out from your slithery slit");
 		//[if cocks == 2]
 		if (pc.cockTotal() == 2) output(", your remaining tool hiding away inside you, uninvited.");
@@ -1235,7 +1235,7 @@ public function exgartuanNagaStoleMyMasturbation():void {
 		output("Well, you had planned on it.  Your arms have frozen in place above your unholy pecker.  \"I have no need for your inexperienced fumbling today, my needy little slut.  Sit back and tremble as I rock your world.\"\n\n");
 	}
 	//[if corruption ≥33 & <66]
-	if (cor() > 33 && cor() < 66) {
+	if (pc.cor() > 33 && pc.cor() < 66) {
 		output("  You shouldn't be looking forward to this, should you?");
 		output("  You haven't even quite figured out just how much of the pleasure one of these sessions garners is actually genuine.  But that doesn't make it any less savory.  \"What's wrong, " + pc.short + ",\" your perverse pecker chimes in, obviously reacting to your internal conflict, \"Having any second thoughts?  You aren't suddenly feeling as if you're above the fun I have on tap, are you?\"\n\n");
 	
@@ -1259,7 +1259,7 @@ public function exgartuanNagaStoleMyMasturbation():void {
 	}
 	output("A sudden tumble to your backside is first on the agenda as your long tail whips around in front of you.  The demon has commandeered your body from waist down to the tip of your lengthy, strong snake body.  You can only sink into the role as a spectator, watching the end of your tail practically kissing the opening of your " + pc.cockDescript(0) + ", smothering itself in the demon's reservoir of pre-cum.");
 	//[if corruption <50]
-	if (cor() < 50) output("  In a move that you could only describe as appallingly spiteful, your urethra gapes open as wide as it can, inviting your tail to coat itself even further.  You make out a low, menacing laugh needling its way through your mind, its owner clear.  A few agonizing moments of gasps through clenched teeth and your hind end emerges with a moist pop.  Of course your corrupted nerves react in only pleasure from the perverse showing; you fear for the day when you can't make the distinction.");
+	if (pc.cor() < 50) output("  In a move that you could only describe as appallingly spiteful, your urethra gapes open as wide as it can, inviting your tail to coat itself even further.  You make out a low, menacing laugh needling its way through your mind, its owner clear.  A few agonizing moments of gasps through clenched teeth and your hind end emerges with a moist pop.  Of course your corrupted nerves react in only pleasure from the perverse showing; you fear for the day when you can't make the distinction.");
 	output("  The possessed shaft works down all of your underside that it can reach, cooperating with your borrowed body to coat both parties as evenly as they can.\n\n");
 	
 	//[If int > 9]
@@ -1277,9 +1277,9 @@ public function exgartuanNagaStoleMyMasturbation():void {
 	
 	output("Self stimulation should never feel this good.  This doesn't even seem like masturbation.  All you've been able to contribute to this action are clenched fists, various sounds, and shuffling expressions.  ");
 	//[if corruption <33]
-	if (cor() < 33) output("\"<i>You can't measure up to treatment of this magnitude, champion,\" Exgarutan insults you, his voice trembling as the slick massage persists, \"But don't think that I'm giving you permission to slack off.  A slut like you can go on dreaming; one day maybe you'll have the perseverance to get close.\"");
+	if (pc.cor() < 33) output("\"<i>You can't measure up to treatment of this magnitude, champion,\" Exgarutan insults you, his voice trembling as the slick massage persists, \"But don't think that I'm giving you permission to slack off.  A slut like you can go on dreaming; one day maybe you'll have the perseverance to get close.\"");
 	//[if corruption ≥33 & <66]
-	else if (cor() < 66) output("Your corrupt cock begins to speak up, the demon's unrelenting motions refusing to ease off, \"You're loving every bit of this champion.  There isn't a hint of uncertainty lingering in your senses.  If only you were this accepting all the time.\"");
+	else if (pc.cor() < 66) output("Your corrupt cock begins to speak up, the demon's unrelenting motions refusing to ease off, \"You're loving every bit of this champion.  There isn't a hint of uncertainty lingering in your senses.  If only you were this accepting all the time.\"");
 	//[else]
 	else output("\"<i>Isn't this great, " + pc.short + "? With both of our sexual expertise combined, we'll own this land in no time, and enjoy the fuck out of any downtime.\"");
 	output("  You're at your wits' end, the demon's words triggering your release.  You can feel a ");

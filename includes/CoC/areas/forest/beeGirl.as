@@ -180,7 +180,7 @@ private function beeEncounterAfraidFirstTimeSex():void {
 	clearOutput();
 	//spriteSelect(6);
 	attitudeBeeGirl = BEE_GIRL_PLAYER_VOLUNTARY_EGGING;
-	output("You smile and nod to her.  She crooks her finger towards you, inviting you to come closer as she spreads her legs wide.  You walk slowly towards her, wearing a " + (cor() < 40 ? "somewhat nervous " : "") + "smile on your face.  You decide to take the opportunity to look over her body once more.  Starting at her unusual legs and feet, you marvel at how the alien woman’s exoskeleton legs looks so much like boots, spread wide and inviting towards you.  Your eyes move up her legs to her thighs, covered in an intriguing yellow fuzz.  You find yourself wondering what that fluff would feel like to touch.  At the same time, it’s almost as if it were leading the way to her honey pot; inevitably drawing your view to it.\n\n");
+	output("You smile and nod to her.  She crooks her finger towards you, inviting you to come closer as she spreads her legs wide.  You walk slowly towards her, wearing a " + (pc.cor() < 40 ? "somewhat nervous " : "") + "smile on your face.  You decide to take the opportunity to look over her body once more.  Starting at her unusual legs and feet, you marvel at how the alien woman’s exoskeleton legs looks so much like boots, spread wide and inviting towards you.  Your eyes move up her legs to her thighs, covered in an intriguing yellow fuzz.  You find yourself wondering what that fluff would feel like to touch.  At the same time, it’s almost as if it were leading the way to her honey pot; inevitably drawing your view to it.\n\n");
 	output("Her cunny looks sort of like a human pussy, but is ringed with small bits of exoskeleton to grip down tightly.  However, the most notable part is how it seems to be an almost literal honey pot.  You can see small drips of yellow goo dripping out, and you guess that that must be the main source of the sweet smell that fills the clearing.  Your mind wanders back to the clearing and you look around for a moment and notice that a number of large red flowers have been strewn about.  While you don’t recognize the flowers, you guess that they’re probably the reason that the smell isn’t so overpowering this time around.  Now the bee’s scent is just at the back of your mind, making you aroused and calming your nerves a little; not unlike the gentle and calming, but not overpowering, buzzing of the handmaiden’s wings.\n\n");
 	output("“You look back at the bee only to find that your legs have carried you right to an arm’s length away from her.  You hesitate for a moment, prompting the woman in front of you to give her ample breasts a little push together.  Then she brings your gaze up to her face.  You can see her luscious black lips part slightly, her eyes close, and suddenly she flies forward.  In an instant, your lips are with hers in a deep kiss.  The taste in her mouth is an incredibly sweet honey, it almost drives your thoughts out of your head right there, and you slump limply into her arms for a moment.  Realizing the state you’re in, the handmaiden puts her hand to her face in surprise.  <i>“Oh, zzzorry about that.”</i> she apologizes before gently lifting you up and taking off your [pc.gear] as you recover from the sensation overload of her kiss.\n\n");
 	var cockIndex:int = pc.cockThatFits(50);
@@ -338,7 +338,7 @@ private function beeEncounterSheDesiresYou():void {
 private function beeEncounterSheBeatsYouRegularly():void {
 	output(" in the light.\n\n");
 	output("Her mouth breaks out in a grin at the sight of you.  <i>“Hello again naughty " + pc.mf("boy", "girl") + ",”</i> her buzzing really starting to get inside your head as she stands up and beckons to you.  <i>“Juzzzt make it eazzier on yourzzzelf and let me lay my eggzzz in you.  No fuzzzzz, no fighting.  Just let yourzzzelf be carried away.”</i>\n\n");
-	if ((pc.libido() + cor() < 70) || rand(4) == 0 || pc.IQ() >= 90 || pc.WQ() >= 75) { //Chance to avoid raaaaeeeeep
+	if ((pc.libido() + pc.cor() < 70) || rand(4) == 0 || pc.IQ() >= 90 || pc.WQ() >= 75) { //Chance to avoid raaaaeeeeep
 		output("With great difficulty you manage to stop yourself from throwing yourself into her arms.  Losing to this girl isn’t helping you resist her charms at all.  You’re finding It harder and harder to fight the call of her incredible song and unnatural scent, it may be wise to run now; but what will you do now that you have your senses again?");
 		clearMenu();
 		addButton(0, "Fight", fightTheBeeGirl);
@@ -359,7 +359,7 @@ private function beeEncounterSheBeatsYouRegularlyTalk():void {
 }
 
 private function beeEncounterSheBeatsYouRegularlyLastChance():void {
-	if ((pc.libido() + cor() < 70) || rand(4) == 0 || pc.IQ() >= 90 || pc.WQ() >= 75) { //Chance to avoid raaaaeeeeep
+	if ((pc.libido() + pc.cor() < 70) || rand(4) == 0 || pc.IQ() >= 90 || pc.WQ() >= 75) { //Chance to avoid raaaaeeeeep
 		clearMenu();
 		addButton(0, "Yes", beeEncounterSheBeatsYouRegularlyAndYouLetHerLaysEggs);
 		addButton(2, "No", beeEncounterSheBeatsYouRegularlyDontLetHer);

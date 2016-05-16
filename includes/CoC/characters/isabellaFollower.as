@@ -443,8 +443,8 @@ private function toggleIsabellasMorningWoodChopping():void {
 	}
 	else {
 		output("You ");
-		if(cor() < 33) output("blush and ");
-		else if(cor() >= 66) output("smirk and ");
+		if(pc.cor() < 33) output("blush and ");
+		else if(pc.cor() >= 66) output("smirk and ");
 		output("let Isabella know that if she's still interested, you'd like her to suck you off in the mornings again.  Her face colors, but you see her eight nipple-tips poking hard at her silk shirt as she answers, \"<i>");
 		if(pc.cocks[pc.shortestCockIndex()].cLength() > 9) 
 		{

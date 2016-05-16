@@ -374,8 +374,8 @@ private function fuckFuckingFuckFlowerP2():void {
 	if (pc.balls > 0) output("[pc.balls]");
 	else output("[pc.legs]");
 	output(" and form a sticky puddle.  Now moaning, you grab the stem and start to pump the sheath up and down, using the plant like the cock-toy it was meant to be.  Lewd, wet squishes ring out through the air,");
-	if (cor() < 33) output(" and you timidly look around, hoping you haven't attracted an audience.");
-	else if (cor() < 66) output(" and you worriedly glance around, hoping yet terrified that someone will walk in on it.");
+	if (pc.cor() < 33) output(" and you timidly look around, hoping you haven't attracted an audience.");
+	else if (pc.cor() < 66) output(" and you worriedly glance around, hoping yet terrified that someone will walk in on it.");
 	else output(" and you glance around, hoping someone will walk in on the sexy show you're making.");
 	output("\n\nNow panting with unbearable lust and undeniable levels of pleasure, you give up all sense of propriety and resort to fucking wildly, [pc.hips] jumping inches into the air.  The flower's interior is a slick, silky heaven for your " + pc.cockDescript(x) + ", a sucking, squeezing hole of seemingly infinite pleasure.  Inside its gluttonous gullet, the numerous tentacles twist around, the longest ones circling the base of your shaft");
 	if (pc.hasSheath(x)) output(" inside your violated sheath");

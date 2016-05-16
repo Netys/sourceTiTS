@@ -3010,7 +3010,7 @@ private function penetrateEmbrah():void
 
 	output("\n\nOverwhelmed by the pleasure, Ember sits atop you and stops moving, going limp and panting in exertion, \"<i>C-can't move my hips anymore...</i>\"");
 
-	if (cor() >= 80) output("\n\nNoisy, weak, and now helpless too... you wonder if you shouldn't have adopted a kitten instead of a dragon, for the peace and quiet.");
+	if (pc.cor() >= 80) output("\n\nNoisy, weak, and now helpless too... you wonder if you shouldn't have adopted a kitten instead of a dragon, for the peace and quiet.");
 	else output("\n\nYou can't accept that - you <b>won't</b> accept that!");
 	output("  With a surge of lust-inflamed strength, you thrust yourself forward, knocking the unprepared Ember over.  You roll her over so that you are on top and spread her legs, draping them casually around your hips and then resume thrusting with ever-increasing force.  Like some sex-starved animal you thrust and rut, pounding the now-helpless dragon raw in pursuit of the tantalizing imminent release that haunts you.");
 

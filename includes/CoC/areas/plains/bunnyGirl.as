@@ -832,8 +832,8 @@ private function fuckTheEggBoundBun():void {
 	if(!isEaster()) output("yielding flesh");
 	else output("semi-spongy hotcakes");
 	output(".  Some light prodding tells you that her ass is far too tightly squeezed from the tension in her bloated organs to have any hope of penetration.  Her snatch is nearly as secure, but the drooling seed of her earlier suitors, along with her own glistening honey should provide all the lubrication you need.  The slimy spunk of countless suitors is warm against the throbbing flesh of your [pc.cock] and you ");
-	if(cor() < 33) output("grimace at the vulgar goo that washes over your flesh");
-	else if(cor() < 66) output("swallow a gulp as the lewd spoo squelches around your member");
+	if(pc.cor() < 33) output("grimace at the vulgar goo that washes over your flesh");
+	else if(pc.cor() < 66) output("swallow a gulp as the lewd spoo squelches around your member");
 	else output("revel in the profane stimulation of bestial batter anointing your length in impure, liquid virility");
 	output(".");
 	

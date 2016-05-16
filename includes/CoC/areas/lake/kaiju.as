@@ -602,8 +602,8 @@ private function mockDatTurtleGirl():void {
 	if(pc.hasVagina()) output("You begin to feel a wetness between your legs as your cunt begins leaking as your arousal spikes from the intense rubbing the herm's penis is giving your whole body.  ");
 	//[If genderless]
 	if(!pc.hasGenitals()) output("Your cheeks blush in arousal from all this heavy rubbing.  ");
-	if(cor() < 33) output("You can't believe that you're being aroused by this.  Aren't you suppose to be a champion?");
-	else if(cor() < 66) output("Wow, this is arousing you.  You wonder if you really are a champion.");
+	if(pc.cor() < 33) output("You can't believe that you're being aroused by this.  Aren't you suppose to be a champion?");
+	else if(pc.cor() < 66) output("Wow, this is arousing you.  You wonder if you really are a champion.");
 	else output("You just want to get off now.");
 	
 	output("\n\n\"<i>See?  You make such a good little cock toy,</i>\" the giantess coos as she begins to stroke faster and faster.  \"<i>You’re making my dick feel so good!</i>\"");

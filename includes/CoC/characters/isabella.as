@@ -639,8 +639,8 @@ public function volunteerToSlurpCowCunt():void {
 		output("\"<i>Don't stop!  Yes, lick momma Izabella's clitty! Yes! YES!</i>\" grunts the dark-skinned woman.  Her thick thighs scissor shut, locking you into your position with soft but vice-like pressure.  Rivulets of honeyed female cum trickle into your tongue with every slurp you give her plus-sized feminine organ.  It pulsates between your lips, and Isabella's legs pull tight with each trembling grunt or barely-articulated moan that escapes the cow-girl's lips.  She pants, \"<i>Such a good tongue-fucker... I – oooohhhhh... I think I shouldn't let you go, huh?  Keep you where you belong, right between Izabella's thighs – an oral tongue-pet.</i>\"\n\n");
 	}
 	
-	if(cor() < 33) output("You blush at her words and hope she's just talking dirty.");
-	else if(cor() < 66) output("You blush at her words and wonder what it would be like if she wasn't talking dirty.");
+	if(pc.cor() < 33) output("You blush at her words and hope she's just talking dirty.");
+	else if(pc.cor() < 66) output("You blush at her words and wonder what it would be like if she wasn't talking dirty.");
 	else output("Despite knowing she's probably just getting into the moment, you see the appeal of the idea, but perhaps it would be hotter if the roles were reversed?");
 	output("  Something splatters over your [pc.gear] and runs down your back.  It's warm, body temperature, and wet.  Is she starting to leak milk just from a little cunnilingus?  Curious about just how much she's going to drip on you, you turn back to your task.  She's nearly as juicy down below as above, and you find yourself having to swallow mouthfuls of her fem-cum from time to time while you work her box over.\n\n");
 	

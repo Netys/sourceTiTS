@@ -144,8 +144,8 @@ public function infertilityQuestions():void {
 	output("\n\nHow can that be?");
 	output("\n\nSeeing your look, Urta sighs, \"<i>I really don't know.  A crazy birth defect?  A curse?  The doctors I spoke with told me that my body doesn't seem to fully accept my penis, and it's causing an imbalance through my whole system.  I suppose it might be to blame for my sex drive... but I haven't heard any complaints from you.</i>\"  She gives you a conspiratorial wink.");
 	output("\n\nWell, ");
-	if (cor() < 33) output("you have nothing to complain about there.  Your sexual romps with Urta are always a delight.");
-	else if (cor() < 66) output("she's definitely a handful in the sack, you've got to give her that.");
+	if (pc.cor() < 33) output("you have nothing to complain about there.  Your sexual romps with Urta are always a delight.");
+	else if (pc.cor() < 66) output("she's definitely a handful in the sack, you've got to give her that.");
 	else output("she's a willing fuck, so no complaints there.  Now if she would just get on with it - if you wanted to flirt, you would've instigated it.");
 	output("\n\nThe prick-vixen catches herself wandering off topic and forcibly drags herself back to the discussion.  \"<i>Anyway, they couldn't do anything for me.  They don't know how to fix me, and that's that.  I'm an infertile, horse-cock endowed herm bitch.</i>\"  She smirks ruefully, \"<i>All of that has made me what I am today - A fierce brawler, a citizen, a captain, and the luckiest herm this side of Lake Marae.  After all, I have you for a lover.</i>\" The gray-furred vulpine girl taps her chin in thought, \"<i>I still wonder if the mages of the Covenant could find anything with their magic, though.  Still, they've enough to worry about with maintaining the wards to keep the demons out.</i>\"");
 	output("\n\nMaybe they could help.  Urta has to have some kind of connections she can lean on as guard captain, doesn't she?  You say as much.");

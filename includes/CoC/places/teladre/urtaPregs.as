@@ -673,7 +673,7 @@ private function getAnUrtaMassageWhenPreggo():void {
 	output("\n\n\"<i>Sorry, [pc.name], I don't really have a lot of experience with this,</i>\" Urta apologizes, looking depressed at her apparent failure to help you.");
 	
 	//cor>50:
-	if (cor() > 50) output("\n\nYou'll let it slide this time, but she really should practice this before trying it on you.");
+	if (pc.cor() > 50) output("\n\nYou'll let it slide this time, but she really should practice this before trying it on you.");
 	else output("\n\nYou tell her not to worry, some of it did feel good... though you'd appreciate if she got some practice next time she suggests giving you a massage.");
 	
 	output("\n\n\"<i>Well, if you moved to civilization with me, then maybe I could practice on you,</i>\" the herm vixen grumbles, but it's obviously half-hearted at best.  You jokingly tell her that you're much too young to start having back problems due to being manhandled by her foxy paws.");

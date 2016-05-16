@@ -301,9 +301,9 @@ public function continueMinoVoyeurism():void {
 	output("They go at it for nearly an hour, oblivious to you watching them, before their intensity heightens as they near orgasm. The results are almost explosive, both of them crying out as they begin twitching uncontrollably. Clinging desperately to the cow-girl's ass, the minotaur pumps so much cum into her depths that it begins spurting out. This accidental lubrication releases his grip and the pair collapse to the ground. Yet the minotaur isn't finished, his man-milk spraying into the air almost like his still-erect dick is a hose and splattering down onto both of them.\n\n");
 	output("As you look at the two cum-covered creatures laying their in their exhausted sex-induced stupors, the minotaur's thick horse-cock now slowly deflating, you realize that you've been touching yourself.  You make yourself stop ");
 	//[low corruption]
-	if (cor() < 33)
+	if (pc.cor() < 33)
 		output("in disgust.");
-	else if (cor() < 66)
+	else if (pc.cor() < 66)
 		output("in confusion.");
 	else
 		output("reluctantly.");

@@ -289,7 +289,7 @@ private function fapResults(place:Number = 3):void {
 	else {
 		output("You meekly place yourself at the end of the butt-fuck wagon, knowing you'll have to endure the thrusts of everyone else.  In your shame and lust, all you can see is a member of enormous size, trembling in arousal, waiting to lodge between your ass-cheeks.  With ");
 		//([if corr < 50]
-		if(cor() < 50) output("a whorish smile");
+		if(pc.cor() < 50) output("a whorish smile");
 		else output("apprehension");
 		output(", you place yourself in front of the creature with the large cock.  It grinds against your back in impatience.  ");
 	}

@@ -602,7 +602,7 @@ private function fSpiderMorphRapeDude():void
 		else output("cocks flop about uselessly");
 	}
 	output(".  That extra stimulation is all it takes to get her off and make her squirt your groin with her copious lady-spunk.  You tweak her nipple and bite down again, ");
-	if (cor() < 50) output("teasing the eager twat");
+	if (pc.cor() < 50) output("teasing the eager twat");
 	else output("punishing the worthless twat");
 	output(" for cumming early while the spastic milking motions of her quivering cunt finally bring you to the edge.\n\n");
 

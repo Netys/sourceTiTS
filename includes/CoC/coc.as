@@ -29,7 +29,6 @@ include "areas/boat/boat.as";
 include "areas/boat/fetishZealot.as";
 include "areas/boat/marae.as";
 include "areas/boat/sharkGirl.as";
-include "areas/camp/camp.as";
 include "areas/deepwoods/akbal.as";
 include "areas/deepwoods/deepwoods.as";
 include "areas/deepwoods/erlking.as";
@@ -64,7 +63,6 @@ include "areas/highmountain/highmountain.as";
 include "areas/highmountain/izumi.as";
 include "areas/highmountain/minerva.as";
 include "areas/highmountain/phoenix.as";
-include "areas/intro.as";
 include "areas/lake/callu.as";
 include "areas/lake/fetishCultist.as";
 include "areas/lake/gooGirl.as";
@@ -92,11 +90,13 @@ include "areas/swamp/swampLoot.as";
 
 // PLACES, note: sub-uncludes are usually inside places
 include "places/bazaar/bazaar.as";
+include "places/camp.as";
 include "places/deepCave/zetazCave.as";
 include "places/desertCave/desertCave.as";
 include "places/factory/factory.as";
 include "places/farm/farm.as";
 include "places/fortress/fortress.as";
+include "places/intro.as";
 include "places/owca/owca.as";
 include "places/phoenixTower/phoenixTower.as";
 include "places/teladre/telAdre.as";
@@ -143,22 +143,6 @@ public function inMareth():Boolean {
 }
 public function allowFollowers():Boolean {
 	return true;
-}
-
-public function cor(arg:Number = 0, apply:Boolean = false): Number 
-{
-	if (flags["COC.CORRUPTION"] == undefined) flags["COC.CORRUPTION"] = 0;
-	if (apply) 
-		flags["COC.CORRUPTION"] = arg;
-	else if (arg != 0) 
-	{
-		flags["COC.CORRUPTION"] += arg;
-		if (flags["COC.CORRUPTION"] > 100)
-			flags["COC.CORRUPTION"] = 100;
-		if (flags["COC.CORRUPTION"] < 0) 
-			flags["COC.CORRUPTION"] = 0;
-	}
-	return flags["COC.CORRUPTION"];
 }
 
 // TODO: use weightedRand

@@ -245,7 +245,7 @@ private function sendMilkGirlToFarm():void
 
 	output("“<i>Ok,</i>” says [bathgirl.short], cautiously testing the idea out. “<i>You’ll come and visit sometimes, right?</i>” Of course. Mollified, the former sand witch slave gets to her feet and cautiously picks her way towards the lake. She won’t be much use protection-wise but she’ll give your milk production a boost.");
 
-	if (cor() >= 90)
+	if (pc.cor() >= 90)
 	{
 		output("\n\nIt darkly but deliciously occurs to you that once she’s at the farm, it would be fairly easy to re-boobify her, build her a new tank and massively increase the amount of milk your farm produces.");
 	}

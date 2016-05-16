@@ -1193,7 +1193,7 @@ private function conquer():void
 		output("\n\n<b>You’ve won, but at what cost?</b>");
 		flags["COC.GAME_END"] = GAME_END_CONQUER_LOW;
 	}
-	else if(cor() <= 66)
+	else if(pc.cor() <= 66)
 	{
 		output("Lethice truly didn’t know what she was doing. She had one of the mightiest armies Mareth had ever seen at her beck and call. Her scientists and magicians worked never-before-seen wonders at her behest. The technology on display in one of her factories alone could advance the civilizations of the realm by decades. Yet she squandered it all on pointless armies and perverse devices with little practical use.");
 		output("\n\nSure, you can see the appeal of having a few fuck-addled sluts to tend to your baser needs, but there’s no need to transform the whole world into them. Surely there’s a middle ground. You set out to find it.");

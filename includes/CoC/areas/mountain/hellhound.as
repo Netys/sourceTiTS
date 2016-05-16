@@ -437,7 +437,7 @@ public function hellHoundPropahRape():void
 		//--> increases corruption, usual post coital procedure
 		pc.orgasm();
 		//[if not corrupt]
-		if (cor() < 40) {
+		if (pc.cor() < 40) {
 			//dynStats("tou", -2, "cor", 1);
 			pc.physique( -1);
 			pc.cor(1);

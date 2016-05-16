@@ -582,7 +582,7 @@ public function brookeAnal():void {
 	if(pc.balls > 0) output("[pc.balls]");
 	else output("[pc.sheath]");
 	output(", burying yourself into her voracious ass.  With her body climbs her voice: a few pumps more and her moans become wails, loud enough that you're sure someone else must have heard.");
-	if(cor() >= 45) output("  With any luck, that someone will come to investigate – you're sure it wouldn't take much convincing to start a party.");
+	if(pc.cor() >= 45) output("  With any luck, that someone will come to investigate – you're sure it wouldn't take much convincing to start a party.");
 
 	output("\n\n<i>\"Harder!\"</i> she demands, thrusting her ass back onto you.  You're not sure how much harder you can go");
 	if(pc.cockTotal() >= 2) output(".  Any one of your dicks that's not inside her is battering painfully around her ass as she continues to hit you with it, making it harder to focus on fucking her this way");
@@ -824,7 +824,7 @@ public function getLaidByBrooke():void {
 
 		output("\n\nBrooke moans, the sound muffled by her own tongue, which vibrates against your sex.  With every deep, long lick she makes, you buck against her face, trying to fuck it like it were a cock.  Eventually, her tongue gets tired of the double-play, and she sits back down to angle her tongue more directly into your [pc.vagina].  The feel of having it back into you so suddenly, coupled with how it thrashes and pounds against every nerve you have while it thrusts and tastes, puts you very close, and you pull on her hair, perhaps a little roughly, to tell her.  She replies by working harder.");
 		output("\n\nShe opens her mouth wider and bends down before spearing forward, penetrating you deeply than she has yet.  You nearly cry out, managing to bite back your jubilation just in time – you don't want any curious onlooker investigating the sound of a womanly scream.");
-		if(cor() <= 49) output("  That would almost be embarrassing enough to turn you off.");
+		if(pc.cor() <= 49) output("  That would almost be embarrassing enough to turn you off.");
 		else output("  You want this sexy bitch all for yourself, and you'll be damned if you're sharing.  At least not until you're done.");
 		output("  Brooke, though, giggles through her mouthful of quim and thrusts again, enjoying the strained efforts you're making to not cry out.  Her hand jills hard and fast against her own neglected pussy, and from her actions, she's maybe as close as you are.");
 

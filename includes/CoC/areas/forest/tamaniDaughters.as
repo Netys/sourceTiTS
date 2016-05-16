@@ -236,8 +236,8 @@ private function fuckYoDaughtersHomie():void {
 		else output("Tamani's daughter looks up at you, giggling happily while her hips vigorously abuse you.   She asks, \"<i>Do you think my cunt is tighter than mom's is?  Bet you never thought you'd be fucking one of your daughters pregnant, did you?</i>\"\n\n");
 		
 		output("Such perverse thoughts, and coming from your own daughters.  ");
-		if (cor() < 33) output("You were supposed to save the village from corruption, not breed tiny sluts to overrun it... y");
-		else if (cor() < 66) output("You came here to make things better for everyone... well, at least you're helping these girls. Y");
+		if (pc.cor() < 33) output("You were supposed to save the village from corruption, not breed tiny sluts to overrun it... y");
+		else if (pc.cor() < 66) output("You came here to make things better for everyone... well, at least you're helping these girls. Y");
 		else output("You came here to make things better, but you know you'll keep knocking up Tamani every chance you get.  It's too much fun to resist adding to the sea of green girls. Y");
 		output("ou moan as a drooling green cunt is pressed into your " + pc.face() + ", smothering away any protests you might have offered.  Your tongue laps away, servicing another one of your many goblin offspring as best it can.  It plunges deep to harvest her nectar, making her soak you with juice, performing oral as if it were possessed.  Your eyes cross and you feel your release building, cresting in a wave as it prepares to dump into your ");
 		if (!tamaniPresent) output("daughter");
@@ -636,8 +636,8 @@ private function legTamanisDaughtersRAEPYou():void {
 			output("your [pc.cocks].  Your eyes roll back in blissful pleasure as Tamani declares, \"<i>Tamani will take care of you, husband.  You're going to cum into these girls' hungry twats until they have to waddle home, and then you're going to remember why Tamani's cunt owns your [pc.cockNoun], forever.</i>\"\n\n");
 			
 			output("Tamani pulls out a ring gag, shoves it into your protesting mouth, and pulls the straps securely around the back of your neck.  She tousles your " + pc.hairDescript() + " as you squirm, but the crowd of goblins easily keeps you subdued, assisting their mother now that they know her plans.   You ");
-			if (cor() > 66) output("sigh, actually anticipating what's about to come");
-			else if (cor() > 33) output("don't resist, knowing there's no way to stop what's about to happen");
+			if (pc.cor() > 66) output("sigh, actually anticipating what's about to come");
+			else if (pc.cor() > 33) output("don't resist, knowing there's no way to stop what's about to happen");
 			else output("shudder, struggling to pull free");
 			output(" as Tamani pulls out a half dozen vials and a handful of pills.  She drops the drug-filled capsules into your mouth, pouring in the potions, one at a time, to wash down her concoctions.\n\n");
 			

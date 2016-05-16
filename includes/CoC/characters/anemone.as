@@ -454,7 +454,7 @@ public function loseToAnemone():void
 
 		output("Hurriedly you begin to compose an explanation for your anatomy, and you get as far as telling her that you have no genitalia thanks to events since your arrival before she bursts into tears.  ");
 		//[(low cor)
-		if (cor() < 33) output("You reach out instinctively to comfort her, but ");
+		if (pc.cor() < 33) output("You reach out instinctively to comfort her, but ");
 		//(high cor)
 		else output("You smirk, amused by the turnabout, until ");
 		output("the anemone lashes out with a slap that knocks the expression off your face and makes your eardrums sing.  <i>\"Dumb!\"</i> she shouts, turning sharply; her tentacles lash past you as she about-faces.  She dives down below the surface and kicks water into your face spitefully as she swims away.  You sputter and rub your jaw a bit, then stand up and walk dizzily back to camp.");

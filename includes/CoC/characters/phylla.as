@@ -289,7 +289,7 @@ private function enterTheColony():void
 	output("\n\nIn the middle of this massive hub, sitting on a 'throne' of sorts, is the only other female ant-morph you've seen in Mareth.  You're suddenly overcome with a feeling of deja vu, as if you've been here before... as if you've <b>lived</b> here before.  The 'queen', as your mind persists in regarding her, is much larger than any of the other ants; on top of that, her abdomen is almost twice the size of her own body!  As your guide leads you to meet her she arches her back and all her muscles tense up, but your uncertainty quickly evaporates as she relaxes; a small flood of clear gel and a small cylindrical egg emerges from the orifice on the end of her abdomen.  The egg is quickly gathered up by another ant emerging from one of the many tunnels and just as quickly carried back into it. The sword-bearing soldier gestures you toward the large female, then disappears into the caves. She looks you over, scanning you up and down.");
 	output("\n\n\"<i>I am Queen Chylla.  Do you understand this?  Qu-een.  It's only recently I've learned this pathetic thing you call by the name of language.</i>\"  Her tone is that of a monarch being forced to address a peasant.  Clearly she doesn't think highly of you or your intelligence.  ");
 	//[(corruption < 40)
-	if (cor() < 40) output("\"<i>'Champion', you've been sent to this land to resist the demons and your efforts thus far, insignificant though they be, have not escaped my gaze.  ");
+	if (pc.cor() < 40) output("\"<i>'Champion', you've been sent to this land to resist the demons and your efforts thus far, insignificant though they be, have not escaped my gaze.  ");
 	else output("\"<i>Despite your obvious taint, you seem to have retained your valor as the 'Champion' you proclaim yourself to be, and not as a rutting beast.  Something to be admired, for sure.  ");
 	output("In saving my daughter, Phylla...</i>\"  She pauses and gestures, and the four-armed girl you saved from the demon horde walks slowly and shyly out of a nearby tunnel to stand next to her mother.  'Phylla' looks very embarrassed and is blushing deeply, avoiding eye contact from both of you by looking at the ground as Queen Chylla continues her dry monologue.  \"<i>... you have been chosen to become her potential...'mate'; much to my dismay.</i>\"  Wait, mate?  \"<i>My daughter has shown me how you saved her from the demons that inhabit this land.  Perhaps you were just lucky and caught them with their cocks in their hands while her back was turned?</i>\"");
 	output("\n\nThe queen pauses momentarily, staring daggers at her daughter.  Chylla's gaze then darts to you, looking for all the world as if her knowledge were firsthand and her question rhetorical.  Phylla seems to shrink even further and continues to stare at the floor, not daring to rouse her mother's ire.");
@@ -1179,7 +1179,7 @@ private function phyllaSexMenu():void
 		//(Note: The above option will only be available if Phylla is 'Laying Eggs.')
 		//While Giving Birth (Male) - Written
 		if (flags["COC.PHYLLA_EGG_LAYING"] > 0 && flags["COC.ANT_KIDS"] >= 10) addButton(1, "Fuck Her", dudesFuckEggLayingBitches);
-		if (flags["COC.ANT_KIDS"] > 10 && cor() >= 75) addButton(3, "Orgy (Male)", orgyWithDatColonyCorruptDudes);
+		if (flags["COC.ANT_KIDS"] > 10 && pc.cor() >= 75) addButton(3, "Orgy (Male)", orgyWithDatColonyCorruptDudes);
 	}
 	//Straight Sex (Lesbian/Fisting) - Written
 	if (pc.hasVagina()) {
@@ -1188,7 +1188,7 @@ private function phyllaSexMenu():void
 		if (flags["COC.PHYLLA_EGG_LAYING"] > 0 && flags["COC.ANT_KIDS"] >= 10) addButton(2, "Lesbian Sex", birfingSexWithAntsForDasLadies);
 		//Orgy w/ Colony (Female)
 		//You tell Phylla you're interested in 'inspecting' your children.
-		if (flags["COC.ANT_KIDS"] > 10 && cor() >= 75) addButton(4, "Orgy (Female)", antColonyOrgy4Ladies);
+		if (flags["COC.ANT_KIDS"] > 10 && pc.cor() >= 75) addButton(4, "Orgy (Female)", antColonyOrgy4Ladies);
 	}
 	//Drider/Bee impregnation scene for Phylla (universal unless otherwise specified, which will include varied intros and stuff.
 	//Sex > [Egg Phylla]
@@ -1234,7 +1234,7 @@ private function talkAboutAntHistory():void
 	output("\n\nTears begin trickling down her cheeks.  Then to your surprise, a smile lights up her face. She turns to you and wipes her tears and nose with her other three hands.  \"<i>That was... until I met you. From the day we met, I knew you were special.  Together, we will write a new chapter for my people. One that has...</i>\"");
 	//(Leads to - Corruption Checks)
 	//[If corruption less than 40]
-	if (cor() < 70) {
+	if (pc.cor() < 70) {
 		output("\n\nBefore she finishes her sentence, you pull her to you and kiss her deeply.");
 		output("\n\nYour mind is suddenly bombarded with images of when you first met Phylla.  You watch yourself burst from your hiding spot and heroically defeat the Oasis Demons.  Only this time from her perspective.  The suffocating fear of being pinned down and gang raped replaced with a glimmer of hope that the individual before her would save her from the tainted creatures.  Next, you see yourself in the trials, fighting off each and every horror they sent at you; the same feeling of hope she felt earlier filling her body as you ducked and weaved past minotaurs and the like.  The feeling of this strange yet courageous individual dueling those monsters being the one that would rise to the challenge of being her mate.  You feel an overwhelming sense of love and compassion as Phylla breaks the kiss.");
 
@@ -1242,7 +1242,7 @@ private function talkAboutAntHistory():void
 		output("\n\nYou try to stand and almost fall over; you thought that this mind-link would get easier over time - you were clearly wrong. Phylla catches you in her arms and helps you to the exit of the colony.  Staggering back to camp like a drunkard you feel the weight on your mind ease with each step and by the time you've arrived you feel right as rain.");
 	}
 	//[If corruption more than 70]
-	else if (cor() < 80) {
+	else if (pc.cor() < 80) {
 		output("\n\nYou interrupt her loving speech by standing up, leaving her momentarily confused.  You then comment on how you were never really interested in her people's history to begin with. All you really wanted was to get away from the surface for a while.  \"<i>W-what?</i>\" she says meekly.  With a small yawn you start to stretch in front of her, sighing to yourself as now you have to explain.");
 
 		output("\n\nYou tell her you have better things to do than sit here and listen to her half-babble, half-cry on about her mother and the demons.  You're a champion after all; if you wanted to hear people babble on and on about history you would have been a scholar.  Any interest in the subject is long gone at this point.");
@@ -2728,7 +2728,7 @@ private function phyllaDigsForGems():void
 		else {
 			output("You ask Phylla if she or her children have found any gems while digging.  She nods happily and closes her eyes, tilting her head back slightly.  After a moment one your children scampers in. He runs overs to a small stone chest in the corner of Phylla's room and after a moment of rifling through it he finds what he's looking for.  Walking over to you, he presents his findings.  You accept the gems he's retrieved.");
 			//if corruption under 50
-			if (cor() < 50) output("\n\nYou pat him on the head for a job well done as he walks deeper into the colony leaving you alone with Phylla.");
+			if (pc.cor() < 50) output("\n\nYou pat him on the head for a job well done as he walks deeper into the colony leaving you alone with Phylla.");
 			//If corruption over 50
 			else output("\n\nYou count the gems, and give both him and Phylla a look of disappointment.  Sighing heavily, you point decisively at the exit and your child hangs his head in shame as he heads back into the tunnels.  Phylla looks just as depressed and just stares at the ground, unable to really move due to her 'pregnancy.'");
 			output("\n\n\"<i>Is there anything else you wanted to do while you're down here?</i>\"");

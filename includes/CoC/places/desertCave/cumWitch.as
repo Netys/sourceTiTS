@@ -655,7 +655,7 @@ public function menFuckUpSomeCumWitch():void {
 		output(".</i>\"");
 		
 		output("\n\nThe spellcaster's lube-oozing entrance seems to get wetter at your authoritative denial, so you keep at it, fucking her slowly and idly batting away any attempt from the woman to touch herself.  It isn't until she gives up and gently grabs your shoulders that you give her a smile ");
-		if(cor() < 50) output("and a hint of compassion");
+		if(pc.cor() < 50) output("and a hint of compassion");
 		else output("and finally deign to let her have some pleasure");
 		output(".  You gradually increase the tempo of your lovemaking and let your hand lazily drift lower, grabbing the witch by her soft, supple thigh.  Her skin is warm and flushed (or as flushed as ebony skin can get), and the higher your fingers reach, the damper it gets.  Gently, you prod around her lips and your own maleness to find the hardness of clit.");
 		

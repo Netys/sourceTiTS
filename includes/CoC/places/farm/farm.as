@@ -305,7 +305,7 @@ private function talkWhitney():void {
 			else output("the front of your [pc.upperGarmentOuter].\n\n");
 			
 			if (pc.cor() > 66 || pc.exhibitionism() > 66) output("You flush hotly and arch your back, openly displaying your milk to the dog-girl");
-			else if(cor() >= 33  || pc.exhibitionism() >= 33) output("You flush with a touch of exhibitionism");
+			else if(pc.cor() >= 33  || pc.exhibitionism() >= 33) output("You flush with a touch of exhibitionism");
 			else output("You blush with shame");
 			
 			output(" as her words sink in.   Runners of milk leak down your " + pc.allBreastsDescript() + ", released by the stress of being so exposed.   In no time flat you're soaked in milk.\n\n");
@@ -1274,7 +1274,7 @@ private function milkerBadEnd1():void {
 	
 	output("For several hours this continues, " + pc.cocksDescript() + " swelling to nearly twice its previous size and your orgasms coming one after another without a break as you pump your hips, knowing or caring about nothing except getting off on your machine lover and being fed in turn.  Your load each time is increased rather than decreased, with the cups growing multiple fleshy overflow valves and working overtime to vent the excess pressure every time you ejaculate.  ", false);
 	//[(corruption > 90, high demonscore)
-	if(cor() > 90) {
+	if(pc.cor() > 90) {
 		output("After literally hundreds of orgasms, the machine once again begins carefully regulating its suction, denying your release.  Repeatedly it teases your " + pc.cocksDescriptLight(), false);
 		//[(vag)
 		if(pc.hasVagina()) output(" and " + pc.vaginaDescript(0), false);
@@ -1288,7 +1288,7 @@ private function milkerBadEnd1():void {
 
 	output("\"<i>What the FUCK!</i>\" the rancher says, her eyes bugging out at the spectacle of you tied to the machine with demonic tubing and the sheer volume of semen you've left in thick ropes all over her barn.", false);
 	//[(corruption < 90)  
-	if(cor() < 90) {
+	if(pc.cor() < 90) {
 		output("  You barely take notice of her as another explosive orgasm goes off, your enormously swollen penis", false);
 		if(pc.cockTotal() > 1) output("es", false);
 		output(" pushing massive loads of semen down the tubes and out of the release valves in a firework pattern. Whitney shrinks back as some of the spooge squirts across the barn and comes to a stop less than a foot from her. The canine woman screams volubly enough to wake the entire farm. \"<i>Dammit, " + pc.short + "; just... DAMMIT!</i>\" You spare her not even a thought as you anticipate your next injection of the tainted chemicals and work up another batch of jizz.", false);

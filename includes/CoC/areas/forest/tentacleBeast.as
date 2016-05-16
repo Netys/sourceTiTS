@@ -670,7 +670,7 @@ private function tentacleRapeContinuationForFemales():void {
 	else output("too intoxicated with lust to continue the pleasure. ");
 	//If has big-clit grow to max of 6"
 	if (pc.clitLength < 7 && pc.clitLength >= 3.5 && pc.hasPerk("Big Clit")) {
-		pc.clitLength += .1 + cor() / 100;
+		pc.clitLength += .1 + pc.cor() / 100;
 		output("Your massive clitty eventually diminishes, retaining a fair portion of its former glory.  It is now " + int(pc.clitLength * 10) / 10 + " inches long when aroused, ");
 		if (pc.clitLength < 5)
 			output("like a tiny cock.");
