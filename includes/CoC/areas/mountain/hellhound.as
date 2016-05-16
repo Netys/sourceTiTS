@@ -8,15 +8,14 @@ import classes.Engine.Utility.*;
 
 public function CoCHellhoundEncounter():void {
 	//spriteSelect(27);
-	//if (pc.findStatusAffect(StatusAffects.WormsOn) >= 0 && rand(2) == 0) {
-		////If lowered encounter rate, 25% chance, otherwise 50%.
-		//if (pc.findStatusAffect(StatusAffects.WormsHalf) >= 0 && rand(2) == 0) {
-			//hellHoundScene.hellhoundEncounter();
-			//return;
-		//}
-		//infestedHellhoundScene.infestedHellhoundEncounter();
-		//return;
-	//}
+	
+	// If lowered encounter rate, 25% chance, otherwise 50%.
+	// condition for WORMS_ENABLED can be undefined and it is not the same as 0
+	if (flags["COC.WORMS_ENABLED"] == 0 && rand(2) == 0 || flags["COC.WORMS_ENABLED"] == 1 && rand(4) == 0) {
+		infestedHellhoundEncounter();
+		return;
+	}
+	
 	hellhoundEncounter();
 }
 
@@ -486,7 +485,6 @@ public function CoCHellHoundDefeated():void
 		}
 	} else {
 		output("Unable to bear hurting you anymore, the hellhound's flames dim as he stops his attack. The two heads look at you, whining plaintively.  The hellhound slowly pads over to you and nudges its noses at your crotch.  It seems he wishes to pleasure you.\n\n");
-		var temp2:Function =null;
 		if (pc.hasGenitals() && pc.lust() >= 33) {
 			output("You realize your desires aren't quite sated.  You could let it please you");
 			

@@ -72,6 +72,7 @@ include "areas/lake/lake.as";
 include "areas/lake/swordInStone.as";
 include "areas/mountain/ceraph.as";
 include "areas/mountain/hellhound.as";
+include "areas/mountain/hellhoundInfested.as";
 include "areas/mountain/minotaur.as";
 include "areas/mountain/mountain.as";
 include "areas/mountain/salon.as";

@@ -39,7 +39,7 @@ package classes.Characters.CoC
 			
 			this.level = 5;
 			this.XPRaw = normalXP();
-			this.credits = rand(50) + 50;
+			this.credits = (10 + rand(10)) * 10;
 			
 			this.physiqueRaw = 55 / 20 * this.level;
 			this.reflexesRaw = 40 / 20 * this.level;
@@ -164,8 +164,6 @@ package classes.Characters.CoC
 
 			this.createStatusEffect("Disarm Immune");
 			
-			credits = (10 + rand(10)) * 10;
-			
 			sexualPreferences.setRandomPrefs(5+rand(3));
 			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.REALLY_LIKES_SEXPREF);
 			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.REALLY_LIKES_SEXPREF);
@@ -184,6 +182,7 @@ package classes.Characters.CoC
 			if (target == null) return;
 			
 			if (rand(3) == 0) hellhoundFire(target);
+			else if(!hasStatusEffect("Flee Disabled") && rand(3) == 0 && !target.hasWings()) hellhoundScent(target)
 			else CombatAttacks.MeleeAttack(this, target);
 		}
 
@@ -202,24 +201,10 @@ package classes.Characters.CoC
 				applyDamage(new TypeCollection( { psionic : 20 + (target.libido() / 10), burning : 15 + rand(10) } ), this, target, "minimal");
 			}
 		}
-
-		//protected function hellhoundScent():void {
-			//if(player.findStatusAffect(StatusAffects.NoFlee) >= 0) {
-				//if(spe == 100) {
-					//hellhoundFire();
-					//return;
-				//}
-				//else {
-					//outputText("The hellhound sniffs your scent again, seemingly gaining more and more energy as he circles faster around you.", false);
-					//spe = 100;	
-				//}
-			//}
-			//else {
-				//spe += 40;
-				//outputText("The hellhound keeps his four eyes on you as he sniffs the ground where you were moments ago. He raises his heads back up and gives you a fiery grin - he seems to have acquired your scent!  It'll be hard to get away now...", false);
-				//
-			//}
-			//processCombat();
-		//}
+		
+		public function hellhoundScent(target:Creature):void {
+			output("The hellhound keeps his four eyes on you as he sniffs the ground where you were moments ago. He raises his heads back up and gives you a fiery grin - he seems to have acquired your scent! It'll be hard to get away now...");
+			createStatusEffect("Flee Disabled", 0, 0, 0, 0, false, "Icon_RadioSignal", "He seems to have acquired your scent! It'll be hard to get away now...", true, 0, 0x0000FF);
+		}
 	}
 }
