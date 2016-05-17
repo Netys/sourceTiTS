@@ -163,12 +163,13 @@ public function EventsAdopterHellNotify():void {
 		pc.removeStatusEffect("Rut");
 	}
 	
-	if (pc.hasPerk("Regeneration")) {
-		pc.HP(pc.maxHP() * .01 / 60);
+	var hpTick:int = Math.max(1 / (pc.maxHP() * .01 / 30), 1); // actually, it is not considering a case when you should regen more than 1 per second, but it would require more than 3000 hp...
+	if (timeAsStamp % hpTick == 0 && pc.hasPerk("Regeneration")) {
+		pc.HP(1); // unlike energy, HP is an integer value, so we can't add a bit every tick
 	}
 	
-	if (pc.hasPerk("Regeneration 2")) {
-		pc.HP(pc.maxHP() * .01 / 60);
+	if (timeAsStamp % hpTick == 0 && pc.hasPerk("Regeneration 2")) {
+		pc.HP(1);
 	}
 	
 	if (pc.hasPerk("Speedy Recovery")) {

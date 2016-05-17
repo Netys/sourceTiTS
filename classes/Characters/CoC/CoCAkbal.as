@@ -173,7 +173,9 @@ package classes.Characters.CoC
 			this.ass.wetnessRaw = 2;
 			this.ass.loosenessRaw = 1;
 			//this.inventory.push();
-
+			
+			this.impregnationType = "CoCImpPregnancy";
+			
 			this.createStatusEffect("Disarm Immune");
 			
 			sexualPreferences.setPref(GLOBAL.SEXPREF_FEMININE,		GLOBAL.KINDA_LIKES_SEXPREF);

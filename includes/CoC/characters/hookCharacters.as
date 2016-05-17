@@ -1,5 +1,6 @@
 	import classes.Characters.CoC.*
 	
+	// see also: NPCTemplates.as
 	//prepChar(justUpdate, "COC.IMP", CoCImp);
 	//prepChar(justUpdate, "COC.GOBLIN", CoCGoblin);
 	//prepChar(justUpdate, "COC.TAMANI", CoCTamani);

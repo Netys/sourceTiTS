@@ -202,6 +202,7 @@ private function swimInStream():void {
 
 public function campEvent():Boolean
 {
+	if (impNightEvent()) return true;
 	if (flags["COC.EDRYN_PREGNANCY_TAOTH"] < timeAsStamp)
 	{
 		urtaAndEdrynGodChildEpilogue();
@@ -360,4 +361,15 @@ public function campStorageMenuRoot():void
 	else addDisabledButton(3, "Valuables");
 	
 	addButton(14, "Back", mainGameMenu);
+}
+
+public function hasNightGuard():String
+{
+	if (flags["COC.DEFENSE_CANOPY"] == 1) return "Canopy";
+	if (flags["COC.HOLLI_DEFENSE_ON"] == 1) return "Holli";
+	if (flags["COC.JOJO_NIGHT_WATCH"] == 1 && flags["COC.JOJO_IN_CAMP"] == 1) return "Jojo";
+	if (flags["COC.ANEMONE_WATCH"] == 1 && flags["COC.ANEMONE_KID"] > 0) return "Kid A";
+	if (flags["COC.HEL_GUARDING"] == 1 && followerHel()) return "Hel";
+	if (flags["COC.KIHA_CAMP_WATCH"] == 1 && followerKiha()) return "Kiha";
+	return "";
 }

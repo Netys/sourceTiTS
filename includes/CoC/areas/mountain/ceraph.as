@@ -153,7 +153,7 @@ public function CoCCeraphPCVictory():void
 			addButton(0, "Fuck Her", maleFuckCeraphsPussy);
 			if (pc.cockThatFits(ceraph.analCapacity()) != -1) addButton(2, "Fuck Her Ass", buttRapeCeraph);
 		}
-		addButton(1, "Ride Her", rideCeraphsCockLikeaBAWSSexclamation11eleven);
+		if(pc.hasVagina()) addButton(1, "Ride Her", rideCeraphsCockLikeaBAWSSexclamation11eleven);
 	}
 }
 

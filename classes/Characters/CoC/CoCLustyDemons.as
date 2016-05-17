@@ -176,6 +176,8 @@ package classes.Characters.CoC
 			this.ass.loosenessRaw = 3;
 			this.ass.bonusCapacity += 10;
 			
+			this.impregnationType = "CoCImpPregnancy";
+			
 			this.createStatusEffect("Disarm Immune");
 			this.createStatusEffect("Force It Gender");
 			this.createPerk("Multiple Attacks", 5, 0, 0, 0, "");

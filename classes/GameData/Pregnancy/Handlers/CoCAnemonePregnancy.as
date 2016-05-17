@@ -23,7 +23,7 @@ package classes.GameData.Pregnancy.Handlers
 			_allowMultiplePregnancies = false;
 			_canImpregnateButt = false;
 			_canImpregnateVagina = true;
-			_canFertilizeEggs = true;
+			_canFertilizeEggs = false;
 			_pregnancyQuantityMinimum = 1;
 			_pregnancyQuantityMaximum = 1;
 			_definedAverageLoadSize = 100;

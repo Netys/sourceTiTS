@@ -114,6 +114,7 @@ include "characters/hel.as";
 include "characters/helFollower.as";
 include "characters/helspawn.as";
 include "characters/holli.as";
+include "characters/impGang.as";
 include "characters/isabella.as";
 include "characters/isabellaFollower.as";
 include "characters/izma.as";

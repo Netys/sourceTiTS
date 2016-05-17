@@ -1573,7 +1573,7 @@ package classes.Engine.Utility
 		 * @param	display
 		 * @param	growthType determines how to choose target.
 		 * 	1 = equalize rows, if all equal grow top one, skips row is limit is hit. Amount is distributed between rows. Param rowsGrown ignored. Recommended to use breastRows.length as multiplier for amount.
-		 *  2 = grow from top and downward by amount, if rowsGrown > than total rows loop. Amount is fully applied to every row, unless limit is hit.
+		 *  2 = grow from top and downward each row by full amount, if rowsGrown > than total rows loop. Amount is fully applied to every row, unless limit is hit.
 		 *  3 = only top row is affected.
 		 *  4 = align rows in stairs pattern, or grow top one. Amount is distributed between rows. growthLimit is for top row, lower rows are each 1 size smaller
 		 * @param	growthLimit is how large can it be.

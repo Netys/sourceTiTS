@@ -163,6 +163,8 @@ package classes.Characters.CoC
 			this.ass.wetnessRaw = 0;
 			this.ass.loosenessRaw = 3;
 			this.ass.bonusCapacity += 500;
+			
+			this.impregnationType = "CoCImpPregnancy";
 
 			this.createStatusEffect("Disarm Immune");
 			

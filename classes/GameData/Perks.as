@@ -1028,7 +1028,9 @@ package classes.GameData
 			
 			if (filterPerks.length == 1) return filterPerks[0];
 
-			throw new Error("Found multiple perks for the provided search key! (" + perkName + ")");
+			//throw new Error("Found multiple perks for the provided search key! (" + perkName + ")");
+			kGAMECLASS.output2("\n<b>Warning: Found multiple perks for the provided search key! (" + perkName + ")</b>\n");
+			return _perkList.filter(ff)[0];
 		}
 		
 		public function getDescriptionForPerk(perkName:String):String

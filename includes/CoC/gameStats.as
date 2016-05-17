@@ -282,13 +282,13 @@ public function displayEncounterLogCoCVarious():int
 			else output2("Given");
 		}
 		
-		if (StatTracking.getStat("coc/pregnancy/cotton") + StatTracking.track("coc/pregnancy/pc cotton") > 0)
+		if (StatTracking.getStat("coc/pregnancy/cotton") + StatTracking.getStat("coc/pregnancy/pc cotton") > 0)
 		{
 			output2("\n<b>* Children: </b>");
 			enum.clear();
 			if (StatTracking.getStat("coc/pregnancy/cotton") > 0)
 				enum.push(StatTracking.getStat("coc/pregnancy/cotton") + " sired");
-			if (StatTracking.getStat("coc/pregnancy/izma tigersharks") > 0)
+			if (StatTracking.getStat("coc/pregnancy/pc cotton") > 0)
 				enum.push(StatTracking.getStat("coc/pregnancy/pc cotton") + " born");
 			output2(enum.toString() + ".");
 		}
@@ -299,7 +299,7 @@ public function displayEncounterLogCoCVarious():int
 		if (flags["COC.IZMA_TIMES_FOUGHT_AND_WON"] != undefined && flags["COC.IZMA_TIMES_FOUGHT_AND_WON"] != 0)
 			output2("\n<b>* Combat Victories Streak: </b>" + flags["COC.IZMA_TIMES_FOUGHT_AND_WON"]);
 		
-		if (StatTracking.getStat("coc/pregnancy/izma sharkgirls") + StatTracking.track("coc/pregnancy/pc sharkgirls") + StatTracking.getStat("coc/pregnancy/izma tigersharks") + StatTracking.track("coc/pregnancy/pc tigersharks") > 0)
+		if (StatTracking.getStat("coc/pregnancy/izma sharkgirls") + StatTracking.getStat("coc/pregnancy/pc sharkgirls") + StatTracking.getStat("coc/pregnancy/izma tigersharks") + StatTracking.getStat("coc/pregnancy/pc tigersharks") > 0)
 		{
 			output2("\n<b>* Daughters: </b>");
 			enum.clear();

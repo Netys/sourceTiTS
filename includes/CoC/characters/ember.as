@@ -801,7 +801,7 @@ private function giveEmberBludSausages():void
 		output(", but nothing does.  How disappointing.");
 		flags["COC.EMBER_INTERNAL_DICK"] = 0;
 	}
-	applyDamage(new TypeCollection( { truehp : 1 }, DamageFlag.BYPASS_SHIELD ), pc, pc);
+	applyDamage(new TypeCollection( { truedamage : 1 }, DamageFlag.BYPASS_SHIELD ), pc, pc);
 	flags["COC.EMBER_ROUNDFACE"] = 1;
 	//(Token HP Loss, can't drop below 1 HP.)
 	IncrementFlag("COC.EMBER_EGG_FLUID_COUNT");

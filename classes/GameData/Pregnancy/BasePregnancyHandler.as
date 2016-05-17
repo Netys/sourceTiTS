@@ -360,6 +360,11 @@ package classes.GameData.Pregnancy
 			// Setup the pregnancy data for the Mother
 			var pData:PregnancyData = mother.pregnancyData[pregSlot];
 			
+			trace("pregSlot: " + pregSlot);
+			trace("thisPtr: " + thisPtr);
+			trace("pData: " + pData);
+			trace("handlesType: " + thisPtr.handlesType);
+			
 			pData.pregnancyType = thisPtr.handlesType;
 			if (thisPtr.debugTrace) trace("Knocking up " + mother.short + " with pregnancy type " + pData.pregnancyType);
 			

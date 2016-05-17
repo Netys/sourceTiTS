@@ -1117,6 +1117,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			pc.unspentStatPoints = 999; // I saw all sorts of shit in my former lives
 			pc.lowerUndergarment = new EmptySlot();
 			pc.upperUndergarment = new EmptySlot();
+			pc.maxOutHP();
 			bonusTexts = "You are the only one who is aware of boundless potential hidden inside of your " + (pc.isTaur() ? "massive" : "small") + " and weird body... For now.";
 			break;
 		default:

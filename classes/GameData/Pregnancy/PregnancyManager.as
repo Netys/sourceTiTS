@@ -2,21 +2,7 @@
 {
 	import classes.Characters.PlayerCharacter;
 	import classes.Creature;
-	import classes.GameData.Pregnancy.Handlers.PsychicTentacles;
-	import classes.GameData.Pregnancy.Handlers.EggTrainerCarryTraining;
-	import classes.GameData.Pregnancy.Handlers.EggTrainerFauxPreg;
-	import classes.GameData.Pregnancy.Handlers.CockvinePregnancy;
-	import classes.GameData.Pregnancy.Handlers.CoCAnemonePregnancy;
-	import classes.GameData.Pregnancy.Handlers.CoCOviElixEggs;
-	import classes.GameData.Pregnancy.Handlers.NyreaHuntressPregnancy;
-	import classes.GameData.Pregnancy.Handlers.OviliumEggPregnancy;
-	import classes.GameData.Pregnancy.Handlers.RenvraEggPregnancy;
-	import classes.GameData.Pregnancy.Handlers.RenvraFullPregnancy;
-	import classes.GameData.Pregnancy.Handlers.RoyalEggPregnancy;
-	import classes.GameData.Pregnancy.Handlers.SydianPregnancyHandler;
-	import classes.GameData.Pregnancy.Handlers.VenusPitcherFertilizedSeedCarrierHandler;
-	import classes.GameData.Pregnancy.Handlers.VenusPitcherSeedCarrierPregnancyHandler;
-	import classes.GameData.Pregnancy.Handlers.QueenOfTheDeepPregnancy;
+	import classes.GameData.Pregnancy.Handlers.*;
 	/**
 	 * ...
 	 * @author Gedan
@@ -27,7 +13,9 @@
 			_pregHandlers = new Array();
 			
 			PregnancyManager.insertNewHandler(new CoCAnemonePregnancy());
+			PregnancyManager.insertNewHandler(new CoCImpPregnancy());
 			PregnancyManager.insertNewHandler(new CoCOviElixEggs());
+			
 			PregnancyManager.insertNewHandler(new VenusPitcherFertilizedSeedCarrierHandler());
 			PregnancyManager.insertNewHandler(new VenusPitcherSeedCarrierPregnancyHandler());
 			PregnancyManager.insertNewHandler(new RenvraEggPregnancy());

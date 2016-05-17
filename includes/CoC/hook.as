@@ -24,21 +24,22 @@ public function enterCocVrPod():void {
 	author("Etis");
 	showName("\nVR POD");
 	clearOutput();
-	output("You can swear you feel VR pod is <i>calling</i> you. Promising something. Something... Different.\n\n");
+	output("You can swear you feel VR pod is <i>calling</i> you. Promising something. Something... Different.");
 	
 	if (flags["COC_VR_INTRO_SEEN"] == undefined) {
 		flags["COC_VR_INTRO_SEEN"] = 1;
-		output("Pod is filled with strange viscous liquid, which smells like... Blood? According to manual, you can actually breath in it.  ");
-		output("Instruction said you have to strip naked and put your gear inside specail section of the pod. Wait... That section is full of liquid too. You open instruction again.\n\n");
-		output("<i>“Yes, you actually should do it. Liquid is there for purpose. It is safe for any equipment.”</i>\n\n");
-		output("Looks like your confusion were expected. Here goes nothing... You lay inside and watch capsule lid closing.\n\n");
+		output("\n\nPod is filled with strange viscous liquid, which smells like... Blood? According to manual, you can actually breath in it. ");
+		if(pc.hasKeyItem("Key of the Twillight")) {
+			output("Instruction said you have to strip naked and put your gear inside specail section of the pod. Wait... That section is full of liquid too. You open instruction again.\n\n");
+			output("<i>“Yes, you actually should do it. Liquid is there for purpose. It is safe for any equipment.”</i>");
+			output("Looks like your confusion were expected. ");
+		}
+		output("Here goes nothing... You lay inside and watch capsule lid closing.");
 		
-		if (pc.gills) output("At least, you don't actually have to <i>breath</i>, thanks to your gills. Inhaling liquid is far from pleasant, and perspective of coughing it out after is even less appealing.\n\n");
-		else output("First inhale of liquid is quite an experience. Not pleasant one, but not as bad as you've expected.\n\n");
+		if (pc.gills) output("\n\nAt least, you don't actually have to <i>breath</i>, thanks to your gills. Inhaling liquid is far from pleasant, and perspective of coughing it out after is even less appealing.\n\n");
+		else output("\n\nFirst inhale of liquid is quite an experience. Not pleasant one, but not as bad as you've expected.");
 		
-		output("You feel like inside sensory deprivation chamber — liquid is surprisingly good at dampening any sounds and vibrations, and you feel yourself floating in nowhere.");
-		output("Few seconds after VR system kicks in and you've found yourself in a dark cave in front of glowing purple-pink portal. Simulation ia amazingly realistic - you can feel air flows caressing your [pc.skinFurScales], stone floor texture under your [pc.legs], humming and light of portal...  ");
-		output("And, suddenly, holo-screen, totally misplaced here, appears.");
+		output("\n\nYou feel like inside sensory deprivation chamber — liquid is surprisingly good at dampening any sounds and vibrations, and you feel yourself floating in nowhere. Few seconds after VR system kicks in and you've found yourself in a dark cave in front of glowing purple-pink portal. Simulation ia amazingly realistic - you can feel air flows caressing your [pc.skinFurScales], stone floor texture under your [pc.legs], humming and light of portal... And, suddenly, holo-screen, totally misplaced here, appears.");
 		
 		output("\n\nWelcome to Corruption of Champions. Running init sequence...");
 		output("\nHardware: E.22.5 Prototype/R2, feedback system status: full/extended, auto-ajust mode.");
@@ -64,7 +65,7 @@ public function enterCocVrPod():void {
 			output("\nFeedback power is high. Warning: this can include permanent mental damage.");
 		if(pc.hasKeyItem("Key of the Twillight"))
 			output("\nUser's personal memory is suppressed during simulation.");
-		output("\n\nWould you kindly enter the portal to launch main sequence?\n\n");
+		output("\n\nWould you kindly enter the portal to launch main sequence?");
 		processTime(20);
 	}
 	else if (flags["COC.PLOT_END"] == 1 && flags["COC_VR_INTRO_SEEN"] == 1) {
@@ -80,11 +81,11 @@ public function enterCocVrPod():void {
 		output("\nWarning: previous session was aborted.");
 		output("\nProcessing recovery protocol... Done. Warning: partial data loss registered. Rollback to stable state executed. Potentially corrupt module blocked.");
 		output("\nProcessing world changes... Done.");
-		output("\n\nWould you kindly enter the portal to launch main sequence?\n\n");
+		output("\n\nWould you kindly enter the portal to launch main sequence?");
 		processTime(10);
 		
 	} else {
-		output("You lay inside and watch capsule lid closing. Few seconds, and familiar portal is ahead...\n\n");
+		output("You lay inside and watch capsule lid closing. Few seconds, and familiar portal is ahead...");
 		processTime(5);
 	}
 	

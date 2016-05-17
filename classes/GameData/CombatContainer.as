@@ -3816,9 +3816,9 @@ package classes.GameData
 				}
 				else
 				{
-					if (_friendlies[i].hasPerk("Regeneration")) _friendlies[i].HP(_friendlies[i].maxHP() * 0.01);
-					if (_friendlies[i].hasPerk("Regeneration 2")) _friendlies[i].HP(_friendlies[i].maxHP() * 0.01);
-					if (_friendlies[i].hasSock("viridian")) _friendlies[i].HP(_friendlies[i].maxHP() * 0.01);
+					if (_friendlies[i].hasPerk("Regeneration")) _friendlies[i].HP(Math.ceil(_friendlies[i].maxHP() * 0.01));
+					if (_friendlies[i].hasPerk("Regeneration 2")) _friendlies[i].HP(Math.ceil(_friendlies[i].maxHP() * 0.01));
+					if (_friendlies[i].hasSock("viridian")) _friendlies[i].HP(Math.ceil(_friendlies[i].maxHP() * 0.01));
 				}
 			}
 			

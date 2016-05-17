@@ -11284,6 +11284,9 @@
 				}
 				desc += RandomInCollection(["vagina", "pussy", "pussy","pussy","pussy", "cunt", "cunt", "slit", "slit","twat", "gash", "cunny", "honeypot", "snatch"]);
 			}
+			
+			if (characterClass == GLOBAL.CLASS_ADVENTURER) desc.replace("terran", "human");
+			
 			return desc;
 		}
 		
@@ -11981,6 +11984,8 @@
 			if(special == "tail" && rand(2) == 0) descript += "tail-" + RandomInCollection(["cock","cock","dick","prick","phallus"]);
 			else if(special == "dick" && rand(2) == 0) descript += RandomInCollection(["dick","cock","prick"] + "-nipple");
 			else descript += RandomInCollection(nouns);
+			
+			if (characterClass == GLOBAL.CLASS_ADVENTURER) descript.replace("terran", "human");
 			
 			return descript;
 		}
@@ -13898,7 +13903,7 @@
 			// Vagina/butt slot checking
 			if (pregSlot < -2 || (pregSlot >= 0 && pregSlot <= 2 && !hasVagina(pregSlot)) || pregSlot > 4)
 			{
-				throw new Error("Unexpected pregnancy slot used to call tryKnockUp.");
+				throw new Error("Unexpected pregnancy slot " + pregSlot + " used to call tryKnockUp.");
 				return false;
 			}
 			

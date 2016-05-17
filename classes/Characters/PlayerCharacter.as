@@ -36,8 +36,10 @@ package classes.Characters
 			return false;
 		}
 		
-		override public function loadInCunt(cumFrom:Creature = null, vagIndex:int = -1):Boolean
+		override public function loadInCunt(cumFrom:Creature = null, vagIndex:int = 0):Boolean
 		{
+			if (!hasVagina()) return loadInAss(cumFrom); // no vag? likely vagOrAss scene, use asss
+			
 			kGAMECLASS.mimbraneFeed("vagina");
 			//Goo TFed? GATHER BIOMASS
 			if(hairType == GLOBAL.HAIR_TYPE_GOO)
@@ -52,10 +54,7 @@ package classes.Characters
 					kGAMECLASS.oviliumEggBump(cumFrom, vagIndex);
 				}
 				if (cumflationEnabled()) {
-					var holeToInflate:int = vagIndex;
-					if (!hasVagina()) holeToInflate = 3; // no vag? likely vagOrAss scene, use asss
-					else if (holeToInflate == -1) holeToInflate = 0; // vag index not specified, use first one
-					cumflationHappens(cumFrom, holeToInflate);
+					cumflationHappens(cumFrom, vagIndex);
 				}
 				return this.tryKnockUp(cumFrom, vagIndex);
 			}

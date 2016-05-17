@@ -163,6 +163,8 @@ package classes.Characters.CoC
 			this.ass.loosenessRaw = 1;
 			this.ass.bonusCapacity = 70;
 			
+			this.impregnationType = "CoCImpPregnancy";
+			
 			this.createStatusEffect("Disarm Immune");
 			this.createStatusEffect("Flee Disabled", 0, 0, 0, 0, true, "", "", false, 0);
 			

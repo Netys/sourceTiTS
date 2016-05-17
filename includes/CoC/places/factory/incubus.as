@@ -101,7 +101,10 @@ public function DemonFactoryDoLossIncubus():void {
 		
 		output("The demon tenses, pulling your head forwards and burying your nose against his belly.  The dick in your mouth slides down your throat, hanging just above your belly as it begins to fill your gut with bursts of demonic warmth.  Black cum erupts from your nipples as his orgasm overwhelms their meager storage capacity, soaking your tits in his corruptive essence as the pleasure finally breaks your mind.  Your eyes roll back into your head as you begin cumming... and cumming... and cumming. The orgasm drags on and on as more and more cum pours into your body.  Like a passenger in a car you see what's happening but have no control.  Your body is used and abused for hours before you finally drift off to sleep.\n\n");
 		
-		//pc.refillHunger(100);
+		pc.loadInMouth(enemy);
+		pc.loadInNipples(enemy);
+		applyCumSoaked(pc);
+		
 		pc.orgasm();
 		pc.cor(20);
 		
@@ -159,7 +162,12 @@ public function DemonFactoryDoLossIncubus():void {
 			//dynStats("cor", 25);
 			pc.cor(25);
 			pc.buttChange(enemy.cockVolume(0), true);
-
+			
+			pc.loadInMouth(enemy);
+			pc.loadInAss(enemy);
+			pc.loadInCunt(enemy);
+			applyCumSoaked(pc);
+			
 			processTime(15);
 			if(flags["COC.FACTORY_SHUTDOWN"] <= 0) addButton(0, "Next", DemonFactoryBadEndGeneric);
 			else {
@@ -192,6 +200,11 @@ public function DemonFactoryDoLossIncubus():void {
 			output("You black out just as you feel the cock-tentacle in your throat retracting. You dully feel your body drop to the ground, your pregnant-looking belly sloshing with demon jizz.\n\n");
 			//pc.refillHunger(100);
 			pc.buttChange(enemy.cockVolume(0), true);
+			
+			pc.loadInMouth(enemy);
+			pc.loadInAss(enemy);
+			applyCumSoaked(pc);
+			
 			pc.orgasm();
 			pc.cor(25);
 
@@ -206,21 +219,19 @@ public function DemonFactoryDoLossIncubus():void {
 public function DemonFactoryDoRideIncubusAnally():void {
 	clearOutput();
 	clearMenu();
-	output("Every day you've spent in this corrupted landscape has made you stronger and hornier, the evidence of which now kneels at your feet.\n\n");
+	output("Every day you've spent in this corrupted landscape has made you stronger and hornier, the evidence of which now kneels at your [pc.feet].");
 	
-	output("The fight over, your eyes begin to wander. You find you cannot resist staring at the huge swinging cock exposed by the incubus' crotchless overalls. The sight ignites desire that has been building within you ever since you arrived in this corrupted land. With an unnatural hunger, you knock the defeated incubus onto his back. He closes his eyes and groans, lost in his own world of lust and pain and unable to resist as you wantonly straddle him. His tool is hot in your hand as you tease it and his cock begins to grow slick with pre-cum. You lick your lips at the sight of his now glistening member, but not for hunger of food or drink. It is another kind of hunger that longs for satisfaction, a hole that needs to be filled. Eagerly, you position his swollen glans against your [pc.asshole] and begin to ease yourself down over the massive tool. You start slowly, but the pleasure it's giving feels so good you ram the rest of the incubus' cock deep into your [pc.asshole].  ");
-	
-	output("His eyes flash open as if you'd just sent a jolt of electricity through him and he regains his senses, becoming hyper-aware of what you're doing. The incubus instinctively moves to control your [pc.hips] and [pc.butt] as they grind against him, guiding his cock towards pleasurable areas up your [pc.asshole] that you would never have guessed were there a short while ago.\n\n");
-	
+	output("\n\nThe fight over, your eyes begin to wander. You find you cannot resist staring at the huge swinging cock exposed by the incubus' crotchless overalls. The sight ignites desire that has been building within you ever since you arrived in this corrupted land. With an unnatural hunger, you knock the defeated incubus onto his back. He closes his eyes and groans, lost in his own world of lust and pain and unable to resist as you wantonly straddle him. His tool is hot in your hand as you tease it and his cock begins to grow slick with pre-cum. You lick your lips at the sight of his now glistening member, but not for hunger of food or drink. It is another kind of hunger that longs for satisfaction, a hole that needs to be filled. Eagerly, you position his swollen glans against your [pc.asshole] and begin to ease yourself down over the massive tool. You start slowly, but the pleasure it's giving feels so good you ram the rest of the incubus' cock deep into your [pc.asshole].  ");
 	pc.buttChange(enemy.cockVolume(0), true);
+	output("His eyes flash open as if you'd just sent a jolt of electricity through him and he regains his senses, becoming hyper-aware of what you're doing. The incubus instinctively moves to control your [pc.hips] and [pc.butt] as they grind against him, guiding his cock towards pleasurable areas up your [pc.asshole] that you would never have guessed were there a short while ago.");
 	
-	output("All too soon, he grunts and shivers as loads of his hot cum begin to squirt into you. He may be cumming, but you're not done yet; each squirt of seed only fans the flames of lust within you, making your increasingly wet and noisy thrusts even harder. Enjoying the ride and still nowhere near satisfied, you start sliding up and down on his slick pole even faster than before. He halfheartedly tries to push you off as you continue draining him of his seed, your lust seemingly unquenchable. But you cannot be stopped; his efforts only add to your pleasure as he struggles and unloads underneath you. With your belly beginning to swell with the cum you're relentlessly drawing from the incubus, you don't know how much longer either of you will last. Each movement of his tool inside you heightens the fire inside you until, with an unholy roar, the pleasure peaks and wave after wave of shuddering orgasm crashes over you. Each one hits hotter and harder than the last until finally, your senses are overcome and you lose consciousness entirely.\n\n");
+	output("\n\nAll too soon, he grunts and shivers as loads of his hot cum begin to squirt into you. He may be cumming, but you're not done yet; each squirt of seed only fans the flames of lust within you, making your increasingly wet and noisy thrusts even harder. Enjoying the ride and still nowhere near satisfied, you start sliding up and down on his slick pole even faster than before. He halfheartedly tries to push you off as you continue draining him of his seed, your lust seemingly unquenchable. But you cannot be stopped; his efforts only add to your pleasure as he struggles and unloads underneath you. With your belly beginning to swell with the cum you're relentlessly drawing from the incubus, you don't know how much longer either of you will last. Each movement of his tool inside you heightens the fire inside you until, with an unholy roar, the pleasure peaks and wave after wave of shuddering orgasm crashes over you. Each one hits hotter and harder than the last until finally, your senses are overcome and you lose consciousness entirely.");
 	
-	output("You awaken moments later beside a sleeping, limp, and drained incubus. You have definitely come out on top from the encounter. Though you feel stretched, sticky and a little sore, for the moment at least the burning desire to fill your [pc.asshole] is satisfied.\n\n");
+	output("\n\nYou awaken moments later beside a sleeping, limp, and drained incubus. You have definitely come out on top from the encounter. Though you feel stretched, sticky and a little sore, for the moment at least the burning desire to fill your [pc.asshole] is satisfied.");
+	output("\n\n");
 	
 	pc.orgasm();
-	//pc.slimeFeed();
-	//dynStats("cor", 2);
+	pc.loadInAss(enemy);
 	pc.cor(2);
 	processTime(15);
 	CombatManager.genericVictory();
@@ -285,8 +296,8 @@ public function DemonFactoryDoRapeIncubus():void {
 		output("Unable to contain your body's desires due to either the demon's aura or his wonderful penis, you slam your [pc.vagina] onto his member with impunity, twitching and squeezing involuntarily.  His tainted pre-cum begins seeping deep inside your uterus and you cry out with orgasmic intensity.  Your entire body clenches down, even the hand clamped on the incubus' windpipe. You feel his demon-cock swell up inside you in response to his stress, stretching your cunt taut.  His skin darkens from the lack of oxygen as he begins cumming HARD inside you.  Your womb immediately fills with his demon-seed, leaving ribbons of spunk to drip from your tightly-stretched cunt.  You sigh in delight as your muscles slowly stop quivering.  With a pleasured gasp, you rise off the distended demon-prick, and realize that you've choked your foe into unconsciousness. Still, you did let him cum, so maybe he won't mind too much when he wakes.  Feeling sensual and sated, you redress and prepare to explore the rest of the factory. ");
 		
 		pc.cuntChange(0, Math.min(pc.vaginalCapacity() * .8, 200), true);
-		//dynStats("cor", 2);
 		pc.cor(2);
+		pc.loadInCunt(enemy);
 	}
 	output("\n\n");
 	pc.orgasm();
@@ -313,6 +324,7 @@ public function DemonFactoryDoOralIncubus():void {
 	
 	output("You push the exhausted demon down and idly collect the cum from your face with your fingers, slowly licking each clean.  Feeling rather sensual and sated, you decide to resume exploring the factory.\n\nAfter redressing you turn about, and see the demon is gone, leaving only a small pool of cum in his wake.\n\n");
 	
+	pc.loadInMouth(enemy);
 	pc.lust(10);
 	processTime(15);
 	CombatManager.genericVictory();
