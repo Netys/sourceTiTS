@@ -3063,6 +3063,7 @@
 		public static const DEPENDANT_MYRVENOM:uint = 1;
 		public static const DEPENDANT_CUM:uint = 2;
 		public static const DEPENDANT_ANAL:uint = 3;
+		public static const DEPENDANT_MINOTAUR_CUM:uint = 10;
 		
 		// Is the character dependant on some external drug/chemical/etc
 		public function isDependant(dependantType:uint = DEPENDANT_ANY):Boolean
@@ -3074,6 +3075,10 @@
 			if(dependantType == DEPENDANT_CUM || dependantType == DEPENDANT_ANY)
 			{
 				if(hasPerk("Cum Guzzler") || hasStatusEffect("Oral Fixation")) return true;
+			}
+			if(dependantType == DEPENDANT_MINOTAUR_CUM || dependantType == DEPENDANT_ANY)
+			{
+				if(hasPerk("Minotaur Cum Addict") || flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] >= 1) return true;
 			}
 			if(dependantType == DEPENDANT_ANAL || dependantType == DEPENDANT_ANY)
 			{
@@ -11285,7 +11290,7 @@
 				desc += RandomInCollection(["vagina", "pussy", "pussy","pussy","pussy", "cunt", "cunt", "slit", "slit","twat", "gash", "cunny", "honeypot", "snatch"]);
 			}
 			
-			if (characterClass == GLOBAL.CLASS_ADVENTURER) desc.replace("terran", "human");
+			if (characterClass == GLOBAL.CLASS_ADVENTURER) desc= desc.replace("terran", "human");  // "terran" seems alien in CoC world
 			
 			return desc;
 		}
@@ -11985,7 +11990,7 @@
 			else if(special == "dick" && rand(2) == 0) descript += RandomInCollection(["dick","cock","prick"] + "-nipple");
 			else descript += RandomInCollection(nouns);
 			
-			if (characterClass == GLOBAL.CLASS_ADVENTURER) descript.replace("terran", "human");
+			if (characterClass == GLOBAL.CLASS_ADVENTURER) descript = descript.replace("terran", "human"); // "terran" seems alien in CoC world
 			
 			return descript;
 		}

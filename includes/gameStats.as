@@ -553,7 +553,7 @@ public function statisticsScreen(showID:String = "All"):void
 						if (pc.statusEffectv2("MagicColorfulEggs") == 1) output2(" Large");
 						output2(" Eggs, Unfertilized");
 					}
-					else if (pData.pregnancyType == "CoCAnemonePregnancy") output2(" Anemone");
+					//else if (pData.pregnancyType == "CoCAnemonePregnancy") output2(" Anemone");
 					else if(pData.pregnancyType == "OviliumEggPregnancy") output2(" Ovilium, Eggs");
 					else if(pData.pregnancyType == "EggTrainerCarryTraining") output2(" Egg Trainer, Eggs");
 					else if(pData.pregnancyType == "EggTrainerFauxPreg") output2(" Egg Trainer");

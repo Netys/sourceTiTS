@@ -62,6 +62,7 @@ include "areas/highmountain/harpy.as";
 include "areas/highmountain/highmountain.as";
 include "areas/highmountain/izumi.as";
 include "areas/highmountain/minerva.as";
+include "areas/highmountain/minotaurMob.as";
 include "areas/highmountain/phoenix.as";
 include "areas/lake/callu.as";
 include "areas/lake/fetishCultist.as";

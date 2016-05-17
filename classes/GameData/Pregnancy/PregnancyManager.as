@@ -14,6 +14,7 @@
 			
 			PregnancyManager.insertNewHandler(new CoCAnemonePregnancy());
 			PregnancyManager.insertNewHandler(new CoCImpPregnancy());
+			PregnancyManager.insertNewHandler(new CoCMinotaurPregnancy());
 			PregnancyManager.insertNewHandler(new CoCOviElixEggs());
 			
 			PregnancyManager.insertNewHandler(new VenusPitcherFertilizedSeedCarrierHandler());

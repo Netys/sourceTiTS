@@ -76,8 +76,6 @@ package classes.GameData.Pregnancy.Handlers
 			BasePregnancyHandler.defaultOnSuccessfulImpregnation(father, mother, pregSlot, thisPtr);
 			
 			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
-			pData.pregnancyBellyRatingContribution += 5 * pData.pregnancyQuantity;
-			mother.bellyRatingMod += 5 * pData.pregnancyQuantity;
 		}
 		
 		public static function CoCAnemonePregnancyOnDurationEnd(mother:Creature, pregSlot:int, thisPtr:BasePregnancyHandler):void

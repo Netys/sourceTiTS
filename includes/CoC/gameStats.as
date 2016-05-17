@@ -100,6 +100,8 @@ public function displayEncounterLogCoCVarious():int
 					enum.push(StatTracking.getStat("coc/pregnancy/pc tigersharks") + " tigersharks");
 				output2(enum.toString() + ".");
 			}
+			if (StatTracking.getStat("coc/pregnancy/minotaurs") > 0)
+				output2("\n<b>* Births, Minotaurs: </b>" + StatTracking.getStat("coc/pregnancy/minotaurs"));
 			if (StatTracking.getStat("coc/pregnancy/pc urta") > 0)
 				output2("\n<b>* Births, Urta Children: </b>" + StatTracking.getStat("coc/pregnancy/pc urta"));
 			

@@ -185,6 +185,7 @@ public function CoCDeluxeDildo():void {
 		if (pc.slut() < 50)
 			output("before slowly working it inside you, gasping at the enhanced sensitivity of your [pc.vagina].");
 		else output("ramming it deep inside you, moaning as it rubs your now over-sensitive walls.");
+		pc.cuntChange(0, Math.min(500, pc.vaginalCapacity() * 0.9), true);
 		output("  You");
 		if(pc.isBiped()) output(" splay your [pc.legs] and");
 		output(" lie there with it inside you, feeling it respond to your wetness, becoming more and more turned on by the second.\n\n");
@@ -227,7 +228,6 @@ public function CoCDeluxeDildo():void {
 			//else output("splattering himself with mouse-spunk as he finishes enjoying your inadvertent show.  He runs off before you have a chance to react.");
 		//}
 		output("\n");
-		pc.cuntChange(0, Math.min(500, pc.vaginalCapacity() * 0.9), true);
 		pc.loadInCunt();
 		processTime(45);
 		pc.orgasm();

@@ -169,6 +169,8 @@ package classes.Characters.CoC
 			this.ass.loosenessRaw = 6;
 			this.ass.bonusCapacity = 20;
 			
+			this.impregnationType = "CoCMinotaurPregnancy";
+			
 			this.createStatusEffect("Disarm Immune");
 			
 			if (rand(3) == 0) meleeWeapon = new CoCMinotaurAxe();

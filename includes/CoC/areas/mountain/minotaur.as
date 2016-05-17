@@ -1089,29 +1089,29 @@ private function takeMinoCumDirectly():void {
 //}
 //
 //public function minoCumUpdate():Boolean {
-	//if(flags[kFLAGS.MINOTAUR_CUM_ADDICTION_TRACKER] == 0) return false;
+	//if(flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] == 0) return false;
 	//var output:Boolean = false;
 	////Your addicted enough for it to be official!
-	//if(flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] == 0 && flags[kFLAGS.MINOTAUR_CUM_ADDICTION_TRACKER] >= 50) {
+	//if(flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] == 0 && flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] >= 50) {
 		//output("\nYou find yourself becoming aroused at the merest thought of minotaurs and their delicious cum.  Immediately you remember how great it made you feel, and you want more.  <b>You're now addicted to minotaur cum!</b>\n", false);
-		//flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] = 1;
+		//flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] = 1;
 		//output = true;
 	//}
 	////If under 50, clear addiction and stuff
-	//if(flags[kFLAGS.MINOTAUR_CUM_ADDICTION_TRACKER] < 50) {
+	//if(flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] < 50) {
 		////Clear addiction if addicted!
-		//if(flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] > 0) {
+		//if(flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] > 0) {
 			////Clear addiction text
 			//output("\n<b>For the first time in a long while, your head is clear and devoid of the unnatural need for minotaur cum. You've overcome your dependance on it, ", false);
 			//if(cor() > 60) output("but miss the tingling apathy and fuzziness that filled your head every time one of them was squirting inside you.", false);
 			//else output("and resolve to give the beasts a wide berth from now on.", false);
 			//output("</b>\n", false);
-			//flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] = 0;
+			//flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] = 0;
 			//output = true;
 		//}
 		//if (flags[kFLAGS.MINOTAUR_CUM_RESISTANCE_TRACKER] >= 150 && pc.findPerk(PerkLib.MinotaurCumAddict) < 0 && pc.findPerk(PerkLib.MinotaurCumResistance) < 0) {
-			//flags[kFLAGS.MINOTAUR_CUM_ADDICTION_TRACKER] = 0;
-			//flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] = 0;
+			//flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] = 0;
+			//flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] = 0;
 			//pc.createPerk(PerkLib.MinotaurCumResistance, 0, 0, 0, 0);
 			//output("\n<b>You have finally learned enough about how to avoid getting addicted to Minotaur Cum again; you are now immune to the addictive properties of Minotaur Cum.</b> (You can never get addicted to Minotaur Cum.)\n", false);
 			//output = true;
@@ -1120,27 +1120,27 @@ private function takeMinoCumDirectly():void {
 	////If over 50, addicted, become addicted, withdrawl, etc
 	//else {
 		////Recover if fed during need or want.
-		//if(flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] > 1 && flags[kFLAGS.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM] < 24) {
+		//if(flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] > 1 && flags["COC.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM"] < 24) {
 			//output("<b>\nYou sigh happily before you return to camp.  You got just what you needed.</b>\n", false);
-			//flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] = 1;
+			//flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] = 1;
 			//output = true;
 		//}
 		////Go into 'need' if its time.
-		//if(flags[kFLAGS.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM] >= 24 && flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] == 1) {
-			//flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] = 2;
+		//if(flags["COC.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM"] >= 24 && flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] == 1) {
+			//flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] = 2;
 			//output = true;
 			//flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00330] = 12;
 			//output("\n<b>You shiver, feeling a little cold.  Maybe you ought to get some more minotaur cum?  You just don't feel right without that pleasant buzz in the back of your mind.</b>\n", false);
 		//}
 		////Go into 'withdrawal' if its time.
-		//if(flags[kFLAGS.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM] >= 48 && flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] == 2) {
-			//flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] = 3;
+		//if(flags["COC.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM"] >= 48 && flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] == 2) {
+			//flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] = 3;
 			//output = true;
 			//flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00330] = 12;
 			//output("\n<b>A steady fire of lust slowly grows within you as you shiver and grab at your head.  You're in withdrawal after having gone so long without a dose of minotaur love.  You just know you're going to be horny and achy until you get some.</b>\n", false);
 		//}
 		////UBER ADDICTION MESSAGE
-		//if(flags[kFLAGS.MINOTAUR_CUM_ADDICTION_TRACKER] >= 100 && pc.findPerk(PerkLib.MinotaurCumResistance) < 0) {
+		//if(flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] >= 100 && pc.findPerk(PerkLib.MinotaurCumResistance) < 0) {
 			//if(pc.findPerk(PerkLib.MinotaurCumAddict) >= 0) {}
 			//else {
 				//pc.createPerk(PerkLib.MinotaurCumAddict,0,0,0,0);
@@ -1149,24 +1149,24 @@ private function takeMinoCumDirectly():void {
 			//}
 		//}
 		////3 lust an hour if in withdrawl, 1 if in need
-		//if(flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] == 3 && flags[kFLAGS.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM] >= 48) {
+		//if(flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] == 3 && flags["COC.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM"] >= 48) {
 			//dynStats("lus", 2);
 		//}
-		//if(flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] == 2 && flags[kFLAGS.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM] >= 48) {
+		//if(flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] == 2 && flags["COC.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM"] >= 48) {
 			//dynStats("lus", 1);
 		//}
 	//}
 //
 	////Decrement addiction value as needed
-	//if(flags[kFLAGS.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM] >= 48 && pc.findPerk(PerkLib.MinotaurCumAddict) < 0) {
-		//if (flags[kFLAGS.MINOTAUR_CUM_ADDICTION_TRACKER] >= 0.15) {
+	//if(flags["COC.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM"] >= 48 && pc.findPerk(PerkLib.MinotaurCumAddict) < 0) {
+		//if (flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] >= 0.15) {
 			//flags[kFLAGS.MINOTAUR_CUM_RESISTANCE_TRACKER] += 0.15;
-			//flags[kFLAGS.MINOTAUR_CUM_ADDICTION_TRACKER] -= 0.15;
+			//flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] -= 0.15;
 		//}
 	//}
 	////Increment time since last imbibing cum...
 	////used for withdrawal and reducing overall addiction.
-	//flags[kFLAGS.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM]++;
+	//flags["COC.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM"]++;
 	////Minotaur cum item's status affect decrement
 	//if(flags[kFLAGS.MINOTAUR_CUM_REALLY_ADDICTED_STATE] > 0) {
 		//flags[kFLAGS.MINOTAUR_CUM_REALLY_ADDICTED_STATE]--;
@@ -1200,7 +1200,7 @@ private function takeMinoCumDirectly():void {
 	//output("While exploring the mountains you catch a strong whiff of your favorite scent.  Tipping your head to the side, you take in a few deep lungfuls and sigh.   Judging by the strength of the smell, there must be MANY minotaurs gathered together.   Immediate visions of being surrounded by the muscly monsters fill your mind.   In your fantasy your holes are plugged and you're soaked in their wondrous stuff.  You desperately want it to be a reality, and all you need to do is follow your nose...\n\n", false);
 //
 	////(Withdrawal) 
-	//if(flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] == 3 && pc.inte < 60) {
+	//if(flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] == 3 && pc.inte < 60) {
 		//output("So great is your need that you don't even think about it, you just start following.", false);
 		//doNext(minoAddictionBadEnd2);
 	//}
@@ -1345,7 +1345,7 @@ private function minotaurBlowjob():void {
 	//if(pc.gender > 0) output("combination of the scent of your fluids and the ");
 	//output("sensation of eggs forcing their way past his sphincter proves too much for your bovine bitch to resist, and he helplessly sprays his musky cum, stream after stream jetting up his chest and across his face as his eyes roll back in his head.");
 	////[(mino addict)
-	//if(flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] >= 1) {
+	//if(flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] >= 1) {
 		//output("  The smell is too much for you as well, and as you come a second time, you point his flare at your mouth, gulping as much of his seed as you can get.");
 		//minoCumAddiction(3);
 	//}
@@ -1481,4 +1481,40 @@ public function CoCMinotaurDefeated():void
 {
 	kGAMECLASS.userInterface.showName("VICTORY:\nMINOTAUR");
 	minoVictoryRapeChoices();
+}
+
+public function minotaurNeed():Boolean {
+	return !pc.hasPerk("Minotaur Cum Resistance") && flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] > 1;
+}
+
+public function minoCumAddiction(raw:Number = 10):void {
+	//Increment minotaur cum intake count
+	IncrementFlag("COC.UNKNOWN_FLAG_NUMBER_00340");
+	//Fix if variables go out of range.
+	if (flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] < 0) flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] = 0;
+	if (flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] < 0) flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] = 0;
+	if (flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] > 120) flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] = 120;
+
+	//Turn off withdrawal
+	//if (flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] > 1) flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] = 1;
+	//Reset counter
+	flags["COC.TIME_SINCE_LAST_CONSUMED_MINOTAUR_CUM"] = 0;
+	//If highly addicted, rises slower
+	if (flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] >= 60) raw /= 2;
+	if (flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] >= 80) raw /= 2;
+	if (flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] >= 90) raw /= 2;
+	if (pc.hasPerk("Minotaur Cum Resistance")) raw *= 0;
+	//If in withdrawl, readdiction is potent!
+	if (flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] == 3) raw += 10;
+	if (flags["COC.MINOTAUR_CUM_ADDICTION_STATE"] == 2) raw += 5;
+	raw = Math.round(raw * 100)/100;
+	//PUT SOME CAPS ON DAT' SHIT
+	if (raw > 50) raw = 50;
+	if (raw < -50) raw = -50;
+	if (flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] == undefined) flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] = 0;
+	flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] += raw;
+	//Recheck to make sure shit didn't break
+	if (pc.hasPerk("Minotaur Cum Resistance")) flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] = 0; //Never get addicted!
+	if (flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] > 120) flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] = 120;
+	if (flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] < 0) flags["COC.MINOTAUR_CUM_ADDICTION_TRACKER"] = 0;
 }

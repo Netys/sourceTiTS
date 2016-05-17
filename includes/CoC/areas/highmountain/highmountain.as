@@ -6,9 +6,7 @@ import classes.Engine.Utility.*;
 
 // TODO:
 // xmas event (rly?)
-// Minotaur sons (IF pregs done)
 // Mino addict scene (IF addiction done)
-// Phoenix scene (IF follower hel done)
 public function exploreHighMountain():void {
 	if (helSexualAmbush()) return;
 	
@@ -28,13 +26,6 @@ public function exploreHighMountain():void {
 
 	if (discoverD3())
 		return;
-	
-	//25% minotaur sons!
-	//if (flags[kFLAGS.UNKNOWN_FLAG_NUMBER_00326] >= 3 && rand(4) == 0 && pc.hasVagina()) {
-		//spriteSelect(44);
-		//minotaurMobScene.meetMinotaurSons();
-		//return;
-	//}
 	
 	//10% chance to mino encounter rate if addicted
 	//if (flags[kFLAGS.MINOTAUR_CUM_ADDICTION_STATE] > 0 && rand(10) == 0) {
@@ -83,6 +74,11 @@ public function exploreHighMountain():void {
 	choice.push(izumiScenesEncounter);
 	chance.push(3);
 	
+	// minotaur sons!
+	if (flags["COC.MINOTAUR_LAST_SONS_ADULT"] >= 3 && pc.hasVagina()) {
+		choice.push(meetMinotaurSons);
+		chance.push(3);
+	}
 	
 	WeightedRandom(choice, chance, true)();
 }
