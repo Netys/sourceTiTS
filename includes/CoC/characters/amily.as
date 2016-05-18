@@ -5247,14 +5247,37 @@ public function hermilyOnFemalePC():void {
 }
 
 //Player gives Birth (quest version):
-public function pcBirthsAmilysKidsQuestVersion():void {
-	amilySprite();
-	StatTracking.track("coc/pregnancy/pc amily");
-	//In camp version:
-	if (flags["COC.AMILY_FOLLOWER"] == 1) {
-		playerBirthsWifAmilyMiceInCamp();
+public function pcBirthsAmilysKidsQuestVersion(pregSlot:int):void
+{
+	if (flags["COC.AMILY_FOLLOWER"] == 1 && !amilyFollower() || amilyCorrupt()) // not in a camp or corrupt
+	{
+		giveBirthToGenericMice(pregSlot);
 		return;
 	}
+	
+	clearOutput();
+
+	var pData:PregnancyData = pc.pregnancyData[pregSlot] as PregnancyData;
+	
+	if (!pc.hasVagina(pregSlot)) {
+		pc.createVagina();
+		pregSlot = pc.vaginas.length - 1; // failsafe
+		output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
+		output("\n\n");
+	}
+	
+	if (!pc.canLactate()) pc.boostLactation(50);
+	
+	amilySprite();
+	
+	//Add to brood size count
+	StatTracking.track("coc/pregnancy/pc amily");
+	//In camp version:
+	if (amilyFollower()) {
+		playerBirthsWifAmilyMiceInCamp(pregSlot);
+		return;
+	}
+	
 	//Quest Ending: Herm Amily Variant
 	//Requirements: Player must have given birth to a litter of Amily's children at least five times before.
 	if (StatTracking.getStat("coc/pregnancy/pc amily") + StatTracking.getStat("coc/pregnancy/amily") >= 5 && allowFollowers()) {
@@ -5262,7 +5285,7 @@ public function pcBirthsAmilysKidsQuestVersion():void {
 
 		output("Pain shoots through you as they pull open your cervix forcefully, causing you to cry out involuntarily. At once, Amily suddenly appears, racing out from the undergrowth. \"<i>Is it time? Are you going into labor?</i>\" She asks, worry evident in her voice. Your pain is momentarily forgotten by your surprise and you ask where she came from. She snorts disdainfully at the question. \"<i>I've been shadowing you for a couple of days, now. Did you really think I'd let the mother of my children go through this alone?</i>\"\n\n");
 
-		output("Any reply you may have been inclined to make to that is swallowed by another cry of pain as yet another contraction wrings its way through you. Amily takes your hand in hers and you cling to the lifeline of comfort it offers, thankful to not be alone for this. You can feel the first child moving out of your womb, through your cervix, down and into your " + pc.vaginaDescript() + ". Your lips part and, with a grunt, you expel the first child into Amily's waiting hand. She holds it up to you so that you can see your firstborn; it's a little mouselet", false);
+		output("Any reply you may have been inclined to make to that is swallowed by another cry of pain as yet another contraction wrings its way through you. Amily takes your hand in hers and you cling to the lifeline of comfort it offers, thankful to not be alone for this. You can feel the first child moving out of your womb, through your cervix, down and into your " + pc.vaginaDescript() + ". Your lips part and, with a grunt, you expel the first child into Amily's waiting hand. She holds it up to you so that you can see your firstborn; it's a little mouselet");
 		//(if player is female: 1 in 3 chance of it being boy, girl or herm, if player is herm, 100% chance of it being a herm)"
 		output(((flags["COC.AMILY_NOT_FURRY"] == undefined)?", naked, pink, and totally hairless":"") +". Amily helps hold it to your " + pc.breastDescript(0) + ", where it eagerly takes hold of your " + pc.nippleDescript(0) + " and starts to suckle. As it drinks, it starts to grow larger, and " + ((flags["COC.AMILY_NOT_FURRY"] == undefined)?"fur the same color as your own hair starts to cover its body":"") +". It quickly drinks its fill and then detaches, its 'father' putting it aside, which is good, because by this time there's another baby waiting for its turn... and another... and another...\n\n");
 
@@ -5289,7 +5312,74 @@ public function pcBirthsAmilysKidsQuestVersion():void {
 	output("Soon, you are back to your old self again, lying down in exhaustion with Amily sitting nearby, your many rambunctious offspring already starting to walk and play around you.\n\n");
 
 	output("\"<i>Look at them all. You... I never thought it would turn out this way, but you're helping my dream to come true. Thank you,</i>\" Amily tells you sincerely. You're too exhausted to keep your eyes open for long, but she promises to stay in touch and, even as you fall asleep, she's gathering up your children and taking them away.");
+	
+	output("\n\n");
+	pc.cuntChange(0, cockVolume(60), true, true, false);
+	if (pc.vaginas[pregSlot].wetnessRaw == 0) pc.vaginas[pregSlot].wetnessRaw++;
+	pc.orgasm();
+	
+	// tou -2
+	pc.slowStatGain("p", -1);
+	pc.slowStatGain("r", 3);
+	pc.slowStatGain("l", 1);
+	// sen +0.5
+	
 	processTime(60 * 4 + rand(60));
+}
+
+public function giveBirthToGenericMice(pregSlot:int):void
+{
+	clearOutput();
+
+	var pData:PregnancyData = pc.pregnancyData[pregSlot] as PregnancyData;
+	
+	if (!pc.canLactate()) pc.boostLactation(50);
+	
+	output("You wake up suddenly to strong pains and pressures in your gut. As your eyes shoot wide open, you look down to see your belly absurdly full and distended. You can feel movement underneath the skin, and watch as it is pushed out in many places, roiling and squirming in disturbing ways. The feelings you get from inside are just as disconcerting. You count not one, but many little things moving around inside you. There are so many, you can't keep track of them.");
+	
+	if (!pc.hasVagina(pregSlot)) {
+		pc.createVagina();
+		pregSlot = pc.vaginas.length - 1; // failsafe
+		output("\n\nYou feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
+	}
+	
+	output("\n\nPain shoots through you as they pull open your cervix forcefully. You grip the ground and pant and push as the pains of labor overwhelm you. You feel your hips being forceably widened by the collective mass of the creatures moving down your birth canal. You spread your legs wide, laying your head back with groans and cries of agony as little white figures begin to emerge from between the lips of your abused pussy. Large innocent eyes, even larger ears, cute little muzzles, long slender pink tails all appear as the figures emerge. Each could be no larger than six inches tall, but they seem as active and curious as if they were already developed children.");
+	output("\n\nTwo emerge, then four, eight... you lose track. They swarm your body, scrambling for your chest, and take turns suckling at your nipples. Milk does their bodies good, making them grow rapidly, defining their genders as the girls grow cute little breasts and get broader hips and the boys develop their little mouse cocks and feel their balls swell. Each stops suckling when they reach two feet tall, and once every last one of them has departed your sore, abused cunt and drunk their fill of your milk, they give you a few grateful nuzzles, then run off towards the forest, leaving you alone to recover.");
+	
+	if (pc.milkMultiplier < 100) {
+		output("\n\nYour breasts won't seem to stop dribbling milk, lactating more heavily than before.");
+		pc.boostLactation(10);
+	}
+	
+	pc.cuntChange(pregSlot, cockVolume(60), false, true, false);
+	
+	if (pc.vaginas[pregSlot].wetnessRaw == 0) pc.vaginas[pregSlot].wetnessRaw++;
+	
+	pc.orgasm();
+	
+	// tou -2
+	pc.slowStatGain("p", -1);
+	pc.slowStatGain("r", 3);
+	pc.slowStatGain("l", 1);
+	// sen +0.5
+	
+	if (pc.buttRatingRaw < 14 && rand(2) == 0) {
+		if (pc.buttRatingRaw < 10) {
+			pc.buttRatingRaw++;
+			output("\n\nYou notice your [pc.ass] feeling larger and plumper after the ordeal.");
+		}
+		//Big butts grow slower!
+		else if (pc.buttRatingRaw < 14 && rand(2) == 0) {
+			pc.buttRatingRaw++;
+			output("\n\nYou notice your ass feeling larger and plumper after the ordeal.");
+		}
+	}
+	
+	StatTracking.track("coc/pregnancy/mice", 1);
+	
+	processTime(4 * 60);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 public function postBirthingEndChoices():void {
@@ -5766,7 +5856,7 @@ public function makeAmilyAHerm():void {
 
 //ENHANCED CAMP FOLLOWER SHIT
 //Player gives Birth (camp follower version):
-private function playerBirthsWifAmilyMiceInCamp():void {
+private function playerBirthsWifAmilyMiceInCamp(pregSlot:int):void {
 	amilySprite();
 	output("You wake up suddenly to strong pains and pressures in your gut. As your eyes shoot wide open, you look down to see your belly absurdly full and distended. You can feel movement underneath the skin, and watch as it is pushed out in many places, roiling and squirming in disturbing ways. The feelings you get from inside are just as disconcerting. You count not one, but many little things moving around inside you. There are so many, you can't keep track of them.\n\n");
 
@@ -5788,8 +5878,18 @@ private function playerBirthsWifAmilyMiceInCamp():void {
 	output("\"<i>I hope you don't mind, [pc.name], but I contacted them to come and take their new siblings back with them shortly after you told me you were pregnant.</i>\" Amily says, sheepishly. \"<i>We just can't really care for them here, and they'll be safer and happier with all their siblings.</i>\"\n\n");
 
 	output("You nod your head and admit that you agree. Once you have regained your strength, you spend some time talking with your fully adult children and playing with your overdeveloped newborns. Then, with a final wave goodbye, the "+((flags["COC.AMILY_NOT_FURRY"] == undefined)?"mouse-morphs":"family of mice") +" disappear into the wilderness once more.");
-	//Add to brood size count
-	StatTracking.track("coc/pregnancy/pc amily");
+	
+	output("\n\n");
+	pc.cuntChange(0, cockVolume(60), true, true, false);
+	if (pc.vaginas[pregSlot].wetnessRaw == 0) pc.vaginas[pregSlot].wetnessRaw++;
+	pc.orgasm();
+	
+	// tou -2
+	pc.slowStatGain("p", -1);
+	pc.slowStatGain("r", 3);
+	pc.slowStatGain("l", 1);
+	// sen +0.5
+	
 	processTime(4 * 60 + rand(60));
 }
 
@@ -7097,7 +7197,11 @@ private function rapeCorruptAmily4Epilogue():void {
 	//Add corrupted amily flag here
 	flags["COC.AMILY_FOLLOWER"] = 2;
 	//Switch to less lovey pregnancy!
-	//if (pc.pregnancyType == PregnancyStore.PREGNANCY_AMILY) pc.knockUpForce(PregnancyStore.PREGNANCY_MOUSE, pc.pregnancyIncubation);
+	if (pc.hasPregnancyOfType("CoCAmilyPregnancy")) pc.getPregnancyOfType("CoCAmilyPregnancy").pregnancyType = "CoCMousePregnancy";
+	var _amily:CoCAmily = amily;
+	_amily.impregnationType = "CoCMousePregnancy";
+	amily = _amily;
+	
 	//Make babies disappear
 	//pregnancyStore.knockUpForce(); //Clear Pregnancy - though this seems unneccessary to me. Maybe it was needed in an older version of the code?
 	//Set other flags if Amily is moving in for the first time
@@ -7312,7 +7416,7 @@ public function farewellNote():void {
 	//Enable village encounters
 	flags["COC.AMILY_VILLAGE_ENCOUNTERS_DISABLED"] = undefined;
 	//Change to plain mouse birth!
-	//if (pc.pregnancyType == PregnancyStore.PREGNANCY_AMILY) pc.knockUpForce(PregnancyStore.PREGNANCY_MOUSE, pc.pregnancyIncubation);
+	if (pc.hasPregnancyOfType("CoCAmilyPregnancy")) pc.getPregnancyOfType("CoCAmilyPregnancy").pregnancyType = "CoCMousePregnancy";
 }
 
 //Amily's Return:

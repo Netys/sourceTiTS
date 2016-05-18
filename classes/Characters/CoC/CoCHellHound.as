@@ -161,6 +161,8 @@ package classes.Characters.CoC
 			this.milkRate = 0;
 			this.ass.wetnessRaw = 1;
 			this.ass.loosenessRaw = 1;
+			
+			this.impregnationType = "CoCHellhoundPregnancy";
 
 			this.createStatusEffect("Disarm Immune");
 			

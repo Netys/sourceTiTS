@@ -84,12 +84,20 @@ public function displayEncounterLogCoCVarious():int
 			// Mother
 			if(StatTracking.getStat("coc/pregnancy/imps birthed") > 0)
 				output2("\n<b>* Births, Imp Litters: </b>" + StatTracking.getStat("coc/pregnancy/imps birthed"));
-			if(StatTracking.getStat("coc/pregnancy/mice") > 0)
-				output2("\n<b>* Births, Amily Litters: </b>" + StatTracking.getStat("coc/pregnancy/mice"));
+			if(StatTracking.getStat("coc/pregnancy/pc amily") > 0)
+				output2("\n<b>* Births, Amily Litters: </b>" + StatTracking.getStat("coc/pregnancy/pc amily"));
 			if (StatTracking.getStat("coc/pregnancy/anemones birthed") > 0)
 				output2("\n<b>* Births, Anemone: </b>" + StatTracking.getStat("coc/pregnancy/anemones birthed"));
+			if(StatTracking.getStat("coc/pregnancy/bees") > 0)
+				output2("\n<b>* Births, Bee Swarms: </b>" + StatTracking.getStat("coc/pregnancy/bees"));
+			if (StatTracking.getStat("coc/pregnancy/centaur") > 0)
+				output2("\n<b>* Births, Centaurs: </b>" + StatTracking.getStat("coc/pregnancy/centaur"));
 			if (StatTracking.getStat("coc/pregnancy/pc cotton") > 0)
 				output2("\n<b>* Births, Cotton Children: </b>" + StatTracking.getStat("coc/pregnancy/pc cotton"));
+			if (StatTracking.getStat("coc/pregnancy/hellhound") > 0)
+				output2("\n<b>* Births, Hellhounds: </b>" + StatTracking.getStat("coc/pregnancy/hellhound"));
+			if (StatTracking.getStat("coc/pregnancy/drider") > 0)
+				output2("\n<b>* Births, Driders: </b>" + StatTracking.getStat("coc/pregnancy/drider"));
 			if (StatTracking.getStat("coc/pregnancy/pc sharkgirls") + StatTracking.getStat("coc/pregnancy/pc tigersharks") > 0)
 			{
 				output2("\n<b>* Births, Izma Daughters: </b>");
@@ -100,8 +108,18 @@ public function displayEncounterLogCoCVarious():int
 					enum.push(StatTracking.getStat("coc/pregnancy/pc tigersharks") + " tigersharks");
 				output2(enum.toString() + ".");
 			}
+			if(StatTracking.getStat("coc/pregnancy/mice") > 0)
+				output2("\n<b>* Births, Mouse Litters: </b>" + StatTracking.getStat("coc/pregnancy/mice"));
 			if (StatTracking.getStat("coc/pregnancy/minotaurs") > 0)
 				output2("\n<b>* Births, Minotaurs: </b>" + StatTracking.getStat("coc/pregnancy/minotaurs"));
+			if (StatTracking.getStat("coc/pregnancy/sandtrap") > 0)
+				output2("\n<b>* Births, Sand Traps: </b>" + StatTracking.getStat("coc/pregnancy/sandtrap"));
+			if (StatTracking.getStat("coc/pregnancy/pc sand witch") > 0)
+				output2("\n<b>* Births, Sand Witches: </b>" + StatTracking.getStat("coc/pregnancy/pc sand witch"));
+			if (StatTracking.getStat("coc/pregnancy/satyr") > 0)
+				output2("\n<b>* Births, Satyrs: </b>" + StatTracking.getStat("coc/pregnancy/satyr"));
+			if (StatTracking.getStat("coc/pregnancy/spider") > 0)
+				output2("\n<b>* Births, Spiders: </b>" + StatTracking.getStat("coc/pregnancy/spider"));
 			if (StatTracking.getStat("coc/pregnancy/pc urta") > 0)
 				output2("\n<b>* Births, Urta Children: </b>" + StatTracking.getStat("coc/pregnancy/pc urta"));
 			
@@ -265,8 +283,8 @@ public function displayEncounterLogCoCVarious():int
 		output2("\n<b><u>Amily</u></b>");
 		output2("\n<b>* Affection: </b>" + flags["COC.AMILY_AFFECTION"]);
 		if (flags["COC.AMILY_FUCK_COUNTER"] > 0) output2("\n<b>* Times sexed: </b>" + flags["COC.AMILY_FUCK_COUNTER"]);
-		if ((StatTracking.getStat("coc/pregnancy/amily") + StatTracking.getStat("coc/pregnancy/mice")) > 0)
-			output2("\n<b>* Litters: </b>" + (StatTracking.getStat("coc/pregnancy/amily") + StatTracking.getStat("coc/pregnancy/mice")));
+		if ((StatTracking.getStat("coc/pregnancy/amily") + StatTracking.getStat("coc/pregnancy/pc amily")) > 0)
+			output2("\n<b>* Litters: </b>" + (StatTracking.getStat("coc/pregnancy/amily") + StatTracking.getStat("coc/pregnancy/pc amily")));
 	}
 	
 	if(flags["COC.COTTON_MET_FUCKED"] > 0) {

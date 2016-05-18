@@ -8,13 +8,12 @@ package classes.GameData.Pregnancy.Handlers
 	import classes.kGAMECLASS;
 	import classes.PregnancyData;
 	
-	public class CoCMinotaurPregnancy extends BasePregnancyHandler
+	public class CoCSpiderPregnancy extends BasePregnancyHandler
 	{
-		
-		public function CoCMinotaurPregnancy() 
+		public function CoCSpiderPregnancy() 
 		{
-			_handlesType = "CoCMinotaurPregnancy";
-			_basePregnancyIncubationTime = 432 * 60; // 18 days
+			_handlesType = "CoCSpiderPregnancy";
+			_basePregnancyIncubationTime = 400 * 60; // 16 days
 			_basePregnancyChance = 0.15;
 			_alwaysImpregnate = false;
 			_ignoreInfertility = false;
@@ -23,75 +22,64 @@ package classes.GameData.Pregnancy.Handlers
 			_allowMultiplePregnancies = false;
 			_canImpregnateButt = false;
 			_canImpregnateVagina = true;
-			_canFertilizeEggs = true;
-			_pregnancyQuantityMinimum = 1;
-			_pregnancyQuantityMaximum = 1;
-			_definedAverageLoadSize = 1000;
+			_canFertilizeEggs = false;
+			_pregnancyQuantityMinimum = 8;
+			_pregnancyQuantityMaximum = 12;
+			_definedAverageLoadSize = 100;
+			_pregnancyChildType = GLOBAL.CHILD_TYPE_EGGS;
 			
-			this.addStageProgression(336 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 8, true);
-				
-				kGAMECLASS.eventBuffer += "\n\nYou realize your belly has gotten slightly larger. Maybe you need to cut back on the strange food.";
+			this.addStageProgression(399 * 60, function(pregSlot:int):void {
+				kGAMECLASS.eventBuffer += "\n\nAfter your session with the spider, you feel much... fuller.  There is no outward change on your body as far as you can see but your womb feels slightly tingly whenever you move.  Hopefully it's nothing to be alarmed about.";
 			}, true);
 			
 			this.addStageProgression(280 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 8, true);
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 1, true);
 				
-				kGAMECLASS.eventBuffer += "\n\nYour belly is getting more noticeably distended and squirming around.  You are probably pregnant.";
+				kGAMECLASS.eventBuffer += "\n\nYour belly grumbles as if empty, even though you ate not long ago.  Perhaps with all the exercise you're getting you just need to eat a little bit more.";
+			}, true);
+			
+			this.addStageProgression(250 * 60, function(pregSlot:int):void {
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 2, true);
+				
+				kGAMECLASS.eventBuffer += "\n\nYour belly looks a little pudgy";
+				if (kGAMECLASS.pc.thickness > 60 && kGAMECLASS.pc.tone < 40) kGAMECLASS.eventBuffer += " even for you";
+				kGAMECLASS.eventBuffer += ", maybe you should cut back on all the food you've been consuming lately?";
 			}, true);
 			
 			this.addStageProgression(216 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 8, true);
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 2, true);
 				
-				kGAMECLASS.eventBuffer += "\n\nThe unmistakable bulge of pregnancy is visible in your tummy. It's feeling heavier by the moment. ";
-				if (kGAMECLASS.pc.cor() < 40) kGAMECLASS.eventBuffer += "You are distressed by your unwanted pregnancy, and your inability to force this thing out of you.";
-				if (kGAMECLASS.pc.cor() >= 40 && kGAMECLASS.pc.cor() < 75) kGAMECLASS.eventBuffer += "Considering the size of the creatures you've fucked, you hope it doesn't hurt when it comes out.";
-				if (kGAMECLASS.pc.cor() >= 75) kGAMECLASS.eventBuffer += "You think dreamily about the monstrous cocks that have recently been fucking you, and hope that your offspring inherit such a pleasure tool.";
-				
-				kGAMECLASS.pc.slowStatGain("r", -1);
-				kGAMECLASS.pc.slowStatGain("l", 1);
-				kGAMECLASS.pc.lust(2);
+				kGAMECLASS.eventBuffer += "\n\nYour belly is definitely getting bigger, and no matter what you do, you can't seem to stop yourself from eating at the merest twinge of hunger.  The only explanation you can come up with is that you've gotten pregnant during your travels.  Hopefully it won't inconvenience your adventuring.";
 			}, true);
 			
 			this.addStageProgression(180 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 8, true);
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 2, true);
 				
-				kGAMECLASS.eventBuffer += "\n\nThe sudden impact of a kick from inside your womb startles you. Moments later it happens again, making you gasp and stagger. Whatever is growing inside you is strong.";
+				kGAMECLASS.eventBuffer += "\n\nA hot flush works its way through you, and visions of aroused spider-morphs quickly come to dominate your thoughts.  You start playing with a nipple while you lose yourself in the fantasy, imagining being tied up in webs and mated with over and over, violated by a pack of horny males, each hoping to father your next brood.  You shake free of the fantasy and notice your hands rubbing over your slightly bloated belly.  Perhaps it wouldn't be so bad?";
+				
+				kGAMECLASS.pc.slowStatGain("l", 1);
+				// sen +1
+				kGAMECLASS.pc.lust(20);
 			}, true);
 			
 			this.addStageProgression(120 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 8, true);
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 2, true);
 				
-				kGAMECLASS.eventBuffer += "\n\nYour ever-growing belly makes your pregnancy obvious for those around you. It's already as big as the belly of any pregnant woman back home.";
+				kGAMECLASS.eventBuffer += "\n\nYour belly has gotten nice and big, perhaps as big as you remember the bellies of the pregnant women back home being.  The elders always did insist on everyone doing their part to keep the population high enough to sustain the loss of a champion every year.  You give yourself a little hug, getting a surge of happiness from your hormone-addled body.  Pregnancy sure is great!";
 			}, true);
 			
 			this.addStageProgression(72 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 8, true);
+				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 2, true);
 				
-				kGAMECLASS.eventBuffer += "\n\nYour belly is painfully distended and overswollen with the offspring of some huge beast, ";
-				if (kGAMECLASS.pc.cor() < 40) kGAMECLASS.eventBuffer += "making it difficult to function.";
-				if (kGAMECLASS.pc.cor() >= 40 && kGAMECLASS.pc.cor() < 75) kGAMECLASS.eventBuffer += "and you wonder how much longer you have to wait.";
-				if (kGAMECLASS.pc.cor() >= 75) kGAMECLASS.eventBuffer += "and you're eager to give birth, so you can get impregnated again by monstrous cocks unloading their corrupted seed directly into your eager womb.";
-				kGAMECLASS.pc.slowStatGain("r", -3);
-				kGAMECLASS.pc.slowStatGain("l", 1);
-				// sen +1
-				kGAMECLASS.pc.lust(4);
-			}, true);
-			
-			this.addStageProgression(48 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 8, true);
-				
-				kGAMECLASS.eventBuffer += "\n\nYou rub your hands over your bulging belly, lost in the sensations of motherhood. Whatever beast is inside your overstretched womb seems to appreciate the attention, and stops its incessant squirming. ";
-				if (kGAMECLASS.pc.cor() < 40) kGAMECLASS.eventBuffer += "Afterwards you feel somewhat disgusted with yourself.";
-				if (kGAMECLASS.pc.cor() >= 40 && kGAMECLASS.pc.cor() < 75) kGAMECLASS.eventBuffer += "You estimate you'll give birth in the next few days.";
-				if (kGAMECLASS.pc.cor() >= 75) kGAMECLASS.eventBuffer += "You find yourself daydreaming about birthing some huge monstrous beast, and raising it to fuck your wet pussy over and over.";
+				kGAMECLASS.eventBuffer += "\n\nThe huge size of your pregnant belly constantly impedes your movement, but the constant squirming and shaking of your unborn offspring makes you pretty sure you won't have to carry them much longer.  A sense of motherly pride wells up in your breast - you just know you'll have such wonderful babies.";
+				if (kGAMECLASS.pc.cor() < 50) kGAMECLASS.eventBuffer += " You shudder and shake your head, wondering why you're thinking such unusual things.";
 			}, true);
 			
 			var intermediate:Function = function(pregSlot:int):void {
 				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 1, true);
 				
 				if (kGAMECLASS.pc.breastRows[0].breastRating() >= 3 && kGAMECLASS.pc.breastsPerRow(0) > 1 && kGAMECLASS.pc.canLactate() && kGAMECLASS.pc.milkMultiplier < 100) {
-					kGAMECLASS.eventBuffer += "\n\nYour breasts feel swollen with all the extra milk they're accumulating.  You wonder just what kind of creature they're getting ready to feed.";
+					kGAMECLASS.eventBuffer += "\n\nYour breasts feel swollen with all the extra milk they're accumulating.";
 					kGAMECLASS.pc.boostLactation(10);
 				}
 				if (kGAMECLASS.pc.breastRows[0].breastRating() >= 3 && kGAMECLASS.pc.breastsPerRow(0) > 1 && kGAMECLASS.pc.milkMultiplier > 0 && kGAMECLASS.pc.milkMultiplier < 50) {
@@ -144,7 +132,7 @@ package classes.GameData.Pregnancy.Handlers
 			{
 				return function():void
 				{
-					kGAMECLASS.giveBirthToMinotaur(c_pregSlot);
+					kGAMECLASS.spiderPregVagBirth(c_pregSlot);
 					cleanupPregnancy(c_mother, c_pregSlot, c_thisPtr);
 				}
 			})(mother, pregSlot, thisPtr);
@@ -157,7 +145,7 @@ package classes.GameData.Pregnancy.Handlers
 			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
 			
 			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
-			StatTracking.track("coc/pregnancy/minotaurs", 1);
+			StatTracking.track("coc/pregnancy/spider", 1);
 			StatTracking.track("coc/pregnancy/total births", 1);
 			
 			pData.reset();

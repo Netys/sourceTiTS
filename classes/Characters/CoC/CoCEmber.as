@@ -194,6 +194,8 @@ package classes.Characters.CoC
 			this.ass.loosenessRaw = 3;
 			this.ass.bonusCapacity = 40;
 			
+			this.impregnationType = "CoCEmberPregnancy";
+			
 			if (int(kGAMECLASS.flags["COC.EMBER_OVIPOSITION"]) > 0) this.createPerk("Oviposition");
 			this.createStatusEffect("Disarm Immune");
 			if (int(kGAMECLASS.flags["COC.EMBER_INTERNAL_DICK"]) > 0 || !roundface) this.createStatusEffect("Genital Slit");
@@ -226,6 +228,16 @@ package classes.Characters.CoC
 		override public function isPregnant(slot:int = -1):Boolean 
 		{
 			return kGAMECLASS.flags["COC.EMBER_INCUBATION"] != undefined;
+		}
+		
+		override public function virility():Number 
+		{
+			return kGAMECLASS.pc.hasStatusEffect("Heat") ? 1 : 0;
+		}
+		
+		override public function fertility():Number 
+		{
+			return kGAMECLASS.pc.hasStatusEffect("Rut") ? 1 : 0;
 		}
 		
 		public function postHostileTurnActions():Boolean {

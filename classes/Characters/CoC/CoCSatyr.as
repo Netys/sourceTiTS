@@ -155,6 +155,8 @@ package classes.Characters.CoC
 			this.ass.loosenessRaw = 3;
 			this.ass.bonusCapacity = 20;
 			
+			this.impregnationType = "CoCSatyrPregnancy";
+			
 			this.createStatusEffect("Disarm Immune");
 			
 			sexualPreferences.setRandomPrefs(2 + rand(3));

@@ -157,6 +157,8 @@ package classes.Characters.CoC
 			this.ass.loosenessRaw = 1;
 			this.ass.bonusCapacity = 10;
 			
+			this.impregnationType = "CoCIzmaPregnancy";
+			
 			this.createStatusEffect("Disarm Immune");
 			if(flags["COC.IZMA_KIDS_ALLOW"] != 1) this.createStatusEffect("Infertile");
 			

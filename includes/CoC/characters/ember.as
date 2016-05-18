@@ -3818,17 +3818,19 @@ public function emberGivesBirth():void
 }
 
 
-public function giveBirthToEmberKids():void
+public function giveBirthToEmberKids(pregSlot:int):void
 {
+	if (!pc.hasVagina(pregSlot)) {
+		pc.createVagina();
+		pregSlot = pc.vaginas.length - 1; // failsafe
+		output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
+		output("\n\n");
+	}
+	
 	var roll:int = rand(100);
 	//PC Gives Live Birth
 	if (!ember.hasPerk("Oviposition")) {
 		//40% chance of boy, 40% chance of girl and 20% chance of both
-		//(If the PC has no pussy)
-		if (!pc.hasVagina()) {
-			output("A terribly painful ripping feeling comes from your crotch. Reaching down to touch the tender spot you feel a spike of pleasure and moistness.  <b>You've grown a vagina!</b>\n\n");
-			pc.createVagina();
-		}
 		output("You find yourself doubling over - well, as far as you can given your hugely gravid stomach, letting out a hollow cry of pain.  You can feel the muscles in your midriff starting to squeeze and ripple in a fashion you just know signifies the onset of labor.  You cry out for Ember to come and attend you.  Ember rushes towards you in a blur, stopping mere inches from you, panting.  \"<i>What is it?  Is it time!?  Are you in labor!?</i>\" [ember.heShe] asks in a hurry.  You nod and tell [ember.himHer] that you are.");
 
 		output("\n\nEmber wastes no time, [ember.heShe] hefts you into [ember.hisHer] arms and takes you to [ember.hisHer] den, gently setting you down on the soft leaves; then [ember.heShe] starts undressing you, stripping your [pc.gear] as quickly as [ember.heShe] can.  \"<i>Okay, Okay...  What do you need?  W-what should I do!?  Do you need anything!?  How are you feeling!?</i>\" Ember asks in panic, the excitement of what's about to happen too much to bear for the dragon" + ember.mf("-boy", "-girl") + ".");
@@ -3857,7 +3859,7 @@ public function giveBirthToEmberKids():void
 		output("\n\n\"<i>...you... alright?...</i>\" You faintly hear Ember asking you.  You look into [ember.hisHer] eyes and manage to nod weakly.  Ember's worried face turns to one of relief, [ember.heShe] calmly tends to the wailing dragonling while waiting for you to rest for a little while, licking it over to clean it from the fluids that came with and on your baby.");
 
 		output("\n\nYou close your eyes, exhausted and happy to see your child. Before you realize it, you've passed out.  When you awaken, you find yourself lying in your bedroll, Ember hovering protectively over you. You ask where the baby is.");
-		output("\n\nEmber calmly smiles at you and points to your [pc.chest].  You follow [ember.hisHer] finger to see the little dragon nursing from your " + pc.nippleDescript(0) + ". \"<i>Sorry.  ");
+		output("\n\nEmber calmly smiles at you and points to your [pc.chest].  You follow [ember.hisHer] finger to see the little dragon nursing from your [pc.nipple]. \"<i>Sorry.  ");
 
 		if (roll < 40) output("He");
 		else output("She");
@@ -3872,7 +3874,7 @@ public function giveBirthToEmberKids():void
 			output(" wanted yours...</i>\"");
 		}
 
-		output("\n\nYou sigh softly, stroking your newborn's head even as it industriously sucks away at your " + pc.nippleDescript(0) + ".  Speaking of which, you ask Ember what you've had - a boy?  A girl?  Both?");
+		output("\n\nYou sigh softly, stroking your newborn's head even as it industriously sucks away at your [pc.nipple].  Speaking of which, you ask Ember what you've had - a boy?  A girl?  Both?");
 
 		output("\n\nEmber sighs and smiles at you. \"<i>It's a beautiful, healthy, little ");
 		if (roll < 40) output("boy");
@@ -3908,10 +3910,6 @@ public function giveBirthToEmberKids():void
 	//PC Lays Egg
 	else {
 		//(If the PC has no pussy)
-		if (!pc.hasVagina()) {
-			output("A terribly painful ripping feeling comes from your crotch. Reaching down to touch the tender spot you feel a spike of pleasure and moistness.  <b>You've grown a vagina!</b>\n\n");
-			pc.createVagina();
-		}
 		output("You find yourself doubling over - well, as far as you can given your hugely gravid stomach, letting out a hollow cry of pain.  You can feel the muscles in your midriff starting to squeeze and ripple in a fashion you just know signifies the onset of labor.  You cry out for Ember to come and attend you.  Ember rushes towards you in a blur, stopping mere inches from you, panting.  \"<i>What is it? Is it time!? Are you ready to lay!?</i>\" [ember.heShe] asks in a hurry.  You nod and tell [ember.himHer] that you are.");
 
 		output("\n\nEmber wastes no time - [ember.heShe] hefts you into [ember.hisHer] arms and takes you to [ember.hisHer] den, gently setting you down on the soft leaves.  Then [ember.heShe] starts undressing you, stripping your [pc.gear] as quickly as [ember.heShe] can.  \"<i>Okay, Okay...  What do you need?  W-what should I do!?  Do you need anything!?  How are you feeling!?</i>\" Ember asks in panic, the excitement of what's about to happen too much to bear for the dragon" + ember.mf("-boy", "-girl") + ".");
@@ -3945,10 +3943,10 @@ public function giveBirthToEmberKids():void
 
 		output("\n\nYou nod wearily, lie back and close your eyes, letting yourself drift off into slumber to escape the weariness of your worn, ravaged body.");
 
-		output("\n\nYou're not certain how long you were sleeping for when you finally regain consciousness.  You wake, though, to the most wonderful sensations emanating from your " + pc.nippleDescript(0) + ", and the feel of soft hands caressing and squeezing your [pc.chest].  You open your eyes and find Ember leaning over you, greedily nursing " + ember.mf("himself", "herself") + " from your [pc.milk].  You can't resist asking what [ember.heShe]'s doing.");
+		output("\n\nYou're not certain how long you were sleeping for when you finally regain consciousness.  You wake, though, to the most wonderful sensations emanating from your [pc.nipple], and the feel of soft hands caressing and squeezing your [pc.chest].  You open your eyes and find Ember leaning over you, greedily nursing " + ember.mf("himself", "herself") + " from your [pc.milk].  You can't resist asking what [ember.heShe]'s doing.");
 
 		output("\n\nEmber ");
-		if (flags["COC.EMBER_ROUNDFACE"] > 0) output("blushes and ");
+		if (!ember.hasScales()) output("blushes and ");
 		output("withdraws, licking [ember.hisHer] lips of a stray droplet of [pc.milkNoun].  \"<i>Sorry, it's just that you looked so full, and all that [pc.milkNoun] would've been wasted...  So, I thought I could help myself, not that I've been wanting to drink your [pc.milkNoun] or anything like that.</i>\"");
 
 		output("\n\nYou tell [ember.himHer] that it's only polite to ask first.  Still, you're happy to let [ember.himHer] drink [ember.hisHer] fill.  It does make your breasts feel so much better.  Ember slowly makes [ember.hisHer] way back to your awaiting nipples to resume [ember.hisHer] drinking.");
@@ -3964,6 +3962,11 @@ public function giveBirthToEmberKids():void
 		IncrementFlag("COC.EMBER_EGGS");
 	}
 	flags["COC.EMBER_NAPPING"] = 5 * 60;
+	
+	processTime(2 * 60);
+	pc.lust(pc.lustMax());
+	
+	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 }
 
@@ -4663,7 +4666,7 @@ public function sleepWithEmber():void {
 			output("\n\nYou notice [ember.heShe]'s avoided answering the heart of your question, but decide to leave it alone.");
 			output("\n\nBesides... this feels nice, and smells pretty good too.  Ember seems to be enjoying [ember.himHer]self too... every once in awhile [ember.hisHer] hands wander to touch you in various sensitive spots... you may not be able to see it in your current position, but you can almost feel Ember quiver at every one of [ember.hisHer] wandering gropes.");
 			output("\n\n\"<i>Turn around, I'm going to do your front now.</i>\"  Ember reaches towards a nearby bowl to gather more lotion in [ember.hisHer] claws.");
-			output("\n\nBreathing calmly, you turn around, gently sloshing through the water until you are facing your draconic lover.  A quick glance towards Ember confirms your suspicion; [ember.heShe] is almost giddy.  However Ember tries to at least look professional in [ember.hisHer] task; [ember.heShe] starts by rubbing your " + pc.breastDescript(0) + ", lingering a little longer than necessary on your " + pc.nippleDescript(0) + ".");
+			output("\n\nBreathing calmly, you turn around, gently sloshing through the water until you are facing your draconic lover.  A quick glance towards Ember confirms your suspicion; [ember.heShe] is almost giddy.  However Ember tries to at least look professional in [ember.hisHer] task; [ember.heShe] starts by rubbing your " + pc.breastDescript(0) + ", lingering a little longer than necessary on your [pc.nipple].");
 			output("\n\n\"<i>How does it feel?  Better?</i>\"  Ember asks, trying to start a conversation. ");
 			output("\n\nYou simply nod gently and close your eyes, enjoying the treatment and trying not to make this any more embarrassing for the emotionally insecure dragon.");
 			output("\n\nEmber smiles.  \"<i>Good.</i>\" Slowly but surely making [ember.hisHer] way towards your [pc.crotch]. ");

@@ -155,6 +155,8 @@ package classes.Characters.CoC
 			
 			this.createStatusEffect("Disarm Immune");
 			
+			this.impregnationType = "CoCAmilyPregnancy";
+			
 			sexualPreferences.setRandomPrefs(2 + rand(3));
 			
 			inventory = [];

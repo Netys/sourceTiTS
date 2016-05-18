@@ -12,9 +12,14 @@
 		{			
 			_pregHandlers = new Array();
 			
+			PregnancyManager.insertNewHandler(new CoCAmilyPregnancy());
 			PregnancyManager.insertNewHandler(new CoCAnemonePregnancy());
+			PregnancyManager.insertNewHandler(new CoCCentaurPregnancy());
+			PregnancyManager.insertNewHandler(new CoCHellhoundPregnancy());
 			PregnancyManager.insertNewHandler(new CoCImpPregnancy());
+			PregnancyManager.insertNewHandler(new CoCKeltPregnancy());
 			PregnancyManager.insertNewHandler(new CoCMinotaurPregnancy());
+			PregnancyManager.insertNewHandler(new CoCMousePregnancy());
 			PregnancyManager.insertNewHandler(new CoCOviElixEggs());
 			
 			PregnancyManager.insertNewHandler(new VenusPitcherFertilizedSeedCarrierHandler());

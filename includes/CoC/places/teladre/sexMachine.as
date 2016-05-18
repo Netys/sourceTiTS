@@ -9,7 +9,7 @@ public function get sexMachine():PregnancyPlaceholder
 	var pp:PregnancyPlaceholder = new PregnancyPlaceholder();
 	if(!pp.hasCock()) pp.createCock();
 	pp.cocks[0].cLengthRaw = 8;
-	pp.impregnationType = ""; // set to random in future
+	pp.impregnationType = RandomInCollection("CoCMinotaurPregnancy", "CoCMousePregnancy", "CoCMousePregnancy", "CoCCentaurPregnancy", "CoCCentaurPregnancy", "CoCCentaurPregnancy");
 	return pp;
 }
 

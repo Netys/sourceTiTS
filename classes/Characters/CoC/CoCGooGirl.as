@@ -182,6 +182,8 @@ package classes.Characters.CoC
 			this.milkRate = 1;
 			this.ass.wetnessRaw = 5;
 			
+			this.impregnationType = "CoCGooGirlPregnancy";
+			
 			if(kGAMECLASS.pc.biggestTitSize() > 3) {
 				breastRows[0].breastRatingRaw = kGAMECLASS.pc.biggestTitSize();
 				long += "  She has apparently made herself a bit more like you, as her chest appears to be a perfect copy of your " + kGAMECLASS.pc.chestDesc() + ".";

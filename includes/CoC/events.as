@@ -123,10 +123,19 @@ public function EventsAdopterHellNotify():void {
 	//////////////////////////////////////////
 	////    OVIPOSITION PERK PROCESSOR    ////
 	//////////////////////////////////////////
-	if (pc.hasPerk("Oviposition") && pc.hasVagina() && pc.fertility() > 0 && (days % 30 == 0 || pc.fertility() >= 2 && days % (30 / int(pc.fertility())) == 0) && !pc.isPregnant()) {
+	if (pc.lizardScore() < 3 && pc.dragonScore() < 3 && pc.harpyScore() < 3 && pc.hasPerk("Oviposition") && !pc.hasPerk("Basilisk Womb")) { //--Lose Oviposition perk if lizard score gets below 3.
+		eventBuffer += "\n\nAnother change in your uterus ripples through your reproductive systems.  Somehow you know you've lost a little bit of reptilian reproductive ability.\n(<b>Perk Lost: Oviposition</b>)";
+		pc.removePerk("Oviposition");
+	}
+	if (pc.bunnyScore() < 3 && pc.hasPerk("Bunny Eggs")) { //--Lose Oviposition perk if bunny score gets below 3.
+		eventBuffer += "\n\nAnother change in your uterus ripples through your reproductive systems.  Somehow you know you've lost your ability to spontaneously lay eggs.\n(<b>Perk Lost: Bunny Eggs</b>)";
+		pc.removePerk("Bunny Eggs");
+	}
+	
+	if ((pc.hasPerk("Oviposition") || pc.hasPerk("Bunny Eggs")) && pc.hasVagina() && pc.fertility() > 0 && (days % 30 == 0 || pc.fertility() >= 2 && days % (30 / int(pc.fertility())) == 0) && !pc.isPregnant()) {
 		if (PregnancyManager.findHandler("CoCOviElixEggs").tryKnockUp(pc, pc, 0)) {
 			eventBuffer += "\n\n<b>Somehow you know that eggs have begun to form inside you.  You wonder how long it will be before they start to show?</b>";
-			pc.addPerkValue("Oviposition", 1, 1); //Count times eggpregged this way in perk.
+			if(pc.hasPerk("Oviposition")) pc.addPerkValue("Oviposition", 1, 1); //Count times eggpregged this way in perk.
 		}
 	}
 	

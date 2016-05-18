@@ -1230,8 +1230,6 @@ private function fuckKeltsShitUp():void {
 	}
 }
 
-
-
 public function KeltSubmissionTimePassedNotify():void {
 	if (hours % 4 == 0 && Flag("COC.KELT_SUBMISSION") > 0) {
 		Flag("COC.KELT_SUBMISSION", -1, true);
@@ -1239,3 +1237,60 @@ public function KeltSubmissionTimePassedNotify():void {
 }
 private var KeltSubmissionTimePassedNotifyHook: * = KeltSubmissionTimePassedNotifyGrapple();
 private function KeltSubmissionTimePassedNotifyGrapple():* { timeChangeListeners.push(KeltSubmissionTimePassedNotify); }
+
+public function giveBirthToCentaur(pregSlot:int):void
+{
+	clearOutput();
+
+	var pData:PregnancyData = pc.pregnancyData[pregSlot] as PregnancyData;
+	
+	output("You blink, feeling a sudden ache of need radiating from your massive stomach. You can't even get off the ground, it is so heavy... you simply lie on your side, panting with desire, as the convulsions start. New life moves beneath your stomach, ready to be born, and it is time to do your part.");
+	
+	if (!pc.hasVagina(pregSlot)) {
+		pc.createVagina();
+		pregSlot = pc.vaginas.length - 1; // failsafe
+		output("\n\nYou feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
+	}
+	
+	if (!pc.canLactate()) pc.boostLactation(50);
+	
+	//Main Text here
+	output("\n\nPerhaps strangely, there is no pain, just a steady, rhythmic compulsion that directs you to breathe steadily and spread your legs as wide as possible. You hardly have to push at all, as the child - no, your child, begins pressing against the walls of your womb, searching for escape. It finds it, and begins the arduous task of squeezing through your cervix, making you gasp with barely concealed pleasure.  It doesn't even hurt; there's only a dull little whisper of happiness followed by a tide of satisfaction.");
+	output("\n\nThe head comes first, and your first thought is relief as you see the face of a small, elfin child.  She's slick with afterbirth and pushing her way free. But the greater part is to come.  She pulls her body free, easily twice as large as her human torso. Soft downy fur with long, spindly legs and a bristly tail... she is a centaur! You help as best as you can, proud of your achievement, but are too exhausted by the ordeal. Your newfound daughter does most of the work.");
+	output("\n\nShe cannot stand, at first, and stumbles over her own shaky legs in a cute, innocent way. She appears to be a six-year old girl, stuck on top of the body of a young foal, and your heart goes out to her involuntarily. She manages to stand at last, wobbling uncertainly, and moves immediately towards your prone form. Knowing her needs, you reveal a breast to her, and she nickers affectionately before latching on, drinking hungrily from your heavily lactating teat.");
+	output("\n\nShe drinks endlessly, and seems more alive and stronger with every gulp. Hours pass in quiet, motherly bliss as she drains your breastmilk first from one breast, then the other. Her little stomach bulges slightly, but she does not stop, and you do not want her to. Even with the strange, soothing effect of the pregnancy wearing off, you feel nothing but affection for this child.");
+	output("\n\nBy the time she is finished, the centaur girl is obviously stronger, able to stand and move about on her own. She explores her new body, jumping and prancing happily, while you lay back and watch, too exhausted to join her. Suddenly, though, her ears perk up, as she looks towards the horizon urgently. She hesitates just long enough to plant a sweet kiss on your cheek, then dashes off, smiling broadly. Exhausted, you are unable to follow... but that comforting sensation returns.  Somehow, you sense she will be all right.");
+	
+	if (pc.milkMultiplier < 100) {
+		output("\n\nYour breasts won't seem to stop dribbling milk, lactating more heavily than before.");
+		pc.boostLactation(10);
+	}
+	
+	pc.cuntChange(pregSlot, cockVolume(100), false, true, false);
+	
+	if (pc.vaginas[pregSlot].wetnessRaw == 0) pc.vaginas[pregSlot].wetnessRaw++;
+	
+	pc.orgasm();
+	
+	// tou -2
+	pc.slowStatGain("p", -1);
+	pc.slowStatGain("r", 3);
+	pc.slowStatGain("l", 1);
+	// sen +0.5
+	
+	if (pc.buttRatingRaw < 14 && rand(2) == 0) {
+		if (pc.buttRatingRaw < 10) {
+			pc.buttRatingRaw++;
+			output("\n\nYou notice your [pc.ass] feeling larger and plumper after the ordeal.");
+		}
+		//Big butts grow slower!
+		else if (pc.buttRatingRaw < 14 && rand(2) == 0) {
+			pc.buttRatingRaw++;
+			output("\n\nYou notice your ass feeling larger and plumper after the ordeal.");
+		}
+	}
+	
+	processTime(4 * 60);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
+}

@@ -410,25 +410,30 @@ private function loseToSpiderBoyVagFucked():void
 	CombatManager.genericLoss();
 }
 
-//public function spiderPregVagBirth():void
-//{
-	//output("\n", false);
-	//spriteSelect(74);
-	//if (pc.vaginas.length == 0) {
-		//output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a vagina.  ", false);
-		//pc.createVagina();
-		//pc.genderCheck();
-	//}
-	//output("You shudder violently, your stomach growling fiercely at you. It feels as if something is moving around in your womb, and you bend over on all fours, raising your ass into the air as if it is the most natural thing in the world. A slimy green fluid starts leaking out of your [pc.vagina], making a small puddle on the ground. The sensation is extremely pleasurable as you feel it running down your thighs. Groaning, you start to push out a small, smooth green ball, and the action makes your [pc.vagina] so much wetter.  You push out another, and another, each ball rubbing against your inner walls before dropping into the slimy pool of goo. After the sixth, you orgasm, ", false);
-	////[if male/herm]
-	//if (pc.gender != 2) output("spraying your cum all over the ground underneath you, each egg squeezing out and prolonging the intense feeling.\n\n", false);
-	////[if female/genderless] 
-	//else output("spraying your juices all over the ground and mixing in with the green slime, soaking your legs, each egg you squeeze out only prolonging the intense feeling.\n\n", false);
-//
-	//output("After what seems like hours, you have lost count of the eggs pushed out, and you collapse from sexual exhaustion.\n\n", false);
-	//kGAMECLASS.timeQ += 2;
-	//output("You awaken later on, a sticky feeling between your legs to go with your wet pussy", false);
-	//if (pc.hasCock()) output(" and raging hard on", false);
-	//output(". Looking around, you notice the slimy pool appears to have dried up, but the broken eggshells show that you weren't just dreaming. Tiny dots in the dirt form a trail leading to the swamp, and you can only guess where your offspring went.\n", false);
-	//pc.orgasm();
-//}
+public function spiderPregVagBirth(pregSlot:int):void
+{
+	if (!pc.hasVagina(pregSlot)) {
+		pc.createVagina();
+		pregSlot = pc.vaginas.length - 1; // failsafe
+		output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
+		output("\n\n");
+	}
+	
+	output("You shudder violently, your stomach growling fiercely at you. It feels as if something is moving around in your womb, and you bend over on all fours, raising your [pc.ass] into the air as if it is the most natural thing in the world. A slimy green fluid starts leaking out of your [pc.vaginaNoun], making a small puddle on the ground. The sensation is extremely pleasurable as you feel it running down your thighs. Groaning, you start to push out a small, smooth green ball, and the action makes your [pc.vagina] so much wetter.  You push out another, and another, each ball rubbing against your inner walls before dropping into the slimy pool of goo. After the sixth, you orgasm, ");
+	//[if male/herm]
+	if (pc.hasCock()) output("spraying your cum all over the ground underneath you, each egg squeezing out and prolonging the intense feeling.");
+	//[if female/genderless] 
+	else output("spraying your juices all over the ground and mixing in with the green slime, soaking your legs, each egg you squeeze out only prolonging the intense feeling.");
+
+	output("\n\nAfter what seems like hours, you have lost count of the eggs pushed out, and you collapse from sexual exhaustion.");
+	
+	output("\n\nYou awaken later on, a sticky feeling between your legs to go with your wet pussy");
+	if (pc.hasCock()) output(" and raging hard on");
+	output(". Looking around, you notice the slimy pool appears to have dried up, but the broken eggshells show that you weren't just dreaming. Tiny dots in the dirt form a trail leading to the swamp, and you can only guess where your offspring went.");
+	
+	processTime(2 * 60);
+	pc.lust(pc.lustMax());
+	
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
+}

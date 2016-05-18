@@ -513,3 +513,58 @@ public function CoCHellHoundWon():void
 {
 	hellhoundRapesPlayer();
 }
+
+public function giveBirthToHellHound(pregSlot:int):void
+{
+	clearOutput();
+
+	var pData:PregnancyData = pc.pregnancyData[pregSlot] as PregnancyData;
+	
+	output("You are suddenly awoken by the heat inside your womb suddenly flaring up rather intensely.  It gives you a sudden charge of energy and you feel a strong need to stand up.  You can feel the two heads moving inside of you and you know that a hellhound will soon be born.  Guided by your instincts, you spread your legs and squat down, but wonder how exactly you are going to pass a creature with two heads?");
+	
+	if (!pc.hasVagina(pregSlot)) {
+		pc.createVagina();
+		pregSlot = pc.vaginas.length - 1; // failsafe
+		output("\n\nYou feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
+	}
+	
+	if (!pc.canLactate()) pc.boostLactation(50);
+	
+	//Main Text here
+	output("\n\nHearing a hiss, you look down to see drops of water hitting the ground and instantly turning to steam.  There is unnatural heat filling you, it's hot enough to boil water; but thanks to the creature inside you, you're barely feeling a thing!  More energy fills you and you begin to push down on the child within in earnest.  The process is painful, but satisfying; you feel like you could push out a mountain with the energy you have right now.  Within a minute, you can feel the heads emerge.  The heads are quickly followed by the rest of the body and you catch your hellhound child in your hands and lift it up to look at it.");
+	output("\n\nYou can see the distinctive dog heads are wrapped around each other and yipping softly; a hint of flame can sometimes be seen inside their mouths.  Its cute paws are waving in the air looking for purchase, but the rest of its body looks entirely human except for the double dicks, and it even has your skin color.  Its mouths are aching for nutrition, and you realize that your breasts are filled with what this pup needs and pull it to your chest.  Each head quickly finds a nipple and begins to suckle.  Having finished the birthing, you contentedly sit back down and bask in the feeling of giving milk to your child, or is it children?");
+	output("\n\nYou sit there in a state of euphoria for some time.  It's not until the child in front of you starts to become uncomfortably hot and heavy, that you are brought back to reality.  You look down to see that the hellhound pup has grown to three times its original size and even sprouted the distinctive layer of tough black fur.  The beast is licking contentedly at your breasts instead of sucking.  It was the now-full flames in its mouth that had broken your reverie, but before you get a real grasp of what had happened, the hellhound pulls away from you and gives you a few quick happy barks before turning around and running off into the wilds, dropping down onto four legs just before disappearing from view.  You feel the unnatural strength you gained during the birth fade away, and you fall into a deep contented sleep.");
+	
+	if (pc.milkMultiplier < 100) {
+		output("\n\nYour breasts won't seem to stop dribbling milk, lactating more heavily than before.");
+		pc.boostLactation(10);
+	}
+	
+	pc.cuntChange(pregSlot, cockVolume(60), false, true, false);
+	
+	if (pc.vaginas[pregSlot].wetnessRaw == 0) pc.vaginas[pregSlot].wetnessRaw++;
+	
+	pc.orgasm();
+	
+	// tou -1
+	pc.slowStatGain("p", -1);
+	pc.slowStatGain("r", 2);
+	pc.slowStatGain("l", 1);
+	// sen +0.5
+	
+	if (pc.buttRatingRaw < 14 && rand(2) == 0) {
+		if (pc.buttRatingRaw < 10) {
+			pc.buttRatingRaw++;
+			output("\n\nYou notice your [pc.ass] feeling larger and plumper after the ordeal.");
+		}
+		//Big butts grow slower!
+		else if (pc.buttRatingRaw < 14 && rand(2) == 0) {
+			pc.buttRatingRaw++;
+			output("\n\nYou notice your ass feeling larger and plumper after the ordeal.");
+		}
+	}
+	
+	processTime(4 * 60);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
+}

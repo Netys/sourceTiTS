@@ -548,88 +548,105 @@ private function drinkSomeUrtaPostBirthTitMilk():void {
 
 //PC Pregnancy Stages
 //PC takes 3 days to progress from one pregnancy stage to the next
-//public function urtaPregooUpdates():Boolean {
-	//if (pc.pregnancyIncubation == 504) {
-		//output("\n<b>You're feeling a bit nauseated.  Your mind floats to Urta and you wonder if maybe this means her seed took...</b>\n");
-		//return true;
-	//}
-	//else if (pc.pregnancyIncubation == 432) {
-		//output("\n<b>You notice your belly has developed into a small bump.  Now you have zero doubts; you're pregnant with Urta's child.  You smile to yourself and decide to pay the vixen a visit.</b>");
-		//output("\n\nOnce you're past Tel'Adre's gates you ask around and finally spot Urta walking down a street.  She sees you approaching her and smiles, giving you a friendly wave.  \"<i>[pc.name]!  What brings you here?</i>\"  You greet her with a short kiss, not able to contain your smile of happiness. \"<i>You're affectionate today; what's up?  Something good happen?</i>\"  Urta laughs, happy to see someone who is so happy to see her.");
-		//
-		//output("\n\nYou strike a small pose, sticking your belly, letting her connect the dots.  She giggles, points hesitantly at it, then lets out a cheer and hugs you tightly when you confirm that, yes, you are pregnant, and she's the father.  \"<i>Oh, [pc.name], you make me so happy... what did I ever do to deserve you in my life?</i>\"  You hug her back, kissing her affectionately, which provokes a rather inappropriate reaction, considering your currently public location.  \"<i>Eh-heh... maybe we should move somewhere more private?</i>\"  Urta grins sheepishly.  \"<i>And I'll have to start getting myself some more external patrols; I can't just leave the mother of my child alone out there in the wilderness, now can I?</i>\"  She notes.");
-		//
-		//output("\n\nYou can't resist but ask if this means you'll be seeing her more frequently?  \"<i>Yes, it does... now, if you'll excuse me...</i>\"  the vixen replies, ducking into a nearby alley, her skirt blatantly tented by her erection.  You let her go handle her problem and go about your own business.\n");
-		//return true;
-	//}
-	////3:
-	//else if (pc.pregnancyIncubation == 360) {
-		//output("\n\"<i>[pc.name]?  [pc.name], are you here?  Oh, please tell me I haven't come out here all the way for nothing...</i>\"");
-		//output("\n\nYou go to the edge of the camp to greet Urta.  She smiles when she sees you, looking at your expanding belly with pride, and then holds up a woven-cane basket.  \"<i>I thought you might appreciate some fresh supplies - food, drinkables, medicine, that sort of thing - so I brought some along with me on my patrol today.</i>\" She explains.");
-		//output("\n\nYou thank her for the supplies, and tell her those will help you with your latest cravings.");
-		////.. except for one.");
-		////output("\n\nUrta looks at you with a puzzled expression.  \"<i>What craving is that?</i>\"  Then she develops a sly look.  \"<i>It wouldn't happen to be something that a certain lucky vixen might be able to provide, hmm?</i>\"  You circle her, examining her with a sly smile.  Urta grins in anticipation, her erection already starting to lift her skirt up.  \"<i>You know... they don't expect me back in Tel'Adre for some time yet; plenty of time for us to help your cravings...</i>\"");
-		////output("\n\nDo you let Urta <i>help</i> you?");
-		////clearMenu();
-		////addButton(0,"Yes",getUrtaHelpPreggoPC);
-		////addButton(1,"No",noHelpForUrtaPreggoPC);
-		////flags[kFLAGS.EVENT_PARSER_ESCAPE] = 1;
-		//return true;
-	//}
-	////4: 
-	//else if (pc.pregnancyIncubation == 288) {
-		//output("\nYou sit down near your tent to get some rest.  You're getting pretty heavy... and lugging this little guy around is starting to affect your performance while adventuring.  You decide to sit back and enjoy the cool breeze on this sunny day, when you spot the visage of a familiar vixen in the distance.");
-		//
-		//output("\n\nUrta smiles at you and gives you a friendly wave as she walks up.  \"<i>Hi, lover; how's the baby?</i>\"  She asks, already looking at your swollen stomach.  You take a deep breath and begin telling Urta about the burdens you're facing. The vixen gives you a sympathetic expression as you complain, timidly advancing closer to you as you speak, then gently reaching out with one hand, stopping before she fully touches your belly, looking at you with an obvious nonverbal request for permission.  You simply smile and nod your head.");
-		//
-		//output("\n\nUrta smiles and eagerly starts patting and rubbing your belly, gleefully running her fingers over its taut skin, feeling every inch of the gravid swell.  \"<i>Have you felt it kick, yet?</i>\"  She asks, ");
-		//if (pregnancy.type != PregnancyStore.PREGNANCY_PLAYER) output("sounding somewhat jealous that it's you carrying and not her.");
-		//else output("sounding a little smug as she caresses her own gravid tummy.");
-		//output("  You shake your head, but considering how far you are into the pregnancy, it shouldn't take long... if Urta keeps visiting, you're pretty sure it'll be kicking the next time she comes around.");
-		//
-		//output("\n\n\"<i>Well, then I'll have to keep coming to see you,</i>\" Urta laughs, rubbing your belly.  \"<i>Now, it can't be easy carrying this big heavy belly around, so why don't you lie down and I'll give you a nice backrub, hmm?</i>\"");
-		////She shifts her arms to drape themselves flirtatiously around your neck, leaning in with a mischievous smile on her lips.  \"<i>Or I could take your mind off your belly altogether...</i>\"  She croons, then pecks you teasingly on the lips.");
-		////[Sex][Massage]
+public function urtaPregooUpdates(stage:int):Boolean {
+	if (stage == 1) { // 432
+		clearOutput();
+		
+		output("<b>You notice your belly has developed into a small bump.  Now you have zero doubts; you're pregnant with Urta's child.  You smile to yourself and decide to pay the vixen a visit.</b>");
+		output("\n\nOnce you're past Tel'Adre's gates you ask around and finally spot Urta walking down a street.  She sees you approaching her and smiles, giving you a friendly wave.  \"<i>[pc.name]!  What brings you here?</i>\"  You greet her with a short kiss, not able to contain your smile of happiness. \"<i>You're affectionate today; what's up?  Something good happen?</i>\"  Urta laughs, happy to see someone who is so happy to see her.");
+		
+		output("\n\nYou strike a small pose, sticking your belly, letting her connect the dots.  She giggles, points hesitantly at it, then lets out a cheer and hugs you tightly when you confirm that, yes, you are pregnant, and she's the father.  \"<i>Oh, [pc.name], you make me so happy... what did I ever do to deserve you in my life?</i>\"  You hug her back, kissing her affectionately, which provokes a rather inappropriate reaction, considering your currently public location.  \"<i>Eh-heh... maybe we should move somewhere more private?</i>\"  Urta grins sheepishly.  \"<i>And I'll have to start getting myself some more external patrols; I can't just leave the mother of my child alone out there in the wilderness, now can I?</i>\"  She notes.");
+		
+		output("\n\nYou can't resist but ask if this means you'll be seeing her more frequently?  \"<i>Yes, it does... now, if you'll excuse me...</i>\"  the vixen replies, ducking into a nearby alley, her skirt blatantly tented by her erection.  You let her go handle her problem and go about your own business.");
+		
+		addNextButton();
+		return true;
+	}
+	//3:
+	else if (stage == 2) { // 360
+		clearOutput();
+		
+		output("\"<i>[pc.name]?  [pc.name], are you here?  Oh, please tell me I haven't come out here all the way for nothing...</i>\"");
+		output("\n\nYou go to the edge of the camp to greet Urta.  She smiles when she sees you, looking at your expanding belly with pride, and then holds up a woven-cane basket.  \"<i>I thought you might appreciate some fresh supplies - food, drinkables, medicine, that sort of thing - so I brought some along with me on my patrol today.</i>\" She explains.");
+		output("\n\nYou thank her for the supplies, and tell her those will help you with your latest cravings.");
+		//.. except for one.");
+		//output("\n\nUrta looks at you with a puzzled expression.  \"<i>What craving is that?</i>\"  Then she develops a sly look.  \"<i>It wouldn't happen to be something that a certain lucky vixen might be able to provide, hmm?</i>\"  You circle her, examining her with a sly smile.  Urta grins in anticipation, her erection already starting to lift her skirt up.  \"<i>You know... they don't expect me back in Tel'Adre for some time yet; plenty of time for us to help your cravings...</i>\"");
+		//output("\n\nDo you let Urta <i>help</i> you?");
 		//clearMenu();
-		////addButton(0,"Sex",getUrtaSexWhenPreggoz);
-		//addButton(0,"Massage",getAnUrtaMassageWhenPreggo);
+		//addButton(0,"Yes",getUrtaHelpPreggoPC);
+		//addButton(1,"No",noHelpForUrtaPreggoPC);
 		//flags[kFLAGS.EVENT_PARSER_ESCAPE] = 1;
-		//return true;
-	//}
-	////5
-	//else if (pc.pregnancyIncubation == 216) {
-		//output("\nYou fetch a waterskin to quench your thirst, then sit down on the outskirts of the camp to get some rest.  \"<i>Hey there, beautiful.</i>\"  A familiar voice echoes from behind you as Urta emerges from the wilderness.  She walks right up to you and reaches around to pat your distended belly.  \"<i>And how's the baby treating you, sexy?  You carry that bump well, you know?</i>\"");
-		//output("\n\nYou smile at her compliment and tell her that the baby's finally kicking now, asking her if she wants to feel it...");
-		//output("\n\nUrta squeals in glee and immediately glomps onto your bloated belly, rubbing her hands and her cheek excitedly across its " + pc.skinFurScales() + " surface in hopes of feeling her child moving around inside you.  You groan at Urta's tight hug, she throws you slightly off-balance, but you manage to remain steady.  From inside you, you feel the baby shifting in your increasingly tight womb, and Urta looks up at you in shock, glee dancing in her eyes.  \"<i>I felt it!  It's moving in there!");
-		//if (urtaKids() == 0) output(" Oh, [pc.name], we really are going to be parents...");
-		//output("</i>\" She babbles happily, tail wagging so enthusiastically you wonder if it's going to fall off.");
-		//
-		//output("\n\nYou pat her head and smile at her. She looks cute when she's all excited like that.  Urta flattens her ears, shuts her eyes and leans into the stroking of your hand, reminding you of the dogs back in the village.  \"<i>Mmm... it feels so good to be here, holding the two of you like this... there's nothing that makes me happier...</i>\" She mumbles.");
-		//
-		//output("\n\nConsidering her increasingly tightening hug, you jokingly tell her that if she keeps loving you like that, there won't be much of you for her to love later.  Urta lets out an \"eep!\" of shock and quickly lets go, doing so with such promptness she ends up falling on her butt.  She rubs it and laughs quietly at her own clumsiness.  \"<i>Sorry, [pc.name]; you're just so huggable the way you are, you know?</i>\"");
-		//
-		//output("\n\nYou gently rub your protruding belly, then offer her a helping hand.  She accepts it, and then gives you a last gentle cuddle.  \"<i>All right, I better get back to scouting; don't do anything I wouldn't do, okay, lover?  Or anyone I wouldn't do, either.</i>\"  She laughs.  You give her a quick farewell kiss then send the happy vixen on her way.\n");
-		//return true;
-	//}
-	////6:
-	//else if (pc.pregnancyIncubation == 144) {
-		//output("\nYou sigh.  You hope this baby will be born soon, your back is starting to ache after carrying the little guy everywhere.  \"<i>Hello, lover... oh, why the long face?</i>\"  Urta asks.  You're not surprised that she's here, now.  You explain to her about how tired you've been feeling lately, since you got this big.  Urta pats your shoulder, looking sympathetic.  \"<i>Really, you should take a break, lover.  I'm on an extended patrol right now, so you and I could stay here and rest together for the day - I'll handle the foraging and defending and stuff for you.</i>\"  She offers.");
-		//clearMenu();
-		//addButton(0,"Accept",acceptUrtaLevelSixPreggoHelps);
-		//addButton(1,"Decline",declineUrtaLevelSixPreggoHelps);
+		addNextButton();
+		return true;
+	}
+	//4: 
+	else if (stage == 3) { // 288
+		clearOutput();
+		
+		output("You sit down near your tent to get some rest.  You're getting pretty heavy... and lugging this little guy around is starting to affect your performance while adventuring.  You decide to sit back and enjoy the cool breeze on this sunny day, when you spot the visage of a familiar vixen in the distance.");
+		
+		output("\n\nUrta smiles at you and gives you a friendly wave as she walks up.  \"<i>Hi, lover; how's the baby?</i>\"  She asks, already looking at your swollen stomach.  You take a deep breath and begin telling Urta about the burdens you're facing. The vixen gives you a sympathetic expression as you complain, timidly advancing closer to you as you speak, then gently reaching out with one hand, stopping before she fully touches your belly, looking at you with an obvious nonverbal request for permission.  You simply smile and nod your head.");
+		
+		output("\n\nUrta smiles and eagerly starts patting and rubbing your belly, gleefully running her fingers over its taut skin, feeling every inch of the gravid swell.  \"<i>Have you felt it kick, yet?</i>\"  She asks, ");
+		if (flags["COC.URTA_INCUBATION"] == undefined) output("sounding somewhat jealous that it's you carrying and not her.");
+		else output("sounding a little smug as she caresses her own gravid tummy.");
+		output("  You shake your head, but considering how far you are into the pregnancy, it shouldn't take long... if Urta keeps visiting, you're pretty sure it'll be kicking the next time she comes around.");
+		
+		output("\n\n\"<i>Well, then I'll have to keep coming to see you,</i>\" Urta laughs, rubbing your belly.  \"<i>Now, it can't be easy carrying this big heavy belly around, so why don't you lie down and I'll give you a nice backrub, hmm?</i>\"");
+		//She shifts her arms to drape themselves flirtatiously around your neck, leaning in with a mischievous smile on her lips.  \"<i>Or I could take your mind off your belly altogether...</i>\"  She croons, then pecks you teasingly on the lips.");
+		//[Sex][Massage]
+		clearMenu();
+		//addButton(0,"Sex",getUrtaSexWhenPreggoz);
+		addButton(0, "Massage", getAnUrtaMassageWhenPreggo);
 		//flags[kFLAGS.EVENT_PARSER_ESCAPE] = 1;
-		//return true;
-	//}
-	//else if (pc.pregnancyIncubation == 72) {
-		//output("\nYou lay down on your tent to take a short nap, but when you're nearly dozing off, you spot a shadow on the outside of your tent.  Recognizing its vulpine form, you greet Urta as she approaches.");
-		//output("\n\n\"<i>Are you feeling okay, [pc.name]?</i>\"  Urta suddenly blurts out with no preamble.  You nod your head, explaining that you're just tired, and you hope this baby will be out of you soon, you can't stand carrying it around anymore.  \"<i>Well, I don't think you'll have long to worry... I mean, have you taken a look at yourself recently, lover?  I don't mean to be rude, but you're huge!  You're going to pop any day now!</i>\"  She replies, staring anxiously at your midriff.");
-		//output("\n\nYeah... you're pretty big, you admit.  \"<i>You really should come to Tel'adre, you know, [pc.name].  I don't know any doctors who'll make housecalls all the way out here, not in the state the world is in.</i>\"  Urta tells you, blatant worry in her eyes.");
-		//output("\n\nYou nod, considering her words.  But ultimately you don't think you need to go there right away. If you start feeling like you're going to go into labor, then you'll go to Tel'Adre.  Urta really doesn't look convinced, but sighs and nods.  \"<i>All right, [pc.name], I know I can't make you change your mind.  Just... please try to be careful, all right?  You're at your most delicate state, you know?</i>\"  She doesn't give you time to answer, instead enveloping you in a gently possessive hug.  You hug her back and promise to be careful.");
-		//output("\n\n\"<i>Just you make sure you do - I can't lose the two of you, not now!</i>\"  Urta says - are those tears in her eyes?  She gives you one last squeeze, then lets go and runs off into the wilderness, probably more to avoid any potentially embarrassing outbursts than anything else.\n");
-		//return true;
-	//}
-	//return false;
-//}
+		return true;
+	}
+	//5
+	else if (stage == 4) { // 216
+		clearOutput();
+		
+		output("You fetch a waterskin to quench your thirst, then sit down on the outskirts of the camp to get some rest.  \"<i>Hey there, beautiful.</i>\"  A familiar voice echoes from behind you as Urta emerges from the wilderness.  She walks right up to you and reaches around to pat your distended belly.  \"<i>And how's the baby treating you, sexy?  You carry that bump well, you know?</i>\"");
+		output("\n\nYou smile at her compliment and tell her that the baby's finally kicking now, asking her if she wants to feel it...");
+		output("\n\nUrta squeals in glee and immediately glomps onto your bloated belly, rubbing her hands and her cheek excitedly across its " + pc.skinFurScales() + " surface in hopes of feeling her child moving around inside you.  You groan at Urta's tight hug, she throws you slightly off-balance, but you manage to remain steady.  From inside you, you feel the baby shifting in your increasingly tight womb, and Urta looks up at you in shock, glee dancing in her eyes.  \"<i>I felt it!  It's moving in there!");
+		if (urtaKids() == 0) output(" Oh, [pc.name], we really are going to be parents...");
+		output("</i>\" She babbles happily, tail wagging so enthusiastically you wonder if it's going to fall off.");
+		
+		output("\n\nYou pat her head and smile at her. She looks cute when she's all excited like that.  Urta flattens her ears, shuts her eyes and leans into the stroking of your hand, reminding you of the dogs back in the village.  \"<i>Mmm... it feels so good to be here, holding the two of you like this... there's nothing that makes me happier...</i>\" She mumbles.");
+		
+		output("\n\nConsidering her increasingly tightening hug, you jokingly tell her that if she keeps loving you like that, there won't be much of you for her to love later.  Urta lets out an \"eep!\" of shock and quickly lets go, doing so with such promptness she ends up falling on her butt.  She rubs it and laughs quietly at her own clumsiness.  \"<i>Sorry, [pc.name]; you're just so huggable the way you are, you know?</i>\"");
+		
+		output("\n\nYou gently rub your protruding belly, then offer her a helping hand.  She accepts it, and then gives you a last gentle cuddle.  \"<i>All right, I better get back to scouting; don't do anything I wouldn't do, okay, lover?  Or anyone I wouldn't do, either.</i>\"  She laughs.  You give her a quick farewell kiss then send the happy vixen on her way.");
+		
+		addNextButton();
+		return true;
+	}
+	//6:
+	else if (stage == 5) { // 144
+		clearOutput();
+		
+		output("You sigh.  You hope this baby will be born soon, your back is starting to ache after carrying the little guy everywhere.  \"<i>Hello, lover... oh, why the long face?</i>\"  Urta asks.  You're not surprised that she's here, now.  You explain to her about how tired you've been feeling lately, since you got this big.  Urta pats your shoulder, looking sympathetic.  \"<i>Really, you should take a break, lover.  I'm on an extended patrol right now, so you and I could stay here and rest together for the day - I'll handle the foraging and defending and stuff for you.</i>\"  She offers.");
+		
+		clearMenu();
+		addButton(0, "Accept", acceptUrtaLevelSixPreggoHelps);
+		addButton(1, "Decline", declineUrtaLevelSixPreggoHelps);
+		//flags[kFLAGS.EVENT_PARSER_ESCAPE] = 1;
+		return true;
+	}
+	else if (stage == 6) { // 72
+		clearOutput();
+		
+		output("\nYou lay down on your tent to take a short nap, but when you're nearly dozing off, you spot a shadow on the outside of your tent.  Recognizing its vulpine form, you greet Urta as she approaches.");
+		output("\n\n\"<i>Are you feeling okay, [pc.name]?</i>\"  Urta suddenly blurts out with no preamble.  You nod your head, explaining that you're just tired, and you hope this baby will be out of you soon, you can't stand carrying it around anymore.  \"<i>Well, I don't think you'll have long to worry... I mean, have you taken a look at yourself recently, lover?  I don't mean to be rude, but you're huge!  You're going to pop any day now!</i>\"  She replies, staring anxiously at your midriff.");
+		output("\n\nYeah... you're pretty big, you admit.  \"<i>You really should come to Tel'adre, you know, [pc.name].  I don't know any doctors who'll make housecalls all the way out here, not in the state the world is in.</i>\"  Urta tells you, blatant worry in her eyes.");
+		output("\n\nYou nod, considering her words.  But ultimately you don't think you need to go there right away. If you start feeling like you're going to go into labor, then you'll go to Tel'Adre.  Urta really doesn't look convinced, but sighs and nods.  \"<i>All right, [pc.name], I know I can't make you change your mind.  Just... please try to be careful, all right?  You're at your most delicate state, you know?</i>\"  She doesn't give you time to answer, instead enveloping you in a gently possessive hug.  You hug her back and promise to be careful.");
+		output("\n\n\"<i>Just you make sure you do - I can't lose the two of you, not now!</i>\"  Urta says - are those tears in her eyes?  She gives you one last squeeze, then lets go and runs off into the wilderness, probably more to avoid any potentially embarrassing outbursts than anything else.");
+		
+		addNextButton();
+		return true;
+	}
+	addNextButton(); // failsafe?
+	return false;
+}
 
 //[=No=]
 private function noHelpForUrtaPreggoPC():void {
@@ -709,14 +726,18 @@ private function acceptUrtaLevelSixPreggoHelps():void {
 }
 	
 //PC Gives Birth
-public function PCGivesBirf():void {
-	output("\n");
+public function PCGivesBirf(pregSlot:int):void {
+	clearOutput();
+	
 	flags["COC.URTA_PREGNANT_DELIVERY_SCENE"] = undefined;
 	flags["COC.NEW_BABY_ANNOUNCED"] = undefined;
-	if (!pc.hasVagina()) {
-		output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a vagina.  ");
+	if (!pc.hasVagina(pregSlot)) {
 		pc.createVagina();
+		pregSlot = pc.vaginas.length - 1; // failsafe
+		output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
+		output("\n\n");
 	}
+	
 	output("You double over in pain as you feel a rush of fluids escape your [pc.vagina].  Looks like your water broke.  You recall promising Urta that you'd go to the hospital before actually going into labor, but right now there's nothing you can do.  It hurts and you know you won't make it there in time, so you rush to your tent and lay down on your bedroll, silently praying that Urta will swing by to assist you.");
 	//1st Time:
 	if (int(flags["COC.URTA_TIMES_PC_BIRTHED"]) == 0) {
@@ -789,7 +810,7 @@ public function PCGivesBirf():void {
 	//[She]
 	if (gender >= 2) output("She");
 	else output("He");
-	output(" will be brought up safely, I promise.</i>\"  With that, she carefully bundles up the sleeping child and quietly vanishes into the wilderness, leaving you to take yourself off to bed for a proper rest.\n");
+	output(" will be brought up safely, I promise.</i>\"  With that, she carefully bundles up the sleeping child and quietly vanishes into the wilderness, leaving you to take yourself off to bed for a proper rest.");
 	
 	//SET ALL PREGGOGOGOGOGOGO
 	IncrementFlag("COC.URTA_TIMES_PC_BIRTHED");
@@ -799,6 +820,11 @@ public function PCGivesBirf():void {
 		flags["COC.URTA_FIRSTBORN_GENDER"] = flags["COC.URTA_LATESTBORN_GENDER"];
 		flags["COC.URTA_FIRSTBORN_COCKTYPE"] = flags["COC.URTA_LATESTBORN_COCKTYPE"];
 	}
+	
+	processTime(3 * 60);
+	
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 //Happy at the Wet Bitch

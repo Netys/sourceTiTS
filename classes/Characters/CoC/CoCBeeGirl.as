@@ -175,6 +175,9 @@ package classes.Characters.CoC
 			this.ass.wetnessRaw = 1;
 			this.ass.loosenessRaw = 2;
 			this.ass.bonusCapacity += 15;
+			
+			this.impregnationType = "CoCBeeEggsPregnancy";
+			
 			this.createStatusEffect("Disarm Immune");
 			
 			credits = (rand(15) + 1) * 10;

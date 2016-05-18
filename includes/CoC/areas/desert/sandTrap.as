@@ -228,6 +228,7 @@ private function dickwieldersLoseToSandTarps():void {
 	output(" flexing out more moisture into the sand beneath you.  The oil-induced serenity and the sexual marathon the sandtrap has put you through are too much and, even with the creature still relentlessly pumping away at you, you pass out.");
 	
 	output("\n\nYou awaken a while later, wearily getting to your feet and looking around.  You are standing in a featureless stretch of desert... there is no suggestion of the sandtrap, or indeed that you are in the same place where it caught you.  A fair amount of time has passed though, judging by the sky above you.  Perhaps it was all a particularly lucid mirage?  A sensation of... fullness in your abdomen suggests otherwise.  Clutching your bowels uneasily, you make your way back to camp.");
+	if (pc.virility() > 0) enemy.impregnationType = "CoCSandTrapFertilizedPregnancy";
 	pc.loadInAss(enemy);
 	pc.orgasm();
 	pc.slowStatGain("l", 1);
@@ -307,42 +308,48 @@ private function genderlessLoss():void {
 	CombatManager.genericLoss();
 }
 
-//public function birfSandTarps():void {
-	////spriteSelect(97);
-	//output("\nYour eyes widen as a gout of oil suddenly gushes from your ass.  Before panic can set in, an incredible light-headedness overtakes you.  Dreamily, you discard your [pc.gear] and squat.  More oil oozes out of you, and in your hazy euphoria, you scoop some of it up and rub it dreamily into your [pc.nipples].  Part of you is disgusted at yourself, questioning what you are doing, but that is one voice in a million-strong chorus crooning you into total relaxation... the oil clings to your skin and seems to radiate warmth and softness.  Something round stretches your rectum wide, but in your state the sensation is practically orgasmic.");
-	////[Male: 
-	//if(pc.gender == 1) {
-		//output("  You roll your eyes to the sky and moan, [pc.eachCock] growing hard as you push out the egg.");
-		////[(mans and qualified horses only)]
-		//if(!pc.isTaur() || (pc.tallness * (5/6) < pc.cocks[pc.longestCock()].cLength())) output("  Your oily hands descend upon your cock, and you massage your shaft as you feel the pressure in your bowels intensify again.");
-	//}
-	////Female: 
-	//else if(pc.gender == 2) {
-		//output("  You roll your eyes to the sky and moan, your [pc.vagina] moistening as you push out the egg.");
-		////[(no fukken horses from here)]
-		//if(!pc.isTaur()) output("  Your oily hands push softly into your cleft, fingering your needy [pc.clit] as you feel the pressure in your bowels intensify again.");
-	//}
-	////Herm: 
-	//else if(pc.gender == 3) {
-		//output("  You roll your eyes to the sky and moan, [pc.eachCock] growing hard and your [pc.vagina] moistening as you push out the egg.");
-		////[(no horses)]
-		//if(!pc.isTaur()) output("  Your oily hands descend upon your genitals and you begin to slowly pump your shaft and finger your needy [pc.clit] as you feel the pressure in your bowels intensify again.");
-	//}
-	//output("\n\nYou nearly cum as egg number two squeezes out.  You DO cum when egg number three stretches you wide, blowing your mind into the empty sky.  Each egg seems to come out closer on the heels of the one before, and each time your conscious mind loses more of its ability to do anything but wallow in oil and pleasure.");
-	//
-	//output("\n\nYou are brought to your senses by something flitting past your eyes.  You wearily brush your face and pick yourself up.  Behind you, leaking and lying in a translucent ooze, is a multitude of black, oily eggshells.  Of more note are the pale blurs which keep zipping past your head.  They look rather like the fairies which inhabit the forest, except they have six black eyes, are flat-chested and are male... no, female...?  No, male... you can't tell.  They are lithe and beautiful and have tiny, undeveloped insect abdomens hanging above their trim butts and below their dragonfly wings.  They whirr in place for a moment before keeling around and about each other excitedly like hoverflies, chattering to each other in a tongue so fast it is beyond your comprehension.");
-	//
-	////Libido <30:
-	//if(pc.lib < 33) output("\n\nYou pick yourself up wearily, flap the flytraps you have birthed away and make your way back to camp.  This whole experience has been deeply unnerving, and you vow to make sure you don't have to repeat it.");
-	////Libido 30-65: 
-	//else if(pc.lib < 66) output("\n\nYou spend a moment enjoying your post-natal haze, then haul yourself out of it, flap the flytraps you have birthed away, and make your way back to camp.  Though this experience has been deeply unnerving, you can't help but acknowledge it has also been incredibly erotic.");
-	////Libido >65: 
-	//else output("\n\nYou smile lazily, then lie back and glory in the sensual haze the oil has left you in.  After you have spent many minutes lying listening to the happy twittering of your flytrap children above you, you reluctantly get up.  You only hope that you get to experience the unearthly wonder of birthing these strange creatures again, and again, and again.");
-	//pc.buttChange(25,true,true,false);
-	//output("\n");
-	//pc.orgasm();
-	//dynStats("lib", 1, "sen", 4);
-//}
+public function birfSandTarps(pregSlot:int):void {
+	//spriteSelect(97);
+	output("Your eyes widen as a gout of oil suddenly gushes from your ass.  Before panic can set in, an incredible light-headedness overtakes you.  Dreamily, you discard your [pc.gear] and squat.  More oil oozes out of you, and in your hazy euphoria, you scoop some of it up and rub it dreamily into your [pc.nipples].  Part of you is disgusted at yourself, questioning what you are doing, but that is one voice in a million-strong chorus crooning you into total relaxation... the oil clings to your skin and seems to radiate warmth and softness.  Something round stretches your rectum wide, but in your state the sensation is practically orgasmic.");
+	//[Male: 
+	if(pc.hasCock() && !pc.hasVagina()) {
+		output("  You roll your eyes to the sky and moan, [pc.eachCock] growing hard as you push out the egg.");
+		//[(mans and qualified horses only)]
+		if (!pc.isTaur() || pc.isFlexible() || pc.tallness * (5 / 6) < pc.longestCockLength()) output("  Your oily hands descend upon your cock, and you massage your shaft as you feel the pressure in your bowels intensify again.");
+	}
+	//Female: 
+	else if(!pc.hasCock() && pc.hasVagina()) {
+		output("  You roll your eyes to the sky and moan, your [pc.vagina] moistening as you push out the egg.");
+		//[(no fukken horses from here)]
+		if(!pc.isTaur() || pc.isFlexible()) output("  Your oily hands push softly into your cleft, fingering your needy [pc.clit] as you feel the pressure in your bowels intensify again.");
+	}
+	//Herm: 
+	else if(pc.isHerm()) {
+		output("  You roll your eyes to the sky and moan, [pc.eachCock] growing hard and your [pc.vagina] moistening as you push out the egg.");
+		//[(no horses)]
+		if(!pc.isTaur() || pc.isFlexible()) output("  Your oily hands descend upon your genitals and you begin to slowly pump your shaft and finger your needy [pc.clit] as you feel the pressure in your bowels intensify again.");
+	}
+	output("\n\nYou nearly cum as egg number two squeezes out.  You DO cum when egg number three stretches you wide, blowing your mind into the empty sky.  Each egg seems to come out closer on the heels of the one before, and each time your conscious mind loses more of its ability to do anything but wallow in oil and pleasure.");
+	
+	output("\n\nYou are brought to your senses by something flitting past your eyes.  You wearily brush your face and pick yourself up.  Behind you, leaking and lying in a translucent ooze, is a multitude of black, oily eggshells.  Of more note are the pale blurs which keep zipping past your head.  They look rather like the fairies which inhabit the forest, except they have six black eyes, are flat-chested and are male... no, female...?  No, male... you can't tell.  They are lithe and beautiful and have tiny, undeveloped insect abdomens hanging above their trim butts and below their dragonfly wings.  They whirr in place for a moment before keeling around and about each other excitedly like hoverflies, chattering to each other in a tongue so fast it is beyond your comprehension.");
+	
+	//Libido <30:
+	if(pc.slut() < 33) output("\n\nYou pick yourself up wearily, flap the flytraps you have birthed away and make your way back to camp.  This whole experience has been deeply unnerving, and you vow to make sure you don't have to repeat it.");
+	//Libido 30-65: 
+	else if(pc.slut() < 66) output("\n\nYou spend a moment enjoying your post-natal haze, then haul yourself out of it, flap the flytraps you have birthed away, and make your way back to camp.  Though this experience has been deeply unnerving, you can't help but acknowledge it has also been incredibly erotic.");
+	//Libido >65: 
+	else output("\n\nYou smile lazily, then lie back and glory in the sensual haze the oil has left you in.  After you have spent many minutes lying listening to the happy twittering of your flytrap children above you, you reluctantly get up.  You only hope that you get to experience the unearthly wonder of birthing these strange creatures again, and again, and again.");
+	pc.buttChange(cockVolume(25), true, true, false);
+	
+	processTime(45 + rand(30));
+	pc.orgasm();
+	
+	pc.slowStatGain("l", 1);
+	// sen +4
+	
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
+}
 
 //\"<i>Hands</i>\" (Z)
 //Requires: Genitals

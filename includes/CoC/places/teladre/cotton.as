@@ -23,6 +23,8 @@ public function get cotton():PregnancyPlaceholder // since there are no TFs... s
 	pp.vaginas[0].wetnessRaw = 3;
 	
 	pp.ass.wetnessRaw = 1;
+	
+	pp.impregnationType = "CoCCottonPregnancy";
 	return pp;
 }
 
@@ -1551,16 +1553,17 @@ public function goTellCottonShesAMomDad():void {
 	doNext(returnToCampUseOneHour);
 }
 
-
-
 //Birthing*
-public function birthingCottonsKids():void {
-	output("\nYou wake up suddenly to strong pains and pressures in your gut.  As your eyes shoot wide open, you look down to see your belly absurdly full and distended.  ");
-	if(!pc.hasVagina()) {
-		output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a vagina.  ");
+public function birthingCottonsKids(pregSlot:int):void {
+	clearOutput();
+	
+	output("You wake up suddenly to strong pains and pressures in your gut.  As your eyes shoot wide open, you look down to see your belly absurdly full and distended.  ");
+	if (!pc.hasVagina(pregSlot)) {
 		pc.createVagina();
+		pregSlot = pc.vaginas.length - 1; // failsafe
+		output("\n\nYou feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
 	}
-	output("You can feel movement underneath the skin, and watch as it bulges and shifts as another living being moves independently inside you.");
+	output("\n\nYou can feel movement underneath the skin, and watch as it bulges and shifts as another living being moves independently inside you.");
 	output("\n\nOddly, there's no pain as you sit up and spread your [pc.legs] in a birthing stance.  A wave of peace and tranquility descends over you, reminding you of your yoga sessions with Cotton.  You take a deep breath and push as hard as you can, pausing only to take small gasps for air.  You feel a sudden pressure against your cervix as your child begins to push its way through little by little.");
 	output("\n\nYou aren't left waiting long, as you see its head emerging from inside you.  Little equine ears top its head, and its face has only the barest hint of a snout.  The torso comes next, more uncomfortable than the head, but still there is no pain.  Finally, with one last push, your child's lower body slips from you in a gush of afterbirth.");
 	output("\n\nThe child struggles on the ground for a moment before you pick it up and bring it to your teat.  It quickly latches on, suckling like there's no tomorrow.  You take this opportunity to sit back and examine the fruit of your loins.  Congratulations, it's a ");
@@ -1684,7 +1687,13 @@ public function birthingCottonsKids():void {
 	output("\n");
 	IncrementFlag("COC.COTTON_KID_COUNT");
 	StatTracking.track("coc/pregnancy/pc cotton");
-	if(flags["COC.COTTON_KID_COUNT"] == 1) flags["COC.COTTON_OLDEST_KID_AGE"] = 1;
+	if (flags["COC.COTTON_KID_COUNT"] == 1) flags["COC.COTTON_OLDEST_KID_AGE"] = 1;
+	
+	processTime(4 * 60);
+	pc.lust(pc.lustMax());
+	
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 

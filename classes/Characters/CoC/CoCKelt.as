@@ -190,6 +190,8 @@ package classes.Characters.CoC
 			
 			//this.createStatusEffect("Disarm Immune");
 			
+			this.impregnationType = "CoCKeltPregnancy";
+			
 			if(Flag("COC.KELT_KILL_PLAN") == 1 || Flag("COC.KELT_BREAK_LEVEL") == 2) // fight to kick his ass or second breaking fight
 				this.inventory.push(new CoCKeltBow());
 			

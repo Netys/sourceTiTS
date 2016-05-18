@@ -171,13 +171,18 @@ package classes.Characters.CoC
 			this.ass.wetnessRaw = 1;
 			this.ass.loosenessRaw = 1;
 			
+			if (rand(3) == 0) {
+				fertilizedEggs = 10;
+				this.impregnationType = "CoCSandTrapFertilizedPregnancy";
+			}
+			else this.impregnationType = "CoCSandTrapPregnancy";
+			
 			this.createStatusEffect("Disarm Immune");
 			this.createStatusEffect("Force It Gender");
 			
 			credits = (2 + rand(5)) * 10;
 			tallness = rand(8) + 150;
 			
-			if (rand(3) == 0) fertilizedEggs = 10;
 			createStatusEffect("Level", 4, 0, 0, 0);
 			
 			sexualPreferences.setRandomPrefs(2 + rand(3));

@@ -1,3 +1,4 @@
+import classes.Characters.PregnancyPlaceholder;
 import classes.GLOBAL;
 import classes.Items.Transformatives.CoCNeonPinkEgg;
 import classes.Util.*;
@@ -8,6 +9,17 @@ import classes.Engine.Utility.*;
 //5'4", small B cup breasts.
 //14" Human dick with a pointed head.  A pair of egg-shaped testes.
 //Egg preg changes – Bunny Ears, Bunny Tail, Bunny Legs?, Hot pink nose & whiskers?
+
+public function get bunny():PregnancyPlaceholder
+{
+	var pp:PregnancyPlaceholder = new PregnancyPlaceholder();
+	if(!pp.hasCock()) pp.createCock();
+	pp.cocks[0].cLengthRaw = 14;
+	pp.createPerk("Fixed CumQ", 6000, 0, 0, 0);
+	pp.impregnationType = "CoCBunnyPregnancy";
+	
+	return pp;
+}
 
 public function isEaster():Boolean {
 	return checkDate(27, 3, 1);
@@ -127,7 +139,7 @@ private function rapeBunBun():void {
 		addDisabledButton(2, "69", "69", "This scene requires you to have genitals.");
 		
 		if (pc.hasVagina()) addButton(0, "Your Vagina", bunbunFucksYourVag);
-		if (pc.cockThatFits(40) >= 0) addButton(1, "Her Vagina", bunbunGetsFucked);
+		if (pc.cockThatFits(cockVolume(40)) >= 0) addButton(1, "Her Vagina", bunbunGetsFucked);
 		if (pc.hasGenitals()) addButton(2, "69", bunbun69);
 		
 		addButton(3, "Your Ass", bunbunFucksPCInAss);
@@ -149,10 +161,10 @@ private function bunbunFucksYourVag():void {
 	output("Gasping hotly, you swallow her pointed tip into your depths, feeling the rabbit-like girl's tip swell and pump out a few more drops of lube");
 	if(pc.vaginas[0].wetness() >= 3) output(", not that you needed it");
 	output(".  You don't need any more encouragement.  The long, slow slide down her thick bunny-dick is heavenly, as the veins on its surface scratch your 'itch' in just the right way.  ");
-	if(pc.vaginalCapacity() < 20) output("By the time you're getting close to the bottom you have to work to encompass her length and girth within your velvet folds and grunt with discomfort from each new inch of throbbing fuck-stick, but you take it all.  ");
-	else if(pc.vaginalCapacity() < 50) output("By the time you get to the bottom you're panting and moaning, delighting in the feeling of being so perfectly impaled on a rigid fuck-stick.   With her entirely inside you, you're ready to fuck her in earnest.  ");
+	if(pc.vaginalCapacity() < bunny.cockVolume() * 0.66) output("By the time you're getting close to the bottom you have to work to encompass her length and girth within your velvet folds and grunt with discomfort from each new inch of throbbing fuck-stick, but you take it all.  ");
+	else if(pc.vaginalCapacity() < bunny.cockVolume() * 1.2) output("By the time you get to the bottom you're panting and moaning, delighting in the feeling of being so perfectly impaled on a rigid fuck-stick.   With her entirely inside you, you're ready to fuck her in earnest.  ");
 	else output("It doesn't take long to slide down the more-than footlong meat-pole, and to be honest you wish she was a bit bigger.  Your [pc.vagina] is so ready for big dicks that this disproportionate member is average at best.  Still, you clench your thigh muscles to wring it a little tighter, and swoon from the feeling of warm maleness filling your loins.  ");
-	pc.cuntChange(0, 35, true);
+	pc.cuntChange(0, bunny.cockVolume(), true);
 	output("\n\n");
 	
 	output("While the bunny was content to remain passive up until this point, a fire lights in her eyes now that she's had a taste of pussy.  Her petite hands grab hold of your [pc.ass] while she pulls her powerful, oddly-jointed legs underneath of her.  A split second later she pushes up with enough force to bounce you a few inches into the air before you drop down on top of her.  ");
@@ -173,7 +185,7 @@ private function bunbunFucksYourVag():void {
 	
 	output("Your eyes cross from a sudden, massive change in thickness of your lover's pole.  It starts out at your lower lips, spreading them until they're positively gaping.  Muscular contractions in the bunny's shaft make her dick pulse inside you, slowly pushing the bulge upwards and stretching your [pc.vagina]'s walls as it travels towards your womb.  More and more fluid leaks inside of your channel until your " + pc.legs() + " relax and go limp.  It isn't just pre-cum anymore – it's dulling the pain and relaxing your body!  You can actually feel your cervix starting to open involuntarily as the bulge passes the halfway point.  From the distended spot downwards, your cunt hangs loosely around the swollen cock, but another knot emerges at the base and starts to slide up your abused tunnel.  ");
 	//(Cunt Change HERE)
-	pc.cuntChange(0, 70, true);
+	pc.cuntChange(0, bunny.cockVolume() * 2, true);
 	output("\n\n");
 	
 	output("The girl underneath you is thrashing and moaning, chanting, \"<i>Yes... eggs eggs EGGS! YES!</i>\" while her ovipositor-like cock robs you of your strength and slides egg-shaped bulges inside you.  Amazingly, your [pc.vagina] is awash with pleasure, and you reach down to ");
@@ -215,6 +227,7 @@ private function bunbunFucksYourVag():void {
 	//else {
 		//pc.knockUp(PregnancyStore.PREGNANCY_BUNNY, PregnancyStore.INCUBATION_BUNNY_BABY, 60);
 	//}
+	pc.loadInCunt(bunny);
 	pc.orgasm();
 	//dynStats("lib", 1, "sen", -3);
 	pc.slowStatGain("l", 1);
@@ -230,8 +243,8 @@ private function bunbunFucksPCInAss():void {
 	output("You get a very naughty idea and silently discard your [pc.gear], tossing it aside as you turn around and present your [pc.ass] to the bunny-girl.  With a lewd shake, you tease her and give her a good view of your [pc.asshole] while it lowers closer and closer to the turgid bunny-cock, just inches away.  Drops of clear pre-cum roll down her shaft as it twitches eagerly, and the girl watches you through a gleam of sexual excitement while her shaft gets closer and closer to your rear entrance.  You let your " + pc.legs() + " relax a little until it's pressing tightly against your sphincter, feeling it slather pre-cum in preparation for the coming penetration.\n\n");
 	
 	output("Looking over your shoulder at the bunny's beet-red face, you let a little of your weight down and start to spread around the bunny-herm's cock.  It slides inside you easily, aided by her copious drops of pre-cum, but ");
-	if(pc.analCapacity() < 20) output("it stretches you dangerously wide as you slide down the thick shaft.  The further down it gets, the more you have to work to relax your muscles and push yourself along.  With enough time, patience, and copious bunny-pre, you manage to take it completely inside you.  It twitches happily while you adjust to the intrusion, but you know you're just getting started.");
-	else if(pc.analCapacity() < 40) output("you have to keep pausing as you slide down to let more of her pre-cum bubble out and lubricate the fourteen inch shaft.  It fills you nicely, pressing on your innards in all the right ways as you slowly engulf the bunny-cock with your [pc.asshole].  After bottoming out, your nervous lover's prick pulsates happily inside you, but you're just getting started.");
+	if(pc.analCapacity() < bunny.cockVolume() * 0.66) output("it stretches you dangerously wide as you slide down the thick shaft.  The further down it gets, the more you have to work to relax your muscles and push yourself along.  With enough time, patience, and copious bunny-pre, you manage to take it completely inside you.  It twitches happily while you adjust to the intrusion, but you know you're just getting started.");
+	else if(pc.analCapacity() < bunny.cockVolume() * 1.2) output("you have to keep pausing as you slide down to let more of her pre-cum bubble out and lubricate the fourteen inch shaft.  It fills you nicely, pressing on your innards in all the right ways as you slowly engulf the bunny-cock with your [pc.asshole].  After bottoming out, your nervous lover's prick pulsates happily inside you, but you're just getting started.");
 	else {
 		output("you wish it was a bit bigger.  A few seconds is all it takes to get her thick shaft completely inside your [pc.asshole].  You clench and squeeze your muscles around it as you sit on the bunny-");
 		if(pc.cor() < 50) output("girl");
@@ -239,7 +252,7 @@ private function bunbunFucksPCInAss():void {
 		output("'s lap, giggling as you feel it twitch happily inside you, but you're just getting started.");
 	}
 	//(BUTT CHANGE HERE)
-	pc.buttChange(35, true);
+	pc.buttChange(bunny.cockVolume(), true);
 	output("\n\n");
 	
 	output("Your partner gasps in surprise as you pull yourself up, dragging her cock slowly through the tight ring of your pucker until she's about to slip out, and then dropping back down to envelop her again.  She involuntarily grunts wordless pleasure noises, thrilled with the sensation your warm body provides.  Her hands grab her nipples as you repeat your actions, working her with a slow, smooth rhythm that should bring her to orgasm... eventually.  ");
@@ -248,7 +261,7 @@ private function bunbunFucksPCInAss():void {
 	
 	output("Without meaning to, you begin to pick up the speed of your up and down strokes.  Your body is feeling horny and warm from all the sex, and having such a strange, attractive lover mating with your backside isn't helping.  ");
 	if(pc.hasVagina()) {
-		if(pc.vaginas[0].wetness() >= 4) output("Juices begin to run from your [pc.vagina], but you ignore the empty feeling and focus on the throbbing meat inside your backdoor.  ");
+		if(pc.isSquirter()) output("Juices begin to run from your [pc.vagina], but you ignore the empty feeling and focus on the throbbing meat inside your backdoor.  ");
 	}
 	output("Fingers find their way to your nipples without conscious thought, and begin ");
 	if(!pc.hasFuckableNipples()) {
@@ -287,7 +300,7 @@ private function bunbunFucksPCInAss():void {
 	}
 	else output("and your arousal returns in force.");
 	//(BUTT CHANGE HERE)
-	pc.buttChange(70, true);
+	pc.buttChange(bunny.cockVolume() * 2, true);
 	output("\n\n");
 	
 	output("A moment before the bulge reaches the tip of the rabbit-cock, you feel another sliding through your [pc.asshole].  The bunny-dick's head thickens for a moment before it dwindles down to its normal shape.  You feel something warm and orb shaped inside you – it's an egg!  The strangeness of the insemination can't hold back the excitement your body built up or the feelings the second egg's passage is leaving in its wake, and you cum hard.  Somehow your body gets enough control to squeeze the girl's penis tightly, but all it accomplishes is speeding the eggs passage as it spurts into your rectum along with another big burst of pleasant, relaxing fluids.");
@@ -307,6 +320,7 @@ private function bunbunFucksPCInAss():void {
 	output("She walks away, her puffy tail twitching with the breeze while your eyes drift closed.");
 	//(Easter ass-preg + 8 hours pass)
 	//pc.buttKnockUp(PregnancyStore.PREGNANCY_BUNNY, PregnancyStore.INCUBATION_BUNNY_EGGS, 1, 1);
+	pc.loadInAss(bunny);
 	pc.orgasm();
 	//dynStats("lib", 1, "sen", 1);
 	pc.slowStatGain("l", 1);
@@ -320,9 +334,9 @@ private function bunbunGetsFucked():void {
 	//spriteSelect(13);
 	clearOutput();
 	//Requires wang that fits
-	var x:Number = pc.cockThatFits(40);
+	var x:Number = pc.cockThatFits(cockVolume(40));
 	//Second wang that fits for DP
-	var y:Number = pc.cockThatFits2(40);
+	var y:Number = pc.cockThatFits2(cockVolume(40));
 	
 	output("You disrobe and toss your [pc.gear] to the side, immediately forgetting about it as the bunny-girl lifts her sack to expose the bright pink flesh of her femininity.  It glistens, practically steaming up the air with her plentiful lubricants.  She runs a slender finger around the moist hole, beckoning you to plunge inside and fill her hungry flesh with your [pc.cock " + x + "].  Lust burns through you as you drop to your knees and line your [pc.cock " + x + "] up with that ready opening");
 	if(y != -1) output(", taking care to align your " + pc.cockDescript(y) + " with her tightly puckered backdoor as well.");
@@ -405,7 +419,7 @@ private function bunbun69():void {
 	clearMenu();
 	var prevTail:Boolean;
 	//Centaur
-	if(pc.isTaur()) {
+	if(pc.isTaur() && !pc.isFlexible()) {
 		if(rand(2) == 0) {
 			//should trigger if PC is a centaur and height > 4'0", since a horse <= 4feet could 69 the bunny >_>
 			output("Without thinking it over beyond 'that sounds hot', you declare your intention to 69 the bunny girl.  She stands there, mouth hanging open and heat briefly forgotten.\n\n");
@@ -502,6 +516,7 @@ private function bunbun69():void {
 			else output("bloated obscenely");
 			output(", your spunk calming the egg-laying passion that had her bouncing like whipped caramel. She pulls her shrinking phallus from your mouth with a wet slurp, the taste of her rich cum sweet on your lips. She rises to a crouch and gives your new ears a playful tweak between her thumb and forefinger. \"<i>Sorry about that, I don't know what came over me! I certainly didn't expect this, though! Kind of makes me want to stick around and see if you and I could pop out more bunnies,</i>\" she winks. \"<i>But unfortunately, I've got to get going! Hope you had a happy, tasty day! Maybe I'll try to find you again, some time down the line.</i>\" She gives you a moist little kiss and hops away, still energetic after all that. You groan, still feeling fat and bloated from the 'meal.'\n\n");
 			
+			pc.loadInMouth(bunny);
 			pc.orgasm();
 			pc.slowStatGain("l", 1);
 			processTime(30 + rand(20));
@@ -559,6 +574,7 @@ private function bunbun69():void {
 			output("ears a playful tweak between her thumb and forefinger. \"<i>Sorry about that, I don't know what came over me! I certainly didn't expect this, though! Kind of makes me want to stick around and see if you and I could pop out more bunnies,</i>\" she winks. \"<i>But unfortunately, I've got to get going! Maybe I'll try to find you again, some time down the line.</i>\" She gives you a moist little kiss and hops away, still energetic after all that. You groan, still recovering from the eggs.");
 			
 			//dynStats("lib", 1, "sen", 1);
+			pc.loadInMouth(bunny);
 			pc.orgasm();
 			pc.slowStatGain("l", 1);
 			processTime(30 + rand(20));
@@ -597,6 +613,7 @@ private function bunbun69():void {
 		output("\n\n");
 		
 		output("With a happy sigh, the girl rubs your slick honey off of her face and gives your clit a final, pleased lick. She pulls her shrinking phallus from your mouth with a wet slurp, the taste of her cum sweetly icy on your lips. She rises to a crouch and gives your ears a playful tweak between her thumb and forefinger. \"<i>Sorry about that, I don't know what came over me! I certainly didn't expect this, though! Kind of makes me want to stick around and see if you and I could pop out more bunnies,</i>\" she winks. \"<i>But unfortunately, I've got to get going! Maybe I'll try to find you again, some time down the line.</i>\" She gives you a moist little kiss and hops away, still energetic after all that. You groan, still recovering from the eggs.");
+		pc.loadInMouth(bunny);
 		pc.orgasm();
 		pc.slowStatGain("l", 1);
 		processTime(30 + rand(20));
@@ -748,7 +765,7 @@ private function adjathaEggsplosions():void {
 	//[Get Egged] (Female/Futa only)
 	if (pc.hasVagina()) addButton(1, "Get Egged", getEggflated);
 	//[Fuck Her] (Male/Futa Only)
-	if (pc.cockThatFits(40) >= 0) addButton(2, "Fuck Her", fuckTheEggBoundBun);
+	if (pc.cockThatFits(cockVolume(40)) >= 0) addButton(2, "Fuck Her", fuckTheEggBoundBun);
 	
 	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
@@ -804,6 +821,7 @@ private function freeHerOhGodWhyDidYouDoThis():void {
 //[Fuck Her] (Male/Futa Only)
 private function fuckTheEggBoundBun():void {
 	clearOutput();
+	var x:int = pc.cockThatFits(cockVolume(40));
 	output("It's not often you find a treat gift wrapped so neatly for you; what kind of ingrate would you be if you just turned it down?  You step up to the wriggling bunny and inspect her carefully.  The girl's body is covered in a ");
 	if(!isEaster()) output("sheen of sweat");
 	else output("shimmering glaze");
@@ -837,7 +855,7 @@ private function fuckTheEggBoundBun():void {
 	else output("revel in the profane stimulation of bestial batter anointing your length in impure, liquid virility");
 	output(".");
 	
-	output("\n\nWith a grunt, you force yourself into her, pulsing phallus parting her overwrought pussy lips in a spearing thrust.  The bunny-girl gasps, her control suffocated under the fathomless ocean of her keening lust.  She bucks wildly against you, desperate to hilt your [pc.cock] as swiftly and fully as she can.  Her stomach bulges while ropes of spunk splatter out of her stuffed cunny, displaced by your girth.  It's amazing she's so frisky after being taken so many times, you consider with delight as you grasp her slender waist to set her pace to your own.  Before long, you have her thrashing in ecstasy, a writhing parade of unfulfilled orgasms setting her body ablaze, her inner walls virtually vibrating around you while rivers of spunk flow down her legs, painting her ");
+	output("\n\nWith a grunt, you force yourself into her, pulsing phallus parting her overwrought pussy lips in a spearing thrust.  The bunny-girl gasps, her control suffocated under the fathomless ocean of her keening lust.  She bucks wildly against you, desperate to hilt your [pc.cock " + x + "] as swiftly and fully as she can.  Her stomach bulges while ropes of spunk splatter out of her stuffed cunny, displaced by your girth.  It's amazing she's so frisky after being taken so many times, you consider with delight as you grasp her slender waist to set her pace to your own.  Before long, you have her thrashing in ecstasy, a writhing parade of unfulfilled orgasms setting her body ablaze, her inner walls virtually vibrating around you while rivers of spunk flow down her legs, painting her ");
 	if(!isEaster()) output("darkly freckled thighs ivory");
 	else output("savory, chocolate thighs with pale cream");
 	output(".  Reaching your own threshold, you lean forward, pressing your cheek against hers, the intake of your breath hissing between your teeth.  She instinctively understands, slamming her ass against your [pc.hips] with as much force as she can muster.");
@@ -905,7 +923,7 @@ private function getEggflated():void {
 	if(!isEaster()) output("well-padded bedding");
 	else output("sponge cakes baked for a giant");
 	output(".");
-	pc.cuntChange(0, 28, true, true, false);
+	pc.cuntChange(0, bunny.cockVolume(), true, true, false);
 	
 	output("\n\nAtop your perch, bound to the lapin by fourteen inches of caramel-colored flesh, you take a moment to rock back and forth atop the girl.  Merely being mounted has taken every ounce of her restraint, but you can tell it's a matter of seconds before her resolve crumbles.  Positioned perfectly to take the full geyser of her ");
 	if(!isEaster()) output("gurgling seed");
@@ -923,6 +941,8 @@ private function getEggflated():void {
 	if(!isEaster()) output("tingling, liquid passion");
 	else output("fattening, cream filling");
 	output(".  Another egg rushes up, followed by another, the pace accelerating as you bounce atop the vivacious hare with fast, short strokes that rub your [pc.clit] against her cum-bloated belly.");
+	
+	pc.cuntChange(0, bunny.cockVolume() * 2, true, true, false);
 	
 	output("\n\nEgg after egg fills your womb, swelling your abdomen with the heavy ");
 	if(!isEaster()) output("load");
@@ -965,6 +985,8 @@ private function getEggflated():void {
 		//pc.fertility++;
 	//}
 	//dynStats("lib", 1, "sen", -3);
+	pc.loadInCunt(bunny);
+	pc.loadInCunt(bunny);
 	pc.slowStatGain("l", 1);
 	output(pc.modThickness(3));
 	output(pc.modTone( -3));
@@ -976,3 +998,54 @@ private function getEggflated():void {
 //If not full bunny morph: [Next]
 //On the way back to your camp, the torrid heat of the melting eggs inside you become unbearable and you drop to your hands and knees. Something is changing!
 //[Insert every bunny morph change text that the player does not have. End Encounter. Weight up, Sensitivity down, fertility up.]
+
+public function giveBirthToBunny(pregSlot:int):void
+{
+	clearOutput();
+
+	var pData:PregnancyData = pc.pregnancyData[pregSlot] as PregnancyData;
+	
+	if (!pc.hasVagina(pregSlot)) {
+		pc.createVagina();
+		pregSlot = pc.vaginas.length - 1; // failsafe
+		output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
+		output("\n\n");
+	}
+	
+	if (!pc.canLactate()) pc.boostLactation(50);
+	
+	//Main Text here
+	output("A dangerous rumble comes from your womb, signaling that it's time to birth your body's cargo at last. Your [pc.legs] wobble unsteadily as your strength ebbs with every gush that erupts  from your now-broken water until you collapse on your [pc.butt], grunting and groaning.  At first it goes slow - there's just a few small contractions that are more strange than anything else, rippling down your [pc.vagina " + pregSlot + "] and squirting out more of your pregnancy's fluid.  All too soon the tempo kicks up, and you feel something starting to stretch you wider and wider.");
+	
+	output("\n\nYou heave and push, instinctively driven to flex muscles you didn't even know you had to speed the super human labor you've entered into. ");
+	if (pc.vaginalCapacity(pregSlot) < cockVolume(60)) output("It hurts a little as your cervix starts to stretch wide");
+	else output("It actually feels kind of nice as your cervix is stretched wide");
+	output(", but somehow your body accommodates the forced dilation without too much discomfort.  It's soon forgotten as you feel your [pc.vagina " + pregSlot + "] pushed into a large sphere, stretched around the inhuman form of your child as it squirms and writhes inside you on its path to freedom.  You grunt and flex, watching with disbelief as a tiny, rabbit-eared form slides from your slick canal into the grass, the process leaving your [pc.chest] heaving with unexpected pleasure.");
+	
+	output("\n\nThe whole process starts over again - there's another one!  By now your well-stretched pussy is oozing both the birthing fluids and your own lubricants, and the second bunny-child slides down to bump into its sibling with ease.  You shake and shudder, groaning and spasming as you nearly cum from the stimulation, but in the end you're left panting and horny.  The two bunnies look like miniature people except for their ears, tails, and fuzzy legs.  Your children lick themselves clean before hopping up onto your [pc.chest] and suckling your nipples for a while");
+	if (pc.lactationQ() > 500) outputText(", growing fat from all the milk");
+	output(".  At last they finish, and with one last nuzzle, your strange bunny-children go hopping off, doubtless to find more of their own kind.");
+	
+	output("\n\nYou sink into restful unconsciousness, marveling at how stretchy and sensitive your [pc.vagina " + pregSlot + "] feels now.");
+	
+	pc.cuntChange(pregSlot, cockVolume(60), false, true, false);
+	
+	if (pc.milkMultiplier < 100) {
+		output("\n\nYour breasts won't seem to stop dribbling milk, lactating more heavily than before.");
+		pc.boostLactation(10);
+	}
+	
+	if (pc.vaginas[pregSlot].wetnessRaw == 0) pc.vaginas[pregSlot].wetnessRaw++;
+	if (pc.vaginalCapacity(pregSlot) < cockVolume(300)) pc.vaginas[pregSlot].bonusCapacity += 10;
+	
+	pc.lust(pc.lustMax());
+	//pc.orgasm();
+	
+	pc.slowStatGain("l", 1);
+	// sen +10
+	pc.cor( -2);
+	
+	processTime(4 * 60);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
+}

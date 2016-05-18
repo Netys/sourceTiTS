@@ -2769,42 +2769,43 @@ private function IzmaPoopsBabies():void {
 }
 
 //PC gives birth (alone): used if PC gets pregnant from vaginal and refusing herbs before recruiting Izma or possibly later if a way to force her out is written
-public function pcPopsOutASharkTot():void {
-	output("\n", false);
+public function pcPopsOutASharkTot(pregSlot:int):void {
+	clearOutput();
+	output("You wake up suddenly to strong pains and pressures in your gut.  As your eyes shoot wide open, you look down to see your belly absurdly full and distended.  ");
+	if (!pc.hasVagina()) {
+		pc.createVagina();
+		pregSlot = pc.vaginas.length - 1; // failsafe
+		output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + x + "].  ");
+	}
+	
 	//If Izma is NOT a follower
 	if (flags["COC.IZMA_FOLLOWER"] != 1) {
-		if (!pc.hasVagina()) {
-			output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a vagina.  ");
-			pc.createVagina();
-		}
-		
 		output("You crumple suddenly; strong pains and pressures pulverize the nerves in your gut.  As your eyes shoot wide open, you look down to see your belly absurdly full and distended.  You can feel movement underneath the skin, and watch as its bulges and shifts reflect another living being moving independently inside you.  Instinctively, you spread your legs as you feel the creature press outward, parting your cervix and allowing a gush of water to spill forth - far more water than you thought you were holding.\n\n");
  
 		output("You cry out as the first wrenching labor pain begins in earnest, unthinkingly hoping for somebody to come and help you.  Much to your despair, no one does, leaving you alone to deliver the baby.  You double your focus, set on pushing in time with its own frantic attempts to escape.  Squeezing over and over, you try to force out the child before the pain robs you of consciousness; luckily it seems to oblige, sliding out of you legs-first after a few more pushes.  The shark-skin rasps your inflamed pussy, drawing gasps of shock from you as she squeezes past your lips in fits and starts.");
-		pc.cuntChange(0, 250, true, true, false);
+		pc.cuntChange(pregSlot, cockVolume(100), true, true, false);
 		output("\n\n");
 
 		output("Finally, she's out; you quiver weakly as she crawls over to you and it takes all your effort to lift your [pc.gear] and expose your [pc.nipples] to her.  As she sucks greedily at them, the haze begins to clear from your vision.  For the first time, you can actually make out distinct features on your new daughter; she's a ");
 		if (rand(100) <= 59) {
 			output("shark-girl");
-			IncrementFlag("COC.IZMA_PC_SHARKGIRL_DAUGHTER");
+			StatTracking.track("coc/pregnancy/pc sharkgirls");
 		}
-		else output("tigershark");
+		else {
+			output("tigershark");
+			StatTracking.track("coc/pregnancy/pc tigersharks");
+		}
+		IncrementFlag("COC.IZMA_PC_SHARKGIRL_DAUGHTER");
 		output(", quickly growing and filling out as she takes in milk.  She finishes up, looking rather like a pre-teen already, and glances around nervously.  The amniotic fluid is evaporating rapidly, and she's scratching idly at her gills as more and more of her skin is exposed directly to the dry air.\n\n");
 
 		output("As she turns scared eyes on you, a spark of understanding lances through the fog of pain.  You look around, getting your bearings within the camp, and then, using a limp arm, point in the direction of the stream.  Her face lights with understanding and gratitude, and she leans forward and places her head over your heart, to listen to it one last time.  You let the arm down, draping it over her, intent on making this one moment of love and affection last as long as possible before she's dumped into the inferno of shark-girl society.  The two of you remain like that for almost five minutes before she gives a small cough.  Lifting your arm gingerly, she kisses you on the cheek and takes off for the vital waterway.\n\n");
 
-		output("After making a quiet wish for your child, you slip into a doze.\n");
+		output("After making a quiet wish for your child, you slip into a doze.");
 		//(Take some fucking melancholy. TAKE IT. -Z)
 	}
 	else {
 		showIzma();
 		//Player Gives Birth (Izma in camp): (For the reason given above, this scene currently has a very high chance of being useless, so I wouldn't waste time on it yet. Also, it's a bit of a turd. Orgasm despite the pain of childbirth exists but the clumsy handling here wouldn't convince you even if you'd already seen it live. Oh, the pain is so intense I can't walk... but wait, she's touching my junk over and over in a vague manner so it becomes pretty great. Thank you, Shark Herm Jesus! I advise cutting the 'sexual' content and keeping a normal childbirth unless you want it rewritten from the foundations. But you've got time to decide. -Z)
-		output("You wake up suddenly to strong pains and pressures in your gut.  As your eyes shoot wide open, you look down to see your belly absurdly full and distended.  ");
-		if (!pc.hasVagina()) {
-			output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a vagina.  ");
-			pc.createVagina();
-		}
 		output("You can feel movement underneath the skin, and watch as it bulges and shifts as another living being moves independently inside you.  Instinctively, you spread your legs as you feel the creature press outward, parting your cervix and allowing a gush of water to spill forth - far more water than you thought you were holding.\n\n");
  
 		output("You cry out as the first wrenching labor pain begins in earnest, unthinkingly hoping for somebody to come and help you.  To your relief, Izma comes running over to you from out of the gloom.  \"<i>[pc.name]!  You've gone into labor?</i>\" she asks; something of a stupid question, but she's evidently as off-guard as you are.\n\n");
@@ -2822,7 +2823,7 @@ public function pcPopsOutASharkTot():void {
 		output("Time slips away; you're too overwhelmed by the pain of your womb contracting and the pleasure as Izma ministers to your [pc.vagina]");
 		if (pc.hasCock()) output(" and [pc.cocks]");
 		output(", which makes the birth pangs become less painful and more orgasmic. You lose yourself in the haze to the point you're barely aware when the birth finally comes to an end; you feel a great pressure welling up inside you, an overwhelming urge to push, and then, the next thing you know, relief washes over you as your stomach deflates.");
-		pc.cuntChange(0, 250, true, true, false);
+		pc.cuntChange(pregSlot, cockVolume(100), true, true, false);
 		output("\n\n");
  
 		output("\"<i>We've got her, [pc.name]! Whoa- hold still, you slippery little girl! Stop wriggling so much, you're out now, it's me, your daddy!</i>\" Izma cries out. As you regain your strength and your vision clears, you are presented with the sight of Izma trying desperately to wrangle a squirming baby shark-morph; from her ");
@@ -2862,6 +2863,9 @@ public function pcPopsOutASharkTot():void {
 	}
 	pc.boostLactation(Math.max(60 - pc.milkMultiplier, 10));
 	processTime(3 * 60 + rand(2 * 60));
+	
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
 }
 
 //Children Interaction Sequences: (increment childcounters only for births after Izma joins)

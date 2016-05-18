@@ -9,14 +9,9 @@ include "cumWitch.as";
 include "milkBath.as";
 include "pharmacyNursery.as";
 include "sandMother.as";
-//include "sandWitchPregs.as"; // TODO. Maybe.
+include "sandWitchPregs.as";
 include "sanura.as";
 include "witchMob.as";
-
-// TODO:
-// take lactaid/labova from sand mother
-// milk slave buy
-// essy interactions and freedom
 
 public function TravelToDesertCave():void {
 	processTime(10 + rand(5));

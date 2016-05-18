@@ -162,6 +162,8 @@ package classes.Characters.CoC
 			this.ass.wetnessRaw = 1;
 			this.ass.loosenessRaw = 1;
 			
+			this.impregnationType = "CoCSandWitchPregnancy";
+			
 			this.createStatusEffect("Disarm Immune");
 			
 			tallness = rand(12) + 55;

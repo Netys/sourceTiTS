@@ -386,11 +386,11 @@ private function willinglyBoneSatyr():void {
 	output("\n\nHe takes hold of your hips and aligns his massive meat with your [pc.vagOrAss]; then with a bleat he pushes in agonizingly slowly.  He slips a few inches in, then waits as his cock throbs, painting your [pc.vagOrAss] walls with a slick dose of pre, then pulls out a couple inches and pushes more inches in. This process is repeated over and over, until finally he's hilted deep inside you.");
 	//(cunt/buttchange)
 	if (pc.hasVagina()) {
-		pc.cuntChange(0, 25, true, true, false);
+		pc.cuntChange(0, cockVolume(25), true, true, false);
 		pc.loadInCunt(new CoCSatyr());
 	}
 	else {
-		pc.buttChange(25, true, true, false);
+		pc.buttChange(cockVolume(25), true, true, false);
 		pc.loadInAss(new CoCSatyr());
 	}
 	
@@ -417,7 +417,7 @@ private function willinglyBoneSatyr():void {
 	output("; making slow, short thrusts to ensure you've got all the seed that you need.  Panting, he grins at you from his prone position.  \"<i>Tell me then... did you like it?  Think that was enough baby batter to put a little satyr inside you?  Because if not I can go again.</i>\"  He grins confidently.");
 	
 	//(if male/genderless and 0 satyr children)
-	if(!pc.hasVagina() && flags["COC.SATYR_KIDS"] < 1) {
+	if(!pc.hasVagina() && int(flags["COC.SATYR_KIDS"]) == 0) {
 		output("\n\nYou stare at him blankly, then, as coherent thought returns to you, you ask how he can knock you up when you don't have a womb.");
 		output("\n\nHe winks at your disquieted expression.  \"<i>Satyr seed is so potent that we can impregnate anything, even ");
 		if(pc.hasCock()) output("males");
@@ -460,32 +460,39 @@ private function willinglyBoneSatyr():void {
 
 //Birthing (Z)
 //Baby is always male.
-//public function satyrBirth(vag:Boolean):void {
-	//spriteSelect(98);
-	//output("\nSudden sharp, intense pangs rip through your gut, seeming to emanate from your ");
-	//if(vag && !pc.hasVagina()) {
-		//output("newly grown vagina");
-		//pc.createVagina();
-	//}
-	//else if(vag) output("[pc.vagina]");
-	//else output("[pc.butt]");
-	//output(", a gripping, writhing sensation as if something is thrashing around inside you and wants to get out.  Looks like it's time for whatever is inside you to emerge.");
-//
-	//output("\n\nYou strip your [pc.gear] and lay down, waiting for the incoming contractions, and sure enough they come.  Your body is wracked with intense pain as you push to get your newborn out; your muscles writhe and flex, anxious to fulfil their task and empty your distended belly of the new life grown within it.");
-	//
-	//output("\n\nIt doesn't take long until you see a small round head poking out of your ");
-	//if(vag) output("[pc.vagina]");
-	//else output("[asshole]");
-	//output("; it's adorned with a pair of miniscule horns.  You groan in pain as its shoulders stretch you even wider, but the worst part of it is over and, within moments, you are delivered of your child.  ");
-	//if(vag) pc.cuntChange(40,true,false,true);
-	//else pc.buttChange(40,true,false,true);
-	//output("Long minutes pass as your body recovers from the strain, bouncing back with unnatural vitality from the exhaustion and pain of giving birth, but finally you are ready to look at it.");
-	//
-	//output("\n\nIt looks like a cute little goat-man; the proof of such hangs between his legs, far larger than it should be on any infant.  He bleats at you meekly, and then begins to grow on his own!  His horns extend into curling, extravagant loops of bone, bending over his head; his soft flesh becomes tougher as his muscles develop, giving him a nice athletic build.  Finally his cock and balls grow to an impressive size, not only because of his natural - or unnatural - growth, but because it hardens with each passing moment; despite having been born only moments ago, your new son seems to be sexually aware.  Moments later he unbends and you get to take a good look at your newborn, and grown up, satyr.");
-	//
-	//output("\n\nHe strokes his small beard and gives you a wicked grin, thrusting his hips at you and spattering you with a few drops of pre-cum, then turns and bounds off.  Exhausted");
-	//if(cor() < 33) output(" and more than a bit disgusted");
-	//output(", you slip into a short, fitful sleep.");
-	////badabingbadaboom
-	//flags[kFLAGS.SATYR_KIDS]++;
-//}
+public function satyrBirth(pregSlot:int):void {
+	var vag:Boolean = pregSlot < 3;
+	
+	output("Sudden sharp, intense pangs rip through your gut, seeming to emanate from your ");
+	if(vag && !pc.hasVagina(pregSlot)) {
+		pc.createVagina();
+		pregSlot = pc.vaginas.length - 1; // failsafe
+		output("newly grown vagina");
+	}
+	else if(vag) output("[pc.vagina]");
+	else output("[pc.asshole]");
+	output(", a gripping, writhing sensation as if something is thrashing around inside you and wants to get out. Looks like it's time for whatever is inside you to emerge.");
+
+	output("\n\nYou strip your [pc.gear] and lay down, waiting for the incoming contractions, and sure enough they come. Your body is wracked with intense pain as you push to get your newborn out; your muscles writhe and flex, anxious to fulfil their task and empty your distended belly of the new life grown within it.");
+	
+	output("\n\nIt doesn't take long until you see a small round head poking out of your ");
+	if(vag) output("[pc.vagina]");
+	else output("[pc.asshole]");
+	output("; it's adorned with a pair of miniscule horns.  You groan in pain as its shoulders stretch you even wider, but the worst part of it is over and, within moments, you are delivered of your child.  ");
+	if (vag) pc.cuntChange(pregSlot, cockVolume(40), true, false, true);
+	else pc.buttChange(cockVolume(40), true, false, true);
+	output("Long minutes pass as your body recovers from the strain, bouncing back with unnatural vitality from the exhaustion and pain of giving birth, but finally you are ready to look at it.");
+	
+	output("\n\nIt looks like a cute little goat-man; the proof of such hangs between his legs, far larger than it should be on any infant.  He bleats at you meekly, and then begins to grow on his own!  His horns extend into curling, extravagant loops of bone, bending over his head; his soft flesh becomes tougher as his muscles develop, giving him a nice athletic build.  Finally his cock and balls grow to an impressive size, not only because of his natural - or unnatural - growth, but because it hardens with each passing moment; despite having been born only moments ago, your new son seems to be sexually aware.  Moments later he unbends and you get to take a good look at your newborn, and grown up, satyr.");
+	
+	output("\n\nHe strokes his small beard and gives you a wicked grin, thrusting his hips at you and spattering you with a few drops of pre-cum, then turns and bounds off.  Exhausted");
+	if(pc.cor() < 33) output(" and more than a bit disgusted");
+	output(", you slip into a short, fitful sleep.");
+	//badabingbadaboom
+	IncrementFlag("COC.SATYR_KIDS");
+	
+	processTime(2 * 60);
+	
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
+}

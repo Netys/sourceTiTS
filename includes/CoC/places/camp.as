@@ -63,7 +63,7 @@ public function followersCount():int {
 	if(flags["COC.ANEMONE_KID"] > 0) counter++;
 	if(followerShouldra()) counter++;
 	if(sophieFollower() && int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) == 0) counter++;
-	//if(helspawnFollower()) counter++;
+	if(helspawnFollower()) counter++;
 	return counter;
 }
 public function campFollowersButton():void {

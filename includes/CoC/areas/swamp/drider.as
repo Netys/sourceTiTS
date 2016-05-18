@@ -786,71 +786,86 @@ private function loseVSDriderAndGetFuckedANDAnalImpreggegity():void
 
 //*Asspreg egg 'birth': (done)
 //Summary: what goes up must come down
-//public function birthSpiderEggsFromAnusITSBLEEDINGYAYYYYY():void
-//{
-	//spriteSelect(77);
-	//output("\nYour gut rumbles dangerously.  As if by instinct, you drop down and bend over, supporting half your weight on your hands while you lower your [pc.ass] to just above ground level.  You grunt suddenly, your pregnant asshole dilating wide as a heavy weight seems to settle atop it, just inside you.  Clenching and tingling, your pucker slowly opens, releasing a torrent of green goop, along with a spherical white egg.  It drops into the messy puddle, cushioned from the fall by the heavy slime still leaking from your slightly agape anus.\n\n", false);
-	//output("The feeling of giving birth in such a way is oddly soothing, almost pleasant.  Your muscles move on their own, slowly and repeatedly clenching, relaxing, and forcing the eggs downward.  The next orb slips through your ring more easily than the first, shooting tingles of pleasure out from your pucker and making you gasp in surprise.  Hot on its heels, another egg follows, catching at your anal ring for a moment before your next contraction squeezes it out into the growing pile of goop.  It feels even better, good enough to make you cross your eyes and exhale contentedly.", false);
-	////(buttstretch)
-	//pc.buttChange(40, true, true, false);
-	//output("\n\n", false);
-//
-	//output("You shift position slightly, if only to get more comfortable, and relax as the eggs work their way through your guts.  With each egg's passage, your sphincter seems to be looser, more pliant, and more sensitive.  You blush and squeeze, hurrying the process to make yourself feel even better, and egg after egg splats wetly into the growing pile, each one slick and soaked in slime.  One after another, the heavy orbs exit your body, until the last one is sliding out of your rectum and you're having a strange anal orgasm that feels as relaxing as it is pleasant.\n\n", false);
-//
-	//output("Clenching and relaxing, your slime-dripping asshole slowly narrows, gaping less visibly while you shudder and sigh, so happy and blissful that you don't even care about the crackling egg-shells hatching beneath you.  ", false);
-	//if (pc.hasCock()) output(SMultiCockDesc() + " stays limp, but drools a heavy flow of semen, puddling up a nice thick batch of your pleasure alongside your goo-pile.  ", false);
-	//if (pc.hasVagina()) {
-		//output("Your pussy clenches and ", false);
-		//if (pc.wetness() < 3) output("drips", false);
-		//else if (pc.wetness() < 4) output("dribbles", false);
-		//else if (pc.wetness() < 5) output("gives a tiny squirt", false);
-		//else output("gushes a river of lady-spunk", false);
-		//output(" into the dirt, getting off along with your [pc.asshole].  ", false);
-	//}
-	//output("Once you come down from your high, you roll to the side and watch the tiny driders clambering out of their egg shells.\n\n", false);
-	//output("Your newborn children glance at you, chittering happily before they scurry off in the direction of the swamp.\n", false);
-	//pc.orgasm();
-//}
+public function birthSpiderEggsFromAnusITSBLEEDINGYAYYYYY():void
+{
+	clearOutput();
+	
+	output("Your gut rumbles dangerously.  As if by instinct, you drop down and bend over, supporting half your weight on your hands while you lower your [pc.ass] to just above ground level.  You grunt suddenly, your pregnant asshole dilating wide as a heavy weight seems to settle atop it, just inside you.  Clenching and tingling, your pucker slowly opens, releasing a torrent of green goop, along with a spherical white egg.  It drops into the messy puddle, cushioned from the fall by the heavy slime still leaking from your slightly agape anus.");
+	output("\n\nThe feeling of giving birth in such a way is oddly soothing, almost pleasant.  Your muscles move on their own, slowly and repeatedly clenching, relaxing, and forcing the eggs downward.  The next orb slips through your ring more easily than the first, shooting tingles of pleasure out from your pucker and making you gasp in surprise.  Hot on its heels, another egg follows, catching at your anal ring for a moment before your next contraction squeezes it out into the growing pile of goop.  It feels even better, good enough to make you cross your eyes and exhale contentedly.");
+	//(buttstretch)
+	pc.buttChange(cockVolume(40), true, true, false);
 
+	output("\n\nYou shift position slightly, if only to get more comfortable, and relax as the eggs work their way through your guts.  With each egg's passage, your sphincter seems to be looser, more pliant, and more sensitive.  You blush and squeeze, hurrying the process to make yourself feel even better, and egg after egg splats wetly into the growing pile, each one slick and soaked in slime.  One after another, the heavy orbs exit your body, until the last one is sliding out of your rectum and you're having a strange anal orgasm that feels as relaxing as it is pleasant.");
 
-//public function driderPregVagBirth():void
-//{
-	//spriteSelect(77);
-	//output("\nYou shudder violently, your stomach growling fiercely at you.  It feels as if something is moving around in your womb, and you bend over on all fours, raising your ass into the air as if it is the most natural thing in the world.  A slimy green fluid starts leaking out of your cunt, making a small puddle on the ground.  The sensation is extremely pleasurable as you feel it running down your thighs.  Groaning, you start to push out a small, smooth green ball, and the action makes your pussy so much wetter.  Groaning, you push out another, and another, each ball rubbing against your inner walls before dropping into the slimy pool of goo.  After the sixth, you orgasm, spraying your cum all over the ground underneath you, each egg squeezing out and prolonging the intense feeling.", false);
-	//pc.cuntChange(40, true, true, false);
-	//output("\n\n", false);
-//
-	//output("After what seems like hours, you have lost count of the eggs pushed out.  ", false);
-	//if (pc.isNaga()) output("At last, when no more eggs seem to be coming, you flop over onto your back, careful not to crush any of your dormant offspring.", false);
-	//else output("Looking between your legs you can see another slick, green egg slide from your body to join the sizable pile behind you.  At last, when no more seem to be following it, you flop over onto your back, careful not to crush any of your dormant offspring.", false);
-	//output("  As you lie panting, your revery is interrupted by a small cracking noise.  You sit up with a start and scan the area for someone approaching.  The cracking noise begins to multiply and you realize that it's coming from the pile of eggs nearby.  You begin watching with interest as your eggs start to hatch.\n\n", false);
-//
-	//output("One egg rolls away from about the middle of the pile and you can see the little drider has almost made her way out of it.  With one last push she completely breaks out of the egg and falls face forward onto the ground.  The drider child seems to be having trouble coordinating all eight of her legs at the same time as she repeatedly picks herself up and stumbles a few steps before falling down again.  Looking back to the pile you can see many more of your drider children breaking out.  Soon enough, there are countless little drider girls, all about the size of your palm, skittering around.\n\n", false);
-//
-	////(If breasts)
-	//if (pc.biggestTitSize() >= 2) {
-		//output("One drider girl cautiously makes her way over to you.  Her legs tickle your stomach as she climbs up to one of your " + breastDescript(0) + ".  Grasping the flesh tightly in her tiny hands she begins to suckle at your [pc.nipple].", false);
-		//if (pc.bRows() > 1) output("  Following their sister's lead, more little driders take their place at each of your nipples and begin to drink.", false);
-		//else output("  Following her sister's lead, another little drider takes her place at your other nipple and begins to drink.", false);
-		//if (pc.lactationQ() >= 3000) output("  One of your offspring seemed to be grasping your breast too tightly and drinking too greedily as suddenly you see one propelled away from you before she lands in a small puddle of milk nearby.  She seems to be struggling to right herself as she writhes around in the milk puddle, and so with a grin you reach over to pluck up the clumsy child and place her back at your waiting teat.", false);
-		//output("\n\n", false);
-	//}
-//
-	//output("Around you, your many drider children fervently explore their surroundings.  One climbs up your back and perches atop your head.  She raises one hand to her forehead to block the sun's glare and stretches all four of her jewel-like eyes wide, delighting in the wondrous world she surveys.", false);
-	//if (pc.eyeType != EYES_FOUR_SPIDER_EYES) output("  Suddenly she flops forward, leaning against your eyebrows and causing you to cross your eyes in an attempt to focus on her.  She seems confused by the way your eyes are different to hers.", false);
-	//if (pc.isNaga()) output("  A few baby driders crawl ponderously across your scaled tail.  You give your tail a little wiggle and suddenly they go wild crawling around it and letting out the faintest, cute little squeals.", false);
-	//else output("  A few baby driders sit on each of your legs, facing each other.  Some gesture and squeak at each other in wonder while others pull faces.", false);
-	//output("\n\n", false);
-//
-	//output("Nearby, two more of your little girls are in a stand-off, as each skitters back and forth in front of the other, ready to charge.  Suddenly one leaps forward and grabs the other before attempting to bite her arm.  Of course the attack is completely harmless - they are still much too young to have grown their fangs.  The other then turns the tables on her sister by grappling her sister to the ground, and soon, they're both letting out tiny giggles.\n\n", false);
-//
-	//output("You lie back and your exhaustion finally begins to get the better of you when combined with the contentment from seeing your babies enjoying themselves.  Your eyelids begin to droop, and before you know it, you've slipped into unconsciousness.  You awaken later on, a sticky feeling between your legs to go with your wet pussy", false);
-	//if (pc.hasCock()) output(" and raging hard on", false);
-	//output(".  After remembering where you are, the next thing you notice is the absence of your drider children.  Only a pile of empty, broken egg shells and some messy webbing in the trees remain.  As you stand up and prepare to move on, the sun reflecting off something in the corner of your eye catches your attention.\n\n", false);
-//
-	//output("Between two nearby trees is a large spider web.  While not out of the ordinary, when the sunlight hits it at a certain angle the gossamer strands spell out a simple message:  \"<i>THANK YOU MOMMY.</i>\"", false);
-	//pc.orgasm();
-//}
+	output("\n\nClenching and relaxing, your slime-dripping asshole slowly narrows, gaping less visibly while you shudder and sigh, so happy and blissful that you don't even care about the crackling egg-shells hatching beneath you.  ");
+	if (pc.hasCock()) output("[pcEachCock] stays limp, but drools a heavy flow of semen, puddling up a nice thick batch of your pleasure alongside your goo-pile.  ");
+	if (pc.hasVagina()) {
+		output("Your pussy clenches and ");
+		if (pc.wetness() < 3) output("drips");
+		else if (pc.wetness() < 4) output("dribbles");
+		else if (pc.wetness() < 5) output("gives a tiny squirt");
+		else output("gushes a river of lady-spunk");
+		output(" into the dirt, getting off along with your [pc.asshole].  ");
+	}
+	output("Once you come down from your high, you roll to the side and watch the tiny driders clambering out of their egg shells.");
+	output("\n\nYour newborn children glance at you, chittering happily before they scurry off in the direction of the swamp.");
+	pc.orgasm();
+	
+	processTime(1 * 60);
+	pc.lust(pc.lustMax());
+	
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
+}
+
+public function driderPregVagBirth(pregSlot:int):void
+{
+	clearOutput();
+	
+	if (!pc.hasVagina(pregSlot)) {
+		pc.createVagina();
+		pregSlot = pc.vaginas.length - 1; // failsafe
+		output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
+		output("\n\n");
+	}
+	
+	output("You shudder violently, your stomach growling fiercely at you.  It feels as if something is moving around in your womb, and you bend over on all fours, raising your ass into the air as if it is the most natural thing in the world.  A slimy green fluid starts leaking out of your cunt, making a small puddle on the ground.  The sensation is extremely pleasurable as you feel it running down your thighs.  Groaning, you start to push out a small, smooth green ball, and the action makes your pussy so much wetter.  Groaning, you push out another, and another, each ball rubbing against your inner walls before dropping into the slimy pool of goo.  After the sixth, you orgasm, spraying your cum all over the ground underneath you, each egg squeezing out and prolonging the intense feeling.");
+	pc.cuntChange(pregSlot, cockVolume(40), true, true, false);
+
+	output("\n\nAfter what seems like hours, you have lost count of the eggs pushed out.  ");
+	if (pc.isNaga()) output("At last, when no more eggs seem to be coming, you flop over onto your back, careful not to crush any of your dormant offspring.");
+	else output("Looking between your legs you can see another slick, green egg slide from your body to join the sizable pile behind you.  At last, when no more seem to be following it, you flop over onto your back, careful not to crush any of your dormant offspring.");
+	output("  As you lie panting, your revery is interrupted by a small cracking noise.  You sit up with a start and scan the area for someone approaching.  The cracking noise begins to multiply and you realize that it's coming from the pile of eggs nearby.  You begin watching with interest as your eggs start to hatch.");
+
+	output("\n\nOne egg rolls away from about the middle of the pile and you can see the little drider has almost made her way out of it.  With one last push she completely breaks out of the egg and falls face forward onto the ground.  The drider child seems to be having trouble coordinating all eight of her legs at the same time as she repeatedly picks herself up and stumbles a few steps before falling down again.  Looking back to the pile you can see many more of your drider children breaking out.  Soon enough, there are countless little drider girls, all about the size of your palm, skittering around.");
+
+	//(If breasts)
+	if (pc.biggestTitSize() >= 1) {
+		output("\n\nOne drider girl cautiously makes her way over to you.  Her legs tickle your stomach as she climbs up to one of your [pc.breasts].  Grasping the flesh tightly in her tiny hands she begins to suckle at your [pc.nipple].");
+		if (pc.bRows() > 1) output("  Following their sister's lead, more little driders take their place at each of your nipples and begin to drink.");
+		else output("  Following her sister's lead, another little drider takes her place at your other nipple and begins to drink.");
+		if (pc.lactationQ() >= 3000) output("  One of your offspring seemed to be grasping your breast too tightly and drinking too greedily as suddenly you see one propelled away from you before she lands in a small puddle of milk nearby.  She seems to be struggling to right herself as she writhes around in the milk puddle, and so with a grin you reach over to pluck up the clumsy child and place her back at your waiting teat.");
+	}
+
+	output("\n\nAround you, your many drider children fervently explore their surroundings.  One climbs up your back and perches atop your head.  She raises one hand to her forehead to block the sun's glare and stretches all four of her jewel-like eyes wide, delighting in the wondrous world she surveys.");
+	if (pc.eyeType != GLOBAL.TYPE_ARACHNID) output("  Suddenly she flops forward, leaning against your eyebrows and causing you to cross your eyes in an attempt to focus on her.  She seems confused by the way your eyes are different to hers.");
+	if (pc.isNaga()) output("  A few baby driders crawl ponderously across your scaled tail.  You give your tail a little wiggle and suddenly they go wild crawling around it and letting out the faintest, cute little squeals.");
+	else output("  A few baby driders sit on each of your legs, facing each other.  Some gesture and squeak at each other in wonder while others pull faces.");
+	
+	output("\n\nNearby, two more of your little girls are in a stand-off, as each skitters back and forth in front of the other, ready to charge.  Suddenly one leaps forward and grabs the other before attempting to bite her arm.  Of course the attack is completely harmless - they are still much too young to have grown their fangs.  The other then turns the tables on her sister by grappling her sister to the ground, and soon, they're both letting out tiny giggles.");
+	
+	output("\n\nYou lie back and your exhaustion finally begins to get the better of you when combined with the contentment from seeing your babies enjoying themselves.  Your eyelids begin to droop, and before you know it, you've slipped into unconsciousness.  You awaken later on, a sticky feeling between your legs to go with your wet pussy");
+	if (pc.hasCock()) output(" and raging hard on");
+	output(".  After remembering where you are, the next thing you notice is the absence of your drider children.  Only a pile of empty, broken egg shells and some messy webbing in the trees remain.  As you stand up and prepare to move on, the sun reflecting off something in the corner of your eye catches your attention.");
+
+	output("\n\nBetween two nearby trees is a large spider web.  While not out of the ordinary, when the sunlight hits it at a certain angle the gossamer strands spell out a simple message:  \"<i>THANK YOU MOMMY.</i>\"");
+	
+	processTime(4 * 60);
+	pc.lust(pc.lustMax());
+	
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
+}
 
 //Win Drider Male Anal (OH BABY)
 private function buttFuckADriderOhBaby():void
