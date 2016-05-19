@@ -88,7 +88,7 @@ package classes.GameData.Pregnancy.Handlers
 					kGAMECLASS.eventBuffer += "\n\nEmber sighs in relief.  \"<i>Good, is there anything I can do for you?</i>\"";
 					kGAMECLASS.eventBuffer += "\n\nYou tap your lips thoughtfully, mulling it over.  ";
 					//(Low Corruption)
-					if (kGAMECLASS.pc.cor() <= 33) kGAMECLASS.eventBuffer += "There really isn't anything you feel like you need right now... maybe some water?  Or maybe you could have Ember help you to your " + camp.homeDesc() + " for a quick rest?";
+					if (kGAMECLASS.pc.cor() <= 33) kGAMECLASS.eventBuffer += "There really isn't anything you feel like you need right now... maybe some water?  Or maybe you could have Ember help you to your tent for a quick rest?";
 					//(Medium Corruption)
 					else if (kGAMECLASS.pc.cor() <= 66) kGAMECLASS.eventBuffer += "You wonder if you should take advantage of Ember - you've certainly been feeling a little on edge lately, and besides [ember.heShe] did say 'anything'.  You ponder this for a while longer.";
 					//High Corruptio
@@ -136,7 +136,7 @@ package classes.GameData.Pregnancy.Handlers
 					//(If Corruption >= 75)
 					else {
 						kGAMECLASS.eventBuffer += "You find yourself daydreaming about giving birth, your belly swollen huge - bigger than it currently is - and the orgasmic sensation of many large, round eggs sliding out of your [pc.vagina].\n\nYou start to absently rub yourself as you envision eggs by the dozens coming from within you; you shall be mothergod for a whole new race of dragons...";
-						pc.lust(35);
+						kGAMECLASS.pc.lust(35);
 					}
 					kGAMECLASS.eventBuffer += "\n\nEmber interrupts your musings with a question.  \"<i>How are you feeling? Do you need me to get you anything?</i>\"";
 					kGAMECLASS.eventBuffer += "\n\nThe dragon's question is uncharacteristic of [ember.himHer].  Still, you do appreciate the attention you're getting, and so you ask Ember to fetch you some food and water.  The speed with which Ember dashes off to fulfill your requests is truly impressive!  In short moments Ember is back with a piece of roasted meat and a skin of water.";

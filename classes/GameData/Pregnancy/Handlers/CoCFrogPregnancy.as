@@ -8,12 +8,12 @@ package classes.GameData.Pregnancy.Handlers
 	import classes.kGAMECLASS;
 	import classes.PregnancyData;
 	
-	public class CoCDriderEggPregnancy extends BasePregnancyHandler
+	public class CoCFrogPregnancy extends BasePregnancyHandler
 	{
-		public function CoCDriderEggPregnancy() // basically simplified copy-paste
+		public function CoCFrogPregnancy()
 		{
-			_handlesType = "CoCDriderEggPregnancy";
-			_basePregnancyIncubationTime = 200 * 60; // 8 days
+			_handlesType = "CoCFrogPregnancy";
+			_basePregnancyIncubationTime = 30 * 60; // just a day and you can go for more, you buttslut...
 			_basePregnancyChance = 1;
 			_alwaysImpregnate = true;
 			_ignoreInfertility = true;
@@ -28,30 +28,25 @@ package classes.GameData.Pregnancy.Handlers
 			_definedAverageLoadSize = 100;
 			_pregnancyChildType = GLOBAL.CHILD_TYPE_EGGS;
 			
-			this.addStageProgression(199 * 60, function(pregSlot:int):void {
-				kGAMECLASS.eventBuffer += "\n\nAfter your session with the drider, you feel so nice and... full.  There is no outward change on your body, aside from the egg-packed bulge of your belly, but your [pc.asshole] tingles slightly and leaks green goop from time to time. Hopefully it's nothing to be alarmed about.";
-			}, true);
-			
-			this.addStageProgression(180 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 1, true);
-				
-				kGAMECLASS.eventBuffer += "\n\nA hot flush works its way through you, and visions of aroused driders quickly come to dominate your thoughts.  You start playing with a nipple while you lose yourself in the fantasy, imagining being tied up in webs and packed completely full of eggs, stuffing your belly completely with burgeoning spheres of love.  You shake free of the fantasy and notice your hands rubbing over your slightly bloated belly.  Perhaps it wouldn't be so bad?";
-				
-				kGAMECLASS.pc.slowStatGain("l", 1);
-				// sen +1
-				kGAMECLASS.pc.lust(20);
-			}, true);
-			
-			this.addStageProgression(120 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 2, true);
-				
-				kGAMECLASS.eventBuffer += "\n\nYour belly is bulging from the size of the eggs growing inside you and gurgling just about any time you walk.  Green goo runs down your [pc.legs] frequently, drooling out of your pregnant asshole.";
-			}, true);
-			
-			this.addStageProgression(72 * 60, function(pregSlot:int):void {
-				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 2, true);
-				
-				kGAMECLASS.eventBuffer += "\n\nThe huge size of your pregnant belly constantly impedes your movement, but the constant squirming and shaking of your unborn offspring makes you pretty sure you won't have to carry them much longer.";
+			this.addStageProgression(8 * 60, function(pregSlot:int):void {
+				if (pregSlot != 3) // vaginal
+				{
+					if (kGAMECLASS.pc.hasVagina()) {
+						kGAMECLASS.eventBuffer += "\n\nYour gut churns, and with a squelching noise, a torrent of transparent slime gushes from your [pc.asshole]. You immediately fall to your knees, landing wetly amidst the slime. The world around briefly flashes with unbelievable colors, and you hear someone giggling.\n\nAfter a moment, you realize that it’s you. Against your [pc.vagina], the slime feels warm and cold at the same time, coaxing delightful tremors from your [pc.clit]. Seated in your own slime, you moan softly, unable to keep your hands off yourself.";
+						kGAMECLASS.pc.lust(kGAMECLASS.pc.lustMax(), true);
+					}
+					else kGAMECLASS.eventBuffer += "\n\nYour gut churns, but after a moment it settles. Your belly does seem a bit bigger and more gravid afterward, like you're filling up with fluid without any possible vent. You suddenly wonder if losing your pussy was such a great idea.";
+				}
+				else // anal
+				{
+					kGAMECLASS.eventBuffer += "\n\nYour gut churns, and with a squelching noise, a torrent of transparent slime gushes from your ass.  You immediately fall to your knees, landing wetly amidst the slime.  The world around briefly flashes with unbelievable colors, and you hear someone giggling.\n\nAfter a moment, you realize that it’s you.";
+					if (kGAMECLASS.pc.hasVagina()) kGAMECLASS.eventBuffer += " Against your [pc.vagina], the slime feels warm and cold at the same time, coaxing delightful tremors from your [pc.clit].";
+					else if (kGAMECLASS.pc.balls > 0) kGAMECLASS.eventBuffer += " Slathered in hallucinogenic frog slime, your [pc.balls] tingle, sending warm pulses of pleasure all the way up into your brain.";
+					else if (kGAMECLASS.pc.hasCock()) kGAMECLASS.eventBuffer += " Splashing against the underside of your [pc.cocksLight], the slime leaves a warm, oozy sensation that makes you just want to rub [pc.eachCock] over and over and over again.";
+					else kGAMECLASS.eventBuffer += " Your asshole begins twitching, aching for something to push through it over and over again.";
+					kGAMECLASS.eventBuffer += " Seated in your own slime, you moan softly, unable to keep your hands off yourself.";
+					kGAMECLASS.pc.lust(kGAMECLASS.pc.lustMax(), true);
+				}
 			}, true);
 			
 			_onTryImpregnate = OverrideOnTryImpregnate;
@@ -83,7 +78,8 @@ package classes.GameData.Pregnancy.Handlers
 			{
 				return function():void
 				{
-					kGAMECLASS.birthSpiderEggsFromAnusITSBLEEDINGYAYYYYY(c_pregSlot);
+					if (c_pregSlot == 3) kGAMECLASS.birthFrogEggsAnal(c_pregSlot);
+					else kGAMECLASS.layFrogEggs(c_pregSlot);
 					cleanupPregnancy(c_mother, c_pregSlot, c_thisPtr);
 				}
 			})(mother, pregSlot, thisPtr);
@@ -96,7 +92,7 @@ package classes.GameData.Pregnancy.Handlers
 			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
 			
 			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
-			StatTracking.track("coc/pregnancy/drider", 1);
+			StatTracking.track("coc/pregnancy/frog", 1);
 			StatTracking.track("coc/pregnancy/total births", 1);
 			
 			pData.reset();
@@ -113,5 +109,4 @@ package classes.GameData.Pregnancy.Handlers
 			return retString;
 		}
 	}
-
 }

@@ -37,7 +37,7 @@ package classes.GameData.Pregnancy.Handlers
 				
 				kGAMECLASS.eventBuffer += "\n\nA honey-scented fluid drips from your rectum.</b>  At first it worries you, but as the smell fills the air around you, you realize anything with such a beautiful scent must be good. ";
 				if (kGAMECLASS.pc.cockTotal() > 0) {
-					if (player.cockTotal() == 1) {
+					if (kGAMECLASS.pc.cockTotal() == 1) {
 						kGAMECLASS.eventBuffer += "The aroma seems to permeate your very being, slowly congregating in your [pc.cockNoun]";
 						if (kGAMECLASS.pc.cocks[0].hasFlag(GLOBAL.FLAG_FLARED)) kGAMECLASS.eventBuffer += ", each inhalation making it bigger, harder, and firmer.  You suck in huge lungfuls of air, until your [pc.cock] is twitching and dripping, the flare swollen and purple. ";
 						else if (kGAMECLASS.pc.cocks[0].hasFlag(GLOBAL.FLAG_KNOTTED)) kGAMECLASS.eventBuffer += ", each inhalation making it thicker, harder, and firmer.  You suck in huge lungfuls of air, desperate for more, until your [pc.cock] is twitching and dripping, its knot swollen to the max. ";

@@ -53,7 +53,7 @@ package classes.GameData.Pregnancy.Handlers
 		{
 			// this one is not actual pregnancy
 			kGAMECLASS.eventBuffer += "\n\nYour bowels make a strange gurgling noise and shift uneasily.  You feel increasingly empty, as though some obstructions inside you were being broken down.";
-			cleanupPregnancy(c_mother, c_pregSlot, c_thisPtr);
+			cleanupPregnancy(mother, pregSlot, thisPtr);
 		}
 		
 		public static function cleanupPregnancy(mother:Creature, pregSlot:int, thisPtr:BasePregnancyHandler):void

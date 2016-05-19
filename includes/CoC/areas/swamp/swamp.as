@@ -3,8 +3,6 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-// TODO:
-// Ember? It's a follower, so big maybe
 public function exploreSwamp():void {
 	if (helSexualAmbush()) return;
 	
@@ -58,6 +56,16 @@ public function exploreSwamp():void {
 		choice.push(encounterRogarSwamp);
 		chance.push(4);
 	}
+	
+	// those are bog encounters, but bog is too empty for full-fledged location and have little sense as place
+	choice.push(encounterChameleon);
+	chance.push(1);
+	
+	choice.push(findTheFrogGirl);
+	chance.push(6);
+	
+	choice.push(phoukaEncounter);
+	chance.push(2);
 	
 	WeightedRandom(choice, chance, true)();
 }

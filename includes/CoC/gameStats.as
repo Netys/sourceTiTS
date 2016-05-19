@@ -94,6 +94,8 @@ public function displayEncounterLogCoCVarious():int
 				output2("\n<b>* Births, Centaurs: </b>" + StatTracking.getStat("coc/pregnancy/centaur"));
 			if (StatTracking.getStat("coc/pregnancy/pc cotton") > 0)
 				output2("\n<b>* Births, Cotton Children: </b>" + StatTracking.getStat("coc/pregnancy/pc cotton"));
+			if (StatTracking.getStat("coc/pregnancy/faerie") > 0)
+				output2("\n<b>* Births, Faerie: </b>" + StatTracking.getStat("coc/pregnancy/faerie"));
 			if (StatTracking.getStat("coc/pregnancy/hellhound") > 0)
 				output2("\n<b>* Births, Hellhounds: </b>" + StatTracking.getStat("coc/pregnancy/hellhound"));
 			if (StatTracking.getStat("coc/pregnancy/drider") > 0)
@@ -112,6 +114,8 @@ public function displayEncounterLogCoCVarious():int
 				output2("\n<b>* Births, Mouse Litters: </b>" + StatTracking.getStat("coc/pregnancy/mice"));
 			if (StatTracking.getStat("coc/pregnancy/minotaurs") > 0)
 				output2("\n<b>* Births, Minotaurs: </b>" + StatTracking.getStat("coc/pregnancy/minotaurs"));
+			if (StatTracking.getStat("coc/pregnancy/phouka") > 0)
+				output2("\n<b>* Births, Phouka: </b>" + StatTracking.getStat("coc/pregnancy/phouka"));
 			if (StatTracking.getStat("coc/pregnancy/sandtrap") > 0)
 				output2("\n<b>* Births, Sand Traps: </b>" + StatTracking.getStat("coc/pregnancy/sandtrap"));
 			if (StatTracking.getStat("coc/pregnancy/pc sand witch") > 0)

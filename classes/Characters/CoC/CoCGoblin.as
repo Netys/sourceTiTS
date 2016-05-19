@@ -163,8 +163,8 @@ package classes.Characters.CoC
 			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		GLOBAL.REALLY_DISLIKES_SEXPREF);
 			
 			inventory.push(kGAMECLASS.WeightedRandom(
-						[new CoCGoblinAle(), new CoCLustDraft(), new CoCDyePink(), new CoCDyeBlue, new CoCDyeOrange(), new CoCDyePurple()] ,
-						[5,                  1,                  1,                1,              1,                  1]));
+						[new CoCGoblinAle(), new CoCLustDraft(), new CoCDyePink(), new CoCDyeBlue(), new CoCDyeOrange(), new CoCDyePurple()] ,
+						[5,                  1,                  1,                1,                1,                  1]));
 			
 			this._isLoading = false;
 		}

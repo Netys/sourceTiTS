@@ -116,8 +116,7 @@ package classes.GameData.Pregnancy.Handlers
 			
 			if (pregSlot == 3) // butt preg is actually by oviposition
 			{
-				CoCDriderEggPregnancy.OverrideOnTryImpregnate(father, mother, pregSlot, thisPtr);
-				return;
+				return CoCDriderEggPregnancy.OverrideOnTryImpregnate(father, mother, pregSlot, thisPtr);
 			}
 			
 			return defaultOnTryImpregnate(father, mother, pregSlot, thisPtr);
@@ -127,7 +126,7 @@ package classes.GameData.Pregnancy.Handlers
 		{
 			if (pregSlot == 3) // butt preg is actually by oviposition
 			{
-				CoCDriderEggPregnancy.defaultOnSuccessfulImpregnation(father, mother, pregSlot, thisPtr);
+				CoCDriderEggPregnancy.OverrideOnSuccessfulImpregnantion(father, mother, pregSlot, thisPtr);
 				return;
 			}
 			

@@ -14,13 +14,28 @@
 			
 			PregnancyManager.insertNewHandler(new CoCAmilyPregnancy());
 			PregnancyManager.insertNewHandler(new CoCAnemonePregnancy());
+			PregnancyManager.insertNewHandler(new CoCBeeEggsPregnancy());
+			PregnancyManager.insertNewHandler(new CoCBunnyEggPregnancy());
 			PregnancyManager.insertNewHandler(new CoCCentaurPregnancy());
+			PregnancyManager.insertNewHandler(new CoCCottonPregnancy());
+			PregnancyManager.insertNewHandler(new CoCDriderEggPregnancy());
+			PregnancyManager.insertNewHandler(new CoCDriderPregnancy());
+			PregnancyManager.insertNewHandler(new CoCEmberPregnancy());
+			PregnancyManager.insertNewHandler(new CoCFrogPregnancy());
+			PregnancyManager.insertNewHandler(new CoCGooGirlPregnancy());
 			PregnancyManager.insertNewHandler(new CoCHellhoundPregnancy());
 			PregnancyManager.insertNewHandler(new CoCImpPregnancy());
+			PregnancyManager.insertNewHandler(new CoCIzmaPregnancy());
 			PregnancyManager.insertNewHandler(new CoCKeltPregnancy());
 			PregnancyManager.insertNewHandler(new CoCMinotaurPregnancy());
 			PregnancyManager.insertNewHandler(new CoCMousePregnancy());
 			PregnancyManager.insertNewHandler(new CoCOviElixEggs());
+			PregnancyManager.insertNewHandler(new CoCSandTrapFertilizedPregnancy());
+			PregnancyManager.insertNewHandler(new CoCSandTrapPregnancy());
+			PregnancyManager.insertNewHandler(new CoCSandWitchPregnancy());
+			PregnancyManager.insertNewHandler(new CoCSatyrPregnancy());
+			PregnancyManager.insertNewHandler(new CoCSpiderPregnancy());
+			PregnancyManager.insertNewHandler(new CoCUrtaPregnancy());
 			
 			PregnancyManager.insertNewHandler(new VenusPitcherFertilizedSeedCarrierHandler());
 			PregnancyManager.insertNewHandler(new VenusPitcherSeedCarrierPregnancyHandler());

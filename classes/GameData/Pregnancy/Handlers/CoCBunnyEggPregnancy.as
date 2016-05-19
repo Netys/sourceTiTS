@@ -85,7 +85,7 @@ package classes.GameData.Pregnancy.Handlers
 		{
 			// not actual pregnancy, just clear it
 			kGAMECLASS.eventBuffer += "\n\nAfter dealing with the discomfort and bodily changes for the past day or so, you finally get the feeling that the eggs in your womb have dissolved.";
-			cleanupPregnancy(c_mother, c_pregSlot, c_thisPtr);
+			cleanupPregnancy(mother, pregSlot, thisPtr);
 		}
 		
 		public static function cleanupPregnancy(mother:Creature, pregSlot:int, thisPtr:BasePregnancyHandler):void
