@@ -1378,6 +1378,10 @@ public function storeItem(args:Array):void
 	}
 	
 	shipStorageMenuType(type);
+	
+	// Special Events
+	if(item is GooArmor) output("\n\n" + gooArmorInStorageBlurb());
+	
 	return;
 }
 
@@ -1409,6 +1413,10 @@ public function doStorageReplace(args:Array):void
 	pc.inventory.push(tarItem);
 	
 	shipStorageMenuType(type);
+	
+	// Special Events
+	if(invItem is GooArmor) output("\n\n" + gooArmorInStorageBlurb());
+	if(tarItem is GooArmor) output("\n\n" + gooArmorInStorageBlurb(false));
 }
 
 public function takeItem(args:Array):void
@@ -1462,6 +1470,9 @@ public function takeItem(args:Array):void
 	}
 	
 	shipStorageMenuType(type);
+	
+	// Special Events
+	if(item is GooArmor) output("\n\n" + gooArmorInStorageBlurb(false));
 }
 
 public function replaceInInventory(args:Array):void
