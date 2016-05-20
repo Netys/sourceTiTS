@@ -320,14 +320,22 @@ private function owcaHerds():void {
 	flags["COC.OWCAS_ATTITUDE"] += 5;
 	if (flags["COC.OWCAS_ATTITUDE"] > 100) flags["COC.OWCAS_ATTITUDE"] = 100;
 	pc.slowStatGain("i", 1);
+	processTime(40 + rand(10));
 	//[if attitude > 70]
-	if(flags["COC.OWCAS_ATTITUDE"] > 70) {
+	if (flags["COC.OWCAS_ATTITUDE"] > 70)
+	{
 		output("\n\nThe villagers thank you for your hard work and one of them hands you a bottle of sheep milk.  \"<i>'Tis good for your health.  Don't worry, it won't... mutate you.</i>\"\n\n");
 		//inventory.takeItem(consumables.SHEEPMK, returnToCampUseOneHour);
+		itemScreen = mainGameMenu;
+		lootScreen = mainGameMenu;
+		useItemFunction = mainGameMenu;
+		itemCollect([new CoCSheepMilk()]);
 	}
-	processTime(30 + rand(10));
-	clearMenu();
-	addButton(0, "Next", owcaMainScreenOn);
+	else
+	{
+		clearMenu();
+		addButton(0, "Next", owcaMainScreenOn);
+	}
 }
 
 //Rebecc Menu (Z)

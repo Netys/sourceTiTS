@@ -642,7 +642,7 @@ internal function phoukaSexGoat(postCombat:Boolean, lustLoss:Boolean):void
 		output(" - he can't already be in that deep, can he?");
 	}
 	output("  Once the goat's cock is inside, he stops moving and tenses up.  You feel his cock growing larger and larger until you fear your abused anus is going to split apart.");
-	pc.buttChange(0, cockVolume(45), true);
+	pc.buttChange(cockVolume(45), true);
 	output("\n\nWith his cock expanded to full size and buried inside you, the goat begins rocking back and forth. <i>“How do ye like it?”</i> the " + phoukaName() + " bleats in your ear as he tries to force yet more of his cock inside you. ");
 	if (pc.cor() <= 50) output("You can't answer the goat, the pain of being split open is too great");
 	else output("You pant with excitement from being dominated by this filthy shapeshifting goat");
@@ -859,7 +859,9 @@ protected function phoukaSexFaerieFemale(postCombat:Boolean):void
 	output("\n\nThe most important thing to you right now is her sopping wet pussy, which looks most inviting.  While she lies there recovering you press your [pc.cock " + pc.biggestCockIndex() + "] against her hole.  Her eyes flutter open as you ");
 	if (pc.isTaur()) output("line your stallion prick up and push.  She slides along the ground on her back but then, to your surprise, she grabs your pole with her hands and presses the head against her muff, helping you impale her");
 	else output("wrap your hands around her tiny waist and push");
-	output(". <i>“Oh fuck - sooo big!”</i> she moans as you force open her pussy.  The walls of her vagina spasm around your cock and you realize she's already cumming.  Taking advantage, you rest most of your weight on your cock and slide several more inches inside.\n\n");
+	output(". <i>“Oh fuck - sooo big!”</i> she moans as you force open her pussy.  The walls of her vagina spasm around your cock and you realize she's already cumming.  Taking advantage, you rest most of your weight on your cock and slide several more inches inside.");
+	pc.cockChange();
+	output("\n\n");
 	if (pc.isTaur()) output("To your surprise the horny faerie girl’s");
 	else output("The horny faerie wraps her twitching legs around you.  To your surprise her");
 	output(" orgasm just doesn't end.  Instead her whole body, inside and out, continues to spasm.  Your only proof it's an orgasm and not some kind of seizure is that she keeps moaning and screaming <i>“MORE!”</i>, <i>“YES!”</i> and sometimes <i>“FILL ME!”</i>\n\nThe constant squeezing and sucking of her elastic cunt feels as good as anything a succubus could do and soon enough you feel a familiar warmth in your [pc.balls].  'Fill me' she begs you in an exhausted whisper.  You're only too happy to oblige this faerie fuckslut.  ");

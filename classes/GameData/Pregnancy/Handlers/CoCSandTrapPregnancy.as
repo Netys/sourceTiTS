@@ -35,7 +35,7 @@ package classes.GameData.Pregnancy.Handlers
 		
 		public static function OverrideOnTryImpregnate(father:Creature, mother:Creature, pregSlot:int, thisPtr:BasePregnancyHandler):Boolean
 		{
-			if (mother.characterClass != GLOBAL.CLASS_ADVENTURER) return false; // only can be pregged if you are true champion
+			//if (mother.characterClass != GLOBAL.CLASS_ADVENTURER) return false; // only can be pregged if you are true champion
 			
 			return defaultOnTryImpregnate(father, mother, pregSlot, thisPtr);
 		}

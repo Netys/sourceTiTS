@@ -1609,12 +1609,12 @@ private function drinkDirectly():void {
 	clearOutput();
 	output("Approaching the pristine pond, you kneel on the shore and dip your hands into the water, cupping them together and lifting them out to scoop up a decent drink.  The water is cool and sweet to the taste, and every swallow makes you feel calmer, cleaner, and refreshed.  You drink until your thirst is quenched, feeling purer in both mind and body.  ");
 	
-	target.energy(10);
-	target.lust( -25);
-	target.cor( -0.5);
-	target.HP(20 + (5 * target.level) + rand(5 * target.level))
-	if (target.cor() > 50) target.cor( -1);
-	if (target.cor() > 75) target.cor( -1);
+	pc.energy(10);
+	pc.lust( -25);
+	pc.cor( -0.5);
+	pc.HP(20 + (5 * pc.level) + rand(5 * pc.level))
+	if (pc.cor() > 50) pc.cor( -1);
+	if (pc.cor() > 75) pc.cor( -1);
 	
 	processTime(15 + rand(10));
 	addButton(0, "Next", mainGameMenu);
