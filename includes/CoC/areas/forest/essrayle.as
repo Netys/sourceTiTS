@@ -263,8 +263,8 @@ private function feedTrappedEssy():void {
 		addButton(0,"Cock",hasCockFeedEssy,true);
 		addButton(1,"Pussy",hasPussyFeedEssy,true);
 	}
-	if(pc.hasVagina()) hasCockFeedEssy(false);
-	if(pc.hasCock()) hasPussyFeedEssy(false);
+	if(pc.hasVagina()) hasPussyFeedEssy(false);
+	if(pc.hasCock()) hasCockFeedEssy(false);
 }
 
 //(Cock)

@@ -5,7 +5,6 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-//Implementation of TimeAwareInterface
 public function VapulaTimePassedNotify():void
 {
 	if (hours == 0) {
@@ -20,11 +19,19 @@ public function VapulaTimePassedNotify():void
 		eventQueue.push(vapulaGivesPCAPresent);
 	}
 }
-//End of Interface Implementation
+
+public function slaveCampMenuBlurbVapula(showInteractButton:Boolean):void {
+	if (vapulaSlave() && int(flags["COC.FOLLOWER_AT_FARM_VAPULA"]) == 0) {
+		vapulaSlaveFlavorText();
+		
+		if (showInteractButton) addButton(followerBtnNum++, "Vapula", function():* { processTime(6); callSlaveVapula() } );
+	}
+}
 
 private var VapulaTimePassedNotifyHook: * = VapulaTimePassedNotifyGrapple();
 private function VapulaTimePassedNotifyGrapple():* { 
 		timeChangeListeners.push(VapulaTimePassedNotify);
+		slaveCampMenuBlurb.push(slaveCampMenuBlurbVapula);
 	}
 
 public function vapulaSlave():Boolean {
@@ -1159,7 +1166,7 @@ public function vapulaForceFeeds():void
 private function spankVapulaLikeABoss():void
 {
 	clearOutput();
-	output("Without any warning, you grab the lusty succubus by the wrists and pull her into you, easily manhandling her surprised form until she's bent over your [leg], vulnerable and squealing like the gutter-slut she is.  Her wings batter at your face and chest, but after a little wrangling, you pin them flat against her back.  The best she can manage now is a few weak twitches at her wing-tips.  Her large, well-formed breasts jiggle and shake as she struggles, but all the trembling purple mountains accomplish is bringing a ready flush to your " + pc.skin());
+	output("Without any warning, you grab the lusty succubus by the wrists and pull her into you, easily manhandling her surprised form until she's bent over your [pc.leg], vulnerable and squealing like the gutter-slut she is.  Her wings batter at your face and chest, but after a little wrangling, you pin them flat against her back.  The best she can manage now is a few weak twitches at her wing-tips.  Her large, well-formed breasts jiggle and shake as she struggles, but all the trembling purple mountains accomplish is bringing a ready flush to your " + pc.skin());
 	if (pc.hasCock()) output(" and a healthy surge of blood to [pc.eachCock]");
 	else if (pc.hasVagina()) output(" and a teltale moistness to your nethers");
 	output(".");
@@ -1181,8 +1188,8 @@ private function spankVapulaLikeABoss():void
 	if (pc.hasCock()) output("maleness");
 	else if (pc.hasVagina()) output("vagina");
 	else output("tingling anus");
-	output(", and bring your palm back down again to start a fresh wave of punishment.  Vapula actually does begin to make vocalizations at this point, but they sound closer to moans and whimpers of pleasure than cries of pain.  As a matter of fact, you can feel the hard nubs of her nipples dragging across your [leg] every time she contorts in pain.  A few blows later and stray drops of feminine lubricants spatter off your [foot].  Vapula's tail stabs towards her vulnerable sex, but you immediately yank it away and give her a harder than usual slap for punishment.");
-	output("\n\nIf she's going to cum, it's going to be because of you.  There's no masturbating your way out of punishment.  You pound away at that reddened bottom with renewed vigor, and soon, those drops of enjoyment turn into a tide of lubricated pleasure.  Vapula's head begins to thrash with each spank, and her body quakes, not from orgasm but from being on the edge for so long.  You double the pace, and as the entirety of her bottom goes red, Vapula cums, unleashing a tide of succubus-spunk to stain your [leg].  You give her a few gentle swats to see her orgasm through and release her once it's over.");
+	output(", and bring your palm back down again to start a fresh wave of punishment.  Vapula actually does begin to make vocalizations at this point, but they sound closer to moans and whimpers of pleasure than cries of pain.  As a matter of fact, you can feel the hard nubs of her nipples dragging across your [pc.leg] every time she contorts in pain.  A few blows later and stray drops of feminine lubricants spatter off your [foot].  Vapula's tail stabs towards her vulnerable sex, but you immediately yank it away and give her a harder than usual slap for punishment.");
+	output("\n\nIf she's going to cum, it's going to be because of you.  There's no masturbating your way out of punishment.  You pound away at that reddened bottom with renewed vigor, and soon, those drops of enjoyment turn into a tide of lubricated pleasure.  Vapula's head begins to thrash with each spank, and her body quakes, not from orgasm but from being on the edge for so long.  You double the pace, and as the entirety of her bottom goes red, Vapula cums, unleashing a tide of succubus-spunk to stain your [pc.leg].  You give her a few gentle swats to see her orgasm through and release her once it's over.");
 	output("\n\nThe demoness nervelessly flops off you and onto the ground, moaning in pain and pleasure, rubbing her abused bottom.  Hopefully she learned her lesson, and if not, you can always teach it to her again, next time.");
 	processTime(20 + rand(5));
 	//{+20ish lust}

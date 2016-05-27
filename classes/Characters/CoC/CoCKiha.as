@@ -195,7 +195,7 @@ package classes.Characters.CoC
 				removeStatusEffect("Blinded");
 			}
 			
-			if(CombatManager.hasEnemyOfClass(PlayerCharacter)) {
+			if(CombatManager.hasEnemyOfClass(CoCKiha)) {
 				var select:Number = rand(5);
 				if (select <= 1) eAttack(target);
 				else if (select == 2) {

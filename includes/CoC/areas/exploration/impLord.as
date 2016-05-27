@@ -300,7 +300,7 @@ public function feederBreastfeedRape():void {
 		
 		output("\n\nAfter riding out his orgasm, the imp flops backwards onto the ground, his cock now semi-hard and coated in his juices.  He gives his slightly bloated belly a gentle, content rub.  You chuckle at him as he falls asleep contentedly.");
 		
-		output("\n\nYou pick yourself up, gather up your equipment and put your [armorName] back on.");
+		output("\n\nYou pick yourself up, gather up your equipment and put your [pc.gear] back on.");
 		pc.loadInAss(enemy);
 		pc.lust(50);
 		pc.cor(1);

@@ -433,7 +433,7 @@ package classes.Characters.CoC
 			}
 			else
 			{
-				output(" You go flying back into a pair of oiled-up slavegirls. They gasp in surprise as you tear your way back to the fight. Too late, they attempt to caress you, barely touching your [leg] before you’re back in the fight. ");
+				output(" You go flying back into a pair of oiled-up slavegirls. They gasp in surprise as you tear your way back to the fight. Too late, they attempt to caress you, barely touching your [pc.leg] before you’re back in the fight. ");
 				var damage:TypeCollection = this.meleeDamage();
 				damage.multiply(1.15);
 				applyDamage(damage, this, pc);

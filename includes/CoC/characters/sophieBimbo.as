@@ -44,7 +44,7 @@ public function sophieSprite():void {
 public function bimboSophie():Boolean {
 	return (flags["COC.UNKNOWN_FLAG_NUMBER_00282"] > 0 && flags["COC.UNKNOWN_FLAG_NUMBER_00283"] == 0 && flags["COC.SOPHIE_DEBIMBOED"] == 0);
 }
-
+•
 public function sophieIsInSeason():Boolean {
 	return (flags["COC.SOPHIE_HEAT_COUNTER"] > 551 && flags["COC.SOPHIE_INCUBATION"] == undefined);
 }
@@ -206,7 +206,7 @@ public function approachBimboSophieInCamp(displayOutput:Boolean = true):void {
 			if (sophieIsInSeason() && pc.hasCock()) {
 				//New Sophie Greeting*
 				output("As soon as you call for Sophie, the blond bimbo trots over to you, her arms hugging around her chest, barely containing the enormous, bouncing mammaries within.  She's completely nude, like usual.  Her fluttering eyelashes lower coquettishly as she comes to a stop, rolling her immense hips back and forth hypnotically.  Her tail feathers twitch up and back, fanning a breeze in your direction that reeks of pheremonal sex.  The tangy, peach-like scent of her lust practically assaults your nostrils as the harpy attaches herself to your arm.  She presses her breasts against you as she clings tight, the prominent nipples so hard that they dig painfully in your " + pc.skinFurScales() + ".");
-				output("\n\nHer thick, soft thighs wrap around your [leg], pressing a slippery heat against you as she coos, \"<i>I've been thinking about you allll day, [pc.name], and I was like, thinking maybe momma Sophie's earned a special treat, since I'm always so good to you.</i>\"");
+				output("\n\nHer thick, soft thighs wrap around your [pc.leg], pressing a slippery heat against you as she coos, \"<i>I've been thinking about you allll day, [pc.name], and I was like, thinking maybe momma Sophie's earned a special treat, since I'm always so good to you.</i>\"");
 				output("\n\nThe voluptuous harpy squeezes her legs around you again, and she pats [pc.oneCock] through your [pc.gear] to make it known exactly what she wants.  She circles her fingers around your [pc.cockHead " + pc.biggestCockIndex() + "] sensually.  You begin to stiffen almost immediately.");
 				output("\n\n\"<i>Oohh, getting <b>soooo</b> hard, aren't you?  Why don't you just stuff that thing in me and cum until I'm like, totally full and pregnant?  Your cock wants it, doesn't it?</i>\" she asks, speaking in a singsong voice as she continues to caress your rock-solid shaft, her very words seeming to stir the cauldron of bubbling lust within you.");
 				output("\n\nYou KNOW Sophie is trying to compel you to do what she wants, but she's not quite as good at it since she became a bimbo.  Do you fuck her pussy?  Her entire mound, labia and all, is slick with her moisture and shining gold layers of aphrodisiac lipstick.  Fucking that would be heavenly, but it would likely take the better part of the day and likely get her pregnant.  You could always just wipe it off with a piece of cloth and do something else instead.");
@@ -502,6 +502,8 @@ public function unlockLuststickResistance():void {
 	output("<b>(Perk Unlocked: Luststick Adapted - your minimum lust is permanently raised, but you are more lust resistant.  In combat, you're immune to it, though it still gives you a rush during sex.  You're also comfortable enough with it to use it like a harpy if you find any.)</b>\n");
 	
 	pc.createPerk("Luststick Adapted", 0, 0, 0, 0, "Your minimum lust is permanently raised, but you are more lust resistant.  In combat, you're immune to it, though it still gives you a rush during sex.  You're also comfortable enough with it to use it like a harpy if you find any.");
+	
+	addNextButton();
 }
 
 //Get oral as female.  
@@ -1074,7 +1076,7 @@ private function sophieImpregnationSex():void {
 	
 	output("\n\nYou shudder as her words take effect.  Sophie's surprisingly focused now, driven in her determination to have you fuck that glorious... sopping wet... beautiful pussy.  You can't wait any more!  You grab hold of the slow-witted bimbo's head and push it down over [pc.oneCock], surrounding yourself with the soft pleasure of her plump, enveloping, and tingling lips.  Her plush cockpillows suckle into a vacuum-tight seal around you as you crudely face-fuck her, bathing your manhood in tingling aphrodisiac lip-gloss.  Sophie's spittle froths at the corners of her luscious lips.  Her nostrils flare as she sucks in lungfuls of air each time you yank her back.  Of course, the air she inhales, utterly saturated with the scent of your maleness and laden with virile pheromones, makes her slit drop slick moisture onto your [foot].");
 	
-	output("\n\nHer mouth feels good, <i>really</i> good, but that dripping on your [leg] reminds you that there's a juicy pussy just waiting to be jizzed inside, and your cock... it <b>needs</b> to enter it... to fuck it hard!  Sophie's mouth is a pale substitute for her creamy pussy.  You force her off, the airhead's plush, cock-sucking lips still connected to you by a shimmering wet web of drool.");
+	output("\n\nHer mouth feels good, <i>really</i> good, but that dripping on your [pc.leg] reminds you that there's a juicy pussy just waiting to be jizzed inside, and your cock... it <b>needs</b> to enter it... to fuck it hard!  Sophie's mouth is a pale substitute for her creamy pussy.  You force her off, the airhead's plush, cock-sucking lips still connected to you by a shimmering wet web of drool.");
 	
 	output("\n\nSophie pants, \"<i>Fuck me, [pc.name].  Fuck me super hard!</i>\" She tries to crawl around on all fours, her swollen breasts dragging across your lower body as she turns.  As soon as her ass pivots towards you, you lose it.  Her heart-shaped rump is so curvy, so pert, and delightfully soft that you cannot resist your body's impulses, the breeding call that sings through every fiber of your being.  <b>You have to mount it!</b> Her feathery thighs are slick with sensuous moisture, and lewd drops of sexual need drip out from the bottom of that bodacious butt, slipping free of the glittering delta that is Sophie's sex.  It's like a golden target, a bull's-eye just waiting for a cock to spear it.");
 	

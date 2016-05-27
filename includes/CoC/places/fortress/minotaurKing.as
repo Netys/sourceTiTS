@@ -562,7 +562,7 @@ private function sloppySeconds():void
 	}
 	else
 	{
-		output(" [leg] wobbles");
+		output(" [pc.leg] wobbles");
 	}
 	output(" weakly beneath you, dumping you and your jiggly concubine to the floor mid-orgasm, but it doesn’t slow your ejaculation in the slightest. You feel like you could keep cuming for ever, clenching and releasing, feeding wave after wave into the happily mooing bovine temptress.");
 	output("\n\n");

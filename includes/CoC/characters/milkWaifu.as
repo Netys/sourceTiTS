@@ -461,7 +461,7 @@ private function communalBath():void {
 	if (flags["COC.JOJO_IN_CAMP"] == 1) output("\n\nThe white-furred monk Jojo approaches the pool with some hesitation, eyeing the tub full of cream.  \"<i>How...  lewd.  Though it would be a shame for such a bounty to go to waste.</i>\"  Slowly, the monk disrobes down to his undergarments, and lowers himself into the pool nearby.");
 	
 	//{If PC has Latexy:
-	//if (latexGirl.latexGooFollower()) output("\n\nYou wave over your ebony-skinned latex goo, telling her to drink up.  \"<i>M-[master]?</i>\" she says, pausing at the poolside.  You repeat your command, patting the surface of the milky waves.  It looks like her primal hunger takes over a moment later as she slips into the vast sea of lactation, soaking it up.");
+	//if (latexGirl.latexGooFollower()) output("\n\nYou wave over your ebony-skinned latex goo, telling her to drink up.  \"<i>M-[pc.master]?</i>\" she says, pausing at the poolside.  You repeat your command, patting the surface of the milky waves.  It looks like her primal hunger takes over a moment later as she slips into the vast sea of lactation, soaking it up.");
 	
 	//{If PC has Valeria:
 	if (flags["COC.VALARIA_AT_CAMP"] == 1 || pc.armor is CoCGooArmor) {

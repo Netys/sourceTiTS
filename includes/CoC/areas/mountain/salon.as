@@ -209,7 +209,7 @@ private function hairDresserRepeatGreeting():void {
 			output("Pulling the door the rest of the way open before you've the latch more than half-turned, Lynnette has you inside with disorienting speed.  She presses her well-endowed, dress-straining tits against your ");
 			if(pc.tallness <= 48) output("side");
 			else if(pc.tallness <= 68) output("[pc.hips]");
-			else output("[leg]");
+			else output("[pc.leg]");
 			output(", compressing her mountainous mammaries against you hard enough to leave milky stains in her wake.\n\n\"<i>How's my favorite breeder doing?</i>\" comes the honeyed words from her mouth, and as she begins to feel at the crotch of your [pc.gear], she asks, \"<i>I can cut your hair, if you like, but why do that when there's a woman with a quim in front of you, waiting to get stuffed?</i>\"  She smirks. \"<i>So what'll it be?</i>\"");
 		}
 		if(pc.cockTotal() == 0) {

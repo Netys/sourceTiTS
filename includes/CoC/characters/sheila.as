@@ -336,7 +336,7 @@ private function sheila1ndEncLookCloserPtIITalkLeave():void {
 //XP-1: PC's apology (sheila xp = -1 and demon sheila = 0):
 private function sheilaApology():void {
 	clearOutput();
-	output("As you search the plains for god-knows-what, you catch your [leg] on something; a rustling in the brush below you is the only warning you get before a cleverly hidden snare closes on it!");
+	output("As you search the plains for god-knows-what, you catch your [pc.leg] on something; a rustling in the brush below you is the only warning you get before a cleverly hidden snare closes on it!");
 	output("\n\n\"<i>Aha, got you now, you little... oh, it's you.</i>\"");
 	
 	output("\n\nSheila, who was apparently either dozing or lazing about in her cover to have failed to notice you, is peeking head and shoulders out of some tall grass.  She stares at you, nonplussed, as you unfasten the trap.  \"<i>Didn't peg you for an altruist.  But if you're tired of livin' and y'wanna feed me and me mates, I expect there's enough meat on you.</i>\"  She cracks a vicious smile and saunters over cautiously as you return her glare.");

@@ -592,7 +592,7 @@ package classes.Characters.CoC
 		{
 			var pc:PlayerCharacter = kGAMECLASS.pc;
 			//Strength check based lust damage, used when aroused only.
-			output("Three tentacles stab out at you like organic spears, but you easily evade them... directly into the succubus' arms! Too late, you realize that the offensive was a feint! Her tremendous tits are pressing into your back, and you feel a trickle of wetness leaking down your [leg] as she grinds against you. At the same time, she whispers into your ear, <i>“Just have a taste... sample the ecstasy. You'll see that indulging is the best thing you could possibly do.”</i>");
+			output("Three tentacles stab out at you like organic spears, but you easily evade them... directly into the succubus' arms! Too late, you realize that the offensive was a feint! Her tremendous tits are pressing into your back, and you feel a trickle of wetness leaking down your [pc.leg] as she grinds against you. At the same time, she whispers into your ear, <i>“Just have a taste... sample the ecstasy. You'll see that indulging is the best thing you could possibly do.”</i>");
 			
 			output("\n\nOne of those tentacles is above you now, and it points down, its phallic shape clear. The slit at the end spreads open, and a blob of whitish goo appears. ");
 			

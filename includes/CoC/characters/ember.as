@@ -4538,7 +4538,7 @@ public function sleepWithEmber():void {
 			output("\n\nYou tell Ember that you wanted to see [ember.himHer] and make sure everything's okay with [ember.himHer] before you did that.");
 			output("\n\n\"<i>Of course I'm okay.  I'm not a child that needs to be babysat.</i>\"  Ember takes another glance at you.  \"<i>Plus you're not in condition to check up on anything, let's get you back into your bed.</i>\"  Ember grabs your arm, leading you off to your tent.  You figure [ember.heShe] has a point and allow [ember.himHer] to lead you, idly wondering why the temperamental dragon seems to care about what condition you're in.");
 			output("\n\n\"<i>Ok, here we are.  Now get undressed and get some sleep; I'll watch the camp while you get some rest.</i>\"");
-			output("\n\nYou give the dragon a quizzical, bemused look, but as this was your intention anyway, proceed to casually slip out of your [armorName] and sink into your bedroll.");
+			output("\n\nYou give the dragon a quizzical, bemused look, but as this was your intention anyway, proceed to casually slip out of your [pc.gear] and sink into your bedroll.");
 		}
 		else if (chooser == 1) {
 			output("\n\nAs you approach Ember's den, you discover the dragon is home, sitting in the shelter of [his] makeshift cave.  When you approach, you notice [ember.heShe] is carefully plucking the petals of a flower.");

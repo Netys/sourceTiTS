@@ -1103,14 +1103,14 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			if (!pc.hasPerk("Controlled Breath")) pc.createPerk("Controlled Breath", 0, 0, 0, 0, "Increases rate of energy regeneration.");
 			if (!pc.hasPerk("Enlightened")) pc.createPerk("Enlightened", 0, 0, 0, 0, "Grants the ability to meditate alone. White magic threshold reduced.");
 			// some of the cool things from CoC, 'cause reasons!
-			if (!pc.hasPerk("Magic Affinity")) pc.createPerk("Magic Affinity", KBIT_SPELL_AROUSE | KBIT_SPELL_HEAL, 200, 50, 0, "Grants you insight into mysteries of magic.");
-			if (!pc.hasPerk("Fortitude")) pc.createPerk("Fortitude", 0, 0, 0, 0, "+1 extra HP per point of willpower.");
-			if (!pc.hasPerk("Resolute")) pc.createPerk("Resolute", 0, 0, 0, 0, "Grants immunity to stuns and some statuses.");
-			if (!pc.hasPerk("Regeneration")) pc.createPerk("Regeneration", 0, 0, 0, 0, "Regenerates 2% of max HP/hour and 1% of max HP/round.");
-			if (!pc.hasPerk("Evade")) pc.createPerk("Evade", 0, 0, 0, 0, "Increases chances of evading enemy attacks by 10%.");
-			if (!pc.hasPerk("Runner")) pc.createPerk("Runner", 0, 0, 0, 0, "Increases chances of escaping combat.");
-			if (!pc.hasPerk("Speedy Recovery")) pc.createPerk("Speedy Recovery", 0, 0, 0, 0, "Regain fatigue 50% faster.");
-			if (!pc.hasPerk("Arousing Aura")) pc.createPerk("Arousing Aura", 0, 0, 0, 0, "Exude a lust-inducing aura, making your lust attacks more effective.");
+			if (!pc.hasPerk("Magic Affinity")) pc.createPerk("Magic Affinity", KBIT_SPELL_AROUSE | KBIT_SPELL_HEAL | KBIT_SPELL_WHITEFIRE, 200, 50, 0, "Grants the ability to use minor magic.");
+			if (!pc.hasPerk("Fortitude")) pc.createPerk("Fortitude", 0, 0, 0, 0, "Grants an extra HP per point of willpower.");
+			if (!pc.hasPerk("Resolute")) pc.createPerk("Resolute", 0, 0, 0, 0, "Grants the ability to shrug off any stun.");
+			if (!pc.hasPerk("Regeneration")) pc.createPerk("Regeneration", 0, 0, 0, 0, "Grants the ability to gradually regenerate HP.");
+			if (!pc.hasPerk("Evade")) pc.createPerk("Evade", 0, 0, 0, 0, "Grants you an additional 10% evasion chance.");
+			if (!pc.hasPerk("Runner")) pc.createPerk("Runner", 0, 0, 0, 0, "Conveys an additional chance to escape combat.");
+			if (!pc.hasPerk("Speedy Recovery")) pc.createPerk("Speedy Recovery", 0, 0, 0, 0, "Grants the ability to gradually regenerate energy. Increases all energy gains by 50%.");
+			if (!pc.hasPerk("Arousing Aura")) pc.createPerk("Arousing Aura", 0, 0, 0, 0, "Your lust-inducing aura is making your tease attacks more effective.");
 			if (!pc.hasStatusEffect("Tolerance"))		pc.createStatusEffect("Tolerance", 100, 0, 0, 0); // too lazy to code real immunity
 			if (!pc.hasStatusEffect("Infertile"))		pc.createStatusEffect("Infertile", 0, 0, 0, 0); // here to have fun, nothing more!
 			pc.originalRace = pc.race(); // You've always been a kitsune. Always, I said!
@@ -1118,6 +1118,14 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			pc.lowerUndergarment = new EmptySlot();
 			pc.upperUndergarment = new EmptySlot();
 			pc.maxOutHP();
+			flags["SHIP_STORAGE_WARDROBE"] = 100;
+			flags["SHIP_STORAGE_EQUIPMENT"] = 100;
+			flags["SHIP_STORAGE_CONSUMABLES"] = 100;
+			flags["SHIP_STORAGE_VALUABLES"] = 100;
+			flags["TIMES_BUTT_TEASED"] = 100;
+			flags["TIMES_CHEST_TEASED"] = 100;
+			flags["TIMES_CROTCH_TEASED"] = 100;
+			flags["TIMES_HIPS_TEASED"] = 100;
 			bonusTexts = "You are the only one who is aware of boundless potential hidden inside of your " + (pc.isTaur() ? "massive" : "small") + " and weird body... For now.";
 			break;
 		default:

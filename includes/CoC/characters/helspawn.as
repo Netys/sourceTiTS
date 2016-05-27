@@ -1152,7 +1152,7 @@ private function hugHelspawn():void {
 	}
 	//{If PC is 6' or taller:}
 	else {
-		output("You grab " + flags["COC.HELSPAWN_NAME"] + " and pull her into a tight hug.  She lets out a girlish giggle as she falls into your arms and squeezes you right back.  Her powerful arms threaten to crush your bigger body, smothering you in affection.  Her tail slips around your [leg], the warm leather binding you to your beloved ");
+		output("You grab " + flags["COC.HELSPAWN_NAME"] + " and pull her into a tight hug.  She lets out a girlish giggle as she falls into your arms and squeezes you right back.  Her powerful arms threaten to crush your bigger body, smothering you in affection.  Her tail slips around your [pc.leg], the warm leather binding you to your beloved ");
 		if (int(flags["COC.HELSPAWN_DADDY"]) == 0) output("daughter ");
 		else output("ward ");
 		output(" as she nuzzles into your [pc.chest].");

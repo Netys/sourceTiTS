@@ -120,7 +120,7 @@ public function campLoversButton():void {
 }
 
 public var loverCampMenuBlurb:/*Function*/Array = []; // Container for self-declaring listeners. Functions here must accept showInteractButton:Boolean argument.
-public var loverBtnNum:int = 0;
+//public var loverBtnNum:int = 0;
 public function campLoversMenu(descOnly:Boolean = false):void {
 	campFollowersMenu(descOnly);
 	return;
@@ -156,7 +156,7 @@ public function campSlavesButton():void {
 }
 
 public var slaveCampMenuBlurb:/*Function*/Array = []; // Container for self-declaring listeners. Functions here must accept showInteractButton:Boolean argument.
-public var slaveBtnNum:int = 0;
+//public var slaveBtnNum:int = 0;
 public function campSlavesMenu(descOnly:Boolean = false):void {
 	campFollowersMenu(descOnly);
 	return;
@@ -255,10 +255,10 @@ public function campEvent():Boolean
 	//Amily and/or Jojo freakout about Vapula!!
 	if (vapulaSlave() && ((flags["COC.JOJO_IN_CAMP"] == 1 && int(flags["COC.KEPT_PURE_JOJO_OVER_VAPULA"]) <= 0) || (amilyFollower() && !amilyCorrupt() && int(flags["COC.KEPT_PURE_AMILY_OVER_VAPULA"]) <= 0))) {
 		//Jojo but not Amily (Must not be bimbo!)
-		if ((flags["COC.JOJO_IN_CAMP"] == 1) && !(amilyFollower() && !amilyCorrupt()) && flags["COC.KEPT_PURE_JOJO_OVER_VAPULA"] == 0)
+		if ((flags["COC.JOJO_IN_CAMP"] == 1) && !(amilyFollower() && !amilyCorrupt()) && int(flags["COC.KEPT_PURE_JOJO_OVER_VAPULA"]) == 0)
 			mouseWaifuFreakout(false, true);
 		//Amily but not Jojo
-		else if ((amilyFollower() && !amilyCorrupt()) && flags["COC.JOJO_IN_CAMP"] != 1 && flags["COC.KEPT_PURE_AMILY_OVER_VAPULA"] == 0) {
+		else if ((amilyFollower() && !amilyCorrupt()) && flags["COC.JOJO_IN_CAMP"] != 1 && int(flags["COC.KEPT_PURE_AMILY_OVER_VAPULA"]) == 0) {
 			mouseWaifuFreakout(true, false);
 		}
 		//Both

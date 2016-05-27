@@ -13,7 +13,7 @@ package classes.Items.Miscellaneous
 			
 			this.quantity = 1;
 			this.stackSize = 20;
-			this.type = GLOBAL.ALL;
+			this.type = GLOBAL.QUESTITEM;
 			
 			//Used on inventory buttons
 			this.shortName = "D.Scale";

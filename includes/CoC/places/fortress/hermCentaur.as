@@ -220,7 +220,7 @@ private function femFuckHerII(cockType:int):void
 	{
 		output("You give her throbbing maleness an affection pat and proclaim, \"<i>Keep it equine, the flare looks delicious.  Just make sure that it will fit, and then we can fuck.</i>\"");
 
-		output("\n\nThe light in the room seems to dim, drawn into the demon's onyx-black horn, accompanied by the sound of flesh slithering and shaping.  A warm, slick presence brushes you, spongy cock-flesh brushing against you as it dribbles a rope of pre-cum onto your [leg].  As the light returns, you get to see the changes, noting that now the demon's member is perfectly sized for your penetration, though the head looks like it could be a bit challenging to take.");
+		output("\n\nThe light in the room seems to dim, drawn into the demon's onyx-black horn, accompanied by the sound of flesh slithering and shaping.  A warm, slick presence brushes you, spongy cock-flesh brushing against you as it dribbles a rope of pre-cum onto your [pc.leg].  As the light returns, you get to see the changes, noting that now the demon's member is perfectly sized for your penetration, though the head looks like it could be a bit challenging to take.");
 
 		output("\n\nYou lower yourself down beneath the centaur's horse-half to get a better look at the beast you intend to fuck.  The cock seems big for your hands, a swollen meat-tube that flexes in response to your touches and flares slightly with each smooth caress.  It dribbles off-white pre-spunk over your hand almost immediately.  Giggling, you smear it back over the shaft and admire the thick cock as you lubricate it.");
 

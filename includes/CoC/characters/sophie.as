@@ -34,7 +34,7 @@ public function sophiePregnancyEvent():int {
 //Implementation of TimeAwareInterface
 public function SophieTimePassedNotify():void
 {
-	if (flags["COC.UNKNOWN_FLAG_NUMBER_00285"] >= 50 && !pc.hasPerk("Luststick Adapted")) { //Luststick resistance unlock
+	if (flags["COC.UNKNOWN_FLAG_NUMBER_00285"] >= 50 && !pc.hasPerk("Luststick Adapted") && eventQueue.indexOf(unlockLuststickResistance) == -1) { //Luststick resistance unlock
 		eventQueue.push(unlockLuststickResistance);
 	}
 	
