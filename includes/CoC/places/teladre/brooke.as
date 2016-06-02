@@ -657,7 +657,7 @@ public function tribadism():void {
 	//[if (isHerm = true)]
 	if(pc.isHerm()) output(" and [pc.eachCock] goes limp");
 	output(" from all the excitement.  Brooke's body shudders several times, feeling several miniature orgasms rip through her, until finally, she opens her eyes and meets yours.  Without a sound, she pulls forward, making out with you once more, shamelessly gliding her tongue over yours.  <i>\"Leave it to a girl to know how to fuck another so well,\"</i> she smiles, rubbing against you some more for emphasis");
-	if(pc.isHerm()) output(".  <i>\"Lucky for me, we won't always have to choose.\"</i>  She gently strokes your waning erection some more, releasing you when the [cockHead] touches down on her skin limply");
+	if(pc.isHerm()) output(".  <i>\"Lucky for me, we won't always have to choose.\"</i>  She gently strokes your waning erection some more, releasing you when the [pc.cockHead] touches down on her skin limply");
 	output(".");
 
 	output("\n\nYou use what's left of the shower water to clean yourselves of your lovemaking, and then you take turns playfully drying each other off.  You start to feel the familiar heat rise in your loins from the way she works your towel on you, and from the way she acts, you don't doubt she's getting randy again herself.  Sighing, you cut her off – you have other things to do today, unfortunately.  She understands, and before you know it, you have your [pc.gear] back on and you're out the door.");

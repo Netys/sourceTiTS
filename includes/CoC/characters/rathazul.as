@@ -25,7 +25,7 @@ public function followerCampMenuBlurbRathazul(showInteractButton:Boolean):void {
 		//if (!(hours > 4 && hours < 23)) outputText("The alchemist is absent from his usual work location. He must be sleeping right now.");
 		//else 
 		if (flags["COC.RATHAZUL_ARMOR_COUNTDOWN"] + 24 * 60 >= timeAsStamp && flags["COC.RATHAZUL_ARMOR_TYPE"] > 0)
-			output("Tucked into a shaded corner of the rocks is a bevy of alchemical devices and equipment.  The alchemist Rathazul looks to be hard at work on the silken equipment you've commissioned him to craft.\n\n");
+			output("The alchemist Rathazul looks to be hard at work on the silken equipment you've commissioned him to craft.");
 		else if(flags["COC.RATHAZUL_ARMOR_COUNTDOWN"] + 24 * 60 < timeAsStamp && flags["COC.RATHAZUL_ARMOR_TYPE"] > 0) output("  Some kind of spider-silk-based equipment is hanging from a nearby rack.  <b>He's finished with the task you gave him!</b>");
 		else output("The alchemist Rathazul looks to be hard at work with his chemicals, working on who knows what.");
 		output("\n\n");
@@ -196,15 +196,15 @@ private function rathazulWorkOffer():void {
 	}
 	//Item crafting offer
 	if(pc.hasItem(new CoCGreenGel())) {
-		if(flags["COC.RATHAZUL_ARMOR"] == undefined) output("He pipes up with a bit of hope in his voice, \"<i>I can smell the essence of the tainted lake-slimes you've defeated, and if you'd let me, I could turn it into something a bit more useful to you.  You see, the slimes are filled with the tainted essence of the world-mother herself, and once the taint is burned away, the remaining substance remains very flexible but becomes nearly impossible to cut through.  With the gel of five defeated slimes I could craft you a durable suit of armor.</i>\"\n\n", false);
-		else output("He pipes up with a bit of excitement in his voice, \"<i>With just five pieces of slime-gel I could make another suit of armor...</i>\"\n\n", false);
+		if(flags["COC.RATHAZUL_ARMOR"] == undefined) output("He pipes up with a bit of hope in his voice, \"<i>I can smell the essence of the tainted lake-slimes you've defeated, and if you'd let me, I could turn it into something a bit more useful to you.  You see, the slimes are filled with the tainted essence of the world-mother herself, and once the taint is burned away, the remaining substance remains very flexible but becomes nearly impossible to cut through.  With the gel of five defeated slimes I could craft you a durable suit of armor.</i>\"\n\n");
+		else output("He pipes up with a bit of excitement in his voice, \"<i>With just five pieces of slime-gel I could make another suit of armor...</i>\"\n\n");
 		spoken = true;
 		if (pc.hasItem(new CoCGreenGel(), 5)) {
 			showArmorMenu = true;
 			totalOffers++;
 		}
 		else {
-			output("You realize you're still a bit short of gel.\n\n", false);
+			output("You realize you're still a bit short of gel.\n\n");
 		}
 	}
 	//Item crafting offer
@@ -247,12 +247,12 @@ private function rathazulWorkOffer():void {
 	}
 	//Single Offer
 	if(pCounter == 1) {
-		output("The rat mentions, \"<i>I see you have tainted item on you... for 20 gems I could remove most of the taint, making it a good deal safer to use.  Of course, who knows what kind of freakish transformations it would cause...</i>\"\n\n", false);
+		output("The rat mentions, \"<i>I see you have tainted item on you... for 20 gems I could remove most of the taint, making it a good deal safer to use.  Of course, who knows what kind of freakish transformations it would cause...</i>\"\n\n");
 		spoken = true;
 		totalOffers++;
 	}
 	if(pCounter > 1) {
-		output("The rat mentions, \"<i>I see you have a number of demonic items on your person.  For 20 gems I could attempt to remove the taint from one of them, rendering it a good deal safer for consumption.  Of course it would not remove most of the transformative properties of the item...</i>\"\n\n", false);
+		output("The rat mentions, \"<i>I see you have a number of demonic items on your person.  For 20 gems I could attempt to remove the taint from one of them, rendering it a good deal safer for consumption.  Of course it would not remove most of the transformative properties of the item...</i>\"\n\n");
 		spoken = true;
 		totalOffers+=2;
 	}
@@ -544,14 +544,14 @@ private function craftSilkArmor():void {
 	showRathazul();
 	clearOutput();
 	clearMenu();
-	output("You hand the bundled webbing to Rathazul carefully, lest you damage the elderly mouse.  He gives you a bemused smile and snatches the stuff from your grasp while he mutters, \"<i>I'm not falling apart you know.</i>\"\n\n", false);
+	output("You hand the bundled webbing to Rathazul carefully, lest you damage the elderly mouse.  He gives you a bemused smile and snatches the stuff from your grasp while he mutters, \"<i>I'm not falling apart you know.</i>\"\n\n");
 	//(Not enough webs: 
 	if(!pc.hasItem(new CoCToughSpiderSilk(), 5)) {
-		output("The rat shakes his head and hands it back to you.  \"<i>This isn't enough for me to make anything with.  I'll need at least five bundles of this stuff total, so you'll need to find more,</i>\" he explains.\n\n", false);
+		output("The rat shakes his head and hands it back to you.  \"<i>This isn't enough for me to make anything with.  I'll need at least five bundles of this stuff total, so you'll need to find more,</i>\" he explains.\n\n");
 		//(optional spider bonus: 
 		if(pc.hasTail(GLOBAL.TYPE_ARACHNID)) {
-			output("You show him your spider-like abdomen in response, offering to produce more webbing for him.  Rathazul chuckles dryly, a sound that reminds you of hot wind rushing through a dead valley.  \"<i>Dear child, this would never do.  Silk this tough can only be produced by a true-born spider.  No matter how you change yourself, you'll always be a human at heart.</i>\"\n\n", false);
-			output("The old rat shakes his head and adds, \"<i>Well, now that I think about it, the venom of a red widow might be able to transform you until you are a spider to the core, but I have absolutely no idea what that would do to you.  If you ever try such a dangerous, reckless idea, let me know.  I want to have my notebooks handy, for SCIENCE!</i>\"\n\n", false);
+			output("You show him your spider-like abdomen in response, offering to produce more webbing for him.  Rathazul chuckles dryly, a sound that reminds you of hot wind rushing through a dead valley.  \"<i>Dear child, this would never do.  Silk this tough can only be produced by a true-born spider.  No matter how you change yourself, you'll always be a human at heart.</i>\"\n\n");
+			output("The old rat shakes his head and adds, \"<i>Well, now that I think about it, the venom of a red widow might be able to transform you until you are a spider to the core, but I have absolutely no idea what that would do to you.  If you ever try such a dangerous, reckless idea, let me know.  I want to have my notebooks handy, for SCIENCE!</i>\"\n\n");
 		}
 		//if (pc.hasItem(new CoCToughSpiderSilk(), 2)) {
 			//output("\"<i>But this should be enough for undergarments if you want,</i>\" Rathazul adds.");
@@ -561,10 +561,10 @@ private function craftSilkArmor():void {
 		doNext(campRathazul, false);
 		return;
 	}
-	output("The rat limps over to his equipment, spider-silk in hand.  With efficient, practiced motions, he runs a few tests.  As he finishes, he sighs and explains, \"<i>This will be harder than I thought.  The webbing is highly resistant to most of my alchemic reagents.  To even begin to work with such material I will need a number of rare, expensive elements.  I would need 500 gems to even start such a project.</i>\"\n\n", false);
-	output("You can't help but sigh when he names such a sizable figure.  Do you give him the 500 gems and spider-silk in order for him to create you a garment?", false);
+	output("The rat limps over to his equipment, spider-silk in hand.  With efficient, practiced motions, he runs a few tests.  As he finishes, he sighs and explains, \"<i>This will be harder than I thought.  The webbing is highly resistant to most of my alchemic reagents.  To even begin to work with such material I will need a number of rare, expensive elements.  I would need 500 gems to even start such a project.</i>\"\n\n");
+	output("You can't help but sigh when he names such a sizable figure.  Do you give him the 500 gems and spider-silk in order for him to create you a garment?");
 	if(pc.credits < 5000) {
-		output("  <b>Wait... you don't even have 500 gems.  Damn.</b>", false);
+		output("  <b>Wait... you don't even have 500 gems.  Damn.</b>");
 		doNext(campRathazul, false);
 		return;
 	}
@@ -578,7 +578,9 @@ private function commissionSilkArmorForReal():void {
 	showRathazul();
 	clearOutput();
 	clearMenu();
-	output("You sort 500 gems into a pouch and toss them to Rathazul, along with the rest of the webbing.  The wizened alchemist snaps the items out of the air with lightning-fast movements and goes to work immediately.  He bustles about with enormous energy, invigorated by the challenging task before him.  It seems Rathazul has completely forgotten about you, but as you turn to leave, he calls out, \"<i>What did you want me to make?  A mage's robe or some nigh-impenetrable armor?  Or undergarments if you want.</i>\"\n\n");
+	output("You sort 500 gems into a pouch and toss them to Rathazul, along with the rest of the webbing.  The wizened alchemist snaps the items out of the air with lightning-fast movements and goes to work immediately.  He bustles about with enormous energy, invigorated by the challenging task before him.  It seems Rathazul has completely forgotten about you, but as you turn to leave, he calls out, \"<i>What did you want me to make?  A mage's robe or some nigh-impenetrable armor?");
+	//output("  Or undergarments if you want.");
+	output("</i>\"\n\n");
 	
 	if (pc.hasItem(new CoCToughSpiderSilk(), 5)) {
 		addOverrideItemButton(0, new CoCSpiderSilkArmor(), "Armor", chooseArmorOrRobes, 1);
@@ -653,23 +655,23 @@ private function collectRathazulArmor():void {
 			break;
 		//case 3: //Bra
 			//output(images.showImage("rathazul-craft-silkbra"));
-			//output("On a table is a pair of white bra.  It glitters brightly in the light, the pearl-white threads seeming to shimmer and shine with every ripple the breeze blows through the soft fabric.  You run your fingers over the silken garment, feeling the soft material give at your touch.  \n\n", false);
+			//output("On a table is a pair of white bra.  It glitters brightly in the light, the pearl-white threads seeming to shimmer and shine with every ripple the breeze blows through the soft fabric.  You run your fingers over the silken garment, feeling the soft material give at your touch.  \n\n");
 			//
-			//output("Rathazul gingerly takes the garment and hands it to you.  \"<i>Don't let the softness of the material fool you.  These bras are very durable and should be comfortable as well.</i>\"\n\n", false);
+			//output("Rathazul gingerly takes the garment and hands it to you.  \"<i>Don't let the softness of the material fool you.  These bras are very durable and should be comfortable as well.</i>\"\n\n");
 			//itype = undergarments.SS_BRA;
 			//break;
 		//case 4: //Panties
 			//output(images.showImage("rathazul-craft-silkpanties"));
-			//output("On a table is a pair of white panties.  It glitters brightly in the light, the pearl-white threads seeming to shimmer and shine with every ripple the breeze blows through the soft fabric.  You run your fingers over the silken garment, feeling the soft material give at your touch.  \n\n", false);
+			//output("On a table is a pair of white panties.  It glitters brightly in the light, the pearl-white threads seeming to shimmer and shine with every ripple the breeze blows through the soft fabric.  You run your fingers over the silken garment, feeling the soft material give at your touch.  \n\n");
 			//
-			//output("Rathazul gingerly takes the garment and hands it to you.  \"<i>Don't let the softness of the material fool you.  These panties are very durable and should be comfortable as well.</i>\"\n\n", false);
+			//output("Rathazul gingerly takes the garment and hands it to you.  \"<i>Don't let the softness of the material fool you.  These panties are very durable and should be comfortable as well.</i>\"\n\n");
 			//itype = undergarments.SSPANTY;
 			//break;
 		//case 5: //Loincloth
 			//output(images.showImage("rathazul-craft-silkloincloth"));
-			//output("On a table is a white loincloth.  It glitters brightly in the light, the pearl-white threads seeming to shimmer and shine with every ripple the breeze blows through the soft fabric.  You run your fingers over the silken garment, feeling the soft material give at your touch.  \n\n", false);
+			//output("On a table is a white loincloth.  It glitters brightly in the light, the pearl-white threads seeming to shimmer and shine with every ripple the breeze blows through the soft fabric.  You run your fingers over the silken garment, feeling the soft material give at your touch.  \n\n");
 			//
-			//output("Rathazul gingerly takes the garment and hands it to you.  \"<i>Don't let the softness of the material fool you.  This loincloth is very durable and should be comfortable as well.</i>\"\n\n", false);
+			//output("Rathazul gingerly takes the garment and hands it to you.  \"<i>Don't let the softness of the material fool you.  This loincloth is very durable and should be comfortable as well.</i>\"\n\n");
 			//itype = undergarments.SS_LOIN;
 			//break;
 		default:
@@ -744,7 +746,9 @@ private function craftCarapace():void {
 private function craftDragonscaleArmor():void {
 	showRathazul();
 	clearOutput();
-	output("The rat looks at the sheets of dragon scales you're carrying and says, \"<i>I could work these into armor. Or if you want, undergarments. I have the necessary supplies.</i>\"");
+	output("The rat looks at the sheets of dragon scales you're carrying and says, \"<i>I could work these into armor.");
+	//output(" Or if you want, undergarments.");
+	output(" I have the necessary supplies.</i>\"");
 	clearMenu();
 	if (pc.hasItem(new CoCDragonScale(), 5)) {
 		addOverrideItemButton(0, new CoCDragonScaleArmor(), "Armor", craftDragonscaleArmorForReal, 1);
@@ -782,19 +786,19 @@ private function craftDragonscaleArmorForReal(type:int = 0):void {
 		//case 3: //Bra
 			//output(images.showImage("rathazul-craft-dragonscalebra"));
 			//output("The rat takes the scales and works on his bench for an hour while you wait.  Once he has finished, Ratzhul is beaming with pride, \"<i>I think you'll be pleased. Go ahead and take a look.</i>\"\n\nHe hands you the bra.  ");
-			//output("It's nicely textured with dragon scales. \"<i>I've used leather straps to maintain the flexibility. It should be comfortable and protective,</i>\" Rathazul says.", false);
+			//output("It's nicely textured with dragon scales. \"<i>I've used leather straps to maintain the flexibility. It should be comfortable and protective,</i>\" Rathazul says.");
 			//itype = undergarments.DS_BRA;
 			//break;
 		//case 4: //Thong
 			//output(images.showImage("rathazul-craft-dragonscalethong"));
 			//output("The rat takes the scales and works on his bench for an hour while you wait.  Once he has finished, Ratzhul is beaming with pride, \"<i>I think you'll be pleased. Go ahead and take a look.</i>\"\n\nHe hands you the thong.  ");
-			//output("It's nicely textured with dragon scales. \"<i>I've used leather straps to maintain the flexibility. It should be comfortable and protective,</i>\" Rathazul says.", false);
+			//output("It's nicely textured with dragon scales. \"<i>I've used leather straps to maintain the flexibility. It should be comfortable and protective,</i>\" Rathazul says.");
 			//itype = undergarments.DSTHONG;
 			//break;
 		//case 5: //Loincloth
 			//output(images.showImage("rathazul-craft-dragonscaleloincloth"));
 			//output("The rat takes the scales and works on his bench for an hour while you wait.  Once he has finished, Ratzhul is beaming with pride, \"<i>I think you'll be pleased. Go ahead and take a look.</i>\"\n\nHe hands you the loincloth.  ");
-			//output("It's nicely textured with dragon scales. \"<i>I've used leather straps to maintain the flexibility. It should be comfortable and protective,</i>\" Rathazul says.", false);
+			//output("It's nicely textured with dragon scales. \"<i>I've used leather straps to maintain the flexibility. It should be comfortable and protective,</i>\" Rathazul says.");
 			//itype = undergarments.DS_LOIN;
 			//break;
 		default:
@@ -816,12 +820,12 @@ private function craftDragonscaleArmorForReal(type:int = 0):void {
 		//output(images.showImage("rathazul-craft-barkarmor-corrupt"));
 		//output("You show him the pieces of thick bark with tentacles attached. \n\n \"<i>My, my. That's definitely the strangest thing I've ever seen. But as you've requested, I'll make armor for you,</i>\" the old rat says. He takes the pile of bark, taking care to avoid touching the still-alive tentacles. He works on his bench for an hour while you wait. \n\n")
 		//output("Once he has finished, Ratzhul is beaming with both pride and shame, \"<i>I think you'll be pleased. Go ahead and take a look. I'm not working on this type of armor again. I nearly got surprised by tentacles.</i>\"\n\nHe hands you the armor. \n\n", false)
-		//output("The plates are white like snow. Green tentacles grow from the shoulderpads. The armor includes a breastplate, pauldrons, full arm guards, and knee-high boots. You realize the armor is missing pants. \n\n", false);
-		//output("\"<i>Something wrong? Nothing to protect your modesty? Surprise!</i>\"  He hands you a silken loincloth", false);
-		//if(pc.mf("m", "f") == "f") output(" with stockings and garters", false);
+		//output("The plates are white like snow. Green tentacles grow from the shoulderpads. The armor includes a breastplate, pauldrons, full arm guards, and knee-high boots. You realize the armor is missing pants. \n\n");
+		//output("\"<i>Something wrong? Nothing to protect your modesty? Surprise!</i>\"  He hands you a silken loincloth");
+		//if(pc.mf("m", "f") == "f") output(" with stockings and garters");
 		//output(". You thank him for the armor.\n\n", false)
-		//if(pc.cockTotal() > 0 && pc.biggestCockArea() >= 40) output("The silken material does little to hide the bulge of your groin, if anything it looks a little lewd.  Rathazul mumbles and looks away, shaking his head.\n\n", false);
-		//if(pc.biggestTitSize() >= 8) output("Your " + biggestBreastSizeDescript() + " barely fit into the breastplate, leaving you displaying a large amount of jiggling cleavage.\n\n", false);
+		//if(pc.cockTotal() > 0 && pc.biggestCockArea() >= 40) output("The silken material does little to hide the bulge of your groin, if anything it looks a little lewd.  Rathazul mumbles and looks away, shaking his head.\n\n");
+		//if(pc.biggestTitSize() >= 8) output("Your " + biggestBreastSizeDescript() + " barely fit into the breastplate, leaving you displaying a large amount of jiggling cleavage.\n\n");
 		//pc.removeKeyItem("Tentacled Bark Plates");
 		//inventory.takeItem(armors.TBARMOR, returnToRathazulMenu);
 	//}
@@ -829,11 +833,11 @@ private function craftDragonscaleArmorForReal(type:int = 0):void {
 		//output(images.showImage("rathazul-craft-barkarmor-pure"));
 		//output("You show him the pieces of glowing white thick bark attached. \n\n \"<i>My, my. I heard a voice from Marae instructing me to make the armor for you,</i>\" the old rat says. He takes the pile of bark and works on his bench for an hour while you wait. \n\n")
 		//output("Once he has finished, Ratzhul is beaming with both pride and shame, \"<i>I think you'll be pleased. Go ahead and take a look. I'm not working on this type of armor again. It took me many attempts to bend the bark plates to get them right.</i>\"\n\nHe hands you the armor. \n\n", false)
-		//output("The plates are white like snow. The armor includes a breastplate, pauldrons, full arm guards, and knee-high boots. You notice there are no pants.  As you turn to ask him where the pants are, you see him scratching his head and hastily rustling in drawers.  He mutters under his breath, \"<i>I'm sorry, I'm sorry, I got so focused on working on the pauldrons that I forgot to make any leg coverings!  Here, this should look good with it, and it won't restrict your movements.</i>\"  He hands you a silken loincloth", false);
-		//if (pc.mf("m", "f") == "f") output(" with stockings and garters", false);
-		//output(".  He still manages to look somewhat pleased with himself in spite of the blunder, even bragging a little bit, \"<i>Let me show you the different lengths of string I used.</i>\"\n\n", false);
-		//if(pc.cockTotal() > 0 && pc.biggestCockArea() >= 40) output("The silken material does little to hide the bulge of your groin, if anything it looks a little lewd.  Rathazul mumbles and looks away, shaking his head.\n\n", false);
-		//if(pc.biggestTitSize() >= 8) output("Your " + biggestBreastSizeDescript() + " barely fit into the breastplate, leaving you displaying a large amount of jiggling cleavage.\n\n", false);
+		//output("The plates are white like snow. The armor includes a breastplate, pauldrons, full arm guards, and knee-high boots. You notice there are no pants.  As you turn to ask him where the pants are, you see him scratching his head and hastily rustling in drawers.  He mutters under his breath, \"<i>I'm sorry, I'm sorry, I got so focused on working on the pauldrons that I forgot to make any leg coverings!  Here, this should look good with it, and it won't restrict your movements.</i>\"  He hands you a silken loincloth");
+		//if (pc.mf("m", "f") == "f") output(" with stockings and garters");
+		//output(".  He still manages to look somewhat pleased with himself in spite of the blunder, even bragging a little bit, \"<i>Let me show you the different lengths of string I used.</i>\"\n\n");
+		//if(pc.cockTotal() > 0 && pc.biggestCockArea() >= 40) output("The silken material does little to hide the bulge of your groin, if anything it looks a little lewd.  Rathazul mumbles and looks away, shaking his head.\n\n");
+		//if(pc.biggestTitSize() >= 8) output("Your " + biggestBreastSizeDescript() + " barely fit into the breastplate, leaving you displaying a large amount of jiggling cleavage.\n\n");
 		//pc.removeKeyItem("Divine Bark Plates");
 		//inventory.takeItem(armors.DBARMOR, returnToRathazulMenu);
 	//}

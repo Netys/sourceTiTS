@@ -377,8 +377,8 @@ package classes.Characters.CoC
 			}
 			
 			if (pc.hasStatusEffect("Grappled")) {
-				addButton(0, "Struggle", grappleStruggle, pc);
-				addButton(4, "Do Nothing", grappleWait, pc);
+				addButton(0, "Struggle", grappleStruggle);
+				addButton(4, "Do Nothing", grappleWait);
 			}
 		}
 		

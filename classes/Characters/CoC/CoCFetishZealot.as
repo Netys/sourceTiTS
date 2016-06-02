@@ -8,6 +8,7 @@ package classes.Characters.CoC
 	import classes.Engine.Utility.*;
 	import classes.GameData.CombatAttacks;
 	import classes.GLOBAL;
+	import classes.Items.Apparel.ComfortableClothes;
 	import classes.Items.Drinks.*;
 	import classes.Items.Melee.CoCLustDagger;
 	import classes.Items.Melee.CoCRidingCrop;
@@ -161,8 +162,8 @@ package classes.Characters.CoC
 			
 			if(rand(10) < 4)
 				inventory.push(kGAMECLASS.WeightedRandom(
-							[new CoCLustDagger(), new CoCLustDraft()], // TODO: C_CLOTH with weight 1
-							[1,                   4]));
+							[new CoCLustDagger(), new CoCLustDraft(), new ComfortableClothes()],
+							[1,                   4,                  1]));
 			
 			this._isLoading = false;
 		}

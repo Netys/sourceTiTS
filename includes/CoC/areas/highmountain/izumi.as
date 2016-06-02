@@ -740,7 +740,7 @@ protected function surrenderMediumCockRefuse():void
 	if (pc.hasVagina()) output(", [pc.vagina] spasming in sympathy");
 	output(", desperate for release.  Somehow, she could sense you were on the verge of orgasm, and she chose to deny you that pleasure, you just <b>know</b> it.  You shoot Izumi a vicious, hateful glare, only to see her laying there quite calmly, her expression blank.\n\n");
 	 
-	output("“<i>Hm?</i>”  She grunts, looking surprised.  “<i>Oh, do you want some help?  Sure; here, let me handle this for you.</i>”  She says, her tone even.  She reaches out and, very deliberately, softly flicks your [cockhead] with a single finger.\n\n");
+	output("“<i>Hm?</i>”  She grunts, looking surprised.  “<i>Oh, do you want some help?  Sure; here, let me handle this for you.</i>”  She says, her tone even.  She reaches out and, very deliberately, softly flicks your [pc.cockhead " + pc.biggestCockIndex() + "] with a single finger.\n\n");
 	 
 	output("The sensation is almost nothing, but as close as you are, it’s just enough.  You groan in a mix of pleasure and heartbroken anguish as the tiny amount of contact forces you over the edge, your load forcing its way up through your cock with agonizing slowness until finally");
 	if (pc.cumQ() <= 250) output(" spurting free, spattering down randomly over you as Izumi watches, happily observing the effects of your ruined orgasm.");

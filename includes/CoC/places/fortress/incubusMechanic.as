@@ -661,7 +661,7 @@ private function maleLossToMechanic(hpVictory:Boolean):void
 	else
 	{
 		//Single
-		output("\n\nThe incubus grabs your [pc.cock] in his hand, holding it steady, not really intending to bring you much pleasure. His touch feels so nice that you piston your [pc.hips] against him anyway, but he holds you firm and steady. A warm tightness, pleasant and unyielding presses down against your [cockHead], so tight that you whimper at the slight touch of pain. You crane your head for a better look, careful not to lose your mouth's grip on its leaking fixation. What you see nearly makes you swoon.");
+		output("\n\nThe incubus grabs your [pc.cock] in his hand, holding it steady, not really intending to bring you much pleasure. His touch feels so nice that you piston your [pc.hips] against him anyway, but he holds you firm and steady. A warm tightness, pleasant and unyielding presses down against your [pc.cockHead], so tight that you whimper at the slight touch of pain. You crane your head for a better look, careful not to lose your mouth's grip on its leaking fixation. What you see nearly makes you swoon.");
 		//Has nondemon dick
 		if (pc.cockTotal(GLOBAL.TYPE_DEMONIC) == 0)
 		{

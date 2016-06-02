@@ -55,7 +55,6 @@ public function timeChangeLarge():Boolean {
 //End of Interface Implementation
 
 public function isabellaGreeting():void {
-	Flag("COC.ISABELLA_MET"); // init?
 	Flag("COC.ISABELLA_ANGRY"); // init?
 	Flag("COC.ISABELLA_MET"); // init?
 	Flag("COC.ISABELLA_TALLNES_ACCEPTED"); // init?

@@ -53,18 +53,18 @@ public function explorePlains():void {
 		return;
 	}
 	//Chance of threesomes!
-	//if (flags["COC.UNKNOWN_FLAG_NUMBER_00256"] != 0 && flags["COC.UNKNOWN_FLAG_NUMBER_00257"] != 0 && flags["COC.HEL_FUCKBUDDY"] == 1 && flags["COC.UNKNOWN_FLAG_NUMBER_00260"] == 0 && !kGAMECLASS.isabellaFollowerScene.isabellaFollower() && flags["COC.EXPLORED_PLAINS"] % 21 == 0 && !(pc.tallness > 78 && flags["COC.UNKNOWN_FLAG_NUMBER_00258"] == 0)) {
-		////Hell/Izzy threesome intro
-		//if (flags["COC.HEL_ISABELLA_THREESOME_ENABLED"] == 0) {
-			//kGAMECLASS.helScene.salamanderXIsabellaPlainsIntro();
-			//return;
-		//}
-		////Propah threesomes here!
-		//else if (flags["COC.HEL_ISABELLA_THREESOME_ENABLED"] == 1) {
-			//kGAMECLASS.helScene.isabellaXHelThreeSomePlainsStart();
-			//return;
-		//}
-	//}
+	if (int(flags["COC.ISABELLA_MET"]) != 0 && flags["COC.HEL_FUCKBUDDY"] == 1 && int(flags["COC.ISABELLA_ANGRY"]) == 0 && !isabellaFollower() && flags["COC.EXPLORED_PLAINS"] % 21 == 0 && !(pc.tallness > 78 && int(flags["COC.ISABELLA_TALLNES_ACCEPTED"] == 0))) {
+		//Hell/Izzy threesome intro
+		if (int(flags["COC.HEL_ISABELLA_THREESOME_ENABLED"]) == 0) {
+			salamanderXIsabellaPlainsIntro();
+			return;
+		}
+		//Propah threesomes here!
+		else if (flags["COC.HEL_ISABELLA_THREESOME_ENABLED"] == 1) {
+			isabellaXHelThreeSomePlainsStart();
+			return;
+		}
+	}
 	
 	choice.push(plainsLoot);
 	chance.push(1);
@@ -81,10 +81,10 @@ public function explorePlains():void {
 	choice.push(gnoll2Encounter);
 	chance.push(2);
 
-	//if (flags["COC.ISABELLA_PLAINS_DISABLED"] == 0) {
-		//choices[choices.length] = kGAMECLASS.isabellaScene.isabellaGreeting;
-		//choices[choices.length] = kGAMECLASS.isabellaScene.isabellaGreeting;
-	//}
+	if (int(flags["COC.ISABELLA_PLAINS_DISABLED"]) == 0) {
+		choice.push(isabellaGreeting);
+		chance.push(1);
+	}
 	
 	if (!followerHel()) {
 		choice.push(encounterAJerkInThePlains);
