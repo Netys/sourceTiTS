@@ -106,7 +106,7 @@ public function payForYammisSlutitude():void
 	output("\n\nYou idly sample some flavors while she’s gone, and you suspect the girls in the machines know she’s leaving. Most look happy, some look a bit sad, many give you thankful looks. Only a few are upset, but you chalk that up to jealousy. Finally, Yammi comes back to the front, locking the back door behind her.");
 	output("\n\n<i>“My ex-owners are really angry. I don’t care though!”</i> She laughs, then hugs your arm. <i>“Okay! Where to, Boss? Your ship has a kitchen, right? Galley? Whatever it’s called? I can cook; I promise you won’t regret this!”</i>");
 	output("\n\nYou inquire if she isn’t perhaps interested in her freedom instead of latching onto you so quickly. She kisses you on the cheek.");
-	output("\n\n<i>“You have a ship. You’re going all over the place. Don’t tell me you couldn’t use a fresh-made hot meal! And don’t worry, I can take care of myself. If we get boarded, I’ll just duck into my water tank and turn it real cold, it slows my life signs down to undetectable levels. And I have basic self defense training, in case of robbery!”</i> She insists, picking up her bag of clothes and whatever personal effects she has. <i>“I won’t be in your way and I won’t charge you anything for the services. I promise! Besides, I can breathe underwater. I can be useful finding things!”</i>");
+	output("\n\n<i>“You have a ship. You’re going all over the place. Don’t tell me you couldn’t use a fresh-made hot meal! And don’t worry, I can take care of myself. If we get boarded, I’ll just duck into my water tank and turn it real cold, it slows my life signs down to undetectable levels. And I have basic self defense training, in case of robbery!”</i> She insists, picking up her bag of clothes and whatever personal effects she has. <i>“I won’t be in your way and I won’t charge you anything for the services. I promise! Besides, I can breathe underwater. I can be useful for finding things!”</i>");
 	pc.credits -= 7000;
 	processTime(2);
 	//[Accept] [Decline]
@@ -124,6 +124,7 @@ public function acceptYammiBunsInShip():void
 	yammiFollowerDisplay();
 	output("You shrug. If she wants to come with, you can’t imagine it will hurt. And it might be nice to have an actual meal prepared for you once in a while. You agree.");
 	output("\n\n<i>“You won’t regret this! I promise! Let’s go, Boss, I have to make sure the kitchen’s all stocked up before we go anywhere!”</i> She locks the front door behind you and then slides the keycard back under the door.");
+	output("\n\n(<b>Yammi has joined your crew!</b>)");
 	flags["YAMMI_RECRUITED"] = 1;
 	flags["YAMMI_IS_CREW"] = 1;
 	processTime(8);
@@ -659,7 +660,7 @@ public function getYammiSmut():void
 	output("When Yammi turns her attention momentarily from you to a pot that needs stirring, you lean against the refrigerator beside her and gently clear your throat.");
 	output("\n\n<i>“So I’ve been thinking...”</i> you say, watching the gentle rise and fall of the sparadat’s perky chest beneath her tight red dress with keen interest. When you pause, Yammi stops and glances ");
 	if(pc.tallness >= 72) output("up ");
-	else output("down ");
+	else if(pc.tallness < 66) output("down ");
 	output("at you. She smiles and swings her spoon over to you, cutting the second half of your sentence off and planting the edge of the spoon on your lip.");
 	output("\n\n<i>“What do you think?”</i> she asks, urging you to take a sip. You do so - what else do you do in that situation? - and find yourself moaning and closing your eyes as a sultry, heady, thick broth rolls across your [pc.tongue]. It tastes like home and heaven at once. <i>“Needs more salt, right? I knew it.”</i> Yammi sighs, dumping the other half of the spoonful back into the pot.");
 	output("\n\nYou stop her, putting a hand on her wrist. <i>“It’s perfect,”</i> you smile. <i>“Just like you.”</i>");

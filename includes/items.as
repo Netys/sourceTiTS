@@ -133,7 +133,7 @@ public function combatUseItem(item:ItemSlotClass, targetCreature:Creature = null
 			}
 			else if (item.requiresTarget == false)
 			{
-				item.useFunction(null, usingCreature);
+				//item.useFunction(null, usingCreature);
 			}
 			else
 			{
@@ -234,8 +234,15 @@ public function buyItem():void {
 	output(shopkeep.keeperBuy);
 	var buyOptions:Boolean = kGAMECLASS.gameOptions.vendorToggle;
 	var temp:Number = 0;
+	var btnSlot:int = 0;
 	clearMenu();
 	for(var x:int = 0; x < shopkeep.inventory.length; x++) {
+		if(btnSlot >= 14 && (btnSlot + 1) % 15 == 0)
+		{
+			addButton(btnSlot, "Back", shop, shopkeep);
+			btnSlot++;
+		}
+		
 		trace("GOING THROUGH SHOPKEEP INVENTORY.");
 		//If slot has something in it.
 		if(shopkeep.inventory[x].quantity > 0) {
@@ -260,23 +267,27 @@ public function buyItem():void {
 				trace("SHOWAN BUTANS: " + x);
 				if(buyOptions)
 				{
-					if (x <= 13) addItemButton(x, shopkeep.inventory[x], buyItemOK, shopkeep.inventory[x], null, null, shopkeep, pc);
-					if (x > 13) addItemButton(x + 1, shopkeep.inventory[x], buyItemOK, shopkeep.inventory[x], null, null, shopkeep, pc);
+					addItemButton(btnSlot, shopkeep.inventory[x], buyItemOK, shopkeep.inventory[x], null, null, shopkeep, pc);
 				}
 				else
 				{
-					if (x <= 13) addItemButton(x, shopkeep.inventory[x], buyItemGo, shopkeep.inventory[x], null, null, shopkeep, pc);
-					if (x > 13) addItemButton(x + 1, shopkeep.inventory[x], buyItemGo, shopkeep.inventory[x], null, null, shopkeep, pc);
+					addItemButton(btnSlot, shopkeep.inventory[x], buyItemGo, shopkeep.inventory[x], null, null, shopkeep, pc);
 				}
 			}
 			else {
 				trace("SHOWAN HIDE BUTTONS");
-				if(x <= 13) addDisabledButton(x, shopkeep.inventory[x].shortName + " x" + shopkeep.inventory[x].quantity);
-				if(x > 13) addDisabledButton(x + 1, shopkeep.inventory[x].shortName + " x" + shopkeep.inventory[x].quantity);
+				addDisabledButton(btnSlot, shopkeep.inventory[x].shortName + " x" + shopkeep.inventory[x].quantity);
 			}
+			btnSlot++;
+		}
+		
+		if(shopkeep.inventory.length > 14 && (x + 1) == shopkeep.inventory.length)
+		{
+			while((btnSlot + 1) % 15 != 0) { btnSlot++; }
+			addButton(btnSlot, "Back", shop, shopkeep);
 		}
 	}
-	addButton(14,"Back",shop,shopkeep);
+	addButton(14, "Back", shop, shopkeep);
 }
 
 public function buyItemOK(arg:ItemSlotClass):void
@@ -385,8 +396,15 @@ public function sellItem():void {
 	clearOutput();
 	output(shopkeep.keeperSell);
 	var sellOptions:Boolean = kGAMECLASS.gameOptions.vendorToggle;
+	var btnSlot:int = 0;
 	clearMenu();
 	for(var x:int = 0; x < pc.inventory.length; x++) {
+		if(btnSlot >= 14 && (btnSlot + 1) % 15 == 0)
+		{
+			addButton(btnSlot, "Back", shop, shopkeep);
+			btnSlot++;
+		}
+		
 		//If slot has something in it.
 		if(pc.inventory[x].quantity > 0) {
 			trace("PC inventory being checked for possible sale.");
@@ -395,22 +413,26 @@ public function sellItem():void {
 				output("\n" + StringUtil.upperCase(pc.inventory[x].description, false) + " - " + getSellPrice(shopkeep,pc.inventory[x].basePrice) + " credits.");
 				if(sellOptions)
 				{
-					if (x <= 13) addItemButton(x, pc.inventory[x], sellItemQuantity, pc.inventory[x], null, null, pc, shopkeep);
-					if (x > 13) addItemButton(x + 1, pc.inventory[x], sellItemQuantity, pc.inventory[x], null, null, pc, shopkeep);
+					addItemButton(btnSlot, pc.inventory[x], sellItemQuantity, pc.inventory[x], null, null, pc, shopkeep);
 				}
 				else
 				{
-					if (x <= 13) addItemButton(x, pc.inventory[x], sellItemGo, pc.inventory[x], null, null, pc, shopkeep);
-					if (x > 13) addItemButton(x + 1, pc.inventory[x], sellItemGo, pc.inventory[x], null, null, pc, shopkeep);
+					addItemButton(btnSlot, pc.inventory[x], sellItemGo, pc.inventory[x], null, null, pc, shopkeep);
 				}
 			}
 			else {
-				if(x <= 13) addDisabledButton(x, pc.inventory[x].shortName + " x" + pc.inventory[x].quantity, StringUtil.toDisplayCase(pc.inventory[x].longName), "The vendor is not interested in this item.");
-				if(x > 13) addDisabledButton(x + 1, pc.inventory[x].shortName + " x" + pc.inventory[x].quantity, StringUtil.toDisplayCase(pc.inventory[x].longName), "The vendor is not interested in this item.");
+				addDisabledButton(btnSlot, pc.inventory[x].shortName + " x" + pc.inventory[x].quantity, StringUtil.toDisplayCase(pc.inventory[x].longName), "The vendor is not interested in this item.");
 			}
+			btnSlot++;
+		}
+		
+		if(pc.inventory.length > 14 && (x + 1) == pc.inventory.length)
+		{
+			while((btnSlot + 1) % 15 != 0) { btnSlot++; }
+			addButton(btnSlot, "Back", shop, shopkeep);
 		}
 	}
-	addButton(14,"Back",shop,shopkeep);
+	addButton(14, "Back", shop, shopkeep);
 }
 
 public function sellItemQuantity(arg:ItemSlotClass):void
@@ -709,6 +731,7 @@ public function inventoryDisplay():void
 public function generalInventoryMenu():void
 {
 	clearOutput();
+	showBust("");
 	showName("\nINVENTORY");
 	var x:int = 0;
 	itemScreen = inventory;
@@ -759,16 +782,30 @@ public function combatInventoryMenu():void
 	output("\n\n");
 	inventoryDisplay();
 	equipmentDisplay();
+	var btnSlot:int = 0;
 	for (var i:int = 0; i < pc.inventory.length; i++)
 	{
+		if(btnSlot >= 14 && (btnSlot + 1) % 15 == 0)
+		{
+			addButton(btnSlot, "Back", CombatManager.showCombatMenu);
+			btnSlot++;
+		}
+		
 		var tItem:ItemSlotClass = pc.inventory[i];
 		if (tItem.type == GLOBAL.MELEE_WEAPON || tItem.type == GLOBAL.RANGED_WEAPON || tItem.combatUsable == true)
 		{
-			addItemButton((i < 14) ? i : i + 1, pc.inventory[i], combatUseItem, pc.inventory[i]);
+			addItemButton(btnSlot, pc.inventory[i], combatUseItem, pc.inventory[i]);
 		}
 		else
 		{
-			addDisabledButton((i < 14) ? i : i + 1, pc.inventory[i].shortName + " x" + pc.inventory[i].quantity, StringUtil.toDisplayCase(pc.inventory[i].longName), "Cannot be used in combat.");
+			addDisabledButton(btnSlot, pc.inventory[i].shortName + " x" + pc.inventory[i].quantity, StringUtil.toDisplayCase(pc.inventory[i].longName), "Cannot be used in combat.");
+		}
+		btnSlot++;
+		
+		if(pc.inventory.length > 14 && (x + 1) == pc.inventory.length)
+		{
+			while((btnSlot + 1) % 15 != 0) { btnSlot++; }
+			addButton(btnSlot, "Back", CombatManager.showCombatMenu);
 		}
 	}
 	
@@ -1118,6 +1155,7 @@ public function hasShipStorage():Boolean
 	if (flags["SHIP_STORAGE_EQUIPMENT"] == undefined) flags["SHIP_STORAGE_EQUIPMENT"] = 10;
 	if (flags["SHIP_STORAGE_CONSUMABLES"] == undefined) flags["SHIP_STORAGE_CONSUMABLES"] = 10;
 	if (flags["SHIP_STORAGE_VALUABLES"] == undefined) flags["SHIP_STORAGE_VALUABLES"] = 10;
+	if (flags["SHIP_STORAGE_TOYS"] == undefined) flags["SHIP_STORAGE_TOYS"] = 10;
 	
 	return true;
 }
@@ -1160,6 +1198,13 @@ public function shipStorageMenuRoot():void
 		addButton(3, "Valuables", shipStorageMenuType, "VALUABLES");
 	}
 	else addDisabledButton(3, "Valuables");
+	
+	if (flags["SHIP_STORAGE_TOYS"] != undefined)
+	{
+		output(" Against one wall, an inconspicuous box with a slide-out compartment is used for storing any lewd toys you may have.");
+		addButton(4, "Toys", shipStorageMenuType, "TOYS");
+	}
+	else addDisabledButton(4, "Toys");
 	
 	if (kGAMECLASS.flags["DONG_DESIGNER_INSTALLED"] == 1)
 	{
@@ -1285,6 +1330,13 @@ public function getListOfType(from:Array, type:String):Array
 				
 			case "VALUABLES":
 				if (InCollection(item.type, GLOBAL.GEM, GLOBAL.QUESTITEM))
+				{
+					items.push(item);
+				}
+				break;
+				
+			case "TOYS":
+				if (InCollection(item.type, GLOBAL.SEXTOY))
 				{
 					items.push(item);
 				}

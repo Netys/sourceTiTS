@@ -133,6 +133,7 @@
 
 		//Misc content
 		include "../includes/masturbation/bubbleBuddy.as";
+		include "../includes/masturbation/sukMastr.as";
 		include "../includes/rivalEncounters.as";
 		include "../includes/saendra.as";
 		include "../includes/travelEvents.as";
@@ -296,6 +297,7 @@
 		include "../includes/uveto/nerrasa.as";
 		include "../includes/uveto/rooms.as";
 		include "../includes/uveto/roomFunctions.as";
+		include "../includes/uveto/shade.as";
 		include "../includes/events/icequeen/icequeen.as"; // Alt. path to unlocking uveto
 		
 		include "../includes/chargendata.as";
@@ -400,7 +402,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.54";
+			version = "0.6.56";
 
 			//temporary nonsense variables.
 			temp = 0;
@@ -546,8 +548,6 @@
 			
 			toggleWTF();
 			
-			if (!inCombat()) userInterface.showBust("none");
-			
 			if (evt.currentTarget is MainButton)
 			{
 				trace("Button " + (evt.currentTarget as MainButton).buttonName + " clicked");
@@ -567,6 +567,7 @@
 			else
 			{
 				if (evt.currentTarget.func != null) evt.currentTarget.func(evt.currentTarget.arg);
+				else kGAMECLASS.clearBust();
 			}
 			
 			if (!inCombat()) 

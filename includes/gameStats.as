@@ -189,9 +189,9 @@ public function statisticsScreen(showID:String = "All"):void
 		output2(" " + GLOBAL.SKIN_TYPE_NAMES[pc.skinType]);
 		output2("\n<b>* Skin Tone: </b>" + StringUtil.toDisplayCase(pc.skinTone));
 		if(pc.hasStatusEffect("Vanae Markings")) output2(", " + StringUtil.toDisplayCase(pc.skinAccent) + " Markings");
-		if(pc.hasFur() || pc.hasLegFur() || pc.hasArmFlag(GLOBAL.FLAG_FURRED) || pc.hasTailFlag(GLOBAL.FLAG_FURRED)) output2("\n<b>* Fur Color: </b>" + StringUtil.toDisplayCase(pc.furColor));
-		if(pc.hasScales() || pc.hasLegFlag(GLOBAL.FLAG_SCALED) || pc.hasArmFlag(GLOBAL.FLAG_SCALED) || pc.hasTailFlag(GLOBAL.FLAG_SCALED)) output2("\n<b>* Scale Color: </b>" + StringUtil.toDisplayCase(pc.scaleColor));
-		if(pc.chitinColor() != "null") output2("\n<b>* Chitin Color: </b>" + StringUtil.toDisplayCase(pc.chitinColor()));
+		if(pc.hasPartFur() || pc.hasPartFeathers()) output2("\n<b>* Fur Color: </b>" + StringUtil.toDisplayCase(pc.furColor));
+		if(pc.hasPartScales()) output2("\n<b>* Scale Color: </b>" + StringUtil.toDisplayCase(pc.scaleColor));
+		if(pc.hasPartChitin()) output2("\n<b>* Chitin Color: </b>" + StringUtil.toDisplayCase(pc.chitinColor()));
 		output2("\n<b>* Arms:</b> 2,");
 		if(pc.armFlags.length > 0)
 		{
@@ -1820,7 +1820,7 @@ public function displayQuestLog(showID:String = "All"):void
 			// Kara's Big Adventure! - Pt.1
 			if(flags["BEEN_TO_MYRELLION_BAR"] != undefined && flags["MET_KARA"] != undefined)
 			{
-				output2("\n<b><u>KaraQuest</u></b>");
+				output2("\n<b><u>KaraQuest: A Damsel in Distress</u></b>");
 				output2("\n<b>* Status:</b>");
 				if(flags["LET_SHADE_AND_KARA_DUKE_IT_OUT"] != undefined) output2(" Ignored Kara and Shade");
 				else if(flags["DISTRACTED_SHADE"] != undefined) output2(" Distracted Shade");
@@ -3437,7 +3437,7 @@ public function displayEncounterLog(showID:String = "All"):void
 						else if(flags["ANNO_CREWMEMBER"] == 2) output2(" (At Tavros Station)");
 					}
 					if(!chars["ANNO"].isNude()) output2("\n<b>* Anno, Attire:</b> [anno.Gear]");
-					if(flags["ANNOxKAEDE_INTRODUCED"] != undefined) output2("\n<b>* Anno, Times Met with Kaede: </b>" + flags["ANNOxKAEDE_INTRODUCED"]);
+					if(flags["ANNOxKAEDE_INTRODUCED"] > 0) output2("\n<b>* Anno, Times Met with Kaede: </b>" + flags["ANNOxKAEDE_INTRODUCED"]);
 					if(flags["ANNO_TRIBERATOR_USED"] != undefined || flags["ANNO_OWNS_LIGHT_STRAPON"] != undefined)
 					{
 						output2("\n<b>* Anno, Sex Toys:</b>");
@@ -4393,6 +4393,17 @@ public function displayEncounterLog(showID:String = "All"):void
 		
 		if(showID == "Uveto" || showID == "All")
 		{
+			// Irestead
+			if(flags["MET_ASTRA"] != undefined)
+			{
+				output2("\n<b><u>Irestead</u></b>");
+				if(flags["MET_ASTRA"] != undefined)
+				{
+					output2("\n<b>* Astra:</b> Met her");
+					if(flags["SHADE_OVI_ASTRA_RUN_IN"] != undefined) output2("\n<b>* Astra, Times Seen Shade Laying Eggs: </b>" + flags["SHADE_OVI_ASTRA_RUN_IN"]);
+				}
+				variousCount++;
+			}
 			// Nayna
 			if(flags["MET_NAYNA"] != undefined)
 			{
@@ -4513,8 +4524,23 @@ public function displayEncounterLog(showID:String = "All"):void
 		{
 			output2("\n<b>* Kaede:</b> Met her");
 			if(flags["ANNOxKAEDE_INTRODUCED"] != undefined) output2(", Seen with Anno");
-			if(flags["PUPPYSLUTMAS_2014"] != undefined) output2(", Seen on Ausaril");
-			if(flags["KAEDE_MYRELLION_ENCOUNTER"] != undefined) output2(", Seen on Myrellion");
+			var kaedePlanets:Array = [];
+			if(flags["PUPPYSLUTMAS_2014"] != undefined) kaedePlanets.push("Ausaril");
+			if(flags["KAEDE_MYRELLION_ENCOUNTER"] != undefined) kaedePlanets.push("Myrellion");
+			if(flags["KAEDE_MET_ON_UVETO"] != undefined) kaedePlanets.push("Uveto");
+			if(kaedePlanets.length > 0)
+			{
+				output2(", Seen on");
+				for(var kp:int = 0; kp < kaedePlanets.length; kp++)
+				{
+					if(kaedePlanets.length > 1 && kp > 0)
+					{
+						if(kp == kaedePlanets.length - 1) output2(" and");
+						else output2(",");
+					}
+					output2(" " + kaedePlanets[kp]);
+				}
+			}
 			if(flags["KAEDE_NT_ENCOUNTER"] != undefined)
 			{
 				output2("\n<b>* Kaede, New Texas Encounter:</b>");
@@ -4526,7 +4552,7 @@ public function displayEncounterLog(showID:String = "All"):void
 				}
 				else output2(" Met with her and Cass");
 			}
-			if(flags["KAEDE_FUCKED"] != undefined) output2("\n<b>* Kaede, Times Sexed: </b>" + flags["KAEDE_FUCKED"]);
+			if(flags["KAEDE_FUCKED"] > 0) output2("\n<b>* Kaede, Times Sexed: </b>" + flags["KAEDE_FUCKED"]);
 			roamCount++;
 		}
 		// Kara
@@ -4666,8 +4692,10 @@ public function displayEncounterLog(showID:String = "All"):void
 		if(flags["MET_KARA"] != undefined)
 		{
 			output2("\n<b>* Shade:</b> Met her");
-			if(flags["TOLD_SHADE_SHES_YER_SIS"] != undefined) output2(", Told her she’s your sister");
+			if(flags["SHADE_IS_YER_SIS"] != undefined) output2(", She is your sister");
+			else if(flags["TOLD_SHADE_SHES_YER_SIS"] != undefined) output2(", " + (flags["TOLD_SHADE_SHES_YER_SIS"] < 0 ? "She’s secretly" : "Told her she’s") + " your sister");
 			if(flags["KQ2_SHADE_DEAD"] != undefined || flags["SHADE_DISABLED"] == 1) output2(", Inactive");
+			else if(flags["SHADE_IS_HOSTILE"] != undefined) output2(", She is hostile, <i>Whereabouts unknown</i>");
 			else if(shadeAtTheBar()) output2(", Active (On Myrellion)");
 			else if(flags["SHADE_ON_UVETO"] != undefined) output2(", Active (On Uveto)");
 			if(flags["SHADE_GOT_HELP_WITH_LAYING"] != undefined)
@@ -4830,7 +4858,7 @@ public function displayEncounterLog(showID:String = "All"):void
 			miscCount++;
 		}
 		// Sexploration: The Sex Toys
-		if(flags["NIVAS_BIONAHOLE_USES"] != undefined || flags["SYRI_BIONAHOLE_USES"] != undefined || flags["TAMANI_HOLED"] != undefined || flags["GRAVCUFFS_USES"] != undefined || flags["HOVERHOLE_USES"] != undefined || flags["BUBBLE_BUDDIED"] != undefined || flags["EGG_TRAINER_INSTALLED"] != undefined || pc.hasItem(new EggTrainer()))
+		if(flags["NIVAS_BIONAHOLE_USES"] != undefined || flags["SYRI_BIONAHOLE_USES"] != undefined || flags["TAMANI_HOLED"] != undefined || flags["GRAVCUFFS_USES"] != undefined || flags["HOVERHOLE_USES"] != undefined || flags["SUKMASTRED"] != undefined || flags["BUBBLE_BUDDIED"] != undefined || flags["EGG_TRAINER_INSTALLED"] != undefined || pc.hasItem(new EggTrainer()))
 		{
 			output2("\n<b><u>Sex Toys</u></b>");
 			// BionaHoles
@@ -4841,6 +4869,8 @@ public function displayEncounterLog(showID:String = "All"):void
 			if(flags["GRAVCUFFS_USES"] != undefined) output2("\n<b>* Grav-Cuffs, Times Used: </b>" + flags["GRAVCUFFS_USES"]);
 			// Hover Hole
 			if(flags["HOVERHOLE_USES"] != undefined) output2("\n<b>* Hovering Pocket-Pussy, Times Used: </b>" + flags["HOVERHOLE_USES"]);
+			// SukMastr 2000
+			if(flags["SUKMASTRED"] != undefined) output2("\n<b>* SukMastr 2000, Times Used: </b>" + flags["SUKMASTRED"]);
 			// Bubble Buddy
 			if(flags["BUBBLE_BUDDIED"] != undefined) output2("\n<b>* TamaniCorp, Bubble Buddy, Times Used: </b>" + flags["BUBBLE_BUDDIED"]);
 			// Egg Trainer

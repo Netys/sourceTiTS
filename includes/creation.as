@@ -9,7 +9,15 @@ import classes.Cheats;
 // Illegal character input check
 public function hasIllegalInput(sText:String = ""):Boolean
 {
-	var r:RegExp = /[^\w .!?,;:@#$&()*-+=]/g; // Match anything that isn't a word or a space (\w == [A-z0-9])
+	//var r:RegExp = /[^\w .!?,;:@#$&()*-+=]/g; // Match anything that isn't a word or a space (\w == [A-z0-9])
+	
+	if(sText.indexOf(" ") == 0) return true;
+	var illegalChar:Array = ["<", ">", "[", "]", "\\", "\/"];
+	for(var i:int = 0; i < illegalChar.length; i++)
+	{
+		if(sText.indexOf(illegalChar[i]) != -1) return true;
+	}
+	
 	// Cheat codes check
 	if(chars["PC"].short.length >= 1)
 	{
@@ -20,7 +28,8 @@ public function hasIllegalInput(sText:String = ""):Boolean
 		else if(sText == "keyofthetwillight") eventQueue.push(Cheats.toggleKeyOfTheTwillight);
 		else if(sText == "forcenext") mainGameMenu();
 	}
-	return r.test(sText);
+	//return r.test(sText);
+	return false;
 }
 
 public function creationRouter(e:Event = null):void {
@@ -34,6 +43,11 @@ public function creationRouter(e:Event = null):void {
 	}
 }
 
+public function showPCBust():void
+{
+	if(pc.isNude()) showBust("PC_NUDE");
+	else showBust("PC");
+}
 public function creationHeader(sName:String = ""):void
 {
 	showLocationName();
@@ -58,6 +72,10 @@ public function startCharacterCreation(e:Event = null):void
 	days = 0;
 	userInterface.hideTime();
 	flags = new Dictionary();
+	
+	// Purge event buffer
+	eventQueue = new Array();
+	eventBuffer = "";
 	gameOverEvent = false;
 
 	// Codex entries
@@ -1748,6 +1766,7 @@ public function takeCeliseAsACrewMember():void {
 //Check Out Your Ship
 public function checkOutYourShip():void {
 	clearOutput();
+	clearBust(true);
 	creationHeader("SHIP\nHANGAR");
 	generateMap();
 	
@@ -1765,6 +1784,7 @@ public function checkOutYourShip():void {
 public function getFoodAndDrink():void {
 	//Meet your rival
 	clearOutput();
+	clearBust(true);
 	creationHeader("ANON'S BAR\nAND BOARD");
 	generateMapForLocation("ANON'S BAR AND BOARD");
 	
@@ -1780,6 +1800,7 @@ public function getFoodAndDrink():void {
 public function jackJillSkip():void
 {
 	clearOutput();
+	clearBust(true);
 	creationHeader("ANON'S BAR\nAND BOARD");
 	generateMapForLocation("ANON'S BAR AND BOARD");
 	

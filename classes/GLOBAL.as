@@ -71,7 +71,9 @@
 		public static const FLAG_DOUBLE_HEADED:int							= 36;
 		public static const FLAG_GOOEY:int									= 37;
 		public static const FLAG_SPIKED:int									= 38;
-		public static const FLAG_ABSORBENT:int									= 39;
+		public static const FLAG_ABSORBENT:int								= 39;
+		public static const FLAG_SLIGHTLY_PUMPED:int 						= 40;
+		public static const FLAG_PUMPED:int 								= 41;
 		
 		public static const FLAG_NAMES:Array = [
 			"OFFSET -- INVALID",
@@ -114,6 +116,8 @@
 			"Gooey",
 			"Spiked",
 			"Absorbent",
+			"Slightly Pumped",
+			"Fully Pumped",
 		];
 		
 		public static const VALID_SKIN_FLAGS:Array = [
@@ -158,12 +162,11 @@
 		public static const TYPE_HUMANMASKED:int                            = 25;
 		public static const TYPE_MOUSE:int                                  = 26;
 		public static const TYPE_MOUSEMAN:int                               = 27;
-		/*
-		public static const TYPE_DOVETWO:int                                = 28;
-		public static const TYPE_DOVEFOUR:int                               = 29;
-		public static const TYPE_DOVESIX:int                                = 30;
-		*/
 		public static const TYPE_DOVE:int									= 28;
+		/*
+		public static const TYPE_UNUSED29:int                               = 29;
+		public static const TYPE_UNUSED30:int                               = 30;
+		*/
 		public static const TYPE_DRAGONFLY:int                              = 31;
 		public static const TYPE_MLP:int                                    = 32;
 		public static const TYPE_CUNTSNAKE:int                              = 33;
@@ -365,6 +368,7 @@
 			TYPE_PANDA,
 			TYPE_HUMAN,
 			TYPE_LEITHAN,
+			TYPE_OVIR,
 			TYPE_RASKVEL,
 			TYPE_VANAE,
 			TYPE_SYLVAN,
@@ -879,6 +883,8 @@
 			FLAG_NUBBY,
 			FLAG_OVIPOSITOR,
 			FLAG_GOOEY,
+			FLAG_SLIGHTLY_PUMPED,
+			FLAG_PUMPED,
 		];
 		
 		//ROOM FLAGS
@@ -910,6 +916,7 @@
 		public static const ICYTUNDRA:int							    = 25;
 		public static const FROZENTUNDRA:int							= 26;
 		public static const SHIPINTERIOR:int							= 27; // Used to flag all rooms of player-own ships.
+		public static const POOL:int									= 28;
 		
 		// Temp flag alias whilst the asset gets introduced
 		public static const LIFT:int = OBJECTIVE;
@@ -937,6 +944,7 @@
 		public static const EXPLOSIVECONSUMABLE:int					   = 14;
 		public static const QUESTITEM:int							   = 15;
 		public static const GEM:int 								   = 16;
+		public static const SEXTOY:int 								   = 17; // Used for any portable sexual relief devices. 
 
 		//CHARACTERS
 		public static const CELISE:int                                 = 1;

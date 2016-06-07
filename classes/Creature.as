@@ -6,18 +6,20 @@
 	import classes.DataManager.Errors.VersionUpgraderError;
 	import classes.Engine.Combat.DamageTypes.TypeCollection;
 	import classes.GameData.SingleCombatAttack;
+	import classes.Items.Accessories.Allure;
 	import classes.Items.Accessories.FlashGoggles;
+	import classes.Items.Accessories.TamWolf;
+	import classes.Items.Accessories.TamWolfDamaged;
+	import classes.Items.Accessories.TamWolfII;
+	import classes.Items.Armor.GooArmor;
 	import classes.Items.Guns.MyrBow;
 	import classes.Items.Melee.Fists;
 	import classes.Items.Melee.Rock;
 	import classes.Items.Miscellaneous.EmptySlot;
 	import classes.Items.Miscellaneous.HorsePill;
-	import classes.Items.Transformatives.Goblinola;
 	import classes.Items.Transformatives.Clippex;
+	import classes.Items.Transformatives.Goblinola;
 	import classes.Items.Transformatives.SemensFriend;
-	import classes.Items.Accessories.TamWolf;
-	import classes.Items.Accessories.TamWolfDamaged;
-	import classes.Items.Accessories.Allure;
 	import classes.VaginaClass;
 	import classes.BreastRowClass;
 	import classes.StorageClass;
@@ -34,7 +36,6 @@
 	import flash.utils.ByteArray;
 	import classes.GLOBAL;
 	import classes.GameData.Pregnancy.PregnancyManager;
-	import classes.Items.Miscellaneous.EmptySlot;
 	import classes.Util.RandomInCollection;
 	import classes.Util.InCollection;
 	import classes.Engine.Combat.DamageTypes.DamageFlag;
@@ -347,6 +348,7 @@
 		public var femininity: Number = 50;
 		public function femininityUnlocked(newFem:Number):Boolean 
 		{
+			if(newFem < femininityMin() || newFem > femininityMax()) return false;
 			return true;
 		}
 		public function femininityLockedMessage():String 
@@ -696,7 +698,7 @@
 		public var legType: Number = 0;
 		public function legTypeUnlocked(newLegType:Number):Boolean
 		{
-			if (newLegType != GLOBAL.TYPE_HUMAN && (hasStatusEffect("Mimbrane Foot Left") || hasStatusEffect("Mimbrane Foot Right"))) return false;
+			if (!InCollection(newLegType, [GLOBAL.TYPE_HUMAN, GLOBAL.TYPE_SUCCUBUS]) && (hasStatusEffect("Mimbrane Foot Left") || hasStatusEffect("Mimbrane Foot Right"))) return false;
 			if (isGoo() && statusEffectv1("Gel Body") >= 1) return false;
 			return true;
 		}
@@ -711,7 +713,7 @@
 		public var legCount: Number = 2;
 		public function legCountUnlocked(newLegCount:Number):Boolean
 		{
-			if (hasStatusEffect("Mimbrane Foot Left") || hasStatusEffect("Mimbrane Foot Right")) return false;
+			if ((hasStatusEffect("Mimbrane Foot Left") || hasStatusEffect("Mimbrane Foot Right")) && newLegCount != 2) return false;
 			return true;
 		}
 		public function legCountLockedMessage():String
@@ -2828,9 +2830,6 @@
 			if(!isCrotchGarbed()) return true;
 			return ((armor is EmptySlot || armor.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL) || armor.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_ASS)) && (lowerUndergarment is EmptySlot || lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL) || lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_ASS)));
 		}
-		public function isGroinCovered(): Boolean {
-			return isCrotchGarbed();
-		}
 		public function isChestCovered(): Boolean {
 			if(hasStatusEffect("Temporary Nudity Cheat")) return false;
 			else if(armor is EmptySlot && upperUndergarment is EmptySlot) return false;
@@ -3968,7 +3967,7 @@
 			temp += armor.shields + upperUndergarment.shields + lowerUndergarment.shields + accessory.shields + shield.shields;
 			if (hasPerk("Shield Tweaks")) temp += level * 2;
 			if (hasPerk("Shield Booster")) temp += level * 8;
-			if (hasPerk("Attack Drone") && !(accessory is TamWolf || accessory is TamWolfDamaged)) temp += level;
+			if (hasPerk("Attack Drone") && !hasTamWolf()) temp += level;
 
 			//Debuffs!
 			if(hasStatusEffect("Rusted Emitters")) temp = Math.round(temp * 0.75);
@@ -4077,7 +4076,7 @@
 		{
 			if (hasFaceFlag(arg))
 			{
-				faceFlags = faceFlags.splice(faceFlags.indexOf(arg), 1);
+				faceFlags.splice(faceFlags.indexOf(arg), 1);
 			}
 		}
 		public function addFaceFlag(arg:int): void {
@@ -4270,39 +4269,41 @@
 			var adjectives:Array = new Array();
 			var nouns:Array = ["ear"];
 			var description:String = "";
+			var nonFurrySkin:Boolean = InCollection(skinType, GLOBAL.SKIN_TYPE_GOO, GLOBAL.SKIN_TYPE_SCALES, GLOBAL.SKIN_TYPE_LATEX);
+			
 			switch (earType)
 			{
 				case GLOBAL.TYPE_CANINE:
 					adjectives = ["canine", "pointed", "upraised", "anubis-like"];
-					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("furry");
+					if(!nonFurrySkin) adjectives.push("furry");
 					if (race().indexOf("ausar") != -1) adjectives.push("ausar");
 					break;
 				case GLOBAL.TYPE_EQUINE:
 					adjectives = ["equine", "horse-like", "inhuman"];
-					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("furry", "bestial");
+					if(!nonFurrySkin) adjectives.push("furry", "bestial");
 					break;
 				case GLOBAL.TYPE_BOVINE:
 					adjectives = ["bovine", "cow-like", "floppy"];
-					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("softly furred");
+					if(!nonFurrySkin) adjectives.push("softly furred");
 					break;
 				case GLOBAL.TYPE_FELINE:
 					adjectives = ["feline", "pointed", "cat-like", "cat-like"];
-					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("furry");
+					if(!nonFurrySkin) adjectives.push("furry");
 					break;
 				case GLOBAL.TYPE_LIZAN:
 					adjectives = ["reptilian", "small", "circular"];
 					break;
 				case GLOBAL.TYPE_LAPINE:
 					adjectives = ["lapine", "bunny", "rabbit-like", "floppy"];
-					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("furry");
+					if(!nonFurrySkin) adjectives.push("furry");
 					break;
 				case GLOBAL.TYPE_KANGAROO:
 					adjectives = ["kangaroo", "oval-shaped", "elliptical", "pointed"];
-					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("furry");
+					if(!nonFurrySkin) adjectives.push("furry");
 					break;
 				case GLOBAL.TYPE_VULPINE:
 					adjectives = ["vulpine", "fox-like", "pointed", "triangular"];
-					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("furry");
+					if(!nonFurrySkin) adjectives.push("furry");
 					break;
 				case GLOBAL.TYPE_DEMONIC:
 					adjectives = ["demonic", "demon-like", "pointy", "inhuman", "pointed"];
@@ -4314,18 +4315,21 @@
 					break;
 				case GLOBAL.TYPE_KUITAN:
 					adjectives = ["tanuki", "egg-shaped", "rounded"];
-					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("furry", "beastial");
+					if(!nonFurrySkin) adjectives.push("furry", "beastial");
 					break;
 				case GLOBAL.TYPE_MOUSE:
 					adjectives = ["mousey", "mouse-like", "rounded", "circular"];
-					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("furry");
+					if(!nonFurrySkin) adjectives.push("furry");
 					break;
 				case GLOBAL.TYPE_PANDA:
 					adjectives = ["panda", "bear-like", "rounded"];
-					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("furry", "softly furred");
+					if(!nonFurrySkin) adjectives.push("furry", "softly furred");
 					break;
 				case GLOBAL.TYPE_LEITHAN:
 					adjectives = ["leithan", "elven", "pointy", "inhuman", "pointed"];
+					break;
+				case GLOBAL.TYPE_OVIR:
+					adjectives = ["ovir", "reptilian", "dot", "hidden"];
 					break;
 				case GLOBAL.TYPE_RASKVEL:
 					adjectives = ["raskvel", "obscenely long", "oh-so sensitive", "lengthy"];
@@ -4339,7 +4343,7 @@
 					break;
 				case GLOBAL.TYPE_DEER:
 					adjectives = ["deer", "pointed", "oval-shaped", "pointy"];
-					if(skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("softly furred");
+					if(!nonFurrySkin) adjectives.push("softly furred");
 					break;
 				case GLOBAL.TYPE_GABILANI:
 					adjectives = ["gabilani", "pointy goblin", "long triangular", "sharp alien", "elven"];
@@ -4980,6 +4984,46 @@
 		{
 			return (hasLegFlag(GLOBAL.FLAG_FLUFFY) || hasLegFlag(GLOBAL.FLAG_FURRED) || skinType == GLOBAL.SKIN_TYPE_FUR)
 		}
+		public function hasPartFur(part:String = "any"):Boolean
+		{
+			if(part == "any" && (hasArmFlag(GLOBAL.FLAG_FURRED) || hasLegFlag(GLOBAL.FLAG_FURRED) || hasTailFlag(GLOBAL.FLAG_FURRED))) return true;
+			if(part == "arm") return hasArmFlag(GLOBAL.FLAG_FURRED);
+			if(part == "leg") return hasLegFlag(GLOBAL.FLAG_FURRED);
+			if(part == "tail") return hasTailFlag(GLOBAL.FLAG_FURRED);
+			return hasFur();
+		}
+		public function hasPartScales(part:String = "any"):Boolean
+		{
+			if(part == "any" && (hasArmFlag(GLOBAL.FLAG_SCALED) || hasLegFlag(GLOBAL.FLAG_SCALED) || hasTailFlag(GLOBAL.FLAG_SCALED))) return true;
+			if(part == "arm") return hasArmFlag(GLOBAL.FLAG_SCALED);
+			if(part == "leg") return hasLegFlag(GLOBAL.FLAG_SCALED);
+			if(part == "tail") return hasTailFlag(GLOBAL.FLAG_SCALED);
+			return hasScales();
+		}
+		public function hasPartChitin(part:String = "any"):Boolean
+		{
+			if(part == "any" && (hasArmFlag(GLOBAL.FLAG_CHITINOUS) || hasLegFlag(GLOBAL.FLAG_CHITINOUS) || hasTailFlag(GLOBAL.FLAG_CHITINOUS))) return true;
+			if(part == "arm") return hasArmFlag(GLOBAL.FLAG_CHITINOUS);
+			if(part == "leg") return hasLegFlag(GLOBAL.FLAG_CHITINOUS);
+			if(part == "tail") return hasTailFlag(GLOBAL.FLAG_CHITINOUS);
+			return hasChitin();
+		}
+		public function hasPartGoo(part:String = "any"):Boolean
+		{
+			if(part == "any" && (hasArmFlag(GLOBAL.FLAG_GOOEY) || hasLegFlag(GLOBAL.FLAG_GOOEY) || hasTailFlag(GLOBAL.FLAG_GOOEY))) return true;
+			if(part == "arm") return hasArmFlag(GLOBAL.FLAG_GOOEY);
+			if(part == "leg") return hasLegFlag(GLOBAL.FLAG_GOOEY);
+			if(part == "tail") return hasTailFlag(GLOBAL.FLAG_GOOEY);
+			return hasGooSkin();
+		}
+		public function hasPartFeathers(part:String = "any"):Boolean
+		{
+			if(part == "any" && (hasArmFlag(GLOBAL.FLAG_FEATHERED) || hasLegFlag(GLOBAL.FLAG_FEATHERED) || hasTailFlag(GLOBAL.FLAG_FEATHERED))) return true;
+			if(part == "arm") return hasArmFlag(GLOBAL.FLAG_FEATHERED);
+			if(part == "leg") return hasLegFlag(GLOBAL.FLAG_FEATHERED);
+			if(part == "tail") return hasTailFlag(GLOBAL.FLAG_FEATHERED);
+			return hasFeathers();
+		}
 		public function skinNoun(skin: Boolean = false,appearance:Boolean = false): String {
 			var output: String = "";
 			var temp: int = 0;
@@ -5095,7 +5139,7 @@
 			return (hasStatusEffect("Stunned") || hasStatusEffect("Paralyzed") || isGrappled() || hasStatusEffect("Endowment Immobilized"));
 		}
 		public function isGrappled(): Boolean {
-			return (hasStatusEffect("Grappled") || hasStatusEffect("Naleen Coiled") || hasStatusEffect("Cockvine Grip"));
+			return (hasStatusEffect("Grappled") || hasStatusEffect("Naleen Coiled"));
 		}
 		public function legs(forceType: Boolean = false, forceAdjective: Boolean = false): String 
 		{
@@ -7884,7 +7928,7 @@
 				subDelta = 60 - ballFullness;
 				//Set fullness to 60 and remove a portion of minutes equivalent to the change
 				ballFullness = 60;
-				minutes = minutes * subDelta/(minutes*cumDelta);
+				minutes -= subDelta/cumDelta;
 				//Half cumDelta for the remaining minutes
 				cumDelta /= 2;
 			}
@@ -9920,6 +9964,10 @@
 				}
 				descripted++;
 			}
+			if(descripted == 0 && hasPerk("Buttslut") && rand(2) == 0)
+			{
+				desc += RandomInCollection("slutty","fuck-hungry","cock-hungry","fuckable","puckered","eager","greedy","ravenous","insatiable");
+			}
 			
 			if (descripted > 0) desc += " ";
 			//Butt descriptor
@@ -10677,7 +10725,7 @@
 			var descript: String = "";
 			var descripted: Number = 0;
 			//Bald folks get one-off quick description
-			if (hairLength == 0) {
+			if (hairLength <= 0) {
 				if (hasFur()) {
 					if (rand(2) == 0) descript += "furry ";
 					else {
@@ -10849,7 +10897,7 @@
 			var descript: String = "";
 			var descripted: Number = 0;
 			//Bald folks get one-off quick description
-			if (hairLength == 0) {
+			if (hairLength <= 0) {
 				if (hasFur()) {
 					if (rand(2) == 0) descript += "furry ";
 					else {
@@ -11162,7 +11210,32 @@
 		{
 			var desc: String = "";
 			var type:int = vag.type;
-			if(special != "default")
+			if(special == "appearance")
+			{
+				desc += vag.vaginaColor + ", ";
+				if (type == GLOBAL.TYPE_EQUINE) desc += "equine ";
+				else if (type == GLOBAL.TYPE_CANINE) desc += "canine ";
+				else if (type == GLOBAL.TYPE_FELINE) desc += "feline ";
+				else if (type == GLOBAL.TYPE_SIREN || type == GLOBAL.TYPE_ANEMONE) desc += "siren ";
+				else if (type == GLOBAL.TYPE_GRYVAIN) desc += "draconic ";
+				else if (type == GLOBAL.TYPE_BEE) desc += "zil-styled ";
+				else if (type == GLOBAL.TYPE_NAGA) desc += "snake-like ";
+				else if (type == GLOBAL.TYPE_VANAE) desc += "vanae ";
+				else if (type == GLOBAL.TYPE_LEITHAN) desc += "leithan mare-";
+				else if (type == GLOBAL.TYPE_SYNTHETIC) desc += "synthetic ";
+				else if (type == GLOBAL.TYPE_GABILANI) desc += "gabilani ";
+				else if (type == GLOBAL.TYPE_NYREA) desc += "nyrean ";
+				else if (type == GLOBAL.TYPE_HUMAN) desc += "human ";
+				else if (type == GLOBAL.TYPE_KUITAN) desc += "kui-tan ";
+				else desc += "alien ";
+				var plainPussies:Array = ["vagina", "pussy"];
+				if(isBimbo()) plainPussies.push("cunt");
+				if(vag.looseness() <= 2) plainPussies.push("slit");
+				else if(vag.looseness() == 5) plainPussies.push("gash");
+				if(type == GLOBAL.TYPE_BEE || girlCumType == GLOBAL.FLUID_TYPE_HONEY) plainPussies.push("honeypot");
+				desc += RandomInCollection(plainPussies);
+			}
+			else if(special != "default")
 			{
 				//If tail mounted, give tail specials.
 				if(special == "tail" && rand(2) == 0)
@@ -11176,24 +11249,24 @@
 				else if(rand(3) == 0 && vag.hasFlag(GLOBAL.FLAG_GOOEY))
 				{
 					if(!simple)
-						desc += RandomInCollection(["sloppy gash", "gooey pussy", "sopping cunt", "slick snatch", "puddling pussy", "semi-solid snatch", "gooey cunt", "goo vagina", "slimy vagina", "gooey pussy", "slimy cunt", "syrupy hole", "juicy twat", "slimy gash", "gooey honeypot", "slimy snatch"]);
+						desc += RandomInCollection(["sloppy slit", "gooey pussy", "slime cunt", "slime vagina", "semi-solid slit", "gooey quim", "goo vagina", "slime pussy", "gooey pussy", "slimy cunt", "syrupy quim", "juicy twat", "slime gash", "goo honeypot", "slimy snatch"]);
 					else
-						desc += RandomInCollection(["googina", "goo-hole", "fuck-hole", "slime-gina", "goo-pussy", "slime-cunt", "fuck-hole", "goo-twat", "slime-gash", "honeypot", "slime-snatch"]);
+						desc += RandomInCollection(["googina", "goo-pussy", "slime-gina", "goo-pussy", "slime-cunt", "fuck-hole", "goo-twat", "slime-gash", "honeypot", "slime-snatch","slime-pussy"]);
 				}
 				else if (type == GLOBAL.TYPE_EQUINE)
 				{
 					if (!simple)
-						desc += RandomInCollection(["equine gash", "animalistic vagina", "animalistic cunny", "equine honeypot", "dusky snatch", "equine cunt", "pheromone-laden pussy", "musky mare-cunt"]);
+						desc += RandomInCollection(["animalistic pussy","animalistic cunt","equine slit","equine pussy","equine vagina", "animalistic vagina", "equine cunny", "equine honeypot", "horse-like pussy", "equine pussy", "musky horse-pussy", "musky mare-cunt"]);
 					else
-						desc += RandomInCollection(["horse-pussy", "mare-cunt", "fuck-hole", "horse-twat", "mare-twat", "centaur-snatch", "animal-pussy", "mare-pussy", "horse-cunt"]);
+						desc += RandomInCollection(["horse-pussy", "mare-pussy","animal-pussy","mare-pussy","mare-cunt", "horse-cunt","horse-gina","horse-twat", "mare-twat", "mare-pussy", "animal-pussy","cunt","gash"]);
 				}
 				//Maybe doge?
 				else if (type == GLOBAL.TYPE_CANINE || type == GLOBAL.TYPE_VULPINE)
 				{
 					if (!simple)
-						desc += RandomInCollection(["canine gash", "small-lipped vagina", "animalistic cunny", "canine honeypot", "canine snatch", "canine cunt", "animalistic pussy", "fragrant dog-cunt"]);
+						desc += RandomInCollection(["canine pussy","animal pussy","animalistic pussy","doggie cunt","animal cunt","canine cunt", "animalistic cunny", "canine honeypot", "canine slit", "animal pussy", "fragrant dog-cunt", "doggie slit"]);
 					else
-						desc += RandomInCollection(["dog-pussy", "bitch-cunt", "fuck-hole", "dog-twat", "animal-twat", "animal-pussy", "dog-pussy", "dog-cunt"]);
+						desc += RandomInCollection(["dog-pussy","dog-pussy","bitch-pussy","animal-pussy","bitch-cunt","dog-cunt","dog-twat","bitch-slit", "animal-pussy", "dog-vagina", "dog-cunt","cunt","slit"]);
 					if (foxScore() > 4) {
 						desc = desc.replace("dog", "fox");
 					}
@@ -11201,83 +11274,90 @@
 				else if (type == GLOBAL.TYPE_FELINE)
 				{
 					if (!simple)
-						desc += RandomInCollection(["feline gash", "small-lipped vagina", "animalistic cunny", "feline honeypot", "feline snatch", "feline cunt", "animalistic pussy", "subtle pussy", "discreet cat-cunt"]);
+						desc += RandomInCollection(["feline pussy","animalistic pussy","feline pussy","feline vagina","animalistic vagina","feline honeypot","kitty cunny","feline cunt","feline slit","kitty cunt","kitty quim","animalistic slit"]);
 					else
-						desc += RandomInCollection(["cat-pussy", "cat-cunt", "fuck-hole", "cat-twat", "animal-twat", "animal-pussy", "cat-pussy", "cat-cunt", "pussy", "box"]);
+						desc += RandomInCollection(["cat-pussy", "cat-pussy", "animal-pussy", "cat-cunt", "cat-quim", "animal-twat", "cat-gina", "cat-vagina", "pussycat-pussy", "box"]);
 				}
 				else if (type == GLOBAL.TYPE_SIREN || type == GLOBAL.TYPE_ANEMONE)
 				{
 					if (!simple)
-						desc += RandomInCollection(["wriggling gash", "stinger-ringed vagina", "cilia-filled cunny", "siren-like honeypot", "aphrodisiac-laced snatch", "tentacle-filled cunt", "alien pussy", "wiggly cunt"]);
+						desc += RandomInCollection(["wriggling gash", "stinger-ringed vagina", "cilia-filled cunny", "siren-like honeypot", "aphrodisiac-laced pussy","wriggling pussy","wriggling vagina","cilia-filled pussy","tentacle-filled twat", "alien pussy", "wiggly cunt","cilia-filled slit","cilia-lined quim","venomous pussy","venomous cunt","venomous vagina"]);
 					else
-						desc += RandomInCollection(["siren-pussy", "siren-snatch", "fuck-hole", "venom-twat", "twat", "snatch", "venom-pussy", "siren-pussy", "cunt"]);
+						desc += RandomInCollection(["siren-pussy", "venom-pussy", "siren-pussy", "siren-slit", "venom-cunt", "pussy", "pussy", "tenta-gina","tenta-pussy","xeno-cunny","xeno-gina","siren-twat","siren-snatch","cunt"]);
 				}
 				else if (type == GLOBAL.TYPE_GRYVAIN)
 				{
 					if (!simple)
-						desc += RandomInCollection(["nub-ringed pussy", "clit-lined cunt", "clit-filled vagina", "clit-ringed vagina", "clit-lined pussy", "scaly pussy", "scaly cunt", "scaly vagina", "gryvain pussy", "dragonic cunt", "dragon-like pussy"]);
+						desc += RandomInCollection(["nub-ringed pussy", "scaly pussy","draconic pussy","gryvain pussy","dragon-like pussy","scaly cunt","gryvain cunt","draconic cunt","scaly quim","draconic slit","nubby pussy","draconic vagina","scaly vagina","draconic box","nub-ringed cunny","nubby snatch"]);
 					else
-						desc += RandomInCollection(["gryvain-pussy", "nubby cunt", "dragon cunt", "pussy"]);
+						desc += RandomInCollection(["gryvain-pussy", "dragon-pussy", "wyrm-cunt", "reptile-pussy", "dragon-vagina","cunt", "dragon-cunt", "pussy"]);
 				}
 				else if (type == GLOBAL.TYPE_BEE)
 				{
 					if (!simple)
-						desc += RandomInCollection(["thick-lipped gash", "alien vagina", "inhuman cunt", "zil-like honeypot", "exceptionally smooth pussy", "exotic slit", "thick-lipped pussy", "seductive snatch"]);
+						desc += RandomInCollection(["zil pussy","fragrant pussy","pheromone-laden pussy","exotic pussy","alien pussy","zil honeypot","alien honeypot","fragrant honeypot","sweet cunt","zil cunt","alien cunt","exotic slit","inhuman slit","sweetened quim"]);
 					else
-						desc += RandomInCollection(["zil-pussy", "honey-cunt", "honey-box", "zil-twat", "pussy", "xeno-snatch", "pussy", "zil-cunt", "twat"]);
+						desc += RandomInCollection(["zil-pussy", "pussy", "zil-pussy", "xeno-cunt", "honey-cunt", "zil-cunt", "honey-box", "zil-twat", "pussy", "zil-gina", "xeno-slit", "slit", "sugar-slit"]);
 				}
 				else if (type == GLOBAL.TYPE_NAGA)
 				{
 					if (!simple)
-						desc += RandomInCollection(["reptilian gash", "naleen-like slit", "snake-like cunt", "semi-concealed pussy", "pussy", "snake-like box", "alien cunt", "half-hidden twat"]);
+						desc += RandomInCollection(["reptilian pussy", "semi-concealed pussy","reptilian pussy","snake-like pussy", "reptilian cunt","half-hidden cunny", "snake-like slit", "alien pussy", "half-hidden quim", "reptilian quim", "inconspicuous gash", "inconspicuous pussy","naleen-morphed pussy"]);
 					else
-						desc += RandomInCollection(["naleen-cunt", "snake-pussy", "box", "snake-twat", "pussy", "xeno-cunt", "pussy", "slit", "slit"]);
+						desc += RandomInCollection(["naleen-pussy","snake-pussy","pussy","pussy","snake-cunt","naleen-cunt","xeno-pussy","slit","slit","twat","reptile-cunt","reptile-pussy"]);
 				}
 				else if (type == GLOBAL.TYPE_VANAE)
 				{
 					if (!simple)
-						desc += RandomInCollection(["tentacle-laden gash", "writhing pussy", "human-like cunt", "vanae pussy", "pussy", "xeno-cunt", "alien pussy", "feeler-lined pussy", "caressing cunt", "stroking snatch", "massaging cunny", "licker-lined pussy", "silky twat"]);
+						desc += RandomInCollection(["tentacle-laden pussy","writhing pussy","feeler-lined pussy","licker-lined pussy","silken pussy","alien cunt", "licker-lined cunt", "feeler-filled slit", "squirming slit","squirmy quim","squirming pussy","tentacle-lined gash","tentacle twat"]);
 					else
-						desc += RandomInCollection(["vanae-cunt", "tenta-pussy", "box", "vanae-twat", "pussy", "xeno-cunt", "pussy", "twat", "cunt"]);
+						desc += RandomInCollection(["vanae-pussy","tenta-pussy","xeno-pussy","pussy","xeno-cunt","vanae-cunt","pussy","tenta-twat","box","cunt","slit","wriggle-slit"])
 				}
 				else if (type == GLOBAL.TYPE_LEITHAN)
 				{
 					if (!simple)
-						desc += RandomInCollection(["puffy gash", "thick-lipped vagina", "leithan cunny", "inhuman honeypot", "dusky snatch", "swollen cunt", "pheromone-laden pussy", "musky mare-cunt"]);
+						desc += RandomInCollection(["leithan pussy","pheromone-laden pussy","fragrant mare-pussy","prominent pussy","near-equine vagina","leithan vagina","inhuman honeypot","leithan cunt","fragrant honeypot","pheromonal cunt","thick-lipped cunt","thick-lipped pussy","horse-like mare-cunt","leithan mare-cunt","fragrant twat"]);
 					else
-						desc += RandomInCollection(["taur-pussy", "mare-cunt", "fuck-hole", "xeno-twat", "mare-twat", "centaur-snatch", "alien-pussy", "mare-pussy", "leith-cunt"]);
+						desc += RandomInCollection(["taur-pussy","mare-pussy","mare-pussy","pussy","mare-cunt","taur-cunt","centaur-slit","centaur-snatch","gash", "mare-twat","pussy","centaur-gina"]);
 				}
 				else if (type == GLOBAL.TYPE_SYNTHETIC)
 				{
 					if (!simple)
-						desc += RandomInCollection(["synth gash", "synthetic vagina", "robotic cunny", "robot honeypot", "synthetic snatch", "robotic cunt", "artificial pussy", "robo-cunt"]);
+						desc += RandomInCollection(["synthetic pussy","robotic pussy","artificial pussy","cybernetic pussy","simulated slit","synthetic slit","cybernetic cunt","synthetic cunt","robotic cunt","synthetic pussy","artificial quim","cybernetic cunny","robotic slit"]);
 					else
-						desc += RandomInCollection(["synth-pussy", "robo-cunt", "fuck-hole", "synth-twat", "robo-twat", "synth-snatch", "mecha-pussy", "robo-pussy", "synth-cunt"]);
+						desc += RandomInCollection(["synth-pussy","robo-pussy","cyber-pussy","techno-pussy","synth-pussy","synth-cunt","robo-cunt","cyber-snatch","techno-twat","synth-slit","cyber-slit","pussy","robo-gina","techno-cunt","tech-gina","synth-gina"]);
 				}
 				else if (type == GLOBAL.TYPE_GABILANI)
 				{
 					if (!simple)
-						desc += RandomInCollection(["gabilani gash", "dexterous vagina", "goblin cunny", "inhuman honeypot", "well muscled snatch", "capable cunt", "gabilani pussy", "dexterous goblin-cunt"]);
+						desc += RandomInCollection(["goblin pussy","gabiliani pussy", "dexterous pussy","inhuman pussy","goblin cunny","goblin cunt","gabilani slit","gabilani gash","dexterous goblin-pussy","inhuman vagina"]);
 					else
-						desc += RandomInCollection(["inhuman-pussy", "goblin-cunt", "fuck-hole", "xeno-twat", "goblin-twat", "goblin-snatch", "alien-pussy", "gabilani-pussy", "gabilani-cunt"]);
+						desc += RandomInCollection(["goblin-pussy","pussy","xeno-pussy","goblin-pussy","goblin-cunt","xeno-cunt","goblin-snatch","cunt","pussy","slit"]);
 				}
 				else if (type == GLOBAL.TYPE_NYREA)
 				{
 					if (!simple)
-						desc += RandomInCollection(["nyrean vagina", "nyrean pussy", "nyrean cunt", "nyrean cunny", "nyrean snatch", "nyrean gash", "boy-pussy", "boy-cunt"]);
+						desc += RandomInCollection(["nyrean pussy","insectile pussy","nyrean cunt","boyish pussy","boyish cunt","cunt","nyrean cunny","insectile slit","alien slit","alien pussy","alien pussy","insectile quim","inhuman pussy"]);
 					else
-						desc += RandomInCollection(["inhuman-pussy", "nyrean-cunt", "fuck-hole", "xeno-twat", "nyrean-snatch", "nyrean-pussy", "nyrean-cunt", "boy-pussy", "boy-cunt"]);
+						desc += RandomInCollection(["pussy","nyrea-pussy","boy-pussy","xeno-pussy","nyrea-cunt","boy-cunt","slit","cunt","pussy","eye-pleasing pussy"]);
+				}
+				else if (type == GLOBAL.TYPE_KUITAN)
+				{
+					if (!simple)
+						desc += RandomInCollection(["heart-shaped box","alien pussy","inhuman pussy","heart-shaped pussy","kui-tan pussy","tanuki twat","heart-shaped cunt","kui-tan cunt","heart-framed slit","kui-tan quim","heart-shaped snatch"]);
+					else
+						desc += RandomInCollection(["'nuki-pussy'","shapely-slit","pussy","'nuki-pussy","pussy","'nuki-cunt","cunt","slit","kui-cunt","shapely-snatch","twat","xeno-pussy"]);
 				}
 				else
 				{
 					if (!simple)
 					{
 						if (type == GLOBAL.TYPE_HUMAN)
-							desc += RandomInCollection(["human ", "human ", "terran ", "terran ", "terran "]);
+							desc += RandomInCollection(["human ", "human ", "terran ", "terran ", "homo sapien "]);
 						else
-							desc += RandomInCollection(["human-like ", "human-like ", "exotic ", "exotic ", "inhuman "]);
+							desc += RandomInCollection(["alien ", "alien ", "exotic ", "exotic ", "inhuman "]);
 					}
-					desc += RandomInCollection(["vagina", "pussy", "pussy","pussy","pussy", "cunt", "cunt", "slit", "slit","twat", "gash", "cunny", "honeypot", "snatch"]);
+					desc += RandomInCollection(["vagina", "pussy", "pussy", "pussy", "pussy","pussy","pussy", "cunt", "cunt", "cunt", "cunt", "slit", "slit","twat", "gash", "cunny", "honeypot", "snatch"]);
 				}
 			}
 			else
@@ -11285,11 +11365,11 @@
 				if (!simple)
 				{
 					if (type == GLOBAL.TYPE_HUMAN)
-						desc += RandomInCollection(["human ", "human ", "terran ", "terran ", "terran "]);
+						desc += RandomInCollection(["human ", "human ", "terran ", "terran ", "homo sapien "]);
 					else
-						desc += RandomInCollection(["human-like ", "human-like ", "exotic ", "exotic ", "inhuman "]);
+						desc += RandomInCollection(["alien ", "alien ", "exotic ", "exotic ", "inhuman "]);
 				}
-				desc += RandomInCollection(["vagina", "pussy", "pussy","pussy","pussy", "cunt", "cunt", "slit", "slit","twat", "gash", "cunny", "honeypot", "snatch"]);
+				desc += RandomInCollection(["vagina", "pussy", "pussy", "pussy", "pussy","pussy","pussy", "cunt", "cunt", "cunt", "cunt", "slit", "slit","twat", "gash", "cunny", "honeypot", "snatch"]);
 			}
 			
 			if (characterClass == GLOBAL.CLASS_ADVENTURER) desc= desc.replace("terran", "human");  // "terran" seems alien in CoC world
@@ -11298,6 +11378,174 @@
 		}
 		
 		//Vaginas + Descript
+		public function vaginaDescript(vaginaNum: Number = 0, forceAdjectives: Boolean = false, adjectives: Boolean = true, appearanceScreen: Boolean = false): String {
+			//ERROR CHECKING:
+			if (vaginaNum > (vaginas.length - 1)) return "<B>Error: Invalid vagina number (" + vaginaNum + ") passed to vaginaDescript()</b>";
+			if (vaginaNum < 0) return "<B>Error: Invalid vaginaNum (" + vaginaNum + ") passed to vaginaDescript()</b>";
+			if (vaginas.length < 0) return "VAGINA ERROR";
+
+			//Appearance screen goes straight to a special subsection of vaginaNoun2
+			if(appearanceScreen) {
+				return vaginaNoun2(vaginas[vaginaNum], false, "appearance");
+			}
+			//Variables
+			var adjectiveLimit:Number = 2;
+			var adjectiveCount:Number = 0;
+			var ultraSimple:Boolean = false;
+			var simple:Boolean = false;
+			var complex:Boolean = false;
+			var vag:VaginaClass = vaginas[vaginaNum];
+			var bonus:Number = 0;
+			var loosenessDisplayed:Boolean = false;
+			var wetnessDisplayed:Boolean = false;
+			var desc:String = "";
+
+			//Determine type of vaginal description. This varies based on type of vagina
+			switch(vag.type)
+			{
+				//human cunts tend to get over-simplistic ones.
+				case GLOBAL.TYPE_HUMAN:
+					ultraSimple = true;
+					break;
+				//These all get 70% complex, 10% ultraSimple, 20% simple
+				case GLOBAL.TYPE_EQUINE:
+				case GLOBAL.TYPE_CANINE:
+				case GLOBAL.TYPE_FELINE:
+				case GLOBAL.TYPE_NAGA:
+				case GLOBAL.TYPE_LEITHAN:
+				case GLOBAL.TYPE_SYNTHETIC:
+					if(rand(10) <= 6) 
+					{
+						complex = true;
+						adjectiveLimit = 1;
+					}
+					else if(rand(3) == 0) ultraSimple = true;
+					else simple = true;
+					break;
+				//Everything else gets 33% splits
+				default:
+					if(rand(3) == 0) 
+					{
+						complex = true;
+						adjectiveLimit = 1;
+					}
+					else if(rand(2) == 0) ultraSimple = true;
+					else simple = true;
+					break;
+			}
+
+			//BUILD DESCRIPTIONS
+			//TIGHTNESS/LOOSENESS FIRST
+			//Figure out chance of tightness desc
+			var currLooseness:Number = vag.looseness();
+			if(currLooseness != 2) bonus = 16;
+			if(currLooseness >= 4) bonus = 10;
+			if(currLooseness == 5) bonus = 5;
+			if(currLooseness == 1) bonus = 5;
+			//Roll the dice on looseness descs
+			if (forceAdjectives || (adjectives && rand(100) < bonus))
+			{
+				if (adjectiveCount > 0) desc+= ", ";
+				//Bimbos get some 'special' tightness variants
+				if (isBimbo() && rand(3) == 0 && currLooseness != 3 && currLooseness != 2)
+				{
+					if(currLooseness == 5) desc += RandomInCollection(["awesomely gaped","gapey","loosey-goosey","size-queen-sized"]);
+					else if(currLooseness == 4) desc += RandomInCollection(["perfect","super loosey","totally awesome"]);
+					else if(currLooseness == 1) desc += RandomInCollection(["perky little","overly-tight","too-tight"]);
+					loosenessDisplayed = true;
+					adjectiveCount++;
+				}
+				if(!loosenessDisplayed)
+				{
+					if (currLooseness <= 2) desc += RandomInCollection(["tight","tight","tight","tight","narrow","narrow","pert little","pert","vice-like"]);
+					else if (currLooseness <= 3) desc += RandomInCollection(["loose","loose","well-practiced","lightly stretched","slightly stretched"]);
+					else if (currLooseness <= 4) desc += RandomInCollection(["well-loosened","slightly gaped","slightly gaped","well-used","widened"]);
+					else desc += RandomInCollection(["gaped","gaped","gaped","wide","exceedingly well-used","ruined","over-used","stretched","dilated","voluminous","spacious","gaped","fistable","vast"]);
+					adjectiveCount++;
+					loosenessDisplayed = true;
+				}
+			}
+			//WETNESS NEXT!
+			//Determine "wetness" value to be displayed based on wetness score and lust
+			//Lust <= 33 == one rank lower.
+			//Lust <= 66 == normal
+			//Lust <= 100 == one rank higher
+			//Lust > 100 == two ranks higher
+			var currWetness:Number = vaginas[vaginaNum].wetness();
+			if(lust() <= 33) currWetness--;
+			if(lust() > 66) currWetness++;
+			if(lust() > 100) currWetness++;
+			if(currWetness < 0) currWetness = 0;
+			//Figure out chances for display of wetness adjectives if appropriate
+			bonus = 0;
+			if(currWetness >= 1) bonus = 10;
+			if(currWetness >= 2) bonus += currWetness * 5;
+			if((forceAdjectives || (adjectives && rand(100) < bonus)) && adjectiveCount < adjectiveLimit)
+			{
+				if (adjectiveCount > 0) desc += ", ";
+				if (currWetness <= 1) desc += RandomInCollection(["moist","dewy","damp","sticky"]);
+				else if (currWetness <= 2) desc += RandomInCollection(["wet","sweltering","slippery","juicy","slick","slippery"]);
+				else if (currWetness <= 3) desc += RandomInCollection(["sopping","soaked","drippy","dripping","succulent","oozy","soggy","drenched"]);
+				else if (currWetness <= 4) desc += RandomInCollection(["drooling","lube-leaking","crotch-soaking","leaky","panty-drenchingly wet","obscenely moist","fluid-oozing","slickness-leaking"]);
+				else desc += RandomInCollection(["slavering","slobbering","puddling","juice-drooling","thigh-soaking","panty-flooding","leg-soaking","slobbering","fluid-drooling"]);				
+				adjectiveCount++;
+				wetnessDisplayed = true;
+			}
+			//Pussy pump - 50% addition of no other descs - doesn't stack well with loose/wet.
+			if(rand(2) == 0 && (vaginas[vaginaNum].hasFlag(GLOBAL.FLAG_PUMPED) || vaginas[vaginaNum].hasFlag(GLOBAL.FLAG_SLIGHTLY_PUMPED)) && adjectiveCount == 0)
+			{
+				if (adjectiveCount > 0) desc += ", ";
+				if (!vaginas[vaginaNum].hasFlag(GLOBAL.FLAG_PUMPED)) desc += RandomInCollection(["cushy", "cushy", "cushy", "chubby", "lightly swollen", "puffy", "slightly pumped"]);
+				else desc += RandomInCollection(["bulgy", "swollen", "plump", "pudgy", "permanently pumped", "jiggly", "wobbly", "pump-enhanced", "prodigious", "obscenely swollen", "lewdly bulging","bulging","pump-fattened"]);
+				adjectiveCount++;
+			}
+			//BIMBO SPECIALS NEXT
+			//More common the more aroused the PC is.
+			//Note that I explicitly mean the PC - this way if the PC sees a part description for say, a customizable Anno's pussy, she'll add fun bimbo speak to the desc.
+			bonus = 8 + kGAMECLASS.pc.lust()/5;
+			if(kGAMECLASS.pc.isBimbo() && adjectives && rand(100) <= bonus && adjectiveCount < adjectiveLimit)
+			{
+				if (adjectiveCount > 0) desc+= ", ";
+				desc += RandomInCollection(["fuckable","cock-ready","cock-hungry","sex-hungry","yummy-looking","yummy","fuckable","slutty","sexy","adorable"]);
+				adjectiveCount++;
+			}
+			//COLOR STUFF!
+			//Set up chances
+			bonus = 13;
+			//Because I think these are exotic and hot and fun to mention moreso than other colors. >.> Fenpreferences!
+			if(vag.vaginaColor == "purple") bonus += 7;
+			if(vag.vaginaColor == "black") bonus += 7;
+			if (adjectives && !forceAdjectives && adjectiveCount < adjectiveLimit && rand(100) <= bonus)
+			{
+				if (adjectiveCount > 0) desc += ", ";
+				//Fix any improperly initialized vag-eye-nas
+				if (vag.vaginaColor.length == 0 || vag.vaginaColor == " ") vag.vaginaColor = "pink";
+				desc += vaginas[vaginaNum].vaginaColor;
+				adjectiveCount++;
+			}
+			if((vaginalVirgin || vag.hymen) && rand(3) == 0 && adjectives && adjectiveCount < adjectiveLimit)
+			{
+				if (adjectiveCount > 0) desc+= ", ";
+				if(vaginalVirgin) 
+				{
+					if(adjectiveCount == 0 && rand(2) == 0 && adjectiveLimit >= 2) desc += "pure and unspoiled";
+					else desc += RandomInCollection(["virgin","virgin","virgin","virgin","unused","celibate","virgin","unspoiled"]);
+				}
+				else desc += RandomInCollection(["virginal","virginal","near-virgin"]);
+				adjectiveCount++;
+			}
+			//NOUN TIME
+			if(adjectiveCount > 0)
+			{
+				if(complex) desc += ", ";
+				else desc += " ";
+			}
+			if(ultraSimple) desc += vaginaNoun2(vag, true, "default");
+			else if(simple) desc += vaginaNoun2(vag, true);
+			else desc += vaginaNoun2(vag);
+			return desc;
+		}
+		/* OLD VAGINA DESC - LEFT FOR REFERENCE
 		public function vaginaDescript(vaginaNum: Number = 0, forceAdjectives: Boolean = false, adjectives: Boolean = true): String {
 			if (vaginaNum > (vaginas.length - 1)) return "<B>Error: Invalid vagina number (" + vaginaNum + ") passed to vaginaDescript()</b>";
 			if (vaginaNum < 0) return "<B>Error: Invalid vaginaNum (" + vaginaNum + ") passed to vaginaDescript()</b>";
@@ -11318,21 +11566,21 @@
 				if (vaginas[vaginaNum].vaginaColor.length > 0)
 				{
 					descripted++;
-					/* 9999 CoC's black cunts. Might still use!
-					if(InCollection(vaginas[vaginaNum].vaginaColor, "black", "ebony", "obsidian", "onyx", "sable") && rand(2) == 0) {
-						if(descripted) vag += ", ";
-						rand = Math.floor(Math.random() * 8);
-						if(rand == 0) vag += "black";
-						else if(rand == 1) vag += "onyx";
-						else if(rand == 2) vag += "ebony";
-						else if(rand == 3) vag += "dusky";
-						else if(rand == 4) vag += "sable";
-						else if(rand == 5) vag += "obsidian";
-						else if(rand == 6) vag += "midnight-hued";
-						else vag += "jet black";
-						descripted = true;
-					}
-					else */
+					// 9999 CoC's black cunts. Might still use!
+					//if(InCollection(vaginas[vaginaNum].vaginaColor, "black", "ebony", "obsidian", "onyx", "sable") && rand(2) == 0) {
+					//	if(descripted) vag += ", ";
+					//	rand = Math.floor(Math.random() * 8);
+					//	if(rand == 0) vag += "black";
+					//	else if(rand == 1) vag += "onyx";
+					//	else if(rand == 2) vag += "ebony";
+					//	else if(rand == 3) vag += "dusky";
+					//	else if(rand == 4) vag += "sable";
+					//	else if(rand == 5) vag += "obsidian";
+					//	else if(rand == 6) vag += "midnight-hued";
+					//	else vag += "jet black";
+					//	descripted = true;
+					//}
+					//else 
 					vag += vaginas[vaginaNum].vaginaColor;
 				}
 				else
@@ -11450,6 +11698,19 @@
 				else vag += "slimy";
 				descripted++;
 			}
+			//Slutty pussy chance!
+			if(descripted < 2 && rand(2) == 0 && (vaginas[vaginaNum].hasFlag(GLOBAL.FLAG_PUMPED) || vaginas[vaginaNum].hasFlag(GLOBAL.FLAG_SLIGHTLY_PUMPED)))
+			{
+				if (descripted > 0) vag += ", ";
+				if (!vaginas[vaginaNum].hasFlag(GLOBAL.FLAG_PUMPED)) vag += RandomInCollection(["cushy", "chubby", "slightly swollen", "puffy", "slightly pumped"]);
+				else vag += RandomInCollection(["bulgy", "swollen", "plump", "pudgy", "permanently pumped", "jiggly", "wobbly", "pump-enhanced", "prodigious", "slutty"]);
+				descripted++;
+			}
+			if(isBimbo() && rand(2) == 0 && descripted == 0)
+			{
+				vag += RandomInCollection(["slutty", "cock-hungry", "bimbo", "yummy-looking", "fuckable"]);
+				descripted++;
+			}
 			//50% of time, simple cunt.
 			if (rand(2) == 0) {
 				if (descripted > 0) vag += " ";
@@ -11461,7 +11722,7 @@
 				vag += vaginaNoun2(vaginas[vaginaNum]);
 			}
 			return vag;
-		}
+		}*/
 		//eachVagina
 		public function eachVagina(): String {
 			var desc: String = "";
@@ -11544,6 +11805,7 @@
 			var descript: String = "";
 			var rando: Number = 0;
 			var descripted: Boolean = false;
+			var adjectives:Number = 0;
 
 			//Single dick gets normal output
 			if (cocks.length == 1) return cockDescript(0, dynamicLength);
@@ -11553,52 +11815,99 @@
 				//For cocks that are the same
 				if (hasSamecType()) {
 					rando = rand(5);
-					if (rando == 0) descript += "pair of ";
-					if (rando == 1) descript += "two, ";
-					if (rando == 2) descript += "brace of ";
-					if (rando == 3) descript += "matching, ";
-					if (rando == 4) descript += "twin, ";
+					if (rando == 0) descript += "pair of";
+					if (rando == 1) 
+					{
+						descript += "two";
+						adjectives = 1;
+					}
+					if (rando == 2) descript += "brace of";
+					if (rando == 3) 
+					{
+						descript += "matching";
+						adjectives = 1;
+					}
+					if (rando == 4) 
+					{
+						descript += "twin";
+						adjectives = 1;
+					}
 				}
 				//Nonidentical
 				else {
 					rando = rand(3);
-					if (rando == 0) descript += "pair of ";
-					if (rando == 1) descript += "two, ";
-					if (rando == 2) descript += "brace of ";
+					if (rando == 0) descript += "pair of";
+					if (rando == 1) 
+					{
+						descript += "two";
+						adjectives = 1;
+					}
+					if (rando == 2) descript += "brace of";
 				}
 			} else if (cocks.length <= 3) {
 				//For samecocks
 				if (hasSamecType()) {
 					rando = rand(5);
-					if (rando == 0) descript += "three, ";
-					if (rando == 1) descript += "group of ";
-					if (rando == 2) descript += "menage a trois of ";
-					if (rando == 3) descript += "triad of ";
-					if (rando == 4) descript += "triumvirate of ";
+					if (rando == 0) 
+					{
+						descript += "three";
+						adjectives = 1;
+					}
+					if (rando == 1) descript += "group of";
+					if (rando == 2) descript += "menage a trois of";
+					if (rando == 3) descript += "triad of";
+					if (rando == 4) descript += "triumvirate of";
 				} else {
 					rando = rand(2);
-					if (rando == 0) descript += "three, ";
-					if (rando == 1) descript += "group of ";
+					if (rando == 0) 
+					{
+						descript += "three";
+						adjectives = 1;
+					}
+					if (rando == 1) descript += "group of";
 				}
 			}
 			//Large numbers of cocks!
 			else {
 				rando = rand(4);
-				if (rando == 0) descript += "bundle of ";
-				if (rando == 1) descript += "obscene group of ";
-				if (rando == 2) descript += "cluster of ";
-				if (rando == 3) descript += "wriggling bunch of ";
+				if (rando == 0) descript += "bundle of";
+				if (rando == 1) descript += "obscene group of";
+				if (rando == 2) descript += "cluster of";
+				if (rando == 3) descript += "wriggling bunch of";
 			}
+			var adjectiveArray:Array = cockAdjectivesRedux(cocks[biggestCockIndex()], 1, true);
+			//Punctuation is important.
+			if(adjectives > 0 && adjectiveArray[1] > 0) descript += ", ";
+			else descript += " ";
+			//Actually add adjectives, if any.
+			descript += adjectiveArray[0];
 			//Append Nounse
-			if (hasSamecType()) descript += cockAdjective(-1, dynamicLength) + ", " + plural(cockNoun2(cocks[0], false, ""));
-			else {
-				rando = rand(4);
-				if (rando == 0) descript += cockAdjective(-1, dynamicLength) + ", mutated cocks";
-				if (rando == 1) descript += cockAdjective(-1, dynamicLength) + ", mutated dicks";
-				if (rando == 2) descript += cockAdjective(-1, dynamicLength) + ", mixed cocks";
-				if (rando == 3) descript += cockAdjective(-1, dynamicLength) + ", mismatched dicks";
+			if (hasSamecType()) 
+			{
+				//Not human? Special descripts goooo
+				if(cocks[0].cType != GLOBAL.TYPE_HUMAN && rand(3) == 0 && adjectiveArray[1] + adjectives < 2)
+				{
+					if(adjectiveArray[1] > 0) descript += ", ";
+					descript += cockNoun2(cocks[biggestCockIndex()], false);
+				}
+				//Mediocre descripts go!
+				else if(rand(2) == 0)
+				{
+					if(adjectiveArray[1] > 0) descript += " ";
+					descript += cockNoun2(cocks[biggestCockIndex()], true);
+				}
+				//Ultrasimple
+				else
+				{
+					if(adjectiveArray[1] > 0) descript += " ";
+					descript += cockNoun2(cocks[biggestCockIndex()], true, "ultraSimple");
+				}
 			}
-			return descript;
+			else {
+				if(adjectiveArray[1] > 0) descript += ", ";
+				descript += RandomInCollection("mutated cock","mutated dicks","mixed cocks","mismatched dicks");
+			}
+			return plural(descript);
 		}
 		public function hasSamecType(): Boolean {
 			if (cocks.length == 0) return false;
@@ -11713,9 +12022,11 @@
 			//Single dicks are normal.
 			else if (cocks.length == 1) return cockDescript(0, dynamicLength);
 			//Matched dicks get full cocknoun.
-			if (hasSamecType()) return plural(cockAdjective(-1, dynamicLength) + ", " + cockNoun2(cocks[0], false));
+			if (hasSamecType()) return plural(cockDescript(0,dynamicLength,true));
 			//Unmatched get default types
-			return plural(cockAdjective(-1, dynamicLength) + " " + randomSimpleCockNoun());
+			var adjectivesArray:Array = cockAdjectivesRedux(cocks[0],2,true);
+			if(adjectivesArray[1] > 0) return plural(adjectivesArray[0] + " " + randomSimpleCockNoun());
+			else return plural(randomSimpleCockNoun());
 		}
 		//Ultra-basic multiple cock description
 		public function cocksDescriptLight(): String {
@@ -11759,16 +12070,18 @@
 		// Spit back a singular word related to the shape of the target cock, with the minimum
 		// of ambiguity. Basically describe a very clear feature of the cock, either its type or a flag.
 		// I didn't want to potentially fuck up an existing descriptor in the process, so I've opted to keep it separate.
-		public function cockShape(cockIndex:int):String
+		public function cockShape(cockIndex:int,forceType:int = -1):String
 		{
 			var cock:CockClass = cocks[cockIndex];
 			var collection:Array = [];
-			
+
+			//If forceType is not set, grab it from the index.
+			if(forceType == -1) forceType = cock.cType;
 			// main shapes
-			switch (cock.cType)
+			switch (forceType)
 			{
 				case GLOBAL.TYPE_HUMAN:
-					collection = ["terran"];
+					collection = ["terran","human"];
 					break;
 				case GLOBAL.TYPE_CANINE:
 					collection = ["canine"];
@@ -11791,19 +12104,19 @@
 					break;
 				case GLOBAL.TYPE_NAGA:
 				case GLOBAL.TYPE_SNAKE:
-					collection = ["snake", "reptilian"];
+					collection = ["snake-like", "reptilian"];
 					break;
 				case GLOBAL.TYPE_DRACONIC:
 					collection = ["draconic"];
 					break;
 				case GLOBAL.TYPE_BEE:
-					collection = ["zil"];
+					collection = ["wasp-like"];
 					break;
 				case GLOBAL.TYPE_KANGAROO:
 					collection = ["kangaroo"];
 					break;
 				case GLOBAL.TYPE_ANEMONE:
-					case GLOBAL.TYPE_SIREN:
+				case GLOBAL.TYPE_SIREN:
 					collection = ["tentacled"];
 					break;
 				case GLOBAL.TYPE_SIMII:
@@ -11813,10 +12126,10 @@
 					collection = ["raskvel"];
 					break;
 				case GLOBAL.TYPE_VENUSPITCHER:
-					collection = ["plant", "vine-like"];
+					collection = ["plant-like", "vine-like"];
 					break;
 				case GLOBAL.TYPE_SAURIAN:
-					collection = ["saurian", "dinosaur"];
+					collection = ["saurian", "dinosaur-like"];
 					break;
 				case GLOBAL.TYPE_SYNTHETIC:
 					collection = ["synthetic", "robotic"];
@@ -11831,24 +12144,24 @@
 					collection = ["sydian", "insectile"];
 					break;
 				case GLOBAL.TYPE_COCKVINE:
-					collection = ["plant", "vine-like"];
+					collection = ["plant-like", "vine-like"];
 					break;
 				case GLOBAL.TYPE_GABILANI:
-					collection = ["gabilani", "goblin"];
+					collection = ["gabilani", "goblin-like"];
 					break;
 				case GLOBAL.TYPE_VANAE:
-					collection = ["vanae", "cephalopod-like"];
+					collection = ["vanae", "sucker-tipped"];
 					break;
 				case GLOBAL.TYPE_HRAD:
 					collection = ["human", "terran", "bullet-shaped", "bullet-headed"];
 					break;
-				case GLOBAL.TYPE_INHUMAN:
-					collection = ["inhuman", "human-like", "alien"];
-					break;
 				case GLOBAL.TYPE_GRYVAIN:
 					collection = ["draconic", "gryvain"];
 					break;
-				
+				case GLOBAL.TYPE_INHUMAN:
+					collection = ["inhuman", "human-like", "alien"];
+					break;
+			
 				default:
 					trace("Fallback cock shape used in cockShape() for type: " + GLOBAL.TYPE_NAMES[cock.cType]);
 					collection = ["bestial"];
@@ -11881,122 +12194,452 @@
 		//Special - "nipple" - NipplecockDesc
 		public function cockNoun2(cock:CockClass, simple:Boolean = true, special:String = ""): String
 		{
-			var descript: String = "";
+			var desc: String = "";
 			var nouns:Array = new Array();
 			var adjectives:Array = new Array();
 			var type:int = cock.cType;
-			if (type == GLOBAL.TYPE_HUMAN) {
-				if (!simple) adjectives.push("human","terran");
-			} 
-			else if (type == GLOBAL.TYPE_CANINE) {
-				adjectives.push("pointed","knotty","bestial","animalistic","knotted","canine","canine");
-				nouns.push("doggie-dong","dog-cock","puppy-pecker","dog-dick");
-			} else if (type == GLOBAL.TYPE_VULPINE) {
-				adjectives.push("pointed","knotty","bestial","animalistic","knotted","vulpine","vulpine");
-				nouns.push("fox-dick","fox-cock","fox-prick","fox-tool","vixen-pricker");
-			} else if (type == GLOBAL.TYPE_EQUINE) {
-				adjectives.push("flared","equine","bestial","flat-tipped","animalistic","blunted","musky");
-				nouns.push("horse-cock","horse-shaft","horse-member","stallion-prick","beast-cock","stallion-cock");
-			} else if (type == GLOBAL.TYPE_DEMONIC) {
-				adjectives.push("nub-covered","nubby","perverse","bumpy","demonic","cursed","infernal","unholy","blighted","fiendish");
-				nouns.push("demon-dick","demon-cock","demon-prick","monster-member");
-			} else if (type == GLOBAL.TYPE_TENTACLE || type == GLOBAL.TYPE_COCKVINE) {
-				adjectives.push("twisting","wriggling","sinuous","squirming","writhing","smooth","undulating","slithering","vine-like");
-				nouns.push("tentacle-prick","plant-shaft","tentacle-cock","cock-tendril","tentacle-pecker","plant-prick","tentacle-dick");
-			} else if (type == GLOBAL.TYPE_FELINE) {
-				adjectives.push("feline","spine-covered","spined","kitty","animalistic","soft-barbed","nubby","feline");
-				nouns.push("cat-cock","kitty-cock","kitty-prick","cat-penis","kitten-prick");
-			} else if (type == GLOBAL.TYPE_NAGA || type == GLOBAL.TYPE_SNAKE) {
-				adjectives.push("reptilian","ophidian","inhuman","reptilian",/*"herpetological",*/"serpentine","bulbous","bulging");
-				nouns.push("snake-cock","snake-shaft","snake-dick");
-			} else if (type == GLOBAL.TYPE_RASKVEL) {
-				adjectives.push("reptilian","alien","raskvel","reptilian","smooth","sleek","exotic");
-				nouns.push("rask-cock");
-			} else if (type == GLOBAL.TYPE_ANEMONE || type == GLOBAL.TYPE_SIREN) {
-				adjectives.push("tentacle-ringed","stinger-laden","pulsating","stinger-coated","near-transparent","tentacle-ringed","squirming");
-				nouns.push("anemone-dick","anemone-prick");
-			} else if (type == GLOBAL.TYPE_KANGAROO) {
-				adjectives.push("pointed","marsupial","tapered","curved");
-				nouns.push("kangaroo-cock","kangaroo-dick","kanga-cock");
-			} else if (type == GLOBAL.TYPE_DRACONIC || type == GLOBAL.TYPE_GRYVAIN) {
-				adjectives.push("dragon-like","segmented","pointed","knotted","mythic","draconic","tapered");
-				if (!cock.hasFlag(GLOBAL.FLAG_GOOEY) || skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("scaly");
-				nouns.push("dragon-cock", "dragon-dick", "wyrm-cock");
-				if (type == GLOBAL.TYPE_GRYVAIN) nouns.push("gryvain-cock");
-			} else if (type == GLOBAL.TYPE_BEE) {
-				adjectives.push("foreskin-covered","alien","vaguely human-like","smooth");
-				if (!cock.hasFlag(GLOBAL.FLAG_GOOEY) || skinType != GLOBAL.SKIN_TYPE_GOO) adjectives.push("thick-skinned","fleshy","skin-shrouded");
-				nouns.push("zil-dick","zil-prick","zil-cock","wasp-cock");
-			} else if (type == GLOBAL.TYPE_KUITAN) {
-				adjectives.push("alien","bulgy","knot-lined","extra knotty","bestial","kui-tan","inhuman","exotic","knotted");
-				nouns.push("'nuki-dick","kui-cock","spunk-dispensor","xeno-cock");
-			} else if (type == GLOBAL.TYPE_SIMII) {
-				adjectives.push("simian");
-				nouns.push("simii-dick","simii-cock");
-			} else if (type == GLOBAL.TYPE_RASKVEL) {
-				adjectives.push("raskvel");
-				nouns.push("rask-dick","rask-cock","egg-fertilizer");
-			} else if (type == GLOBAL.TYPE_VENUSPITCHER) {
-				adjectives.push("floral");
-				nouns.push("plant-dick","plant-cock","vine-dick","vine-cock");
-			} else if (type == GLOBAL.TYPE_SAURIAN) {
-				adjectives.push("dinosaur", "saurian");
-				nouns.push("dino-dick","dino-cock","penisaurus","schlongosaur");
-			} else if (type == GLOBAL.TYPE_SYNTHETIC) {
-				adjectives.push("metallic", "synthetic", "mechanical", "robotic", "sleek");
-				nouns.push("robo-dick","robo-cock","mecha-dick","mecha-cock");
-			} else if (type == GLOBAL.TYPE_NYREA) {
-				adjectives.push("nyrean", "insectile", "egg-laying", "nyrean", "insectile");
-				nouns.push("ovipositor", "organ", "tool", "member", "tube");
-			} else if (type == GLOBAL.TYPE_DAYNAR) {
-				adjectives.push("daynarian", "reptilian", "inhuman", "reptilian");
-				nouns.push("daynar-cock", "daynar-shaft", "daynar-dick");
-			} else if (type == GLOBAL.TYPE_SYDIAN) {
-				adjectives.push("sydian", "insectile", "inhuman", "bristly", "brush-like");
-				nouns.push("bug-cock", "bug-shaft", "bug-dick");
-			} else if (type == GLOBAL.TYPE_AVIAN) {
-				adjectives.push("avian", "bird-like");
-				nouns.push("bird-cock", "bird-shaft", "bird-dick");
-			} else if (type == GLOBAL.TYPE_GABILANI) {
-				adjectives.push("alien", "bulbous", "double-crowned", "gabilani", "goblin", "inhuman", "exotic", "two-headed");
-				nouns.push("goblin-dick", "goblin-cock", "goblin-prick", "gabilani-dick", "gabilani-cock", "gabilani-prick");
-			} else if (type == GLOBAL.TYPE_VANAE) {
-				adjectives.push("vanae", "alien", "suckler-tipped", "vanae", "cephalopod-like", "inhuman", "exotic");
-				nouns.push("vanae-dick", "vanae-cock", "vanae-prick");
-			} else if (type == GLOBAL.TYPE_HRAD) {
-				adjectives.push("human", "terran", "bullet-shaped", "bullet-headed");
-			} else if (type == GLOBAL.TYPE_INHUMAN) {
-				adjectives.push("inhuman", "human-like", "almost-human", "alien");
-			} else {
-				nouns.push("Error. Cock type does not have a cock noun configuration.");
-			}
-			
-			if (cock.hasFlag(GLOBAL.FLAG_GOOEY)) {
-				adjectives.push("gooey","self-lubricating","slick");
-				nouns.push("goo-dick","goo-cock");
-			}
-			nouns.push("cock","cock","dick","prick","shaft","member","dong","tool","phallus");
-			
-			if(!simple && adjectives.length > 0) 
+			if(special == "ultraSimple") desc += RandomInCollection(["cock","cock","dick","dick","member","member","phallus","prick","tool","shaft"]);
+			//Simple = hyphenated shit
+			else if(simple)
 			{
-				descript = RandomInCollection(adjectives);
-				//Prevent duplicate "canine dog-cock" type deals.
-				if(InCollection(descript,"gabilani","goblin","insectile","robotic","mechanical","dinosaur","saurian","floral","gooey","raskvel","simian","kui-tan","draconic","dragon-like","marsupial","reptilian","serpentine","kitty","feline","demonic","equine","vulpine","canine","gooey"))
-				{
-					descript += " " + RandomInCollection("cock","cock","dick","prick","shaft","member","dong","tool","phallus");
-					return descript;
+				//Gooey has chance to override normal shit
+				if (cock.hasFlag(GLOBAL.FLAG_GOOEY) && rand(3) == 0) {
+					desc += RandomInCollection(["goo-cock","slime-cock","goo-dick","slime-dick","goo-cock","goo-prick","slime-prick","slime-shaft","goo-tool"]);
 				}
-				descript += " ";
+				//Tail-cock specials
+				else if(special == "tail" && rand(2) == 0) desc += "tail-" + RandomInCollection(["cock","cock","dick","prick","cock","dick"]);
+				//Nipple-dick specials
+				else if(special == "dick" && rand(2) == 0) desc += RandomInCollection(["dick","cock","prick"] + "-nipple");
+				else
+				{
+					switch(type)
+					{
+						case GLOBAL.TYPE_CANINE:
+							//adjectives.push("pointed","knotty","bestial","animalistic","knotted","vulpine","vulpine");
+							desc += RandomInCollection(["doggie-dong","dog-cock","dog-cock","puppy-prick","puppy-pecker","dog-dick","cock","prick","animal-endowment",mf("bitch-breeder","bitch-boner"),"beast-cock","beast-dick"]);
+							break;
+						case GLOBAL.TYPE_VULPINE:
+							//adjectives.push("pointed","knotty","bestial","animalistic","knotted","vulpine","vulpine");
+							desc += RandomInCollection(["fox-cock",mf("vixen-breeder","vixen-prick"),"fox-dick","animal-phallus","fox-phallus","fox-shaft","fox-cock",mf("vixen-inseminator","vixen-dick"),"beast-cock"]);
+							break;
+						case GLOBAL.TYPE_EQUINE:
+							//adjectives.push("flared","equine","bestial","flat-tipped","animalistic","blunted","musky");
+							desc += RandomInCollection(["horse-cock","beast-cock","stallion-cock","horse-cock","beast-cock","horse-shaft",mf("stallion-shaft","mare-member"),mf("mare-mounter","mare-member"),"horse-member","stallion-prick","horse-phallus","horse-phallus","phallus","tool"]);
+							break;
+						case GLOBAL.TYPE_DEMONIC:
+							//adjectives.push("nub-covered","nubby","perverse","bumpy","demonic","cursed","infernal","unholy","blighted","fiendish");
+							desc += RandomInCollection(["demon-dick","demon-cock","demon-prick","monster-member","monster-dick","corrupted-cock","dick","perverted-prick","nub-shaft","designer-dick"]);
+							break
+						case GLOBAL.TYPE_TENTACLE:
+						case GLOBAL.TYPE_COCKVINE:
+						case GLOBAL.TYPE_VENUSPITCHER:
+							//adjectives.push("twisting","wriggling","sinuous","squirming","writhing","smooth","undulating","slithering","vine-like");
+							desc += RandomInCollection(["tentacle-cock","plant-cock","cock-tendril","plant-prick","tentacle-prick","plant-phallus","tentacle-phallus","dick-tentacle","dick-tendril","tentacle-tool","plant-shaft","vine-cock","vine-dick"]);
+							break;
+						case GLOBAL.TYPE_FELINE:
+							//adjectives.push("feline","spine-covered","spined","kitty","animalistic","soft-barbed","nubby","feline");
+							desc += RandomInCollection(["cat-cock","kitty-cock","kaithrit-cock","animal-prick","cat-prick","cat-dick","kitty-dick","cat-phallus","cat-cock","cat-penis"]);
+							break;
+						case GLOBAL.TYPE_NAGA:
+							//adjectives.push("reptilian","ophidian","inhuman","reptilian",/*"herpetological",*/"serpentine","bulbous","bulging");
+							desc += RandomInCollection(["snake-cock","reptile-cock","snake-shaft","reptile-dick","snake-dick","snake-phallus","reptile-phallus","snake-prick","reptile-tool","snake-cock","snake-cock"]);
+							break;
+						case GLOBAL.TYPE_RASKVEL:
+							//adjectives.push("reptilian","alien","raskvel","reptilian","smooth","sleek","exotic");
+							desc += RandomInCollection(["rask-cock","reptile-cock","rask-cock","alien-endowment","rask-dick","reptile-dick","egg-inseminator","rask-prick","rask-dick","reptile-tool","raskvel-member"]);
+							break;
+						case GLOBAL.TYPE_ANEMONE:
+							//adjectives.push("tentacle-ringed","stinger-laden","pulsating","stinger-coated","near-transparent","tentacle-ringed","squirming");
+							desc += RandomInCollection(["anemone-cock","wiggle-cock","anemone-dick","anemone-prick","anemone-phallus","stinger","shaft","anemone-prong","anemone-tool","anemone-cock","anemone-dick"]);
+							break;
+						case GLOBAL.TYPE_KANGAROO:
+							//adjectives.push("pointed","marsupial","tapered","curved");
+							desc += RandomInCollection(["kangaroo-cock","kangaroo-dick","kanga-cock"]);
+							break;
+						case GLOBAL.TYPE_DRACONIC:
+						case GLOBAL.TYPE_GRYVAIN:
+							//adjectives.push("dragon-like","segmented","pointed","knotted","mythic","draconic","tapered");
+							desc += RandomInCollection(["dragon-cock", "wyrm-cock", "dragon-cock", "reptile-cock", "dragon-dick","reptile-dick","wyrm-dick","dragon-phallus","dragon-prick","wyrm-prick","wyrm-phallus"]);
+							break;
+						case GLOBAL.TYPE_BEE:
+							//adjectives.push("foreskin-covered","alien","vaguely human-like","smooth");
+							desc += RandomInCollection(["zil-cock","wasp-cock","zil-cock","zil-dick","wasp-dick","prick","prong","zil-member","insect-cock","insect-dick","zil-prick"]);
+							break;
+						case GLOBAL.TYPE_KUITAN:
+							//adjectives.push("alien","bulgy","knot-lined","extra knotty","bestial","kui-tan","inhuman","exotic","knotted");
+							desc += RandomInCollection(["'nuki-cock","kui-cock","'nuki-cock","xeno-dick","'nuki-dick","knotty-cock","prick","phallus","member","'nuki-member","shaft","tool"]);
+							break;
+						case GLOBAL.TYPE_SIMII:
+							//adjectives.push("simian");
+							desc += RandomInCollection(["simii-dick","simii-cock","member","member","phallus","prick","tool","shaft"]);
+							break;
+						case GLOBAL.TYPE_SAURIAN:
+							//adjectives.push("dinosaur", "saurian");
+							desc += RandomInCollection(["dino-cock","reptile-cock","dinosaur-cock","dino-dick","reptile-dick","dinosaur-prick","dinosaur-tool","member","cock"]);
+							break;
+						case GLOBAL.TYPE_SYNTHETIC:
+							//adjectives.push("metallic", "synthetic", "mechanical", "robotic", "sleek");
+							desc += RandomInCollection(["synth-cock","robo-cock","mecha-cock","robo-dick","mecha-dick","synth-shaft","synth-cock","robot-prong","robo-tool","synth-phallus","mecha-prick","robo-prick"]);
+							break;
+						case GLOBAL.TYPE_NYREA:
+							//adjectives.push("nyrean", "insectile", "egg-laying", "nyrean", "insectile");
+							desc += RandomInCollection(["ovipositor","ovi-cock","egg-layer","nyrea-cock","ovi-dong","ovi-dick","egg-dick","nyrea-dick","egg-organ","nyrea-prick","nyrea-dick","ovi-member","egg-shaft","ovi-shaft"]);
+							break;
+						case GLOBAL.TYPE_DAYNAR:
+							//adjectives.push("daynarian", "reptilian", "inhuman", "reptilian");
+							desc += RandomInCollection(["daynar-cock", "reptile-cock", "cock", "daynar-dick", "reptile-dick","lizard-cock","lizard-prick","reptile-phallus","lizard-member","daynar-prick"]);
+							break;
+						case GLOBAL.TYPE_SYDIAN:
+							//adjectives.push("sydian", "insectile", "inhuman", "bristly", "brush-like");
+							desc += RandomInCollection(["sydian-cock","bug-cock","xeno-cock","sydian-dick","bug-dick","sydian-prick","sydian-shaft","dong","bug-prick"]);
+							break;
+						case GLOBAL.TYPE_GABILANI:
+							//adjectives.push("alien", "bulbous", "double-crowned", "gabilani", "goblin", "inhuman", "exotic", "two-headed");
+							desc += RandomInCollection(["goblin-cock","gabilani-cock","goblin-cock","gabilani-dick","goblin-dick","xeno-dick","goblin-prick","gabilani-phallus","goblin-tool","xeno-tool","goblin-member"]);
+							break;
+						case GLOBAL.TYPE_VANAE:
+							//adjectives.push("vanae", "alien", "suckler-tipped", "vanae", "cephalopod-like", "inhuman", "exotic");
+							desc += RandomInCollection(["vanae-cock","vanae-dick","vanae-prick","cock","cock","member","xeno-dick","phallus"]);
+							break;
+						//Basic dicks names:  "cock",
+						case GLOBAL.TYPE_HUMAN:
+						//Nothing special for these two.
+						case GLOBAL.TYPE_HRAD:
+						case GLOBAL.TYPE_INHUMAN:
+						//Catch-all
+						default:
+							desc += RandomInCollection(["cock","cock","dick","dick","member","member","phallus","prick","tool","shaft"]);
+							break;
+					}
+				}
 			}
-			if(special == "tail" && rand(2) == 0) descript += "tail-" + RandomInCollection(["cock","cock","dick","prick","phallus"]);
-			else if(special == "dick" && rand(2) == 0) descript += RandomInCollection(["dick","cock","prick"] + "-nipple");
-			else descript += RandomInCollection(nouns);
-			
-			if (characterClass == GLOBAL.CLASS_ADVENTURER) descript = descript.replace("terran", "human"); // "terran" seems alien in CoC world
-			
-			return descript;
+			//Long type descriptions
+			else
+			{
+				//Gooey has chance to override normal shit
+				if (cock.hasFlag(GLOBAL.FLAG_GOOEY) && rand(2) == 0) {
+					desc += RandomInCollection(["gooey cock","gooey cock","gooey dick","gooey prick","gooey tool","gooey shaft","self-lubricating goo-cock","self-lubricating shaft","self-lubricating member","self-lubricating slime-cock","slick shaft","slick cock","slick dick","slick goo-cock","slick goo-dick","slippery slime-cock","slippery slime-dick","slippery prick"]);
+				}
+				//TO BE COMPLETED LATER - TAIL AND NIPPLE STUFF
+				else if(special == "tail" && rand(2) == 0) desc += cockShape(0,type) + " tail-" + RandomInCollection(["cock","cock","dick","prick","cock","dick"]);
+				else if(special == "dick" && rand(2) == 0) desc += cockShape(0,type) + " " + RandomInCollection(["dick","cock","prick"] + "-nipple");
+				else
+				{
+					switch(type)
+					{
+						case GLOBAL.TYPE_CANINE:
+							//adjectives.push("pointed","knotty","bestial","animalistic","knotted","vulpine","vulpine");
+							desc += RandomInCollection(["canine cock","bestial cock","knotty dog-cock","canine cock","animalistic dick","pointed prick","bestial member","animalistic shaft","bestial shaft","canine shaft","knotted tool","feral prick"]);
+							break;
+						case GLOBAL.TYPE_VULPINE:
+							//adjectives.push("pointed","knotty","bestial","animalistic","knotted","vulpine","vulpine");
+							desc += RandomInCollection(["vulpine cock","bestial fox-cock","bestial cock","knotty cock","vulpine cock","animalistic dick","pointed prick","bestial member","animalistic shaft","bestial shaft","vulpine shaft","knotted tool","feral prick"]);
+							break;
+						case GLOBAL.TYPE_EQUINE:
+							//adjectives.push("flared","equine","bestial","flat-tipped","animalistic","blunted","musky");
+							desc += RandomInCollection(["flared horse-cock","blunted horse-cock","bestial cock","equine cock","musky cock","flared cock","musky horse-dick","animalistic dick","blunt-tipped dick","flared horse-dick","bestial member","musky member","equine shaft","animalistic shaft","equine horse-prick","flat-tipped horse-boner","bestial tool","equine phallus","equine tool"]);
+							break;
+						case GLOBAL.TYPE_DEMONIC:
+							//adjectives.push("nub-covered","nubby","perverse","bumpy","demonic","cursed","infernal","unholy","blighted","fiendish");
+							desc += RandomInCollection(["nub-covered cock","nub-covered demon-cock","demonic cock","nubby cock","fiendish cock","nub-covered dick","nubby dick","perverse dick","bumpy dick","demonic dick","fiendish dick","demonic shaft","blighted tool","fiendish prick"]);
+							break
+						case GLOBAL.TYPE_TENTACLE:
+						case GLOBAL.TYPE_COCKVINE:
+						case GLOBAL.TYPE_VENUSPITCHER:
+							//adjectives.push("twisting","wriggling","sinuous","squirming","writhing","smooth","undulating","slithering","vine-like");
+							desc += RandomInCollection(["twisting cock","twisting tentacle-cock","sinuous plant-cock","sinuous cock","vine-like cock","squirming vine-cock","slithering dick-tentacle","squirming tentacle-dick","plant-like dick","smooth vine-dick","sinuous plant-member","undulating member","wiggly tentacle-phallus","twisting plant-prick"]);
+							break;
+						case GLOBAL.TYPE_FELINE:
+							//adjectives.push("feline","spine-covered","spined","kitty","animalistic","soft-barbed","nubby","feline");
+							desc += RandomInCollection(["feline cock","spine-covered cock","animalistic cat-cock","soft-barbed cock","nubby cock","spined kitty-dick","soft-barbed cat-dick","animalistic dick","feline dick","kitty dick","feline tool","feline prick","animalistic shaft","barbed animal-prick"]);
+							break;
+						case GLOBAL.TYPE_NAGA:
+							//adjectives.push("reptilian","ophidian","inhuman","reptilian",/*"herpetological",*/"serpentine","bulbous","bulging");
+							desc += RandomInCollection(["reptilian cock","inhuman cock","serpentine cock","bulbous snake-cock","ophidian cock","reptilian dick","serpentine dick","bulbous dick","ophidian dick","bulbous snake-dick","reptilian phallus","inhuman phallus","bulbous phallus","serpentine member","inhuman member","reptilian member","bulgy member","reptilian prick","bulbous snake-prick"]);
+							break;
+						case GLOBAL.TYPE_RASKVEL:
+							//adjectives.push("reptilian","alien","raskvel","reptilian","smooth","sleek","exotic");
+							desc += RandomInCollection(["reptilian cock","alien cock","raskvel cock","sleek cock","exotic rask-cock","exotic cock","reptilian dick","alien dick","smooth rask-dick","reptilian prick","alien phallus","exotic phallus","sleep prick","reptilian tool","alien tool"]);
+							break;
+						case GLOBAL.TYPE_ANEMONE:
+							//adjectives.push("tentacle-ringed","stinger-laden","pulsating","stinger-coated","near-transparent","tentacle-ringed","squirming");
+							desc += RandomInCollection(["tentacle-ringed cock","pulsating cock","stinger-lined cock","squirming anemone-cock","exotic cock","stinger-laden dick","stinger-covered dick","tentacle-ringed dick","pulsating prick","tentacle-ringed prick","squirming prick","near-transparent phallus","stinger-laden phallus","tentacle-ringed tool","tentacle-lined tool"]);
+							break;
+						case GLOBAL.TYPE_KANGAROO:
+							//adjectives.push("pointed","marsupial","tapered","curved");
+							desc += RandomInCollection(["pointed kangaroo-cock","marsupial cock","tapered kanga-cock","curved cock","pointed kangaroo-dick","marsupial dick","curved kanga-dick","curved dick","marsupial prick","tapered prick","marsupial member","pointed prick","curved member","marsupial tool","tapered kangaroo-tool"]);
+							break;
+						case GLOBAL.TYPE_DRACONIC:
+						case GLOBAL.TYPE_GRYVAIN:
+							//adjectives.push("dragon-like","segmented","pointed","knotted","mythic","draconic","tapered");
+							desc += RandomInCollection(["dragon-like cock","segmented dragon-cock","segmented wyrm-cock","draconic cock","tapered dragon-cock","segmented dick","segmented dragon-dick","draconic dick","segmented phallus","dragon-like phallus","tapered phallus","pointed prick","draconic prick","tapered wyrm-tool","segmented tool","tapered dragon-tool","draconic tool"]);
+							break;
+						case GLOBAL.TYPE_BEE:
+							//adjectives.push("foreskin-covered","alien","vaguely human-like","smooth");
+							desc += RandomInCollection(["thick-skinned zil-cock","smooth wasp-cock","foreskin-covered cock","alien cock","human-like cock","foreskin-covered zil-dick","alien dick","smooth wasp-dick","alien prick","smooth insect-dick","foreskin-sheathed zil-prick","alien prong","smooth wasp-tool"]);
+							break;
+						case GLOBAL.TYPE_KUITAN:
+							//adjectives.push("alien","bulgy","knot-lined","extra knotty","bestial","kui-tan","inhuman","exotic","knotted");
+							desc += RandomInCollection(["bulgy 'nuki-cock", "knot-lined kui-cock", "bestial cock", "exotic kui-cock", "exotic cock", "knotted 'nuki-cock", "knot-lined dick","knot-covered dick","bulgy 'nuki-dick","kui-tan cock","kui-tan dick","extra-knotty dick","bulgy dick","knot-lined prick","bulgy prick","knot-lined tool","bulgy shaft","knotted member","kui-tan member","bulgy shaft","alien shaft"]);
+
+							break;
+						case GLOBAL.TYPE_SIMII:
+							//adjectives.push("simian");
+							desc += RandomInCollection(["simian cock","simian cock","inhuman cock","bestial monkey-cock","alien cock","simian dick","simian shaft","simian member","simian tool","inhuman monkey-dick","alien dick","simian phallus"]);
+							break;
+						case GLOBAL.TYPE_SAURIAN:
+							//adjectives.push("dinosaur", "saurian");
+							desc += RandomInCollection(["dinosaur cock","saurian cock","reptilian cock","prehistoric dino-cock","dinosaur dick","saurian shaft","dinosaur dick","reptilian member","saurian member","saurian tool","saurian prick","dinosaur prick","prehistoric dino-dick"]);
+							break;
+						case GLOBAL.TYPE_SYNTHETIC:
+							//adjectives.push("metallic", "synthetic", "mechanical", "robotic", "sleek");
+							desc += RandomInCollection(["metallic member","metallic cock","metallic cock","metallic shaft","metallic dick","synthetic cock","synthetic dick","synthetic cock","synthetic tool","synthetic prick","robotic cock","robotic cock","robotic dick","robotic prick","robotic tool","sleek synth-cock","sleek robo-cock","sleek synth-dick","mechanical dick","mechanical cock","mechanical member"]);
+							break;
+						case GLOBAL.TYPE_NYREA:
+							//adjectives.push("nyrean", "insectile", "egg-laying", "nyrean", "insectile");
+							desc += RandomInCollection(["nyrean ovipositor","nyrean ovi-cock","nyrean cock","nyrean egg-organ","nyrean egg-shaft","nyrean shaft","nyrean tool","nyrean cock","nyrean egg-layer","nyrean lady-cock","insectile ovi-cock","insectile cock","insectile ovi-dick","insectile ovipositor","insectile prick","insectile shaft","insectile member"]);
+							break;
+						case GLOBAL.TYPE_DAYNAR:
+							//adjectives.push("daynarian", "reptilian", "inhuman", "reptilian");
+							desc += RandomInCollection(["daynarian dick","daynarian cock","daynarian tool","daynarian member","daynarian prick","daynarian cock","reptilian cock","reptilian cock","reptilian dick","reptilian member","reptilian phallus","daynarian phallus","alian cock","alien dick","inhuman reptile-dick","daynarian lizard-cock"]);
+							break;
+						case GLOBAL.TYPE_SYDIAN:
+							//adjectives.push("sydian", "insectile", "inhuman", "bristly", "brush-like");
+							desc += RandomInCollection(["bristle-covered cock","bristle-covered prick","brush-coated cock","brush-coated dick","brush-coated prick","brush-coated cock","brush-coated phallus","sydian dick","sydian cock","insectile prong","insectile cock","insectile dick","insectile member","insectile tool","sydian shaft","sydian member","sydian cock"]);
+							break;
+						case GLOBAL.TYPE_GABILANI:
+							//adjectives.push("alien", "bulbous", "double-crowned", "gabilani", "goblin", "inhuman", "exotic", "two-headed");
+							desc += RandomInCollection(["two-headed goblin-cock","two-headed cock","bulbous cock","bulbous goblin-cock","bulbous goblin-dick","bulbous prick","double-crowned dick","double-crowned dong","gabilanian phallus","gabilanian member","gabilanian cock","exotic goblin-cock","double-crowned cock"]);
+							break;
+						case GLOBAL.TYPE_VANAE:
+							//adjectives.push("vanae", "alien", "suckler-tipped", "vanae", "cephalopod-like", "inhuman", "exotic");
+							desc += RandomInCollection(["alien cock","sucker-tipped cock","sucker-tipped dick","sucker-tipped prick","sucker-tipped cock","sucker-crowned cock","sucker-crowned dick","sucker-capped member","sucker-capped pahllus","alien dick","exotic vanae-cock","exotic vanae-dick","sucker-topped prick"]);
+							break;
+						//Basic dicks names:  "cock",
+						case GLOBAL.TYPE_HUMAN:
+							desc += RandomInCollection(["terran cock","human cock","human dick","terran dick","human member","terran member","terran phallus","human prick","terran tool","human shaft"]);
+							break;
+						//Nothing special for these two.
+						case GLOBAL.TYPE_HRAD:
+						case GLOBAL.TYPE_INHUMAN:
+						//Dafault catch-all
+						default:
+							desc += RandomInCollection(["exotic cock","inhuman cock","alien dick","inhuman dick","alien member","exotic member","inhuman phallus","exotic prick","alien tool","alien shaft"]);
+							break;
+					}
+				}
+			}
+			return desc;
 		}
-		//New cock adjectives. The old one sucked dicks
+		//New new cock adjectives. For cool kids that aren't afraid of anything.
+		public function cockAdjectivesRedux(cock:CockClass, adjectiveLimit:int = 2, multi:Boolean = false):Array
+		{
+			var descript: String = "";
+			var adjectives: int = 0;
+			var bonus:int = 0;
+			var x:int = 0;
+			//If we're doing multidicks, let's use the biggest one
+			if(multi) cock = cocks[biggestCockIndex()];
+			//Get length
+			var cLength: Number = cock.cLength();
+			//Get width
+			var cWidth:Number = cock.thickness();
+			//We want to avoid doing both as it can lead to some awkward results: "gargantuan, meaty cock"
+			var lengthDescribed:Boolean = false;
+			var girthDescribed:Boolean = false;
+			var multiOkay:Boolean = false;
+			//Determine length chances! - nothing for "normal" length. Bonus for super small or progressively larger!
+			bonus = 0;
+			if(cLength <= 5) bonus = 25;
+			else if(cLength >= 7) bonus = 25;
+			if(cLength <= 4) bonus += 10;
+			if(cLength >= 14) bonus += 3;
+			if(cLength >= 18) bonus += 3;
+			if(cLength >= 30) bonus += 3;
+			if(cLength >= 50) bonus += 3;
+			if(cLength >= 100) bonus += 3;
+			if(multi)
+			{
+				multiOkay = true;
+				for(x = 0; x < cockTotal(); x++)
+				{
+					if(x > 0)
+					{
+						if(Math.abs(cocks[x].cLength() - cocks[x-1].cLength()) > 5) multiOkay = false;
+					}
+				}
+			}
+			if (rand(100) < bonus && (!multi || multiOkay)) {
+				if (cLength <= 4) descript += RandomInCollection(["little","toy-sized","mini","tiny","diminutive",]);
+				else if (cLength <= 5) descript += RandomInCollection(["short","small","petite"]);
+				//This one should pretty much never proc
+				else if (cLength < 7) descript += RandomInCollection(["fair-sized","nice"]);
+				else if (cLength < 11) descript += RandomInCollection([(cock.cType == GLOBAL.TYPE_EQUINE) ? "pony-sized" : "long","lengthy","cucumber-sized"]);
+				else if (cLength < 14) descript += RandomInCollection(["huge","foot-long",(cock.cType == GLOBAL.TYPE_CANINE) ? "mastiff-sized" : "pornstar-sized","impressive"]);
+				else if (cLength < 18) descript += RandomInCollection(["massive","knee-length","forearm-length","imposing","seam-straining","pant-bulging"]);
+				else if (cLength < 30) descript += RandomInCollection(["enormous","enormous","giant","giant",(cock.cType == GLOBAL.TYPE_EQUINE) ? "clydesdale-sized" : "arm-sized","seam-shredding","pant-ripping"])
+				else if (cLength < 50) descript += RandomInCollection(["towering","monstrous","prodigious","ultrapornstar-sized","hyper-sized","unnaturally large",""])
+				else if (cLength < 100) descript += RandomInCollection(["person-sized","ridiculously massive","extremely prodigious","overly imposing","room-dominating","body-dominating","colossal","monumental","immense"]);
+				else if (cLength < 150) descript += RandomInCollection(["car-sized","vehicle-length","movement-impairing","monumentally long","couch-length","impossibly long"]);
+				else if (cLength < 270) descript += RandomInCollection(["room-sized","hall-length","exquisitely over-sized","bus-length","ship-length","impossibly lengthy","tremendously long"]);
+				else descript += RandomInCollection(["bus-sized","ship-sized","universe-shaming","house-crushing","mansion-filling","distractingly distended","gorgeously gigantic"]);
+				adjectives++;
+				lengthDescribed = true;
+			}
+			if(multi)
+			{
+				multiOkay = true;
+				for(x = 0; x < cockTotal(); x++)
+				{
+					if(x > 0)
+					{
+						if(cLength <= tallness * 2/3) multiOkay = false;
+					}
+				}
+			}
+			//Chance of special relative descriptions
+			else if(cLength > tallness * 2/3 && rand(9) == 0 && (!multi || multiOkay))
+			{
+				if(adjectives > 0) descript += ", ";
+				descript += RandomInCollection("floor-dragging","ground-dragging","floor-polishing");
+				adjectives++;
+				lengthDescribed = true;
+			}
+			//TIME FOR GIRTH!
+			bonus = 10;
+			//"average" aint never gonna show up
+			if(cWidth >= 1 && cWidth <= 1.2) bonus = 0;
+			//Super fatties show up more
+			if(cWidth > 2) bonus + 10;
+			if(multi)
+			{
+				multiOkay = true;
+				for(x = 0; x < cockTotal(); x++)
+				{
+					if(x > 0)
+					{
+						if(Math.abs(cocks[x].thickness() - cocks[x-1].thickness()) > .5) multiOkay = false;
+					}
+				}
+			}
+			if(adjectives < adjectiveLimit && rand(100) < bonus && (!multi || multiOkay))
+			{
+				if(adjectives > 0) descript += ", ";
+				if (cWidth < 1) descript += RandomInCollection(["thin","slender","narrow","girlish"]);
+				//This should NEVER proc, but leaving here in case I change my mind down the road
+				else if (cWidth <= 1.2) descript += RandomInCollection(["modest","substantial","fleshy"]);
+				else if (cWidth <= 1.6) descript += RandomInCollection(["ample","meaty","generously-proportioned"]);
+				else if (cWidth <= 2) descript += RandomInCollection(["broad","girthy","expansive","thick"]);
+				else if (cWidth <= 3.5) descript += RandomInCollection(["fat","wide","voluminous","distended"]);
+				else descript += RandomInCollection(["incredibly thick","bloated","mammoth","monstrously thick","swollen","tremendously wide"]);
+				girthDescribed = true;
+				adjectives++;
+			}
+			//Bimbo flavor - 1/6 chance
+			if(adjectives < adjectiveLimit && rand(6) == 0 && isBimbo())
+			{
+				if(adjectives > 0) descript += ", ";
+				if(rand(7) == 8 && cLength < 6) descript += "cute";
+				else if(rand(7) == 0) descript += "mouth-watering";
+				else if(rand(6) == 0) descript += "totally sexy";
+				else if(rand(5) == 0) descript += "super hot";
+				else if(rand(4) == 0) descript += "delicious-looking";
+				else if(rand(3) == 0 && cLength >= 10) descript += "awe-inspiring";
+				else descript += "yummy";
+				adjectives++;
+			}
+			//Hornyness 25%
+			if (adjectives < adjectiveLimit && lust() >= 75 && rand(4) == 0) 
+			{
+				if(adjectives > 0) descript += ", ";
+				var cum:Number = cumQ();
+				//Uber horny like a baws!
+				if (lust() > 90)
+				{
+					//Weak as shit cum
+					if (cum < 150) descript += RandomInCollection(["throbbing","pulsating"]);
+					//lots of cum? drippy.
+					else if (cum < 1000) descript += RandomInCollection(["throbbing","pulsating","pre-leaking","pre-drooling","pre-oozing","pre-dribbling"]);
+					//Tons of cum
+					else descript += RandomInCollection(["throbbing","pulsating","pre-gushing","cum-bubbling","pre-soaked","pre-slicked","cum-dribbling"]);
+				}
+				//A little less lusty, but still lusty.
+				else {
+					if (cum < 50) descript += RandomInCollection(["turgid","rock-hard","tumescent","stiff","eager"]);
+					//A little drippy
+					else if (cum < 200) descript += RandomInCollection(["turgid","rock-hard","stiff","tumescent","eager","pre-beading","pre-leaking"]);
+					//uber drippy
+					else descript += RandomInCollection(["pre-dribbling","pre-drooling","precum-oozing","turgid","hard","rock-hard","tumescent","fully engorged"]);
+				}
+				adjectives++;
+			}
+			//Knot - 1/5 chance. Only specifically called out if dick isn't dog, since knot shows up with the
+			//canine nouns.
+			if(multi)
+			{
+				multiOkay = true;
+				for(x = 0; x < cockTotal(); x++)
+				{
+					if(!cocks[x].hasFlag(GLOBAL.FLAG_KNOTTED)) multiOkay = false;
+				}
+			}
+			if(adjectives < adjectiveLimit && rand(5) == 0 && cock.hasFlag(GLOBAL.FLAG_KNOTTED) && cock.cType != GLOBAL.TYPE_CANINE && cock.cType != GLOBAL.TYPE_SNAKE && cock.cType != GLOBAL.TYPE_NAGA && cock.cType != GLOBAL.TYPE_KUITAN && (!multi || multiOkay))
+			{
+				if(adjectives > 0) descript += ", ";
+				descript += RandomInCollection(["knotted","bulbous","knotty"]);
+				adjectives++;
+			}
+			//Pierced - 1/5 chance
+			if(multi)
+			{
+				multiOkay = true;
+				for(x = 0; x < cockTotal(); x++)
+				{
+					if(cocks[x].pierced <= 0) multiOkay = false;
+				}
+			}
+			if (adjectives < adjectiveLimit && rand(5) == 0 && cock.pierced > 0 && (!multi || multiOkay)) 
+			{
+				if(adjectives > 0) descript += ", ";
+				descript += "pierced";
+				adjectives++;
+			}
+			//Color: 1/15 chance
+			if(multi)
+			{
+				multiOkay = true;
+				for(x = 0; x < cockTotal(); x++)
+				{
+					if(x > 0)
+					{
+						if(cocks[x].cockColor != cocks[x-1].cockColor) multiOkay = false;
+					}
+				}
+			}
+			if (adjectives < adjectiveLimit && rand(10) == 0 && (!multi || multiOkay)) 
+			{
+				if(adjectives > 0) descript += ", ";
+				descript += cock.cockColor;
+				adjectives++;
+			}
+			//Cocksocks!
+			//Pierced - 1/5 chance
+			if(multi)
+			{
+				multiOkay = true;
+				for(x = 0; x < cockTotal(); x++)
+				{
+					if(cocks[x].sock == "") multiOkay = false;
+				}
+			}
+			if (adjectives < adjectiveLimit && !multi && rand(5) == 0 && cock.sock != "" && (!multi || multiOkay)) {
+				if(adjectives > 0) descript += ", ";descript += "pierced";
+				descript += RandomInCollection(["sock-sheathed","garment-wrapped","wrapped","smartly dressed","cloth-shrouded","sock-shrouded","fabric swaddled","covered"]);
+				adjectives++;
+			}
+			return [descript,adjectives];
+		}
+		/*Old cockAdjective left for reference - not that this WAS the "new hotness". So many generations of parsers.
 		public function cockAdjective(cockNum: Number = -1, dynamicLength:Boolean = false):String {
 			var descript: String = "";
 			var rando: Number = 0;
@@ -12116,7 +12759,11 @@
 						else if (rando == 1) descript = "ridiculously massive";
 						else if (rando == 2) descript = "extremely prodigious";
 						else if (rando == 3) descript = "overly imposing";
-						else if (rando == 4) descript = "floor-dragging";
+						else if (rando == 4)
+						{
+							if(cocks[cockNum].cLength() > (tallness * 2/3)) descript = "floor-dragging";
+							else descript = "incredibly immense";
+						}
 						else if (rando == 5) descript = "colossal";
 						else if (rando == 6) descript = "very hyper";
 						else descript = "monumental";
@@ -12229,7 +12876,7 @@
 				}
 			}
 			return descript;
-		}
+		}*/
 		//New cock adjectives. The old one sucked dicks
 		public function statCockAdjective(l: int, w: int, type: int = 0):String {
 			var descript: String = "";
@@ -12305,7 +12952,11 @@
 						else if (rando == 1) descript = "ridiculously massive";
 						else if (rando == 2) descript = "extremely prodigious";
 						else if (rando == 3) descript = "overly imposing";
-						else if (rando == 4) descript = "floor-dragging";
+						else if (rando == 4)
+						{
+							if(l > (tallness * 2/3)) descript = "floor-dragging";
+							else descript = "incredibly immense";
+						}
 						else if (rando == 5) descript = "colossal";
 						else if (rando == 6) descript = "very hyper";
 						else descript = "monumental";
@@ -12518,7 +13169,11 @@
 						else if (rando == 1) descript = "ridiculously massive";
 						else if (rando == 2) descript = "extremely prodigious";
 						else if (rando == 3) descript = "overly imposing";
-						else if (rando == 4) descript = "floor-dragging";
+						else if (rando == 4)
+						{
+							if(l > (tallness * 4/5)) descript = "floor-dragging";
+							else descript = "incredibly immense";
+						}
 						else if (rando == 5) descript = "colossal";
 						else if (rando == 6) descript = "very hyper";
 						else descript = "monumental";
@@ -13035,9 +13690,7 @@
 			// Penis?
 			else if(idxOverride >= 0)
 			{
-				if(forceAdjective == 1 || (forceAdjective == 0 && rand(2) == 0)) descript += cockAdjective(idxOverride) + " ";
-				descript += cockNoun2(cocks[idxOverride]);
-				return descript;
+				return cockDescript(idxOverride);
 			}
 			// Giant Clits?
 			else if(idxOverride == -2)
@@ -13056,34 +13709,71 @@
 			// Error, return something though!
 			return "strapon";
 		}
-		public function cockDescript(cockNum: Number = 0, dynamicLength:Boolean = false): String {
+		public function cockDescript(cockNum: Number = 0, dynamicLength:Boolean = false, multi:Boolean = false): String {
 			if (totalCocks() == 0) return "<b>ERROR: CockDescript Called But No Cock Present</b>";
 			if (cockTotal() <= cockNum && cockNum != 99) return "<b>ERROR: CockDescript called with index of " + cockNum + " - out of BOUNDS</b>";
 
-			var descript: String = "";
-			//Non boring descriptions!
-			if (cockNum != 99) {
-				//70% of the time add a descriptor
-				if (rand(10) <= 6) {
-					descript += cockAdjective(cockNum, dynamicLength);
-					//50% of the time add supplimental cock adjective with the noun.
-					if (rand(2) == 0) {
-						descript += ", " + cockNoun2(cocks[cockNum], false);
+			//Variables
+			var adjectiveLimit:Number = 2;
+			var adjectiveCount:Number = 0;
+			var ultraSimple:Boolean = false;
+			var simple:Boolean = false;
+			var complex:Boolean = false;
+			var cock:CockClass = cocks[cockNum];
+			var bonus:Number = 0;
+			var descript:String = "";
+
+			//Determine type of cock description. This varies based on type
+			switch(cock.cType)
+			{
+				//human cunts tend to get over-simplistic ones.
+				case GLOBAL.TYPE_HUMAN:
+					ultraSimple = true;
+					break;
+				//These all get 70% complex, 10% ultraSimple, 20% simple
+				case GLOBAL.TYPE_EQUINE:
+				case GLOBAL.TYPE_CANINE:
+				case GLOBAL.TYPE_FELINE:
+				case GLOBAL.TYPE_NAGA:
+				case GLOBAL.TYPE_LEITHAN:
+				case GLOBAL.TYPE_SYNTHETIC:
+					if(rand(10) <= 6) 
+					{
+						complex = true;
+						adjectiveLimit = 1;
 					}
-					//Otherwise normal
-					else descript += " " + cockNoun2(cocks[cockNum], true);
-				}
-				//These guys get a bonus adjective 70% of the time.
-				else {
-					if (rand(10) <= 6) descript += cockNoun2(cocks[cockNum], false);
-					else descript += cockNoun2(cocks[cockNum]);
-				}
+					else if(rand(3) == 0) ultraSimple = true;
+					else simple = true;
+					break;
+				//Everything else gets 33% splits
+				default:
+					if(rand(3) == 0) 
+					{
+						complex = true;
+						adjectiveLimit = 1;
+					}
+					else if(rand(2) == 0) ultraSimple = true;
+					else simple = true;
+					break;
 			}
-			//Boring descriptions. Mostly the same but kinda lame, actually.
-			else {
-				//70% of the time add a descriptor
-				if (rand(10) <= 6) descript += cockAdjective(-1, dynamicLength) + " " + randomSimpleCockNoun();
-				else descript += randomSimpleCockNoun();
+			//Get adjectives!
+			var adjectivesReturn:Array = cockAdjectivesRedux(cock, adjectiveLimit, multi);
+			descript = adjectivesReturn[0];
+			if(ultraSimple)
+			{
+				if(adjectivesReturn[1] > 0) descript += " ";
+				descript += cockNoun2(cock, true, "ultraSimple");
+			}
+			else if(simple)
+			{
+				if(adjectivesReturn[1] > 0) descript += " ";
+				descript += cockNoun2(cock, true);
+			}
+			//Complexico!
+			else 
+			{
+				if(adjectivesReturn[1] > 0) descript += ", ";
+				descript += cockNoun2(cock, false);
 			}
 			return descript;
 		}
@@ -13516,8 +14206,6 @@
 		}
 		public function addBiomass(arg:Number):void
 		{
-			//if(kGAMECLASS.flags["GOO_BIOMASS"] == undefined) kGAMECLASS.flags["GOO_BIOMASS"] = 0;
-			//kGAMECLASS.flags["GOO_BIOMASS"] += arg;
 			kGAMECLASS.gooBiomass(arg);
 		}
 		public function cumflationHappens(cumFrom:Creature, hole:Number):void
@@ -13719,6 +14407,14 @@
 			return false;
 		}
 		public function hasPregnancy():Boolean { return isPregnant(); }
+		public function hasWombPregnancy():Boolean
+		{
+			return (totalWombPregnancies() > 0);
+		}
+		public function hasAnalPregnancy():Boolean
+		{
+			return (isPregnant(3));
+		}
 		
 		//Argument is the same string as defined in the handler.
 		//Example: VenusPitcherSeedCarrier
@@ -13762,6 +14458,15 @@
 		{
 			var count:int = 0;
 			for (var i:int = 0; i < pregnancyData.length; i++)
+			{
+				if ((pregnancyData[i] as PregnancyData).pregnancyType != "") count++;
+			}
+			return count;
+		}
+		public function totalWombPregnancies():int
+		{
+			var count:int = 0;
+			for (var i:int = 0; i < vaginas.length; i++)
 			{
 				if ((pregnancyData[i] as PregnancyData).pregnancyType != "") count++;
 			}
@@ -15060,6 +15765,10 @@
 			}
 			return new TypeCollection( { electric: d } );
 		}
+		public function hasTamWolf():Boolean
+		{
+			return (accessory is TamWolf || accessory is TamWolfDamaged || accessory is TamWolfII);
+		}
 		
 		public var droneTarget:Creature = null; // Transient
 		public var concentratedFireTarget:Creature = null; // Transient
@@ -15260,6 +15969,11 @@
 									break;
 								case "Flahne_Extra_Pissed":
 									kGAMECLASS.flags["FLAHNE_MAKEUP"] = 1;
+									break;
+								case "Goo Armor Defense Drain":
+									if(armor is GooArmor) kGAMECLASS.eventBuffer += ParseText("\n\n[goo.name] wriggles around you and tightens, testing her strength. <i>“Ahh, I feel better now!”</i> She seems to have fully recovered!");
+									if(hasItemByName("Goo Armor")) kGAMECLASS.eventBuffer += ParseText("\n\n[goo.name] happily mumbles something to herself, but you don’t quite catch it. Feeling her energetic movements, you can only assume that she has finally recovered!");
+									kGAMECLASS.gooArmorDefense((statusEffects[x] as StorageClass).value1);
 									break;
 							}
 						}

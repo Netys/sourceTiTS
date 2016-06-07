@@ -59,6 +59,7 @@ public function processEventBuffer():Boolean
 	if (eventBuffer.length > 0)
 	{
 		clearOutput();
+		clearBust();
 		output("<b>" + possessive(pc.short) + " log:</b>" + eventBuffer);
 		showLocationName();
 		eventBuffer = "";
@@ -155,7 +156,7 @@ public function mainGameMenu(minutesMoved:Number = 0):void {
 		output("\n\n<b>BUG REPORT: TEMP NUDITY STUCK ON.</b>");
 	//Standard buttons:
 	clearMenu(false);
-	userInterface.showBust("none");
+	clearBust();
 	inSceneBlockSaving = false;
 	updatePCStats();
 	//Inventory shit
@@ -246,9 +247,20 @@ public function mainGameMenu(minutesMoved:Number = 0):void {
 			addButton(7, rooms[currentLocation].outText, move, rooms[currentLocation].outExit);
 		}
 	}
+	if (currentLocation == "SHIP INTERIOR")
+	{
+		if (rooms[currentLocation].outExit && isNavDisabled(NAV_OUT_DISABLE)) 
+		{
+			addDisabledButton(7,rooms[currentLocation].outText,rooms[currentLocation].outText,"You can’t exit your ship here!");
+		}
+	}
 	if (currentLocation == shipLocation)
 	{
-		addButton(5, "Enter Ship", move, "SHIP INTERIOR");
+		if (isNavDisabled(NAV_IN_DISABLE))
+		{
+			addDisabledButton(5, rooms[currentLocation].inText, rooms[currentLocation].inText, "You can’t enter your ship here!");
+		}
+		else addButton(5, "Enter Ship", move, "SHIP INTERIOR");
 	}
 	
 	if (rooms[currentLocation].runAfterEnter != null) rooms[currentLocation].runAfterEnter();
@@ -267,12 +279,29 @@ public function generateMap():void
 {
 	generateMapForLocation(currentLocation);
 }
-
 public function generateMapForLocation(location:String):void
 {
 	userInterface.setMapData(mapper.generateMap(location));
 }
+public function generateLocationName(location:String):void
+{
+	setLocation(rooms[location].roomName, rooms[location].planet, rooms[location].system);
+}
+public function generateLocation(location:String):void
+{
+	generateMapForLocation(location);
+	generateLocationName(location);
+}
 
+public function backToPrimaryOutput():void
+{
+	clearBust();
+	userInterface.backToPrimaryOutput();
+}
+public function clearBust(forceNone:Boolean = false):void
+{
+	if(forceNone || !inCombat()) showBust("none");
+}
 public function showCodex():void
 {
 	userInterface.showCodex();
@@ -291,7 +320,7 @@ public function showCodex():void
 	//addGhostButton(3, "CHEEVOS", function():void { } );
 	addGhostButton(1, "Log", displayQuestLog, flags["TOGGLE_MENU_LOG"]);
 	if(flags["EMMY_QUEST"] >= 6 && flags["EMMY_QUEST"] != undefined) addGhostButton(3,"EmmyRemote",pushEmmysButtonsMenu);
-	addGhostButton(4, "Back", userInterface.showPrimaryOutput);
+	addGhostButton(4, "Back", backToPrimaryOutput);
 }
 
 // Temp display stuff for perks
@@ -309,8 +338,7 @@ public function showPerkListHandler(e:Event = null):void
 	}
 	else if (pButton.isActive && pButton.isHighlighted)
 	{
-		userInterface.showPrimaryOutput();
-		userInterface.DeGlowButtons();
+		backToPrimaryOutput();
 	}
 }
 
@@ -339,8 +367,7 @@ public function showMailsHandler(e:Event = null):void
 	}
 	else if (pButton.isActive && pButton.isHighlighted)
 	{
-		userInterface.showPrimaryOutput();
-		userInterface.DeGlowButtons();
+		backToPrimaryOutput();
 	}
 }
 
@@ -403,7 +430,9 @@ public function updateMailStatus():void
 public function showPerksList():void
 {
 	clearOutput2();
+	showPCBust();
 	setLocation("\nPERKS", "CODEX", "DATABASE");
+	author("");
 	clearGhostMenu();
 	addGhostButton(14, "Back", showPerkListHandler);
 	
@@ -436,11 +465,12 @@ public function crewRecruited(allcrew:Boolean = false):Number
 	if (!annoNotRecruited()) counter++;
 	if (bessIsFollower()) counter++;
 	if (yammiIsCrew()) counter++;
+	if (gooArmorIsCrew()) counter++;
 	
 	// Pets or other non-speaking crew members
 	if (allcrew)
 	{
-		if (hasGooArmor()) counter++;
+		if (hasGooArmor() && !gooArmorIsCrew()) counter++;
 		if (varmintIsTame()) counter++;
 	}
 	
@@ -501,9 +531,10 @@ public function crew(counter:Boolean = false, allcrew:Boolean = false):Number {
 			addButton((count + other) - 1, "Yammi", yammiInTheKitchen);
 		}
 	}
-	if (hasGooArmor())
+	if (hasGooArmor() || gooArmorIsCrew())
 	{
-		other++;
+		if(gooArmorIsCrew()) count++; // Speaking crew member on ship.
+		else other++; // Mostly quiet member on person or in storage.
 		if (!counter)
 		{
 			crewMessages += gooArmorOnSelfBonus((count + other) - 1);
@@ -519,6 +550,7 @@ public function crew(counter:Boolean = false, allcrew:Boolean = false):Number {
 	}
 	if(!counter) {
 		if((count + other) > 0) {
+			clearBust();
 			showName("\nCREW");
 			output("Who of your crew do you wish to interact with?" + crewMessages);
 		}
@@ -761,6 +793,9 @@ public function shipMenu():Boolean {
 		return true;
 	}
 	
+	// Location Exceptions
+	if(shipLocation == "600") myrellionLeaveShip();
+	
 	// Main ship interior buttons
 	if(currentLocation == "SHIP INTERIOR")
 	{
@@ -971,21 +1006,6 @@ public function leaveShipOK():Boolean
 	{
 		output(" and attempt to head towards the airlock... but you can barely budge an inch from where you are sitting. You’re immobilized. It looks like your endowments have swollen far too large, making it impossible for you to exit your ship! <b>You’ll have to take care of that if you want to leave...</b>");
 		currentLocation = "SHIP INTERIOR";
-		return false;
-	}
-	if(shipLocation == "600" && flags["KQ2_NUKE_EXPLODED"] != undefined)
-	{
-		output(" and head towards the airlock--but suddenly, your ship’s radioactivity alarms start blaring, causing you to freeze instantaneously. The planet has been glassed and is surrounded by several levels of radiation. How you even ended up here is anyone’s guess, but you probably shouldn’t leave your ship to venture off into a nuclear wasteland if you know what’s good for you...");
-		
-		if(flags["KQ2_MYRELLION_STATE"] == undefined)
-		{
-			if (!reclaimedProbeMyrellion())
-			{
-				flags["KQ2_MYRELLION_STATE"] = 1;
-				if(flags["KQ2_DANE_COORDS_TIMER"] == undefined) flags["KQ2_DANE_COORDS_TIMER"] = GetGameTimestamp();
-			}
-			else if(flags["KING_NYREA"] != undefined) flags["KQ2_MYRELLION_STATE"] = 2;
-		}
 		return false;
 	}
 	return true;
@@ -1489,6 +1509,16 @@ public function variableRoomUpdateCheck():void
 	
 	// KQuest
 	kquest2RoomStateUpdater();
+	if (flags["KQ2_MYRELLION_STATE"] == 2)
+	{
+		rooms["2I7"].removeFlag(GLOBAL.TAXI);
+		rooms["2I7"].addFlag(GLOBAL.SHIPHANGAR);
+	}
+	else
+	{
+		rooms["2I7"].removeFlag(GLOBAL.SHIPHANGAR);
+		rooms["2I7"].addFlag(GLOBAL.TAXI);
+	}
 	
 	notifyVariableRoomUpdateListenerss(); // for CoC rooms
 }
@@ -1673,14 +1703,14 @@ public function processTime(arg:int):void {
 			{
 				if (flags["KQ2_NUKE_STARTED"] + KQ2_NUKE_DURATION < GetGameTimestamp())
 				{
-					eventQueue.push(kq2NukeBadend);
+					if(eventQueue.indexOf(kq2NukeBadend) == -1) eventQueue.push(kq2NukeBadend);
 				}
 			}
 			// Left
 			else if (InShipInterior(pc))
 			{
-				eventQueue.push(kq2NukeExplodesLater);
 				flags["KQ2_NUKE_EXPLODED"] = 1;
+				if(eventQueue.indexOf(kq2NukeExplodesLater) == -1) eventQueue.push(kq2NukeExplodesLater);
 			}
 		}
 		
@@ -1689,7 +1719,18 @@ public function processTime(arg:int):void {
 		{
 			if (flags["KQ2_DANE_COORDS_TIMER"] != undefined && flags["KQ2_DANE_COORDS_TIMER"] + 2880 < GetGameTimestamp())
 			{
-				eventQueue.push(kq2DaneCoordEmail);
+				if(eventQueue.indexOf(kq2DaneCoordEmail) == -1) eventQueue.push(kq2DaneCoordEmail);
+			}
+		}
+		
+		// Moving Shade to Uveto
+		if(flags["KQ2_SHADE_AWAY_TIME"] != undefined)
+		{
+			if(GetGameTimestamp() > (flags["KQ2_SHADE_AWAY_TIME"] + (24 * 60)))
+			{
+				if(flags["SHADE_ON_UVETO"] == undefined || flags["SHADE_ON_UVETO"] < 1) flags["SHADE_ON_UVETO"] = 1;
+				if(flags["SHADE_DISABLED"] == -1) flags["SHADE_DISABLED"] = undefined;
+				flags["KQ2_SHADE_AWAY_TIME"] = undefined;
 			}
 		}
 		
@@ -1828,13 +1869,15 @@ public function processTime(arg:int):void {
 					else pc.vaginas[x].shrinkCounter = 0;
 					//Reset for this cunt.
 					tightnessChanged = false;
-					if(pc.vaginas[x].loosenessRaw < 2) {}
-					else if(pc.vaginas[x].loosenessRaw >= 5 && pc.vaginas[x].shrinkCounter >= 60) tightnessChanged = true;
+					if(pc.vaginas[x].loosenessRaw >= 5 && pc.vaginas[x].shrinkCounter >= 60) tightnessChanged = true;
 					else if(pc.vaginas[x].loosenessRaw >= 4 && pc.vaginas[x].shrinkCounter >= 96) tightnessChanged = true;
 					else if(pc.vaginas[x].loosenessRaw >= 3 && pc.vaginas[x].shrinkCounter >= 132) tightnessChanged = true;
 					else if(pc.vaginas[x].loosenessRaw >= 2 && pc.vaginas[x].shrinkCounter >= 168) tightnessChanged = true;
+					else if(pc.vaginas[x].loosenessRaw >= pc.vaginas[x].minLooseness && pc.vaginas[x].shrinkCounter >= 204) tightnessChanged = true;
 					if(tightnessChanged) {
 						pc.vaginas[x].loosenessRaw--;
+						if (pc.vaginas[x].loosenessRaw < pc.vaginas[x].minLooseness)
+							pc.vaginas[x].loosenessRaw = pc.vaginas[x].minLooseness;
 						msg += "\n\n<b>Your";
 						if(pc.totalVaginas() > 1) msg += " " + num2Text2(x+1);
 						msg += " " + pc.vaginaDescript(x) + " has recovered from its ordeals, tightening up a bit.</b>";
@@ -1848,13 +1891,15 @@ public function processTime(arg:int):void {
 			else pc.ass.shrinkCounter = 0;
 			//Reset for this cunt.
 			tightnessChanged = false;
-			if(pc.ass.loosenessRaw < 2) {}
-			else if(pc.ass.loosenessRaw >= 5 && pc.ass.shrinkCounter >= 12) tightnessChanged = true;
+			if(pc.ass.loosenessRaw >= 5 && pc.ass.shrinkCounter >= 12) tightnessChanged = true;
 			else if(pc.ass.loosenessRaw >= 4 && pc.ass.shrinkCounter >= 24) tightnessChanged = true;
 			else if(pc.ass.loosenessRaw >= 3 && pc.ass.shrinkCounter >= 48) tightnessChanged = true;
 			else if(pc.ass.loosenessRaw >= 2 && pc.ass.shrinkCounter >= 72) tightnessChanged = true;
+			else if(pc.ass.loosenessRaw >= pc.ass.minLooseness && pc.ass.shrinkCounter >= 96) tightnessChanged = true;
 			if(tightnessChanged) {
 				pc.ass.loosenessRaw--;
+				if (pc.ass.loosenessRaw < pc.ass.minLooseness)
+					pc.ass.loosenessRaw = pc.ass.minLooseness;
 				if(pc.ass.loosenessRaw <= 4) eventBuffer += "\n\n<b>Your " + pc.assholeDescript() + " has recovered from its ordeals and is now a bit tighter.</b>";
 				else eventBuffer += "\n\n<b>Your " + pc.assholeDescript() + " recovers from the brutal stretching it has received and tightens up.</b>";
 			}
@@ -1896,17 +1941,9 @@ public function processTime(arg:int):void {
 				//Unlock dat shiiit
 				if(flags["HOLIDAY_OWEEN_ACTIVATED"] == undefined && (isHalloweenish() || rand(100) == 0)) eventQueue.push(hollidayOweenAlert);
 				if(pc.hasPerk("Honeypot") && days % 3 == 0) honeyPotBump();
-				//Exhibitionism reduction!
-				if
-				(	!(pc.armor is EmptySlot)
-				&&	!(pc.lowerUndergarment is EmptySlot || pc.lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL) || pc.lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_GROIN) || pc.lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_ASS))
-				&&	!(pc.upperUndergarment is EmptySlot || pc.upperUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL) || pc.upperUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_CHEST))
-				)
-				{
-					if(pc.isChestExposed() && pc.isCrotchExposed() && pc.isAssExposed())
-						{ /* No reduction for a full set of exposed clothing! */ }
-					else pc.exhibitionism(-0.5);
-				}
+				//Exhibitionism reduction! Reduces exhibition if chest, crotch and ass are not all exposed
+				if(!(pc.isCrotchExposed() && pc.isAssExposed() && pc.isChestExposed()))
+					pc.exhibitionism(-0.5);
 				// New Texas cockmilker repair cooldown.
 				if (flags["MILK_BARN_COCKMILKER_BROKEN"] == undefined && flags["MILK_BARN_COCKMILKER_REPAIR_DAYS"] != undefined)
 				{
@@ -1961,7 +1998,9 @@ public function processTime(arg:int):void {
 				tryProcSaendraXPackEmail();
 				
 				// Manes grow out!
-				if(pc.hasPerk("Mane") && pc.hairLength <= 3) maneHairGrow();
+				if(pc.hasPerk("Mane")) maneHairGrow();
+				// Bodonkadonk-donks donkin'!
+				if(pc.hasPerk("Buttslut")) buttslutBootyGrow();
 				// Fecund Figure shape gain (Gains only while pregnant)
 				if(pc.hasPerk("Fecund Figure"))
 				{
@@ -2058,8 +2097,6 @@ public function processTime(arg:int):void {
 	if (!MailManager.isEntryUnlocked("annoweirdshit") && flags["MET_ANNO"] != undefined && flags["ANNO_MISSION_OFFER"] != 2 && flags["FOUGHT_TAM"] == undefined && flags["RUST_STEP"] != undefined && rand(20) == 0) goMailGet("annoweirdshit");
 	//KIRO FUCKMEET
 	if(!MailManager.isEntryUnlocked("kirofucknet") && flags["RESCUE KIRO FROM BLUEBALLS"] == 1 && kiroTrust() >= 50 && flags["MET_FLAHNE"] != undefined) { goMailGet("kirofucknet"); kiroFuckNetBonus(); }
-	//Shade KQ2 Mail
-	//9999 - if (!MailManager.isEntryUnlocked("kq2_shade_makeup") && flags["KQ2_SHADE_AWAY_TIME"] != undefined && flags["KQ2_SHADE_AWAY_TIME"] <= (GetGameTimestamp() - (9999 * 24 * 60))) goMailGet("kq2_shade_makeup");
 	//Other Email Checks!
 	if (rand(100) == 0) emailRoulette();
 	flags["HYPNO_EFFECT_OUTPUT_DONE"] = undefined;

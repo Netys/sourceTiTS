@@ -1239,7 +1239,10 @@ public function fuckAnnoAfterBeeJay():void
 	output("\n\n");
 	if(pc.balls > 0) output("Balls ");
 	else output("Hilt ");
-	output("deep inside your bent-over lover, you give her a two-pronged slap on the butt, both hands dagging into the pert assflesh on display. Anno yelps playfully, and her vaginal muscles contract hard around your member, wringing tight enough that you can feel her quickening heartbeat through the grinding walls of her pussy. With a firm grip on Anno's hind-end, you drag yourself out of her slick slit, pleased to see your sheath slathered with her juices, so covered that it starts to drip onto the floor, pooling between your [pc.feet] - and with your cock withdrawn to the crown, even more of her fem-slime drools out of her pussy, a constant trickle down her thighs onto the deck.");
+	output("deep inside your bent-over lover, you give her a two-pronged slap on the butt, both hands dagging into the pert assflesh on display. Anno yelps playfully, and her vaginal muscles contract hard around your member, wringing tight enough that you can feel her quickening heartbeat through the grinding walls of her pussy. With a firm grip on Anno's hind-end, you drag yourself out of her slick slit");
+	if(pc.hasSheath(x)) output(", pleased to see your sheath slathered with her juices, so covered that it starts to drip onto the floor, pooling " + (pc.isBiped() ? "between" : "at") + " your [pc.feet] - and with your cock withdrawn to the crown, even more of");
+	else output(" and watch as");
+	output(" her fem-slime drools out of her pussy, a constant trickle down her thighs onto the deck.");
 	if(pc.isAss()) output(" Maybe you'll have to make her clean up after herself after you're done with her....");
 
 	output("\n\nFaster this time, you thrust back into Anno's still-gaping pussy. She gives a sharp moan as your [pc.hips] slap into her, leaving her ass bouncing with the impact and your [pc.cock " + x + "] buried back into that wonderful hole of hers, surrounded by spasming muscles as she recovers from the potent thrust. Again and again you thrust into her, working yourself up to a steady rhythm of pussy-pounding, occasionally punctuating your peaks with a sharp slap on Anno's jiggling butt or reaching up to cup one of her bouncing breasts, squeezing her stiff nips until she's screaming for more.");
@@ -1249,7 +1252,7 @@ public function fuckAnnoAfterBeeJay():void
 	//if PC has a knot:
 	if(pc.hasKnot(x))
 	{
-		output("\n\nWhile she's at the peak of her pleasure, you decide it’s time for the main course. With one last, mighty thrust of your hips, you slam the turgid ball of your [pc.knot " + x + "] into the sodden delta of Anno's drooling, orgasming sex. Her cries of pleasure crescendo into a high-pitched scream of shock and mind-wracking ecstasy as her cooch is forced open by your thick canid member. Your thrust pins Anno to the desk, spreading her legs and sex apart as you sink yourself into her, tying the two of you together.");
+		output("\n\nWhile she's at the peak of her pleasure, you decide it’s time for the main course. With one last, mighty thrust of your hips, you slam the turgid ball of your [pc.knot " + x + "] into the sodden delta of Anno's drooling, orgasming sex. Her cries of pleasure crescendo into a high-pitched scream of shock and mind-wracking ecstasy as her cooch is forced open by your thick " + (pc.cocks[x].cType == GLOBAL.TYPE_CANINE ? "canid" : "knotted") + " member. Your thrust pins Anno to the desk, spreading her legs and sex apart as you sink yourself into her, tying the two of you together.");
 	}
 	output("\n\nThanks to the wild, milking motions of Anno's cunt, you can feel your own orgasm rushing up to follow hers. You push your prick as deep inside your lover as you can, letting her still-spasming muscles do the work for you, squeezing and caressing your cock, slathering it with hot juices trapped inside her wanton hole by the thick cock spearing her, unable to escape. Your orgasm hits you like a hammer, giving you just enough time to let loose a feral roar of pleasure as a thick wad of cum surges up your [pc.cock " + x + "], blasting into the trap of the tightly bound sheath around it. You grunt and groan with the spasms, hips bucking against Anno's red-flushed ass as your load works itself out, eased along by Anno's own squirming walls.");
 
@@ -1450,7 +1453,7 @@ public function cumWithAnnoOnTop():void
 
 	output("\n\nAnno gives you a quizzical look before a small grin plays across her lips. <i>\"I can try,\"</i> she says, her voice trailing off into a little moan as you pull yourself out of her and saunter back, sliding down to sit against the other crate. Slowly, Anno stands up, taking her time to look over her shoulders at her backside, even reaching back to spread her cheeks - clearly for your benefit.");
 
-	output("\n\n<i>\"God, I feel </i>loose<i> now...\"</i> she teases, turning on a heel and stepping out of her bunched-up uniform, long legs carrying her to you in a single stride. Another turn and a little bending gives you an faceful of ass, her big cheeks practically enveloping your [pc.face]. She gives her hips a wiggle, and you're immediately drawn into a reverse-motorboat as her cheeks rumble around you, blacking out your world in a haze of jiggling ass-flesh. You grab the ausar's big hips, trying to stop her, but only earn yourself a faceful of fem-lube from her overeager pussy as it grinds back against your face.");
+	output("\n\n<i>\"God, I feel </i>loose<i> now...\"</i> she teases, turning on a heel and stepping out of her bunched-up uniform, long legs carrying her to you in a single stride. Another turn and a little bending gives you a faceful of ass, her big cheeks practically enveloping your [pc.face]. She gives her hips a wiggle, and you're immediately drawn into a reverse-motorboat as her cheeks rumble around you, blacking out your world in a haze of jiggling ass-flesh. You grab the ausar's big hips, trying to stop her, but only earn yourself a faceful of fem-lube from her overeager pussy as it grinds back against your face.");
 
 	output("\n\nAnno only stops when she's good and ready - and you're good and filthy. Casting a wink over her shoulder, the snowy-haired babe shimmies down to her knees, planting herself just over your diamond-hard member, trapping the [pc.cockHead " + x + "] of your [pc.cock " + x + "] between the cheeks of her ass, kissing the rim of her still-open hole.");
 
@@ -2435,131 +2438,6 @@ public function deck13ShieldControlFunc():Boolean
 	}
 }
 
-public function deck13MakeGoo():void
-{
-	clearOutput();
-	author("Savin");
-	showName("GOO\nCONTAINER");
-
-	output("You step up to the one vat of gray goo remaining on the deck. Its humming slightly, churning as it produces and maintains a little sea of goop. There’s a spigot about six feet off the deck, controlled by a dark computer monitor that looks like it belongs in a museum. You walk over and push the screen. Nothing happens.");
-	
-	output("\n\nPoke. Nothing again.");
-	
-	output("\n\nYou grumble and pull your Codex out, hoping your device can sync with the goo cannister. You flip the Codex on and search for nearby networks. Again, nothing close enough to be the goo. Shit. You drop down");
-	if (pc.hasKnees()) output(" to a [pc.knee]");
-	output(" and start looking for an old-school data port. Sure enough, there’s one hidden underneath the console. You pull a universal cable from your Codex, and thankfully manage to slot it into the port. The Codex takes over from there, booting up the ancient computer and interfacing for you. The Bell-Isle/Grunmann logo appears, followed by a button-press command prompt, which the Codex translates onto its touch screen. That’s better. You tap through a few commands, instructing the machine to print you out a great big pile of gray goo.");
-	
-	output("\n\nThe device hums to life and starts working, squirting out goo like ice cream from its spigot. You watch as it squirts and thrums, depositing gallons of murky silvery goop onto the deck, looking more like a puddle than a person for now. A few seconds later, though, the vat shuts off, and the goo starts squirming and re-shaping itself. It only takes a moment for the big gray blob to turn into a big, bouncy gray girl. She looks just like the creatures");
-	if (flags["TARKUS_DESTROYED"] != undefined) output(" once");
-	output(" found outside of Novahome, with inhumanly exaggerated hips and ass and a pair of tits that look like silver-sheened watermelons standing impossibly perky on her chest. Her ample assets jiggle and bounce as she looks around, surveying her surroundings with wide eyes full of wonder.");
-	
-	output("\n\n<i>“Hi!”</i> the newly-made goo says, adopting a huge grin as you take a step toward her. <i>“Wow! You’re super");
-	if (pc.isFeminine()) output(" pretty");
-	else output(" handsome");
-	output("! Are we going to be friends?”</i>");
-	
-	output("\n\nWell, that’s not exactly what you were expecting from the fuck-happy creatures that escaped the <i>Nova</i>. Still, you nod and say that you are. The gray goo swells up, making a high-pitch squealing sound and hugging herself. <i>“Yaaaaaay! Best friends forever and ever and ever!”</i> she giggles, beaming at you. <i>“Oh! I’m... uh... um... I need a name!”</i>");
-	
-	CodexManager.unlockEntry("BI/G");
-	
-	clearMenu();
-	addButton(0, "Next", deck13MakeGooII);
-}
-
-public function deck13MakeGooII():void
-{
-	clearOutput();
-	author("Savin");
-	showName("GOO\nCONTAINER");
-	
-	output("<b>Enter the Gray Goo’s name:</b>");
-	this.displayInput();
-
-	clearMenu();
-	addButton(0, "Next", nameThaGoo);
-}
-
-public function nameThaGoo():void
-{
-	if (userInterface.textInput.text.length == 0)
-	{
-		deck13MakeGoo();
-		output("\n\n\n<b>You must enter a name.</b>");
-		return;
-	}
-	// Illegal characters check. Just in case...
-	if (hasIllegalInput(userInterface.textInput.text))
-	{
-		deck13MakeGoo();
-		output("\n\n\n<b>To prevent complications, please avoid using code in the name.</b>");
-		return;
-	}
-	if (userInterface.textInput.text.length > 14)
-	{
-		deck13MakeGoo();
-		output("\n\n\n<b>You must enter a name no more than fourteen characters long.</b>");
-		return;
-	}
-
-	goo.short = userInterface.textInput.text;
-	this.removeInput();
-
-	processTime(5+rand(3));
-	flags["ANNO_NOVA_UPDATE"] = 2;
-
-	nameThaGooII();
-}
-
-public function nameThaGooII():void
-{
-	clearOutput();
-	author("Savin");
-	showName("GOO\nCONTAINER");
-
-	output("<i>“[goo.name]?”</i> you suggest.");
-	
-	output("\n\n<i>“Wow! That’s awesome. I’m soooo " + indefiniteArticle(chars["GOO"].short) + ",”</i> [goo.name] announces, bouncing giddily. <i>“You’re the bestest friend in the whoooole wide universe. It’s the best name EVER!”</i>");
-	
-	output("\n\nShe lunges at you! For a moment, you’re afraid for your life (or at least, your sexual integrity)... but thankfully her arms settle around your shoulders, and [goo.name] pulls herself");
-	if (pc.tallness > goo.tallness + 6) output(" up");
-	else if (pc.tallness < goo.tallness - 6) output(" down");
-	output(" into a tight hug, squeezing her massive tits against you. You chuckle nervously and pat the goo on the head, your fingers coming away slightly wet and sticky.");
-	
-	output("\n\nAfter a moment, she peels herself off of you and grins. <i>“So, um, what’s </i>your<i> name?”</i>");
-	
-	output("\n\n<i>“[pc.name]. [pc.name] Steele,”</i> you answer, extending a hand.");
-	
-	output("\n\nShe stares at your hand quizzically. Slowly, [goo.name] leans in and wraps her big cock-pillow lips around one of your fingers and sucks on it. The sensation is cool, wet, with just enough suckling pressure to send a shiver of pleasure through your arm. You gently push her off you, and instead offer her Anno’s thumb drive to suckle on.");
-	
-	output("\n\n<i>“What’s that?”</i> she coos, cocking her head to the side. You tell her it’s loaded with extra programming for her. <i>“No waaaay, is it going to make me super smart and stuff?”</i>");
-	
-	output("\n\nYou nod. <i>“It sure is.”</i>");
-	
-	output("\n\n<i>“Yaaaaaaaaaaaay!”</i> she cheers, plucking the drive out of your hand and swallowing it.");
-	
-	output("\n\nWell shit. [goo.name] beams at you, giggling to herself as you stare and her. Looks like that plan just went out the window.");
-	
-	output("\n\n<i>“I don’t feel any different,”</i> she pouts, absently cupping one of her huge breasts. <i>“Oh well! Hey, wanna... I dunno, wanna fuck?”</i>");
-	
-	output("\n\nTime to put this new gray goo to the test.");
-	if (pc.libido() >= 66) output(" As much as you would like to see what she’s capable of, you need to make sure she’s not as forcefully amorous as her sisters.");
-	output(" <i>“Not right now,”</i> you tell her.");
-	
-	output("\n\n[goo.name] shrugs. <i>“Kay! Um... what do you wanna do?”</i>");
-	
-	output("\n\nYou smile, relieved, and ask if [goo.name] would like to come with you back to your ship.");
-	
-	output("\n\n<i>“Oh wow! A SPACE SHIP!? That’s awesome. I wanna see. I wanna see!”</i>");
-	
-	output("\n\nLaughing, you take [goo.name]’s hand and lead her up toward the hangar.");
-
-	currentLocation = shipLocation;
-	
-	processTime(45+rand(15));
-
-	addButton(0, "Next", mainGameMenu);
-}
-
 public function grayPrimeEscapeGrapple():void
 {
 	var hostiles:Array = CombatManager.getHostileCharacters();
@@ -3101,7 +2979,7 @@ public function deck13DecisionGoo():void
 	
 	output("\n\n<i>“Fucking hypocrite,”</i> you answer. <i>“You’d kill two living, breathing people just to keep your secret, but you’re afraid to press the ‘delete’ button on some soulless fucking robots?”</i>");
 	
-	if (pc.accessory is TamWolf || pc.accessory is TamWolfDamaged)
+	if (pc.hasTamWolf())
 	{
 		output("\n\n<i>“" + pc.mf("Master","Mistress") + "?”</i> Tam-wolf whines.");
 	

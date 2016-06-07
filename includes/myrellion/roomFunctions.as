@@ -84,6 +84,21 @@ public function flyToMyrellion():void
 		generateMapForLocation(currentLocation);
 		processTime(5);
 	}
+	else if(!myrellionLeaveShip())
+	{
+		output("Flying to Myrellion is no quick jaunt down the road--however, this time, there are no myr biplanes to guide you. In fact, the sky is thick with dark clouds and the ground below seems completely deserted, almost spookily... like a land comprised of ghosts. It is hard to make out the hangar with all the dirt and debris in the air, but your guiding instruments help you with that.");
+		output("\n\nAfter making sure you are docked properly, you prepare your things and head towards the airlock--but suddenly, your ship’s radioactivity alarms start blaring, causing you to freeze instantaneously. The planet has been glassed and is surrounded by several levels of radiation. How you even ended up here is anyone’s guess, but you probably shouldn’t leave your ship to venture off into a nuclear wasteland if you know what’s good for you...");
+		
+		if(flags["KQ2_MYRELLION_STATE"] == undefined)
+		{
+			if (!reclaimedProbeMyrellion())
+			{
+				flags["KQ2_MYRELLION_STATE"] = 1;
+				if(flags["KQ2_DANE_COORDS_TIMER"] == undefined) flags["KQ2_DANE_COORDS_TIMER"] = GetGameTimestamp();
+			}
+			else if(flags["KING_NYREA"] != undefined) flags["KQ2_MYRELLION_STATE"] = 2;
+		}
+	}
 	else
 	{
 		showBust("MYR_GOLD_PILOT");
@@ -97,6 +112,17 @@ public function flyToMyrellion():void
 	CodexManager.unlockEntry("Red Myr");
 	CodexManager.unlockEntry("Gold Myr");
 	CodexManager.unlockEntry("Scarlet Federation");
+}
+
+public function myrellionLeaveShip():Boolean
+{
+	if(flags["KQ2_NUKE_EXPLODED"] != undefined)
+	{
+		currentLocation = "SHIP INTERIOR";
+		setNavDisabled(NAV_OUT_DISABLE);
+		return false;
+	}
+	return true;
 }
 
 public function streetOutsideBarBonus():Boolean
@@ -328,6 +354,9 @@ public function myrellionUndergroundCrashSiteBonus():Boolean
 {
 	if (flags["KQ2_MYRELLION_STATE"] == 2)
 	{
+		// Ship Location Hotfix
+		if(shipLocation != currentLocation && currentLocation == "2I7" && rooms["2I7"].hasFlag(GLOBAL.SHIPHANGAR)) shipLocation = "2I7";
+		
 		output(" The beacon sits silent, an ominious red glow flashing across its top like a metronome.");
 		return false;
 	}

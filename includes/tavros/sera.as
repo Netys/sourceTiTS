@@ -103,8 +103,10 @@ public function seraMenu():void
 	shopkeep = chars["SERA"];
 	if(flags["ZODEE_GALOQUEST"] != undefined)
 	{
-		if(!chars["SERA"].hasItem(new GaloMax()) && flags["PURCHASED_SERAS_GALO"] == undefined) chars["SERA"].inventory.push(new GaloMax());
-		//Else no whip
+		if(flags["PURCHASED_SERAS_GALO"] == undefined)
+		{
+			if(!chars["SERA"].hasItem(new GaloMax())) chars["SERA"].inventory.push(new GaloMax());
+		}
 		else chars["SERA"].destroyItem(new GaloMax());
 	}
 	chars["SERA"].keeperBuy = "While you're accessing the shopping terminal, Sera produces a file and goes to work on her nails to keep them honed to a razor-like sharpness. You suppose there's not much for her to do while she waits on you to make a purchase.\n";
@@ -797,7 +799,7 @@ public function catchEverythingInYoButtBySavinForSeraDogcock():void {
 	showSera();
 	output("You nod your assent to the demon-morphed mistress's demand, which earns you a small grin from her blue-sheened lips.");
 	//If PC “cat” score > 3 and “dog” score < 4
-	if(pc.felineScore() > 3 && pc.canineScore() < 4)
+	if(pc.earType == GLOBAL.TYPE_FELINE || (pc.felineScore() > 3 && pc.canineScore() < 4))
 	{
 		author("Nonesuch & Savin");
 		output(" <i>“Then prove it. Meow, little pussy.”</i> You hesitate a moment, not sure if she’s being serious, and her slim smile fades into a sneer. <i>“I said MEOW, slut.”</i>");

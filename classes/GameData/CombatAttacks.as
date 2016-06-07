@@ -1533,6 +1533,11 @@ package classes.GameData
 		private static function PocketSandImp(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
 		{
 			var aTarget:Creature = GetBestPotentialTarget(hGroup);
+			if(aTarget == null)
+			{
+				output("It seems you have no target to use your pocket sand on.");
+				return;
+			}
 			
 			output("With a cry of <i>“Pocket sand!”</i> you produce a handful of sand and throw it at " + aTarget.a + aTarget.uniqueName + ".");
 			
@@ -1559,6 +1564,12 @@ package classes.GameData
 		private static function FlashGrenadeImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
 		{
 			var aTarget:Creature = GetBestPotentialTarget(hGroup);
+			if(aTarget == null)
+			{
+				if (attacker is PlayerCharacter) output("It seems you have no target to use your flash grenade on.");
+				else output(attacker.capitalA + attacker.uniqueName + " produces a flash grenade--but with no target to use it on, " + attacker.mfn("he", "she", "it") + " puts it away.");
+				return;
+			}
 			
 			if (attacker is PlayerCharacter) output("You produce one of your rechargeable flash grenades and huck it in the direction of " + aTarget.a + aTarget.uniqueName + ".");
 			else if (aTarget is PlayerCharacter) output(attacker.capitalA + attacker.uniqueName + " produces a flash grenade and hucks it in your direction!");
@@ -1709,6 +1720,12 @@ package classes.GameData
 		private static function GrenadeImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
 		{
 			var aTarget:Creature = GetBestPotentialTarget(hGroup);
+			if(aTarget == null)
+			{
+				if (attacker is PlayerCharacter) output("It seems you have no target to use your explosive on.");
+				else output(attacker.capitalA + attacker.uniqueName + " produces an explosive--but with no target to use it on, " + attacker.mfn("he", "she", "it") + " puts it away.");
+				return;
+			}
 			
 			if (attacker is PlayerCharacter) output("Tossing an explosive in the general direction of your target, you unleash an explosive blast of heat on " + aTarget.a + aTarget.uniqueName + "!");
 			else if (target is PlayerCharacter) output(attacker.capitalA + attacker.uniqueName + " hucks a small device in your direction, unleashing an explosive blast scant inches from your body!");
@@ -1739,6 +1756,12 @@ package classes.GameData
 		private static function GasGrenadeImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
 		{
 			var aTarget:Creature = GetBestPotentialTarget(hGroup);
+			if(aTarget == null)
+			{
+				if (attacker is PlayerCharacter) output("It seems you have no target to use your gas grenade on.");
+				else output(attacker.capitalA + attacker.uniqueName + " produces a gas grenade--but with no target to use it on, " + attacker.mfn("he", "she", "it") + " puts it away.");
+				return;
+			}
 			
 			if (attacker is PlayerCharacter) output("Tossing a hissing grenade in the general direction of your target, you watch the gaseous stuff do its trick.");
 			else if (aTarget is PlayerCharacter) output(attacker.capitalA + attacker.uniqueName + " tosses a small device in your direction, great clouds of thick, gaseous vapour pouring from within its body.");
