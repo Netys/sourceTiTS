@@ -372,7 +372,7 @@ package classes.Characters.CoC
 			
 			if (hasPerk("Melee Immune")) addDisabledButton(0, "Attack", "Attack", "She is out of reach!");
 			
-			if (pc.hasStatusEffect("LethicesRapeTentacles") && pc.energy() >= 15 && (kGAMECLASS.isNineTails(pc) || ((pc.perkv1("Magic Affinity") & KBIT_SPELL_WHITEFIRE) > 0) && !kGAMECLASS.pc.hasStatusEffect("Silence"))) {
+			if (pc.hasStatusEffect("LethicesRapeTentacles") && pc.energy() >= 15 && (kGAMECLASS.isNineTails(pc) || ((pc.perkv1("Magic Affinity") & kGAMECLASS.KBIT_SPELL_WHITEFIRE) > 0) && !kGAMECLASS.pc.hasStatusEffect("Silence"))) {
 				addButton(10, "BurnTentacles", dispellRapetacles, null, "Burn Tentacles", "Get rid of that tentacles!");
 			}
 			

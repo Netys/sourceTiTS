@@ -982,7 +982,7 @@ private function warmLoverKihaIntro(displayOutput:Boolean = true):void {
 	addButton(3, "Sex", kihaSexMenu, null, "Sex", "Initiate sex session with Kiha.");
 	addButton(4, "Spar", sparWithKiha, null, "Spar", "Do some quick battle with Kiha!");
 	if (!followerKiha() && flags["COC.KIHA_MOVE_IN_OFFER"] == 1) addButton(5, "InviteCamp", inviteKihaForDickings, null, "InviteCamp", "Invite Kiha to your camp.");
-	addButton(14, "Leave", leave);
+	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
 
 

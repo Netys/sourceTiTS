@@ -83,7 +83,7 @@ package classes.GameData.Pregnancy.Handlers
 			{
 				return function():void
 				{
-					kGAMECLASS.birthSpiderEggsFromAnusITSBLEEDINGYAYYYYY(c_pregSlot);
+					kGAMECLASS.birthSpiderEggsFromAnusITSBLEEDINGYAYYYYY();
 					cleanupPregnancy(c_mother, c_pregSlot, c_thisPtr);
 				}
 			})(mother, pregSlot, thisPtr);
