@@ -21,7 +21,7 @@ package classes.Items.Miscellaneous
 			
 			this.quantity = 1;
 			this.stackSize = 10;
-			this.type = GLOBAL.ALL;
+			this.type = GLOBAL.QUESTITEM;
 			
 			//Used on inventory buttons
 			this.shortName = "KitGift";
