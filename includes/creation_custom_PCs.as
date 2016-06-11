@@ -1108,7 +1108,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 				//pc.cocks[1] = pc.cocks[0].makeCopy(); // who can say "no" to DP?
 				pc.cumType = GLOBAL.FLUID_TYPE_VANAE_CUM; // glowing! tasty!
 				if (!pc.hasVagina()) pc.createVagina(); // why not? more possibilities are always good, right?
-				pc.shiftVagina(0, GLOBAL.TYPE_CANINE); // let's go to the wild side!
+				pc.shiftVagina(0, GLOBAL.TYPE_VULPINE); // let's go to the wild side!
 				pc.vaginas[0].wetnessRaw = 1;
 				pc.vaginas[0].loosenessRaw = 1;
 				pc.vaginas[0].bonusCapacity = 9000; // hammerspace, ho!

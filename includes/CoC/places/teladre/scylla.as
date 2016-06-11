@@ -41,8 +41,8 @@ private var scyllaLastActionSelectionTime:int;
 public function scyllaBarSelectAction():void {
 	//This allows Scylla's activity at the bar to be determined before any description of what Kath and Urta be doing.
 	//Required because Scylla's behaviour in the bar is partly random, so you can't just check flags to see what she's up to.
-	if (hours == scyllaLastActionSelectionTime) return; //Only choose action once per visit to the bar
-	scyllaLastActionSelectionTime = hours;
+	if (scyllaLastActionSelectionTime + 60 > timeAsStamp) return; //Only choose action once per visit to the bar
+	scyllaLastActionSelectionTime = timeAsStamp;
 	scyllaAction = SCYLLA_NOT_PRESENT;
 	if (int(flags["COC.FACTORY_SHUTDOWN"]) <= 0) return; //Factory still running? NoScylla4U
 	if ((!pc.hasCock() || pc.longestCockLength() < 12) && flags["COC.NUMBER_OF_TIMES_MET_SCYLLA"] == undefined)
@@ -81,6 +81,7 @@ public function scyllaBarSelectAction():void {
 				return;
 			}
 		}
+	trace("Scylla state: " + flags["COC.NUMBER_OF_TIMES_MET_SCYLLA"] + ", action: " + scyllaAction);
 		//All the following conditions are needed to see if she's fucking Urta
 		if (flags["COC.NUMBER_OF_TIMES_MET_SCYLLA"] < 3) return; //Minimum Scylla meetings for Urta to fuck her
 		if (flags["COC.UNKNOWN_FLAG_NUMBER_00147"] == 1 && flags["COC.UNKNOWN_FLAG_NUMBER_00145"] == 1) return; //Together these are the 'No more Scylla' flag
