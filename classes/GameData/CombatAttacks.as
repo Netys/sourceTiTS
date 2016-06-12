@@ -917,7 +917,7 @@ package classes.GameData
 			
 			var numHits:int = 0;
 			if (attacker.hasPerk("Multiple Attacks")) numSwings = attacker.perkv1("Multiple Attacks");
-			if (attacker.hasPerk("Double Attack")) numSwings++;
+			if (attacker.hasPerk("Double Attack")) numSwings * 2;
 			
 			var totalSwings:int = numSwings + numFlurries;
 			for (var i:int = 0; i < totalSwings; i++)

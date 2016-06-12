@@ -1,5 +1,6 @@
 package classes.GameData 
 {
+	import classes.Characters.CoC.CoCSpiderMorph;
 	import classes.Characters.PlayerCharacter;
 	import classes.Creature;
 	import classes.Engine.Combat.DamageTypes.DamageResult;
@@ -306,6 +307,8 @@ package classes.GameData
 		private function updateStatusEffectsFor(target:Creature):void
 		{
 			if (target.isDefeated()) return;
+			
+			if (target.hasOwnProperty("updateStatusEffectsFor")) target["updateStatusEffectsFor"]();
 			
 			if (target.hasPerk("Shield Regen") && target.shields() <= 0 && target.shieldsMax() > 0 && !target.hasStatusEffect("Used Shield Regen"))
 			{
@@ -731,7 +734,20 @@ package classes.GameData
 					target.removeStatusEffect("Lust Stunned");
 				}
 			}
-		
+			
+			if (target.hasStatusEffect("Silence") && hasEnemyOfClass(CoCSpiderMorph)) // hate to add it here, but it is only way for it to work properly in a group fight
+			{
+				if (target.statusEffectv1("Silence") >= 2 || rand(20) + 1 + target.physique() / 10 >= 15)
+				{
+					output("\n\nYou rip off the webbing that covers your mouth with a cry of pain, finally able to breathe normally again! Now you can cast spells!");
+					target.removeStatusEffect("Silence");
+				}
+				else {
+					output("\n\n<b>Your mouth and nose are obstructed by sticky webbing, making it difficult to breathe and impossible to focus on casting spells. You try to pull it off, but it just won't work!</b>");
+					target.addStatusValue("Silence", 1, 1);
+				}
+			}
+			
 			// This is basically irrelevent now-
 			// NPCs use the same method (doStunRecover) as the player to recover from stunned effects
 			// automatically.
@@ -2858,7 +2874,7 @@ package classes.GameData
 			
 			var buffer:String = "";
 			var textRands:Array = [];
-			if (target.hasOwnProperty("teaseReactions")) (buffer = target["teaseReactions"](damage)) != "";
+			if (target.hasOwnProperty("teaseReactions") && (buffer = target["teaseReactions"](damage)) != "") { }
 			else if (target is PlayerCharacter)
 			{
 				if (damage == 0) buffer = "You seem unimpressed.";

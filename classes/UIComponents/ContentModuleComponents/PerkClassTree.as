@@ -122,7 +122,7 @@ package classes.UIComponents.ContentModuleComponents
 		
 		public function setInitialState(creature:Creature):void
 		{
-			if (_configured == false || _configuredForClass != creature.characterClass)
+			if (_configured == false || _configuredForClass != creature.characterClass || kGAMECLASS.pc.characterClass == GLOBAL.CLASS_ADVENTURER) // Adventurer has dynamic list
 			{
 				this.Build();
 				_configuredForClass = creature.characterClass;

@@ -12,6 +12,8 @@ package classes.Characters.CoC
 	import classes.GameData.CombatAttacks;
 	import classes.GameData.CombatManager;
 	import classes.GLOBAL;
+	import classes.Items.Melee.Rock;
+	import classes.Items.Miscellaneous.EmptySlot;
 	import classes.kGAMECLASS;
 	import classes.Util.*;
 	
@@ -31,7 +33,7 @@ package classes.Characters.CoC
 			else if(target is PlayerCharacter && !target.hasStatusEffect("Web Silence") && rand(3) == 0) {
 				spiderSilence(target);
 			}
-			else if(target is PlayerCharacter && !target.hasStatusEffect("Disarmed") && target.hasEquippedWeapon() && rand(3) == 0) {
+			else if(target is PlayerCharacter && target.hasEquippedWeapon() && rand(3) == 0) {
 				spiderDisarm(target);
 			}
 			else if(target is PlayerCharacter && (rand(2) == 0 || target.reflexes() < 2)) getBitten(target);
@@ -40,11 +42,6 @@ package classes.Characters.CoC
 		
 		public function additionalCombatMenuEntries():void
 		{
-			if (kGAMECLASS.pc.hasStatusEffect("Disarmed")) { // TODO: use fists?
-				addDisabledButton(0, "Attack", "Attack", "You are disarmed!");
-				addDisabledButton(1, "Shoot", "Shoot", "You are disarmed!");
-			}
-			
 			if ((kGAMECLASS.pc.hasStatusEffect("Web") || kGAMECLASS.pc.hasStatusEffect("Silence")) && kGAMECLASS.pc.energy() >= 5 && (kGAMECLASS.isNineTails(kGAMECLASS.pc) || (kGAMECLASS.pc.perkv1("Magic Affinity") & kGAMECLASS.KBIT_SPELL_WHITEFIRE) > 0 && !kGAMECLASS.pc.hasStatusEffect("Silence"))) {
 				addButton(10, "Burn Webs", CleansingFlame, null, "Burn webs", "Get rid of that webs by <b>all</b> means!");
 			}
@@ -207,8 +204,18 @@ package classes.Characters.CoC
 				else output("gauntlets, but they're so effectively fastened to your hands that the attack fails to disarm you.\n");
 			}
 			else {
-				output("You don't react fast enough and the sticky webbing pulls your weapon out of your grip, gluing it to a nearby tree.  There's no way to get it back right now!");
-				target.createStatusEffect("Disarmed", 9999, 0, 0, 0, false, "Blocked", "Cannot use normal melee or ranged attacks!", true, 0);
+				output("You don't react fast enough and the sticky webbing pulls your weapon out of your grip. <b>You'll have to pick it up to continue fight, but it would cost you a turn. Alternatively, you can just pick up nearby rock...</b>");
+				
+				if (target.hasMeleeWeapon())
+				{
+					target.inventory.push(target.meleeWeapon);
+					target.meleeWeapon = new Rock();
+				}
+				if (target.hasRangedWeapon())
+				{
+					target.inventory.push(target.rangedWeapon);
+					target.rangedWeapon = new Rock();
+				}
 			}
 		}
 

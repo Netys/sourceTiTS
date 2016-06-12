@@ -289,14 +289,15 @@ package classes.Characters.CoC
 			}
 		}
 		
-		public function teaseReactions(damage:Number):void
+		public function teaseReactions(damage:Number):String
 		{
 			if (damage >= 10)
-				output("The " + this.short + " breaks off its attack in the face of your teasing.  Its drooling member leaves a trail of precum along the ground and you get the feeling it needs to end this fight quickly.");
+				return "The " + this.short + " breaks off its attack in the face of your teasing.  Its drooling member leaves a trail of precum along the ground and you get the feeling it needs to end this fight quickly.";
 			else if (damage >= 5)
-				output("The " + this.short + " stops its assault for a moment.  A glob of precum oozes from its cock before it shakes its head and gets ready to attack again.");
+				return "The " + this.short + " stops its assault for a moment.  A glob of precum oozes from its cock before it shakes its head and gets ready to attack again.";
 			else if (damage > 0)
-				output("The " + this.short + " hesitates and slows down.  You see its cock twitch and then it readies for the next attack.");
+				return "The " + this.short + " hesitates and slows down.  You see its cock twitch and then it readies for the next attack.";
+			else return "";
 		}
 		
 		protected function phoukaTransformToBunny():void

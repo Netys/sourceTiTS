@@ -25,7 +25,7 @@ public function phoukaNameText(known:String, unknown:String):String
 
 public function phoukaName():String
 { //Helper function, Handles the most use of phoukaNameText
-	return phoukaNameText("phouka", "faerie creature");
+	return phoukaNameText("phouka", "faerie");
 }
 
 public function phoukaEncounter():void
@@ -125,7 +125,7 @@ protected function phoukaStartFight():void
 	CombatManager.setHostileCharacters(new CoCPhouka());
 	CombatManager.victoryScene(phoukaPlayerWins);
 	CombatManager.lossScene(CoCPhoukaPcLoss);
-	CombatManager.displayLocation(phoukaName());
+	CombatManager.displayLocation(phoukaName().toUpperCase());
 	CombatManager.beginCombat();
 }
 
@@ -428,10 +428,10 @@ protected function phoukaLeaveOnLustWin(newScreen:Boolean = true):void
 	CombatManager.genericVictory();
 }
 
-internal function phoukaPlayerWins(hpVictory:Boolean):void
+internal function phoukaPlayerWins():void
 {
 	clearOutput();
-	if (hpVictory) { //You win by physical damage, the phouka cheats and runs
+	if (enemy.HP() < 1) { //You win by physical damage, the phouka cheats and runs
 		output("The seriously injured " + phoukaName() + " stumbles backward, but before you can strike again it twists and stretches in mid-air, dropping to the ground in the form of a long black eel.  You're pretty sure you hear the eel curse at you as it dives into the mire and sinks out of view.\n\nWith your attacker gone you struggle and strain to get yourself free of the thick mass of roots and muck around your [pc.legs].  Your lower half is soaked and you decide to head home.");
 		
 		output("\n\n");

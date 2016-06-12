@@ -3866,8 +3866,8 @@
 		{ 
 			var d:TypeCollection = damage(true); 
 			var physiqueMod:Number = physique() / 2;
-			if (characterClass == GLOBAL.CLASS_ADVENTURER) physiqueMod += physique();
-			if (hasPerk("History: Fighter")) physiqueMod /= 2;
+			if (characterClass == GLOBAL.CLASS_ADVENTURER) physiqueMod += physique() / 2; // full point of damage per point of physique for champions
+			if (hasPerk("Double Attack")) physiqueMod /= 2; // extra attack in cost of halving physique bonus
 			if (hasPerk("Hold With Both Hands") && PQ() >= 80 && !hasRangedWeapon()) physiqueMod += physique() * 0.2;
 			d.add(physiqueMod);
 			
