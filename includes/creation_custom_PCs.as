@@ -1133,8 +1133,8 @@ public function customPCCheck(TF:Boolean = false):Boolean
 				if (!pc.hasStatusEffect("Genital Slit"))	pc.createStatusEffect("Genital Slit", 0, 0, 0, 0); // dangling all the time bits are not classy
 				if (!pc.hasStatusEffect("Uniball"))			pc.createStatusEffect("Uniball", 0, 0, 0, 0);
 				pc.armor = new IllusoryAttire(); // clothes? fur furevar!
+				(pc.armor as IllusoryAttire).onValidate(pc);
 				pc.meleeWeapon = new CoCLethiceWhip();
-				IllusoryAttireTimePassedNotify(false); // validate the IllusoryAttire for kitsune
 			}
 			if (!pc.hasPerk("Dragonfire")) pc.createPerk("Dragonfire", 0, 0, 0, 0, "You are much more of a dragon inside than outside."); // my hide is keeping explosion inside, not vice versa!
 			if (!pc.hasPerk("Purity Blessing")) pc.createPerk("Purity Blessing", 0, 0, 0, 0, "Reduces the rate at which your libido and lust increase.");

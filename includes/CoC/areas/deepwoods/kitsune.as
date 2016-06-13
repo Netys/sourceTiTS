@@ -2418,7 +2418,7 @@ public function kitsuneShrineEnter():void
 
 		output("You call out, but the place seems to be abandoned.  Shrugging, you decide to take a look around the building, hefting a rotten timber out of the way of the door and creeping inside carefully, just in case you aren't really alone.\n\n");
 
-		output("It takes a moment for your eyes to adjust to the dim light inside the musty shed, but you eventually start to piece together the makings of a simple dwelling.  An old bedroll lies in one corner, assorted cooking implements hung with care over a small fire pit.  In the rear of the one-room building is enshrined a small pedestal, atop of which stands a small gold statue of an androgynous figure with nine tails.  A short distance away stands a bookcase filled with musty tomes and scrolls of all shapes and sizes. Small locked box is tucked into corner.\n\n");
+		output("It takes a moment for your eyes to adjust to the dim light inside the musty shed, but you eventually start to piece together the makings of a simple dwelling.  An old bedroll lies in one corner, assorted cooking implements hung with care over a small fire pit.  In the rear of the one-room building is enshrined a small pedestal, atop of which stands a small gold statue of an androgynous figure with nine tails.  A short distance away stands a bookcase filled with musty tomes and scrolls of all shapes and sizes. The small locked box is tucked into the corner.\n\n");
 
 		output("Judging by the layer of dust on everything, whoever lived here hasn't been around in quite some time.  You're sure they wouldn't mind if you helped yourself to some of those books - you might just learn a thing or two.  That gold statue is pretty tempting too, but on the other hand it seems to have some sort of spiritual significance - stealing it from its rightful place might not be the wisest idea.  Of course, you could always try praying to it.");
 	}
@@ -2588,18 +2588,18 @@ private function openAKitsuneStash():void
 	clearOutput();
 	processTime(5);
 	clearMenu();
-	output("You decide to try your luck with locked box. It is made of something smooth and milky-white, with animal paw outline drawn on it.\n\n");
+	output("You decide to try your luck with the locked box. It is made of something smooth and milky-white, with animal paw outline drawn on it.\n\n");
 	if (!IllusoryAttire.isActive(pc)) {
-		output("You have no idea how to open it - there are no trace of keyhole, no gaps between parts, no hidden button.");
+		output("You have no idea how to open it - there is no trace of the keyhole, no gaps between parts, no hidden button.");
 		addButton(0, "Next", kitsuneShrine);
 	} else {
-		output("Surprisingly, it opens immediately, you just had to touch drawn pawprint with your own [pc.hand]. There are nearly two dozen of ornate bands inside! Two of them are marked 'forearm', nine have 'tail' marks and other are marked 'foot'.  ");
-		if (pc.hasTail() && pc.tailCount == 9) output("Considering amount of tail bands they are clearly designed for someone like you.  ");
+		output("Surprisingly, it opens immediately; you just had to touch drawn pawprint with your own [pc.hand]. There are nearly two dozen of ornate bands inside! Two of them are marked 'forearm', nine have 'tail' marks and other are marked 'foot'. ");
+		if (pc.hasTail() && pc.tailCount == 9) output("Considering a number of tail bands, they are clearly designed for someone like you. ");
 		if (!pc.hasLegFlag(GLOBAL.FLAG_DIGITIGRADE)) {
-			output("The 'foot' marks is a bit confusing, though - they are likely designed for digitigrade creature");
+			output("The 'foot' marks is a bit confusing, though - they are likely designed for a digitigrade creature");
 			if (pc.hasLegFlag(GLOBAL.FLAG_PLANTIGRADE)) output(", but you can wear them on your shins.");
-			else  output(".  ");
-		} else output("The 'foot' marks likely means they are intended to be worn by digitigrade creature, though you can wear them on your shins as well.");
+			else  output(".");
+		} else output("The 'foot' marks likely mean they are intended to be worn by a digitigrade creature, though you can wear them on your shins as well.");
 		output("\n\n");
 		
 		flags["COC.TOOK_KITSUNE_ATTIRE"] = 1;
@@ -2635,23 +2635,23 @@ public function validatePlayerKitsuneElderColor():void {
 		if (!InCollection(pc.hairColor, elderKitsuneColors)) // wrong hair color
 			if (pc.skinType == GLOBAL.SKIN_TYPE_FUR && InCollection(pc.furColor, elderKitsuneColors)) { // right fur color
 				pc.hairColor = pc.furColor;
-				if(pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " hair</b> matching your fur, like a true kitsune elder.");
+				if(pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " hair</b> matching your fur, like an actual kitsune elder.");
 			}
 			else if (pc.skinType == GLOBAL.SKIN_TYPE_FUR) { // wrong fur color
 				pc.hairColor = RandomInCollection(elderKitsuneColors);
 				pc.furColor = pc.hairColor;
-				if (pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " fur and hair</b>, like a true kitsune elder.");
-				else output("\n\nNow <b>you have " + pc.furColor + " fur</b>, like a true kitsune elder.");
+				if (pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " fur and hair</b>, like an actual kitsune elder.");
+				else output("\n\nNow <b>you have " + pc.furColor + " fur</b>, like an actual kitsune elder.");
 			}
 			else { // no fur
 				pc.hairColor = RandomInCollection(elderKitsuneColors);
 				pc.furColor = pc.hairColor;
-				if (pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " hair</b>, like a true kitsune elder.");
+				if (pc.hairLength > 0) output("\n\nNow <b>you have " + pc.hairColor + " hair</b>, like an actual kitsune elder.");
 			}
 		else // right hair color
 			if (pc.skinType == GLOBAL.SKIN_TYPE_FUR && !InCollection(pc.furColor, elderKitsuneColors)) { // wrong fur color
 				pc.furColor = pc.hairColor;
-				output("\n\nNow <b>you have " + pc.furColor + " fur</b> matching your hair, like a true kitsune elder.");
+				output("\n\nNow <b>you have " + pc.furColor + " fur</b> matching your hair, like an actual kitsune elder.");
 			}
 		
 		if (pc.hasStatusEffect("Vanae Markings") && pc.skinAccent != "luminous azure") {
@@ -2725,29 +2725,10 @@ public function NineTailsTimePassedNotify():void {
 	}
 }
 
-public function IllusoryAttireTimePassedNotify(showOutput:Boolean = true):String {
-	var ret:String = "";
+public function IllusoryAttireTimePassedNotify():String {
 	if (pc.armor is IllusoryAttire) {
-		if (pc.armor.hasRandomProperties && !isNineTails(pc) && !pc.isPsionic()) {
-			ret += "\n\nWithout your power flowing through your bands, they are little more than just decorations.";
-			pc.armor = new IllusoryAttire(); // reset stats
-		}
-		else if (isNineTails(pc) || pc.isPsionic()) {
-			if(!pc.armor.hasRandomProperties) { // first time message
-				ret += "\n\nYou feel your power resonating with your bands... You are fully in tune with them! Enchantment is now powerful enough to provide some real protection from attacks as well, and glamour effect is more efective too.";
-			}
-			pc.armor.type = GLOBAL.ARMOR;
-			pc.armor.tooltip = IllusoryAttire.descBasic + (isNineTails(pc) ? IllusoryAttire.descNineTails : IllusoryAttire.descPsionic);
-			pc.armor.defense = Math.ceil(pc.level / 4) + 2;
-			pc.armor.shieldDefense = pc.armor.defense;
-			pc.armor.evasion = Math.ceil(pc.level / 2) + 2;
-			pc.armor.sexiness = Math.ceil(pc.level / 2) + 2;
-			pc.armor.resistances.psionic.resistanceValue = 20;
-			pc.armor.hasRandomProperties = true;
-		}
-		TooltipManager.addTooltip(pc.armor.shortName, pc.armor.tooltip);
+		(pc.armor as IllusoryAttire).onValidate(pc);
 	}
-	if(showOutput) eventBuffer += ret;
 	return ret;
 }
 private var NineTailsTimePassedNotifyHook: * = NineTailsTimePassedNotifyGrapple();

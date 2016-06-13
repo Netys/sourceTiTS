@@ -12,9 +12,9 @@ package classes.Items.Apparel
 	public class IllusoryAttire extends ItemSlotClass
 	{
 		public static var descBasic:String = "A set of ornate bands designed to be worn on feet and tails by Kitsune in feral or semi-feral form and enchanted with distracting unfocused attention glamour. Can be worn on wrists and shins as well.";
-		public static var descDefault:String = "\n\nAs long as your body is animalistic enough, you won't be accused in public indecency while wearing them. As side effect they can partially protect you from psionic attacks, but nothing else. Illusion requires several specific body points for proper work: fur or scales, long tail, digitigrade paws or other sort of inhuman legs, C-cup or smaller breasts. Also, it only can hide your male parts if your have genital slit or sheath and your balls are not too large.";
-		public static var descNineTails:String = " You won't be accused in public indecency while wearing them.\n\nSince they are worn by Kitsune, their potential is fully unleashed. Magic barrier is powerful enough to provide some protection from any threat, and any body type requirements are lifted.";
-		public static var descPsionic:String = " You won't be accused in public indecency while wearing them.\n\nSince they are worn by psionic, their potential is fully unleashed. Psionic barrier is powerful enough to provide some protection from any threat, and any body type requirements are lifted.";
+		public static var descDefault:String = "\n\nAs long as your body is animalistic enough, you won't be accused of public indecency while wearing them. As a side effect they can partially protect you from psionic attacks, but nothing else. The illusion requires several specific body points for proper work: fur or scales, long tail, digitigrade paws or another sort of inhuman legs, C-cup or smaller breasts. Also, it only can hide your male parts if your have genital slit or sheath and your balls are not too large.";
+		public static var descNineTails:String = " You won't be accused of public indecency while wearing them.\n\nSince they are worn by Kitsune, their potential is fully unleashed. The magic barrier is powerful enough to provide some protection from any threat, and any body type requirements are lifted.";
+		public static var descPsionic:String = " You won't be accused of public indecency while wearing them.\n\nSince they are worn by psionic, their potential is fully unleashed. The psionic barrier is powerful enough to provide some protection from any threat, and any body type requirements are lifted.";
 		
 		public function IllusoryAttire() 
 		{
@@ -72,14 +72,45 @@ package classes.Items.Apparel
 		
 		override public function onEquip(targetCreature:Creature):void
 		{
-			var validate:String = kGAMECLASS.IllusoryAttireTimePassedNotify(false);
+			var validate:String = onValidate(targetCreature, false);
 			if (targetCreature.isExposed()) {
 				if (isActive(targetCreature)) {
 					output(" While not covering anything, this bands still somehow give you decent appearance.");
 				}
-				else output(" With this bands your appearance is even more provoking than simple nudity.");
+				else output(" With this bands, your appearance is even more provoking than mere nudity.");
 			}
 			if(validate != "") output(validate);
+		}
+		
+		public function onValidate(target:Creature, showOutput:Boolean = true):String { // actually, this should be override of a generic function
+			if (!target.hasArmor() || !target.armor is IllusoryAttire) return;
+			
+			var isNineTails:Boolean = kGAMECLASS.isNineTails(target);
+			var ret:String = "";
+			
+			if (hasRandomProperties && !isNineTails && !target.isPsionic()) {
+				ret += "\n\nWithout your power flowing through your bands, they are little more than just decorations.";
+				target.armor = new IllusoryAttire(); // reset stats
+				TooltipManager.addTooltip(shortName, tooltip);
+			}
+			else if (nineTails || target.isPsionic()) {
+				if(!hasRandomProperties) { // first time message
+					ret += "\n\nYou feel your power resonating with your bands... You are fully in tune with them! Enchantment is now powerful enough to provide some real protection from attacks as well, and glamour effect is more effective too.";
+				}
+				type = GLOBAL.ARMOR;
+				tooltip = descBasic + (isNineTails ? descNineTails : descPsionic);
+				defense = Math.ceil(target.level / 4) + 2; // 7 on level 20
+				shieldDefense = defense;
+				evasion = Math.ceil(target.level / 2) + 2; // 12 on level 20
+				sexiness = Math.ceil(target.level / 4) + 4; // 9 on level 20
+				resistances.psionic.resistanceValue = 20; // 40 effective with nullifying flag
+				hasRandomProperties = true;
+				TooltipManager.addTooltip(shortName, tooltip);
+			}
+			
+			if (showOutput && !target.hasStatusEffect("In Creation")) eventBuffer += ret;
+			
+			return ret;
 		}
 	}
 }
