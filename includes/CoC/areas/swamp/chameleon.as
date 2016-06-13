@@ -67,9 +67,13 @@ public function encounterChameleon():void
 	
 	IncrementFlag("COC.TIMES_MET_CHAMELEON");
 	
+	addNextButton(fightChameleon, monster);
+}
+
+public function fightChameleon(monster:CoCChameleonGirl = null):void {
 	CombatManager.newGroundCombat();
 	CombatManager.setFriendlyCharacters(pc);
-	CombatManager.setHostileCharacters(monster);
+	CombatManager.setHostileCharacters(monster == null ? new CoCChameleonGirl() : monster);
 	CombatManager.victoryScene(defeatChameleonGirl);
 	CombatManager.lossScene(loseToChameleonGirl);
 	CombatManager.displayLocation("CHAMELEON");

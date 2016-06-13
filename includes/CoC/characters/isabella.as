@@ -38,7 +38,7 @@ public function timeChange():Boolean
 	}
 	if (hours == 0) {
 		if (flags["COC.FOUND_ISABELLA_AT_FARM_TODAY"] == 1) flags["COC.FOUND_ISABELLA_AT_FARM_TODAY"] = 0;
-		if (isabellaFollower() && flags["COC.ISABELLA_MILKED_YET"] >= 0 && flags["COC.FOLLOWER_AT_FARM_ISABELLA"] == 0) {
+		if (isabellaFollower() && flags["COC.ISABELLA_MILKED_YET"] >= 0 && int(flags["COC.FOLLOWER_AT_FARM_ISABELLA"]) == 0) {
 			flags["COC.ISABELLA_MILKED_YET"]++;
 		}
 	}
@@ -66,7 +66,7 @@ public function isabellaGreeting():void {
 	clearOutput();
 	clearMenu();
 	//Not approached yet - the prequel!
-	if (flags["COC.ISABELLA_MET"] == 0) {
+	if (int(flags["COC.ISABELLA_MET"]) == 0) {
 		//isabellaSprite(); // we don't know her yet
 		output("While walking through the high grasses you hear a rich, high voice warbling out a melodious tune in a language you don't quite understand.  Do you approach or avoid it?");
 		//[Approach – to meeting] [Avoid – camp] – dont flag as met yet
@@ -85,9 +85,9 @@ public function isabellaGreeting():void {
 		return;
 	}
 	//[Camp Meeting First Time]
-	if (flags["COC.ISABELLA_MET"] == 0) {
+	if (int(flags["COC.ISABELLA_MET"]) == 0) {
 		isabellaSprite();
-		flags["COC.ISABELLA_MET"]++;
+		IncrementFlag("COC.ISABELLA_MET");
 		output("You stumble through a break in the tall foliage to discover a small, barren clearing.  While it looks like grass once grew here, it's long since been trampled into the dirt.  Looking closer, it reminds you of some of the old straw that was constantly packed into the hard earth of your neighbor's barn when you were growing up.  There are a few sizable chests secured with heavy iron locks and draped with comfortable-looking blankets.  The heavy boxes are grouped in a half-circle surrounding a chair that currently holds the camp-owner's sizable backside.  It reminds you of a cruder version of your own camp.\n\n");
 		
 		output("Even seated, the occupant of this unsheltered settlement is imposing.  Standing up she'd have to be at least seven feet tall, maybe even eight.  You're looking at her from the back, and aside from the obvious femininity of her figure and lilting voice, all you see is the red tangles of her unruly red locks.  The woman's voice peaks, finishing her unusual song with such a high-pitched tone that you expect the iron locks and rivets on her chests to crack.  Thankfully her song's crescendo is quite brief, and her voice drops to a quiet warble before trailing off into silence.  She stands up, glances over her shoulder, and jumps back with her eyes wide in shock as she notices you.\n\n");
@@ -108,7 +108,7 @@ public function isabellaGreeting():void {
 		}
 		//(Shorter PC's) 
 		else {
-			if(flags["COC.ISABELLA_MET_AS_SMALL"] == 0) flags["COC.ISABELLA_MET_AS_SMALL"]++;
+			if(int(flags["COC.ISABELLA_MET_AS_SMALL"]) == 0) IncrementFlag("COC.ISABELLA_MET_AS_SMALL");
 			output("The cow-girl's big brown eyes soften as she regards your relatively diminutive form.  She smiles and coos, \"<i>Awww, you're zuch a cutey!  Izabella could never turn avay someone like you.  Come here, vould you like a drink?</i>\"");
 			output("\n\nYou approach and exchange introductions with the friendly woman, still a bit taken aback by her eagerness.");
 			//(Male PC's) 
@@ -145,7 +145,7 @@ public function isabellaGreeting():void {
 		return;
 	}
 	//Camp Meeting – Was welcome tall, but not short yet!
-	else if (flags["COC.ISABELLA_TALLNES_ACCEPTED"] > 0 && flags["COC.ISABELLA_MET_AS_SMALL"] == 0 && pc.tallness <= 78) {
+	else if (flags["COC.ISABELLA_TALLNES_ACCEPTED"] > 0 && int(flags["COC.ISABELLA_MET_AS_SMALL"]) == 0 && pc.tallness <= 78) {
 		isabellaSprite();
 		flags["COC.ISABELLA_MET_AS_SMALL"]++;
 		output("You stumble through a wall of tall grasses back into Isabella's camp!  It's amazing how much taller they've become since your last visit.  Or perhaps it just seems that way due to the change in height.  You look for Isabella, and the fiery, red-headed cow-girl is charging right at you, bellowing, \"<i>Awwww, you're so much cuter!  Iz vonderful to have such tiny, adorable friends!  Did you come back for one of mein special drinks?</i>\"  She envelops you in a hug that crushes you against jiggling breast-flesh, and in seconds you're cradled in her arms as she marvels at your new size.\n\n");
@@ -169,7 +169,7 @@ public function isabellaGreeting():void {
 		//simpleChoices("Talk",0,"Drink",0,"Get Licked",suck,"Rape Attempt",0,"Leave",13);
 	}
 	//Camp Meeting – Welcomed Short but Not Tall
-	else if (flags["COC.ISABELLA_MET_AS_SMALL"] > 0 && flags["COC.ISABELLA_TALLNES_ACCEPTED"] == 0 && pc.tallness > 78) {
+	else if (int(flags["COC.ISABELLA_MET_AS_SMALL"]) > 0 && int(flags["COC.ISABELLA_TALLNES_ACCEPTED"]) == 0 && pc.tallness > 78) {
 		isabellaSprite();
 		output("You easily brush through the tall grasses and stride into Isabella the cow-girl's camp.  It looks like she was sitting in her chair mending a blanket when you arrived, and you take a moment to watch her hunched posture squeeze her breasts tightly against the gauzy silk top she's so fond of wearing.  The outline of a single areola is clearly visible through the diaphanous material, but most striking is that each areola has four VERY prominent nipple-tips.  She looks at you, first in fright, and then in embarrassment as she recognizes you AND realizes what you were doing in a single instant.\n\n");
 		//(+lust!)
@@ -191,7 +191,7 @@ public function isabellaGreeting():void {
 		//simpleChoices("Talk",0,"Drink",0,"Get Licked",suck,"Rape Attempt",0,"Leave",13);
 	}
 	//Follower go!
-	else if (flags["COC.ISABELLA_CAMP_DISABLED"] == 0 && flags["COC.ISABELLA_FOLLOWER_ACCEPTED"] == 0 && isabellaAffection() >= (50 + flags["COC.ISABELLA_TIMES_OFFERED_FOLLOWER"] * 15)) {
+	else if (int(flags["COC.ISABELLA_CAMP_DISABLED"]) == 0 && int(flags["COC.ISABELLA_FOLLOWER_ACCEPTED"]) == 0 && isabellaAffection() >= (50 + int(flags["COC.ISABELLA_TIMES_OFFERED_FOLLOWER"]) * 15)) {
 		isabellaSprite();
 		isabellaMoovesInGreeting();
 		return;
@@ -200,7 +200,7 @@ public function isabellaGreeting():void {
 	//Camp Meeting – Standard Repeat
 	else {
 		isabellaSprite();
-		if(flags["COC.ISABELLA_MET_AS_SMALL"] <= 0) flags["COC.ISABELLA_MET_AS_SMALL"]++;
+		if(int(flags["COC.ISABELLA_MET_AS_SMALL"]) <= 0) IncrementFlag("COC.ISABELLA_MET_AS_SMALL");
 		output("While making your way through the tall grasses you hear a familiar voice lilting in a high-pitched foreign song.  It sounds like Isabella the cow-girl is at it again.  You meander towards the melodic tune, smiling as it rises in pitch and volume through your journey.  A short time later you break through the edge of the grasses in time to watch Isabella finish her song and the curvy cow-girl seems completely oblivious to your presence, enraptured by the music of her homeland.\n\n");
 		output("You wait patiently, watching her curvy body shift and her large, milk-swollen breasts wobble dangerously inside her near-transparent shirt.  Her quad-tipped areolas are plainly on display, clearly engorged and ready to leak.  If you weren't here, in this strange place, you'd be amazed by how her breasts are basically humanized udders.  In this place, it's just another thing that adds to her exotic appeal.\n\n");
 		output("Isabella finishes her song and turns to you with a twinkling smile as she asks, \"<i>Did you come back for some of ze milk?</i>\"");

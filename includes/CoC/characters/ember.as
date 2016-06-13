@@ -2495,7 +2495,7 @@ private function stickDickInKnifeDrawer():void
 	if (pc.cockTotal() > 1) {
 		output("  [ember.HeShe] selects the biggest cock and gives it a gentle stroke,");
 	}
-	else output("  [ember.HeShe] takes your [cock " + y + "] in hand and begins gently stroking it,");
+	else output("  [ember.HeShe] takes your [pc.cock " + y + "] in hand and begins gently stroking it,");
 	output(" sniffing your musk with obvious delight.");
 
 	//(if Ember chose a dragon cock)
@@ -2528,14 +2528,14 @@ private function stickDickInKnifeDrawer():void
 	output("\n\nEmber flicks [ember.hisHer] tongue against your ");
 	if (pc.balls > 0) output("balls");
 	else if (pc.hasVagina()) output(pc.vaginaDescript());
-	else output("[cock " + y + "]");
+	else output("[pc.cock " + y + "]");
 	output(" and begins licking you from base to tip in slow, almost torturous, strokes.  \"<i>Mmm.  So tasty...</i>\"  Sparks of pleasure surge up your body from the dragon's ministrations, and you find yourself biting back words because you're not sure if you want [ember.himHer] to go faster or to keep at it like this.");
 
 	output("\n\nBy now you're leaking like a spring, and Ember greedily laps up every little drop.  \"<i>Feed me, [pc.name].  I'm sooo thirsty...</i>\" Ember teases you, giving your leaking tip the softest of kisses.  You buck forward, eager to be re-engulfed in the dragon's tantalizing mouth, promising to feed [ember.himHer] everything you have if only [ember.heShe]'ll keep doing that!  Ember smiles at your promise, and obliges by sucking you back in like a popsicle.");
 
 	output("\n\nClawed hands grab at your waist for support as [ember.heShe] finally begins bobbing [ember.hisHer] head with abandon, intent on milking you of every single drop you're worth.  Your own hands unthinkingly latch onto [ember.hisHer] horns, using them to help pin [ember.hisHer] head in place, thrusting your cock obligingly into Ember's jaws as [ember.hisHer] lips and long, prehensile tongue send ecstasy coursing through you from their efforts to wring you of your seed.");
 
-	output("\n\nYou don't have long to wait, and with a wordless cry, you unleash yourself into Ember's thirsty mouth.  As the first jet hits Ember's tongue, [ember.heShe] cries out in bliss and buries your erupting [cock " + y + "] as far into [ember.himHer]self as far as [ember.heShe] can.");
+	output("\n\nYou don't have long to wait, and with a wordless cry, you unleash yourself into Ember's thirsty mouth.  As the first jet hits Ember's tongue, [ember.heShe] cries out in bliss and buries your erupting [pc.cock " + y + "] as far into [ember.himHer]self as far as [ember.heShe] can.");
 
 	//(Low Cum Amount)
 	if (pc.cumQ() < 250) {

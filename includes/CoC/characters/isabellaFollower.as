@@ -51,15 +51,20 @@ Variable List
 //const FOUND_ISABELLA_AT_FARM_TODAY:int = 707;
 
 public function isabellaFollower():Boolean {
-	return flags["COC.ISABELLA_FOLLOWER_ACCEPTED"] == 1 && flags["COC.ISABELLA_CAMP_DISABLED"] == 0;
+	return flags["COC.ISABELLA_FOLLOWER_ACCEPTED"] == 1 && int(flags["COC.ISABELLA_CAMP_DISABLED"]) == 0;
 
 }
 public function isabellaAccent():Boolean {
+	if (flags["COC.ISABELLA_ACCENT_TRAINING_PERCENT"] == undefined) flags["COC.ISABELLA_ACCENT_TRAINING_PERCENT"] = 0;
+	if (flags["COC.ISABELLA_ACCENT_FORCED_ON"] == undefined) flags["COC.ISABELLA_ACCENT_FORCED_ON"] = 0;
+	
 	if (flags["COC.ISABELLA_ACCENT_TRAINING_PERCENT"] < 100) return true;
 	if (flags["COC.ISABELLA_ACCENT_FORCED_ON"]) return true;
 	return false;
 }
 public function isabellaAffection(mod:int = 0):int {
+	if (flags["COC.ISABELLA_AFFECTION"] == undefined) flags["COC.ISABELLA_AFFECTION"] = 0;
+	
 	flags["COC.ISABELLA_AFFECTION"] += mod;
 	if(flags["COC.ISABELLA_AFFECTION"] > 100) flags["COC.ISABELLA_AFFECTION"] = 100;
 	else if(flags["COC.ISABELLA_AFFECTION"] < 0) flags["COC.ISABELLA_AFFECTION"] = 0;
@@ -76,7 +81,7 @@ public function isabellaSprite():void
 internal function isabellaMoovesInGreeting():void {
 	isabellaSprite();
 	clearOutput();
-	if(flags["COC.ISABELLA_TIMES_OFFERED_FOLLOWER"] == 0) {
+	if(int(flags["COC.ISABELLA_TIMES_OFFERED_FOLLOWER"]) == 0) {
 		output("Isabella gives you a warm smile when you wander into her camp and spikes the sharp edge of her shield into the ground, leaving it standing next to her.  Her big brown eyes are filled with warmth and affection for a friend as she greets you, saying, \"<i>Velcome back, [pc.name].  Did you miss little old me?</i>\"\n\n");
 		
 		output("You ");
@@ -116,7 +121,7 @@ internal function isabellaMoovesInGreeting():void {
 		addButton(5, "Accept Offer", moveTheBitchIn);
 		addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 	}
-	flags["COC.ISABELLA_TIMES_OFFERED_FOLLOWER"]++;
+	IncrementFlag("COC.ISABELLA_TIMES_OFFERED_FOLLOWER");
 }
 
 //Decline Izzy Initial Moving Offer (-10 affection) 
