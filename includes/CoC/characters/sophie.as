@@ -54,8 +54,8 @@ public function SophieTimePassedNotify():void
 	}
 	if (!sophieAtCamp()) { //Could be at the farm or still in the wild
 		if (int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) == 0 && flags["COC.SOPHIE_INCUBATION"] != undefined && flags["COC.SOPHIE_INCUBATION"] <= 0) { //As long as she's not at the farm it's alright to lay eggs
-			flags["COC.SOPHIE_EGGS_LAID"]++; //Before she moves in she just produces harpies in the mountains
-			flags["COC.SOPHIE_INCUBATION"] == undefined; //Clear Pregnancy
+			IncrementFlag("COC.SOPHIE_EGGS_LAID"); //Before she moves in she just produces harpies in the mountains
+			flags["COC.SOPHIE_INCUBATION"] = undefined; //Clear Pregnancy
 		}
 	}
 	else { //She might be a bimbo, debimboed or normal, but she's a follower and presently at camp

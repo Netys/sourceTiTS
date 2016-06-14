@@ -2725,11 +2725,10 @@ public function NineTailsTimePassedNotify():void {
 	}
 }
 
-public function IllusoryAttireTimePassedNotify():String {
+public function IllusoryAttireTimePassedNotify():void {
 	if (pc.armor is IllusoryAttire) {
 		(pc.armor as IllusoryAttire).onValidate(pc);
 	}
-	return ret;
 }
 private var NineTailsTimePassedNotifyHook: * = NineTailsTimePassedNotifyGrapple();
 private function NineTailsTimePassedNotifyGrapple():* { 

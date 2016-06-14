@@ -50,6 +50,85 @@ Variable List
 //const ISABELLA_PROBOVA_BURP_COUNT:int = 383;
 //const FOUND_ISABELLA_AT_FARM_TODAY:int = 707;
 
+
+public function followerCampMenuBlurbIsabella(showInteractButton:Boolean):void {
+	if (isabellaFollower() && int(flags["COC.FOLLOWER_AT_FARM_ISABELLA"]) == 0) {
+		if (hours >= 21 || hours <= 5) output("Isabella is sound asleep in her bunk and quietly snoring.");
+		else if (hours == 6) output("Isabella is busy eating some kind of grain-based snack for breakfast.  The curly-haired cow-girl gives you a smile when she sees you look her way.");
+		else if (hours == 7) output("Isabella, the red-headed cow-girl, is busy with a needle and thread, fixing up some of her clothes.");
+		else if (hours == 8) output("Isabella is busy cleaning up the camp, but when she notices you looking her way, she stretches up and arches her back, pressing eight bullet-hard nipples into the sheer silk top she prefers to wear.");
+		else if (hours == 9) output("Isabella is out near the fringes of your campsite.  She has her massive shield in one hand and appears to be keeping a sharp eye out for intruders or demons.  When she sees you looking her way, she gives you a wave.");
+		else if (hours == 10) output("The cow-girl warrioress, Isabella, is sitting down on a chair and counting out gems from a strange pouch.  She must have defeated someone or something recently.");
+		else if (hours == 11) output("Isabella is sipping from a bottle labelled 'Lactaid' in a shaded corner.  When she sees you looking she blushes, though dark spots appear on her top and in her skirt's middle.");
+		else if (hours == 12) output("Isabella is cooking a slab of meat over the fire.  From the smell that's wafting this way, you think it's beef.  Idly, you wonder if she realizes just how much like her chosen food animal she has become.");
+		else if (hours == 13) {
+			output("Isabella ");
+			var izzyCreeps:Array = [];
+			//Build array of choices for izzy to talk to
+			if (flags["COC.RATHAZUL_IN_CAMP"] == 1)
+				izzyCreeps[izzyCreeps.length] = 0;
+			if (flags["COC.JOJO_IN_CAMP"] == 1)
+				izzyCreeps[izzyCreeps.length] = 1;
+			if (amilyFollower() && flags["COC.AMILY_FOLLOWER"] == 1 && int(flags["COC.AMILY_BLOCK_COUNTDOWN_BECAUSE_CORRUPTED_JOJO"]) == 0)
+				izzyCreeps[izzyCreeps.length] = 2;
+			if (amilyFollower() && flags["COC.AMILY_FOLLOWER"] == 2 && int(flags["COC.AMILY_BLOCK_COUNTDOWN_BECAUSE_CORRUPTED_JOJO"]) == 0 && int(flags["COC.FOLLOWER_AT_FARM_AMILY"]) == 0)
+				izzyCreeps[izzyCreeps.length] = 3;
+			if (izmaFollower() && int(flags["COC.FOLLOWER_AT_FARM_IZMA"]) == 0)
+				izzyCreeps[izzyCreeps.length] = 4;
+			//Base choice - book
+			izzyCreeps[izzyCreeps.length] = 5;
+			//Select!
+			var choice:int = rand(izzyCreeps.length);
+				
+			if (izzyCreeps[choice] == 0) output("is sitting down with Rathazul, chatting amiably about the weather.");
+			else if (izzyCreeps[choice] == 1) output("is sitting down with Jojo, smiling knowingly as the mouse struggles to keep his eyes on her face.");
+			else if (izzyCreeps[choice] == 2) output("is talking with Amily, sharing stories of the fights she's been in and the enemies she's faced down.  Amily seems interested but unimpressed.");
+			else if (izzyCreeps[choice] == 3) output("is sitting down chatting with Amily, but the corrupt mousette is just staring at Isabella's boobs and masturbating.  The cow-girl is pretending not to notice.");
+			else if (izzyCreeps[choice] == 4) output("is sitting down with Izma and recounting some stories, somewhat nervously.  Izma keeps flashing her teeth in a predatory smile.");
+			else output("is sitting down and thumbing through a book.");
+		}
+		else if (hours == 14) output("Isabella is working a grindstone and sharpening her tools.  She even hones the bottom edge of her shield into a razor-sharp cutting edge.  The cow-girl is sweating heavily, but it only makes the diaphanous silk of her top cling more alluringly to her weighty chest.");
+		else if (hours == 15) output("The warrior-woman, Isabella is busy constructing dummies of wood and straw, then destroying them with vicious blows from her shield.  Most of the time she finishes by decapitating them with the sharp, bottom edge of her weapon.  She flashes a smile your way when she sees you.");
+		else if (hours == 16) output("Isabella is sitting down with a knife, the blade flashing in the sun as wood shavings fall to the ground.  Her hands move with mechanical, practiced rhythm as she carves a few hunks of shapeless old wood into tools or art.");
+		else if (hours == 17) output("Isabella is sitting against one of the large rocks near the outskirts of your camp, staring across the wasteland while idly munching on what you assume to be a leg of lamb.  She seems lost in thought, though that doesn't stop her from throwing a wink and a goofy food-filled grin toward you.");
+		else if (hours == 18) output("The dark-skinned cow-girl, Isabella, is sprawled out on a carpet and stretching.  She seems surprisingly flexible for someone with hooves and oddly-jointed lower legs.");
+		else if (hours == 19) {
+			//[(Izzy Milked Yet flag = -1)
+			if (flags["COC.ISABELLA_MILKED_YET"] == -1) output("Isabella has just returned from a late visit to Whitney's farm, bearing a few filled bottles and a small pouch of gems.");
+			else output("Isabella was hidden behind a rock when you started looking for her, but as soon as you spot her in the darkness, she jumps, a guilty look flashing across her features.  She turns around and adjusts her top before looking back your way, her dusky skin even darker from a blush.  The cow-girl gives you a smile and walks back to her part of camp.  A patch of white decorates the ground where she was standing - is that milk?  Whatever it is, it's gone almost as fast as you see it, devoured by the parched, wasteland earth.");
+		}
+		else if (hours == 20) output("Your favorite chocolate-colored cowgirl, Isabella, is moving about, gathering all of her scattered belongings and replacing them in her personal chest.  She yawns more than once, indicating her readiness to hit the hay, but her occasional glance your way lets you know she wouldn't mind some company before bed.");
+		else output("Isabella looks incredibly bored right now.");
+		//if (totalIsabellaChildren() > 0) {
+			//var babiesList:Array = [];
+			//if (getIsabellaChildType(IsabellaScene.OFFSPRING_HUMAN_BOYS) > 0) {
+				//babiesList.push((isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_HUMAN_BOYS) == 1 ? "a" : num2Text(isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_HUMAN_BOYS))) + " human son" + (isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_HUMAN_BOYS) == 1 ? "" : "s"));
+			//}
+			//if (isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_HUMAN_GIRLS) > 0) {
+				//babiesList.push((isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_HUMAN_GIRLS) == 1 ? "a" : num2Text(isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_HUMAN_GIRLS))) + " human daughter" + (isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_HUMAN_GIRLS) == 1 ? "" : "s"));
+			//}
+			//if (isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_HUMAN_HERMS) > 0) {
+				//babiesList.push((isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_HUMAN_HERMS) == 1 ? "a" : num2Text(isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_HUMAN_HERMS))) + " human herm" + (isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_HUMAN_HERMS) == 1 ? "" : "s"));
+			//}
+			//if (isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_COWGIRLS) > 0) {
+				//babiesList.push((isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_COWGIRLS) == 1 ? "a" : num2Text(isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_COWGIRLS))) + " cow girl" + (isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_COWGIRLS) == 1 ? "" : "s"));
+			//}
+			//if (isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_COWFUTAS) > 0) {
+				//babiesList.push((isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_COWFUTAS) == 1 ? "a" : num2Text(isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_COWFUTAS))) + " cow herm" + (isabellaScene.getIsabellaChildType(IsabellaScene.OFFSPRING_COWFUTAS) == 1 ? "" : "s"));
+			//}
+			//output("  Isabella has set up a small part of her \"corner\" in the camp as a nursery. She has sawn a " + (Math.ceil(isabellaScene.totalIsabellaChildren() / 2) == 1 ? "barrel" : "number of barrels") + " in half and lined " + (Math.ceil(isabellaScene.totalIsabellaChildren() / 2) == 1 ? "it" : "them") + " with blankets and pillows to serve as rocking cribs. "); 
+			//output("You have " + formatStringArray(babiesList) + " with her, all living here; unlike native Marethians, they will need years and years of care before they can go out into the world on their own.");
+		//}
+		output("\n\n");
+		if (showInteractButton) addButton(followerBtnNum++, "Isabella", function():* { processTime(2); callForFollowerIsabella() });
+	}
+}
+
+private var IsabellaTimePassedNotifyHook: * = IsabellaTimePassedNotifyGrapple();
+private function IsabellaTimePassedNotifyGrapple():* { 
+		loverCampMenuBlurb.push(followerCampMenuBlurbIsabella);
+	}
+
 public function isabellaFollower():Boolean {
 	return flags["COC.ISABELLA_FOLLOWER_ACCEPTED"] == 1 && int(flags["COC.ISABELLA_CAMP_DISABLED"]) == 0;
 
@@ -67,7 +146,9 @@ public function isabellaAffection(mod:int = 0):int {
 	
 	flags["COC.ISABELLA_AFFECTION"] += mod;
 	if(flags["COC.ISABELLA_AFFECTION"] > 100) flags["COC.ISABELLA_AFFECTION"] = 100;
-	else if(flags["COC.ISABELLA_AFFECTION"] < 0) flags["COC.ISABELLA_AFFECTION"] = 0;
+	else if (flags["COC.ISABELLA_AFFECTION"] < 0) flags["COC.ISABELLA_AFFECTION"] = 0;
+	
+	trace("Izzy new affection: " + flags["COC.ISABELLA_AFFECTION"]);
 	return flags["COC.ISABELLA_AFFECTION"];
 }
 
@@ -154,7 +235,7 @@ private function moveTheBitchIn():void {
 	
 	output("Isabella catches you staring and gives you a sultry, seductive look as she ask, \"<i>Mmm, do you see something you like, [pc.name]?  Do you like to watch mein butt while I work?  If zat is ze case zen ve vill never get anything done once I move in!</i>\"  You hesitantly look up at her face, and she laughs with a voice that tinkles like ringing bells.  \"<i>You can vatch me like zat if you want, but I vould rather you help me move all zis,</i>\" the cow-girl mentions.  You smile ruefully and help your ");
 	if(hasCompanions()) output("newest ");
-	output("camp follower gather and move her possessions to your camp.  It takes the better part of an hour, but the entire decor is coming with you, so it may just be worth it.\n\n");
+	output("camp follower gather and move her possessions to your camp.  It takes the better part of an hour, but the entire decor is coming with you, so it may just be worth it.");
 	output("\n\n(<b>Isabella now available in the lovers menu.</b>)");
 	flags["COC.ISABELLA_AFFECTION"] = 100;
 	flags["COC.ISABELLA_FOLLOWER_ACCEPTED"] = 1;
@@ -206,6 +287,7 @@ public function callForFollowerIsabella():void {
 		else output("\n\n“<i>Hello [pc.name]. What can Isabella help you with?</i>”");
 	}
 	
+	clearMenu();
 	if(flags["COC.ISABELLA_ACCENT_TRAINING_PERCENT"] < 100) addButton(0, "Accent Coach", isabellasAccentCoaching);
 	if(flags["COC.ISABELLA_MILKED_YET"] < 0) addButton(1, "Get Milk", getMilk);
 	//if(pc.hasItem(consumables.PROBOVA) && pc.hasGenitals()) addButton(2, "GiveProBova", isabellaBurps, undefined, "Give ProBova", "Isabella would probably drink a bottle of Pro Bova if you gave it to her.");
@@ -1376,9 +1458,9 @@ private function fuckIsabella():void {
 		if(isabellaAccent()) output("\"<i>I zuppose I could do vith some relief of mein own...  Very vell, [pc.name].  Ve vill have zex, you und I.</i>\"");
 		else output("\"<i>I guess I could do with some relief of my own...  Okay, [pc.name], let's do it.</i>\"");
 	}
-	output("\n\nWith a lusty grin, Isabella reaches behind her back and begins to undo the laces of her corset.  A moment later, and her massive milky mammaries pop free of their restraints, the huge soft orbs jiggling freely with every breath their owner takes.  Your bovine friend quickly pulls you out of your [pc.gear] too, letting you stand naked in the breeze, your [cock " + y + "] hardening at the occasional brush or stroke she gives it.");
+	output("\n\nWith a lusty grin, Isabella reaches behind her back and begins to undo the laces of her corset.  A moment later, and her massive milky mammaries pop free of their restraints, the huge soft orbs jiggling freely with every breath their owner takes.  Your bovine friend quickly pulls you out of your [pc.gear] too, letting you stand naked in the breeze, your [pc.cock " + y + "] hardening at the occasional brush or stroke she gives it.");
 
-	output("\n\nOnce denuded, Isabella drops to her knees and cups her huge breasts, hefting them up around your [cock " + y + "].  You shudder as her warm, soft titflesh envelops your prick, ");
+	output("\n\nOnce denuded, Isabella drops to her knees and cups her huge breasts, hefting them up around your [pc.cock " + y + "].  You shudder as her warm, soft titflesh envelops your prick, ");
 	if(pc.cockVolume(y) < cockVolume(50)) output("utterly engulfing your length");
 	else output("surrounding a fair amount of your massive shaft");
 	output(".  Slowly, the cow-girl begins to work her tits along your cock, rubbing her smooth, mottled skin up and down, up and down, occasionally venturing to lick you with her huge, wide tongue, nearly wrapping you in wet muscle between strokes of her breasts.");
@@ -1387,7 +1469,7 @@ private function fuckIsabella():void {
 
 	if(isabellaAccent()) output("\n\n\"<i>Nicht zo rough!</i>\"");
 	else output("\n\n\"<i>Not so rough!</i>\"");
-	output(" she cries, but does not hesitate to open her thighs for you and expose her slick cunt and the tight ring of her anus, nearly hidden between her big butt-cheeks.  You set to work on her as soon as you catch sight of her twat, burying your face in her groin and slurping at her slit with your tongue, lapping at the little trickles of girl-lube clinging to her inner walls.  She moans loudly, her high singing voice warbling into a drawn-out \"<i>MOOOOOOOOOOO!</i>\" as your tongue teases and caresses her cherry-nub; she grabs your [pc.hair] and pushes you in further as you begin to suckle her clit.  You continue to lap at her womanhood and its bud until she's leaking everywhere, her pussy positively soaked from your ministrations.  Contented in your efforts, you shove her hands off you and get onto your knees, your [cock " + y + "] flopping heavily onto her wet crotch.");
+	output(" she cries, but does not hesitate to open her thighs for you and expose her slick cunt and the tight ring of her anus, nearly hidden between her big butt-cheeks.  You set to work on her as soon as you catch sight of her twat, burying your face in her groin and slurping at her slit with your tongue, lapping at the little trickles of girl-lube clinging to her inner walls.  She moans loudly, her high singing voice warbling into a drawn-out \"<i>MOOOOOOOOOOO!</i>\" as your tongue teases and caresses her cherry-nub; she grabs your [pc.hair] and pushes you in further as you begin to suckle her clit.  You continue to lap at her womanhood and its bud until she's leaking everywhere, her pussy positively soaked from your ministrations.  Contented in your efforts, you shove her hands off you and get onto your knees, your [pc.cock " + y + "] flopping heavily onto her wet crotch.");
 
 	output("\n\nYou slide your dick across her entrance, coating yourself in her slick lubricants in preparation.  Again the cow-girl bellows loudly as you slip your shaft into her, stretching her pussy-lips into a warm embrace.  ");
 	//[(dick fitzwell)
@@ -1398,7 +1480,7 @@ private function fuckIsabella():void {
 
 	output("\n\nThat simply won't do.  You twist Isabella around, forcing her onto all fours like the cow she is.  Exhausted from her double-orgasm, she can only grunt in protest as you slide your dick back into her, your hips soon coming to rest against her abundant, cushiony ass.  You plow into her, sinking your fingers into her squishy cheeks as you pound her soaked cunt, her lube and femcum helping you to slam in and out of her at break-pelvis speeds.  She moos, but it turns into a yelp when you shove her face in the ground and yank on her tail, causing her passage to constrict, vice-like, around you.");
 
-	output("\n\nSlick and tight, Isabella's cow-cunt is the perfect hole for your needy [cock " + y + "].  You roar and, yanking her tail one last time, cum into her, splattering her innermost depths with your hot baby batter ");
+	output("\n\nSlick and tight, Isabella's cow-cunt is the perfect hole for your needy [pc.cock " + y + "].  You roar and, yanking her tail one last time, cum into her, splattering her innermost depths with your hot baby batter ");
 	if(pc.cumQ() <= 250) output("until you're utterly spent");
 	else if(pc.cumQ() <= 1000) output("until cum spurts out of her passage and stains her thighs");
 	else output("until her belly begins to bloat with the sheer amount of cream you're stuffing into her");

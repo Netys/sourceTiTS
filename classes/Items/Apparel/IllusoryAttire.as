@@ -77,13 +77,13 @@ package classes.Items.Apparel
 				if (isActive(targetCreature)) {
 					output(" While not covering anything, this bands still somehow give you decent appearance.");
 				}
-				else output(" With this bands, your appearance is even more provoking than mere nudity.");
+				else output(" With these bands, your appearance is even more provoking than mere nudity.");
 			}
 			if(validate != "") output(validate);
 		}
 		
 		public function onValidate(target:Creature, showOutput:Boolean = true):String { // actually, this should be override of a generic function
-			if (!target.hasArmor() || !target.armor is IllusoryAttire) return;
+			if (!target.hasArmor() || !target.armor is IllusoryAttire) return "";
 			
 			var isNineTails:Boolean = kGAMECLASS.isNineTails(target);
 			var ret:String = "";
@@ -93,7 +93,7 @@ package classes.Items.Apparel
 				target.armor = new IllusoryAttire(); // reset stats
 				TooltipManager.addTooltip(shortName, tooltip);
 			}
-			else if (nineTails || target.isPsionic()) {
+			else if (isNineTails || target.isPsionic()) {
 				if(!hasRandomProperties) { // first time message
 					ret += "\n\nYou feel your power resonating with your bands... You are fully in tune with them! Enchantment is now powerful enough to provide some real protection from attacks as well, and glamour effect is more effective too.";
 				}
@@ -108,7 +108,7 @@ package classes.Items.Apparel
 				TooltipManager.addTooltip(shortName, tooltip);
 			}
 			
-			if (showOutput && !target.hasStatusEffect("In Creation")) eventBuffer += ret;
+			if (showOutput && !target.hasStatusEffect("In Creation")) kGAMECLASS.eventBuffer += ret;
 			
 			return ret;
 		}

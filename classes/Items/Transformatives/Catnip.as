@@ -100,7 +100,7 @@ package classes.Items.Transformatives
 				if (kGAMECLASS.flags["CATNIP_USED"] == undefined) {
 					output(" A quiet-sounding 'snick' hits your ears, but nothing else. Did it even work? You look where pen touched your skin. There's a tiny red mark and nothing else. The pen's label displays the word ‘inactive’ in bold red text. It must have a built-in painkiller. Suddenly, your codex beeps responding to the connection request from injected nanobots.");
 					
-					output("\n\n<i>“Detected feedback-compatible Biosign Monitor device. Aborting automated route. Debug mode activated. The system is awaiting input. Please select a specific route or confirm default settings. Please note: targeted route is less effective than automated since it forces the override of the optimization algorithm.”</i>");
+					output("\n\n<i>“Detected feedback-compatible Biosign Monitor device. Aborting automated route. Debug mode activated. The system is awaiting input. Please select a specific route or confirm default settings. Please note: targeted route is less effective than automated since it forces an override of the optimization algorithm.”</i>");
 					
 					kGAMECLASS.flags["CATNIP_USED"] = 1;
 				}
@@ -298,7 +298,7 @@ package classes.Items.Transformatives
 			if (target.hasVagina()) buttLimit = 3;
 			if (target.buttRating() > buttLimit && target.buttRatingUnlocked(target.buttRating() - 1))
 			{
-				output("\n\nYour butt all of a sudden feels tight, as though you were wearing a pair of pants two sizes too small. You wince and grip your buttocks, and feel it losing mass under your hand. After a moment, you're left with a much smaller, less curvy butt.</b>");
+				output("\n\nYour butt all of a sudden feels tight, as though you were wearing a pair of pants two sizes too small. You wince and grip your buttocks, and feel it losing mass under your hand. After a moment, you're left with a much <b>smaller, less curvy butt.</b>");
 				if (target.buttRating() >= buttLimit + 9 && target.buttRatingUnlocked(target.buttRating() - 1)) target.buttRating( -1);
 				if (target.buttRating() >= buttLimit + 6 && target.buttRatingUnlocked(target.buttRating() - 1)) target.buttRating( -1);
 				if (target.buttRating() >= buttLimit + 4 && target.buttRatingUnlocked(target.buttRating() - 1)) target.buttRating( -1);
@@ -697,7 +697,7 @@ package classes.Items.Transformatives
 					if(target.balls > 0) output("right above your [pc.sack]");
 					else if(target.hasVagina()) output("right above your [pc.vaginas]");
 					else output("in the center of your crotch");
-					output(". It feels achy and a little painful but very, very sensitive, and it's getting bigger with alarming rapidity. The little knot is sticking an inch out past your [pc.skinFurScales], turning glossy and red as it does. You touch its tip and moan, assaulted by the pleasure you barely understand, watching the bulge stretch out another inch in eager response. In seconds, you're rubbing and fondling it, coaxing more and more length from your crotch until ");
+					output(". It feels achy and a little painful but very, very sensitive, and it's getting bigger with alarming rapidity. The little knot is sticking an inch out past your [pc.skinFurScales], turning glossy and red as it does. You touch its tip and moan, assaulted by a pleasure you barely understand, watching the bulge stretch out another inch in eager response. In seconds, you're rubbing and fondling it, coaxing more and more length from your crotch until ");
 					target.createCock();
 					target.shiftCock(0, GLOBAL.TYPE_FELINE);
 					target.cocks[0].cLengthRaw = 12;
@@ -756,9 +756,9 @@ package classes.Items.Transformatives
 				if (target.balls == 0 && target.hasGenitals() && !target.hasStatusEffect("Genital Slit"))
 				{
 					output("\n\nAn odd sensation overtakes you. Your entire body shivers, as flesh is rippling around your [pc.crotch], forming a new... slit? After some experiments with internal muscles, you've found that you can pull your genitals in and push them out at will.");
-					if(target.hasCock() && target.hasFullSheaths()) output(" Strangely enough, you still have the animalistic sheath, unlike reptiles.");
+					if(target.hasCock() && target.hasFullSheaths()) output(" Strangely enough, you still have an animalistic sheath, that of a reptile.");
 					output(" Skin of your new folds are surprisingly taut when your genitals are retracted - looks like you have some decent protection against low blows from now on!");
-					output(" <b>Your genitals are now hidden inside the protective slit.</b>");
+					output(" <b>Your genitals are now hidden inside a protective slit.</b>");
 					target.createStatusEffect("Genital Slit");
 					changes++;
 					surprise = true;
@@ -833,7 +833,7 @@ package classes.Items.Transformatives
 				target.addTailFlag(GLOBAL.FLAG_PREHENSILE);
 				changes++;
 				
-				output("\n\It looks like bypassing safety can be a good idea sometimes! Your appendage" + (target.tailCount > 1 ? "s are" : " is") + " definitely better now.");
+				output("\n\nIt looks like bypassing safety can be a good idea sometimes! Your appendage" + (target.tailCount > 1 ? "s are" : " is") + " definitely better now.");
 			}
 			
 			afterTF(target);

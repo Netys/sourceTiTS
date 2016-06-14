@@ -19,10 +19,14 @@ public function cocCampMenu():void {
 	
 	showLocationName(); // force validation, since mainGameMenu does not always do it
 	
-	output("Your campsite is fairly simple at the moment.  Your tent and bedroll are set in front of the rocks that lead to the portal.  You have a small fire pit as well.  "); // there are no actual counter for time in Mareth...
-	output("You have a number of traps surrounding your makeshift home, but they are fairly simple and may not do much to deter a demon.  ");
+	if (isabellaFollower())
+		output("Your campsite got a lot more comfortable once Isabella moved in. Carpets cover up much of the barren ground, simple awnings tied to the rocks provide shade, and hand-made wooden furniture provides comfortable places to sit and sleep. ");
+	else
+		output("Your campsite is fairly simple at the moment.  Your tent and bedroll are set in front of the rocks that lead to the portal. You have a small fire pit as well. "); // there are no actual counter for time in Mareth...
+	
+	output("You have a number of traps surrounding your makeshift home, but they are fairly simple and may not do much to deter a demon. ");
 	output("The portal shimmers in the background as it always does, looking menacing and reminding you of why you came.");
-	if (flags["COC.ANT_KIDS"] > 1000) outputText("  Really close to the portal there is a small entrance to the underground maze created by your ant children. And due to Phylla wish from time to time one of your children coming out this entrance to check on the situation near portal. You feel a little more safe now knowing that it will be harder for anyone to go near the portal without been noticed or...if someone came out of the portal.");
+	if (flags["COC.ANT_KIDS"] > 1000) outputText(" Really close to the portal there is a small entrance to the underground maze created by your ant children. And due to Phylla wish from time to time one of your children coming out this entrance to check on the situation near portal. You feel a little more safe now knowing that it will be harder for anyone to go near the portal without been noticed or... if someone came out of the portal.");
 	output("\n\n");
 	
 	showExplorationButton(); // as well as places
