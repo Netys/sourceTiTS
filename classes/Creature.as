@@ -9487,58 +9487,6 @@
 			if (hasFur() && counter > 0) counter++;
 			return counter;
 		}
-		// Copy-paste from CoC. Messy...
-		public function kitsuneScore():Number
-		{
-			var kitsuneCounter:int = 0;
-			//If the character has fox ears, +1
-			if (earType == GLOBAL.TYPE_VULPINE)
-				kitsuneCounter++;
-			//If the character has a fox tail, +1
-			if (hasTail(GLOBAL.TYPE_VULPINE))
-				kitsuneCounter++;
-			//If the character has two or more fox tails, +2
-			if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount >= 2)
-				kitsuneCounter += 2;
-			if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9)
-				kitsuneCounter += 1;
-			//If the character has tattooed skin, +1
-			//9999
-			//If the character has a 'vag of holding', +1
-			if (biggestVaginalCapacity() >= 8000)
-				kitsuneCounter++;
-			//If the character's kitsune score is greater than 0 and:
-			//If the character has a normal or foxy face, +1
-			if (kitsuneCounter > 0 && (faceType == GLOBAL.TYPE_HUMAN || faceType == GLOBAL.TYPE_VULPINE))
-				kitsuneCounter++;
-			//If the character's kitsune score is greater than 1 and:
-			//If the character has kitsune-colored hair
-			// commented, requires Lucid Dreams mod parts to work
-			//if (kitsuneCounter > 0 && (InCollection(furColor, kGAMECLASS.basicKitsuneHair, kGAMECLASS.elderKitsuneColors, kGAMECLASS.corruptKitsuneColors)))
-				//kitsuneCounter++;
-			//If the character's femininity is 40 or higher, +1
-			if (kitsuneCounter > 0 && femininity >= 40)
-				kitsuneCounter++;
-			//If the character has fur of non-foxy color
-			// commented, requires Lucid Dreams mod parts to work
-			//if (skinType == GLOBAL.SKIN_TYPE_FUR && !InCollection(furColor, kGAMECLASS.basicKitsuneFur, kGAMECLASS.elderKitsuneColors, kGAMECLASS.corruptKitsuneColors))
-				//kitsuneCounter--;
-			if (skinType > GLOBAL.SKIN_TYPE_FUR)
-				kitsuneCounter -= 2;  // Not skin or fur
-			//If the character has abnormal legs, -1
-			if (!InCollection(legType, GLOBAL.TYPE_HUMAN, GLOBAL.TYPE_VULPINE))
-				kitsuneCounter--;
-			//If the character has a nonhuman face, -1
-			if (!InCollection(faceType, GLOBAL.TYPE_HUMAN, GLOBAL.TYPE_VULPINE))
-				kitsuneCounter--;
-			//If the character has ears other than fox ears, -1
-			if (earType != GLOBAL.TYPE_VULPINE)
-				kitsuneCounter--;
-			//If the character has tail(s) other than fox tails, -1
-			if (hasTail() && tailType != GLOBAL.TYPE_VULPINE)
-				kitsuneCounter--;
-			return kitsuneCounter;
-		}
 		public function frogScore(): int
 		{
 			var counter: int = 0;
