@@ -784,7 +784,7 @@ package classes.Items.Transformatives
 			//Grow feline tail. One tail, since this is not exactly Kaithrit TF. But will keep second Kaithrit tail, if you already have it.
 			if(!target.hasTail(GLOBAL.TYPE_FELINE))
 			{
-				if (target.tailTypeUnlocked(GLOBAL.TYPE_FELINE) || target.hasTail(GLOBAL.TYPE_COCKVINE))
+				if (target.tailTypeUnlocked(GLOBAL.TYPE_FELINE) || target.hasParasiteTail())
 				{
 					//{If PC had a tail before: }
 					if(target.tailCount == 1) output("\n\nYou feel something itching on your [pc.tail]. Twisting around, you watch in a mix of horror and excitement as [pc.furColor] bristles, the beginnings of a thin coat of fur, sprout up across the length of your reforming posterior appendage. It starts curling and twisting as the change completes, leaving you with a <b>feline tail.</b>");
@@ -798,26 +798,46 @@ package classes.Items.Transformatives
 						output(". There's a raised, irritated lump there, and it's getting bigger. Wiggling slightly, it extends as new bones form within it, gently wagging as it lengthens. You're growing a tail! Fine hairs sprout on its [pc.skin], giving it a distinctly feline cast. When it finishes growing, it's long enough to begin curling and twisting vigorously; <b>you've obviously gained a feline tail.</b>");
 					}
 					
-					if (target.hasTailCock())
+					var hasTailCock:Boolean = target.hasTailCock();
+					var hasTailCunt:Boolean = target.hasTailCunt();
+					
+					target.clearTailFlags();
+					if (hasTailCock)
 					{
-						target.clearTailFlags();
 						target.tailGenitalColor = "pink";
 						target.tailGenitalArg = GLOBAL.TYPE_FELINE;
 						target.tailGenital = GLOBAL.TAIL_GENITAL_COCK;
 						target.addTailFlag(GLOBAL.FLAG_TAILCOCK); // that's a hell load of flags...
+						if (hasTailCunt) target.addTailFlag(GLOBAL.FLAG_TAILCUNT); // Since I have no real idea how combo version should work, I also don't know how to fork it properly, so let's silently apply flag
 						target.addTailFlag(GLOBAL.FLAG_PREHENSILE);
 						target.addTailFlag(GLOBAL.FLAG_NUBBY); // not really sure how it should be actually handled
 						target.addTailFlag(GLOBAL.FLAG_TAPERED);
 						target.addTailFlag(GLOBAL.FLAG_SHEATHED);
 						output(" The tip of your tail feels strange. After some probing, you've found your tail genitalia still present, but totally unnoticeable under a furry sheath when not aroused.");
-						if(target.tailType == GLOBAL.TYPE_COCKVINE) output(" And much less prone to act by itself as well.");
+						if(target.hasParasiteTail()) output(" And much less prone to act by itself as well.");
 						output(".");
-					} else target.clearTailFlags();
+					}
+					else if (hasTailCunt)
+					{
+						target.tailGenitalColor = "pink";
+						target.tailGenitalArg = GLOBAL.TYPE_FELINE;
+						target.tailGenital = GLOBAL.TAIL_GENITAL_VAGINA;
+						target.addTailFlag(GLOBAL.FLAG_TAILCUNT);
+						target.addTailFlag(GLOBAL.FLAG_PREHENSILE);
+						target.addTailFlag(GLOBAL.FLAG_SHEATHED);
+						output(" The tip of your tail feels strange. After some probing, you've found your tail genitalia still present, but totally unnoticeable when not aroused.");
+						if(target.hasParasiteTail()) output(" And much less prone to act by itself as well.");
+						output(".");
+					}
+					
+					kGAMECLASS.flags["CUNT_TAIL_PREGNANT_TIMER"] = undefined;
+					kGAMECLASS.flags["DAYS_SINCE_FED_CUNT_TAIL"] = undefined;
 					
 					target.tailCount = 1;
 					target.tailType = GLOBAL.TYPE_FELINE;
 					target.addTailFlag(GLOBAL.FLAG_LONG);
 					target.addTailFlag(GLOBAL.FLAG_FURRED);
+					if (target.hasSkinFlag(GLOBAL.FLAG_FLUFFY)) target.addTailFlag(GLOBAL.FLAG_FLUFFY);
 					changes++;
 				}
 				else output(target.tailTypeLockedMessage());
@@ -831,6 +851,7 @@ package classes.Items.Transformatives
 				
 				target.addTailFlag(GLOBAL.FLAG_LONG); // just in case
 				target.addTailFlag(GLOBAL.FLAG_PREHENSILE);
+				if (target.hasSkinFlag(GLOBAL.FLAG_FLUFFY)) target.addTailFlag(GLOBAL.FLAG_FLUFFY);
 				changes++;
 				
 				output("\n\nIt looks like bypassing safety can be a good idea sometimes! Your appendage" + (target.tailCount > 1 ? "s are" : " is") + " definitely better now.");

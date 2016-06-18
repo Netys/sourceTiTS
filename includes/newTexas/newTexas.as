@@ -1294,8 +1294,7 @@ public function specialOrdersForTreatedGals():void
 public function stephIrsonBySavinWhoSaysHesTiredOfTreatedCowBimbosThenMakesHerATreatedCowGirlForShitsAndGigglesWhyIsThisFunctionNameSoLong():void
 {
 	clearOutput();
-	showName("STEPH\nIRSON");
-	showBust("STEPH_2");
+	stephHeader(3);
 	
 	flags["STEPH_WATCHED"] = 1;
 	
@@ -1326,9 +1325,8 @@ public function stephIrsonBySavinWhoSaysHesTiredOfTreatedCowBimbosThenMakesHerAT
 public function stephIrsonEp3Pt2():void
 {
 	clearOutput();
-	author("Savin");
-	showName("STEPH\nIRSON");
-	showBust("STEPH_2");
+	stephHeader(3);
+	
 	output("Steph sets her big bucket down, cracks her knuckles, and wipes the milk from her lips. <i>“Right, then. That’s a Tehan sheila for you. Now, we’re going to have to be a little more careful up ahead: we’re on a quest to find a Tehan male. Now, these bovine ladies we’ve met so far are typical of their sex here: quiet, content, eager to please. But the studs here on Grand Teh are a bit more aggressive. They’re outnumbered ten to one by females, with each bull able to control his own harem of females or, as is the case on many ranches, spread their wild oats freely among all the girls. But the Treatment’s made ‘em big, burly, and eager to go toe-to-toe on a hairpin.”</i>");
 	output("\n\nAs she’s talking, Steph’s walks out of the stall and back into the barn proper. Her <i>“quest”</i> takes her all the way to the other end of the barn, where in the background of her narration, you can see a huge, muscular man pounding away at one of the harnessed-up cowgirls, plunging his cock into her spread pussy as the automated milkers work their magic on her. Seeing the proceedings out of the corner of her gray eye, Steph freezes mid-step, hunching down and whispering to the camera drone, <i>“Alright, here we go. I’m going to have to be very, very careful not to earn this bull’s ire. Small words, a non-threatening tone.... I absolutely do not want to be seen as a threat, especially during what must be mating season here on Teh.”</i>");
 	output("\n\nIn proper <i>Galactic Huntress</i> fashion, Steph starts to creep up toward the bull, stealthily making her way up behind his pistoning hips. The camera drone floats around to get a better picture of him: mostly human, but freakishly tall, with massive bull horns growing from his brow. The man’s muscular to the point of a bodybuilder, with a thick layer of body hair that clings tightly to his darkly tanned skin. His jaw is locked in a frown of effort, and he’s grunting deeply, almost like a real bull. Every powerful hip-thrust sends the cow-girl rocking in her harness, her assflesh rippling with the impacts.");
@@ -1352,9 +1350,8 @@ public function stephIrsonEp3Pt2():void
 public function stephIrsonEp3Pt3():void
 {
 	clearOutput();
-	author("Savin");
-	showName("STEPH\nIRSON");
-	showBust("STEPH_3_NUDE");
+	stephHeader(3, true);
+	
 	output("<i>“Hey, I’m not a-”</i> Steph starts to say, getting cut off when the bull bucks her onto the milker. His free hand all but rips her shirt off by the back, leaving tattered fragments of cloth hanging limply from Steph’s shoulders.");
 	output("\n\n<i>“Why don’t you interview this?”</i> he chuckles, aiming the camera drone down to watch as he cranes Steph’s head into the thighs of the cow-girl he was just fucking, rubbing the huntress’s nose into the cream-packed slit between them. The cow immediately starts to moan, arching her back and clutching at her over-sized jugs - you can’t see the action up close, but something tells you Steph isn’t exactly resisting the bull’s direction.");
 	output("\n\nThe stud chuckles and steps back, keeping one hand firmly planted on Steph’s back as he circles around, giving you - and the hundreds of thousands of other viewers across the galaxy - an ultra-HD panoramic of Steph Irson lapping up his cum from the cow’s twat. <i>“Always wanted to do a porno,”</i> he laughs, almost boomingly loud so close to the drone’s microphone.");
@@ -2311,7 +2308,7 @@ public function carrieSoothingShowerGo(response:String = "intro"):void
 		// Repeat
 		case "shower repeat":
 			showName("SHOWER\nROOM");
-			showBust("HORISHA", "PECK");
+			showBust("HORISHA_AND_PECK");
 			
 			output("You don’t have to say anything; all you have to do is go across, curl each arm around a warm, giggly cow-girl, breathe in their sweet, milky scent and give their plump butts a good, healthy squeeze. Once again, they lead you to the showers detached from the main barn.");
 			output("\n\n");
@@ -2336,7 +2333,7 @@ public function carrieSoothingShowerGo(response:String = "intro"):void
 		// Join Us
 		case "shower fivesome intro":
 			showName("SHOWER\nROOM");
-			showBust("HORISHA", "PECK");
+			showBust("HORISHA_AND_PECK");
 			
 			output("<i>“Why don’t you join us?”</i> you offer with a rakish grin. <i>“You know it’ll be fun.”</i>");
 			output("\n\nThe cow-mazon leans back on her chair for a long moment, drinking the three of you in with the same, leisured grin.");
@@ -2352,7 +2349,7 @@ public function carrieSoothingShowerGo(response:String = "intro"):void
 			break;
 		case "shower fivesome p1":
 			showName("SHOWER\nROOM");
-			showBust("PECK_NUDE", "HORISHA_NUDE", "CARRIE_NUDE", "CORA_NUDE");
+			showBust("HORISHA_AND_PECK", "CARRIE_NUDE", "CORA_NUDE");
 			
 			output("Your bullish impulses seethe in the presence of so many plush, willing cows, and once within the enclosed, steamy space of the communal shower, their sweet, fruity smell heavy in your nostrils, they make demands of you that you cannot resist. The presence of another male - even such a male as Peck, half the size of his owner, girly shoulders, hairless on his body and lips every bit as glossy and perfect for cock-sucking as Carrie’s - demands you step up and make it clear who the alpha here is.");
 			output("\n\nThe moment he takes his tight clothes off, displaying an ass as pert, cute and provoking as his features, you’re on top of him, sliding your [pc.cock] between his pale cheeks, letting one hand trail down his flat front and the other firmly clutch his thick, eight-inch horse dick. He whimpers but doesn’t pull away, simply shifts his soft buttocks up your water-slicked shaft and looks over his shoulder at you with a butter-wouldn’t-melt expression. Pulse thudding in your temple, you push him against the enamel wall of the shower and use it as stanchion to inexorably open his pink fuck-hole with your [pc.cockHead] and push your dripping cock into the tight, hot tunnel of his ass, intent on reshaping it in your own throbbing, dominant dick’s image. His breathy little gasps, little tenses of the muscles and his slim fingers grasping at your [pc.hips] spur you on.");
@@ -2388,7 +2385,7 @@ public function carrieSoothingShowerGo(response:String = "intro"):void
 			break;
 		case "shower fivesome p2":
 			showName("SHOWER\nROOM");
-			showBust("HORISHA_NUDE", "CORA_NUDE", "CARRIE_NUDE", "PECK_NUDE");
+			showBust("HORISHA_AND_PECK", "CORA_NUDE", "CARRIE_NUDE");
 			
 			output("You relax back on a wooden bench, [pc.eachCock] throbbing satisfyingly, reveling in the soundtrack of gently panting cowgirls and bois. With your immediate lust and bestial imperatives seen to, you’re happy to let somebody else take the lead. It’s no surprise who that is.");
 			output("\n\n<i>“Nice dick,”</i> Horisha observes, her ebony muscle, palpitating F-cups and white teeth looming over you. <i>“Mind if I use it?”</i> You signal your sentiments to this idea by shifting your grip along your [pc.cock], instantly becoming erect again, [pc.eyes] fixed upon her luscious body.");
@@ -2420,7 +2417,7 @@ public function carrieSoothingShowerGo(response:String = "intro"):void
 			break;
 		case "shower fivesome p3":
 			showName("SHOWER\nROOM");
-			showBust("HORISHA_NUDE", "CORA_NUDE", "CARRIE_NUDE", "PECK_NUDE");
+			showBust("HORISHA_AND_PECK", "CORA_NUDE", "CARRIE_NUDE");
 			
 			output("It’s a little while later. You sit back and bask in a well-earned glow next to Horisha, water drizzling down your [pc.chest]. Your hand lazily curls between her muscular thighs. In front of you Carrie and Peck are putting on a little show for you two, hands running over each other’s bare, heat-blushed bodies, constantly stealing lusty, snickering looks at their alphas. Cora’s being put to good use.");
 			output("\n\n<i>“Should bring some stuff in here next time,”</i> you murmur. The fauxcow’s fingers stroke hard in Carrie’s twat and the two french wetly. <i>“Couple of dildos, bullet vibes, maybe a paddle... really go to town.”</i>");

@@ -742,25 +742,30 @@ public function sleepHeal():void
 		pc.HP(Math.round(pc.HPMax()));
 	}
 	// Fecund Figure shape loss (Lose only after sore/working out)
-	if(pc.hasPerk("Fecund Figure") && pc.hasStatusEffect("Sore"))
+	if(pc.hasPerk("Fecund Figure") && pc.isSore())
 	{
 		var numPreg:int = pc.totalPregnancies();
 		if(pc.isPregnant(3)) numPreg--;
+		
+		var weightLoss:int = 0;
+		if(pc.hasStatusEffect("Sore")) weightLoss = -1;
+		if(pc.hasStatusEffect("Very Sore")) weightLoss = -2;
+		if(pc.hasStatusEffect("Worn Out")) weightLoss = -3;
+		
 		if(numPreg <= 0)
 		{
-			pc.addPerkValue("Fecund Figure", 1, -1);
-			pc.addPerkValue("Fecund Figure", 2, -1);
-			pc.addPerkValue("Fecund Figure", 3, -1);
+			pc.addPerkValue("Fecund Figure", 1, weightLoss);
+			pc.addPerkValue("Fecund Figure", 2, weightLoss);
+			pc.addPerkValue("Fecund Figure", 3, weightLoss);
 		}
-		pc.addPerkValue("Fecund Figure", 1, -1);
-		pc.addPerkValue("Fecund Figure", 2, -1);
-		pc.addPerkValue("Fecund Figure", 3, -1);
+		pc.addPerkValue("Fecund Figure", 1, weightLoss);
+		pc.addPerkValue("Fecund Figure", 2, weightLoss);
+		pc.addPerkValue("Fecund Figure", 3, weightLoss);
 		if(pc.perkv1("Fecund Figure") < 0) pc.setPerkValue("Fecund Figure", 1, 0);
 		if(pc.perkv2("Fecund Figure") < 0) pc.setPerkValue("Fecund Figure", 2, 0);
 		if(pc.perkv3("Fecund Figure") < 0) pc.setPerkValue("Fecund Figure", 3, 0);
 	}
-	pc.removeStatusEffect("Sore");
-	pc.removeStatusEffect("Sore Counter");
+	if(pc.isSore()) soreChange(-3);
 	pc.removeStatusEffect("Jaded");
 	
 	if (pc.energy() < pc.energyMax()) pc.energyRaw = pc.energyMax();
@@ -1147,8 +1152,7 @@ public function move(arg:String, goToMainMenu:Boolean = true):void {
 		if (pc.armor is IllusoryAttire && IllusoryAttire.isActive(pc)) nudistPrevention = false;
 		// Wrap yorself into your fluffy tails! At least 6 of them.
 		if (pc.hasTail() && pc.hasTailFlag(GLOBAL.FLAG_LONG) && pc.hasTailFlag(GLOBAL.FLAG_FLUFFY) && pc.hasTailFlag(GLOBAL.FLAG_FURRED) && pc.tailCount >= 6) nudistPrevention = false;
-		// Cover yourself with your fuckton of wings
-		if (pc.wingType == GLOBAL.TYPE_DOVE && pc.wingCount >= 4 && pc.genitalLocation() <= 1) nudistPrevention = false;
+		if(pc.canCoverSelf(true)) nudistPrevention = false;
 		if(nudistPrevention)
 		{
 			clearOutput();
@@ -1395,6 +1399,9 @@ public function variableRoomUpdateCheck():void
 		rooms["573"].removeFlag(GLOBAL.OBJECTIVE);
 		rooms["574"].removeFlag(GLOBAL.OBJECTIVE);
 	}
+	// Gianna
+	if (giannaAWOL()) rooms["512"].removeFlag(GLOBAL.NPC);
+	else rooms["512"].addFlag(GLOBAL.NPC);
 	
 	
 	/* MYRELLION */
@@ -1734,6 +1741,9 @@ public function processTime(arg:int):void {
 			}
 		}
 		
+		// Gianna AWOL timer
+		if(flags["GIANNA_AWAY_TIMER"] != undefined && flags["GIANNA_AWAY_TIMER"] > 0) giannaAWOL(-1);
+		
 		//Ovilium tracker removal
 		if(pc.hasStatusEffect("Ovilium")) oviliumEffectCheck();
 		//Clippex procs!
@@ -1904,11 +1914,17 @@ public function processTime(arg:int):void {
 				else eventBuffer += "\n\n<b>Your " + pc.assholeDescript() + " recovers from the brutal stretching it has received and tightens up.</b>";
 			}
 			//Cunt snake pregnancy stuff
-			if(pc.hasCuntSnake() && flags["CUNT_TAIL_PREGNANT_TIMER"] > 0) {
-				flags["CUNT_TAIL_PREGNANT_TIMER"]--;
-				if(flags["CUNT_TAIL_PREGNANT_TIMER"] == 1) {
-					flags["CUNT_TAIL_PREGNANT_TIMER"] = 0;
-					eventQueue[eventQueue.length] = giveBirthThroughCuntTail;
+			if (flags["CUNT_TAIL_PREGNANT_TIMER"] > 0) {
+				if (!pc.hasCuntSnake()) {
+					flags["CUNT_TAIL_PREGNANT_TIMER"] = undefined;
+					flags["DAYS_SINCE_FED_CUNT_TAIL"] = undefined;
+				}
+				else {
+					flags["CUNT_TAIL_PREGNANT_TIMER"]--;
+					if(flags["CUNT_TAIL_PREGNANT_TIMER"] == 1) {
+						flags["CUNT_TAIL_PREGNANT_TIMER"] = 0;
+						eventQueue[eventQueue.length] = giveBirthThroughCuntTail;
+					}
 				}
 			}
 			//Shade cunt snakustuff
@@ -1941,9 +1957,17 @@ public function processTime(arg:int):void {
 				//Unlock dat shiiit
 				if(flags["HOLIDAY_OWEEN_ACTIVATED"] == undefined && (isHalloweenish() || rand(100) == 0)) eventQueue.push(hollidayOweenAlert);
 				if(pc.hasPerk("Honeypot") && days % 3 == 0) honeyPotBump();
-				//Exhibitionism reduction! Reduces exhibition if chest, crotch and ass are not all exposed
-				if(!(pc.isCrotchExposed() && pc.isAssExposed() && pc.isChestExposed()))
-					pc.exhibitionism(-0.5);
+				//Exhibitionism reduction!
+				if
+				(	!(pc.armor is EmptySlot)
+				&&	!(pc.lowerUndergarment is EmptySlot || pc.lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL) || pc.lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_GROIN) || pc.lowerUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_ASS))
+				&&	!(pc.upperUndergarment is EmptySlot || pc.upperUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_FULL) || pc.upperUndergarment.hasFlag(GLOBAL.ITEM_FLAG_EXPOSE_CHEST))
+				)
+				{
+					if(pc.isChestExposed() && pc.isCrotchExposed() && pc.isAssExposed())
+						{ /* No reduction for a full set of exposed clothing! */ }
+					else pc.exhibitionism(-0.5);
+				}
 				// New Texas cockmilker repair cooldown.
 				if (flags["MILK_BARN_COCKMILKER_BROKEN"] == undefined && flags["MILK_BARN_COCKMILKER_REPAIR_DAYS"] != undefined)
 				{
@@ -2190,6 +2214,18 @@ public function racialPerkUpdateCheck():void
 			msg += "\n\n(<b>Perk Lost: Slut Stamp</b>)";
 			pc.removePerk("Slut Stamp");
 		}
+	}
+	if (pc.hasPerk("Androgyny") && pc.perkv1("Androgyny") > 0 && !pc.hasFaceFlag(GLOBAL.FLAG_MUZZLED))
+	{ // racialPerkUpdateCheck: removal of Androgyny perk with the loss of muzzle.
+		msg += "\n\nWith your face becoming more human, your appearance is now no longer androgynous.";
+		msg += "\n\n(<b>Perk Lost: Androgyny</b> - You've lost your muzzle.)";
+		pc.removePerk("Androgyny");
+	}
+	if (pc.hasPerk("Icy Veins") && pc.perkv1("Icy Veins") > 0 && (!pc.hasSkinFlag(GLOBAL.FLAG_FLUFFY) || pc.skinType != GLOBAL.SKIN_TYPE_FUR))
+	{ // racialPerkUpdateCheck: removal of Icy Veins perk with he loss of fluffy fur (fork on still having fur but not fluffy flag?).
+		msg += "\n\nWithout all that thick, fluffy coat of fur you suddenly feel rather cold...";
+		msg += "\n\n(<b>Perk Lost: Icy Veins</b> - You've lost your insulating coat of fur, and as a result you are now weaker against cold.)";
+		pc.removePerk("Icy Veins");
 	}
 	
 	if(msg.length > 0) eventBuffer += msg;

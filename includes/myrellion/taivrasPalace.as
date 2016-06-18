@@ -1515,7 +1515,7 @@ public function youMarriedAnEvilChick():void
 	output("\n\nDane staggers a half-step back from the pain, but he doesn’t drop the shield. He leans further back, sweeping the shield up and into the underside of Queenguard’s polished blade. The clang of metal on metal reverberates through the cavernous chamber as the two bodyguards struggle. The nyrea barely keeps her grip on her weapon, but Dane never needed to disarm her, just take away her biggest defense - the shield - and open her up to a strike.");
 	output("\n\nThe metal spearpoint flashes as Dane’s fist carries it forward into the dented section of the nyrea’s armor. The impact reminds you of the sound of the industrial steel punches in one of your father’s factories. Dane’s hand comes away empty, the only evidence of his strike a rent in his foe’s armor and a protruding bit of wood. Thick purple blood oozes down the plate covering Queensguard’s legs, staining them with visible defeat.");
 	output("\n\n<i>“Told you that you should’ve brought a gun,”</i> Dane snarls, kicking the nyrea square in the chest. She drops like a sack of bricks and curls into a ball, wincing from what must be terrible abdominal pain. <i>“Musta ruptured something other than your sperm sacks, huh? I guess not all the male nyrea get off on penetration.”</i>");
-	output("\n\nDane doesn’t look much better off, but he’s still standing, somehow. He slips the shield onto his lower left arm and nods respectfully to you. <i>“Thanks for the assist. A word of advice - don’t get into the bodyguarding game. Half the job is bleeding for the boss.”</i>");
+	output("\n\nDane doesn’t look much better off, but he’s still standing, somehow. He slips the shield onto his lower left arm and turns to you. <i>“Thanks for the distraction. A word of advice - don’t get into the bodyguarding game. Half the job is bleeding for the boss.”</i>");
 	output("\n\n<i>“Enough of this!”</i> the shocked Queen cries, leaping to her feet and grabbing her spear. <i>“I will lay you low myself!”</i>");
 	output("\n\nDane looks ready to rumble, to face down your new mate - and you too, if need be. But a shrill cry from the stairwell draws his attention, and with a grunt Dane is forced to retreat, rushing to save his cowardly ward.");
 	output("\n\n<i>“After him!”</i> Taivra shouts at the handful of huntresses left in the room, who rush towards the stairs. The queen leaps up a moment later, but not to pursue your cousin or [rival.hisHer] brutal bodyguard: instead, she rushes to the side of the injured Queensguard, pressing her hands to her injured subject’s abdomen. <i>“Damn them - damn them all,”</i> Taivra grunts, ripping her cape off and tying it around the wounded knight’s injury. <i>“Be still, dearest... the healers will be here soon.”</i>");
@@ -1776,7 +1776,7 @@ public function fuckTaivra():void
 	clearOutput();
 	showTaivra();
 	author("Savin");
-	output("You grab the defeated queen’s spear and levels its jagged tip at her chest. She’d have made you her sex slave had you lost, so it’s only fair you at least get to sample her at least he once. You curtly tell her that you’ll leave her people in peace if she surrenders her body to you - a prospect she should be intimately familiar with.");
+	output("You grab the defeated queen’s spear and level its jagged tip at her chest. She’d have made you her sex slave had you lost, so it’s only fair you at least get to sample her at least he once. You curtly tell her that you’ll leave her people in peace if she surrenders her body to you - a prospect she should be intimately familiar with.");
 	output("\n\n<i>“I suppose you’ve earned it,”</i> the queen admits, beckoning one of her submissives over to tend to Queensguard. She stands after that, geting pushing the tip of your spear out of the way. <i>“I’ll come willingly. To my chambers, then?”</i>");
 	output("\n\nOh, no. You want every last one of Taivra’s followers to see what happens when you get between a Steele and [pc.hisHer] prize. You grab the queen’s wrist and twist her around, shoving her down onto the dias at the foot of her throne. She grunts, biting back a yelp of surprise as she’s forced down, and your hands grab the hem of her mail panties. One good yank and she’s bared to the air, her full cheeks swaying and a forearm-length shaft of pink ovipositor dangling between her legs. You grin, seeing a dark ring of asshole winking at you between her cheeks, though no feminine sex in sight");
 	//if read codex:
@@ -1826,7 +1826,7 @@ public function fuckTaivrasAss():void
 	output("\n\nStill groping the queen’s rump, you shift your [pc.hips] forward, pressing your cockhead into her sloppy asshole. After two loads of cum have basted it, there’s not much her hole can do to resist you: the tight ring of flesh gives way easily, letting you glide into the tight, hot passage of Taivra’s queenly ass. She squeezes hard around you, arching her back and trying hard to suppress a cry of pleasure as you slide inch after inch of cockflesh into her.");
 	if(pc.cockTotal() > 1)
 	{
-		output("Your other cock");
+		output(" Your other cock");
 		if(pc.cockTotal() == 2) output(" pushes");
 		else output("s push");
 		output(" up against her taut cheeks, drooling ");

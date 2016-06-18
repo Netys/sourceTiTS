@@ -2701,7 +2701,7 @@ public function validatePlayerKitsuneElderColor():void {
 }
 
 public function isNineTails(target:Creature):Boolean {
-	return target.hasTail(GLOBAL.TYPE_VULPINE) && target.tailCount >= 9 && (target.hasPerk("Enlightened Nine-tails") || target.hasPerk("Corrupted Nine-tails"));
+	return target.hasTail(GLOBAL.TYPE_VULPINE) && target.tailCount >= 9 && (target.hasPerk("Enlightened Nine-tails") || target.hasPerk("Nine-tails") || target.hasPerk("Corrupted Nine-tails"));
 }
 
 public function NineTailsTimePassedNotify():void {
