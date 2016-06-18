@@ -12,7 +12,7 @@ package classes.Characters.CoC
 		{
 			this._latestVersion = 1;
 			this.version = _latestVersion;
-			this._neverSerialize = true;
+			this._neverSerialize = false;
 			
 			this.short = "Arian";
 			this.originalRace = "lizan";
@@ -59,19 +59,20 @@ package classes.Characters.CoC
 			this.faceFlags = [GLOBAL.FLAG_MUZZLED];
 			this.tongueType = GLOBAL.TYPE_LIZAN;
 			this.tongueFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_PREHENSILE];
-			this.lipMod = -2;
-			this.earType = GLOBAL.TYPE_HUMAN;
+			this.lipMod = -4;
+			this.earType = GLOBAL.TYPE_LIZAN;
 			this.antennae = 0;
 			this.antennaeType = GLOBAL.TYPE_HUMAN;
-			this.horns = 0;
+			this.horns = 0; // he is never mentioned as having them
 			this.hornType = GLOBAL.TYPE_LIZAN;
 			this.hornLength = 0;
 			this.armType = GLOBAL.TYPE_HUMAN;
+			this.armFlags = [GLOBAL.FLAG_SCALED, GLOBAL.FLAG_PAWS];
 			this.gills = false;
 			this.wingType = GLOBAL.TYPE_HUMAN;
 			this.legType = GLOBAL.TYPE_LIZAN;
 			this.legCount = 2;
-			this.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_SCALED];
+			this.legFlags = [GLOBAL.FLAG_DIGITIGRADE, GLOBAL.FLAG_SCALED, GLOBAL.FLAG_PAWS];
 			//0 - Waist
 			//1 - Middle of a long tail. Defaults to waist on bipeds.
 			//2 - Between last legs or at end of long tail.
@@ -190,6 +191,33 @@ package classes.Characters.CoC
 		override public function mf(male:String, female:String):String 
 		{
 			return hasVagina() ? female : male;
+		}
+		
+		public function analExp(arg:Number = 0, apply:Boolean = false):Number {
+			if (flags["COC.ARIAN_ANAL_XP"] == undefined) flags["COC.ARIAN_ANAL_XP"] = 0;
+			
+			if (apply) flags["COC.ARIAN_ANAL_XP"] = arg;
+			else if (arg != 0) {
+				flags["COC.ARIAN_ANAL_XP"] += arg;
+				
+				if (flags["COC.ARIAN_ANAL_XP"] > 100) flags["COC.ARIAN_ANAL_XP"] = 100;
+				if (flags["COC.ARIAN_ANAL_XP"] < 0) flags["COC.ARIAN_ANAL_XP"] = 0;
+			}
+			
+			return flags["COC.ARIAN_ANAL_XP"];
+		}
+		
+		public function health(arg:Number = 0, apply:Boolean = false):Number {
+			if (flags["COC.ARIAN_HEALTH"] == undefined) flags["COC.ARIAN_HEALTH"] = 0;
+			
+			if (apply) flags["COC.ARIAN_HEALTH"] = arg;
+			else if (arg != 0) {
+				flags["COC.ARIAN_HEALTH"] += arg;
+				if (flags["COC.ARIAN_HEALTH"] > 100) flags["COC.ARIAN_HEALTH"] = 100;
+				if (flags["COC.ARIAN_HEALTH"] < 0) flags["COC.ARIAN_HEALTH"] = 0;
+			}
+			
+			return flags["COC.ARIAN_HEALTH"];
 		}
 	}
 }

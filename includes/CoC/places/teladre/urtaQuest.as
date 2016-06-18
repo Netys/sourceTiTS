@@ -415,13 +415,13 @@ private function visitPCPreUrtaQuest(truth:Boolean):void {
 	if (flags["COC.FACTORY_SHUTDOWN"] > 0) output(", no matter why [player2.heShe] was sent here");
 	output(".");
 	if (player2.accessory is TamWolf || player2.accessory is TamWolfDamaged || player2.accessory is TamWolfII || player2.hasStatusEffect("Varmint Buddy")) {
-		output("  You move to wake [player2.himHer] up, but freeze in place startled by sudden growl. Looks like you've missed another guardian - [player2.hisHer]");
+		output("  You move to wake [player2.himHer] up but freeze in place startled by the sudden growl. It looks like you've missed another guardian - [player2.hisHer]");
 		if (player2.hasStatusEffect("Varmint Buddy")) output(" strange");
 		else output(" automaton");
 		output(" pet is alert enough.");
 	}
 	else if (isNineTails(player2)) {
-		output("  You move to wake [player2.himHer] up, but freeze in place as you feel something coiling around your leg and almost let out a yelp as you are suddenly entangled. You are bound tightly while coils of delightfully soft fur envelop you on all sides.");
+		output("  You move to wake [player2.himHer] up but freeze in place as you feel something coiling around your leg and almost let out a yelp as you are suddenly entangled. You are bound tightly while coils of delightfully soft fur envelop you on all sides.");
 	}
 	else output("  You gently press on [player2.hisHer] shoulder and shake [player2.himHer] awake, holding your index finger across [player2.hisHer] lips to shush [player2.himHer] to silence.");
 	

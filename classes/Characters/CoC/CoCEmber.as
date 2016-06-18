@@ -59,10 +59,10 @@ package classes.Characters.CoC
 			
 			this.rangedWeapon = new EmptySlot();
 			
-			this.level = 15 + Math.round(int(kGAMECLASS.flags["COC.EMBER_AFFECTION"]) / 20);
+			this.level = 20;
 			this.XPRaw = bossXP();
 			this.credits = 0;
-			this.HPMod = 550 + (int(kGAMECLASS.flags["COC.EMBER_AFFECTION"]) * 2);
+			this.HPMod = 700;
 			this.shieldsRaw = this.shieldsMax();
 			this.HPRaw = this.HPMax();
 			
@@ -75,11 +75,9 @@ package classes.Characters.CoC
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
 			this.lustRaw = 20;
-			this.personality = int(kGAMECLASS.flags["COC.EMBER_COR"]);
+			this.personality = 50;
 			
-			var roundface:Boolean = (int(kGAMECLASS.flags["COC.EMBER_ROUNDFACE"]) > 0)
-			
-			this.femininity = 50;
+			this.femininity = 80;
 			this.eyeType = GLOBAL.TYPE_SNAKE;
 			this.eyeColor = "orange";
 			this.tallness = 7 * 12 + 3;
@@ -88,19 +86,19 @@ package classes.Characters.CoC
 			this.hairColor = "red";
 			this.scaleColor = "red";
 			this.furColor = "none";
-			this.hairLength = (roundface ? 12 : 0) + int(kGAMECLASS.flags["COC.EMBER_HAIR"]) * 8;
+			this.hairLength = 0;
 			this.hairType = GLOBAL.TYPE_HUMAN;
 			this.beardLength = 0;
 			this.beardStyle = 0;
-			this.skinType = roundface ? GLOBAL.SKIN_TYPE_SKIN : GLOBAL.SKIN_TYPE_SCALES;
+			this.skinType = GLOBAL.SKIN_TYPE_SCALES;
 			this.skinTone = "dark";
 			this.skinFlags = new Array();
-			this.faceType = roundface ? GLOBAL.TYPE_HUMAN : GLOBAL.TYPE_DRACONIC;
-			this.faceFlags = roundface ? [] : [GLOBAL.FLAG_MUZZLED];
+			this.faceType = GLOBAL.TYPE_DRACONIC;
+			this.faceFlags = [GLOBAL.FLAG_MUZZLED];
 			this.tongueType = GLOBAL.TYPE_DRACONIC;
 			this.tongueFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_PREHENSILE];
 			this.lipMod = 0;
-			this.earType = roundface ? GLOBAL.TYPE_HUMAN : GLOBAL.TYPE_DRACONIC;
+			this.earType = GLOBAL.TYPE_DRACONIC;
 			this.antennae = 0;
 			this.antennaeType = 0;
 			this.horns = 4;
@@ -152,53 +150,31 @@ package classes.Characters.CoC
 			//16 - huge
 			//20 - inconceivably large/big/huge etc
 			this.buttRatingRaw = 5;
-			//No dicks here!
+			// Ember defaults to herm
 			this.cocks = [];
+			this.createCock(16);
+			this.shiftCock(0, GLOBAL.TYPE_DRACONIC);
 			this.vaginas = [];
+			this.vaginalVirgin = true;
+			this.createVagina();
+			this.vaginas[0].loosenessRaw = 3;
+			this.vaginas[0].wetnessRaw = 4;
+			this.vaginas[0].hymen = true;
 			this.breastRows = [];
 			this.createBreastRow();
-			
-			var gender:int = int(kGAMECLASS.flags["COC.EMBER_GENDER"]);
-			if (gender == 1 || gender == 3) {
-				this.createCock(16);
-				if (int(kGAMECLASS.flags["COC.EMBER_INTERNAL_DICK"]) != 0 || !roundface) this.shiftCock(0, GLOBAL.TYPE_DRACONIC);
-				else {
-					this.cocks[0].addFlag(GLOBAL.FLAG_KNOTTED);
-					this.cocks[0].knotMultiplier = 1.25;
-				}
-				this.balls = 2;
-				this.ballSizeRaw = 4 * Math.PI;
-				this.cumMultiplierRaw = 3;
-			}
-			if (gender >= 2) {
-				this.createVagina();
-				this.vaginas[0].loosenessRaw = 3;
-				this.vaginas[0].wetnessRaw = 4;
-				this.vaginas[0].hymen = int(kGAMECLASS.flags["COC.EMBER_PUSSY_FUCK_COUNT"]) == 0;
-				this.vaginalVirgin = this.vaginas[0].hymen;
-				this.breastRows[0].breastRatingRaw = 11;
-				this.femininity = 80;
-			} else {
-				this.breastRows[0].breastRatingRaw = 0;
-				this.femininity = 20;
-			}
+			this.breastRows[0].breastRatingRaw = 11;
 			
 			this.nippleColor = "pink";
-			if (int(kGAMECLASS.flags["COC.EMBER_MILK"] > 0)) {
-				this.milkFullness = 80;
-				this.milkMultiplier = 80;
-			}
 			
-			this.analVirgin = false;
+			this.analVirgin = true;
 			this.ass.wetnessRaw = 0;
 			this.ass.loosenessRaw = 3;
 			this.ass.bonusCapacity = 40;
 			
 			this.impregnationType = "CoCEmberPregnancy";
 			
-			if (int(kGAMECLASS.flags["COC.EMBER_OVIPOSITION"]) > 0) this.createPerk("Oviposition");
 			this.createStatusEffect("Disarm Immune");
-			if (int(kGAMECLASS.flags["COC.EMBER_INTERNAL_DICK"]) > 0 || !roundface) this.createStatusEffect("Genital Slit");
+			this.createStatusEffect("Genital Slit");
 			
 			if (rand(5) == 0) this.inventory.push(new CoCDragonScale());
 			

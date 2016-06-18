@@ -12,21 +12,9 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-public function set kath(kat:CoCKatherine):void
-{
-	flags["COC.KATH"] = JSON.stringify(kat.getSaveObject());
-}
-
 public function get kath():CoCKatherine
 {
-	var saved:* = flags["COC.KATH"];
-	if (saved == undefined) {
-		return new CoCKatherine();
-	} else {
-		var kat:CoCKatherine = new CoCKatherine();
-		kat.loadSaveObject(JSON.parse(saved as String));
-		return kat;
-	}
+	return chars["COC.KATH"];
 }
 
 public function katherineSprite(naked:Boolean = false):void {
@@ -155,9 +143,8 @@ public function initKathFlags():void
 
 //Katherine Appearance:
 private function katherinesAppearance(clear:Boolean = true):void {
-    if (clear) clearOutput();
-    //output(images.showImage("katherine-examine-her-appearance"));
-	var cat:CoCKatherine = kath;
+	if (clear) clearOutput();
+	//output(images.showImage("katherine-examine-her-appearance"));
 	
     if (flags["COC.KATHERINE_UNLOCKED"] < 4) { //Still unemployed
 		output("Katherine stands before you, nervously watching as you scrutinize her form.  “<i>Um... do you like what you see?</i>”  Nervously trying to break the ice and amateurishly trying to flaunt her body, she strikes what might be a sexy pose... in her mind.\n\n");
@@ -168,28 +155,28 @@ private function katherinesAppearance(clear:Boolean = true):void {
 	}
 
 	output("Katherine is a lean-built hermaphroditic cat ");
-	if (cat.hasFur()) {
+	if (kath.hasFur()) {
 		output("morph, standing maybe 5' 2\" tall.  ");
-		if (cat.hairColor == "jet black")
+		if (kath.hairColor == "jet black")
 			output("Both her fur and");
 		else output("Her fur is black, but");
 	}
 	else output("girl, standing maybe 5' 2\" tall.  She has a pair of cat ears and a tail, both covered in black fur.  Her skin is milky white and");
-	output(" her shoulder-length hair, often worn forward and obscuring one of her leaf-green eyes, " + (cat.hasFur() && cat.hairColor == "jet black" ? "are " : "is "));
-	if (!cat.hasFur() && cat.hairColor == "jet black")
+	output(" her shoulder-length hair, often worn forward and obscuring one of her leaf-green eyes, " + (kath.hasFur() && kath.hairColor == "jet black" ? "are " : "is "));
+	if (!kath.hasFur() && kath.hairColor == "jet black")
 		output("just as black as the fur on her ears and tail.\n\n");
-	else output(cat.hairColor + ".\n\n");
+	else output(kath.hairColor + ".\n\n");
 	
 	kathClothes(); //Outputs a full description of the clothes she’s currently wearing
 	output("  Before you can even ask she begins to strip off her clothes to give you a better look");
 	output(".\n\n");
 
-	output("Two " + cat.breastCup() + " breasts" + (cat.isLactating() ? ", laden with cream," : "") + " sit on her chest" + (cat.milkFullness >= 100 ? ".  Her nipples stand at attention, ready for milking" : ""));
-	if (cat.hasCock()) {
-		output(", while just below her belly button sits the unmistakable form of an animalistic penis sheath.  Shyly, her " + (cat.cockTotal() == 1 ? "phallus begins " : "phalli begin ") + "to slip from its length; a " + cat.multiCockDescript() + ", " + formatFloat(cat.cocks[0].thickness(), 1) +"\" thick and " + cat.cocks[0].cLength() + "\" long reveal" + (cat.cockTotal() == 1 ? "s itself, with a " : " themselves, with ") + formatFloat(cat.cocks[0].knotMultiplier * cat.cocks[0].thickness(), 0) + "\" thick knot" + (cat.cockTotal() == 1 ? " at its base.  " : "s at their bases.  "));
-		if (cat.balls == 0)
-			output("Just beneath Kath’s " + (cat.cockTotal() == 1 ? "cock is" : "twin cocks is"));
-		else output("A pair of " + formatFloat(cat.ballDiameter(), 1) + "\" wide balls sway below her cock" + (cat.cockTotal() == 1 ? "" : "s") + ", hanging just above");
+	output("Two " + kath.breastCup() + " breasts" + (kath.isLactating() ? ", laden with cream," : "") + " sit on her chest" + (kath.milkFullness >= 100 ? ".  Her nipples stand at attention, ready for milking" : ""));
+	if (kath.hasCock()) {
+		output(", while just below her belly button sits the unmistakable form of an animalistic penis sheath.  Shyly, her " + (kath.cockTotal() == 1 ? "phallus begins " : "phalli begin ") + "to slip from its length; a " + kath.multiCockDescript() + ", " + formatFloat(kath.cocks[0].thickness(), 1) +"\" thick and " + kath.cocks[0].cLength() + "\" long reveal" + (kath.cockTotal() == 1 ? "s itself, with a " : " themselves, with ") + formatFloat(kath.cocks[0].knotMultiplier * kath.cocks[0].thickness(), 0) + "\" thick knot" + (kath.cockTotal() == 1 ? " at its base.  " : "s at their bases.  "));
+		if (kath.balls == 0)
+			output("Just beneath Kath’s " + (kath.cockTotal() == 1 ? "cock is" : "twin cocks is"));
+		else output("A pair of " + formatFloat(kath.ballDiameter(), 1) + "\" wide balls sway below her cock" + (kath.cockTotal() == 1 ? "" : "s") + ", hanging just above");
 	}
 	else output(" and between her legs rests");
 	output(" her wet, eager cunt.\n\n");
@@ -200,7 +187,7 @@ private function katherinesAppearance(clear:Boolean = true):void {
 	}
 	else if (hours >= 10) { //She’s at home (appearance function is never called at the bar). If time < 10 then she is on duty. See katherineOnDuty() for end of conversation & menu
 		output("Totally naked, tail waving with pleasure, Katherine stretches, giving you a very good show of all her most private parts.  “<i>Like what you see, dearest?</i>” she purrs.\n\n");
-		output("Oh yes, you tell her.  The clothes look good on her and what they hid is even better.  “<i>I do like the sound of that,</i>” she replies, “<i>but it is a bit chilly in here.</i>”  Her tail twitches with pent up energy and she slides her hands down her sides, " + (!cat.hasFur() ? "stroking her milky white skin" : "smoothing her shiny fur coat") + " before asking, “<i>Can you think of a way to keep me warm?</i>”\n\n");
+		output("Oh yes, you tell her.  The clothes look good on her and what they hid is even better.  “<i>I do like the sound of that,</i>” she replies, “<i>but it is a bit chilly in here.</i>”  Her tail twitches with pent up energy and she slides her hands down her sides, " + (!kath.hasFur() ? "stroking her milky white skin" : "smoothing her shiny fur coat") + " before asking, “<i>Can you think of a way to keep me warm?</i>”\n\n");
 		output("She starts to collect her clothes, putting them back on almost as seductively as she removed them.\n\n");
 		katherineMenu();
 	}
@@ -2689,8 +2676,8 @@ private function giveKatherineAnItem():void {
 private function useReductoOnKat():void {
 	clearOutput();
 	var dickMin:int = (flags["COC.KATHERINE_UNLOCKED"] >= 4 ? 6 : 8); //If she's employed she'll go as low as 6 inches
-	var cat:CoCKatherine = kath;
-	if (cat.longestCockLength() <= dickMin && (cat.balls == 0 || cat.ballSizeRaw <= Math.PI) && (!cat.hasCock() || cat.cocks[0].knotMultiplier <= 1.5) && cat.biggestTitSize() <= 1) {
+	
+	if (kath.longestCockLength() <= dickMin && (kath.balls == 0 || kath.ballSizeRaw <= Math.PI) && (!kath.hasCock() || kath.cocks[0].knotMultiplier <= 1.5) && kath.biggestTitSize() <= 1) {
 		//If min size on all Kat parts reached:
 		output("She looks at the jar and then visibly thinks about it, but shakes her head.  “<i>I'm sorry, " + kathPlayerText() + ", but I don't think it's possible for that stuff to make any of my remaining parts shrink any more...");
 		if (flags["COC.KBIT_SUB_CALL_MASTER"] == 1)
@@ -2719,10 +2706,10 @@ private function useReductoOnKat():void {
 		addDisabledButton(2, "Balls", "Balls", "Her balls should be large enough for her to shrink them.");
 		addDisabledButton(3, "Breasts", "Breasts", "Her breasts should be large enough for her to shrink them.");
 		
-		if (cat.hasCock() && cat.cocks[0].knotMultiplier > 1.5) addButton(0, "Knot", useRedoctoOnKatsKnot);
-		if (cat.hasCock() && cat.cocks[0].cLength() > dickMin) addButton(1, "Length", useReductoOnKatsKock);
-		if (cat.balls > 0 && cat.ballSizeRaw > Math.PI) addButton(2, "Balls", reductoBallSize);
-		if (cat.biggestTitSize() > 1) addButton(3, "Breasts", useRreductoOnKatsBreasts);
+		if (kath.hasCock() && kath.cocks[0].knotMultiplier > 1.5) addButton(0, "Knot", useRedoctoOnKatsKnot);
+		if (kath.hasCock() && kath.cocks[0].cLength() > dickMin) addButton(1, "Length", useReductoOnKatsKock);
+		if (kath.balls > 0 && kath.ballSizeRaw > Math.PI) addButton(2, "Balls", reductoBallSize);
+		if (kath.biggestTitSize() > 1) addButton(3, "Breasts", useRreductoOnKatsBreasts);
 		
 		addButton(14, "Back", giveKatherineAnItem);
     }
@@ -2730,14 +2717,13 @@ private function useReductoOnKat():void {
 
 private function useRedoctoOnKatsKnot():void {
 	clearOutput();
-	var cat:CoCKatherine = kath;
 	output("You gently reach out and start to stroke her sheath up and down, feeling the long bone of ");
-	if (cat.cockTotal() > 1)
-		output("each of her " + cat.multiCockDescript() + ", and rubbing one finger across the exposed tips.  The cat wriggles and squirms, and quickly blooms under your care, until all " + cat.longestCockLength() + " inches of both shafts are exposed.  Her knots just barely visible as a bulge at the base of each cock, you start to stroke them next.  Katherine coos and moans as your fingers glide up and down, and the responsive flesh starts to swell like red, hard balloons.  They puff up and up, swelling to full size, " + formatFloat(cat.cocks[0].thickness() * cat.cocks[0].knotMultiplier, 1) + " inches in diameter.  With the subjects prepared, you stop, leaving Katherine hovering at the edge of release.\n\n");
-	else output("her " + kath.cockType() + " cock, and rubbing one finger across the exposed tip.  The cat wriggles and squirms, and quickly blooms under your care, until all " + cat.longestCockLength() + " inches of her shaft is exposed.  Knot just barely visible as a bulge at the base of her cock, you start to stroke it next.  Katherine coos and moans as your fingers glide up and down, and the responsive flesh starts to swell like a red, hard balloon.  It puffs up and up, swelling to full size, " + formatFloat(cat.cocks[0].thickness() * cat.cocks[0].knotMultiplier, 1) + " inches in diameter.  With the subject prepared, you stop, leaving Katherine hovering at the edge of release.\n\n");
+	if (kath.cockTotal() > 1)
+		output("each of her " + kath.multiCockDescript() + ", and rubbing one finger across the exposed tips.  The cat wriggles and squirms, and quickly blooms under your care, until all " + kath.longestCockLength() + " inches of both shafts are exposed.  Her knots just barely visible as a bulge at the base of each cock, you start to stroke them next.  Katherine coos and moans as your fingers glide up and down, and the responsive flesh starts to swell like red, hard balloons.  They puff up and up, swelling to full size, " + formatFloat(kath.cocks[0].thickness() * kath.cocks[0].knotMultiplier, 1) + " inches in diameter.  With the subjects prepared, you stop, leaving Katherine hovering at the edge of release.\n\n");
+	else output("her " + kath.cockType() + " cock, and rubbing one finger across the exposed tip.  The cat wriggles and squirms, and quickly blooms under your care, until all " + kath.longestCockLength() + " inches of her shaft is exposed.  Knot just barely visible as a bulge at the base of her cock, you start to stroke it next.  Katherine coos and moans as your fingers glide up and down, and the responsive flesh starts to swell like a red, hard balloon.  It puffs up and up, swelling to full size, " + formatFloat(kath.cocks[0].thickness() * kath.cocks[0].knotMultiplier, 1) + " inches in diameter.  With the subject prepared, you stop, leaving Katherine hovering at the edge of release.\n\n");
 
 	output("She is, however, too wound up to do anything, so you are forced to take the Reducto from her slack fingers and smear the foul-smelling gunk across her knot");
-	if (cat.cockTotal() > 1) {
+	if (kath.cockTotal() > 1) {
 		output("s.  She gasps and suddenly lets out a yowl, her cocks visibly spasming as her knots shrink... and then promptly begins spurting cum, which you ");
 		if (pc.slut() > 50) output("joyously attempt to catch in your mouth like rain");
 		else output("narrowly dodge in surprise");
@@ -2752,10 +2738,10 @@ private function useRedoctoOnKatsKnot():void {
 
 	output("She rewards you with a glowing, orgasmic smile.  “<i>That was... incredible.  Thank you so much for the present... did you want to do anything else?  Maybe... have a little fun?</i>” she asks, her voice low and husky with desire.\n\n");
 	//use 1x Reducto, reduce Kat knot size by 2, increase PC lust value, go to Kat sex menu
-	cat.cocks[0].knotMultiplier -= 0.55;
-	if (cat.cocks[0].knotMultiplier < 1.25) cat.cocks[0].knotMultiplier = 1.25;
-	if (cat.cockTotal() > 1) cat.cocks[1].knotMultiplier = cat.cocks[0].knotMultiplier;
-	kath = cat; // enforce save
+	kath.cocks[0].knotMultiplier -= 0.55;
+	if (kath.cocks[0].knotMultiplier < 1.25) kath.cocks[0].knotMultiplier = 1.25;
+	if (kath.cockTotal() > 1) kath.cocks[1].knotMultiplier = kath.cocks[0].knotMultiplier;
+	
 	pc.lust(10 + pc.libido() / 20);
 	pc.destroyItem(new CoCReducto());
 	katSexMenu();
@@ -2764,22 +2750,21 @@ private function useRedoctoOnKatsKnot():void {
 //[Cock Length] (unavailable unless Kat cocklength is >8, or >6 if she's employed)
 private function useReductoOnKatsKock():void {
 	clearOutput();
-	var cat:CoCKatherine = kath;
 	output("With a gesture, you indicate for her to expose herself.  In obedience, she begins to stroke her sheath and expose its contents, bashfully at first but with increasing vigor as her erection takes hold.  Soon she's masturbating happily with her eyes closed and her head rolled back on her neck, having nearly forgotten what she was doing in the first place.  You ");
-	if (pc.slut() > 50) output("allow her to continue until " + (cat.balls > 0 ? "her scrotum tightens up and " : "") + "it looks like she'll blow her load with one more touch, and then ");
-	output("clear your throat noisily to regain her focus.  Blushing " + (!cat.hasFur() ? "a brilliant red" : "red underneath her sable fur") + ", she guiltily withdraws her hand from her shivering cock" + (cat.cockTotal() == 1 ? "" : "s") + ".\n\n");
+	if (pc.slut() > 50) output("allow her to continue until " + (kath.balls > 0 ? "her scrotum tightens up and " : "") + "it looks like she'll blow her load with one more touch, and then ");
+	output("clear your throat noisily to regain her focus.  Blushing " + (!kath.hasFur() ? "a brilliant red" : "red underneath her sable fur") + ", she guiltily withdraws her hand from her shivering cock" + (kath.cockTotal() == 1 ? "" : "s") + ".\n\n");
 
-	output("With a playful eyebrow, you take a knee in front of the throbbing-hard member" + (cat.cockTotal() == 1 ? "" : "s") + " and uncap the salve.  As if to tease, you dip into it and then, at a glacial pace, draw the paste closer to her shaft" + (cat.cockTotal() == 1 ? "" : "s") + " while remarking how cold it is compared to the desert air.  She quivers at the comment, setting her " + (cat.cockTotal() == 1 ? "cock" : "twin cocks") + " to bobbing");
+	output("With a playful eyebrow, you take a knee in front of the throbbing-hard member" + (kath.cockTotal() == 1 ? "" : "s") + " and uncap the salve.  As if to tease, you dip into it and then, at a glacial pace, draw the paste closer to her shaft" + (kath.cockTotal() == 1 ? "" : "s") + " while remarking how cold it is compared to the desert air.  She quivers at the comment, setting her " + (kath.cockTotal() == 1 ? "cock" : "twin cocks") + " to bobbing");
 	if (pc.slut() > 50) output(", then quivers again as the movement brings her a hair closer to her climax");
 	output(".\n\n");
 
-	output("Gingerly, you lift your unemployed hand up and tilt her " +  cat.multiCockDescript() + " toward her face and chest; she shivers as you touch the sensitive underside" + (cat.cockTotal() == 1 ? "" : "s") + ".  As you hold her in that position, ");
+	output("Gingerly, you lift your unemployed hand up and tilt her " +  kath.multiCockDescript() + " toward her face and chest; she shivers as you touch the sensitive underside" + (kath.cockTotal() == 1 ? "" : "s") + ".  As you hold her in that position, ");
 	if (pc.slut() > 50) output("staring at Katherine with a lewd smirk as she trembles and tries to maintain control, ");
-	output("you bring the occupied hand up and begin rubbing the paste into the shaft" + (cat.cockTotal() == 1 ? "" : "s") + " proper with brisk up-and-down strokes.");
+	output("you bring the occupied hand up and begin rubbing the paste into the shaft" + (kath.cockTotal() == 1 ? "" : "s") + " proper with brisk up-and-down strokes.");
 	if (pc.slut() > 50) output("  Barely any time has passed before Katherine, with a husky groan of protest and acquiescence mingled, begins unloading her steamy cargo; the first squirt  " + (kathIsAt(KLOC_STREETS) ? "stains her shirt" : "coats her chest") + " while the later and more energetic ones after it reach all the way to her neck and spatter on her chin.");
 	output("  Katherine trembles ");
 	if (pc.slut() > 50) output("and her orgasm continues ");
-	output("as you apply a goodly amount of paste, smearing it over every inch of the twitching cock" + (cat.cockTotal() == 1 ? "" : "s") + " and mingling it with the copious pre-cum from her errant masturbation.  Suddenly a gasp interrupts the chorus of low moans from your felid companion, as the effects begin.  Her shaft" + (cat.cockTotal() == 1 ? " spasms and shrinks, " : "s spasm and shrink, "));
+	output("as you apply a goodly amount of paste, smearing it over every inch of the twitching cock" + (kath.cockTotal() == 1 ? "" : "s") + " and mingling it with the copious pre-cum from her errant masturbation.  Suddenly a gasp interrupts the chorus of low moans from your felid companion, as the effects begin.  Her shaft" + (kath.cockTotal() == 1 ? " spasms and shrinks, " : "s spasm and shrink, "));
 	if(pc.slut() > 50) output("still pushing out the aftershocks of her climax onto her belly, ");
 	output("ending up two inches shorter than before.\n\n");
 
@@ -2789,10 +2774,10 @@ private function useReductoOnKatsKock():void {
 
 	//remove 2 inches from Kat's length, use 1x Reducto, increase PC lust value, go to Kat sex menu
 	var dickMin:int = (flags["COC.KATHERINE_UNLOCKED"] >= 4 ? 6 : 8); //If she's employed she'll go as low as 6 inches
-	cat.cocks[0].cLengthRaw -= 2;
-	if (cat.cocks[0].cLengthRaw < dickMin) cat.cocks[0].cLengthRaw = dickMin;
-	if (cat.cockTotal() > 1) cat.cocks[1].cLengthRaw = cat.cocks[0].cLengthRaw;
-	kath = cat; // enforce save
+	kath.cocks[0].cLengthRaw -= 2;
+	if (kath.cocks[0].cLengthRaw < dickMin) kath.cocks[0].cLengthRaw = dickMin;
+	if (kath.cockTotal() > 1) kath.cocks[1].cLengthRaw = kath.cocks[0].cLengthRaw;
+	
 	pc.lust(10 + pc.libido() / 20);
 	pc.destroyItem(new CoCReducto());
 	katSexMenu();
@@ -2801,15 +2786,14 @@ private function useReductoOnKatsKock():void {
 //[Ball Size](unavailable until Kat balls > 1")
 private function reductoBallSize():void {
 	clearOutput();
-	var cat:CoCKatherine = kath;
 	if (kathIsAt(KLOC_STREETS)) output("With a little help from you, she discards her clothes, exposing her swollen testes.  ");
-	output("You wonder for a moment if the " + (!cat.hasFur() ? "hair" : "fur") + " on her " + (cat.ballDiameter() > 3 ? "distended" : "") + " sack will interfere with the process, then decide it can't hurt to try.  Uncertainly, you open the jar and begin smearing your fingers with the salve, which you then start painting across Katherine's balls.  The hermaphrodite " + (!cat.hasFur() ? "cat girl" : "feline") + " shivers at your touch, but bites her lip and says nothing as you massage the shrinking cream into her semen-factories, rolling the globular orbs around in the palm of your hand to ensure a thorough, even coating.\n\n");
+	output("You wonder for a moment if the " + (!kath.hasFur() ? "hair" : "fur") + " on her " + (kath.ballDiameter() > 3 ? "distended" : "") + " sack will interfere with the process, then decide it can't hurt to try.  Uncertainly, you open the jar and begin smearing your fingers with the salve, which you then start painting across Katherine's balls.  The hermaphrodite " + (!kath.hasFur() ? "cat girl" : "feline") + " shivers at your touch, but bites her lip and says nothing as you massage the shrinking cream into her semen-factories, rolling the globular orbs around in the palm of your hand to ensure a thorough, even coating.\n\n");
 
-	output("You finish applying the salve and watch as they visibly shrink, contracting in on themselves until they have lost two inches in diameter.  It's at that point you realize the man-meat above them is jutting straight up from her sheath, pre-cum starting to bubble from the pointy tip" + (cat.cockTotal() == 1 ? "" : "s") +".  “<i>Uh... I think shrinking my balls put their contents under pressure.  You wanna help me vent some?</i>” she meekly suggests, coloring and biting her lip in either embarrassment or anticipation.\n\n");
+	output("You finish applying the salve and watch as they visibly shrink, contracting in on themselves until they have lost two inches in diameter.  It's at that point you realize the man-meat above them is jutting straight up from her sheath, pre-cum starting to bubble from the pointy tip" + (kath.cockTotal() == 1 ? "" : "s") +".  “<i>Uh... I think shrinking my balls put their contents under pressure.  You wanna help me vent some?</i>” she meekly suggests, coloring and biting her lip in either embarrassment or anticipation.\n\n");
 	//use 1x Reducto, reduce Kat ball size by two inches, increase PC lust by small value, go to Kat sex menu
-	cat.ballSizeRaw -= 2 * Math.PI;
-	if (cat.ballSizeRaw < Math.PI) cat.ballSizeRaw = Math.PI;
-	kath = cat; // enforce save
+	kath.ballSizeRaw -= 2 * Math.PI;
+	if (kath.ballSizeRaw < Math.PI) kath.ballSizeRaw = Math.PI;
+	
 	pc.lust(10 + pc.libido() / 20);
 	pc.destroyItem(new CoCReducto());
 	katSexMenu();
@@ -2817,30 +2801,29 @@ private function reductoBallSize():void {
 
 private function useRreductoOnKatsBreasts():void {
 	clearOutput();
-	var cat:CoCKatherine = kath;
-	output("You get next to Kath and place the jar on her belly.  As you coat your hands with the cool cream Kath closes her eyes and begins to purr.  There seems to be no change as you rub the ointment into her " + cat.breastDescript(0) + ".  Only when the jar is nearly exhausted do they start to firm up and contract.");
-	if (cat.isLactating()) {
+	output("You get next to Kath and place the jar on her belly.  As you coat your hands with the cool cream Kath closes her eyes and begins to purr.  There seems to be no change as you rub the ointment into her " + kath.breastDescript(0) + ".  Only when the jar is nearly exhausted do they start to firm up and contract.");
+	if (kath.isLactating()) {
 		output("  Kath's tail goes rigid and puffs up as her breasts shrink and you soon understand why.  ");
-		if (cat.milkFullness >= 100)
+		if (kath.milkFullness >= 100)
 			output("Her cream is forced from her newly shrunken chest in long streams that almost reach the ceiling.  The whole bed is soggy and you have to wonder how many people can say they've had their girlfriend's milk rain down on them.  She seems to be fixed in place until it's over, then she unclenches her fists and lets out a deep sigh.");
-		else if (cat.milkFullness > 50)
+		else if (kath.milkFullness > 50)
 			output("Her cream is forced from her newly shrunken chest in little squirts, drizzling onto Kath and the bed.  She grits her teeth and when it's over she unclenches her fists and lets out a deep sigh.");
 		else output("Drops of cream fall from her newly shrunken bosom, leaving little trails on her chest.");
 	}
-	cat.breastRows[0].breastRatingRaw--;
-	kath = cat; // enforce save
+	kath.breastRows[0].breastRatingRaw--;
+	
 	output("\n\nKath sits up and begins to play with her smaller and lighter rack.\n\n");
-	if (cat.breastRows[0].breastRatingRaw == 1)
+	if (kath.breastRows[0].breastRatingRaw == 1)
 		output("“<i>These are so small people might think I’m a boy.  Guess I’ll just have to act even more girly to make up for it, right?</i>”");
-	else if (cat.breastRows[0].breastRatingRaw == 2)
+	else if (kath.breastRows[0].breastRatingRaw == 2)
 		output("“<i>Back to my natural size.  Nice, I’ve missed the balance I had when they were this big.  Thank you so much " + kathPlayerText() + ".</i>”");
-	else if (cat.breastRows[0].breastRatingRaw == 6)
+	else if (kath.breastRows[0].breastRatingRaw == 6)
 		output("“<i>Oh, that’s better.  They’re a lot lighter.  It doesn’t feel like I’ve got a pair of watermelons tied to my chest anymore.</i>”");
-	else if (cat.breastRows[0].breastRatingRaw > 6)
+	else if (kath.breastRows[0].breastRatingRaw > 6)
 		output("“<i>Oh thank Marae.  And thank you too " + kathPlayerText() + ".  I can feel some of the muscles in my lower back starting to relax.</i>”");
 	else output("“<i>Yes, I think I’ll get used to these smaller sweater puppies pretty quickly.</i>”");
 	output("\n\nShe lies back on the bed and spreads her legs wide");
-	if(cat.hasCock()) output(", her cock" + (cat.cockTotal() == 1 ? "" : "s") + " aimed at the ceiling");
+	if(kath.hasCock()) output(", her cock" + (kath.cockTotal() == 1 ? "" : "s") + " aimed at the ceiling");
 	output(".  “<i>Now since you’ve pawed my breasts and got me all excited I hope you aren’t planning on leaving anytime soon.</i>”");
 	pc.lust(10 + pc.libido() / 20);
 	pc.destroyItem(new CoCReducto());
@@ -2855,24 +2838,22 @@ private function giveKatACaninePepper():void {
 		output("She takes your hand and says, “<i>It was a nice thought, and I do like the taste and smell.</i>”  At this she starts to sniff along the pepper's length.  “<i>They make me horny... do they make you horny?</i>”  She nuzzles against you and asks, “<i>Can you guess what's on my mind, love?</i>”\n\n");
 	}
 	else {
-		var cat:CoCKatherine = kath;
-		output("“<i>It's sure to give me a " + (cat.cockTotal() == 1 ? "dog cock" : "set of dog cocks") + " again.  That doesn't mean I'm saying no, I kinda got used to having one" + (cat.cockTotal() == 1 ? "" : " and then two of 'em") + ".</i>”  At this she starts to sniff along the pepper's length.  “<i>I guess what I means is I like having a nice " + (cat.cockTotal() == 1 ? "hard cock" : "pair of hard cocks") + " and somewhere to stuff " + (cat.cockTotal() == 1 ? "it" : "them") + ".  Maybe that makes me a slutty herm, but I could care less.</i>”\n\n");
+		output("“<i>It's sure to give me a " + (kath.cockTotal() == 1 ? "dog cock" : "set of dog cocks") + " again.  That doesn't mean I'm saying no, I kinda got used to having one" + (kath.cockTotal() == 1 ? "" : " and then two of 'em") + ".</i>”  At this she starts to sniff along the pepper's length.  “<i>I guess what I means is I like having a nice " + (kath.cockTotal() == 1 ? "hard cock" : "pair of hard cocks") + " and somewhere to stuff " + (kath.cockTotal() == 1 ? "it" : "them") + ".  Maybe that makes me a slutty herm, but I could care less.</i>”\n\n");
 		
-		output("You feed the canine pepper into her mouth and Kath rolls it around before snapping her jaws shut and giving you a spicy peck on the cheek.  Quickly, she exposes her " + cat.multiCockDescript() + ".\n\n");
+		output("You feed the canine pepper into her mouth and Kath rolls it around before snapping her jaws shut and giving you a spicy peck on the cheek.  Quickly, she exposes her " + kath.multiCockDescript() + ".\n\n");
 		
-		var oldKnot:Number = cat.cocks[0].knotMultiplier;
-		cat.shiftCock(0, GLOBAL.TYPE_CANINE);
-		cat.cocks[0].knotMultiplier = oldKnot;
-		cat.cocks[0].cThicknessRatioRaw = 1;
-		if (cat.cockTotal() > 1) {
-			cat.shiftCock(1, GLOBAL.TYPE_CANINE);
-			cat.cocks[1].knotMultiplier = oldKnot;
-			cat.cocks[1].cThicknessRatioRaw = 1;
+		var oldKnot:Number = kath.cocks[0].knotMultiplier;
+		kath.shiftCock(0, GLOBAL.TYPE_CANINE);
+		kath.cocks[0].knotMultiplier = oldKnot;
+		kath.cocks[0].cThicknessRatioRaw = 1;
+		if (kath.cockTotal() > 1) {
+			kath.shiftCock(1, GLOBAL.TYPE_CANINE);
+			kath.cocks[1].knotMultiplier = oldKnot;
+			kath.cocks[1].cThicknessRatioRaw = 1;
 		}
 		
-		output("The pepper doesn't disappoint and you watch the magic stretch her cock" + (cat.cockTotal() == 1 ? "" : "s") + " outwards, absorbing " + (cat.cockTotal() == 1 ? "its" : "their") + " barbs.  Kath once again sports a " + cat.multiCockDescript() + " and a happy, horny grin to go with " + (cat.cockTotal() == 1 ? "it" : "them") + ".");
+		output("The pepper doesn't disappoint and you watch the magic stretch her cock" + (kath.cockTotal() == 1 ? "" : "s") + " outwards, absorbing " + (kath.cockTotal() == 1 ? "its" : "their") + " barbs.  Kath once again sports a " + kath.multiCockDescript() + " and a happy, horny grin to go with " + (kath.cockTotal() == 1 ? "it" : "them") + ".");
 		pc.destroyItem(new CoCCaninePepper());
-		kath = cat; // enforce save
 	}
 	katSexMenu();
 }
@@ -2881,102 +2862,101 @@ private function giveKatACaninePepper():void {
 private function giveKatABulbousPepper():void {
 	clearOutput();
 	output("You hold out your bulbous canine pepper and ask if she'd like to eat it.\n\n");
-	var cat:CoCKatherine = kath;
 	var oldKnot:Number;
-	if (!cat.hasCock()) {
+	if (!kath.hasCock()) {
 		output("“<i>I'm pretty sure that won't have any effect on me,</i>” she replies.  “<i>But they do taste nice, so as long as you don't mind...</i>”  She smiles and and takes the pepper, munching it down.  With a moan she rapidly discards her clothes and starts rubbing her clit.\n\n");
 		output("“<i>Oh please " + kathPlayerText() + ", don't leave me to deal with this feeling on my own.</i>”");
 		pc.destroyItem(new CoCCaninePepperBulby());
 		pc.lust(10 + pc.libido() / 20);
 		katSexMenu();
 	}
-	else if (cat.balls == 0) {
+	else if (kath.balls == 0) {
 		output("“<i>Funny, I was just getting used to not having them</i>” she replies.  She gives you a friendly wink and then takes the pepper, munching it down.  She moans and clutches her groin through her clothes; as you watch her hand is forced away from her body as her testes regrow and descend.");
-		if (!cat.hasCock(GLOBAL.TYPE_CANINE)) {
-			oldKnot = cat.cocks[0].knotMultiplier;
-			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
-			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatioRaw = 1;
-			if (cat.cockTotal() > 1) {
-				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
-				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatioRaw = 1;
+		if (!kath.hasCock(GLOBAL.TYPE_CANINE)) {
+			oldKnot = kath.cocks[0].knotMultiplier;
+			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
+			kath.cocks[0].knotMultiplier = oldKnot;
+			kath.cocks[0].cThicknessRatioRaw = 1;
+			if (kath.cockTotal() > 1) {
+				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
+				kath.cocks[1].knotMultiplier = oldKnot;
+				kath.cocks[1].cThicknessRatioRaw = 1;
 			}
-			if (cat.cockTotal() > 1)
-				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
-			else output(" At the same time her cock stretches outwards, absorbing its barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
+			if (kath.cockTotal() > 1)
+				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
+			else output(" At the same time her cock stretches outwards, absorbing its barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
         }
-		output("\n\nKath rubs her newly formed balls and you see a bulge developing as her " + (cat.cockTotal() == 1 ? "cock stands" : "twin cocks stand") + " to attention.  She gives you a toothy smile and asks, “<i>So... you wanna give them a test run?</i>”\n\n");
-		cat.balls = 2;
-		cat.ballSizeRaw = Math.PI;
-		cat.createStatusEffect("Uniball");
+		output("\n\nKath rubs her newly formed balls and you see a bulge developing as her " + (kath.cockTotal() == 1 ? "cock stands" : "twin cocks stand") + " to attention.  She gives you a toothy smile and asks, “<i>So... you wanna give them a test run?</i>”\n\n");
+		kath.balls = 2;
+		kath.ballSizeRaw = Math.PI;
+		kath.createStatusEffect("Uniball");
 		pc.lust(10 + pc.libido() / 20);
 		pc.destroyItem(new CoCCaninePepperBulby());
-		kath = cat; // enforce save
+		
 		katSexMenu();
 	}
-	else if (cat.ballSizeRaw < 5 * Math.PI) {
+	else if (kath.ballSizeRaw < 5 * Math.PI) {
 		output("“<i>Oh, sure, why not?  Bigger balls have got to be better, right?</i>” she replies.  Her tone is sarcastic, but she gives you a friendly wink and then takes the pepper, munching it down.  With a moan she reveals her crotch to show her balls visibly growing.  They roughly double in size, then stop, leaving the cat herm panting.  ");
-		if (!cat.hasCock(GLOBAL.TYPE_CANINE)) {
-			oldKnot = cat.cocks[0].knotMultiplier;
-			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
-			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatioRaw = 1;
-			if (cat.cockTotal() > 1) {
-				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
-				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatioRaw = 1;
+		if (!kath.hasCock(GLOBAL.TYPE_CANINE)) {
+			oldKnot = kath.cocks[0].knotMultiplier;
+			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
+			kath.cocks[0].knotMultiplier = oldKnot;
+			kath.cocks[0].cThicknessRatioRaw = 1;
+			if (kath.cockTotal() > 1) {
+				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
+				kath.cocks[1].knotMultiplier = oldKnot;
+				kath.cocks[1].cThicknessRatioRaw = 1;
 			}
-			if (cat.cockTotal() > 1)
-				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
-			else output(" At the same time her cock stretches outwards, absorbing its barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
+			if (kath.cockTotal() > 1)
+				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
+			else output(" At the same time her cock stretches outwards, absorbing its barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
         }
 		output("She throws you a sultry look.  “<i>So... you wanna give them a test run?</i>” she purrs.\n\n");
-		cat.ballSizeRaw += 2 * Math.PI;
-		if (cat.ballSizeRaw > 5 * Math.PI) cat.ballSizeRaw = 5 * Math.PI;
-		cat.removeStatusEffect("Uniball");
+		kath.ballSizeRaw += 2 * Math.PI;
+		if (kath.ballSizeRaw > 5 * Math.PI) kath.ballSizeRaw = 5 * Math.PI;
+		kath.removeStatusEffect("Uniball");
 		pc.lust(10 + pc.libido() / 20);
 		pc.destroyItem(new CoCCaninePepperBulby());
-		kath = cat; // enforce save
+		
 		katSexMenu();
     }
-	else if (kathSubmissiveness() >= 4 && cat.ballDiameter() < 9) {
+	else if (kathSubmissiveness() >= 4 && kath.ballDiameter() < 9) {
 		output("She looks at the bulbous pepper and then shakes her head.  “<i>No thank you.  Any bigger and I'm going to have trouble walking, and I think I make enough of a mess as it is.  Thank you for the offer, though.  Was there anything else?</i>” she adds, trying to be diplomatic.\n\n");
-		output("You give Kath a big grin and tell her you’d like to see her grow larger.  Lots of people in Mareth have balls bigger than her and they can still move around.  You move closer and start to fondle her " + cat.ballsDescript(false, true) + " through her clothes.\n\n");
-		output("Kath pants as her " + (cat.cockTotal() == 1 ? "cock begins" : "cocks begin") + " to swell.  “<i>I... I suppose I could try it.  As long as you still think I’m pretty.</i>”\n\n");
+		output("You give Kath a big grin and tell her you’d like to see her grow larger.  Lots of people in Mareth have balls bigger than her and they can still move around.  You move closer and start to fondle her " + kath.ballsDescript(false, true) + " through her clothes.\n\n");
+		output("Kath pants as her " + (kath.cockTotal() == 1 ? "cock begins" : "cocks begin") + " to swell.  “<i>I... I suppose I could try it.  As long as you still think I’m pretty.</i>”\n\n");
 		output("You continue to massage her nuts and tell her that’s not enough.  She agreed so quickly that she must secretly want this.\n\n");
-		output("Kath twists and turns in place, as if part of her wants to escape.  Finally, after a sharp intake of breath your obedient little " + (!cat.hasFur() ? "cat girl" : "kitty") + " says, “<i>Yes.  Yes, " + kathPlayerText() + ", I want it.  If you want me to have bigger balls then I want them too.</i>”\n\n");
+		output("Kath twists and turns in place, as if part of her wants to escape.  Finally, after a sharp intake of breath your obedient little " + (!kath.hasFur() ? "cat girl" : "kitty") + " says, “<i>Yes.  Yes, " + kathPlayerText() + ", I want it.  If you want me to have bigger balls then I want them too.</i>”\n\n");
 		output("You just smile and use your free hand to push the fat little pepper between Kath’s lips.  She tries to take it but you slide it in and out as if it’s a tiny cock.  You tell her to suck on it and she does.  When you finally release your grip Kath sucks the pepper into her mouth and munches on it hungrily.\n\n");
 		output("It doesn’t take long before you feel her scrotum expand.  It throbs and pushes your fingers apart, each of her testes growing by about two inches.  ");
-		if (!cat.hasCock(GLOBAL.TYPE_CANINE)) {
-			oldKnot = cat.cocks[0].knotMultiplier;
-			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
-			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatioRaw = 1;
-			if (cat.cockTotal() > 1) {
-				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
-				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatioRaw = 1;
+		if (!kath.hasCock(GLOBAL.TYPE_CANINE)) {
+			oldKnot = kath.cocks[0].knotMultiplier;
+			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
+			kath.cocks[0].knotMultiplier = oldKnot;
+			kath.cocks[0].cThicknessRatioRaw = 1;
+			if (kath.cockTotal() > 1) {
+				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
+				kath.cocks[1].knotMultiplier = oldKnot;
+				kath.cocks[1].cThicknessRatioRaw = 1;
 			}
-			if (cat.cockTotal() > 1)
-				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
-			else output(" At the same time her cock stretches outwards, absorbing its barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
+			if (kath.cockTotal() > 1)
+				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
+			else output(" At the same time her cock stretches outwards, absorbing its barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
         }
-		output("Katherine wraps her arms around you for support.  When the change seems to have run its course she spreads her legs to accommodate her " + cat.ballsDescript(false, true) + " and whispers in your ear, “<i>So... you wanna give them a test run?</i>”\n\n");
+		output("Katherine wraps her arms around you for support.  When the change seems to have run its course she spreads her legs to accommodate her " + kath.ballsDescript(false, true) + " and whispers in your ear, “<i>So... you wanna give them a test run?</i>”\n\n");
 		flags["COC.KBIT_SUB_REM_BALLS"] = 1; //Have made her supersize her balls at least once
-		cat.ballSizeRaw += 2 * Math.PI;
-		if (cat.ballSizeRaw > 9 * Math.PI) cat.ballSizeRaw = 9 * Math.PI;
+		kath.ballSizeRaw += 2 * Math.PI;
+		if (kath.ballSizeRaw > 9 * Math.PI) kath.ballSizeRaw = 9 * Math.PI;
 		pc.lust(10 + pc.libido() / 20);
 		pc.destroyItem(new CoCCaninePepperBulby());
-		kath = cat; // enforce save
+		
 		katSexMenu();
 	}
     else { //Too big
 		if (kathSubmissiveness() >= 4) { //Too big even for submissive Kath
 			output("She gets down on her knees and begs you.  “<i>Please " + kathPlayerText() + " - I already have problems whenever I try to chase criminals.  If they get any bigger I might lose my job.  Thank you for offering, but don’t these monsters make enough cum for us both?  Please can’t we do something else?</i>” she adds with a worried smile, trying to be diplomatic.");
 			if (pc.cor() >= 75) {
-				output("\n\nIt certainly would be fun to give your " + (!cat.hasFur() ? "cat girl" : "feline") + " fucktoy such enormous balls that she wouldn’t be able to move.  On the other hand if she loses her job then you’ll have to take care of her.  Screw that - you still get all the sex you want from her as is and you don’t have to pay.\n\n");
-				output("You scratch her ear and assure her it’s all right.  Kath purrs and presses against you, her cock" + (cat.cockTotal() == 1 ? " beginning to slide from its sheath." : "s beginning to slide from their sheaths."));
+				output("\n\nIt certainly would be fun to give your " + (!kath.hasFur() ? "cat girl" : "feline") + " fucktoy such enormous balls that she wouldn’t be able to move.  On the other hand if she loses her job then you’ll have to take care of her.  Screw that - you still get all the sex you want from her as is and you don’t have to pay.\n\n");
+				output("You scratch her ear and assure her it’s all right.  Kath purrs and presses against you, her cock" + (kath.cockTotal() == 1 ? " beginning to slide from its sheath." : "s beginning to slide from their sheaths."));
 			}
 		}
 		else {
@@ -2990,142 +2970,136 @@ private function giveKatABulbousPepper():void {
 private function giveKatAKnottyPepper():void {
 	//Kath can now regrow her knot. At first she’s willing to regrow it to 4", at submissiveness 1 she //will regrow it to its original 6" size.
 	clearOutput();
-	var cat:CoCKatherine = kath;
 	var oldKnot:Number;
 	output("You show Kath the knotted canine pepper and ask if it brings back any memories.\n\n");
-	if (!cat.hasCock()) {
+	if (!kath.hasCock()) {
 		output("“<i>I'm pretty sure that won't have any effect on me,</i>” she says.  “<i>But they do taste nice, so as long as you don't mind...</i>”  She smiles and and takes the pepper, munching it down.  With a moan she rapidly discards her clothes and starts rubbing her clit.\n\n");
 		output("“<i>Oh please " + kathPlayerText() + ", don't leave me to deal with this feeling on my own.</i>”");
 		pc.lust(10 + pc.libido() / 20);
 		pc.destroyItem(new CoCCaninePepperKnotty());
 	}
-	else if (cat.cocks[0].knotMultiplier >= 4) { //Original size - it won’t grow any further
-		output("Kath gestures towards her " + cat.multiCockDescript() + " and says, “<i>I don’t think it can get any bigger.  I ate a ton of those peppers all at once and they never pushed me past this.</i>”\n\n");
+	else if (kath.cocks[0].knotMultiplier >= 4) { //Original size - it won’t grow any further
+		output("Kath gestures towards her " + kath.multiCockDescript() + " and says, “<i>I don’t think it can get any bigger.  I ate a ton of those peppers all at once and they never pushed me past this.</i>”\n\n");
 		output("She takes the pepper and examines it more closely and then pops it in her mouth.  Once she’s finished chewing she adds, “<i>They do taste good.</i>”  She looks at you again and says, “<i>Thank you " + kathPlayerText() + "; even though I’m not starving that sure hit the spot.</i>”\n\n");
-		if (cat.hasCock(GLOBAL.TYPE_CANINE))
-			output("Kath sits there and you watch for a short while, but the only indication that she just ate a magic imbued pepper " + (cat.cockTotal() == 1 ? "is her rock solid erection." : "are her rock solid twin erections."));
+		if (kath.hasCock(GLOBAL.TYPE_CANINE))
+			output("Kath sits there and you watch for a short while, but the only indication that she just ate a magic imbued pepper " + (kath.cockTotal() == 1 ? "is her rock solid erection." : "are her rock solid twin erections."));
 		else {
 			output("Just as she finishes speaking Kath’s eyes go wide and she crosses her legs.  ");
-			oldKnot = cat.cocks[0].knotMultiplier;
-			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
-			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatioRaw = 1;
-			if (cat.cockTotal() > 1) {
-				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
-				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatioRaw = 1;
+			oldKnot = kath.cocks[0].knotMultiplier;
+			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
+			kath.cocks[0].knotMultiplier = oldKnot;
+			kath.cocks[0].cThicknessRatioRaw = 1;
+			if (kath.cockTotal() > 1) {
+				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
+				kath.cocks[1].knotMultiplier = oldKnot;
+				kath.cocks[1].cThicknessRatioRaw = 1;
 			}
-			if (cat.cockTotal() > 1)
-				output("Her cocks stretch outwards, absorbing their barbs and getting fatter along their whole length.  In a few moments Kath is once again sporting a pair of " + cat.multiCockDescript() + ".");
-			else output("Her cock stretches outwards, absorbing its barbs and getting fatter along its whole length.  In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
+			if (kath.cockTotal() > 1)
+				output("Her cocks stretch outwards, absorbing their barbs and getting fatter along their whole length.  In a few moments Kath is once again sporting a pair of " + kath.multiCockDescript() + ".");
+			else output("Her cock stretches outwards, absorbing its barbs and getting fatter along its whole length.  In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
 		}
-		kath = cat; // enforce save
 		pc.lust(10 + pc.libido() / 20);
 		pc.destroyItem(new CoCCaninePepperKnotty());
 	}
-	else if (cat.cocks[0].knotMultiplier >= 2,35) { //Need submissiveness 1+ to grow
+	else if (kath.cocks[0].knotMultiplier >= 2,35) { //Need submissiveness 1+ to grow
 		output("Kath takes the pepper a little uncertainly.  “<i>It brings back some good memories, from after I met you; it also brings back memories of being an outcast among my own kind.</i>”\n\n");
 		output("She tries to give the pepper back but you close your hand around hers and tell her to concentrate on the good memories.  She knows you won’t think she’s ugly.  The two of you got along just fine when she had a massive knot.  In a way it’s what brought you two together." + (flags["COC.KATHERINE_URTA_AFFECTION"] > 10 ? "  Besides, wouldn’t it be fun to share it with Urta?" : "") + "\n\n");
 		if (kathSubmissiveness() < 1) {
 			output("Kath shakes her head and says, “<i>I don’t know if I’m ready for that.  I spent so long hating my giant knot.</i>”\n\n");
-			output("You tease her knot" + (cat.cockTotal() == 1 ? "" : "s") + " with your fingers.  Kath’s body wriggles and she smiles at you but she pushes the pepper back into your free hand.\n\n");
+			output("You tease her knot" + (kath.cockTotal() == 1 ? "" : "s") + " with your fingers.  Kath’s body wriggles and she smiles at you but she pushes the pepper back into your free hand.\n\n");
 			output("“<i>Maybe some other time love,</i>” she says, “<i>right now I’ve got something else on my mind.</i>”\n\n");
 			output("She did hesitate for a second... if you convince Kath to do a few other things she's unsure of she might be willing to munch on another pepper.");
 		}
 		else {
 			output("Kath takes the pepper and then hugs you close.  “<i>Okay " + kathPlayerText() + ", I’m doing this for you.  If you think I’m more fun with a giant size knot...</i>” she slowly bites into the pepper and swallows it down, “<i>... then so be it.</i>”");
-			if (!cat.hasCock(GLOBAL.TYPE_CANINE)) {
+			if (!kath.hasCock(GLOBAL.TYPE_CANINE)) {
 				output("Just as she finishes speaking Kath’s eyes go wide and she crosses her legs.  ");
-				oldKnot = cat.cocks[0].knotMultiplier;
-				cat.shiftCock(0, GLOBAL.TYPE_CANINE);
-				cat.cocks[0].knotMultiplier = oldKnot;
-				cat.cocks[0].cThicknessRatioRaw = 1;
-				if (cat.cockTotal() > 1) {
-					cat.shiftCock(1, GLOBAL.TYPE_CANINE);
-					cat.cocks[1].knotMultiplier = oldKnot;
-					cat.cocks[1].cThicknessRatioRaw = 1;
+				oldKnot = kath.cocks[0].knotMultiplier;
+				kath.shiftCock(0, GLOBAL.TYPE_CANINE);
+				kath.cocks[0].knotMultiplier = oldKnot;
+				kath.cocks[0].cThicknessRatioRaw = 1;
+				if (kath.cockTotal() > 1) {
+					kath.shiftCock(1, GLOBAL.TYPE_CANINE);
+					kath.cocks[1].knotMultiplier = oldKnot;
+					kath.cocks[1].cThicknessRatioRaw = 1;
 				}
-				if (cat.cockTotal() > 1)
-					output("Her cocks stretch outwards, absorbing their barbs and getting fatter along their whole length.  In a few moments Kath is once again sporting a pair of " + cat.multiCockDescript() + ".");
-				else output("Her cock stretches outwards, absorbing its barbs and getting fatter along its whole length.  In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
+				if (kath.cockTotal() > 1)
+					output("Her cocks stretch outwards, absorbing their barbs and getting fatter along their whole length.  In a few moments Kath is once again sporting a pair of " + kath.multiCockDescript() + ".");
+				else output("Her cock stretches outwards, absorbing its barbs and getting fatter along its whole length.  In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
 			}
-			output("\n\nIt takes almost a minute before Kath’s knot" + (cat.cockTotal() == 1 ? " reacts" : "s react") + " to the pepper.  When the change comes it happens quickly - her knot" + (cat.cockTotal() == 1 ? " just inflates" : "s just inflate") + " without any fanfare, gaining a few inches.\n\n");
-			output("Kath watches it happen almost without any reaction.  You would guess she’s eaten so many her body has developed a resistance to the effects.  Apart from the knot" + (cat.cockTotal() == 1 ? ", which is throbbing slowly, the only indication that she just ate a magic imbued pepper is her rock solid erection." : "s, which are throbbing slowly, the only indications that she just ate a magic imbued pepper are her rock solid twin erections."));
-			cat.cocks[0].knotMultiplier += 0.55;
-			if (cat.cocks[0].knotMultiplier > 4) cat.cocks[0].knotMultiplier = 4;
-			if (cat.cockTotal() > 1) cat.cocks[1].knotMultiplier = cat.cocks[0].knotMultiplier;
+			output("\n\nIt takes almost a minute before Kath’s knot" + (kath.cockTotal() == 1 ? " reacts" : "s react") + " to the pepper.  When the change comes it happens quickly - her knot" + (kath.cockTotal() == 1 ? " just inflates" : "s just inflate") + " without any fanfare, gaining a few inches.\n\n");
+			output("Kath watches it happen almost without any reaction.  You would guess she’s eaten so many her body has developed a resistance to the effects.  Apart from the knot" + (kath.cockTotal() == 1 ? ", which is throbbing slowly, the only indication that she just ate a magic imbued pepper is her rock solid erection." : "s, which are throbbing slowly, the only indications that she just ate a magic imbued pepper are her rock solid twin erections."));
+			kath.cocks[0].knotMultiplier += 0.55;
+			if (kath.cocks[0].knotMultiplier > 4) kath.cocks[0].knotMultiplier = 4;
+			if (kath.cockTotal() > 1) kath.cocks[1].knotMultiplier = kath.cocks[0].knotMultiplier;
 			flags["COC.KBIT_SUB_GROW_KNOT"] = 1; //Have regrown her knot to full size at least once
 			pc.lust(10 + pc.libido() / 20);
 			pc.destroyItem(new CoCCaninePepperKnotty());
-			kath = cat; // enforce save
 		}
 	}
 	else { //Knot is < 4", Always willing to grow if you ask
-		output("Kath takes the pepper and laughs.  “<i>How could I forget?  I don’t even remember how many of these I ate trying to make my cock just a bit bigger.</i>”  She rubs the base of " + (cat.cockTotal() == 1 ? "her cock" : "one cock then the other") + " and says, “<i>You want me to fill out a bit more?  Does it feel good when I knot you?</i>”\n\n");
-		output("You just smile and Kath licks the pepper experimentally.  “<i>I never thought I’d eat another one of these,</i>” she says.  She shakes her head before popping the pepper into her mouth.  Apart from her cock" + (cat.cockTotal() == 1 ? "" : "s") + " standing to attention nothing seems to happen but Kath smiles and says, “<i>Yeah, I can feel it.  When " + kath.CockMultiple("this bad boy kicks in my knot is", "these bad boys kick in my knots are each") + " going to puff out to the size of an apple.</i>”\n\n");
-			if (!cat.hasCock(GLOBAL.TYPE_CANINE)) {
+		output("Kath takes the pepper and laughs.  “<i>How could I forget?  I don’t even remember how many of these I ate trying to make my cock just a bit bigger.</i>”  She rubs the base of " + (kath.cockTotal() == 1 ? "her cock" : "one cock then the other") + " and says, “<i>You want me to fill out a bit more?  Does it feel good when I knot you?</i>”\n\n");
+		output("You just smile and Kath licks the pepper experimentally.  “<i>I never thought I’d eat another one of these,</i>” she says.  She shakes her head before popping the pepper into her mouth.  Apart from her cock" + (kath.cockTotal() == 1 ? "" : "s") + " standing to attention nothing seems to happen but Kath smiles and says, “<i>Yeah, I can feel it.  When " + kath.CockMultiple("this bad boy kicks in my knot is", "these bad boys kick in my knots are each") + " going to puff out to the size of an apple.</i>”\n\n");
+			if (!kath.hasCock(GLOBAL.TYPE_CANINE)) {
 				output("Just as she finishes speaking Kath’s eyes go wide and she crosses her legs.  ");
-				oldKnot = cat.cocks[0].knotMultiplier;
-				cat.shiftCock(0, GLOBAL.TYPE_CANINE);
-				cat.cocks[0].knotMultiplier = oldKnot;
-				cat.cocks[0].cThicknessRatioRaw = 1;
-				if (cat.cockTotal() > 1) {
-					cat.shiftCock(1, GLOBAL.TYPE_CANINE);
-					cat.cocks[1].knotMultiplier = oldKnot;
-					cat.cocks[1].cThicknessRatioRaw = 1;
+				oldKnot = kath.cocks[0].knotMultiplier;
+				kath.shiftCock(0, GLOBAL.TYPE_CANINE);
+				kath.cocks[0].knotMultiplier = oldKnot;
+				kath.cocks[0].cThicknessRatioRaw = 1;
+				if (kath.cockTotal() > 1) {
+					kath.shiftCock(1, GLOBAL.TYPE_CANINE);
+					kath.cocks[1].knotMultiplier = oldKnot;
+					kath.cocks[1].cThicknessRatioRaw = 1;
 				}
-				if (cat.cockTotal() > 1)
-					output("Her cocks stretch outwards, absorbing their barbs and getting fatter along their whole length.  In a few moments Kath is once again sporting a pair of " + cat.multiCockDescript() + ".");
-				else output("Her cock stretches outwards, absorbing its barbs and getting fatter along its whole length.  In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
+				if (kath.cockTotal() > 1)
+					output("Her cocks stretch outwards, absorbing their barbs and getting fatter along their whole length.  In a few moments Kath is once again sporting a pair of " + kath.multiCockDescript() + ".");
+				else output("Her cock stretches outwards, absorbing its barbs and getting fatter along its whole length.  In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
 			}
-		output("It takes almost a minute before Kath’s knot" + (cat.cockTotal() == 1 ? " reacts" : "s react") + " to the pepper.  When the change comes it happens quickly - her knot" + (cat.cockTotal() == 1 ? " just inflates" : "s just inflate") + " without any fanfare, gaining a few inches.\n\n");
+		output("It takes almost a minute before Kath’s knot" + (kath.cockTotal() == 1 ? " reacts" : "s react") + " to the pepper.  When the change comes it happens quickly - her knot" + (kath.cockTotal() == 1 ? " just inflates" : "s just inflate") + " without any fanfare, gaining a few inches.\n\n");
 		output("Kath watches it happen almost without any reaction.  You would guess she’s eaten so many her body has developed a resistance to the effects.  Apart from the knot" + kath.CockMultiple(", which is slowly shrinking, the only indication that she just ate a magic imbued pepper is her rock solid erection.", "s, which are slowly shrinking, the only indications that she just ate a magic imbued pepper are her rock solid twin erections."));
-		cat.cocks[0].knotMultiplier += 0.55;
-		if (cat.cocks[0].knotMultiplier > 2.35) cat.cocks[0].knotMultiplier = 2.35;
-		if (cat.cockTotal() > 1) cat.cocks[1].knotMultiplier = cat.cocks[0].knotMultiplier;
+		kath.cocks[0].knotMultiplier += 0.55;
+		if (kath.cocks[0].knotMultiplier > 2.35) kath.cocks[0].knotMultiplier = 2.35;
+		if (kath.cockTotal() > 1) kath.cocks[1].knotMultiplier = kath.cocks[0].knotMultiplier;
 		pc.lust(10 + pc.libido() / 20);
 		pc.destroyItem(new CoCCaninePepperKnotty());
-		kath = cat; // enforce save
 	}
-	if (cat.hasCock()) output("\n\nHer tail flicks against your leg.  She looks down at her erection" + (cat.cockTotal() == 1 ? "" : "s") + ", looks to you and then looks back at her erection" + (cat.cockTotal() == 1 ? "" : "s") + " again.");
+	if (kath.hasCock()) output("\n\nHer tail flicks against your leg.  She looks down at her erection" + (kath.cockTotal() == 1 ? "" : "s") + ", looks to you and then looks back at her erection" + (kath.cockTotal() == 1 ? "" : "s") + " again.");
 	katSexMenu();
 }
 
 //Double Pepper
 private function giveKatADoublePepper():void {
 	clearOutput();
-	var cat:CoCKatherine = kath;
 	var oldKnot:Number;
 	if (!kath.hasCock()) {
 		output("You hold out your double canine pepper and ask if she'd like to eat it.\n\n");
 		output("“<i>I'm pretty sure that won't have any effect on me,</i>” she replies.  “<i>But they do taste nice, so as long as you don't mind...</i>”  She smiles and and takes the pepper, munching it down.  With a moan she rapidly discards her clothes and starts rubbing her clit.\n\n");
 		output("“<i>Oh please " + kathPlayerText() + ", don't leave me to deal with this feeling on my own.</i>”");
 	}
-	else if (cat.cockTotal() == 1) {
+	else if (kath.cockTotal() == 1) {
 		output("You hold out your double canine pepper and ask if she'd like to eat it.\n\n");
 		output("“<i>Double your fun, huh?  Okay... this is a really weird thing, but if it makes you happy,</i>” she notes.  She takes the pepper and, pausing only to slip off her clothes to expose her sheath, polishes the pepper off with a smack of her lips for good measure.  “<i>Mmm... Not bad.  Oh!</i>”  She gasps and then arches her back suddenly.\n\n");
-		output("Your gaze goes to her crotch, where her " + cat.cockNounComplex(0) + " slides free with deceptive slowness, crowning itself at " + cat.cocks[0].cLength() + " inches and filling its knot to " + formatFloat(cat.cocks[0].thickness() * cat.cocks[0].knotMultiplier, 1) + " inches thick as it pops free.");
-		if (!cat.hasCock(GLOBAL.TYPE_CANINE)) {
-			oldKnot = cat.cocks[0].knotMultiplier;
-			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
-			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatioRaw = 1;
-			if (cat.cockTotal() > 1) {
-				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
-				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatioRaw = 1;
+		output("Your gaze goes to her crotch, where her " + kath.cockNounComplex(0) + " slides free with deceptive slowness, crowning itself at " + kath.cocks[0].cLength() + " inches and filling its knot to " + formatFloat(kath.cocks[0].thickness() * kath.cocks[0].knotMultiplier, 1) + " inches thick as it pops free.");
+		if (!kath.hasCock(GLOBAL.TYPE_CANINE)) {
+			oldKnot = kath.cocks[0].knotMultiplier;
+			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
+			kath.cocks[0].knotMultiplier = oldKnot;
+			kath.cocks[0].cThicknessRatioRaw = 1;
+			if (kath.cockTotal() > 1) {
+				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
+				kath.cocks[1].knotMultiplier = oldKnot;
+				kath.cocks[1].cThicknessRatioRaw = 1;
 			}
-			if (cat.cockTotal() > 1)
-				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
-			else output(" At the same time her cock stretches outwards, absorbing its barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
+			if (kath.cockTotal() > 1)
+				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
+			else output(" At the same time her cock stretches outwards, absorbing its barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
         }
 		output(" Then the sheath's opening stretches even wider as a second distinctive tip pops up, sliding up and out until she is sporting two bulging dog-cocks, each exactly the same size as the other.  She reaches down and gently strokes one with each hand, casting you a come hither look.\n\n");
-		cat.cocks.push(cat.cocks[0]);
-		kath = cat; // enforce save
+		kath.cocks.push(kath.cocks[0]); // dirty...
 	}
 	else {
 		output("Katherine looks at the twinned peppers with a puzzled expression.  ");
-		if (!cat.hasCock(GLOBAL.TYPE_CANINE)) {
+		if (!kath.hasCock(GLOBAL.TYPE_CANINE)) {
 			output("“<i>You want me to go back to the way I was?</i>”\n\n");
 			output("You tell her you think she looks good with either cat cocks or dog cocks and right now you’re in the mood for doggystyle - in a manner of speaking.  Besides, you know she loves peppers.  Kath takes the pepper and gives you a big smile.");
 		}
@@ -3134,22 +3108,21 @@ private function giveKatADoublePepper():void {
 			output("You tell her you think she could use a good meal, and you know how much she likes peppers.  The cat gives you a nervous smile and accepts the double pepper.");
 		}
 		output("She eats it daintily, swallows, and then develops a peculiar expression.  As she pants loudly, you can see her cocks starting to rise");
-		if (!cat.hasCock(GLOBAL.TYPE_CANINE)) {
-			oldKnot = cat.cocks[0].knotMultiplier;
-			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
-			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatioRaw = 1;
-			if (cat.cockTotal() > 1) {
-				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
-				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatioRaw = 1;
+		if (!kath.hasCock(GLOBAL.TYPE_CANINE)) {
+			oldKnot = kath.cocks[0].knotMultiplier;
+			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
+			kath.cocks[0].knotMultiplier = oldKnot;
+			kath.cocks[0].cThicknessRatioRaw = 1;
+			if (kath.cockTotal() > 1) {
+				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
+				kath.cocks[1].knotMultiplier = oldKnot;
+				kath.cocks[1].cThicknessRatioRaw = 1;
 			}
-			if (cat.cockTotal() > 1)
-				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
-			else output(" At the same time her cock stretches outwards, absorbing its barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
+			if (kath.cockTotal() > 1)
+				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
+			else output(" At the same time her cock stretches outwards, absorbing its barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
         }
 		output(".\n\n“<i>Oh dear...  I think that was maybe a bit too spicy.  You want to help me out with this?</i>” she purrs, already starting to stroke her twin shafts.\n\n");
-		kath = cat; // enforce save
 	}
 	pc.lust(10 + pc.libido() / 20);
 	pc.destroyItem(new CoCCaninePepperDouble());
@@ -3159,10 +3132,9 @@ private function giveKatADoublePepper():void {
 //Overly Large Pepper
 private function giveKatAOverlyLargePepper():void {
 	clearOutput();
-	var cat:CoCKatherine = kath;
 	var oldKnot:Number;
 	var kathSubEnough:Boolean = kathSubmissiveness() >= 4 || (kathSubmissiveness() >= 2 && flags["COC.KATHERINE_URTA_TIMES_SEX"] > 0); //May as well test this just once
-	if (!cat.hasCock()) {
+	if (!kath.hasCock()) {
 		output("You wave an overly large canine pepper in front of Katherine's nose and she drinks in the spicy scent.\n\n");
 		output("“<i>I'm pretty sure that won't have any effect on me,</i>” she says.  “<i>But they do taste nice, so as long as you don't mind...</i>”  She smiles and and takes the pepper, munching it down.  With a moan she rapidly discards her clothes and starts rubbing her clit.\n\n");
 		output("“<i>Oh please " + kathPlayerText() + ", don't leave me to deal with this feeling on my own.</i>”");
@@ -3170,74 +3142,72 @@ private function giveKatAOverlyLargePepper():void {
 		pc.destroyItem(new CoCCaninePepperLarge());
 		katSexMenu();
 	}
-	else if (cat.longestCockLength() < 16) {
+	else if (kath.longestCockLength() < 16) {
 		output("You ask if Katherine would really like to make her cock bigger, holding up the overly large canine pepper from your inventory.\n\n");
-		output("“<i>Yes!  Please!</i>” she says, clearly excited.  She snatches it from your hands and wolfs it down noisily, licking her fingers and then pulling her pants down with obvious excitement.  Her cock" + (cat.cockTotal() == 1 ? "" : "s") + " immediately thrust" + (cat.cockTotal() == 1 ? "s" : "") + " from her sheath, growing to full size and then a full two inches further before stopping.  ");
-		if (!cat.hasCock(GLOBAL.TYPE_CANINE)) {
-			oldKnot = cat.cocks[0].knotMultiplier;
-			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
-			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatioRaw = 1;
-			if (cat.cockTotal() > 1) {
-				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
-				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatioRaw = 1;
+		output("“<i>Yes!  Please!</i>” she says, clearly excited.  She snatches it from your hands and wolfs it down noisily, licking her fingers and then pulling her pants down with obvious excitement.  Her cock" + (kath.cockTotal() == 1 ? "" : "s") + " immediately thrust" + (kath.cockTotal() == 1 ? "s" : "") + " from her sheath, growing to full size and then a full two inches further before stopping.  ");
+		if (!kath.hasCock(GLOBAL.TYPE_CANINE)) {
+			oldKnot = kath.cocks[0].knotMultiplier;
+			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
+			kath.cocks[0].knotMultiplier = oldKnot;
+			kath.cocks[0].cThicknessRatioRaw = 1;
+			if (kath.cockTotal() > 1) {
+				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
+				kath.cocks[1].knotMultiplier = oldKnot;
+				kath.cocks[1].cThicknessRatioRaw = 1;
 			}
-			if (cat.cockTotal() > 1)
-				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
-			else output(" At the same time her cock stretches outwards, absorbing its barbs. In a few moments Kath is once again sporting a " + cat.multiCockDescript() + ".");
+			if (kath.cockTotal() > 1)
+				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
+			else output(" At the same time her cock stretches outwards, absorbing its barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
         }
 		output("She moans softly, licks her lips and smiles at you.  “<i>Care to have a test run?  Be a shame to let the chance go to waste...</i>” she purrs.\n\n");
 		pc.lust(10 + pc.libido() / 20);
 		pc.destroyItem(new CoCCaninePepperLarge());
-		cat.cocks[0].cLengthRaw += 2;
-		if (cat.cocks[0].cLengthRaw > 16) cat.cocks[0].cLengthRaw = 16;
-		if (cat.cockTotal() > 1) cat.cocks[1].cLengthRaw = cat.cocks[0].cLengthRaw;
-		kath = cat; // enforce save
+		kath.cocks[0].cLengthRaw += 2;
+		if (kath.cocks[0].cLengthRaw > 16) kath.cocks[0].cLengthRaw = 16;
+		if (kath.cockTotal() > 1) kath.cocks[1].cLengthRaw = kath.cocks[0].cLengthRaw;
 		katSexMenu();
 	}
-	else if (cat.longestCockLength() < 20 && kathSubEnough) {
+	else if (kath.longestCockLength() < 20 && kathSubEnough) {
 		output("She looks at the pepper eagerly, then visibly reins herself in.  “<i>I'm sorry...  I really would like to eat it, but I have to be practical,</i>” she says.\n\n");
-		output("You step forward, putting a finger on her lips to silence her.  You trace that finger down her body, slowly dragging it between her breasts and over her navel until it reaches the " + (cat.cockTotal() == 1 ? "root of her prick. A bit of gentle rubbing and her shaft begins" : "little hollow between the roots of her pricks.  A bit of gentle rubbing and her shafts begin") + " to rise, drawing moans of pleasure from your lover.\n\n");
+		output("You step forward, putting a finger on her lips to silence her.  You trace that finger down her body, slowly dragging it between her breasts and over her navel until it reaches the " + (kath.cockTotal() == 1 ? "root of her prick. A bit of gentle rubbing and her shaft begins" : "little hollow between the roots of her pricks.  A bit of gentle rubbing and her shafts begin") + " to rise, drawing moans of pleasure from your lover.\n\n");
 		if (flags["COC.KATHERINE_URTA_TIMES_SEX"] > 0) {
 			output("You ask Katherine if she thinks you love Urta.\n\n");
 			output("She wriggles under your finger and answers, “<i>Yes, of course.  But I don’t need to be as big as Urta.</i>”\n\n");
 			output("You keep rubbing and slowly push Kath back until she’s up against the wall.  You tell her Urta could use a friend in the Watch, someone who really understands what it’s like to have such a huge... burden.\n\n");
-			output("Kath’s tail flicks against the wall.  She opens her mouth to say something and your free hand pops the pepper between her lips.  She freezes and you remind her how good it will taste, how nice it will feel when her " + (cat.cockTotal() == 1 ? "dick gets" : "dicks get") + " even bigger.\n\n");
+			output("Kath’s tail flicks against the wall.  She opens her mouth to say something and your free hand pops the pepper between her lips.  She freezes and you remind her how good it will taste, how nice it will feel when her " + (kath.cockTotal() == 1 ? "dick gets" : "dicks get") + " even bigger.\n\n");
 		}
 		else {
-			output("You tell Katherine that you've been right so far.  Every extra inch of cock has made her sexier.  You love that cute, embarrassed look on her face when she tries to hide her huge schlong" + (cat.cockTotal() == 1 ? "" : "s") + " from view.\n\n");
+			output("You tell Katherine that you've been right so far.  Every extra inch of cock has made her sexier.  You love that cute, embarrassed look on her face when she tries to hide her huge schlong" + (kath.cockTotal() == 1 ? "" : "s") + " from view.\n\n");
 			output("She wriggles under your finger and finally says, “<i>I guess I can do it... I'll do it for you.</i>”\n\n");
-			output("You keep rubbing and slowly push Kath back until she’s up against the wall.  You tell her that you want her to do this for <b>her</b>.  You want her to see how much fun a " + (cat.cockTotal() == 1 ? "massive cock" : "pair of massive cocks") + " can be.  Then you press the pepper against her lips until she opens her mouth and allows you to rub it against her tongue.\n\n");
+			output("You keep rubbing and slowly push Kath back until she’s up against the wall.  You tell her that you want her to do this for <b>her</b>.  You want her to see how much fun a " + (kath.cockTotal() == 1 ? "massive cock" : "pair of massive cocks") + " can be.  Then you press the pepper against her lips until she opens her mouth and allows you to rub it against her tongue.\n\n");
 		}
 		output("She stares into your eyes and you say, “<i>I love you.</i>”\n\n");
-		output("Kath crunches down on the pepper, pulls it from your fingers and wolfs it down.  Beneath her clothes you see the " + (cat.cockTotal() == 1 ? "bulge" : "twin bulges") + " expanding.  Kath gives you a pained smile as her genitals balloon inside her panties.\n\n");
-		output("With the transformation complete Kath quickly disrobes to get a better look at her new cock" + (cat.cockTotal() == 1 ? ".  It is" : "s.  They are") + " indeed larger, having gained a good two inches in length.");
-		if (!cat.hasCock(GLOBAL.TYPE_CANINE)) {
-			oldKnot = cat.cocks[0].knotMultiplier;
-			cat.shiftCock(0, GLOBAL.TYPE_CANINE);
-			cat.cocks[0].knotMultiplier = oldKnot;
-			cat.cocks[0].cThicknessRatioRaw = 1;
-			if (cat.cockTotal() > 1) {
-				cat.shiftCock(1, GLOBAL.TYPE_CANINE);
-				cat.cocks[1].knotMultiplier = oldKnot;
-				cat.cocks[1].cThicknessRatioRaw = 1;
+		output("Kath crunches down on the pepper, pulls it from your fingers and wolfs it down.  Beneath her clothes you see the " + (kath.cockTotal() == 1 ? "bulge" : "twin bulges") + " expanding.  Kath gives you a pained smile as her genitals balloon inside her panties.\n\n");
+		output("With the transformation complete Kath quickly disrobes to get a better look at her new cock" + (kath.cockTotal() == 1 ? ".  It is" : "s.  They are") + " indeed larger, having gained a good two inches in length.");
+		if (!kath.hasCock(GLOBAL.TYPE_CANINE)) {
+			oldKnot = kath.cocks[0].knotMultiplier;
+			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
+			kath.cocks[0].knotMultiplier = oldKnot;
+			kath.cocks[0].cThicknessRatioRaw = 1;
+			if (kath.cockTotal() > 1) {
+				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
+				kath.cocks[1].knotMultiplier = oldKnot;
+				kath.cocks[1].cThicknessRatioRaw = 1;
 			}
-			output("  The effects of the pepper have also changed " + (cat.cockTotal() == 1 ? "it" : "them") + " back into canine cocks.");
+			output("  The effects of the pepper have also changed " + (kath.cockTotal() == 1 ? "it" : "them") + " back into canine cocks.");
 		}
-		output("  Kath smiles and strokes her " + cat.multiCockDescript() + " with one hand while straightening her tail with the other.\n\n");
-		output("“<i>I wasn’t sure I wanted this, but it feels good.  Do you like it?</i>” she asks, " + (cat.cockTotal() == 1 ? "pointing her cock" : "leveling both her cocks") + " at you.  “<i>Maybe you could show me how much, hmmm?  Be a shame to let the chance go to waste...</i>” she purrs.\n\n");
+		output("  Kath smiles and strokes her " + kath.multiCockDescript() + " with one hand while straightening her tail with the other.\n\n");
+		output("“<i>I wasn’t sure I wanted this, but it feels good.  Do you like it?</i>” she asks, " + (kath.cockTotal() == 1 ? "pointing her cock" : "leveling both her cocks") + " at you.  “<i>Maybe you could show me how much, hmmm?  Be a shame to let the chance go to waste...</i>” she purrs.\n\n");
 		pc.lust(10 + pc.libido() / 20);
 		flags["COC.KBIT_SUB_GROW_BIG_DICK"] = 1; //Have made her supersize her cock(s) at least once
 		pc.destroyItem(new CoCCaninePepperLarge());
-		cat.cocks[0].cLengthRaw += 2;
-		if (cat.cocks[0].cLengthRaw > 20) cat.cocks[0].cLengthRaw = 20;
-		if (cat.cockTotal() > 1) cat.cocks[1].cLengthRaw = cat.cocks[0].cLengthRaw;
-		kath = cat; // enforce save
+		kath.cocks[0].cLengthRaw += 2;
+		if (kath.cocks[0].cLengthRaw > 20) kath.cocks[0].cLengthRaw = 20;
+		if (kath.cockTotal() > 1) kath.cocks[1].cLengthRaw = kath.cocks[0].cLengthRaw;
 		katSexMenu();
 	}
 	else if (kathSubEnough) { //Too big, even for submissive Kath
-		output("She looks at the pepper and then looks down at her already enormous package.  “<i>Please " + kathPlayerText() + "</i>” she cries, getting to her knees.  “<i>I can’t get any bigger. I know you want me to have " + (cat.cockTotal() == 1 ? "a massive cock" : "a pair of massive cocks") + " but I’m already so big.  I have to be careful when I stretch - otherwise I’ll topple forward into the ground.  If I smell whisker fruit or a woman in heat I start to feel faint!  I already grew as big as " + (flags["COC.KATHERINE_URTA_TIMES_SEX"] > 0 ? "Urta" : "most centaurs") + " for you " + kathPlayerText() + ", please don’t make me grow any more.</i>”\n\n");
+		output("She looks at the pepper and then looks down at her already enormous package.  “<i>Please " + kathPlayerText() + "</i>” she cries, getting to her knees.  “<i>I can’t get any bigger. I know you want me to have " + (kath.cockTotal() == 1 ? "a massive cock" : "a pair of massive cocks") + " but I’m already so big.  I have to be careful when I stretch - otherwise I’ll topple forward into the ground.  If I smell whisker fruit or a woman in heat I start to feel faint!  I already grew as big as " + (flags["COC.KATHERINE_URTA_TIMES_SEX"] > 0 ? "Urta" : "most centaurs") + " for you " + kathPlayerText() + ", please don’t make me grow any more.</i>”\n\n");
 		output("She puts her arms around your legs and adds, “<i>I know I can satisfy you.  Let me show you.</i>”");
 		katSexMenu();
 	}
@@ -3256,12 +3226,11 @@ private function giveKatAOverlyLargePepper():void {
 
 private function giveKatWhiskerFruit():void {
 	clearOutput();
-	var cat:CoCKatherine = kath;
 	output("You offer Katherine the small, fuzzy fruit with a smile.  Kath’s pupils begin to dilate and you notice ");
-	if (cat.hasCock())
+	if (kath.hasCock())
 		output("a telltale swelling beneath her clothes.\n\n");
 	else output("her nipples have grow as hard as diamonds.\n\n");
-	if (!cat.hasCock() || !cat.hasCock(GLOBAL.TYPE_CANINE)) {
+	if (!kath.hasCock() || !kath.hasCock(GLOBAL.TYPE_CANINE)) {
 		output("She takes the fruit and gives you a big grin as she bites into it, sucking up all the juices.  Kath leans back on the bed and thrusts her chest toward you.  “<i>Oh Marae, do those ever put me in the mood.</i>”  She licks her lips seductively, closes her eyes and shudders with pent up energy.  In a barely controlled whisper she asks, “<i>How do you want me?</i>”");
 		pc.lust(10 + pc.libido() / 20);
 		pc.destroyItem(new CoCWhiskerFruit());
@@ -3271,19 +3240,19 @@ private function giveKatWhiskerFruit():void {
 	var doneBefore:Boolean = flags["COC.KBIT_SUB_CAT_DICK"] == 1;
 	output("Kath steps back and waves the fruit away.  “<i>Even the smell makes me horny, but if I eat one of those whisker fruits I’ll probably lose my dog cock");
 	if (doneBefore)
-		output((cat.cockTotal() == 1 ? "" : "s") + ".  Is that what you want, " + kathPlayerText() + "?</i>”");
+		output((kath.cockTotal() == 1 ? "" : "s") + ".  Is that what you want, " + kathPlayerText() + "?</i>”");
 	else {
-		output((cat.cockTotal() == 1 ? ".  It’s been with me so long I’ve really gotten used to having this big smooth tip and a knot to go with it" : "s.  It... well, they’ve been with me so long I’ve really got used to having these big smooth tips and the knots to go with them") + ".</i>”\n\n");
-		output("She rubs at her crotch absentmindedly as she continues.  “<i>When I first ate those peppers I thought of my cock, or at least the knot, as a curse.  You were the first person who didn’t run away screaming when you saw it.</i>”  She gives you a big smile and says, “<i>" + (cat.cockTotal() == 1 ? "It’s a" : "They’re") + " part of me now.  Added by strange magic produce, but part of me nonetheless.</i>”\n\n");
-		output("Her cock" + (cat.cockTotal() == 1 ? " has" : "s have") + " surely swollen to full size by now and Kath lets out a deep, rolling purr.  “<i>Now how about you put that fruit away and I show you once again just how much you mean to me?</i>”");
+		output((kath.cockTotal() == 1 ? ".  It’s been with me so long I’ve really gotten used to having this big smooth tip and a knot to go with it" : "s.  It... well, they’ve been with me so long I’ve really got used to having these big smooth tips and the knots to go with them") + ".</i>”\n\n");
+		output("She rubs at her crotch absentmindedly as she continues.  “<i>When I first ate those peppers I thought of my cock, or at least the knot, as a curse.  You were the first person who didn’t run away screaming when you saw it.</i>”  She gives you a big smile and says, “<i>" + (kath.cockTotal() == 1 ? "It’s a" : "They’re") + " part of me now.  Added by strange magic produce, but part of me nonetheless.</i>”\n\n");
+		output("Her cock" + (kath.cockTotal() == 1 ? " has" : "s have") + " surely swollen to full size by now and Kath lets out a deep, rolling purr.  “<i>Now how about you put that fruit away and I show you once again just how much you mean to me?</i>”");
 	}
 	//if (submissiveness() >= 1) {
-		output("\n\nYou walk toward Kath, holding the fruit up under her nose.  She sniffs at it and begins to pull off her clothes.  Once she’s naked she sits on the edge of the bed, her legs spread wide and her cock" + (cat.cockTotal() == 1 ? "" : "s") + " bouncing in time with her heartbeat.\n\n");
+		output("\n\nYou walk toward Kath, holding the fruit up under her nose.  She sniffs at it and begins to pull off her clothes.  Once she’s naked she sits on the edge of the bed, her legs spread wide and her cock" + (kath.cockTotal() == 1 ? "" : "s") + " bouncing in time with her heartbeat.\n\n");
 		if (!doneBefore) output("You remind her that eating any kind of pepper could give her a canine cock again.  ");
 		output("As you wave the fruit under her nose her head starts to sway, almost like a pendulum, her dilated eyes following its every movement.");
 		if (!doneBefore) output("  Doesn’t she want to try out a kitty cock?  See what sex is like with the cock nature intended her to have?");
-		output("\n\nKath’s purring gets lower and lower in pitch.  Finally she bites down on the fruit, gently tugs it from your fingers and sucks on its juicy pulp.  When only the hard pit is left Kath flings it into the waste bin.  It sails right in and Kath pumps her fist.  She says, “<i>Nailed it,</i>” and then doubles over, clutching at her " + (cat.cockTotal() == 1 ? "member" : "twin members") + ".\n\n");
-		output("You watch, amazed, as Kath’s cock" + (cat.cockTotal() == 1 ? " narrows along its entire length.  The tip  becomes" : "s narrow along their entire length.  The tips become") + " more and more pointed and little protrusions form, developing into the barbs that will bring her mates ecstasy.  Her dick" + (cat.cockTotal() == 1 ? " is" : "s are") + " now have only about a half of their former thickness.\n\n");
+		output("\n\nKath’s purring gets lower and lower in pitch.  Finally she bites down on the fruit, gently tugs it from your fingers and sucks on its juicy pulp.  When only the hard pit is left Kath flings it into the waste bin.  It sails right in and Kath pumps her fist.  She says, “<i>Nailed it,</i>” and then doubles over, clutching at her " + (kath.cockTotal() == 1 ? "member" : "twin members") + ".\n\n");
+		output("You watch, amazed, as Kath’s cock" + (kath.cockTotal() == 1 ? " narrows along its entire length.  The tip  becomes" : "s narrow along their entire length.  The tips become") + " more and more pointed and little protrusions form, developing into the barbs that will bring her mates ecstasy.  Her dick" + (kath.cockTotal() == 1 ? " is" : "s are") + " now have only about a half of their former thickness.\n\n");
 		output("Then the changes reach her knot");
 		if (kath.cockTotal() > 1) {
 			output("s.  They shrink down to nothing, then inflate again.  They do this several times, eliciting a deep moan of pleasure from Katherine each time.  Finally they stabilize, having lost half of their previous girth as well");
@@ -3292,23 +3261,22 @@ private function giveKatWhiskerFruit():void {
 			output(".  It shrinks down to nothing, then inflates again.  It does this several times, eliciting a deep moan of pleasure from Katherine each time.  Finally it stabilizes, having lost half of its previous girth as well");
 		}
 		output(".\n\n");
-		output("When it's over Kath feels up and down her shaft" + (cat.cockTotal() == 1 ? "" : "s") + ".  ");
+		output("When it's over Kath feels up and down her shaft" + (kath.cockTotal() == 1 ? "" : "s") + ".  ");
 		if (!doneBefore)
-			output("“<i>That’s so weird.  How come I still have " + (cat.cockTotal() == 1 ? "a knot" : "knots") + "?</i>”  She traces her " + (!cat.hasFur() ? "nails" : "claws") + " along the soft bulge of her knot" + (cat.cockTotal() == 1 ? "" : "s") + " and then smiles at you.  “<i>Guess I ate so many of those peppers that I get to keep " + (cat.cockTotal() == 1 ? "it" : "them") + ".</i>”\n\n");
-		output("She puts her arms around you and kisses you hard.  “<i>And now " + kathPlayerText() + ", do you feel like trying out your new pussy cat?  " + (doneBefore ? "Nubs and knot" + (cat.cockTotal() == 1 ? "" : "s") + ", all in one" : "She’s got an all new kind of prick for you to test out") + ".</i>”");
-		var oldKnot:Number = cat.cocks[0].knotMultiplier;
-		cat.shiftCock(0, GLOBAL.TYPE_FELINE);
-		cat.cocks[0].knotMultiplier = oldKnot;
-		cat.cocks[0].cThicknessRatioRaw = 2 / 3;
-		if (cat.cockTotal() > 1) {
-			cat.shiftCock(1, GLOBAL.TYPE_FELINE);
-			cat.cocks[1].knotMultiplier = oldKnot;
-			cat.cocks[1].cThicknessRatioRaw = 2 / 3;
+			output("“<i>That’s so weird.  How come I still have " + (kath.cockTotal() == 1 ? "a knot" : "knots") + "?</i>”  She traces her " + (!kath.hasFur() ? "nails" : "claws") + " along the soft bulge of her knot" + (kath.cockTotal() == 1 ? "" : "s") + " and then smiles at you.  “<i>Guess I ate so many of those peppers that I get to keep " + (kath.cockTotal() == 1 ? "it" : "them") + ".</i>”\n\n");
+		output("She puts her arms around you and kisses you hard.  “<i>And now " + kathPlayerText() + ", do you feel like trying out your new pussy cat?  " + (doneBefore ? "Nubs and knot" + (kath.cockTotal() == 1 ? "" : "s") + ", all in one" : "She’s got an all new kind of prick for you to test out") + ".</i>”");
+		var oldKnot:Number = kath.cocks[0].knotMultiplier;
+		kath.shiftCock(0, GLOBAL.TYPE_FELINE);
+		kath.cocks[0].knotMultiplier = oldKnot;
+		kath.cocks[0].cThicknessRatioRaw = 2 / 3;
+		if (kath.cockTotal() > 1) {
+			kath.shiftCock(1, GLOBAL.TYPE_FELINE);
+			kath.cocks[1].knotMultiplier = oldKnot;
+			kath.cocks[1].cThicknessRatioRaw = 2 / 3;
 		}
 		flags["COC.KBIT_SUB_CAT_DICK"] = 1; //Have given her a cat dick at least once
 		pc.lust(10 + pc.libido() / 20);
 		pc.destroyItem(new CoCWhiskerFruit());
-		kath = cat; // enforce save
 	//}
 	katSexMenu();
 }

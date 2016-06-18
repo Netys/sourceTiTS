@@ -19,7 +19,7 @@ package classes.Characters.CoC
 		{			
 			this._latestVersion = 1;
 			this.version = _latestVersion;
-			this._neverSerialize = true;
+			this._neverSerialize = false;
 			
 			this.short = "Amily";
 			this.originalRace = "mouse";
@@ -78,7 +78,7 @@ package classes.Characters.CoC
 			this.skinTone = "tawny";
 			this.skinFlags = new Array();
 			this.faceType = GLOBAL.TYPE_MOUSE;
-			this.faceFlags = new Array();
+			this.faceFlags = [GLOBAL.FLAG_MUZZLED];
 			this.tongueType = GLOBAL.TYPE_HUMAN;
 			this.lipMod = 0;
 			this.earType = GLOBAL.TYPE_MOUSE;
@@ -87,11 +87,12 @@ package classes.Characters.CoC
 			this.horns = 0;
 			this.hornType = 0;
 			this.armType = GLOBAL.TYPE_MOUSE;
+			this.armFlags = [GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS];
 			this.gills = false;
 			this.wingType = GLOBAL.TYPE_HUMAN;
 			this.legType = GLOBAL.TYPE_MOUSE;
 			this.legCount = 2;
-			this.legFlags = [GLOBAL.FLAG_PLANTIGRADE];
+			this.legFlags = [GLOBAL.FLAG_PLANTIGRADE, GLOBAL.FLAG_FURRED, GLOBAL.FLAG_PAWS];
 			//0 - Waist
 			//1 - Middle of a long tail. Defaults to waist on bipeds.
 			//2 - Between last legs or at end of long tail.
@@ -99,7 +100,7 @@ package classes.Characters.CoC
 			this.genitalSpot = 0;
 			this.tailType = GLOBAL.TYPE_MOUSE;
 			this.tailCount = 1;
-			this.tailFlags = new Array();
+			this.tailFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_PREHENSILE, GLOBAL.FLAG_SMOOTH, GLOBAL.FLAG_TAPERED];
 			//Used to set cunt or dick type for cunt/dick tails!
 			this.tailGenitalArg = 0;
 			//tailGenital:

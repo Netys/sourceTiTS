@@ -23,7 +23,7 @@ import classes.Engine.Utility.*;
 
 public function get ember():CoCEmber
 {
-	return new CoCEmber();
+	return chars["COC.EMBER"];
 }
 
 //Tainted Ember
@@ -173,11 +173,10 @@ public function emberAffection(changes:Number = 0):Number
 
 private function emberCorruption(changes:Number = 0):Number
 {
-	if (flags["COC.EMBER_COR"] == undefined) flags["COC.EMBER_COR"] = 0;
-	flags["COC.EMBER_COR"] += changes;
-	if (flags["COC.EMBER_COR"] > 100) flags["COC.EMBER_COR"] = 100;
-	else if (flags["COC.EMBER_COR"] < 0) flags["COC.EMBER_COR"] = 0;
-	return flags["COC.EMBER_COR"];
+	ember.personality += changes;
+	if (ember.personality > 100) ember.personality = 100;
+	else if (ember.personality < 0) ember.personality = 0;
+	return ember.personality;
 }
 
 public function followerEmber():Boolean
@@ -489,7 +488,7 @@ private function takeEmbersEggHomeInADoggieBag():void
 	//set flags
 	pc.createKeyItem("Dragon Egg", 0, 0, 0, 0);
 	flags["COC.TOOK_EMBER_EGG"] = 1;
-	flags["COC.EMBER_COR"] = 50;
+	ember.personality = 50;
 	clearMenu();
 	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
@@ -803,6 +802,7 @@ private function giveEmberBludSausages():void
 	}
 	applyDamage(new TypeCollection( { truedamage : 1 }, DamageFlag.BYPASS_SHIELD ), pc, pc);
 	flags["COC.EMBER_ROUNDFACE"] = 1;
+	
 	//(Token HP Loss, can't drop below 1 HP.)
 	IncrementFlag("COC.EMBER_EGG_FLUID_COUNT");
 	processTime(5);
@@ -890,6 +890,57 @@ private function masturbateOntoAnEgg():void
 private function hatchZeMuzzles():void
 {
 	clearOutput();
+	
+	var gender:int = int(flags["COC.EMBER_GENDER"]);
+	var roundface:Boolean = (int(flags["COC.EMBER_ROUNDFACE"]) > 0)
+	
+	// cleanup
+	ember.removeVaginas();
+	ember.removeCocks();
+	ember.hairLength = 0;
+	
+	if (flags["COC.EMBER_ROUNDFACE"] == 1) {
+		ember.hairLength += 12;
+		ember.skinType = GLOBAL.SKIN_TYPE_SKIN;
+		ember.faceType = GLOBAL.TYPE_HUMAN;
+		ember.faceFlags = [];
+	}
+	
+	// set
+	if (gender == 1 || gender == 3) {
+		ember.createCock(16);
+		if (int(flags["COC.EMBER_INTERNAL_DICK"]) != 0 || !roundface) ember.shiftCock(0, GLOBAL.TYPE_DRACONIC);
+		else {
+			ember.cocks[0].addFlag(GLOBAL.FLAG_KNOTTED);
+			ember.cocks[0].knotMultiplier = 1.25;
+		}
+		ember.balls = 2;
+		ember.ballSizeRaw = 4 * Math.PI;
+		ember.cumMultiplierRaw = 3;
+	}
+	
+	if (gender >= 2) {
+		ember.createVagina();
+		ember.vaginas[0].loosenessRaw = 3;
+		ember.vaginas[0].wetnessRaw = 4;
+		ember.breastRows[0].breastRatingRaw = 11;
+		ember.femininity = 80;
+	} else {
+		ember.breastRows[0].breastRatingRaw = 0;
+		ember.femininity = 20;
+	}
+	
+	ember.hairLength += int(flags["COC.EMBER_HAIR"]) * 8;
+	
+	if (int(flags["COC.EMBER_MILK"] > 0)) {
+		ember.milkFullness = 100;
+		ember.milkMultiplier = 100;
+	}
+	
+	if (int(flags["COC.EMBER_OVIPOSITION"]) > 0) ember.createPerk("Oviposition");
+	
+	if (int(flags["COC.EMBER_INTERNAL_DICK"]) == 0 && roundface) ember.removeStatusEffect("Genital Slit");
+	
 	output("Resting bonelessly on the ground and re-examining the motivations that led up to cumming on the strange egg, you are startled when it shines brilliantly.  Then just as suddenly, it goes dark.  Unnerved, you creep over to your erstwhile sextoy to examine it.  As you lean in, a very slight trembling manifests itself in the egg.  Cracking, breaking noises fill the air as tiny fractures begin to show across the egg's surface.  Warned just in time by them, you turn your face away and cover your head as the shell erupts into a cloud of tiny fragments!  As you huddle against the storm of eggshell shards, you hear a loud roar.");
 	output("\n\nLifting your head, you find the egg gone; in its place is an unfamiliar figure wrapped in thin wisps of ");
 	if (!ember.hasGenitals()) output("white ");
@@ -2107,6 +2158,10 @@ private function decideToSparEmbra():void
 		output("\n\n\"<i>Well... don't expect me to go easy on you!  We dragons are very competitive!  And I don't mind beating you up, even if you are my friend!</i>\" Ember warns you, dropping into [ember.hisHer] battle stance.");
 		output("\n\nYou grin at [ember.himHer] and tell [ember.himHer] to bring it on - you're too psyched up to be caught off guard by the dragon openly calling you a friend.");
 	}
+	
+	ember.maxOutHP();
+	ember.maxOutEnergy();
+	ember.lustRaw = 20;
 	
 	CombatManager.newGroundCombat();
 	CombatManager.setFriendlyCharacters(pc);
