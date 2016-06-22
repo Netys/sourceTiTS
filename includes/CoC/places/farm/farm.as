@@ -96,7 +96,7 @@ public function farmExploreEncounter():void {
 		addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 		
 		if(Flag("COC.KELT_MET") > 0 && Flag("COC.KELT_OFF") == 0 && Flag("COC.KELT_KILLED") == 0) {
-			if(flags["COC.KELT_BREAK_LEVEL"] >= 4) addButton(1,"Kelly", breakingKeltOptions);
+			if(flags["COC.KELT_BREAK_LEVEL"] >= 4) addButton(1,"Kelly", approachKelly);
 			else addButton(1,"Kelt", breakingKeltOptions);
 		}
 		

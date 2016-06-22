@@ -49,6 +49,11 @@ STATUSES:
 "Kelt" - v1 = Archery, v2 = Submissiveness, v3 = total encounters.
 "KeltOff" - Turns off Kelt */
 
+public function get kelt():CoCKelt
+{
+	return chars["COC.KELT"];
+}
+
 public function showKelt():void
 {
 	//userInterface.showBust("KELT");
@@ -687,7 +692,7 @@ private function keltMainEncounter3():void {
 			//(Vagina, Large: 
 			else output("It seems like a perfect fit for your capacious, hungry pussy as Kelt rams the flared head deep into you.  You feel that glorious manhood filling you like few cocks can these days, spreading you wide and searching out your depths.  Kelt lets out a pleased laugh when he bottoms out with you just barely able to accommodate his size.  His heavy balls slap pleasantly against your ass as you groan with pleasure, filled to the core with cock.");
 			
-			pc.cuntChange(0, new CoCKelt().cockVolume(0), true, true, false);
+			pc.cuntChange(0, kelt.cockVolume(0), true, true, false);
 			
 			output("\n\n");
 			output("From then on, the ride only becomes rougher.  Kelt begins pumping his hips steadily, deep and hard, intent on burying as much of his manhood as possible with each thrust.  He gives little thought to your pleasure, but it hardly matters.  With a cock that size, you cannot help but moan with each buck of his hips.\r\r");
@@ -704,7 +709,7 @@ private function keltMainEncounter3():void {
 			output("\"<i>That's a good look for you.  Come back tomorrow if it doesn't take, slut.  I'll be glad to do the job again.</i>\"\r\r");
 			//pc.slimeFeed();
 			pc.orgasm();
-			pc.loadInCunt(new CoCKelt());
+			pc.loadInCunt(kelt);
 			output("He leaves you without another word.");
 			//(+5 Submissive)
 			Flag("COC.KELT_SUBMISSION", 5, true);
@@ -834,7 +839,7 @@ private function keltMainEncounterPostBlowjob():void {
 			output("Kelt doesn't hesitate.  With an almost primal snarl, he rams his cock forward, anxious to sink himself deep into your ass.  With no lube and no foreplay, you let out a cry as the massive cock splits you open.  Fortunately, it drools precum eagerly into your backside, making the next thrust easier, though no less forceful.  Kelt shows no mercy, trying to fit himself inside your ");
 			if(pc.tallness < 112 && !pc.isTaur()) output("smaller ");
 			output("body with no concern for your well being.");
-			pc.buttChange(new CoCKelt().cockVolume(0), true, true, false);
+			pc.buttChange(kelt.cockVolume(0), true, true, false);
 			output("\r\r", false);
 			output("You can't help it... at the thought of being used as his worthless fucktoy, you suffer a mild orgasm of your own, crying out your submission to this powerful creature.");
 			//(Penis: 
@@ -853,9 +858,9 @@ private function keltMainEncounterPostBlowjob():void {
 			output("\"<i>Now stay there for a while, bitch.  Let it get good and stuck up there.  Come back tomorrow, and maybe, if you're lucky, I'll fuck you again.  You do, after all, make a pretty good cumdump.</i>\"\r\r");
 			output("It's some hours later before you rouse yourself, clenching your ass as best as you can to keep the tide inside.  Despite your efforts, a steady trail oozes down your leg, marking your path as you slowly, happily trudge back to your camp.");
 			
-			pc.loadInAss(new CoCKelt());
+			pc.loadInAss(kelt);
 			//(+10 Submissiveness)
-			if (pc.buttChange(new CoCKelt().cockVolume(0), true)) output("\r\r");
+			if (pc.buttChange(kelt.cockVolume(0), true)) output("\r\r");
 			Flag("COC.KELT_SUBMISSION", 10, true);
 			pc.orgasm();
 			pc.cor(1);
@@ -876,7 +881,7 @@ private function keltMainEncounterPostBlowjob():void {
 			output("\"<i>Pretty good, slut.  I knew there was a reason I kept you around.  I've indulged you enough, though.  Get over there and shoot some arrows, before I get bored with you.</i>\"\r\r");
 			output("You hardly remember the rest of the training.  You're far too distracted by the fullness of your belly, and the thought of maybe getting a little more.  Kelt seems almost bored by the end, despite your attempts to entice him during the lesson, and leaves soon afterwards, to your chagrin.");
 			//pc.slimeFeed();
-			pc.loadInMouth(new CoCKelt());
+			pc.loadInMouth(kelt);
 			//(+5 Submissiveness)
 			Flag("COC.KELT_SUBMISSION", 5, true);
 			pc.slowStatGain("a", 1);
@@ -967,7 +972,7 @@ private function keltReluctantGivingBJ():void {
 	//pc.refillHunger(50);
 	output("\r\r\"<i>Pretty good, slut.  I knew there was a reason I kept you around.  Come back next time, and maybe I'll actually teach you something.  Or, who knows?  Maybe I'll just give you another snack, huh?  Ha!</i>\"\r\r");
 	output("Meekly you nod, humiliated and full of cum.  The worst part, by far, is how happy you are on the inside.  You try to tell yourself that this is wrong, that Kelt is an arrogant, cruel creature, and that this is the last time.  But you don't really believe that.  Despite the lies you tell yourself, you look forward to the next time he decides to use you.\r\r");	
-	pc.loadInMouth(new CoCKelt());
+	pc.loadInMouth(kelt);
 	pc.lust(5);
 	//(+5 Submissiveness)*/
 	Flag("COC.KELT_SUBMISSION", 5, true);

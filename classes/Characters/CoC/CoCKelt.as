@@ -27,18 +27,14 @@ package classes.Characters.CoC
 		{
 			this._latestVersion = 1;
 			this.version = _latestVersion;
-			this._neverSerialize = true;
+			this._neverSerialize = false;
 			
-			var breakLevel2:Boolean = Flag("COC.KELT_BREAK_LEVEL") == 2;
 			this.short = "Kelt";
 			this.originalRace = "centaur";
 			this.a = "";
 			this.capitalA = "";
 			
-			this.long = "You are fighting Kelt, centaur archer.";
-			
-			if(Flag("COC.KELT_BREAK_LEVEL") > 0)
-				this.long = "Kelt has changed for the worse since your first meeting.  Gone is his muscular, barrel chest.  In its place is a softer frame, capped with tiny boobs - remnants of your last treatment.  His jaw is fairly square and chiselled (though less than before).  From the waist down, he has the body of a horse, complete with a fairly large pair of balls and a decent-sized dong.  Both are smaller than they used to be, however.  He has his bow strung and out, clearly intent on defending himself from your less than gentle touches." + (breakLevel2?"Kelt is looking less and less like the burly centaur from before, and more and more like a woman.  He looks more like an odd, androgynous hybrid than the beautiful woman you had turned him into.  He currently sports roughly B-cup breasts and a smallish, miniature horse-cock.  There's barely any hair on his human body, aside from a long mane of hair.  Each treatment seems to be more effective than the last, and you can't wait to see what happens after you tame him THIS time.":"");
+			this.long = "OVERRIDE";
 			
 			this.customDodge = "";
 			this.customBlock = "";
@@ -80,7 +76,7 @@ package classes.Characters.CoC
 			this.lustRaw = 40;
 			this.personality = 75;
 			
-			this.femininity = 10 + Flag("COC.KELT_BREAK_LEVEL") * 25;
+			this.femininity = 10;
 			this.eyeType = GLOBAL.TYPE_HUMAN;
 			this.eyeColor = "green";
 			this.tallness = 84;
@@ -152,12 +148,7 @@ package classes.Characters.CoC
 			this.buttRatingRaw = 5;
 			
 			this.cocks = new Array();
-			if(Flag("COC.KELT_BREAK_LEVEL") == 0)
-				this.createCock(30);
-			else if (Flag("COC.KELT_BREAK_LEVEL") == 1)
-				this.createCock(24);
-			else 
-				this.createCock(12);
+			this.createCock(30);
 			this.shiftCock(0, GLOBAL.TYPE_EQUINE);
 			
 			//balls
@@ -182,11 +173,11 @@ package classes.Characters.CoC
 			
 			this.breastRows = [];
 			this.createBreastRow();
-			this.breastRows[0].breastRatingRaw = Flag("COC.KELT_BREAK_LEVEL");
+			this.breastRows[0].breastRatingRaw = 0;
 			
 			this.ass.wetnessRaw = 0;
 			this.ass.loosenessRaw = 1;
-			this.ass.bonusCapacity = 50;
+			this.ass.bonusCapacity = 500;
 			
 			//this.createStatusEffect("Disarm Immune");
 			
@@ -205,6 +196,33 @@ package classes.Characters.CoC
 			sexualPreferences.setPref(GLOBAL.SEXPREF_HERMAPHRODITE,	0);
 			
 			this._isLoading = false;
+		}
+		
+		override public function get long():String 
+		{
+			var breakLevel:int = int(kGAMECLASS.flags["COC.KELT_BREAK_LEVEL"]);
+			var ret:String = "You are fighting [kelt.short], centaur archer.";
+			
+			if (breakLevel > 0)
+			{
+				ret = "[kelt.short] has changed for the worse since your first meeting.  Gone is his muscular, barrel chest.  In its place is a softer frame, capped with tiny boobs - remnants of your last treatment.  His jaw is fairly square and chiselled (though less than before).  From the waist down, he has the body of a horse, complete with a fairly large pair of balls and a decent-sized dong.  Both are smaller than they used to be, however.  He has his bow strung and out, clearly intent on defending himself from your less than gentle touches." + (breakLevel >= 2 ? "[kelt.short] is looking less and less like the burly centaur from before, and more and more like a woman.  He looks more like an odd, androgynous hybrid than the beautiful woman you had turned him into.  He currently sports roughly B-cup breasts and a smallish, miniature horse-cock. There's barely any hair on his human body, aside from a long mane of hair. Each treatment seems to be more effective than the last, and you can't wait to see what happens after you tame him THIS time.":"");
+			}
+			if (breakLevel >= 2)
+			{
+				ret += "[kelt.short] is looking less and less like the burly centaur from before, and more and more like a woman.  He looks more like an odd, androgynous hybrid than the beautiful woman you had turned him into.  He currently sports roughly B-cup breasts and a smallish, miniature horse-cock. There's barely any hair on his human body, aside from a long mane of hair. Each treatment seems to be more effective than the last, and you can't wait to see what happens after you tame him THIS time.";
+			}
+			
+			return ret;
+		}
+		
+		override public function set long(value:String):void 
+		{
+			super.long = value;
+		}
+		
+		override public function isPregnant(slot:int = -1):Boolean 
+		{
+			return kGAMECLASS.flags["COC.KELLY_PREGNANCY_INCUBATION"] != undefined;
 		}
 		
 		override public function CombatAI(alliedCreatures:Array, hostileCreatures:Array):void

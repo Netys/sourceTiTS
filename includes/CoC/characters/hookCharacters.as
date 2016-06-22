@@ -6,3 +6,4 @@
 	prepChar(justUpdate, "COC.BENOIT", CoCBenoit);
 	prepChar(justUpdate, "COC.EMBER", CoCEmber);
 	prepChar(justUpdate, "COC.KATH", CoCKatherine);
+	prepChar(justUpdate, "COC.KELT", CoCKelt);

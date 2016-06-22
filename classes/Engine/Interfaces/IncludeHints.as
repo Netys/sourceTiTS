@@ -54,4 +54,10 @@ package classes.Engine.Interfaces
 		return kGAMECLASS.debug; }
 	public function get timeAsStamp():uint {
 		return kGAMECLASS.GetGameTimestamp(); }
+	
+	import classes.Characters.CoC.*;
+	public function get kath():CoCKatherine { return kGAMECLASS.kath(); }
+	public function get kelt():CoCKelt { return kGAMECLASS.kelt(); }
+	public function get urta():CoCUrta { return kGAMECLASS.urta(); }
+	
 }
