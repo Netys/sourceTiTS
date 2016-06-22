@@ -13,6 +13,7 @@ package classes.Characters.CoC
 			this._latestVersion = 1;
 			this.version = _latestVersion;
 			this._neverSerialize = false;
+			this.fluidSimulate = true;
 			
 			this.short = "Arian";
 			this.originalRace = "lizan";

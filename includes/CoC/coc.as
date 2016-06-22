@@ -258,17 +258,17 @@ public function onSpellCast(caster:Creature):String {
 	
 	if (pc.perkv4("Magic Affinity") >= 5 && pc.perkv3("Magic Affinity") < 20) {
 		pc.setPerkValue("Magic Affinity", 3, 20);
-		return "\n<b>You've become more comfortable with your spells, reducing energy cost of spells by 20%!</b>\n";
+		return "\n<b>You've become more comfortable with your spells, reducing the energy cost of spells by 20%!</b>\n";
 	}
 	
 	if (pc.perkv4("Magic Affinity") >= 15 && pc.perkv3("Magic Affinity") < 35) {
 		pc.setPerkValue("Magic Affinity", 3, 35);
-		return "\n<b>You've become more comfortable with your spells, reducing energy cost of spells by an additional 15%!</b>\n";
+		return "\n<b>You've become more comfortable with your spells, reducing the energy cost of spells by an additional 15%!</b>\n";
 	}
 	
 	if (pc.perkv4("Magic Affinity") >= 45 && pc.perkv3("Magic Affinity") < 50) {
 		pc.setPerkValue("Magic Affinity", 3, 50);
-		return "\n<b>You've become more comfortable with your spells, reducing energy cost of spells by an additional 15%!</b>\n";
+		return "\n<b>You've become more comfortable with your spells, reducing the energy cost of spells by an additional 15%!</b>\n";
 	}
 	
 	return "";

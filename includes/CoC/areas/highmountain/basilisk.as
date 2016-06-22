@@ -1,6 +1,7 @@
 import classes.Characters.CoC.CoCBasilisk;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
+import classes.PregnancyData;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
@@ -298,84 +299,92 @@ private function basiliskHasVagEggStuff():void {
 	CombatManager.genericLoss();
 }
 
-//public function basiliskBirth():void {
+public function basiliskBirth(pregSlot:int):void {
 	//spriteSelect(75);
-	//output("\n");
-	//if(pc.vaginas.length == 0) {
-		//output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  <b>You look down and behold a new vagina</b>.\n\n", false);
-		//pc.createVagina();
-		//pc.genderCheck();
-	//}
-	//if(pc.findPerk(PerkLib.BasiliskWomb) >= 0) {
-		//output("\nA sudden pressure in your belly wakes you, making you moan softly in pain as you feel your womb rippling and squeezing, the walls contracting around the ripe eggs inside you.  You drag yourself from your bedding, divesting yourself of your lower clothes and staggering out into the middle of the camp. Squatting upright, you inhale deeply and start to concentrate.");
-		//output("\n\nA thick, green slime begins to flow from your stretched netherlips, splatting wetly onto the ground below you and quickly soaking into the dry earth. You settle easily into the rhythm of oushing with your contractions and breathing deeply when they ebb.  The eggs inside you move quickly, lubricated by the strange slime that cushioned them in your womb, sized and shaped just right the pressure of their passage stretches you in the most delightful way, your [pc.clit] growing erect");
-		//if(pc.hasCock()) output(" and [pc.eachCock] starting to leak pre-cum");
-		//output(" as you find yourself being moved to climax by the birthing.  You see no point in resisting and reach down to begin fiddling with yourself, moaning in pain-spiked pleasure as the stimulus overwhelms you. With an orgasmic cry, you release your eggs into the world amidst a gush of femcum");
-		//if(pc.hasCock()) output(" and a downpour of hermcum");
-		//output(".");
-		//
-		//output("\n\nWhen you find yourself able to stand, you examine what it is you have birthed; ");
-		////(eggNumber) 
-		//output(num2Text(Math.floor(pc.totalFertility() / 10)));
-		//output(" large, jade-colored eggs, the unmistakable shape of reptile eggs. You pick up one and hold it gently against your ear; inside, you can hear a little heart, beating strong and quick.  You put it down carefully with its fellows and stare at your clutch, a queasy tangle of emotions tugging at you.");
-//
-		////First time:
-		//if(flags[kFLAGS.BENOIT_EGGS] + flags[kFLAGS.BENOIT_GENERIC_EGGS] == 0) {
-			////[Have not laid generic basilisk eggs before, have not laid Benoit's eggs: 
-			//output("\n\nThe seconds drag by and the eggs remain still- the vague hope you harbor that they will immediately hatch, mature and get out of your life slowly vanishes.  What are you going to do with them? The only thing you can think of is to take them to Benoit.  Although you feel a slight tingle of shame for approaching him like this, you can't think of anyone else who would know what to do with these odd, unborn children of yours.");
-		//}
-		////[Have laid Benoit's eggs: 
-		//else {
-			//output("The seconds drag by and the eggs remain still.  Although you don't like to admit it, you had entertained the soft illusion that the eggs you sired with Benoit were special somehow; the cold fact of the ones in front of you tell you that that is not the case, that the ones forced upon your transformed womb by the mountain basilisks are functionally the same as the ones you have with him.  The thought sends a tight shiver up your spine, and you deliberately turn away from it to think of Benoit.  You suppose you'll have to take these to him, too.  Although you feel a slight tingle of shame for approaching him like this, you can't think of anyone else who would know what to do with these odd, unborn children of yours.");
-			//output("\n\nYou place the egg back down and gather them all up, moving them closer to the campfire to stay warm while you recover from your exertions.");
-		//}
-		//
-		//output("\n\nThere is nothing else to be done: you will have to take this batch to Benoit");
-		//if(flags[kFLAGS.BENOIT_EGGS] > 0) output(" as well");
-		//output(".  You place the egg back down and gather them all up, moving them closer to the campfire to stay warm while you recover from your exertions.");
-		//output("\n\nWhen the light of day breaks, you gather your newly laid clutch and set off for Benoit's shop. The blind basilisk is asleep when you arrive, forcing you to bang loudly on his door to wake him up.");
-		//output("\n\n\"<i>What is it?!</i>\" He snarls, displaying his fangs when he pops his head irritably out of the door. He stops and inhales through his nose, blushing faintly when he recognizes your scent.  \"<i>Oops! [pc.name], I am zo sorry, I did not think it would be you. But why are you here at such an early hour?</i>\"");
-		////First Time:  
-		//if(flags[kFLAGS.BENOIT_GENERIC_EGGS] == 0) {
-			//output("\n\nApprehensively, you explain the situation - you were caught unawares by a basilisk in the mountains, and then... you put an egg into his hand to feel.  Benoit is silent for a time, his claws rubbing pensively over the smooth surface.");
-			//output("\n\n“I see,” he says heavily.  \"<i>No, you were right to bring zem ere.  Zey will be safe with me and 'ell knows I will need all ze eggs I can get if I am to make zis work.</i>\"  You breathe an inward sigh of relief and follow him into his shop.");
-			//if(flags[kFLAGS.BENOIT_EGGS] + flags[kFLAGS.BENOIT_GENERIC_EGGS] == 0) {
-				//output("\n\nHe feels around the clutter of his store room until he finds what he's looking for: A battered old basket stuffed with a soft pillow.  You raise an eyebrow at the liberal amounts of dog hair the pillow is covered with and Benoit coughs apologetically.");
-				//output("\n\n“E isn't 'appy about me taking is bed, but to 'ell wizzim; e always gets is 'air on everysing anyway.” You spend some time arranging the eggs where they will be safe and warm.  Although you know they can't be, Benoit's blind eyes seem to be fixed upon the brood when you have finished.");
-				//output("\n\n“And zese eggs are different?” he says hesitantly.  “Zere will be...little girls?”  You shrug and say even if they aren't female, at least he'll have some sons he can keep away from the mountain.  He sets his jaw and nods.");
-			//}
-			////[Not first time: 
-			//else {
-				//output("\n\nBenoit places the eggs into a blanket-swaddled basket with the same painstaking care he did with the others, before turning back to you.");
-				//output("\n\nThe blind basilisk reaches out, finds your hand, and then squeezes it.  \"<i>[pc.name], you must be more careful in ze future,</i>\" he says.  \"<i>Please understand I am not saying zis because I am jealous or angry or anysing so zilly.  You 'ave done a great sing to change your body to 'elp my people, but if you keep getting attacked by my bruzzers and zey find out... if zey work out what you are... I do not like to sink about it.</i>\"  You tell him you'll be more on guard in the future and he seems to accept this.  He gestures to the corner where he has put together a serviceable stove from scrap.");
-				//output("\n\n“<i>'Ungry?</i>”");
-				//output("\n\nYou linger long enough to share breakfast with him, and then return to camp.");
-			//}
-		//}
-		////Subsequent: Sheepishly, you give him an egg to feel.  Benoit shakes his head in exasperation, but lets you in.
-		//else output("\n\nHe puts your latest batch with the others and then shares breakfast with you.  You leave with his final words lingering in your ears:  “More eggs is always good [pc.name], but for ze Gods sake: Be.  More.  Careful.”");
-		//output("\n");
-		//flags[kFLAGS.BENOIT_GENERIC_EGGS] += Math.floor(pc.totalFertility() / 10);
-	//}
-	//else {
-		//output("A sudden shift in the weight of your pregnant belly staggers you, dropping you to your knees.  You realize something is about to be birthed, and you shed your [pc.gear] before it can be ruined by what's coming.  A contraction pushes violently through your midsection, stretching your [pc.vagina] painfully, the lips opening wide as something begins sliding down your passage.  A burst of green slime soaks the ground below as the birthing begins in earnest, and the rounded surface of a strangely colored egg peaks between your lips.  You push hard and the large egg pops free at last, making you sigh with relief as it drops into the pool of slime.", false);
-		//pc.cuntChange(20,true,true,false);
-		//output("  The experience definitely turns you on, and you feel your clit growing free of its hood as another big egg starts working its way down your birth canal, rubbing your sensitive vaginal walls pleasurably.  You pant and moan as the contractions stretch you tightly around the next, slowly forcing it out between your nether-lips.  The sound of a gasp startles you as it pops free, until you realize it was your own voice responding to the sudden pressure and pleasure.  Aroused beyond reasonable measure, you begin to masturbate your clit, stroking it up and down between your slime-lubed thumb and fore-finger.  It twitches and pulses with your heartbeats, the incredible sensitivity of it overloading your fragile mind with waves of pleasure.  You cum hard, the big eggs each making your cunt gape wide just before popping free.  You slump down, nervous and barely conscious from the force of the orgasm.\n\n", false);
-		//pc.orgasm();
+	clearOutput();
+	var pData:PregnancyData = pc.pregnancyData[pregSlot] as PregnancyData;
+	
+	if (!pc.hasVagina(pregSlot)) {
+		pc.createVagina();
+		pregSlot = pc.vaginas.length - 1; // failsafe
+		output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
+		output("\n\n");
+	}
+	
+	if(pc.hasPerk("Basilisk Womb")) {
+		output("A sudden pressure in your belly wakes you, making you moan softly in pain as you feel your womb rippling and squeezing, the walls contracting around the ripe eggs inside you.  You drag yourself from your bedding, divesting yourself of your lower clothes and staggering out into the middle of the camp. Squatting upright, you inhale deeply and start to concentrate.");
+		output("\n\nA thick, green slime begins to flow from your stretched netherlips, splatting wetly onto the ground below you and quickly soaking into the dry earth. You settle easily into the rhythm of oushing with your contractions and breathing deeply when they ebb.  The eggs inside you move quickly, lubricated by the strange slime that cushioned them in your womb, sized and shaped just right the pressure of their passage stretches you in the most delightful way, your [pc.clit] growing erect");
+		if(pc.hasCock()) output(" and [pc.eachCock] starting to leak pre-cum");
+		output(" as you find yourself being moved to climax by the birthing.  You see no point in resisting and reach down to begin fiddling with yourself, moaning in pain-spiked pleasure as the stimulus overwhelms you. With an orgasmic cry, you release your eggs into the world amidst a gush of femcum");
+		if(pc.hasCock()) output(" and a downpour of hermcum");
+		output(".");
+		
+		output("\n\nWhen you find yourself able to stand, you examine what it is you have birthed; ");
+		//(eggNumber) 
+		output(num2Text(pData.pregnancyQuantity));
+		output(" large, jade-colored eggs, the unmistakable shape of reptile eggs. You pick up one and hold it gently against your ear; inside, you can hear a little heart, beating strong and quick.  You put it down carefully with its fellows and stare at your clutch, a queasy tangle of emotions tugging at you.");
+
+		//First time:
+		if(int(flags["COC.BENOIT_EGGS"]) + int(flags["COC.BENOIT_GENERIC_EGGS"]) == 0) {
+			//[Have not laid generic basilisk eggs before, have not laid Benoit's eggs: 
+			output("\n\nThe seconds drag by and the eggs remain still- the vague hope you harbor that they will immediately hatch, mature and get out of your life slowly vanishes.  What are you going to do with them? The only thing you can think of is to take them to Benoit.  Although you feel a slight tingle of shame for approaching him like this, you can't think of anyone else who would know what to do with these odd, unborn children of yours.");
+		}
+		//[Have laid Benoit's eggs: 
+		else {
+			output("The seconds drag by and the eggs remain still.  Although you don't like to admit it, you had entertained the soft illusion that the eggs you sired with Benoit were special somehow; the cold fact of the ones in front of you tell you that that is not the case, that the ones forced upon your transformed womb by the mountain basilisks are functionally the same as the ones you have with him.  The thought sends a tight shiver up your spine, and you deliberately turn away from it to think of Benoit.  You suppose you'll have to take these to him, too.  Although you feel a slight tingle of shame for approaching him like this, you can't think of anyone else who would know what to do with these odd, unborn children of yours.");
+			output("\n\nYou place the egg back down and gather them all up, moving them closer to the campfire to stay warm while you recover from your exertions.");
+		}
+		
+		output("\n\nThere is nothing else to be done: you will have to take this batch to Benoit");
+		if(flags["COC.BENOIT_EGGS"] > 0) output(" as well");
+		output(".  You place the egg back down and gather them all up, moving them closer to the campfire to stay warm while you recover from your exertions.");
+		output("\n\nWhen the light of day breaks, you gather your newly laid clutch and set off for Benoit's shop. The blind basilisk is asleep when you arrive, forcing you to bang loudly on his door to wake him up.");
+		output("\n\n\"<i>What is it?!</i>\" He snarls, displaying his fangs when he pops his head irritably out of the door. He stops and inhales through his nose, blushing faintly when he recognizes your scent.  \"<i>Oops! [pc.name], I am zo sorry, I did not think it would be you. But why are you here at such an early hour?</i>\"");
+		//First Time:  
+		if(flags["COC.BENOIT_GENERIC_EGGS"] == 0) {
+			output("\n\nApprehensively, you explain the situation - you were caught unawares by a basilisk in the mountains, and then... you put an egg into his hand to feel.  Benoit is silent for a time, his claws rubbing pensively over the smooth surface.");
+			output("\n\n“I see,” he says heavily.  \"<i>No, you were right to bring zem ere.  Zey will be safe with me and 'ell knows I will need all ze eggs I can get if I am to make zis work.</i>\"  You breathe an inward sigh of relief and follow him into his shop.");
+			if(int(flags["COC.BENOIT_EGGS"]) + int(flags["COC.BENOIT_GENERIC_EGGS"]) == 0) {
+				output("\n\nHe feels around the clutter of his store room until he finds what he's looking for: A battered old basket stuffed with a soft pillow.  You raise an eyebrow at the liberal amounts of dog hair the pillow is covered with and Benoit coughs apologetically.");
+				output("\n\n“E isn't 'appy about me taking is bed, but to 'ell wizzim; e always gets is 'air on everysing anyway.” You spend some time arranging the eggs where they will be safe and warm.  Although you know they can't be, Benoit's blind eyes seem to be fixed upon the brood when you have finished.");
+				output("\n\n“And zese eggs are different?” he says hesitantly.  “Zere will be...little girls?”  You shrug and say even if they aren't female, at least he'll have some sons he can keep away from the mountain.  He sets his jaw and nods.");
+			}
+			//[Not first time: 
+			else {
+				output("\n\nBenoit places the eggs into a blanket-swaddled basket with the same painstaking care he did with the others, before turning back to you.");
+				output("\n\nThe blind basilisk reaches out, finds your hand, and then squeezes it.  \"<i>[pc.name], you must be more careful in ze future,</i>\" he says.  \"<i>Please understand I am not saying zis because I am jealous or angry or anysing so zilly.  You 'ave done a great sing to change your body to 'elp my people, but if you keep getting attacked by my bruzzers and zey find out... if zey work out what you are... I do not like to sink about it.</i>\"  You tell him you'll be more on guard in the future and he seems to accept this.  He gestures to the corner where he has put together a serviceable stove from scrap.");
+				output("\n\n“<i>'Ungry?</i>”");
+				output("\n\nYou linger long enough to share breakfast with him, and then return to camp.");
+			}
+		}
+		//Subsequent: Sheepishly, you give him an egg to feel.  Benoit shakes his head in exasperation, but lets you in.
+		else output("\n\nHe puts your latest batch with the others and then shares breakfast with you.  You leave with his final words lingering in your ears:  “More eggs is always good [pc.name], but for ze Gods sake: Be. More. Careful.”");
+		
+		if (flags["COC.BENOIT_GENERIC_EGGS"] == undefined) flags["COC.BENOIT_GENERIC_EGGS"] = 0;
+		flags["COC.BENOIT_GENERIC_EGGS"] += pData.pregnancyQuantity;
+	}
+	else {
+		output("A sudden shift in the weight of your pregnant belly staggers you, dropping you to your knees.  You realize something is about to be birthed, and you shed your [pc.gear] before it can be ruined by what's coming.  A contraction pushes violently through your midsection, stretching your [pc.vagina] painfully, the lips opening wide as something begins sliding down your passage.  A burst of green slime soaks the ground below as the birthing begins in earnest, and the rounded surface of a strangely colored egg peaks between your lips.  You push hard and the large egg pops free at last, making you sigh with relief as it drops into the pool of slime.");
+		pc.cuntChange(pregSlot, cockVolume(20), true, true, false);
+		output("  The experience definitely turns you on, and you feel your clit growing free of its hood as another big egg starts working its way down your birth canal, rubbing your sensitive vaginal walls pleasurably.  You pant and moan as the contractions stretch you tightly around the next, slowly forcing it out between your nether-lips.  The sound of a gasp startles you as it pops free, until you realize it was your own voice responding to the sudden pressure and pleasure.  Aroused beyond reasonable measure, you begin to masturbate your clit, stroking it up and down between your slime-lubed thumb and fore-finger.  It twitches and pulses with your heartbeats, the incredible sensitivity of it overloading your fragile mind with waves of pleasure.  You cum hard, the big eggs each making your cunt gape wide just before popping free.  You slump down, nervous and barely conscious from the force of the orgasm.\n\n");
+		pc.orgasm();
 		//dynStats("sen", 2);
-	//
-		//output("You slowly drag yourself into a sitting position, mind still simmering with bliss, and take in the clutch that you have laid.  They seem taller and more oblong than other eggs you've seen and they are a strange color: a mottled grey-green. Where have you seen that shade of green before...?  A memory rises unbidden to you and you put your hand to your mouth.  At the same moment as realization takes hold, a thin papercut line appears in the largest of your eggs.  You hunch yourself up and watch in wonder as the cracks spread until, with a final, insistent push, a tiny reptilian face pops out of the shell.  It blinks albumen from its rheumy eyes and then, with an infant's awkward industriousness, begins to peel and push its way out of its shell.  It trails slime as it crawls forward like a salamander, blinking its big, wide eyes uncertainly, attempting to take in the very large world it has found itself in.  Behind it a small cacophony of cracking and wet splintering fills the air as your other children begin to tentatively push their way into existence.\n\n", false);
-	//
-		//output("In front of you finally are a dozen newly hatched basilisks, crawling around on all fours, the wetness of their eggs slowly drying on their scales, licking each other, flicking their long tails around and blinking at their surroundings with eyes huge in their tiny heads as interest in the wider world takes hold.  You can't say whether you find the sight insanely cute or utterly disgusting, and you don't know whether the reason you can't look away is because you are fascinated by the creatures you have brought into this world, or because of the effect of twenty four baby basilisk eyes on you.  You suspect in either case the answer is a bit of both.\n\n", false);
-	//
-		//output("They seem to quickly adapt to where they have found themselves, running around each other with increasing confidence, and you can see even in the short time you have been watching they have grown, their tender scales hardening as the sun and air beats down on them.  One of them suddenly scuttles like the lizard it is for cover, and you lose it from view underneath a rock.  They are quickly all at it, one after the other dashing and slipping from view.  The last to go is the largest, the first to hatch: it fixes you with its stare before slowly turning and following suit.  You could swear it gives you the smallest of smiles, a child's eager grin, before it goes.  The only evidence you have left of what just happened is a slimy pile of discarded egg shells.\n\n", false);
-	//
-		//if(cor() < 33) output("You find yourself shaken by the experience, and deeply disquieted by the thought of the clutch of monsters you have unleashed on this world.  You pick yourself up, rub yourself down and leave, promising yourself fervently you'll be more careful around basilisks in the future.\n\n", false);
-		//else if(cor() < 66) output("You pick yourself up, rub yourself down and leave.  You feel conflicted about what just happened; on the one hand you feel disquieted about the dozen monsters you just unleashed on this world, on the other you cannot help feel oddly proud of them and yourself.\n\n", false);
-		//else output("With a soft smile, you get up and leave, enjoying the sensation of green slime trickling down your legs.  You cannot wait to get pregnant again, for your stomach to bulge with eggs, to release more delightful creatures into this world which can grow up to fuck you and everyone else in turn, so everyone can enjoy life as much as you do.", false);
-	//}
-	//output("\n", false);
-//}
+	
+		output("You slowly drag yourself into a sitting position, mind still simmering with bliss, and take in the clutch that you have laid.  They seem taller and more oblong than other eggs you've seen and they are a strange color: a mottled grey-green. Where have you seen that shade of green before...?  A memory rises unbidden to you and you put your hand to your mouth.  At the same moment as realization takes hold, a thin papercut line appears in the largest of your eggs.  You hunch yourself up and watch in wonder as the cracks spread until, with a final, insistent push, a tiny reptilian face pops out of the shell.  It blinks albumen from its rheumy eyes and then, with an infant's awkward industriousness, begins to peel and push its way out of its shell.  It trails slime as it crawls forward like a salamander, blinking its big, wide eyes uncertainly, attempting to take in the very large world it has found itself in.  Behind it a small cacophony of cracking and wet splintering fills the air as your other children begin to tentatively push their way into existence.\n\n");
+	
+		output("In front of you finally are a dozen newly hatched basilisks, crawling around on all fours, the wetness of their eggs slowly drying on their scales, licking each other, flicking their long tails around and blinking at their surroundings with eyes huge in their tiny heads as interest in the wider world takes hold.  You can't say whether you find the sight insanely cute or utterly disgusting, and you don't know whether the reason you can't look away is because you are fascinated by the creatures you have brought into this world, or because of the effect of twenty four baby basilisk eyes on you.  You suspect in either case the answer is a bit of both.\n\n");
+	
+		output("They seem to quickly adapt to where they have found themselves, running around each other with increasing confidence, and you can see even in the short time you have been watching they have grown, their tender scales hardening as the sun and air beats down on them.  One of them suddenly scuttles like the lizard it is for cover, and you lose it from view underneath a rock.  They are quickly all at it, one after the other dashing and slipping from view.  The last to go is the largest, the first to hatch: it fixes you with its stare before slowly turning and following suit.  You could swear it gives you the smallest of smiles, a child's eager grin, before it goes.  The only evidence you have left of what just happened is a slimy pile of discarded egg shells.\n\n");
+	
+		if(pc.cor() < 33) output("You find yourself shaken by the experience, and deeply disquieted by the thought of the clutch of monsters you have unleashed on this world.  You pick yourself up, rub yourself down and leave, promising yourself fervently you'll be more careful around basilisks in the future.\n\n");
+		else if(pc.cor() < 66) output("You pick yourself up, rub yourself down and leave.  You feel conflicted about what just happened; on the one hand you feel disquieted about the dozen monsters you just unleashed on this world, on the other you cannot help feel oddly proud of them and yourself.\n\n");
+		else output("With a soft smile, you get up and leave, enjoying the sensation of green slime trickling down your legs.  You cannot wait to get pregnant again, for your stomach to bulge with eggs, to release more delightful creatures into this world which can grow up to fuck you and everyone else in turn, so everyone can enjoy life as much as you do.");
+	}
+	
+	processTime(4 * 60);
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
+}
 
 //basilisk Bad End
 //Requires: Lose to basilisk when Speed is less than 5 (changed from 15 to prevent level 1 gameover -Z)

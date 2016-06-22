@@ -23,7 +23,7 @@ package classes.Items.Apparel
 			
 			this.description = "a wizard's robes";
 			
-			this.tooltip = "These robes appear to have once belonged to a female wizard.  They're long with a slit up the side and full billowing sleeves.  The top is surprisingly low cut.  Somehow you know wearing it would aid your spellcasting.";
+			this.tooltip = "These robes appear to have once belonged to a female wizard. They're long with a slit up the side and full billowing sleeves. The top is surprisingly low cut. Somehow you know wearing it would aid your spellcasting.\n\nWizard's Endurance: -25% Spell Cost.";
 			
 			TooltipManager.addTooltip(this.shortName, this.tooltip);
 			

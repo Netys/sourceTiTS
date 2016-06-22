@@ -715,7 +715,7 @@ package classes.GameData
 			var Runner:PerkData = new PerkData();
 			Runner.classLimit = GLOBAL.CLASS_ADVENTURER;
 			Runner.perkName = "Runner";
-			Runner.perkDescription = "Increases chances of escaping combat.";
+			Runner.perkDescription = "Conveys an additional chance to escape combat.";
 			Runner.levelLimit = -1;
 			Runner.accessFunction = function():Boolean { return kGAMECLASS.pc.RQ() >= 25; };
 			insertPerkData(Runner);
@@ -731,7 +731,7 @@ package classes.GameData
 			var SpeedyRecovery:PerkData = new PerkData();
 			SpeedyRecovery.classLimit = GLOBAL.CLASS_ADVENTURER;
 			SpeedyRecovery.perkName = "Speedy Recovery";
-			SpeedyRecovery.perkDescription = "Regain fatigue 50% faster.";
+			SpeedyRecovery.perkDescription = "Grants the ability to gradually regenerate energy. Increases all energy gains by 50%.";
 			SpeedyRecovery.levelLimit = 6;
 			SpeedyRecovery.accessFunction = function():Boolean { return kGAMECLASS.pc.RQ() >= 60 && kGAMECLASS.pc.hasPerk("Evade"); };
 			insertPerkData(SpeedyRecovery);
@@ -923,7 +923,7 @@ package classes.GameData
 			var ArousingAura:PerkData = new PerkData();
 			ArousingAura.classLimit = GLOBAL.CLASS_ADVENTURER;
 			ArousingAura.perkName = "Arousing Aura";
-			ArousingAura.perkDescription = "Exude a lust-inducing aura, making your lust attacks more effective.";
+			ArousingAura.perkDescription = "Your lust-inducing aura is making your tease attacks more effective.";
 			ArousingAura.levelLimit = 6;
 			ArousingAura.accessFunction = function():Boolean { return kGAMECLASS.pc.cor() >= 70 && kGAMECLASS.pc.hasPerk("Corrupted Libido"); };
 			insertPerkData(ArousingAura);

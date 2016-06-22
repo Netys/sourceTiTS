@@ -11,6 +11,9 @@
 	import classes.Items.Accessories.TamWolf;
 	import classes.Items.Accessories.TamWolfDamaged;
 	import classes.Items.Accessories.TamWolfII;
+	import classes.Items.Apparel.CoCDragonScaleRobes;
+	import classes.Items.Apparel.CoCSpiderSilkRobes;
+	import classes.Items.Apparel.CoCWizardRobes;
 	import classes.Items.Armor.GooArmor;
 	import classes.Items.Guns.MyrBow;
 	import classes.Items.Melee.Fists;
@@ -768,7 +771,7 @@
 		public var tailType: Number = 0;
 		public function tailTypeUnlocked(newTailType:Number):Boolean
 		{
-			if (kGAMECLASS.isNineTails(this)) return false;
+			if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9 && (hasPerk("Enlightened Nine-tails") || hasPerk("Corrupted Nine-tails"))) return false;
 			if (tailType == GLOBAL.TYPE_CUNTSNAKE) return false;
 			if (tailType == GLOBAL.TYPE_COCKVINE) return false;
 			return true;
@@ -776,7 +779,7 @@
 		public function tailTypeLockedMessage():String
 		{
 			var msg:String = "";
-			if (kGAMECLASS.isNineTails(this)) {
+			if (hasTail(GLOBAL.TYPE_VULPINE) && tailCount == 9 && (hasPerk("Enlightened Nine-tails") || hasPerk("Corrupted Nine-tails"))) {
 				msg += "You are startled by sudden burst of dazzling ";
 				if (hasPerk("Enlightened Nine-tails") || hasPerk("Nine-tails")) msg += "azure";
 				else msg += "lavender";
@@ -7643,10 +7646,12 @@
 			//Great. Now figure out how much fullness that adds.
 			var fullnessDelta:Number = mLsGained / milkCapacity() * 100;
 			
+			var needNotification:Boolean = this is PlayerCharacter && !InCollection(milkType, GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK, GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK);
+			
 			//75% fullness notification
-			if(!InCollection(milkType, GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK, GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK) && milkFullness < 75 && milkFullness + fullnessDelta >= 75) createStatusEffect("Pending Gain Milk Note: 75");
+			if(needNotification && milkFullness < 75 && milkFullness + fullnessDelta >= 75) createStatusEffect("Pending Gain Milk Note: 75");
 			//100% notification!
-			if(!InCollection(milkType, GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK, GLOBAL.FLUID_TYPE_VANAE_HUNTRESS_MILK) && milkFullness < 100 && milkFullness + fullnessDelta >= 100) createStatusEffect("Pending Gain Milk Note: 100");
+			if(needNotification && milkFullness < 100 && milkFullness + fullnessDelta >= 100) createStatusEffect("Pending Gain Milk Note: 100");
 
 			//If we're going above 100.
 			if(fullnessDelta + milkFullness > 100)
@@ -7663,9 +7668,9 @@
 						fullnessDelta -= subHundredFullness;
 					}
 					//150%
-					if(milkFullness < 150 && milkFullness + fullnessDelta/2 >= 150) createStatusEffect("Pending Gain Milk Note: 150");
+					if(needNotification && milkFullness < 150 && milkFullness + fullnessDelta/2 >= 150) createStatusEffect("Pending Gain Milk Note: 150");
 					//200%
-					if(milkFullness < 200 && milkFullness + fullnessDelta/2 >= 200) createStatusEffect("Pending Gain Milk Note: 200");
+					if(needNotification && milkFullness < 200 && milkFullness + fullnessDelta/2 >= 200) createStatusEffect("Pending Gain Milk Note: 200");
 					//Grow at half rate since we're over 100
 					milkFullness += fullnessDelta/2;
 				}
@@ -9254,7 +9259,7 @@
 				harpy++;
 			if (hairType == GLOBAL.HAIR_TYPE_FEATHERS)
 				harpy++;
-			if (wingType == GLOBAL.TYPE_AVIAN)
+			if (hasWings(GLOBAL.TYPE_AVIAN) || hasWings(GLOBAL.TYPE_DOVE))
 				harpy++;
 			if (hasTail(GLOBAL.TYPE_AVIAN))
 				harpy++;
@@ -15852,6 +15857,9 @@
 			var cost:Number = attack.EnergyCost;
 			if (attack.GetAttackTypeFlags()["isMagic"] != undefined) {
 				cost *= Math.max(100 - perkv3("Magic Affinity"), 10) / 100;
+				if (armor is CoCWizardRobes) cost *= 0.75;
+				if (armor is CoCSpiderSilkRobes) cost *= 0.7;
+				if (armor is CoCDragonScaleRobes) cost *= 0.8;
 				if (hasPerk("History: Scholar")) cost *= 0.8;
 			}
 			else if (hasPerk("Iron Man")) cost *= 0.8; // all specials which are not magic are considered physical

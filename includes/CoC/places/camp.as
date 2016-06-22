@@ -1,5 +1,8 @@
 import classes.Creature;
 import classes.GLOBAL;
+import classes.Items.Accessories.LeithaCharm;
+import classes.Items.Transformatives.Foxfire;
+import classes.Items.Transformatives.Frostfire;
 import classes.ItemSlotClass;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
@@ -45,6 +48,23 @@ public function cocCampMenu():void {
 }
 
 public function doDebugFunction():void {
+	//pc.addTailFlag(GLOBAL.FLAG_TAILCOCK);
+	//pc.addTailFlag(GLOBAL.FLAG_TAILCUNT);
+	//pc.tailGenitalArg = GLOBAL.TYPE_VULPINE;
+	//pc.tailGenital = 1;
+	pc.tallness = 12 * 6 + 6;
+	pc.thickness = 70;
+	pc.tone = 100;
+	pc.cocks[0].addFlag(GLOBAL.FLAG_NUBBY);
+	pc.cocks[0].cLengthRaw = 12;
+	pc.cocks[0].knotMultiplier = 1.75;
+	pc.cocks[0].cockColor = "azure";
+	pc.cocks[1] = pc.cocks[0].makeCopy(); // who can say "no" to DP?
+	pc.breastRows[0].breastRatingRaw = 7;
+	pc.breastRows[1].breastRatingRaw = 1;
+	pc.breastRows[2].breastRatingRaw = 1;
+	pc.breastRows[3].breastRatingRaw = 1;
+	pc.milkType = GLOBAL.FLUID_TYPE_VANAE_MAIDEN_MILK;
 }
 
 public function inCamp():Boolean

@@ -2621,7 +2621,7 @@ public var corruptKitsuneColors:Array = ["pitch black", "ashen gray", "sable"];
 public var corruptKitsuneEyeColors:Array = ["sable"];
 
 public function validatePlayerKitsuneElderColor():void {
-	if (pc.hasPerk("Enlightened Nine-tails")) {
+	if (pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Nine-tails")) {
 		if (pc.eyeType != GLOBAL.TYPE_HUMAN && pc.eyeType != GLOBAL.TYPE_VULPINE) {
 			pc.eyeType = GLOBAL.TYPE_HUMAN;
 			pc.eyeColor = RandomInCollection(elderKitsuneEyeColors);
@@ -2705,13 +2705,15 @@ public function isNineTails(target:Creature):Boolean {
 }
 
 public function NineTailsTimePassedNotify():void {
-	if (pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Corrupted Nine-tails")) {
+	if (pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Nine-tails") || pc.hasPerk("Corrupted Nine-tails")) {
 		if (!pc.hasTail(GLOBAL.TYPE_VULPINE) || pc.tailCount < 9) {
+			if (pc.hasPerk("Nine-tails")) return;
 			eventBuffer += "\n\n<b>Without your tails, the magic power they once granted withers and dies, vanishing completely.</b>";
 			pc.removePerk("Enlightened Nine-tails");
 			pc.removePerk("Corrupted Nine-tails");
 		}
 		else if (pc.isBimbo() || pc.isBro() || pc.IQ() < 10 || pc.WQ() < 10) {
+			if (pc.hasPerk("Nine-tails")) return;
 			pc.tailCount = Math.max(Math.min(8, pc.IQ() / 10), 1);
 			
 			eventBuffer += "\n\n<b>Your crumbling mind is not able to maintain enlightened state anymore!</b>";

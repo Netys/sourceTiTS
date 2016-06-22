@@ -644,26 +644,30 @@ package classes.GameData
 			KitsuneFoxFire = new SingleCombatAttack();
 			KitsuneFoxFire.ButtonName = "Fox Fire";
 			KitsuneFoxFire.EnergyCost = 20;
-			KitsuneFoxFire.RequiresPerk = "Enlightened Nine-tails";
 			KitsuneFoxFire.DisabledIfEffectedBy = [];
 			KitsuneFoxFire.TooltipTitle = "Fox Fire";
 			KitsuneFoxFire.TooltipBody = "Unleash an ethereal blue flame at your opponent for high burning damage. Damage is based on your intellegence.";
 			KitsuneFoxFire.Implementor = KitsuneFoxFireImpl;
 			KitsuneFoxFire.SetAttackTypeFlags(SingleCombatAttack.ATF_MAGIC);
 			KitsuneFoxFire.RequiresTarget = true;
+			KitsuneFoxFire.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
+				return (target.hasPerk("Enlightened Nine-tails") || target.hasPerk("Nine-tails")) && kGAMECLASS.isNineTails(target);
+			}
 			a.push(KitsuneFoxFire);
 			
 			// Illusion - AoE blind
 			KitsuneIllusion = new SingleCombatAttack();
 			KitsuneIllusion.ButtonName = "Illusion";
 			KitsuneIllusion.EnergyCost = 15;
-			KitsuneIllusion.RequiresPerk = "Enlightened Nine-tails";
 			KitsuneIllusion.DisabledIfEffectedBy = [];
 			KitsuneIllusion.TooltipTitle = "Illusion";
 			KitsuneIllusion.TooltipBody = "Warp the reality around your opponents, lowering their accuracy. To succeed you should have successfull intellegence or willpower roll against target's ones.";
 			KitsuneIllusion.Implementor = KitsuneIllusionImpl;
 			KitsuneIllusion.SetAttackTypeFlags(SingleCombatAttack.ATF_MAGIC);
 			KitsuneIllusion.RequiresTarget = false;
+			KitsuneIllusion.ExtendedDisplayabilityCheck = function(target:Creature):Boolean {
+				return (target.hasPerk("Enlightened Nine-tails") || target.hasPerk("Nine-tails")) && kGAMECLASS.isNineTails(target);
+			}
 			a.push(KitsuneIllusion);
 			
 			// Corrupted Fox Fire - single target burning damage

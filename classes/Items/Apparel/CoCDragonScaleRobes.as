@@ -24,7 +24,7 @@ package classes.Items.Apparel
 			
 			this.description = "a dragonscale robes";
 			
-			this.tooltip = "This robe is expertly made from dragon scales. It offers high protection while being lightweight and should be comfortable to wear all day.";
+			this.tooltip = "This robe is expertly made from dragon scales. It offers high protection while being lightweight and should be comfortable to wear all day.\n\nWizard's Endurance: -20% Spell Cost.";
 			
 			TooltipManager.addTooltip(this.shortName, this.tooltip);
 			

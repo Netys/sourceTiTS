@@ -1544,7 +1544,11 @@ public function processTime(arg:int):void {
 		//Cum volume only simulated for those that simulate dat shit.
 		if(chars[prop].fluidSimulate)
 		{
-			if(chars[prop].ballFullness < 100 || chars[prop] is PlayerCharacter) chars[prop].cumProduced(arg);
+			if (chars[prop].ballFullness < 100 || chars[prop] is PlayerCharacter) chars[prop].cumProduced(arg);
+			if (chars[prop].canLactate() && chars[prop] != pc) {
+				chars[prop].milkProduced(arg); // pc has it in other place
+				if (chars[prop].milkFullness >= 150) chars[prop].milked(chars[prop].milkFullness - 75); // overflow protection
+			}
 			chars[prop].cumFlationSimulate(arg);
 		}
 	}
