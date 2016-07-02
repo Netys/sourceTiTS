@@ -56,7 +56,7 @@ public function answerCorrectSmartAss(riddles:Array):void {
 //THE SPHINX BEAT YOU AT HER OWN -- WAIT A SECOND
 public function answerWrongYouStupid():void {
 	clearOutput();
-	output("\"<i>That's... wrong, I'm afraid,</i>\" she says, a proud smile playing across her lips.  \"<i>Wrong, wrong, wrong.  Well, perhaps </i>I<i> was wrong about </i>you<i> after all...  Here I thought you'd be some fun.  Still, though, at least your body will serve me well, I think.  Yes, you'll do nicely.  Go on then, love, strip out of your [armor] for me.  A deal's a deal, after all...</i>\"");
+	output("\"<i>That's... wrong, I'm afraid,</i>\" she says, a proud smile playing across her lips.  \"<i>Wrong, wrong, wrong.  Well, perhaps </i>I<i> was wrong about </i>you<i> after all...  Here I thought you'd be some fun.  Still, though, at least your body will serve me well, I think.  Yes, you'll do nicely.  Go on then, love, strip out of your [pc.gear] for me.  A deal's a deal, after all...</i>\"");
 	//(Display Options: [Submit] [Fuck it, Attack])
 	//(Submit goes to appropriate loss scene)
 	clearMenu();

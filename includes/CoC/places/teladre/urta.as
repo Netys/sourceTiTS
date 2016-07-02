@@ -1,3 +1,4 @@
+import classes.Characters.CoC.CoCUrta;
 import classes.CockClass;
 import classes.Engine.Combat.applyDamage;
 import classes.Engine.Combat.DamageTypes.TypeCollection;
@@ -86,6 +87,15 @@ public function UrtaTimePassedNotify():void
 private var UrtaTimePassedNotifyHook: * = UrtaTimePassedNotifyGrapple();
 private function UrtaTimePassedNotifyGrapple():* { timeChangeListeners.push(UrtaTimePassedNotify); }
 
+public function get urta():CoCUrta
+{
+	var _urta:CoCUrta = new CoCUrta();
+	_urta.vaginas[0].bonusCapacity = flags["COC.TIMES_RUT_FUCKED_URTAS_CUNT"] == undefined ? 0 : Math.min(flags["COC.TIMES_RUT_FUCKED_URTAS_CUNT"] * 5, 40);
+	if (flags["COC.URTA_TENTACLE_GAPED"] > 0) _urta.vaginas[0].bonusCapacity = 500;
+	_urta.ass.bonusCapacity = _urta.vaginas[0].bonusCapacity; // that's how it works originally...
+	return _urta;
+}
+
 public function urtaIsPregnant(byPc:Boolean = true):Boolean {
 	return flags["COC.URTA_INCUBATION"] != undefined;
 }
@@ -95,11 +105,7 @@ public function urtaSprite():void {
 }
 
 public function urtaCapacity():Number {
-	var maxSize:Number = 19; // 60 capacity in CoC is arount 19" cock
-	var bonus:int = int(flags["COC.TIMES_RUT_FUCKED_URTAS_CUNT"]);
-	if(bonus > 5) bonus = 5; // up to 24
-	if(int(flags["COC.URTA_TENTACLE_GAPED"]) > 0) bonus += 30; // up to 55
-	return new CockClass(maxSize + bonus).volume();
+	return urta.vaginalCapacity();
 }
 
 public function urtaLove(love:Number = 0):Boolean {

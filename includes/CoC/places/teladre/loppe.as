@@ -38,8 +38,8 @@ public function get loppe():PregnancyPlaceholder // since there are no TFs... sc
 	
 	pp.ass.wetnessRaw = 1;
 	
-	Mutator.ajustCapacity(pp, new CockClass(24).volume()); // original 90 is something like up to 2' of cock
-	Mutator.ajustCapacity(pp, new CockClass(24).volume(), 3);
+	Mutator.ajustCapacity(pp, cockVolume(90)); // original 90 is something like up to 2' of cock
+	Mutator.ajustCapacity(pp, cockVolume(90), 3);
 	
 	return pp;
 }

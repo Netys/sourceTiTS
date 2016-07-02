@@ -92,7 +92,7 @@ public function KitsuneImpPCVictory():void
 	output("\"<i>My hero!</i>\"  she swoons, beaming.  \"<i>Oh, if there's </i>anything<i> I can do to repay you, please, tell me!</i>\"\n\n");
 	output("You find yourself gazing deep into her eyes, a dim haze entering your mind as you are drawn deeper and deeper into the glistening green pools.  The corners of her lips curl into a broad smile as she starts to step toward you, and for a moment you swear you can see a subtle change in her.  You rub your eyes, certain they are playing tricks on you, slowly following the gentle sway of her six tails as she strolls up to you." + ( ((pc.lustQ() > pc.WQ()) || (pc.willpower() < 25)) ? "  Nope, nothing wrong here...\n\n\"<i>Mm...  my hero...</i>\" she croons again, reaching up to caress your cheek." : "\n\nWait.") + "\n\n");
 	//PC saw through glamour
-	if (pc.lustQ() <= pc.WQ() && pc.willpower() >= 25) {
+	if (pc.lustQ() <= pc.WQ() && pc.willpower() >= 40) {
 		output("You push her away, almost cracking your head open as you stumble over a stump.  Now that you have broken free of her sorcery, you can see her for what she is.  A pair of large triangular fox ears poke up from her ");
 		if (enemy.hairColor == "blonde") output("back-length, flaxen");
 		else if (enemy.hairColor == "black") output("ass-length, raven");
@@ -2490,10 +2490,9 @@ private function meditateLikeAKitsuneEhQuestionMark():void
 	if (pc.hasItem(new CoCFoxJewel())
 		&& pc.earType == GLOBAL.TYPE_VULPINE
 		&& pc.hasTail(GLOBAL.TYPE_VULPINE) 
-		&& pc.tailCount < 9 
-		&& pc.tailCount < pc.level 
-		&& pc.tailCount * 5 <= pc.intelligence()
-		&& pc.WQ() >= 33)
+		&& (pc.tailCount < 9 && pc.tailCount < pc.level || pc.tailCount == 9 && !isNineTails(pc))
+		&& Math.min(pc.tailCount * 10 + 10, 90) <= pc.intelligence()
+		&& pc.willpower() >= 33)
 	{
 		//20% chance if PC has fox ears, 1 or more fox tails, carries a Fox Jewel, and meets level & INT requirements for the next tail:
 		output("You sit down carefully on a small mat in front of the shrine and clear your mind.  Closing your eyes, you meditate on the things you've learned in your journey thus far, and resolve to continue fighting against the forces of corruption that permeate the land.\n\n");
@@ -2505,7 +2504,7 @@ private function meditateLikeAKitsuneEhQuestionMark():void
 		
 		if (pc.tailCount < 8 || pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Corrupted Nine-tails")) { // also used to regrow lost tails
 			output("Sitting in a silent reverie, you allow the flames to wash over you, and begin to feel a bit more...  enlightened.  Your bushy tail" + ((pc.tailCount > 1) ? "s" : "" ) + " begin" + ((pc.tailCount > 1) ? "s" : "" ) + " to glow with an eerie, ghostly light, and with a crackle of electrical energy, split" + ((pc.tailCount > 1) ? "s" : "" ) + " into " + num2Text(pc.tailCount + 1) + "!");
-			pc.tailCount++;
+			if (pc.tailCount < 9) pc.tailCount++;
 		}
 		else {
 			output("As the mystical flames wash over you, your mind is assaulted by a maelstrom of otherworldly knowledge and power.  For a moment it feels as though your mind will be torn asunder, but you are ready.  Your travels and meditations have prepared you well, and you open your mind to accept enlightenment.\n\n");

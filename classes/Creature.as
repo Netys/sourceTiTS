@@ -4433,8 +4433,8 @@
 			description += nouns[rand(nouns.length)];
 			return description;
 		}
-		public function eyesDescript(): String {
-			return plural(eyeDescript());
+		public function eyesDescript(forcedAdjectives:Boolean = false): String {
+			return plural(eyeDescript(forcedAdjectives));
 		}
 		
 		public function hasLongTongue():Boolean
@@ -11430,15 +11430,12 @@
 						desc += RandomInCollection(["horse-pussy", "mare-pussy","animal-pussy","mare-pussy","mare-cunt", "horse-cunt","horse-gina","horse-twat", "mare-twat", "mare-pussy", "animal-pussy","cunt","gash"]);
 				}
 				//Maybe doge?
-				else if (type == GLOBAL.TYPE_CANINE || type == GLOBAL.TYPE_VULPINE)
+				else if (type == GLOBAL.TYPE_CANINE)
 				{
 					if (!simple)
 						desc += RandomInCollection(["canine pussy","animal pussy","animalistic pussy","doggie cunt","animal cunt","canine cunt", "animalistic cunny", "canine honeypot", "canine slit", "animal pussy", "fragrant dog-cunt", "doggie slit"]);
 					else
 						desc += RandomInCollection(["dog-pussy","dog-pussy","bitch-pussy","animal-pussy","bitch-cunt","dog-cunt","dog-twat","bitch-slit", "animal-pussy", "dog-vagina", "dog-cunt","cunt","slit"]);
-					if (foxScore() > 4) {
-						desc = desc.replace("dog", "fox");
-					}
 				}
 				else if (type == GLOBAL.TYPE_VULPINE)
 				{

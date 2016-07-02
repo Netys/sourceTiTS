@@ -1075,7 +1075,6 @@ public function customPCCheck(TF:Boolean = false):Boolean
 				pc.scaleColor = "white";
 				pc.eyeColor = "luminous celeste"; // unfathomable and serene, like a clear summer sky...
 				pc.skinTone = "albino";
-				if (!pc.hasStatusEffect("Vanae Markings")) pc.createStatusEffect("Vanae Markings"); // everyone loves them!
 				pc.skinAccent = "luminous azure"; // but with own flavor
 				pc.faceType = GLOBAL.TYPE_VULPINE; // and they called you crazy... and they were right...
 				pc.faceFlags = [GLOBAL.FLAG_MUZZLED];
@@ -1126,6 +1125,8 @@ public function customPCCheck(TF:Boolean = false):Boolean
 				pc.refractoryRate = pc.balls > 0 ? 4 : 20;
 				pc.cumMultiplierRaw = 50;
 				pc.ballEfficiency = 50;
+				if (!pc.hasStatusEffect("Vanae Markings")) pc.createStatusEffect("Vanae Markings"); // everyone loves them!
+				if (pc.balls > 0) pc.setStatusValue("Vanae Markings", 4, 1);
 				if (!pc.hasPerk("Androgyny")) pc.createPerk("Androgyny", 1, 0, 0, 0, "Your visage is always androgynous."); // not anthro enough for usual gender recognition patterns to really work
 				if (!pc.hasPerk("Icy Veins")) pc.createPerk("Icy Veins", 1, 0, 0, 0, "Your body has adapted to the extreme winter cold.");
 				if (!pc.hasStatusEffect("Genital Slit"))	pc.createStatusEffect("Genital Slit", 0, 0, 0, 0); // dangling all the time bits are not classy

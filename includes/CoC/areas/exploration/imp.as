@@ -977,11 +977,11 @@ private function noogaisNippleRape():void {
 	//clearOutput();
 	//if (doSFWloss()) return;
 	//output(images.showImage("impoverlord-loss-female"), false);
-	//output("You collapse from exhaustion, your [vagina] beginning to soak your [armor].  You groan loudly, desperately trying to continue the fight, or flee, but the exhaustion is too much.  You close your eyes for a moment, but hearing a loud thud near your face causes you to painfully open your eyes.  You see a large bestial hoof near your face, while the other hoof is used to roll you onto your back.");
+	//output("You collapse from exhaustion, your [vagina] beginning to soak your [pc.gear].  You groan loudly, desperately trying to continue the fight, or flee, but the exhaustion is too much.  You close your eyes for a moment, but hearing a loud thud near your face causes you to painfully open your eyes.  You see a large bestial hoof near your face, while the other hoof is used to roll you onto your back.");
 	//
 	//output("\n\nYou try to move, but before you can even begin to squirm a hoof presses hard between your " + breastDescript(0) + ".  You gasp as the air is temporarily knocked out of your lungs.  The demon chuckles at your last feeble attempt to free yourself.  He holds his " + monster.cockDescript(0) + " stroking it lewdly, a cruel smirk stretching across his face.  You watch as several beads of pre begin to drip from his tip onto your stomach.");
 	//
-	//output("\n\nThe imp steps between your legs, gently kicking them apart, until the wet spot on your [armor] is painfully obvious.  He chuckles, and leans down, ripping your [armor] off.  He casually tosses it to the side, and leans towards your [vagina].");
+	//output("\n\nThe imp steps between your legs, gently kicking them apart, until the wet spot on your [pc.gear] is painfully obvious.  He chuckles, and leans down, ripping your [pc.gear] off.  He casually tosses it to the side, and leans towards your [vagina].");
 	//
 	////if(pc has balls)
 	//if(pc.balls > 0) {
@@ -1003,7 +1003,7 @@ private function noogaisNippleRape():void {
 	//
 	//output("\n\nThe imp pulls out, and gives himself a few final strokes, sending one last shot of cum across your face.  You blush in embarrassment and wipe the sticky seed from your nose and lips.  Standing up, the imp presses a hoof down hard on your distended stomach, making you gasp loudly as the demon's thick cum is forced back out of your [vagina], pooling between your legs. The imp gives a satisfied smirk and flies off, leaving you to clean up.");
 	//
-	//output("\n\nYou stand up weakly after several moments, and gather your [armor].  It takes you a while to get dressed in your defeated state, but you manage to crawl back towards your camp.  Your [vagina] is still leaking some of the demonic cum, but you try not to worry about it as you arrive, collapsing almost immediately.");
+	//output("\n\nYou stand up weakly after several moments, and gather your [pc.gear].  It takes you a while to get dressed in your defeated state, but you manage to crawl back towards your camp.  Your [vagina] is still leaking some of the demonic cum, but you try not to worry about it as you arrive, collapsing almost immediately.");
 	//pc.orgasm();
 	//dynStats("cor", 1);
 	//pc.slimeFeed();

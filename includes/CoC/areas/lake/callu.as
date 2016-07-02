@@ -11,7 +11,7 @@ public function calluSceneOttahGirl():void
 	//output(images.showImage("callu-intro"));
 	//First Time
 	if (flags["COC.MET_OTTERGIRL"] == undefined) {
-		flags["COC.MET_OTTERGIRL"] = 0;;
+		flags["COC.MET_OTTERGIRL"] = 0;
 		output("Your exploration of the lakeside takes you further than you've gone before.  The water here is almost completely still, its waters ");
 		if (!flags["COC.FACTORY_SHUTDOWN"] == 1) output("crystal clear, giving you a stunning view of the lakebed");
 		else output("only slightly clouded, giving you an obscured view of the lakebed");

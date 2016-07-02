@@ -1,19 +1,9 @@
-import classes.Characters.CoC.CoCUrta;
 import classes.Characters.PregnancyPlaceholder;
 import classes.GLOBAL;
 import classes.Items.Accessories.CoCUrtaCollar;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
-
-public function get urta():CoCUrta
-{
-	var _urta:CoCUrta = new CoCUrta();
-	_urta.vaginas[0].bonusCapacity = flags["COC.TIMES_RUT_FUCKED_URTAS_CUNT"] == undefined ? 0 : Math.min(flags["COC.TIMES_RUT_FUCKED_URTAS_CUNT"] * 5, 40);
-	if (flags["COC.URTA_TENTACLE_GAPED"] > 0) _urta.vaginas[0].bonusCapacity = 500;
-	_urta.ass.bonusCapacity = _urta.vaginas[0].bonusCapacity; // that's how it works originally...
-	return _urta;
-}
 
 //[Under Table BJ]
 internal function blowUrtaUnderTable():void {

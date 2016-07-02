@@ -65,10 +65,11 @@ public function displayEncounterLogCoCVarious():int
 	
 	//=====GENERAL STATS=====//
 	output2("\n\n" + blockHeader("General Statistics", false));
-	// Crew
+	// Camp status
 	output2("\n<b><u>Camp</u></b>");
 	output2("\n<b>* Companions: </b>" + companionsCount());
 	
+	// Reproduction
 	var totalOffspring:Number = StatTracking.getStat("coc/pregnancy/total births");
 	var totalProduce:Number = 0;
 	totalProduce += StatTracking.getStat("coc/pregnancy/unfertilized eggs");
@@ -81,7 +82,7 @@ public function displayEncounterLogCoCVarious():int
 			output2("\n<b><u>Offspring</u></b>");
 			output2("\n<b>* Total: </b>" + totalOffspring);
 			
-			// Mother
+			// Mother PC
 			if(StatTracking.getStat("coc/pregnancy/imps birthed") > 0)
 				output2("\n<b>* Births, Imp Litters: </b>" + StatTracking.getStat("coc/pregnancy/imps birthed"));
 			if(StatTracking.getStat("coc/pregnancy/pc amily") > 0)
@@ -127,8 +128,7 @@ public function displayEncounterLogCoCVarious():int
 			if (StatTracking.getStat("coc/pregnancy/pc urta") > 0)
 				output2("\n<b>* Births, Urta Children: </b>" + StatTracking.getStat("coc/pregnancy/pc urta"));
 			
-			
-			// Father
+			// Father PC
 			if(StatTracking.getStat("coc/pregnancy/imps sired") > 0)
 				output2("\n<b>* Fathered, Imp Litters (Total): </b>" + StatTracking.getStat("coc/pregnancy/imps sired"));
 			if(StatTracking.getStat("coc/pregnancy/amily") > 0)
@@ -169,9 +169,41 @@ public function displayEncounterLogCoCVarious():int
 		}
 	}
 	
+	// Places and areas
+	
+	// Tel Adre
 	if(flags["COC.TEL_ADRE_KNOWN"] > 0) {
 		output2("\n\n" + blockHeader("Encounters: Tel Adre", false));
 		
+		// Cotton
+		if(flags["COC.COTTON_MET_FUCKED"] > 0) {
+			output2("\n<b><u>Cotton</u></b>");
+			output2("\n<b>* Status: </b> ");
+			if (flags["COC.COTTON_MET_FUCKED"] >= 1) output2("Met");
+			if (flags["COC.COTTON_MET_FUCKED"] >= 2) output2(", Sexed");
+			if (flags["COC.PC_IS_A_DEADBEAT_COTTON_DAD"] == 1) output2(", Upset");
+			if (flags["COC.COTTON_UNUSUAL_YOGA_BOOK_TRACKER"] != undefined) {
+				output2("\n<b>* Special Book: </b> ");
+				if (flags["COC.COTTON_UNUSUAL_YOGA_BOOK_TRACKER"] == 1) {
+					if (pc.hasKeyItem("Yoga Guide")) output2("Found");
+					else output2("Not Found");
+				}
+				else output2("Given");
+			}
+			
+			if (StatTracking.getStat("coc/pregnancy/cotton") + StatTracking.getStat("coc/pregnancy/pc cotton") > 0)
+			{
+				output2("\n<b>* Children: </b>");
+				enum.clear();
+				if (StatTracking.getStat("coc/pregnancy/cotton") > 0)
+					enum.push(StatTracking.getStat("coc/pregnancy/cotton") + " sired");
+				if (StatTracking.getStat("coc/pregnancy/pc cotton") > 0)
+					enum.push(StatTracking.getStat("coc/pregnancy/pc cotton") + " born");
+				output2(enum.toString() + ".");
+			}
+		}
+		
+		// Kath
 		if (flags["COC.KATHERINE_UNLOCKED"] > 0) {
 			output2("\n<b><u>Katherine</u></b>");
 			output2("\n<b>* Status: </b>");
@@ -191,6 +223,7 @@ public function displayEncounterLogCoCVarious():int
 			}
 		}
 		
+		// Urta
 		output2("\n<b><u>Urta</u></b>"); // if you know Tel Adre you know Urta
 		if (flags["COC.URTA_GOBLIN_SLAVE"] == 1) output2("\n<b>* Status: Goblin slave</b>");
 		else if (flags["COC.URTA_BECOMES_SNAKE_SLAVE"] == 1) output2("\n<b>* Status: Naga slave</b>");
@@ -229,24 +262,40 @@ public function displayEncounterLogCoCVarious():int
 		}
 	}
 	
+	// Plains
 	if(flags["COC.EXPLORED_PLAINS"] > 0) {
 		output2("\n\n" + blockHeader("Encounters: Plains", false));
+		
 		if(flags["COC.HEL_TIMES_ENCOUNTERED"] > 0) {
 			output2("\n<b><u>Helia</u></b>");
 			output2("\n<b>* Times Met: </b>" + flags["COC.HEL_TIMES_ENCOUNTERED"]);
 			output2("\n<b>* Times Sexed: </b>" + flags["COC.HEL_FUCK_COUNTER"]);
-			output2("\n<b>* Affection: </b>" + helAffection());
+			if (flags["COC.HEL_BONUS_POINTS"] > 0) output2("\n<b>* Affection: </b>" + flags["COC.HEL_BONUS_POINTS"]);
+			else output2("\n<b>* Affection: </b>" + helAffection());
 			output2("\n<b>* Attitude: </b>");
 			if (flags["COC.HEL_REDUCED_ENCOUNTER_RATE"] == 1) output2(" Upset");
+			else if (followerHel() && flags["COC.HEL_FOLLOWER_LEVEL"] == 2) output2(" Lover");
 			else if (flags["COC.HEL_FUCKBUDDY"] == 1 && flags["COC.PC_PROMISED_HEL_MONOGAMY_FUCKS"] == 1) output2(" Stalker");
 			else if (flags["COC.HEL_FUCKBUDDY"] == 1) output2(" Fuckbuddy");
-			else if (followerHel() && flags["COC.HEL_FOLLOWER_LEVEL"] == 2) output2(" Lover");
 			else  output2(" Undecided");
+		}
+		
+		if(flags["COC.ISABELLA_MET"] > 0 && (flags["COC.ISABELLA_MET_AS_SMALL"] > 0 || flags["COC.ISABELLA_TALLNES_ACCEPTED"] > 0)) {
+			output2("\n<b><u>Isabella</u></b>");
+			output2("\n<b>* Times Met: </b>" + flags["COC.ISABELLA_MET"]);
+			output2("\n<b>* Affection: </b>" + isabellaAffection());
+			output2("\n<b>* Attitude: </b>");
+			if (flags["COC.ISABELLA_ANGRY"] > 0) output2(" Upset");
+			else if (isabellaFollower()) output2(" Lover");
+			else output2(" Undecided");
 		}
 	}
 	
+	// Swamp
 	if(flags["COC.EXPLORED_SWAMP"] > 0) {
 		output2("\n\n" + blockHeader("Encounters: Swamp", false));
+		
+		// Ember
 		if(followerEmber()) {
 			output2("\n<b><u>Ember</u></b>");
 			output2("\n<b>* Gender: </b> ");
@@ -263,6 +312,8 @@ public function displayEncounterLogCoCVarious():int
 				output2("\n<b>* Children: </b> " + enum.toString());
 			}
 		}
+		
+		// Kiha
 		if(flags["COC.TIMES_MET_KIHA"] > 0) {
 			output2("\n<b><u>Kiha</u></b>");
 			output2("\n<b>* Times Met: </b>" + flags["COC.TIMES_MET_KIHA"]);
@@ -282,57 +333,36 @@ public function displayEncounterLogCoCVarious():int
 		}
 	}
 	
+	// Lake
+	if(flags["COC.EXPLORED_LAKE"] > 0) {
+		// Izma
+		if(flags["COC.IZMA_MET"] > 0) {
+			output2("\n<b><u>Izma</u></b>");
+			if (int(flags["COC.IZMA_TIMES_FOUGHT_AND_WON"]) != 0)
+				output2("\n<b>* Combat Victories Streak: </b>" + flags["COC.IZMA_TIMES_FOUGHT_AND_WON"]);
+			
+			if (StatTracking.getStat("coc/pregnancy/izma sharkgirls") + StatTracking.getStat("coc/pregnancy/pc sharkgirls") + StatTracking.getStat("coc/pregnancy/izma tigersharks") + StatTracking.getStat("coc/pregnancy/pc tigersharks") > 0)
+			{
+				output2("\n<b>* Daughters: </b>");
+				enum.clear();
+				if (StatTracking.getStat("coc/pregnancy/izma sharkgirls") > 0)
+					enum.push((StatTracking.getStat("coc/pregnancy/izma sharkgirls") + StatTracking.getStat("coc/pregnancy/pc sharkgirls")) + " shark-girls");
+				if (StatTracking.getStat("coc/pregnancy/izma tigersharks") > 0)
+					enum.push((StatTracking.getStat("coc/pregnancy/izma tigersharks") + StatTracking.getStat("coc/pregnancy/pc tigersharks")) + " tigersharks");
+				output2(enum.toString() + ".");
+			}
+		}
+	}
+	
 	output2("\n\n" + blockHeader("Encounters: Other", false));
+	
+	// Amily
 	if(flags["COC.AMILY_MET"] > 0) {
 		output2("\n<b><u>Amily</u></b>");
 		output2("\n<b>* Affection: </b>" + flags["COC.AMILY_AFFECTION"]);
 		if (flags["COC.AMILY_FUCK_COUNTER"] > 0) output2("\n<b>* Times sexed: </b>" + flags["COC.AMILY_FUCK_COUNTER"]);
 		if ((StatTracking.getStat("coc/pregnancy/amily") + StatTracking.getStat("coc/pregnancy/pc amily")) > 0)
 			output2("\n<b>* Litters: </b>" + (StatTracking.getStat("coc/pregnancy/amily") + StatTracking.getStat("coc/pregnancy/pc amily")));
-	}
-	
-	if(flags["COC.COTTON_MET_FUCKED"] > 0) {
-		output2("\n<b><u>Cotton</u></b>");
-		output2("\n<b>* Status: </b> ");
-		if (flags["COC.COTTON_MET_FUCKED"] >= 1) output2("Met");
-		if (flags["COC.COTTON_MET_FUCKED"] >= 2) output2(", Sexed");
-		if (flags["COC.PC_IS_A_DEADBEAT_COTTON_DAD"] == 1) output2(", Upset");
-		if (flags["COC.COTTON_UNUSUAL_YOGA_BOOK_TRACKER"] != undefined) {
-			output2("\n<b>* Special Book: </b> ");
-			if (flags["COC.COTTON_UNUSUAL_YOGA_BOOK_TRACKER"] == 1) {
-				if (pc.hasKeyItem("Yoga Guide")) output2("Found");
-				else output2("Not Found");
-			}
-			else output2("Given");
-		}
-		
-		if (StatTracking.getStat("coc/pregnancy/cotton") + StatTracking.getStat("coc/pregnancy/pc cotton") > 0)
-		{
-			output2("\n<b>* Children: </b>");
-			enum.clear();
-			if (StatTracking.getStat("coc/pregnancy/cotton") > 0)
-				enum.push(StatTracking.getStat("coc/pregnancy/cotton") + " sired");
-			if (StatTracking.getStat("coc/pregnancy/pc cotton") > 0)
-				enum.push(StatTracking.getStat("coc/pregnancy/pc cotton") + " born");
-			output2(enum.toString() + ".");
-		}
-	}
-	
-	if(flags["COC.IZMA_MET"] > 0) {
-		output2("\n<b><u>Izma</u></b>");
-		if (flags["COC.IZMA_TIMES_FOUGHT_AND_WON"] != undefined && flags["COC.IZMA_TIMES_FOUGHT_AND_WON"] != 0)
-			output2("\n<b>* Combat Victories Streak: </b>" + flags["COC.IZMA_TIMES_FOUGHT_AND_WON"]);
-		
-		if (StatTracking.getStat("coc/pregnancy/izma sharkgirls") + StatTracking.getStat("coc/pregnancy/pc sharkgirls") + StatTracking.getStat("coc/pregnancy/izma tigersharks") + StatTracking.getStat("coc/pregnancy/pc tigersharks") > 0)
-		{
-			output2("\n<b>* Daughters: </b>");
-			enum.clear();
-			if (StatTracking.getStat("coc/pregnancy/izma sharkgirls") > 0)
-				enum.push((StatTracking.getStat("coc/pregnancy/izma sharkgirls") + StatTracking.getStat("coc/pregnancy/pc sharkgirls")) + " shark-girls");
-			if (StatTracking.getStat("coc/pregnancy/izma tigersharks") > 0)
-				enum.push((StatTracking.getStat("coc/pregnancy/izma tigersharks") + StatTracking.getStat("coc/pregnancy/pc tigersharks")) + " tigersharks");
-			output2(enum.toString() + ".");
-		}
 	}
 	
 	return variousCount;

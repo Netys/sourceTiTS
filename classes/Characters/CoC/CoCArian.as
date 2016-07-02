@@ -144,7 +144,7 @@ package classes.Characters.CoC
 			this._isLoading = false;
 		}
 		
-		public function arianChestAdjective():String {
+		override public function breastCup(rowNum: Number = 0, ratingCheck: int = -1):String {
 			var buffer:String = "";
 			var temp:int = rand(10);
 			if (breastRows[0].breastRating() == 0) return "";
@@ -171,7 +171,7 @@ package classes.Characters.CoC
 			return buffer;
 		}
 		
-		public function arianChestNoun():String {
+		override public function chestNoun(rowNum:int = 99):String {
 			var buffer:String = "";
 			//Men get no cool descriptions!
 			if (breastRows[0].breastRating() == 0) return "chest";
@@ -185,8 +185,8 @@ package classes.Characters.CoC
 			return buffer;
 		}
 		
-		public function arianChest():String {
-			return arianChestAdjective() + " " + arianChestNoun();
+		override public function chestDesc():String {
+			return breastCup() + " " + chestNoun();
 		}
 		
 		override public function mf(male:String, female:String):String 

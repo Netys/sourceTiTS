@@ -803,7 +803,7 @@ private function missingoSex6():void {
 	//
 	////PC won through HP victory: 
 	//if(enemy.HP() <= 1) output("\n\nRolling your eyes, you offer a sympathetic hand to the defeated witch, showing her that you don't mean to hurt her any further, that you have something more... pleasurable in mind.  ")
-	//output("The sand witch slows to a dead stop as she assesses your intentions, which are made all the more clear as you disrobe and toss your [armor] aside, exposing your ");
+	//output("The sand witch slows to a dead stop as she assesses your intentions, which are made all the more clear as you disrobe and toss your [pc.gear] aside, exposing your ");
 	//if(pc.hasCock()) output("hardened  " + multiCockDescriptLight());
 	//if(pc.gender == 3) output(" and ");
 	//if(pc.hasVagina()) output(clitDescript());
@@ -931,7 +931,7 @@ private function missingoSex6():void {
 	//output(".  Having finally achieved release, and also having run out of eggs, you pull yourself free of the desert woman with a loud pop, the ");
 	//if(pc.canOvipositBee()) output("honey-like");
 	//else output("goopy");
-	//output(" lubricant drooling out of her in the absence of your intimate plug.  Utterly overwhelmed and exhausted, the sand witch resigns herself to gathering strength in the bright, blistering gaze of the desert sun.  Smiling to yourself, you take to re-donning your discarded [armor], remarking as you leave that you look forward to the next encounter; a sentiment the sorceress must agree with as she weakly waves to you, holding her stomach with her arms and filled with motherly delight at the thought of carrying your brood.");
+	//output(" lubricant drooling out of her in the absence of your intimate plug.  Utterly overwhelmed and exhausted, the sand witch resigns herself to gathering strength in the bright, blistering gaze of the desert sun.  Smiling to yourself, you take to re-donning your discarded [pc.gear], remarking as you leave that you look forward to the next encounter; a sentiment the sorceress must agree with as she weakly waves to you, holding her stomach with her arms and filled with motherly delight at the thought of carrying your brood.");
 	////Give her ze eggs!
 	//if (pc.fertilizedEggs() > 0) {
 		//if (pc.canOvipositBee())

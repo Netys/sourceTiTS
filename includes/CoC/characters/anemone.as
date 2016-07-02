@@ -1038,8 +1038,8 @@ private function fuckingAssholelessAnemoneeeez():void
 //
 	//output("\n\nGrasping the nettle, you gather her squirming, writhing hair in your hands and pull it taut, then lasso it with a spray of silk, directing it with your foremost legs.  The feeling of your spinnerets weaving long criss-crossing strands down her hair to restrain it - of spewing white, sticky strings all over it - becomes increasingly sexual as her venom suffuses your bloodstream through your hands");
 	////[(cock)
-	//if (pc.hasCock()) output(", and your [armor] tightens as [eachCock] swells");
-	//else if (pc.hasVagina()) output(", and the inside of your [armor] dampens with the lube your [vagina] leaves as it clenches around empty air");
+	//if (pc.hasCock()) output(", and your [pc.gear] tightens as [eachCock] swells");
+	//else if (pc.hasVagina()) output(", and the inside of your [pc.gear] dampens with the lube your [vagina] leaves as it clenches around empty air");
 	//output("; you have to push yourself to finish working before you can lose yourself to it.  Completing your restraints, you release her tentacles.  They bob behind her in one mass like a long, cute ponytail, and only the ends are free to wiggle.  When she realizes this, her behavior changes dramatically.");
 //
 	//output("\n\n\"<i>Off,</i>\" whimpers the anemone, thrashing the water, turning her head and trying reach the silk tie.  \"<i>Off!</i>\"");
@@ -1070,7 +1070,7 @@ private function fuckingAssholelessAnemoneeeez():void
 //
 	//output("\n\n\"<i>Don't worry,</i>\" you murmur, ");
 	////[(sexed)
-	//if (pc.gender > 0) output("while unfastening your [armor] with one hand, ");
+	//if (pc.gender > 0) output("while unfastening your [pc.gear] with one hand, ");
 	//output("\"<i>there is definitely more.</i>\"  The next two eggs slip into her as you speak, sending convulsions through her body.  Her pussy spasms again and enfolds your ovipositor even more tightly; you're ready for the sensation this time, and allow it to resonate through you, forcing out your own wet orgasm.  You hold her face as you unburden yourself");
 	//if (pc.hasCock()) {
 		//output(" and cover her hair with yet more white strings from your twitching manhood");

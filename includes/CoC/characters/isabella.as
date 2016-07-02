@@ -72,7 +72,7 @@ public function isabellaGreeting():void {
 		//[Approach – to meeting] [Avoid – camp] – dont flag as met yet
 		//Approach - sets flags["COC.ISABELLA_MET"] to 1 and calls this function
 		clearMenu();
-		addButton(0, "Approach", isabellaGreetingFirstTime);
+		addButton(0, "Approach", function():*{ flags["COC.ISABELLA_MET"] = 1; isabellaGreeting(); } );
 		addButton(1, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 		return;
 	}
@@ -222,11 +222,6 @@ public function isabellaGreeting():void {
 	addButton(3, "Fight 4 Rape", fightIsabella);
 	addButton(4, "Offer Oral", volunteerToSlurpCowCunt);
 	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
-}
-
-private function isabellaGreetingFirstTime():void {
-	flags["COC.ISABELLA_MET"] = 1;
-	isabellaGreeting();
 }
 
 private function isabellaStartFight():void 

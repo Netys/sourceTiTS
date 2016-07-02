@@ -69,7 +69,7 @@ package classes.Items.Transformatives
 			//Used for dick and boob TFs
 			var counter:int = 0;
 			
-			if (pc.faceType == GLOBAL.TYPE_VULPINE && pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount < 9 && pc.earType == GLOBAL.TYPE_VULPINE && pc.legType == GLOBAL.TYPE_VULPINE && pc.armType == GLOBAL.TYPE_VULPINE && pc.vaginaTotal() == pc.vaginaTotal(GLOBAL.TYPE_CANINE) && pc.cockTotal() == pc.cockTotal(GLOBAL.TYPE_VULPINE) && pc.hasFur() && rand(3) == 0 && !pc.hasPerk("Transformation Resistance")) {
+			if (pc.faceType == GLOBAL.TYPE_VULPINE && pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount < 9 && pc.earType == GLOBAL.TYPE_VULPINE && pc.legType == GLOBAL.TYPE_VULPINE && pc.armType == GLOBAL.TYPE_VULPINE && pc.vaginaTotal() == pc.vaginaTotal(GLOBAL.TYPE_VULPINE) && pc.cockTotal() == pc.cockTotal(GLOBAL.TYPE_VULPINE) && pc.hasFur() && rand(3) == 0 && !pc.hasPerk("Transformation Resistance")) {
 				if (kGAMECLASS.flags["COC.FOX_BAD_END_WARNING"] == undefined) {
 					kGAMECLASS.output("\n\nYou get a massive headache and a craving to raid a henhouse.  Thankfully, both pass in seconds, but <b>maybe you should cut back on the vulpine items...</b>");
 					kGAMECLASS.flags["COC.FOX_BAD_END_WARNING"] = 1;
@@ -377,16 +377,16 @@ package classes.Items.Transformatives
 			}
 			
 			// foxgina
-			if (changes < changeLimit && rand(3) == 0 && pc.hasVagina() && pc.vaginas[0].type != GLOBAL.TYPE_CANINE) {
+			if (changes < changeLimit && rand(3) == 0 && pc.hasVagina() && pc.vaginas[0].type != GLOBAL.TYPE_VULPINE) {
 				output("\n\nSomething invisible brushes against your sex, making you twinge.  ");
 				if (!pc.isCrotchExposed()) output("Undoing your clothes, y");
 				else output("Y");
 				output("ou take a look at your vagina and find that it has turned into animalistic, vulpine form.");
 				// not using shiftVagina to bypass wetness and looseness enforcement... wetness and looseness should be high only during heat
-				pc.vaginas[0].type = GLOBAL.TYPE_CANINE;
+				pc.vaginas[0].type = GLOBAL.TYPE_VULPINE;
 				pc.vaginas[0].clearFlags();
 				pc.vaginas[0].clits = 1;
-				pc.vaginas[0].vaginaColor = "pink";
+				pc.vaginas[0].vaginaColor = "black";
 				if (pc.vaginas[0].wetnessRaw > 3) pc.vaginas[0].wetnessRaw = 3;
 				if (pc.vaginas[0].minLooseness > 3) pc.vaginas[0].minLooseness = 3;
 				changes++;

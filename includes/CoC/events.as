@@ -142,7 +142,7 @@ public function EventsAdopterHellNotify():void {
 	///////////////////////////////////////
 	////    HEAT AND RUT PROCESSORS    ////
 	///////////////////////////////////////
-	if ((pc.hasVaginaType(GLOBAL.TYPE_CANINE) || pc.hasVaginaType(GLOBAL.TYPE_FELINE) || pc.hasVaginaType(GLOBAL.TYPE_EQUINE) || pc.hasVaginaType(GLOBAL.TYPE_LEITHAN)) // regulars heats for appropriate morphs... should be actually some function
+	if ((pc.hasVaginaType(GLOBAL.TYPE_CANINE) || pc.hasVaginaType(GLOBAL.TYPE_VULPINE) || pc.hasVaginaType(GLOBAL.TYPE_FELINE) || pc.hasVaginaType(GLOBAL.TYPE_EQUINE) || pc.hasVaginaType(GLOBAL.TYPE_LEITHAN)) // regulars heats for appropriate morphs... should be actually some function
 		&& pc.fertility() > 0 && (days % 30 == 0 || pc.fertility() >= 2 && days % (30 / int(pc.fertility())) == 0) && !pc.isPregnant() && flags["HEAT_LAST_CYCLE"] != days) { // same schedule with oviposition for correct overlaps
 		if (Mutator.goIntoHeat(pc, true, pc.fertility())) flags["HEAT_LAST_CYCLE"] = days;
 	}
@@ -164,7 +164,7 @@ public function EventsAdopterHellNotify():void {
 		}
 	}
 	if (pc.hasStatusEffect("Rut") && !pc.hasCock()) {
-		eventBuffer += "\n\n<b>Your rut is gone with your cock.</b>";
+		eventBuffer += "\n\n<b>Your rut is gone with your maleness.</b>";
 		pc.removeStatusEffect("Rut");
 	}
 	if (pc.hasStatusEffect("Rut") && pc.virility() <= 0) {

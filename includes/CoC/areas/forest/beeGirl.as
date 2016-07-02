@@ -2194,7 +2194,7 @@ public function beeGirlsGetsDildoed():void {
 	//else output("fertilized");
 	//output(" eggs.  By the time the last one shifts through your swollen pole, her bloated gut is nearly scraping the ground, leaving her panting and twitching with the weight of your eggs.");
 //
-	//output("\n\nYou pull yourself free on unsteady legs, her gaping hole gushing emerald lube while her chitinous abdomen flops listlessly over her egg-filled ass.  You cut her free from your sticky webbing and gather up your [armor], shuffling back to camp as she collapses exhausted on her side, both hands wrapped around her tremendously swollen midsection.");
+	//output("\n\nYou pull yourself free on unsteady legs, her gaping hole gushing emerald lube while her chitinous abdomen flops listlessly over her egg-filled ass.  You cut her free from your sticky webbing and gather up your [pc.gear], shuffling back to camp as she collapses exhausted on her side, both hands wrapped around her tremendously swollen midsection.");
 	//pc.dumpEggs();
 	//pc.orgasm();
 	//cleanupAfterCombat();

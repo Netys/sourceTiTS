@@ -1854,7 +1854,7 @@ public function izmaFollowerMenu():void {
 		//output("<b>New codex entry unlocked: Shark-girls & Tigershark-girls!</b>\n\n")
 	//}	
 	//[Sex (If lust is 30+)] [Talk] [Appearance]
-	
+	clearMenu();
 	addButton(0, "Appearance", izmaPearance);
 	addButton(1, "Books", IzmaCampBooks);
 	addDisabledButton(2, "Children", "Children", "This scene requires you to have children with Izma.");

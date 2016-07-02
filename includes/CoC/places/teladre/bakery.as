@@ -7,8 +7,9 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-include "maddie.as";
 include "frosty.as";
+include "maddie.as";
+include "rubi.as";
 
 public function showTelAdreBakery():void {
 	userInterface.showName("TEL'ADRE\nBAKERY");
@@ -144,12 +145,12 @@ private function talkBakeryMenu():void {
 	clearMenu();
 	//addButton(0,"Baker",talkToBaker);
 	
-	// rubiIntros returns 0 if you've driven rubi away
-	// I'm actually not sure how this was *supposed* to work, since it would just call eventParser with a event of 0 
-	// I guess it just wouldn't do anything?
-	// FWIW, the flag that has to be set to get rubiIntros to return zero is set in a function that has the comment:
+	 //rubiIntros returns 0 if you've driven rubi away
+	 //I'm actually not sure how this was *supposed* to work, since it would just call eventParser with a event of 0 
+	 //I guess it just wouldn't do anything?
+	 //FWIW, the flag that has to be set to get rubiIntros to return zero is set in a function that has the comment:
 	//(Will no longer encounter Rubi at the bakery.)
-	//if (rubiIntros() != null) addButton(btn++, (flags["COC.RUBI_INTRODUCED"] == undefined ? "Waitress" : "Rubi"), rubiIntros());
+	if (rubiIntros() != null) addButton(btn++, (flags["COC.RUBI_INTRODUCED"] == undefined ? "Waitress" : "Rubi"), rubiIntros());
 
 	//if(kGAMECLASS.nieveHoliday()) {
 		//if(flags[kFLAGS.KAMI_ENCOUNTER] > 0) {
