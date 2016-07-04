@@ -46,7 +46,7 @@ public function helAffection(diff:Number = 0):Number {
 	if (flags["COC.HEL_AFFECTION_FOLLOWER"] == undefined) flags["COC.HEL_AFFECTION_FOLLOWER"] = 0;
 	if (flags["COC.HEL_BONUS_POINTS"] == undefined) flags["COC.HEL_BONUS_POINTS"] = 0;
 	
-	if (flags["COC.HEL_AFFECTION_FOLLOWER"] > 70 && int(flags["COC.HEL_HARPY_QUEEN_DEFEATED"]) == undefined) flags["COC.HEL_AFFECTION_FOLLOWER"] = 70;
+	if (flags["COC.HEL_AFFECTION_FOLLOWER"] > 70 && int(flags["COC.HEL_HARPY_QUEEN_DEFEATED"]) == 0) flags["COC.HEL_AFFECTION_FOLLOWER"] = 70;
 	if (flags["COC.HEL_AFFECTION_FOLLOWER"] < 100 || (int(flags["COC.HEL_BONUS_POINTS"]) == 0 && diff < 0)) {
 		flags["COC.HEL_AFFECTION_FOLLOWER"] += diff;
 		if (flags["COC.HEL_AFFECTION_FOLLOWER"] >= 100) flags["COC.HEL_AFFECTION_FOLLOWER"] = 100;
