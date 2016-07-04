@@ -2,18 +2,34 @@
 
 /* Gray Goo Armor */
 
-public function showGrayGooArmor():void
+public function showGrayGooArmor(nude:Boolean = false, special:String = "none"):void
 {
-	showGrayGooArmorBust();
+	showBust(novaBustDisplay(nude, special));
 	if(flags["ANNO_NOVA_UPDATE"] >= 2) showName("\n" + goo.short.toUpperCase());
 	else if(hasGooArmorOnSelf()) showName("GOO\nARMOR");
 	else showName("\nGRAY GOO");
 }
-public function showGrayGooArmorBust():void
+public function novaBustDisplay(nude:Boolean = false, special:String = "none"):String
 {
-	if(chars["GOO"].hairStyle == "ponytail") showBust("GRAY_GOO_PRIME");
-	else if(chars["GOO"].hairStyle == "loose") showBust("GRAY_GOO");
-	else showBust("GRAY_GOO_ARMOR");;
+	var bustName:String = "";
+	
+	if(!nude && chars["GOO"].hairStyle == "ponytail") bustName = "GRAY_GOO_PRIME";
+	else if(!nude && chars["GOO"].hairStyle == "loose") bustName = "GRAY_GOO";
+	else
+	{
+		bustName = "NOVA";
+		if(nude)
+		{
+			bustName += "_NUDE";
+			switch(special)
+			{
+				case "tits": bustName += "_0"; break;
+				case "cock": bustName += "_1"; break;
+			}
+		}
+	}
+	
+	return bustName;
 }
 
 public function deck13MakeGoo():void
@@ -50,7 +66,7 @@ public function deck13MakeGooII():void
 {
 	clearOutput();
 	author("Savin");
-	showGrayGooArmorBust();
+	showBust(novaBustDisplay());
 	showName("GOO\nCONTAINER");
 	
 	output("<b>Enter the Gray Goo’s name:</b>");
@@ -94,7 +110,7 @@ public function nameThaGooII():void
 {
 	clearOutput();
 	author("Savin");
-	showGrayGooArmorBust();
+	showBust(novaBustDisplay());
 	showName("GOO\nCONTAINER");
 
 	output("<i>“[goo.name]?”</i> you suggest.");
@@ -313,7 +329,7 @@ public function gooDickFap():void
 {
 	clearOutput();
 	author("Savin");
-	showGrayGooArmor();
+	showGrayGooArmor(true, "cock");
 	
 	output("You");
 	if(pc.armor is GooArmor)
@@ -467,7 +483,7 @@ public function grayGooCockSleeve():void
 {
 	clearOutput();
 	author("Savin");
-	showGrayGooArmor();
+	showGrayGooArmor(true, "tits");
 
 	output("You reach down to your pent-up [pc.cock] and give yourself a stroke through the gooey coating hugging your body. Grinning, you");
 	if(pc.armor is GooArmor) { /* Fine here! */ }
@@ -495,7 +511,7 @@ public function grayGooCockSleeveII(allowIt:Boolean = false):void
 {
 	clearOutput();
 	author("Savin");
-	showGrayGooArmor();
+	showGrayGooArmor(true, "tits");
 
 	if (allowIt)
 	{
@@ -700,7 +716,7 @@ public function gooArmorDefense(def:Number = 0):Number
 }
 public function gooArmorInStorageBlurb(store:Boolean = true):String
 {
-	showGrayGooArmorBust();
+	showBust(novaBustDisplay());
 	
 	var halp:Array = [];
 	
@@ -850,7 +866,13 @@ public function approachGooArmorCrewMenu(fromCrew:Boolean = true):void
 	gooArmorAddButton(fromCrew, 0, "Talk", gooArmorCrewOption, ["talk", fromCrew], "Talk", "Chat a bit with [goo.name].");
 	if(flags["GOO_ARMOR_CUSTOMIZE"] == undefined) gooArmorAddDisabledButton(fromCrew, 1, "Locked", "Locked", "[goo.name] hasn’t learned how to do this yet..." + (pc.level < 3 ? " She may be more confident if you are a higher level." : " Maybe try" + ((pc.armor is GooArmor) ? " taking her off first, then" : "") + " talking to her" + (InShipInterior() ? "" : " while in your ship") + " for a bit?"));
 	else gooArmorAddButton(fromCrew, 1, "Customize", gooArmorCrewOption, ["customize", fromCrew], "Customize " + ((pc.armor is GooArmor) ? "Suit" : "Appearance"), ((pc.armor is GooArmor) ? "See if [goo.name] can change how she looks on you." : "See if [goo.name] can change her form for you."));
-	if(pc.lust() >= 33) gooArmorAddButton(fromCrew, 2, "Sex", gooArmorCrewOption, ["sex", fromCrew], "Sex", "Have some sexy fun-time with [goo.name].");
+	if(pc.lust() >= 33)
+	{
+		if(rooms[currentLocation].hasFlag(GLOBAL.NOFAP)) gooArmorAddDisabledButton(fromCrew, 2, "Sex", "Sex", "Masturbating here would be impossible.");
+		else if(rooms[currentLocation].hasFlag(GLOBAL.FAPPING_ILLEGAL)) gooArmorAddDisabledButton(fromCrew, 2, "Sex", "Sex", "Public masturbation is illegal here. Trying to masturbate would almost certainly land you in jail.");
+		else if(rooms[currentLocation].hasFlag(GLOBAL.PUBLIC) && pc.exhibitionism() < 33 && pc.libido() < 70) gooArmorAddDisabledButton(fromCrew, 2, "Sex", "Sex", "You cannot have sex with [goo.name] at this time!");
+		else gooArmorAddButton(fromCrew, 2, "Sex", gooArmorCrewOption, ["sex", fromCrew], "Sex", "Have some sexy fun-time with [goo.name].");
+	}
 	else gooArmorAddDisabledButton(fromCrew, 2, "Sex", "Sex", "You are not aroused enough for this.");
 	
 	if(flags["GOO_ARMOR_HEAL_LEVEL"] == undefined) gooArmorAddDisabledButton(fromCrew, 5, "Locked", "Locked", "[goo.name] hasn’t learned how to do this yet..." + (pc.level < 7 ? " She may be more confident if you are a higher level." : " Maybe try" + (pc.hasItem(new GrayMicrobots(), 10) ? "" : " stocking up and") + " carrying some drinkable health items," + ((pc.armor is GooArmor) ? " taking her off," : " and") + " then talking to her" + (InShipInterior() ? "" : " while in your ship") + "?"));
@@ -893,12 +915,13 @@ public function gooArmorCrewOption(arg:Array):void
 	
 	gooArmorClearOutput(fromCrew);
 	author("Jacques00");
-	showGrayGooArmor();
 	gooArmorClearMenu(fromCrew);
 	
 	switch(response)
 	{
 		case "talk":
+			showGrayGooArmor();
+			
 			// Level 3
 			if(pc.level >= 3 && flags["GOO_ARMOR_CUSTOMIZE"] == undefined && InShipInterior() && !(pc.armor is GooArmor) && rand(4) == 0)
 			{
@@ -1079,6 +1102,8 @@ public function gooArmorCrewOption(arg:Array):void
 			}
 			break;
 		case "customize":
+			showGrayGooArmor();
+			
 			txt += "Deciding to go for some customization,";
 			
 			// Armor changes
@@ -1144,6 +1169,8 @@ public function gooArmorCrewOption(arg:Array):void
 			}
 			break;
 		case "sex":
+			showGrayGooArmor(true);
+			
 			txt += "<i>“Ooo, feeling frisky, are we?”</i> [goo.name]";
 			if(pc.armor is GooArmor) txt += " teases you as she rubs and tightens her mass around your body";
 			else txt += " swirls herself around you and gives you a playful <i>boop</i> on the nose";
@@ -1156,6 +1183,8 @@ public function gooArmorCrewOption(arg:Array):void
 			gooArmorAddButton(fromCrew, 14, "Back", approachGooArmorCrew, [false, fromCrew]);
 			break;
 		case "heal":
+			showGrayGooArmor();
+			
 			var hpQ:Number = pc.HPQ();
 			
 			txt += "Looking at your";
@@ -1209,6 +1238,8 @@ public function gooArmorCrewOption(arg:Array):void
 			gooArmorAddButton(fromCrew, 0, "Next", approachGooArmorCrew, [false, fromCrew]);
 			break;
 		case "stay":
+			showGrayGooArmor();
+			
 			txt += "You ask [goo.name] to stay on your ship as a crewmember.";
 			if(pc.armor is GooArmor)
 			{
@@ -1230,6 +1261,8 @@ public function gooArmorCrewOption(arg:Array):void
 			processTime(1);
 			break;
 		case "take":
+			showGrayGooArmor();
+			
 			if(!pc.hasArmor())
 			{
 				if(silly && pc.isBimbo() && pc.hasBreasts())
@@ -1261,6 +1294,8 @@ public function gooArmorCrewOption(arg:Array):void
 			processTime(1);
 			break;
 		case "leave":
+			showGrayGooArmor();
+			
 			if(gooArmorIsCrew())
 			{
 				txt += "You decide to let [goo.name] do her thing and tell her that you’re going to tend to some other things.";
@@ -2147,33 +2182,7 @@ public function gooArmorChangeDesign(arg:Array):void
 			if(pc.getStatusTooltip("Goo Armor Design") == "" || pc.getStatusTooltip("Goo Armor Design") == "none") txt += "<i>“You want an emblem, huh? Is that like a tattoo?”</i>";
 			else txt += "<i>“Represent!”</i>";
 			
-			var i:int = 0;
-			var btnSlot:int = 0;
-			var emblemList:Array = [
-				["None", "none"],
-				["BI/G", "Bell-Isle/Grunmann patch"],
-				["Steele", "Steele Tech logo"],
-			];
-			// Push other emblems in the list for unlocking!
-			
-			for(i = 0; i < emblemList.length; i++)
-			{
-				if(btnSlot >= 14 && (btnSlot + 1) % 15 == 0)
-				{
-					gooArmorAddButton(fromCrew, btnSlot, "Back", gooArmorChangeArmorMenu, fromCrew);
-					btnSlot++;
-				}
-				
-				if(pc.getStatusTooltip("Goo Armor Design") != emblemList[i][1]) gooArmorAddButton(fromCrew, btnSlot, emblemList[i][0], gooArmorChangeEmblem, [emblemList[i][1], fromCrew], StringUtil.toDisplayCase(emblemList[i][1]), (emblemList[i][1] == "none" ? "Remove the current emblem." : "Change the emblem to " + indefiniteArticle(emblemList[i][1]) + "."));
-				else gooArmorAddDisabledButton(fromCrew, btnSlot, emblemList[i][0]);
-				btnSlot++;
-				
-				if(emblemList.length > 14 && (i + 1) == emblemList.length)
-				{
-					while((btnSlot + 1) % 15 != 0) { btnSlot++; }
-					gooArmorAddButton(fromCrew, btnSlot, "Back", gooArmorChangeArmorMenu, fromCrew);
-				}
-			}
+			gooArmorEmblemMenu([fromCrew, 0]);
 			break;
 		case "helmet":
 			txt += "<i>“" + (pc.statusEffectv3("Goo Armor Design") == 0 ? "Would you like a helmet" : "Wanna change your helmet") + "?”</i>";
@@ -2208,6 +2217,50 @@ public function gooArmorChangeDesign(arg:Array):void
 	}
 	
 	gooArmorOutput(fromCrew, txt);
+	
+	gooArmorAddButton(fromCrew, 14, "Back", gooArmorChangeArmorMenu, fromCrew);
+}
+public function gooArmorEmblemMenu(arg:Array):void
+{
+	var fromCrew:Boolean = arg[0];
+	var offset:int = arg[1];
+	
+	gooArmorClearMenu(fromCrew);
+	
+	var i:int = 0;
+	var btnSlot:int = 0;
+	var emblemList:Array = [
+		["None", "none"],
+		["BI/G", "Bell-Isle/Grunmann patch"],
+		["Steele", "Steele Tech logo"],
+	];
+	// Push other emblems in the list for unlocking!
+	if(9999 == 0) emblemList.push(["None", "none"]);
+	
+	for(i = (fromCrew ? 0 : offset); i < (fromCrew ? emblemList.length : (offset + 10)); i++)
+	{
+		if(!fromCrew && i >= emblemList.length) break;
+		if(fromCrew && btnSlot >= 14 && (btnSlot + 1) % 15 == 0)
+		{
+			gooArmorAddButton(fromCrew, btnSlot, "Back", gooArmorChangeArmorMenu, fromCrew);
+			btnSlot++;
+		}
+		
+		if(pc.getStatusTooltip("Goo Armor Design") != emblemList[i][1]) gooArmorAddButton(fromCrew, btnSlot, emblemList[i][0], gooArmorChangeEmblem, [emblemList[i][1], fromCrew], StringUtil.toDisplayCase(emblemList[i][1]), (emblemList[i][1] == "none" ? "Remove the current emblem." : "Change the emblem to " + indefiniteArticle(emblemList[i][1]) + "."));
+		else gooArmorAddDisabledButton(fromCrew, btnSlot, emblemList[i][0]);
+		btnSlot++;
+		
+		if(fromCrew && emblemList.length > 14 && (i + 1) == emblemList.length)
+		{
+			while((btnSlot + 1) % 15 != 0) { btnSlot++; }
+			gooArmorAddButton(fromCrew, btnSlot, "Back", gooArmorChangeArmorMenu, fromCrew);
+		}
+		if(!fromCrew)
+		{
+			if(offset >= 10) gooArmorAddButton(fromCrew, 10, "Prev Pg.", gooArmorEmblemMenu, [fromCrew, (offset - 10)], "Previous Page", "View more emblems.");
+			if(offset + 10 < emblemList.length) gooArmorAddButton(fromCrew, 12, "Next Pg.", gooArmorEmblemMenu, [fromCrew, (offset + 10)], "Next Page", "View more emblems.");
+		}
+	}
 	
 	gooArmorAddButton(fromCrew, 14, "Back", gooArmorChangeArmorMenu, fromCrew);
 }
@@ -2389,14 +2442,14 @@ public function gooArmorChangeEmblem(arg:Array):void
 	
 	if(style == "Bell-Isle/Grunmann patch")
 	{
-		txt += "[goo.name]’s head pops from you, <i>“So what’ll it be?”</i>.";
+		txt += "[goo.name]’s head pops from you, <i>“So what’ll it be?”</i>";
 		txt += "\n\nYou ask if she can give you a Bell-Isle/Grunmann patch to go along with your suit.";
-		txt += "<i>“Oh, that’s easy, peasy... Just watch!”</i>. In an instant, the recognizable logo is etched onto your armor, one on each shoulder. Looks like she knows that one pretty well!";
+		txt += "<i>“Oh, that’s easy, peasy... Just watch!”</i> In an instant, the recognizable logo is etched onto your armor, one on each shoulder. Looks like she knows that one pretty well!";
 		processTime(1);
 	}
 	else if(style != "none")
 	{
-		txt += "[goo.name]’s head pops from you, <i>“Sure, whatcha got there?”</i>.";
+		txt += "[goo.name]’s head pops from you, <i>“Sure, whatcha got there?”</i>";
 		txt += "\n\nYou press a button on your " + (InShipInterior() ? "dash to display" : "codex to project") + " the " + style + " and let her view it for a moment.";
 		txt += "\n\n[goo.name] makes some concentrating noises, storing the details in her memory. When she’s confident she has it, she confirms, <i>“Got it!”</i>";
 		txt += "\n\nIt takes a little time, but she manages to get the design printed, one on each shoulder.";

@@ -150,6 +150,11 @@ public function mainGameMenu(minutesMoved:Number = 0):void {
 		if (tryApplyUvetoColdDamage(minutesMoved)) return;
 	}
 	
+	if (tryEncounterFreedomBeef())
+	{
+		return;
+	}
+	
 	if(inCombat()) 
 		output("\n\n<b>You’re still in combat, you ninny!</b>");
 	if(pc.hasStatusEffect("Temporary Nudity Cheat"))
@@ -1871,6 +1876,8 @@ public function processTime(arg:int):void {
 			{
 				treatmentHourProcs();
 			}
+			//Omnisuit!
+			if(pc.armor is Omnisuit) omnisuitChangeUpdate();
 			//Egg trainer stuff
 			carryTrainingBonusBlurbCheck();
 			//Nessa cumflationshit
@@ -2014,7 +2021,10 @@ public function processTime(arg:int):void {
 				if(flags["BRIHA_LATEST_SPAWN_AGE"] != undefined) flags["BRIHA_LATEST_SPAWN_AGE"]++;
 				if(flags["BRIHA_SECOND_OLDEST_SPAWN_AGE"] != undefined) flags["BRIHA_SECOND_OLDEST_SPAWN_AGE"]++;
 				if(flags["BRIHA_OLDEST_SPAWN_AGE"] != undefined) flags["BRIHA_OLDEST_SPAWN_AGE"]++;
-
+				
+				// Thollum mushroom grow
+				thollumYardMushroomGrow();
+				
 				// Tick up all of the attached mimbranes days since last fed
 				mimbranesIncreaseDaysSinceFed();
 				

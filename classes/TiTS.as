@@ -120,6 +120,7 @@
 
 		//Holiday shit
 		include "../includes/holidayEvents/halloweenCostumes.as";
+		include "../includes/holidayEvents/freedomBeef.as";
 		include "../includes/event.puppyslutmas.as";
 
 		//Followers
@@ -146,6 +147,8 @@
 		include "../includes/events/bimboPennyAndBadgerQuest/badgerGifts.as";
 		include "../includes/events/tentacle_psychic_hatchling.as";
 		include "../includes/events/kiroCrewQuest/buttslutinator.as";
+		include "../includes/events/kiroCrewQuest/omnisuitExtras.as";
+		include "../includes/events/kiroCrewQuest/orgasmender.as";
 
 		//Tavros Station
 		include "../includes/tavros/aina.as";
@@ -228,6 +231,7 @@
 		include "../includes/newTexas/bigT.as";
 		include "../includes/newTexas/brynn.as";
 		include "../includes/newTexas/ellie.as";
+		include "../includes/newTexas/haley.as";
 		include "../includes/newTexas/gianna.as";
 		include "../includes/newTexas/gobbles.as";
 		include "../includes/newTexas/millie.as";
@@ -298,6 +302,7 @@
 		include "../includes/uveto/rooms.as";
 		include "../includes/uveto/roomFunctions.as";
 		include "../includes/uveto/shade.as";
+		include "../includes/uveto/tlako_and_xotchi.as";
 		include "../includes/events/icequeen/icequeen.as"; // Alt. path to unlocking uveto
 		
 		include "../includes/chargendata.as";
@@ -402,7 +407,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.59";
+			version = "0.6.64";
 
 			//temporary nonsense variables.
 			temp = 0;

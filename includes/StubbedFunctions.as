@@ -11,3 +11,17 @@ public function daneIsCrew():Boolean
 	return false;
 }
 
+// 9999 - Bust display functions for New Candania stuffs! (move when implemented)
+public function mountmeBustDisplay(attire:String = "normal"):String
+{
+	var bustName:String = "MOUNTME";
+	
+	switch(attire)
+	{
+		case "nude": bustName += "_NUDE"; break;
+		case "bra": bustName += "_BRA"; break;
+	}
+	
+	return bustName;
+}
+

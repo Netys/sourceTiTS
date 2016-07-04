@@ -637,7 +637,7 @@ public function femSydianCallOthers():void
 	}
 	else
 	{
-		output("<i>“Hello,”</i> you leer, watching the alien’s liberated breasts rise and fall. <i>“Look what you’ve been hiding.”</i> Flakes of pulverized armor fall away as she covers herself with an arm. When you glance lower, at the thin orange line between her legs, she shifts to cover the gap in her thighs, dislodging more dust. You amuse yourself, making her brush away the crumbling remnants just by eye-fucking her.}");
+		output("<i>“Hello,”</i> you leer, watching the alien’s liberated breasts rise and fall. <i>“Look what you’ve been hiding.”</i> Flakes of pulverized armor fall away as she covers herself with an arm. When you glance lower, at the thin orange line between her legs, she shifts to cover the gap in her thighs, dislodging more dust. You amuse yourself, making her brush away the crumbling remnants just by eye-fucking her.");
 	}
 
 	output("\n\n<i>“Stop staring,”</i> she snaps. The sydian won’t give you a decent eyeful of her good bits, and you’re daydreaming of someone else to keep her hands busy when you realize - that’s a real possibility. The girl eyes your distant, thoughtful expression.");
@@ -841,7 +841,7 @@ public function femSydianCallOthers():void
 		output("\n\nYou decide not to pop out when you perceive the size of the male; he’s at least seven feet tall and");
 		if (flags["MET_FLAHNE"] != undefined) output(" broader than Flahne’s definition of ‘work ethic’.");
 		else output(" stouter than a radioactive beer.");
-		output("He ");
+		output(" He");
 		if (enemy.hairColor == "orange") output(" bounds up, energized by the girl’s brilliant orange hair.");
 		else output(" saunters over, gaining energy as it drains from the girl.");
 		
@@ -982,7 +982,7 @@ public function femSydianGiveThrob():void
 	
 	output("\n\nThe location of the stick is a throbbing, reddish-orange welt, raised high on a pale delta; her fingers continue to scrape so furiously that you’re obliged to grab her wrists just to stop her drawing blood. Body heat seeps into your palms as she twists and jerks, trying to pull away, and her breaths hitch in short gasps. <i>“Ah... ah... ah... my body....”</i>");
 	
-	output("\n\nWith her hands restrained, the growth stalls until you touch your own finger to the tip. The teary sydian jerks and two inches of suppressed growth slide free. Inches blossom from from the mound, while the alien woman writhes in incomprehensible, foreign pleasure that will become very familiar before you’re finished with her. A slit opens as the orange growth tops half a foot, bubbling with proto-cum. Ministering to the new flesh, you tease her cock out to eight hefty inches, and little nodules with the beginnings of soft bristles develop along the crown. Her male lubrication increases to a rivulet, and streams over your hand.");
+	output("\n\nWith her hands restrained, the growth stalls until you touch your own finger to the tip. The teary sydian jerks and two inches of suppressed growth slide free. Inches blossom from the mound, while the alien woman writhes in incomprehensible, foreign pleasure that will become very familiar before you’re finished with her. A slit opens as the orange growth tops half a foot, bubbling with proto-cum. Ministering to the new flesh, you tease her cock out to eight hefty inches, and little nodules with the beginnings of soft bristles develop along the crown. Her male lubrication increases to a rivulet, and streams over your hand.");
 
 	output("\n\n<i>“What’s... happening?”</i> the sydian gasps, drawn so tight that she’s unable to breathe. The base of her new penis is still swollen and hot, promising more change. You release the slimy crown and rub the base - something is shifting under the skin. A weight drops into your palm, then another, descending until your hand is full of two heavy, sperm-stocked balls. <i>“It’s... nnn...”</i>");
 	

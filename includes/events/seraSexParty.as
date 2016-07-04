@@ -503,7 +503,7 @@ public function seraSexPartyStage2(response:String = "none"):void
 			
 			processTime(60);
 			
-			showBust("JARVIS", "SERA", "KIRLARWE", "VEDICE");
+			showBust("JARVIS", "KIRLARWE", "VEDICE");
 			
 			output("The three of you step into a large, well-lit hardwood floored room crowded with people. The air is dense with music, warmth, conversation and laughter. The way the throng, air and sound here ebb and flow you get given the vague impression there are many other rooms leading out from this one, each clustered with people and each with something slightly different going on. A far more concrete perception is that, looking around, neither you nor your mistress are going to stand out. Sera is conservatively modded");
 			// Casual/Business
@@ -527,7 +527,7 @@ public function seraSexPartyStage2(response:String = "none"):void
 		case "curtsy":
 		case "appease":
 		case "nothing":
-			showBust("JARVIS", "SERA", "KIRLARWE", "VEDICE");
+			showBust("JARVIS", "KIRLARWE", "VEDICE");
 			
 			// Say Hello:
 			if(response == "hello")
@@ -580,6 +580,7 @@ public function seraSexPartyStage2(response:String = "none"):void
 		case "explore":
 			rooms["RES DECK EAST ESTATE"].removeFlag(GLOBAL.NPC);
 			generateMap();
+			clearBust();
 			showName("ESTATE\nCORRIDOR");
 			
 			output("Sipping your drink, you break off and wander aimlessly through the party. The buzz of the alcohol combines with the teasing touch of your slutty costume to make you feel warm and open, sensitized to what’s going on around you. Away from the main room the lighting is dimmer and things seem a lot less tense; there is an awful lot of whispering, giggling and closing of doors going on. You find yourself in a tiled corridor lined with plinths, upon each of which a slim man or woman is dancing slowly. They are all naked except for concealing latex gimp masks; underneath them groups of suited people with animal heads are talking amongst themselves animatedly. You pause by a door from which extremely heavy music seems to be emanating.");
@@ -1120,7 +1121,7 @@ public function seraSexPartyStage3(response:String = "none"):void
 				if(outfitPC == "schoolgirl") output(" pull down your panties");
 				else if(outfitPC == "butler") output(" pull down your thong");
 				output(" and display");
-				if(pc.hasCock()) output(" [pc.eachPenis]");
+				if(pc.hasCock()) output(" [pc.eachCock]");
 				else output(" [pc.eachVagina]");
 				output(" to him. Kirlarwe smirks slightly.");
 				output("\n\n<i>“Mm, yes. Am I supposed to be impressed?”</i>");
@@ -1298,7 +1299,7 @@ public function seraSexPartyStage4(response:String = "none"):void
 			
 			output("You spend the next hour or so sitting and chatting lightly with Jarvis, after which the prodigious orgy reaches something of a critical mass and breaks down a bit. The participants either split off with catches they’re particularly taken with to other parts of the mansion, or collapse in an exhausted heap. Sera is in the latter group, comatose with a big smile on her face, her arms and tail wrapped around various groaning aliens. You have felt an enduring level of arousal throughout it all,");
 			if(pc.hasGenitals()) {
-				if(pc.hasCock()) output(" [pc.eachPenis] tenting your costume uncomfortably");
+				if(pc.hasCock()) output(" [pc.eachCock] tenting your costume uncomfortably");
 				if(pc.isHerm()) output(" and");
 				if(pc.hasVagina()) output(" [pc.eachVagina] slickening your underwear so it clings to you even tighter");
 			}
@@ -1578,7 +1579,7 @@ public function seraSexPartyStage4(response:String = "none"):void
 				output(" <i>“And we showed ‘em, didn’t we? How to really get down. ‘Specially that snake cow. A snot like her actually coming over and asking to use you...”</i> Sera closes her eyes and savors it, squeezing you tightly. <i>“I’ll always remember that. What a team we make!”</i>");
 				output("\n\n<i>“Uh huh,”</i> you say dully. You close your eyes as once again your lips tingle and the taste of Vedice comes vividly back; your [pc.groin] throbs achingly at the same time. It occurs to you that one part of this team is taking many more for the team than the other, so to speak. But then you did agree to all of this, obliging slut that you are.");
 			}
-			output("\n\nBy the time you get back to the Dark Chrysalis Sera has sobered up a bit. She breaks off from you, trailing her hand down your arm as she fumbles for her key.");
+			output("\n\nBy the time you get back to the Dark Chrysalis, Sera has sobered up a bit. She breaks off from you, trailing her hand down your arm as she fumbles for her key.");
 			output("\n\n<i>“Keep the costume. My thanks for coming along. Make sure to get plenty of use out of it – I’m sure I won’t be the only one who thinks you look cute in it...”</i> She gets the door open and turns back to you. <i>“Seriously [pc.name], thanks for doing this. I had a good time, and – it made it easier, knowing you were around, ‘n I could talk to you. And even if nothing comes of it, we got loads of free sex and booze out of it, didn’t we? That’s what really matters.”</i> She smiles and disappears inside.");
 			
 			// Shut the Dark Chrysalis for about 6 hours afterwards

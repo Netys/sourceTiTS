@@ -63,16 +63,18 @@ public function pennysOffice():void {
 
 public function showPennyName():void
 {
-	if(flags["MET_PENNY"] == undefined) userInterface.showName("POLICE\nWOMAN");
-	else userInterface.showName("\nPENNY");
+	if(flags["MET_PENNY"] == undefined) showName("POLICE\nWOMAN");
+	else showName("\nPENNY");
 }
 public function pennyBustDisplay(nude:Boolean = false):String
 {
 	// 9999 - Special artist exceptions!
-	// Umm... leaving this as-is for now... Art for Penny is kinda all over the place.
+	// Umm... Art for Penny is kinda all over the place.
+	var hasNude:Boolean = true;
+	if(kGAMECLASS.gameOptions.configuredBustPreferences["PENNY"] != "GATS") hasNude = false;
 	
 	var sBust:String = "PENNY";
-	if(nude) sBust += "_NUDE";
+	if(nude && hasNude) sBust += "_NUDE";
 	
 	if(flags["PENNY_BADGER_BIMBO"] != undefined || pennyIsCumSlut())
 	{
@@ -297,8 +299,12 @@ public function getSpitRoastedForPenny():void {
 		if(!pc.hasVagina() && pc.analVirgin) output("anal ");
 		output("innocence surprisingly bearable. ");
 	}
+	var x:int = -1;
 	if(pc.hasVagina()) {
-		pc.cuntChange(rand(pc.vaginas.length),zilpack.cockVolume(0),false, false,false);
+		for(x = 0; x < pc.vaginas.length; x++)
+		{
+			pc.cuntChange(x,zilpack.cockVolume(0),false, false,false);
+		}
 	}
 	else {
 		pc.buttChange(zilpack.cockVolume(0),false, false,false);
@@ -364,7 +370,13 @@ public function getSpitRoastedForPenny():void {
 	if(pc.wetness() >= 3) output(" along with your own moisture");
 	output(", squirting from your well-used holes. The constant sexual onslaught sends you to orgasm after orgasm, almost one on top of the other. Your mind seems to be turning to putty under the ecstatic assault, shutting down one thought process after another as you ride pleasure unending. Dimly, you’re aware of one sloppy honey injection after another...");
 	pc.orgasm();
-	if(pc.hasVagina()) pc.loadInCunt(chars["ZIL"]);
+	if(pc.hasVagina())
+	{
+		for(x = 0; x < pc.vaginas.length; x++)
+		{
+			pc.loadInCunt(chars["ZIL"], x);
+		}
+	}
 	pc.loadInAss(chars["ZIL"]);
 	//Cum, pregnancy chances, sensitivity reduction
 	//Pass 2 hours.
@@ -613,10 +625,28 @@ public function approachFriendPenny(outputT:Boolean = true):void {
 	if(flags["DR_BADGER_TURNED_IN"] == undefined)
 	{
 		if(flags["NO_REPORTING_DOC_BADGER"] != undefined) addDisabledButton(5,"ReportBadger","Report Dr. Badger","You've decided not to turn in Doctor Badger.");
-		else if(flags["MET_DR_BADGER"] != undefined) addButton(5,"ReportBadger",whineToPennyCauseYerABitch,undefined,"Report Dr. Badger","That Doctor Badger thought she could get the best of you... time to turn the tables the right way: by bringing the hammer of the LAW down on her.");
+		else if(flags["MET_DR_BADGER"] != undefined) addButton(5,"ReportBadger",whineToPennyCauseYerABitch,undefined,"Report Dr. Badger","That Doctor Badger thought she could get the best of you... Time to turn the tables the right way: by bringing the hammer of the LAW down on her.");
 		else addDisabledButton(5,"Locked","Locked","Someone would have to do something illegal to you to unlock this button...");
+		
+		if(flags["BADGER_QUEST"] == 1)
+		{
+			addButton(6,"BadgerWarn",warnPennyAboutDoctorBadgersNefariousSchemes,undefined,"Warn Her About Dr. Badger","Penny would probably have some opinions about Dr. Badger's plan. Who knows, maybe she’d be into it, or maybe she’ll have some ideas about how to turn the tables on Dr. Badger instead.");
+			if(flags["NO_ZAP_PENNY"] == undefined) 
+			{
+				if(flags["PENNY_BADGER_WARNED"] == undefined) addButton(5,"Zap Penny",surpriseZapPennyWithBimboRay,undefined,"Zap Penny","This seems like a jerk move, but if nothing else you can be pretty sure she’ll probably enjoy the end result, as will you.");
+				else addButton(5,"Zap Penny",zapPennyAfterWarningHer,undefined,"Zap Penny","Go ahead and zap Penny with the Bimbo Raygun, now that it seems like she approves.");
+			}
+			else addDisabledButton(5,"Zap Penny","Zap Penny","Now that you've tipped her off, it'll be impossible to catch her with her guard down.");
+		}
 	}
 	else addDisabledButton(5,"ReportBadger","Report Dr. Badger","You already turned in Doctor Badger.");
+	//Penny has the doc's raygun
+	if(flags["BADGER_QUEST"] == -1 || flags["BADGER_QUEST"] == -2)
+	{
+		addDisabledButton(5,"ReportBadger","Report Dr. Badger","Why would you report Dr. Badger when you and Penny are planning to give her a taste of her own medicine?");
+	}
+	//Mission complete
+	if(flags["BADGER_QUEST"] == -3) addDisabledButton(5,"ReportBadger","Report Dr. Badger","Why would you report Dr. Badger when you've turned her into your big-breasted, bimbo badger fucktoy?");
 }
 
 //[Sex]
@@ -1315,7 +1345,7 @@ public function pennyGirlfriendMenu():void
 	if(flags["DR_BADGER_TURNED_IN"] == undefined)
 	{
 		if(flags["NO_REPORTING_DOC_BADGER"] != undefined) addDisabledButton(2,"ReportBadger","Report Dr. Badger","You've decided not to turn in Doctor Badger.");
-		else if(flags["MET_DR_BADGER"] != undefined) addButton(2,"ReportBadger",whineToPennyCauseYerABitch,undefined,"Report Dr. Badger","That Doctor Badger thought she could get the best of you... time to turn the tables the right way: by bringing the hammer of the LAW down on her.");
+		else if(flags["MET_DR_BADGER"] != undefined) addButton(2,"ReportBadger",whineToPennyCauseYerABitch,undefined,"Report Dr. Badger","That Doctor Badger thought she could get the best of you... Time to turn the tables the right way: by bringing the hammer of the LAW down on her.");
 		else addDisabledButton(2,"Locked","Locked","Someone would have to do something illegal to you to unlock this button...");
 		
 		if(flags["BADGER_QUEST"] == 1)
