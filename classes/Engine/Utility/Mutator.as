@@ -1855,8 +1855,8 @@ package classes.Engine.Utility
 			
 			// copypaste from race detection for now
 			if (target.horseScore() >= 3) cType = GLOBAL.TYPE_EQUINE; // Horse-morphs
-			if (target.foxScore() >= 4) cType = GLOBAL.TYPE_VULPINE;
-			if (target.kitsuneScore() >= 5 && target.foxScore() < 4) cType = RandomInCollection(GLOBAL.TYPE_HUMAN, GLOBAL.TYPE_VULPINE);
+			if (target.vulpineScore() >= 4) cType = GLOBAL.TYPE_VULPINE;
+			if (target.kitsuneScore() >= 5 && target.vulpineScore() < 4) cType = RandomInCollection(GLOBAL.TYPE_HUMAN, GLOBAL.TYPE_VULPINE);
 			if (target.lizardScore() >= 4) cType = GLOBAL.TYPE_SNAKE;
 			if (target.kangaScore() >= 4) cType = GLOBAL.TYPE_KANGAROO;
 			//if (target.bunnyScore() >= 4) race = "bunny-" + mf("boy", "girl");
@@ -1917,8 +1917,8 @@ package classes.Engine.Utility
 			
 			// copypaste from race detection for now
 			if (target.horseScore() >= 3) cType = GLOBAL.TYPE_EQUINE; // Horse-morphs
-			if (target.foxScore() >= 4) cType = GLOBAL.TYPE_CANINE;
-			if (target.kitsuneScore() >= 5 && target.foxScore() < 4) cType = GLOBAL.TYPE_HUMAN;
+			if (target.vulpineScore() >= 4) cType = GLOBAL.TYPE_VULPINE;
+			if (target.kitsuneScore() >= 5 && target.vulpineScore() < 4) cType = target.hasFur() ? GLOBAL.TYPE_VULPINE : GLOBAL.TYPE_HUMAN;
 			if (target.lizardScore() >= 4) cType = GLOBAL.TYPE_SNAKE;
 			//if (target.kangaScore() >= 4) cType = GLOBAL.TYPE_KANGAROO;
 			//if (target.bunnyScore() >= 4) race = "bunny-" + mf("boy", "girl");

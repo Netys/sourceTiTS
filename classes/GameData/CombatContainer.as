@@ -193,7 +193,8 @@ package classes.GameData
 		 */
 		private function postHostileTurnActions():Boolean
 		{
-			for (var i:int = 0; i < _hostiles.length; i++) {
+			var i:int = 0;
+			for (i = 0; i < _hostiles.length; i++) {
 				if (_hostiles[i].hasOwnProperty("postHostileTurnActions")) {
 					if (_hostiles[i].postHostileTurnActions()) return true;
 				}
@@ -246,7 +247,7 @@ package classes.GameData
 			{
 				var e:Array = CombatManager.getHostileCharacters();
 				
-				for (var i:int = 0; i < e.length; i++)
+				for (i = 0; i < e.length; i++)
 				{
 					if (e[i] is Ehstraffe)
 					{

@@ -125,7 +125,7 @@ public function playerHuntScore():int
 	}
 
 	// Heavy penalty for prey features. The penalty is applied PER FEATURE.
-	var score:int = pc.foxScore();
+	var score:int = pc.vulpineScore();
 	if (pc.hasTail(GLOBAL.TYPE_VULPINE) && pc.tailCount > 1) score -= pc.tailCount;
 	if (score > 0)
 	{
@@ -355,7 +355,7 @@ protected function repeatWildHuntCaught(pScore:int):void
 
 	output("The ropes are thicker than your wrist, and you could probably untie them, given time, but the spin of the net, combined with the mind-bending terror of the fog has left you no room to think.  The hounds are snarling, the world is spinning, you’re prey, and you’ve been caught.\n\n");
 
-	if (/*pc.bunnyScore() >= 4 ||*/ pc.foxScore() >= 4 || /*pc.harpyScore() >= 4 ||*/ pScore > 100) repeatWildHuntAWinnerIsYou();
+	if (pc.bunnyScore() >= 4 || pc.vulpineScore() >= 4 || pc.harpyScore() >= 4 || pScore > 100) repeatWildHuntAWinnerIsYou();
 	else repeatWildHuntGivenToTheHounds();
 }
 
