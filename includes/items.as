@@ -871,7 +871,7 @@ public function unequip(arg:String, next:Boolean = true):void
 {
 	clearOutput();
 	// Renamed from lootList so I can distinguish old vs new uses
-	var unequippedItems:/*ItemSlotClass*/Array;
+	var unequippedItems:/*ItemSlotClass*/Array = [];
 
 	if(arg == "bra") {
 		if(!pc.itemSlotUnlocked(GLOBAL.UPPER_UNDERGARMENT))
