@@ -111,9 +111,8 @@ public function abortIAmNotBloodyChampion():void {
 		output("And... Was it REALLY just simulation?\n\n");
 	}
 	
-	if (!pc.hasKeyItem("Key of the Twillight") && chars["PC_COC"] != undefined && chars["PC_TITS"] != undefined) {
-		chars["PC_COC"] = chars["PC"];
-		chars["PC"] = chars["PC_TITS"];
+	if (!pc.hasKeyItem("Key of the Twillight") && chars["PC_COC"] != undefined) {
+		switchToTiTSSteele();
 	}
 	
 	processTime(5);
@@ -127,22 +126,34 @@ public function EnterVRIAmYourBloodyChampionYouVapidCunt():void {
 	clearOutput();
 	clearMenu();
 	
-	if (!pc.hasKeyItem("Key of the Twillight")) {
-		if (chars["PC_COC"] == undefined) createYourChampion();
-		else {
-			chars["PC_TITS"] = chars["PC"];
-			chars["PC"] = chars["PC_COC"];
+	if (pc.hasKeyItem("Key of the Twillight")) {
+		if (flags["COC_INTRO_SEEN"] == undefined) {
+			flags["COC_INTRO_SEEN"] = 1;
+			cocMainIntroScene0();
+		} else {
 			move("COC_CAMP");
 		}
 		return;
 	}
 	
-	if (flags["COC_INTRO_SEEN"] == undefined) {
-		flags["COC_INTRO_SEEN"] = 1;
-		cocMainIntroScene0();
-	} else {
-		move("COC_CAMP");
-	}
+	switchToCoCChampion();
+	if (flags["COC_INTRO_SEEN"] != undefined) move("COC_CAMP");
+}
+
+public function switchToCoCChampion():void
+{
+	chars["PC_TITS"] = chars["PC"];
+	
+	if (chars["PC_COC"] == undefined) createYourChampion();
+	else chars["PC"] = chars["PC_COC"];
+}
+
+public function switchToTiTSSteele():void
+{
+	if (chars["PC_TITS"] == undefined) return;
+	
+	chars["PC_COC"] = chars["PC"];
+	chars["PC"] = chars["PC_TITS"];
 }
 
 //////////////////////////////////////////
@@ -559,6 +570,7 @@ public function abortVRAfterVictory():void {
 	output("Wait, what? Portal? World? You are [pc.fullName], not some Champion! With all possible speed you rush to your camp. Usually travels here are astoundingly quick, but this time it feels like eternity sor some reason. To your relief, portal is still faintly glowing...");
 	
 	processTime(3 * 24 * 60 + rand(24 * 60));
+	switchToTiTSSteele();
 	clearMenu();
 	addButton(0, "Next", abortVRAfterVictoryII);
 }

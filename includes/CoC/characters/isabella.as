@@ -56,7 +56,6 @@ public function timeChangeLarge():Boolean {
 
 public function isabellaGreeting():void {
 	Flag("COC.ISABELLA_ANGRY"); // init?
-	Flag("COC.ISABELLA_MET"); // init?
 	Flag("COC.ISABELLA_TALLNES_ACCEPTED"); // init?
 	Flag("COC.ISABELLA_MET_AS_SMALL"); // init?
 	Flag("COC.ISABELLA_FOLLOWER_ACCEPTED"); // init?
@@ -66,13 +65,13 @@ public function isabellaGreeting():void {
 	clearOutput();
 	clearMenu();
 	//Not approached yet - the prequel!
-	if (int(flags["COC.ISABELLA_MET"]) == 0) {
+	if (flags["COC.ISABELLA_MET"] == undefined) {
 		//isabellaSprite(); // we don't know her yet
 		output("While walking through the high grasses you hear a rich, high voice warbling out a melodious tune in a language you don't quite understand.  Do you approach or avoid it?");
 		//[Approach – to meeting] [Avoid – camp] – dont flag as met yet
 		//Approach - sets flags["COC.ISABELLA_MET"] to 1 and calls this function
 		clearMenu();
-		addButton(0, "Approach", function():*{ flags["COC.ISABELLA_MET"] = 1; isabellaGreeting(); } );
+		addButton(0, "Approach", function():*{ flags["COC.ISABELLA_MET"] = 0; isabellaGreeting(); } );
 		addButton(1, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 		return;
 	}
@@ -85,9 +84,9 @@ public function isabellaGreeting():void {
 		return;
 	}
 	//[Camp Meeting First Time]
-	if (int(flags["COC.ISABELLA_MET"]) == 0) {
+	if (flags["COC.ISABELLA_MET"] == 0) {
 		isabellaSprite();
-		IncrementFlag("COC.ISABELLA_MET");
+		flags["COC.ISABELLA_MET"]++;
 		output("You stumble through a break in the tall foliage to discover a small, barren clearing.  While it looks like grass once grew here, it's long since been trampled into the dirt.  Looking closer, it reminds you of some of the old straw that was constantly packed into the hard earth of your neighbor's barn when you were growing up.  There are a few sizable chests secured with heavy iron locks and draped with comfortable-looking blankets.  The heavy boxes are grouped in a half-circle surrounding a chair that currently holds the camp-owner's sizable backside.  It reminds you of a cruder version of your own camp.\n\n");
 		
 		output("Even seated, the occupant of this unsheltered settlement is imposing.  Standing up she'd have to be at least seven feet tall, maybe even eight.  You're looking at her from the back, and aside from the obvious femininity of her figure and lilting voice, all you see is the red tangles of her unruly red locks.  The woman's voice peaks, finishing her unusual song with such a high-pitched tone that you expect the iron locks and rivets on her chests to crack.  Thankfully her song's crescendo is quite brief, and her voice drops to a quiet warble before trailing off into silence.  She stands up, glances over her shoulder, and jumps back with her eyes wide in shock as she notices you.\n\n");
@@ -147,7 +146,7 @@ public function isabellaGreeting():void {
 	//Camp Meeting – Was welcome tall, but not short yet!
 	else if (flags["COC.ISABELLA_TALLNES_ACCEPTED"] > 0 && int(flags["COC.ISABELLA_MET_AS_SMALL"]) == 0 && pc.tallness <= 78) {
 		isabellaSprite();
-		flags["COC.ISABELLA_MET_AS_SMALL"]++;
+		IncrementFlag("COC.ISABELLA_MET_AS_SMALL");
 		output("You stumble through a wall of tall grasses back into Isabella's camp!  It's amazing how much taller they've become since your last visit.  Or perhaps it just seems that way due to the change in height.  You look for Isabella, and the fiery, red-headed cow-girl is charging right at you, bellowing, \"<i>Awwww, you're so much cuter!  Iz vonderful to have such tiny, adorable friends!  Did you come back for one of mein special drinks?</i>\"  She envelops you in a hug that crushes you against jiggling breast-flesh, and in seconds you're cradled in her arms as she marvels at your new size.\n\n");
 		if(pc.hasCock()) {
 			output("Her nose twitches and ");
@@ -176,7 +175,7 @@ public function isabellaGreeting():void {
 		pc.lust(10 + rand(10));
 		
 		output("Isabella complains, \"<i>Vere you just checking me out?  Vell I must confess, I liked you better ven you were shorter.  Maybe if you ask nicely I might give you a peak and a drink.  That vould be nice, nein?\n\n");
-		flags["COC.ISABELLA_TALLNES_ACCEPTED"]++;
+		IncrementFlag("COC.ISABELLA_TALLNES_ACCEPTED");
 		if(pc.hasCock()) {
 			output("She sniffs and gives your crotch a glance ");
 			if (pc.cocks[pc.shortestCockIndex()].cLength() >= 9) {

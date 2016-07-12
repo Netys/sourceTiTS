@@ -169,7 +169,7 @@ public function femaleGirlsLoseToSammitches():void {
 	
 	output("\n\nYou cum, seemingly without any build-up, and then it happens again, and again... It just comes and keeps coming.");
 
-	output("\n\nThe next few hours are a blur.  You remember being on your knees then sucking a cock while your pussy is licked, stroking three cocks with your hands and [feet] and even being completely upside down at one point.  Then things gradually fade to black...");
+	output("\n\nThe next few hours are a blur.  You remember being on your knees then sucking a cock while your pussy is licked, stroking three cocks with your hands and [pc.feet] and even being completely upside down at one point.  Then things gradually fade to black...");
 	pc.orgasm();
 	//dynStats("lib", 1);
 	pc.libido(1);

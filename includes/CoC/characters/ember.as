@@ -900,7 +900,7 @@ private function hatchZeMuzzles():void
 	ember.hairLength = 0;
 	
 	if (flags["COC.EMBER_ROUNDFACE"] == 1) {
-		ember.hairLength += 12;
+		ember.hairLength += 4;
 		ember.skinType = GLOBAL.SKIN_TYPE_SKIN;
 		ember.faceType = GLOBAL.TYPE_HUMAN;
 		ember.faceFlags = [];
@@ -908,15 +908,18 @@ private function hatchZeMuzzles():void
 	
 	// set
 	if (gender == 1 || gender == 3) {
+		ember.balls = 2;
+		ember.ballSizeRaw = 4 * Math.PI;
+		ember.cumMultiplierRaw = 3;
 		ember.createCock(16);
-		if (int(flags["COC.EMBER_INTERNAL_DICK"]) != 0 || !roundface) ember.shiftCock(0, GLOBAL.TYPE_DRACONIC);
+		if (int(flags["COC.EMBER_INTERNAL_DICK"]) != 0 || !roundface) {
+			ember.shiftCock(0, GLOBAL.TYPE_DRACONIC);
+			ember.makeBallsInternal();
+		}
 		else {
 			ember.cocks[0].addFlag(GLOBAL.FLAG_KNOTTED);
 			ember.cocks[0].knotMultiplier = 1.25;
 		}
-		ember.balls = 2;
-		ember.ballSizeRaw = 4 * Math.PI;
-		ember.cumMultiplierRaw = 3;
 	}
 	
 	if (gender >= 2) {
@@ -925,9 +928,13 @@ private function hatchZeMuzzles():void
 		ember.vaginas[0].wetnessRaw = 4;
 		ember.breastRows[0].breastRatingRaw = 11;
 		ember.femininity = 80;
+		ember.hipRatingRaw = 8;
+		ember.buttRatingRaw = 6;
 	} else {
 		ember.breastRows[0].breastRatingRaw = 0;
 		ember.femininity = 20;
+		ember.hipRatingRaw = 2;
+		ember.buttRatingRaw = 2;
 	}
 	
 	ember.hairLength += int(flags["COC.EMBER_HAIR"]) * 8;
@@ -1053,11 +1060,11 @@ private function embersAppearance():void
 	//Anthro Ember's Appearance (Z)
 	if (ember.hasScales()) {
 		output("Ember is a 7' 3\" tall humanoid dragon, with supple, long limbs and a build that is toned and athletic, with powerful underlying muscles.  [ember.HeShe] looks strong and imposing, but ");
-		if (flags["COC.EMBER_GENDER"] == 1) output(" not overly muscled.");
+		if (!ember.hasVagina()) output(" not overly muscled.");
 		else output(" feminine.");
 
 		//(Male)
-		if (flags["COC.EMBER_GENDER"] == 1) {
+		if (!ember.hasVagina()) {
 			output("\n\nEmber's body is the perfect picture of a healthy male.  Not underweight or overweight, but with just the perfect amount of fat that, excepting the");
 			if (ember.isLactating()) output(" dribbling breasts,");
 			output(" snout, wings, and horns, gives him the silhouette of a prince from your village's stories: dashing and handsome.");
@@ -1069,19 +1076,17 @@ private function embersAppearance():void
 		output("\n\nThe dragon scorns clothing and exposes [ember.himHer]self to both you and the elements with equal indifference, claiming [ember.hisHer] scales are all the covering [ember.heShe] needs... and yet when you admire [ember.hisHer] body, [ember.heShe] is quick to hide it from your wandering gaze.");
 		output("\n\n[ember.HisHer] head is reptilian, with sharp teeth fit for a predator and strong ridges on the underside of the jaw.  At the sides of [ember.hisHer] head are strange, fin-like growths concealing small holes; you presume these to be the dragon equivalent of ears.  Atop [ember.hisHer] head sit a pair of ebony horns that curve backwards elegantly; despite being as tough as steel, their shape is not fit for use in combat, instead it is simply aesthetical, giving Ember a majestic look.  A long tongue occasionally slips out, to lick at [ember.hisHer] jaws and teeth.  Prideful, fierce eyes, with slit pupils and burning orange irises, glitter even in the darkness.");
 		//(if Ember has any hair)
-		if (flags["COC.EMBER_HAIR"] == 1) {
-			if (flags["COC.EMBER_GENDER"] == 1) output("  Short ");
-			else output("  Shoulder-length ");
-			output("steel-gray hair sprouts from [ember.hisHer] head.  You'd think that a dragon with hair would look weird, but it actually compliments Ember's looks very well.");
+		if (ember.hasHair() && ember.hairLength < 16) {
+			output(ember.hairDescript(true, true) + " hair sprouts from [ember.hisHer] head.  You'd think that a dragon with hair would look weird, but it actually compliments Ember's looks very well.");
 		}
 		//(if Ember has a level 2 mane)
-		else if (flags["COC.EMBER_HAIR"] == 2) {
+		if (ember.hairLength >= 16) {
 			output("  Tracing [ember.hisHer] spine, a mane of hair grows; starting at the base of [ember.hisHer] neck and continuing down [ember.hisHer] tail, ending on the tip of [ember.hisHer] tail in a small tuft.  It is the same color as the hair on [ember.hisHer] head, but shorter and denser; it grows in a thick vertical strip, maybe two inches wide.  It reminds you vaguely of a horse's mane.");
 		}
 		output("\n\n[ember.HisHer] back supports a pair of strong, scaly dragon wings, covered in membranous leathery scales.  The muscles are held taut, as though ready to extend and take to the skies at any notice.");
 
 		//(Male)
-		if (flags["COC.EMBER_GENDER"] == 1) output("\n\nHis hips are normal-looking, not demanding any kind of extra attention.  His butt is taut and firm, lending itself well to balance.");
+		if (!ember.hasVagina()) output("\n\nHis hips are normal-looking, not demanding any kind of extra attention.  His butt is taut and firm, lending itself well to balance.");
 		//(Female/Herm)
 		else output("\n\nHer girly hips are as eye-catching as the shapely handful that graces her posterior, giving Ember a graceful strut.  That same delightful butt of hers just begs to be touched, soft enough to jiggle only slightly and yet firm enough to not trouble the dragon's balance.");
 
@@ -1126,7 +1131,7 @@ private function embersAppearance():void
 			output("\n\nThe head is rounded and elongated, while the shaft has a series of ridges, evenly spaced and so prominent as to give it an almost segmented appearance. When fully extended; a pair of apple-sized testicles drops out of [ember.hisHer] genital slit.");
 		}
 		//(If Ember has a vagina)
-		if (flags["COC.EMBER_GENDER"] == 2 || ember.isHerm()) output("\n\nThe scales in-between Ember's legs are particularly smooth and fine, and part just enough to reveal the insides of her slick pussy; soft, inviting and moist.");
+		if (ember.hasVagina()) output("\n\nThe scales in-between Ember's legs are particularly smooth and fine, and part just enough to reveal the insides of her slick pussy; soft, inviting and moist.");
 
 		output("\n\nAt first Ember puffs [ember.hisHer] chest in pride at your obvious appreciation of [ember.hisHer] form, letting you examine [ember.himHer] as closely as you want, but after a minute [ember.heShe] starts blushing in both arousal and embarrassment, eventually covering [ember.himHer]self and blurting out, \"<i>That's enough looking!</i>\"");
 		output("\n\n[ember.HisHer] reaction to your staring is kind of cute, actually.  [ember.HisHer] swaying tail and small fidgets let you know that [ember.heShe] actually might've been enjoying [ember.himHer]self a bit too much...");
@@ -1135,14 +1140,14 @@ private function embersAppearance():void
 	else {
 		//Credit him with additional scenes.
 		output("Ember is a 7' 3</i>\" tall ");
-		if (flags["COC.EMBER_GENDER"] == 1) output("male");
-		else if (flags["COC.EMBER_GENDER"] == 2) output("female");
+		if (!ember.hasVagina()) output("male");
+		else if (!ember.hasCock()) output("female");
 		else output("hermaphrodite");
 		output(" dragon-[ember.boyGirl], with slender limbs and a thin frame; [ember.heShe] refuses to wear any kind of clothing and exposes [ember.himHer]self naturally to the world.  [ember.HeShe] sports a rather human looking face, but with several key differences.  Where a normal set of human eyes would be located, instead a pair of orange, reptilian eyes stares back at you, filled with immeasurable pride and ferocity.");
 		output("\n\nOn the sides of [ember.hisHer] face, you spot an exotic pattern of dragon scales that are intertwined with [ember.hisHer] olive, human like skin, which branch down [ember.hisHer] neck and shoulders before merging with [ember.hisHer] predominantly scaled body.  Like the dragons from your village lore, Ember sports a pair of ebony, draconic horns that emerge from [ember.hisHer] temples, boldly curved backwards past [ember.hisHer] scalp.  While you aren't certain of their rigidity, they look like they could deflect most overhead attacks.  Drawn to [ember.hisHer] jaw, you zero in on an attractive pair of pink, human lips.  The calm appearance of [ember.hisHer] mouth almost makes you forget the many sharp teeth that Ember sports, which could easily rend flesh from a body if Ember put [ember.hisHer] mind to it.");
 		output("\n\nThe shiny, silver hair that coiffures the dragon's head compliments [ember.hisHer] facial features well and ");
 		//Short:
-		if (int(flags["COC.EMBER_HAIR"]) < 1) output("is quite short, giving [ember.himHer] that definitive " + ember.mf("masculine", "tomboy") + " look.");
+		if (ember.hairLength <= 4) output("is quite short, giving [ember.himHer] that definitive " + ember.mf("masculine", "tomboy") + " look.");
 		else output("drops down to [ember.hisHer] shoulders, giving [ember.himHer] the look of the " + ember.mf("handsome", "beautiful") + " warriors from your village legends.");
 
 		output("\n\n[ember.HisHer] chest is also human in appearance and houses a pair of ");
@@ -1156,7 +1161,7 @@ private function embersAppearance():void
 
 		output("\n\nEmber has, in most respects, a rather human-looking pelvis.");
 		if (ember.hasCock()) {
-			if (int(flags["COC.EMBER_INTERNAL_DICK"]) == 0) output("  [ember.HeShe] sports a flaccid penis and a pair of apple-sized balls that sit dangerously exposed to the elements, let alone to naked blades or a heavy blow.  Yet [ember.heShe] doesn't seem concerned about that in the least, almost daring anyone to focus on them.  While [ember.heShe] isn't aroused right now, Ember's penis can reach a length of approximately 16 inches, and it looks to be about 2 inches thick.");
+			if (!ember.hasStatusEffect("Genital Slit")) output("  [ember.HeShe] sports a flaccid penis and a pair of apple-sized balls that sit dangerously exposed to the elements, let alone to naked blades or a heavy blow.  Yet [ember.heShe] doesn't seem concerned about that in the least, almost daring anyone to focus on them.  While [ember.heShe] isn't aroused right now, Ember's penis can reach a length of approximately 16 inches, and it looks to be about 2 inches thick.");
 
 			else output("  [ember.HeShe] sports what looks like a protective slit of some sort, protecting [ember.hisHer] dick from the elements as well as stray blows.  You can't see it right now; but you remember it to be about 16 inches long and 2 inches thick.");
 		}
@@ -1899,7 +1904,7 @@ private function getMilkFromEmber():void
 {
 	clearOutput();
 	//output(images.showImage("ember-drink-her-milk"));
-	var _ember:CoCEmber = ember; // workaround
+	var temp:Boolean = !ember.isLactating();
 	if (ember.isLactating()) {
 		output("You think for a few moments, then find your gaze drawn to Ember's round, firm");
 		if (ember.hasScales()) output(", scaly");
@@ -1910,9 +1915,9 @@ private function getMilkFromEmber():void
 		if (ember.hasScales()) output(", scaly");
 		output(" breasts, [ember.hisHer] perky nipples bare as always and enticing you.  With a repressed smile, you ask if [ember.heShe]'ll let you suckle [ember.hisHer] milk if you give [ember.himHer] a Lactaid.");
 		pc.destroyItem(new CoCLactaid()); //Remove 1 Lactaid
-		_ember.milkFullness = 100;
-		_ember.milkMultiplier = 100;
-		_ember.breastRows[0].breastRatingRaw = 11;
+		ember.milkFullness = 100;
+		ember.milkMultiplier = 100;
+		ember.breastRows[0].breastRatingRaw = 11;
 	}
 	//Summary:
 	//Usable only through Follower menu
@@ -1985,7 +1990,7 @@ private function getMilkFromEmber():void
 	}
 	//(Medium Affection)
 	else if (emberAffection() < 75) {
-		if (int(flags["COC.EMBER_MILK"]) <= 0) {
+		if (temp) {
 			output("\n\nYou give Ember the lactaid and [ember.heShe] says, \"<i>Fine.  I'll drink this but be warned, this is only temporary!</i>\" [ember.HeShe] glares at you and drinks the content of Lactaid. [ember.HisHer] breasts swell, looking positively milk-filled.");
 		}
 		output("\n\n\"<i>Okay.  I guess I can give you a treat... but no funny ideas!</i>\"  That said, Ember walks into [ember.hisHer] den to settle on a pile of soft leaves against the cave wall.");
@@ -2041,7 +2046,7 @@ private function getMilkFromEmber():void
 		output("\n\nEmber's tail waggles at your request even as she forces a frown, and you swear you can see ");
 		if (ember.hasCock()) {
 			output("the faintest hint of [ember.hisHer] cock ");
-			if (int(flags["COC.EMBER_ROUNDFACE"]) == 0 || flags["COC.EMBER_INTERNAL_DICK"] > 0) output("emerging");
+			if (ember.hasStatusEffect("Genital Slit")) output("emerging");
 			else output("hardening");
 		}
 		else output("small beads of moisture gathering on her honeypot");
@@ -2056,7 +2061,7 @@ private function getMilkFromEmber():void
 		output("\n\nBut your focus is on playing with your dragon right now, rather than straightforward drinking, and so one hands creeps purposefully towards ");
 		if (ember.hasCock()) {
 			output(ember.mf("his", "her") + " erecting dragon-prick, gently stroking its");
-			if (int(flags["COC.EMBER_ROUNDFACE"]) == 0 || flags["COC.EMBER_INTERNAL_DICK"] > 0) output(" strangely ridged, almost scaly");
+			if (ember.hasCock(GLOBAL.TYPE_DRACONIC)) output(" strangely ridged, almost scaly");
 			output(" surface");
 		}
 		else output("her gently-dripping cunt, sliding in between the lips to stroke the wet interior");
@@ -2129,8 +2134,15 @@ private function getMilkFromEmber():void
 	processTime(30 + rand(10));
 	if (emberAffection() < 75) pc.lust(20);
 	pc.energy(50);
-	pc.milkInMouth(_ember);
+	pc.milkInMouth(ember);
 	pc.HP(pc.maxHP() * 0.33);
+	
+	if (temp) {
+		ember.milkFullness = 0;
+		ember.milkMultiplier = 0;
+		if (!ember.hasVagina()) ember.breastRows[0].breastRatingRaw = 0;
+	}
+	
 	addNextButton();
 }
 
@@ -3745,6 +3757,20 @@ private function emberPregUpdate():Boolean
 
 public function emberGivesBirth():void
 {
+	var roll:int = rand(100);
+	if (!ember.hasPerk("Oviposition")) {
+		if (roll < 40) IncrementFlag("COC.EMBER_CHILDREN_MALES");
+		else if (roll < 80) IncrementFlag("COC.EMBER_CHILDREN_FEMALES");
+		else IncrementFlag("COC.EMBER_CHILDREN_HERMS");
+		StatTracking.track("coc/pregnancy/ember");
+	} else {
+		IncrementFlag("COC.EMBER_EGGS");
+		StatTracking.track("coc/pregnancy/ember eggs");
+	}
+	flags["COC.EMBER_NAPPING"] = 12 * 60;
+	
+	if (!inCamp()) return; // keep it silent if not in camp
+	
 	//Ember Gives Live Birth
 	if (!ember.hasPerk("Oviposition")) {
 		output("\nA roar interrupts your daily routine and you quickly run to check its source.  You see Ember doubling over and sitting inside her den, her face twisted in pain. She suddenly looks up at you.");
@@ -3776,7 +3802,6 @@ public function emberGivesBirth():void
 		if (ember.hasScales()) output("n anthro dragon");
 		else output(" hybrid of human and dragon");
 		output(".  It's a beautiful strong, healthy little ");
-		var roll:int = rand(100);
 		if (roll < 40) output("boy");
 		else if (roll < 80) output("girl");
 		else output("herm");
@@ -3808,10 +3833,6 @@ public function emberGivesBirth():void
 		if (emberChildren() <= 1) output("new child");
 		else output("newly expanded draconic brood");
 		output(" to get some rest, leaving the den.\n");
-		if (roll < 40) IncrementFlag("COC.EMBER_CHILDREN_MALES");
-		else if (roll < 80) IncrementFlag("COC.EMBER_CHILDREN_FEMALES");
-		else IncrementFlag("COC.EMBER_CHILDREN_HERMS");
-		StatTracking.track("coc/pregnancy/ember");
 	}
 	//Ember Lays Egg
 	else {
@@ -3861,15 +3882,11 @@ public function emberGivesBirth():void
 
 		output("\n\nYou continue drinking, draining Ember's bloated breasts, the cool nutritious milk helps you relax for a spell and forget about your troubles.  Your ordeals are forgotten for the moments you find yourself drifting off, guided into the land of dreams by Ember's soft purring - or is it snoring?  You can't tell, and it doesn't matter right now...");
 		//pc.refillHunger(40);
-		var _ember:CoCEmber = ember;
-		_ember.milkFullness = 100;
-		_ember.milkMultiplier = 100;
-		pc.milkInMouth(_ember);
+		ember.milkFullness = 100;
+		ember.milkMultiplier = 100;
+		pc.milkInMouth(ember);
 		output("\n\nYou wake up a short while later.  Ember's breasts are completely drained of their milk, and your belly is bulging a bit from the amount you've drank.  Ember sleeps softly under you.  Gently you extract yourself from Ember's embrace - a difficult task, considering Ember's tail is intent on holding you like a boa constrictor.  Eventually though, you manage to withdraw yourself from its insistent grip and slowly sneak out of the den.\n");
-		IncrementFlag("COC.EMBER_EGGS");
-		StatTracking.track("coc/pregnancy/ember eggs");
 	}
-	flags["COC.EMBER_NAPPING"] = 12 * 60;
 }
 
 

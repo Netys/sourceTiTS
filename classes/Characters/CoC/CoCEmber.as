@@ -84,8 +84,8 @@ package classes.Characters.CoC
 			this.tallness = 7 * 12 + 3;
 			this.thickness = 50;
 			this.tone = 80;
-			this.hairColor = "red";
-			this.scaleColor = "red";
+			this.hairColor = "gray";
+			this.scaleColor = "silver";
 			this.furColor = "none";
 			this.hairLength = 0;
 			this.hairType = GLOBAL.TYPE_HUMAN;
@@ -139,7 +139,7 @@ package classes.Characters.CoC
 			//10 - curvy//flaring
 			//15 - child-bearing/fertile
 			//20 - inhumanly wide
-			this.hipRatingRaw = 6;
+			this.hipRatingRaw = 8;
 			//buttRating
 			//0 - buttless
 			//2 - tight
@@ -150,7 +150,7 @@ package classes.Characters.CoC
 			//13 - expansive
 			//16 - huge
 			//20 - inconceivably large/big/huge etc
-			this.buttRatingRaw = 5;
+			this.buttRatingRaw = 6;
 			// Ember defaults to herm
 			this.cocks = [];
 			this.createCock(16);

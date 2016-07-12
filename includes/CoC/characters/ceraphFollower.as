@@ -213,14 +213,10 @@ public function submissiveCeraphOffer():void
 			if (pc.cockThatFits(enemy.analCapacity()) != -1) addButton(3, "FuckHerAss", buttRapeCeraph);
 		}
 		if (pc.hasVagina()) addButton(2, "Ride Her", rideCeraphsCockLikeaBAWSSexclamation11eleven);
-		
-		addButton(0, "Collar Her", collarCeraph);
-		addButton(4, "Leave", function():* { processTime(20 + rand(10)); CombatManager.genericVictory(); } );
 	}
-	else {
-		addButton(0, "Collar Her", collarCeraph);
-		addButton(1, "Leave", function():* { processTime(20 + rand(10)); CombatManager.genericVictory(); } );
-	}
+	
+	addButton(0, "Collar Her", collarCeraph);
+	addButton(1, "Leave", function():* { processTime(20 + rand(10)); CombatManager.genericVictory(); } );
 }
 
 //Collar Ceraph After 4th Defeat + Rape: (Zeddited)
@@ -270,6 +266,7 @@ private function carryCarephsToken():void
 	if (pc.hasGenitals()) {
 		output("Do you fuck her as a disobedient demon, one last time? (And if so, which of your body parts do you do it with?)\n\n");
 		//Dickings ahoyu!
+		addDisabledButton(0, "Collar Her");
 		addDisabledButton(1, "Fuck Her", "Fuck Her", "This scene requires you to have cock.");
 		addDisabledButton(2, "Ride Her", "Ride Her", "This scene requires you to have vagina.");
 		addDisabledButton(3, "FuckHerAss", "Fuck Her Ass", "This scene requires you to have fitting cock.");
@@ -279,7 +276,6 @@ private function carryCarephsToken():void
 		}
 		if (pc.hasVagina()) addButton(2, "Ride Her", rideCeraphsCockLikeaBAWSSexclamation11eleven);
 		
-		addButton(0, "Collar Her", collarCeraph);
 		addButton(4, "Leave", function():* { processTime(20 + rand(10)); CombatManager.genericVictory(); } );
 	}
 	else {
@@ -308,6 +304,7 @@ private function getCeraphFollowerPiercing():void
 	if (pc.hasGenitals()) {
 		output("\n\nDo you fuck her as a disobedient demon, one last time? (And if so, which of your body parts do you do it with?)\n\n");
 		//Dickings ahoyu!
+		addDisabledButton(0, "Collar Her");
 		addDisabledButton(1, "Fuck Her", "Fuck Her", "This scene requires you to have cock.");
 		addDisabledButton(2, "Ride Her", "Ride Her", "This scene requires you to have vagina.");
 		addDisabledButton(3, "FuckHerAss", "Fuck Her Ass", "This scene requires you to have fitting cock.");
@@ -317,7 +314,6 @@ private function getCeraphFollowerPiercing():void
 		}
 		if (pc.hasVagina()) addButton(2, "Ride Her", rideCeraphsCockLikeaBAWSSexclamation11eleven);
 		
-		addButton(0, "Collar Her", collarCeraph);
 		addButton(4, "Leave", function():* { processTime(20 + rand(10)); CombatManager.genericVictory(); } );
 	}
 	else {

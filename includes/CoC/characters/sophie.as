@@ -48,9 +48,9 @@ public function SophieTimePassedNotify():void
 	//pregnancy.pregnancyAdvance();
 	//trace("\nSophie time change: Time is " + model.time.hours + ", incubation: " + pregnancy.incubation + ", event: " + pregnancy.event);
 	if (flags["COC.SOPHIE_ANGRY_AT_PC_COUNTER"] > 0) flags["COC.SOPHIE_ANGRY_AT_PC_COUNTER"]--;
-	if (flags["COC.SOPHIES_DAUGHTERS_DEBIMBOED"] == 1 && sophieFollower() && flags["COC.FOLLOWER_AT_FARM_SOPHIE"] == 0) {
+	if (flags["COC.SOPHIES_DAUGHTERS_DEBIMBOED"] == 1 && sophieFollower() && int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) == 0 && eventQueue.indexOf(sophieDaughterDebimboUpdate) == -1) {
 		eventQueue.push(sophieDaughterDebimboUpdate);
-		needNext = true;
+		//needNext = true;
 	}
 	if (!sophieAtCamp()) { //Could be at the farm or still in the wild
 		if (int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) == 0 && flags["COC.SOPHIE_INCUBATION"] != undefined && flags["COC.SOPHIE_INCUBATION"] <= 0) { //As long as she's not at the farm it's alright to lay eggs
@@ -59,11 +59,11 @@ public function SophieTimePassedNotify():void
 		}
 	}
 	else { //She might be a bimbo, debimboed or normal, but she's a follower and presently at camp
-		if (flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"] > 0) { //Maturation of the egg she laid
+		if (flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"] > 0 && eventQueue.indexOf(sophiesEggHatches) == -1) { //Maturation of the egg she laid
 			flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"]--;
 			if (flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"] == 0) {
 				eventQueue.push(sophiesEggHatches);
-				needNext = true;
+				//needNext = true;
 			}
 		}
 		if (flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"] > 0) { //Maturation of her daughter into an adult
@@ -75,8 +75,10 @@ public function SophieTimePassedNotify():void
 				switch (flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"]) {
 					case 100:
 					case 200:
-					case 325: eventQueue.push(sophiesDaughterDescript); //At these three times we need to output a message about her daughters
-							needNext = true;
+					case 325:
+							if (eventQueue.indexOf(sophiesDaughterDescript) == -1)
+								eventQueue.push(sophiesDaughterDescript); //At these three times we need to output a message about her daughters
+							//needNext = true;
 					default:
 				}
 			}
@@ -91,41 +93,41 @@ public function SophieTimePassedNotify():void
 							//needNext = true;
 							//break;
 					//default: 
-							if (flags["COC.SOPHIE_INCUBATION"] <= 0) {
+							if (flags["COC.SOPHIE_INCUBATION"] <= 0 && eventQueue.indexOf(sophieBirthsEgg) == -1) {
 								eventQueue.push(sophieBirthsEgg);
 								flags["COC.SOPHIE_INCUBATION"] = undefined; //Clear Pregnancy 
 								flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"] = 150 + rand(30); //This long till that egg hatches
 								flags["COC.SOPHIE_HEAT_COUNTER"] = 551; //After pregnancy she waits 23 days before going into heat again
-								needNext = true;
+								//needNext = true;
 							}
 				//}
 			//}
-			if (flags["COC.SOPHIE_HEAT_COUNTER"] >= 552) { //She got knocked up while in heat
+			if (flags["COC.SOPHIE_HEAT_COUNTER"] >= 552 && eventQueue.indexOf(sophieGotKnockedUp) == -1 && eventQueue.indexOf(sophieFertilityKnockedUpExpired) == -1) { //She got knocked up while in heat
 				if (bimboSophie()) eventQueue.push(sophieGotKnockedUp);
 				else eventQueue.push(sophieFertilityKnockedUpExpired);
 				flags["COC.SOPHIE_HEAT_COUNTER"] = 551;
-				needNext = true;
+				//needNext = true;
 			}
 		}
 		else { //She's in camp and not pregnant
 			if (flags["COC.SOPHIE_HEAT_COUNTER"] == 0) { //Tick over into heat if appropriate
-				if (pc.hasCock() && inCamp()) {
+				if (pc.hasCock() && inCamp() && eventQueue.indexOf(sophieGoesIntoSeason) == -1 && eventQueue.indexOf(sophieFollowerGoesIntoSeas) == -1) {
 					if (bimboSophie()) eventQueue.push(sophieGoesIntoSeason);
 					else eventQueue.push(sophieFollowerGoesIntoSeas);
 					flags["COC.SOPHIE_HEAT_COUNTER"] = 720;
-					needNext = true;
+					//needNext = true;
 				}
 			}
 			else {
 				flags["COC.SOPHIE_HEAT_COUNTER"]--;
-				if (flags["COC.SOPHIE_HEAT_COUNTER"] == 552 && inCamp()) { //Expire heat if it counts down to 552
+				if (flags["COC.SOPHIE_HEAT_COUNTER"] == 552 && inCamp() && eventQueue.indexOf(sophieSeasonExpiration) == -1 && eventQueue.indexOf(sophieFertilityExpired) == -1) { //Expire heat if it counts down to 552
 					if (bimboSophie()) eventQueue.push(sophieSeasonExpiration);
 					else eventQueue.push(sophieFertilityExpired);
-					needNext = true;
+					//needNext = true;
 				}
-				if (hours == 10 && (!pc.hasPerk("Luststick Adapted") < 0 || rand(3) == 0) && bimboSophie() && !sophieIsInSeason() && int(flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"]) == 0 && flags["COC.SOPHIE_LUSTSTICK_SURPRISE_LAST"] != days && inCamp()) {
+				if (hours == 10 && (!pc.hasPerk("Luststick Adapted") < 0 || rand(3) == 0) && bimboSophie() && !sophieIsInSeason() && int(flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"]) == 0 && flags["COC.SOPHIE_LUSTSTICK_SURPRISE_LAST"] != days && inCamp() && eventQueue.indexOf(bimboSophieLustStickSurprise) == -1) {
 					eventQueue.push(bimboSophieLustStickSurprise);
-					needNext = true;
+					//needNext = true;
 				}
 			}
 		}

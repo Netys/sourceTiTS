@@ -42,7 +42,7 @@ public function sophieSprite():void {
 }
 
 public function bimboSophie():Boolean {
-	return (flags["COC.UNKNOWN_FLAG_NUMBER_00282"] > 0 && flags["COC.UNKNOWN_FLAG_NUMBER_00283"] == 0 && flags["COC.SOPHIE_DEBIMBOED"] == 0);
+	return (flags["COC.UNKNOWN_FLAG_NUMBER_00282"] > 0 && int(flags["COC.UNKNOWN_FLAG_NUMBER_00283"]) == 0 && int(flags["COC.SOPHIE_DEBIMBOED"]) == 0);
 }
 
 public function sophieIsInSeason():Boolean {

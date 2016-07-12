@@ -473,7 +473,7 @@ public function fuckTheSandMothersCunt():void {
 	output(" as ");
 	if(y < 0) output("it clamps down");
 	else output("they clamp down");
-	output(", squirting femlube and leftover spunk across your [feet].");
+	output(", squirting femlube and leftover spunk across your [pc.feet].");
 	if(pc.cumQ() >= 500) {
 		output("  Again and again, you flood the poor spellcaster's twat");
 		if(y >= 0) output("s");

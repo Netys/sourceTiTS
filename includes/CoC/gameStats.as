@@ -282,7 +282,6 @@ public function displayEncounterLogCoCVarious():int
 		
 		if(flags["COC.ISABELLA_MET"] > 0 && (flags["COC.ISABELLA_MET_AS_SMALL"] > 0 || flags["COC.ISABELLA_TALLNES_ACCEPTED"] > 0)) {
 			output2("\n<b><u>Isabella</u></b>");
-			output2("\n<b>* Times Met: </b>" + flags["COC.ISABELLA_MET"]);
 			output2("\n<b>* Affection: </b>" + isabellaAffection());
 			output2("\n<b>* Attitude: </b>");
 			if (flags["COC.ISABELLA_ANGRY"] > 0) output2(" Upset");

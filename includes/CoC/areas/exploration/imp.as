@@ -861,7 +861,7 @@ private function noogaisNippleRape():void {
 	//output(images.showImage("imp-egg"), false);
 	//output("You glance down at the masturbating imp, feeling a twitch in your swollen, insectile abdomen.  As the red-skinned homunculus writhes on the ground, beating his meat, you smile, feeling a globule of sweet nectar oozing out of your ovipositor.");
 	//
-	//output("\n\nHeвЂ™s too busy humping the air and stroking himself to notice you hooking the tip of one of your [feet] under him.  You kick up one of your [legs], flipping the fapping imp over.  He gasps as he lands face-down on the ground, startled enough to stop jerking his tool.");
+	//output("\n\nHeвЂ™s too busy humping the air and stroking himself to notice you hooking the tip of one of your [pc.feet] under him.  You kick up one of your [legs], flipping the fapping imp over.  He gasps as he lands face-down on the ground, startled enough to stop jerking his tool.");
 	//output("\n\nYou grin, straddling his surprisingly perky ass, resting your [hips] on his small, round cheeks.  With your arms pinning down his shoulders, he canвЂ™t stroke himself, and he whimpers at the restraint.");
 	//
 	//output("\n\n\"<i>Wait - whatвЂ™s going on?</i>\" he gasps.");

@@ -3,6 +3,7 @@
 	import classes.Characters.PlayerCharacter;
 	import classes.Creature;
 	import classes.GameData.Pregnancy.Handlers.*;
+	import classes.kGAMECLASS;
 	/**
 	 * ...
 	 * @author Gedan
@@ -81,6 +82,8 @@
 		{
 			if (tarCreature.isPregnant())
 			{
+				if (tarCreature is PlayerCharacter && tarCreature != kGAMECLASS.pc) return; // set pregnancy on halt for other player bodies; it would break pregnancy progression for other PlayerCharacter instances, but I don't think it is an actual problem
+				
 				if (_debugTrace) trace("Updating pregnancy stages for " + tarCreature.short);
 				
 				for (var i:int = 0; i < tarCreature.pregnancyData.length; i++)

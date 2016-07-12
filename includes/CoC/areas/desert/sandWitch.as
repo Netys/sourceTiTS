@@ -984,7 +984,7 @@ private function missingoSex6():void {
 	//if(pc.isTaur() || pc.isDrider()) {
 		//output("\n\n\"<i>I-I can't get up; it hurts too much!</i>\" she cries out, despairing of making it somewhere safe in time, and that your children will be born and die out here, all in the same day.  Sternly, you tell her to get on your lower half, sinking to the ground to allow her to hobble up.");
 	//
-		//output("\n\n\"<i>Please, not too fast!</i>\" she calls out from behind you, clearly trying her best to not have the labors of your lust right here and now.  Rising to your [feet], you attempt to recall which way to go, only to realize that it doesn't matter.  Concentrating on the camp, you yell at the sand witch to hold on, then ");
+		//output("\n\n\"<i>Please, not too fast!</i>\" she calls out from behind you, clearly trying her best to not have the labors of your lust right here and now.  Rising to your [pc.feet], you attempt to recall which way to go, only to realize that it doesn't matter.  Concentrating on the camp, you yell at the sand witch to hold on, then ");
 		//if(pc.isDrider()) output("skitter");
 		//else output("gallop");
 		//output(" across the dry desert sea...");

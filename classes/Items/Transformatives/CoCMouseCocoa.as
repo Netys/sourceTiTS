@@ -68,7 +68,7 @@ package classes.Items.Transformatives
 			//lose height + gain speed (42" height floor, no speed ceiling but no speed changes without height change)
 			if (target.tallness >= 45 && changes < changeLimit && rand(3) == 0) {
 				//not horse
-				if (target.isBiped()) output("\n\nYou tap your [pc.feet] idly against the ground as you enjoy the treat; it takes several minutes before you realize you don't reach as far down as you did when you sat down!  In shock, you jerk upright and leap off, nearly falling forward as your body moves more responsively than before!  Experimentally, you move in place as you look down at your now-closer [feet]; the sensation of a more compact agility stays with you.");
+				if (target.isBiped()) output("\n\nYou tap your [pc.feet] idly against the ground as you enjoy the treat; it takes several minutes before you realize you don't reach as far down as you did when you sat down!  In shock, you jerk upright and leap off, nearly falling forward as your body moves more responsively than before!  Experimentally, you move in place as you look down at your now-closer [pc.feet]; the sensation of a more compact agility stays with you.");
 				//horse
 				else output("\n\nYou trot idly in place as you eat, moving quicker and quicker as you become increasingly bored; on one step, the ground sneaks up on you and you hit it sharply, expecting a few more inches before contact!  Looking down, you notice better resolution than before - you can make out the dirt a bit more clearly.  It looks like you just shed some height, but... you're feeling too jittery to care.  You just want to run around.");
 				target.slowStatGain("r", 1);

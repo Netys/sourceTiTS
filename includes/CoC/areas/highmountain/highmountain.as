@@ -67,8 +67,10 @@ public function exploreHighMountain():void {
 	chance.push(1);
 	
 	// Sophie
-	choice.push(meetSophie);
-	chance.push(2);
+	if (!sophieAtCamp() && !bimboSophie()) {
+		choice.push(meetSophie);
+		chance.push(2);
+	}
 	
 	// Izumi
 	choice.push(izumiScenesEncounter);
