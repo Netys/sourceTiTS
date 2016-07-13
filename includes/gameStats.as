@@ -588,7 +588,15 @@ public function statisticsScreen(showID:String = "All"):void
 		output2("\n<b>* Butt, Size Rating:</b> " + formatFloat(pc.buttRating(), 3));
 		output2("\n<b>* Butt, Weight:</b> " + prettifyWeight(pc.bodyPartWeight("butt")));
 		if(pc.weightQ("butt") > 0) output2(" (" + pc.weightQ("butt") + " %)");
-		output2("\n<b>* Anus:</b> 1, Asshole");
+		output2("\n<b>* Anus:</b> 1,");
+		if(pc.ass.vagooFlags.length > 0)
+		{
+			for(i = 0; i < pc.ass.vagooFlags.length; i++)
+			{
+				output2(" " + GLOBAL.FLAG_NAMES[pc.ass.vagooFlags[i]] + ",");
+			}
+		}
+		output2(" Asshole");
 		output2("\n<b>* Anus, Virginity:</b>");
 		if(pc.analVirgin) output2(" Virgin");
 		else output2(" Taken");
@@ -1232,6 +1240,7 @@ public function displayQuestLog(showID:String = "All"):void
 				output2(" <i>In progress...</i>");
 				output2("\n<b>* Probe Location:</b> <i>It seems the probe fell deep into the jungles.</i>");
 			}
+			if(flags["MHENGA_PROBE_CASH_GOT"] != undefined) output2(", Reclaimed probe");
 			// Scout
 			if(flags["MET_FLAHNE"] != undefined)
 			{
@@ -1245,7 +1254,13 @@ public function displayQuestLog(showID:String = "All"):void
 		{
 			output2("\n<b><u>Tarkus</u></b>");
 			output2("\n<b>* Status:</b>");
-			if(flags["PLANET_3_UNLOCKED"] != undefined) output2(" Coordinates received");
+			if(flags["PLANET_3_UNLOCKED"] != undefined)
+			{
+				output2(" Coordinates received");
+				if(flags["TARKUS_PROBE_CASH_GOT"] == 1) output2(", Reclaimed probe");
+				if(flags["TARKUS_PROBE_CASH_GOT"] == -1) output2(", Sold probe to Shekka");
+				if(flags["GAVE_SHEKKA_PROBE"] != undefined) output2(", Gave probe to Shekka");
+			}
 			else
 			{
 				output2(" <i>In progress...</i>");
@@ -1258,7 +1273,6 @@ public function displayQuestLog(showID:String = "All"):void
 					if(MailManager.isEntryViewed("annoweirdshit")) output2(" <i>Anno confirms this.</i>");
 				}
 			}
-			if(flags["GAVE_SHEKKA_PROBE"] != undefined) output2(", Gave probe to Shekka");
 			// Scout
 			if(flags["BEEN_ON_TARKUS"] != undefined)
 			{
@@ -1318,7 +1332,11 @@ public function displayQuestLog(showID:String = "All"):void
 		{
 			output2("\n<b><u>Myrellion</u></b>");
 			output2("\n<b>* Status:</b>");
-			if(nyreaDungeonFinished() || (flags["KQ2_MYRELLION_STATE"] == 1 && MailManager.isEntryUnlocked("danemyrellioncoords"))) output2(" Coordinates received");
+			if(nyreaDungeonFinished() || (flags["KQ2_MYRELLION_STATE"] == 1 && MailManager.isEntryUnlocked("danemyrellioncoords")))
+			{
+				output2(" Coordinates received");
+				if(flags["MYRELLION_PROBE_CASH_GOT"] != undefined) output2(", Reclaimed probe");
+			}
 			else output2(" <i>In progress...</i>");
 			if(!reclaimedProbeMyrellion() && flags["KQ2_MYRELLION_STATE"] != 1)
 			{
@@ -4428,6 +4446,17 @@ public function displayEncounterLog(showID:String = "All"):void
 				}
 				variousCount++;
 			}
+			// RhenWorld Offices
+			if(flags["RHENWORLD_OFFICE_VISITED"] != undefined)
+			{
+				output2("\n<b><u>RhenWorld Offices</u></b>");
+				if(9999 == 0) output2("\n<b>* Kyris:</b> Met her");
+				else output2("\n<b>* Secretary:</b> Met her");
+				if(flags["MET_RHENESUNNE"] != undefined)
+				{
+					output2("\n<b>* Anyxine Rhenesunne:</b> Met her");
+				}
+			}
 			// Irestead
 			if(flags["MET_ASTRA"] != undefined)
 			{
@@ -4472,7 +4501,7 @@ public function displayEncounterLog(showID:String = "All"):void
 			if(flags["9999"] != undefined || flags["9999"] != undefined || flags["UVIP_J46_SEARCHED"] != undefined)
 			{
 				output2("\n<b><u>Ice Plains</u></b>");
-				if(flags["9999"] != undefined) output2("\n<b>* Korgonne, Times Encountered:</b> " + flags["9999"]);
+				if(flags["MET_FEMKORGONNE"] != undefined) output2("\n<b>* Female Korgonne, Times Encountered:</b> " + flags["MET_FEMKORGONNE"]);
 				if(flags["9999"] != undefined) output2("\n<b>* Stormguard Lancer, Times Encountered:</b> " + flags["9999"]);
 				// Abandoned Outpost
 				if(flags["UVIP_J46_SEARCHED"] != undefined) output2("\n<b>* Abandoned Outpost:</b> Found, Looted camp");

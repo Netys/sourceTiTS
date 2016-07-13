@@ -189,7 +189,7 @@ internal function isabellaMoovesInGreeting():void {
 		//(Raise threshold for next occurance to current affection + 15)
 		//[Accept - Use standard] [Normal Menu Options]
 		if (pc.hasCock()) {
-			if(pc.cocks[pc.shortestCockIndex()].cLength() < 9)
+			if(pc.shortestCockLength() < 9)
 				addButton(2, "Get Licked", izzyGivesSmallWangsFreeOral);
 			else addDisabledButton(2, "Get Licked", "Get Licked", "She is not into large cocks, apparently...");
 		}
@@ -214,7 +214,7 @@ private function turnDownIsabellaFollower():void {
 	
 	output("Isabella sighs and slumps down against her metal defender at your words.  Eventually, she answers, \"<i>I... understand, [pc.name].  I shall continue mein lonely vigil.  Vas zere somezing else I could do for you, ja?</i>\"\n\n");
 	if (pc.hasCock()) {
-		if(pc.cocks[pc.shortestCockIndex()].cLength() < 9)
+		if(pc.shortestCockLength() < 9)
 			addButton(2, "Get Licked", izzyGivesSmallWangsFreeOral);
 		else addDisabledButton(2, "Get Licked", "Get Licked", "She is not into large cocks, apparently...");
 	}
@@ -533,7 +533,7 @@ private function toggleIsabellasMorningWoodChopping():void {
 		if(pc.cor() < 33) output("blush and ");
 		else if(pc.cor() >= 66) output("smirk and ");
 		output("let Isabella know that if she's still interested, you'd like her to suck you off in the mornings again.  Her face colors, but you see her eight nipple-tips poking hard at her silk shirt as she answers, \"<i>");
-		if(pc.cocks[pc.shortestCockIndex()].cLength() > 9) 
+		if(pc.shortestCockLength() > 9) 
 		{
 			if(isabellaAccent()) output("I vill, but only once you shrink zat monster down.  I cannot handle somezing like zat!");
 			else output("I will, but only once you shrink that monster down.  I can't handle something like that!");

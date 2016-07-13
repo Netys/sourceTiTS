@@ -204,6 +204,7 @@
 		public static const TYPE_NARWHAL:int								= 63;
 		public static const TYPE_HRAD:int									= 64;
 		public static const TYPE_GRYVAIN:int								= 65;
+		public static const TYPE_KORGONNE:int								= 66;
 		
 		public static const TYPE_NAMES:Array = [
 			"Human",
@@ -272,6 +273,7 @@
 			"Narwhal",
 			"Hradian",
 			"Gryvain",
+			"Korgonne",
 		];
 		
 		public static const VALID_FACE_TYPES:Array = [

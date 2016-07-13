@@ -113,7 +113,7 @@ public function isabellaGreeting():void {
 			//(Male PC's) 
 			if(pc.hasCock()) {
 				output("  She sniffs the air and immediately glances towards your groin.");
-				if(pc.cocks[pc.shortestCockIndex()].cLength() < 9) {
+				if(pc.shortestCockLength() < 9) {
 					output("The cow's eyes practically fog with lust when she sees the size of your diminutive bulge.  Isabella begs, \"<i>V-vould you come closer?  I-ah have a fondness for 'small' lovers, and I like to... 'lick'.</i>\"  To emphasize, she rolls out her tongue, showing you nearly eight inches of flat, wide, and pink flesh.");
 					addButton(2, "Get Licked", izzyGivesSmallWangsFreeOral);
 				}
@@ -140,31 +140,15 @@ public function isabellaGreeting():void {
 		clearMenu();
 		addButton(0, "Try to Talk", tryToTalkDownAngryCow);
 		addButton(1, "Fight", unwelcomeFightCowGal);
-		addButton(4, "Leave", leaveAngryIzzy);
+		addButton(14, "Leave", leaveAngryIzzy);
 		return;
 	}
 	//Camp Meeting – Was welcome tall, but not short yet!
 	else if (flags["COC.ISABELLA_TALLNES_ACCEPTED"] > 0 && int(flags["COC.ISABELLA_MET_AS_SMALL"]) == 0 && pc.tallness <= 78) {
 		isabellaSprite();
 		IncrementFlag("COC.ISABELLA_MET_AS_SMALL");
-		output("You stumble through a wall of tall grasses back into Isabella's camp!  It's amazing how much taller they've become since your last visit.  Or perhaps it just seems that way due to the change in height.  You look for Isabella, and the fiery, red-headed cow-girl is charging right at you, bellowing, \"<i>Awwww, you're so much cuter!  Iz vonderful to have such tiny, adorable friends!  Did you come back for one of mein special drinks?</i>\"  She envelops you in a hug that crushes you against jiggling breast-flesh, and in seconds you're cradled in her arms as she marvels at your new size.\n\n");
-		if(pc.hasCock()) {
-			output("Her nose twitches and ");
-			if(pc.cocks[pc.shortestCockIndex()].cLength() < 9) {
-				output("she glances down at your small bulge.  Isabella's lips curl into a lewd smile as her voice grows husky.  \"<i>Maybe you could... pull it out for me?  I just vant to lick it a little.</i>\"");
-				addButton(2, "Get Licked", izzyGivesSmallWangsFreeOral);
-			}
-			else {
-				output("she glances down at your ");
-				if(pc.cocks[pc.shortestCockIndex()].cLength() < 20) output("large");
-				else output("gigantic");
-				output(" bulge.  Isabella sighs and mumbles something about it being too big to be any fun.");
-				addDisabledButton(2, "Get Licked", "Get Licked", "She is not into large cocks, apparently...");
-			}
-			output("\n\n");
-		}
-		output("The cow-girl's dusky cheeks color pink with embarrassment before she sets you down and apologizes, saying, \"<i>I am so sorry.  It iz so lonely here in ze plains, and well, feeding someone is how do you say... more fun when you can cuddle them in your arms!</i>\"\n\n");
-		output("What do you want to do with Isabella today?");
+		output("You stumble through a wall of tall grasses back into Isabella's camp!  It's amazing how much taller they've become since your last visit.  Or perhaps it just seems that way due to the change in height.  You look for Isabella, and the fiery, red-headed cow-girl is charging right at you, bellowing, \"<i>Awwww, you're so much cuter!  Iz vonderful to have such tiny, adorable friends!  Did you come back for one of mein special drinks?</i>\"  She envelops you in a hug that crushes you against jiggling breast-flesh, and in seconds you're cradled in her arms as she marvels at your new size.");
+		output("\n\nThe cow-girl's dusky cheeks color pink with embarrassment before she sets you down and apologizes, saying, \"<i>I am so sorry.  It iz so lonely here in ze plains, and well, feeding someone is how do you say... more fun when you can cuddle them in your arms!</i>\"");
 		//simpleChoices("Talk",0,"Drink",0,"Get Licked",suck,"Rape Attempt",0,"Leave",13);
 	}
 	//Camp Meeting – Welcomed Short but Not Tall
@@ -178,7 +162,7 @@ public function isabellaGreeting():void {
 		IncrementFlag("COC.ISABELLA_TALLNES_ACCEPTED");
 		if(pc.hasCock()) {
 			output("She sniffs and gives your crotch a glance ");
-			if (pc.cocks[pc.shortestCockIndex()].cLength() >= 9) {
+			if (pc.shortestCockLength() >= 9) {
 				output("before sighing wistfully.");
 				addDisabledButton(2, "Get Licked", "Get Licked", "She is not into large cocks, apparently...");
 			}
@@ -203,21 +187,26 @@ public function isabellaGreeting():void {
 		output("While making your way through the tall grasses you hear a familiar voice lilting in a high-pitched foreign song.  It sounds like Isabella the cow-girl is at it again.  You meander towards the melodic tune, smiling as it rises in pitch and volume through your journey.  A short time later you break through the edge of the grasses in time to watch Isabella finish her song and the curvy cow-girl seems completely oblivious to your presence, enraptured by the music of her homeland.\n\n");
 		output("You wait patiently, watching her curvy body shift and her large, milk-swollen breasts wobble dangerously inside her near-transparent shirt.  Her quad-tipped areolas are plainly on display, clearly engorged and ready to leak.  If you weren't here, in this strange place, you'd be amazed by how her breasts are basically humanized udders.  In this place, it's just another thing that adds to her exotic appeal.\n\n");
 		output("Isabella finishes her song and turns to you with a twinkling smile as she asks, \"<i>Did you come back for some of ze milk?</i>\"");
-		if(pc.hasCock()) {
-			output("  She takes a long sniff and glances between your " + pc.legs() + " at your groin");
-			if (pc.cocks[pc.shortestCockIndex()].cLength() >= 9) {
-				output(", sighing wistfully.");
-				addDisabledButton(2, "Get Licked", "Get Licked", "She is not into large cocks, apparently...");
-			}
-			else {
-				output(".  Her tongue inadvertently licks her lips before she asks, \"<i>Mmmm, just the right size.  Might I give it a lick?</i>\"");
-				addButton(2, "Get Licked", izzyGivesSmallWangsFreeOral);
-			}
-		}
 	}
+	
+	if(pc.hasCock()) {
+		output("\n\nHer nose twitches and ");
+		if(pc.shortestCockLength() < 9) {
+			output("she glances down at your small bulge.  Isabella's lips curl into a lewd smile as her voice grows husky.  \"<i>Maybe you could... pull it out for me?  I just vant to lick it a little.</i>\"");
+			addButton(2, "Get Licked", izzyGivesSmallWangsFreeOral);
+		}
+		else {
+			output("she glances down at your ");
+			if(pc.shortestCockLength() < 20) output("large");
+			else output("gigantic");
+			output(" bulge.  Isabella sighs and mumbles something about it being too big to be any fun.");
+			addDisabledButton(2, "Get Licked", "Get Licked", "She is not into large cocks, apparently...");
+		}
+	} else addDisabledButton(2, "Get Licked", "Get Licked", "She prefers to lick cocks, apparently...");
+		
 	addButton(0, "Talk", talkWithIsabella);
 	addButton(1, "Drink", nomOnMommaIzzysTits);
-	// 3 - get licked
+	// 2 - get licked
 	addButton(3, "Fight 4 Rape", fightIsabella);
 	addButton(4, "Offer Oral", volunteerToSlurpCowCunt);
 	addButton(14, "Leave", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
@@ -652,7 +641,7 @@ public function volunteerToSlurpCowCunt():void {
 	pc.lust(15 + pc.libido() / 10);
 	if(pc.hasCock()) {
 		output("The cow-girl suddenly glances back at your crotch ");
-		if(pc.cocks[pc.shortestCockIndex()].cLength() >= 9) output("before sighing wistfully.");
+		if(pc.shortestCockLength() >= 9) output("before sighing wistfully.");
 		else {
 			output("before offering something else.  \"<i>Perhaps you could undress?  I ");
 			if(isabellaAccent()) output("vould like to return ze favor.</i>\"");
@@ -806,7 +795,7 @@ public function IsabellaWinsAndSpanks():void {
 		if(pc.hasPerk("Masochist")) pc.orgasm();
 	}
 	if(pc.hasCock()) {
-		if(pc.cocks[pc.shortestCockIndex()].cLength() < 9) {
+		if(pc.shortestCockLength() < 9) {
 			addNextButton(IsabellaPostSpankFeedSex);
 			return;
 		}
@@ -1066,7 +1055,7 @@ public function defeatIsabella():void {
 			if(pc.cockThatFits(enemy.analCapacity()) != -1) addButton(1, "Buttsex", PCVictoryOnIsabellaButtsex);
 			if(pc.cockThatFits(enemy.vaginalCapacity()) != -1) addButton(3, "Vaginal", vaginalProdNPokeIsabella);
 			if(pc.cockVolume(pc.biggestCockIndex()) > cockVolume(70)) addButton(4, "Big Titfuck", tooBigVictoryTittyFuckingFuntimesWithMilk);
-			if(pc.cocks[pc.shortestCockIndex()].cLength() < 9) addButton(5, "Small Titfuck", tinyVictoryTittyFuckingFuntimesWithMilk);
+			if(pc.shortestCockLength() < 9) addButton(5, "Small Titfuck", tinyVictoryTittyFuckingFuntimesWithMilk);
 		}
 	}
 	

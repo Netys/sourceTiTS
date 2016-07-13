@@ -1263,6 +1263,21 @@ public function shadeApproach():void
 	}
 	
 	clearOutput();
+	
+	// Shade left for Uveto Hotfix!
+	if(flags["MYRELLION_PROBE_CASH_GOT"] != undefined && flags["TOLD_SHADE_SHES_YER_SIS"] != undefined)
+	{
+		output("Before you get the chance to approach her, Shade stands up and leaves in a hurry, not once looking up or making eye-contact with you. She is obviously in a hurry... off to Uveto like she said she would, you guess.");
+		
+		processTime(2);
+		if(flags["UVETO_UNLOCKED"] == undefined) flags["UVETO_UNLOCKED"] = 1;
+		if(flags["SHADE_ON_UVETO"] == undefined) flags["SHADE_ON_UVETO"] = 1;
+		
+		clearMenu();
+		addButton(0, "Next", mainGameMenu);
+		return;
+	}
+	
 	showShade();
 	//Repeat, Not Sex’d
 	if(flags["SEXED_SHADE"] == undefined)
@@ -1744,7 +1759,7 @@ public function goWithShadeToTakeCareOfBusinessYuSlut():void
 	output(", though even in that short time, you can see Shade becoming progressively more uncomfortable: the hand not holding yours rarely leaves her belly, and her pace becomes erratic as you near her");
 	if(flags["SHADE_ON_UVETO"] == undefined) output(" ship");
 	else output(" doorstep");
-	output(". A grimac is plastered on her face by the time the two of you are");
+	output(". A grimace is plastered on her face by the time the two of you are");
 	if(flags["SHADE_ON_UVETO"] == undefined) output(" aboard");
 	else output(" going downstairs");
 	output(", and a bit of sweat sheens her brow.");
@@ -1772,7 +1787,7 @@ public function helpShadeLayHerEgg2():void
 	output("\n\nYou don’t think Shade’s in pain per se, but the expression on her face makes it clear she’s not in a good place. Her fingers dig into her bedspread, and she takes a slow, deep breath.");
 	output("\n\n<i>“If you want to help... grab my tail and rub the tip. Help it relax.”</i>");
 	output("\n\nThat you can do. You reach out with tentative hands, gently wrapping them around the bulbous crown of Shade’s reptilian tail. The squirming creature struggles in your grasp for a moment before your massaging fingers settle it down, lulling it into a fitful acquiescence. With the tail calmed, you begin to gently caress its length, massaging the head around the drooling pussylips. A bit of moisture trickles onto your fingers, letting you move along its polished scales easily. The length of her tail swells slightly after a moment, and Shade throws her head back with a low moan as the egg starts to move down the vaginal passage.");
-	output("\n\nShade’s hand shifts up to her breast, cupping and squeezing through the straining fabric of her shirt. <i>“Oh, fuck, now we’re getting somewhere,”</i> she moans, breathing hard and grunting as she forces the egg down her tail. Femcum and lube squirts out of tailpussy, slathering your hands and drenching the stuffing at the bottom of the bucket.");
+	output("\n\nShade’s hand shifts up to her breast, cupping and squeezing through the straining fabric of her shirt. <i>“Oh, fuck, now we’re getting somewhere,”</i> she moans, breathing hard and grunting as she forces the egg down her tail. Femcum and lube squirts out of the tailpussy, slathering your hands and drenching the stuffing at the bottom of the bucket.");
 	output("\n\nA mischievous grin spreads across your lips as your bear witness to Shade’s sexual moans. You shift the lips of her tail up to your mouth and let your [pc.tongue] play across them, licking her reptilian cunt its owner makes a cry of pleasure. The egg traveling down her passage starts coming faster in answer to your movements, sliding through her passage with increasing speed as you eat her tail-pussy out. Shade’s voice quavers as she moans, trying to tell you to either lick faster or fuck her - she wobbles in between extremes, her voice picking up to an ecstatic scream. You keep your [pc.tongue] moving quickly, teasing the hooded little clit near her tail’s broad tip until you can feel the lips spreading, parting around the thick, white surface of the cunt-snake’s egg.");
 	output("\n\nShade screams as an orgasm rocking through her, spurred on by the egg cresting from her pussylips. You get your face out of the way and level her cunt-tail with the bin, letting the egg roll out of her twat and onto the thick layer of stuffing waiting for it. Shade groans and flops onto her back, breathing hard, hands on her belly.");
 	

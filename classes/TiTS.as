@@ -296,9 +296,13 @@
 		include "../includes/events/karaquest2/roomFunctions.as";
 		
 		// Uveto
+		include "../includes/uveto/freezer.as";
+		include "../includes/uveto/jerome.as";
 		include "../includes/uveto/kaede.as";
+		include "../includes/uveto/korgonneFemaleHostile.as";
 		include "../includes/uveto/nayna.as";
 		include "../includes/uveto/nerrasa.as";
+		include "../includes/uveto/rhenworld.as";
 		include "../includes/uveto/rooms.as";
 		include "../includes/uveto/roomFunctions.as";
 		include "../includes/uveto/shade.as";
@@ -407,7 +411,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.64";
+			version = "0.6.66";
 
 			//temporary nonsense variables.
 			temp = 0;
@@ -1205,6 +1209,10 @@
 		public function get nerrasa():Nerrasa
 		{
 			return chars["NERRASA"];
+		}
+		public function get jerome():Jerome
+		{
+			return chars["JEROME"];
 		}
 		
 		private var _dbgtestvar:int = 0;
