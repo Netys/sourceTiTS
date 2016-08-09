@@ -111,7 +111,7 @@ public function abortIAmNotBloodyChampion():void {
 		output("And... Was it REALLY just simulation?\n\n");
 	}
 	
-	if (!pc.hasKeyItem("Key of the Twillight") && chars["PC_COC"] != undefined) {
+	if (!pc.hasKeyItem("Key of the Twillight")) {
 		switchToTiTSSteele();
 	}
 	
@@ -128,7 +128,6 @@ public function EnterVRIAmYourBloodyChampionYouVapidCunt():void {
 	
 	if (pc.hasKeyItem("Key of the Twillight")) {
 		if (flags["COC_INTRO_SEEN"] == undefined) {
-			flags["COC_INTRO_SEEN"] = 1;
 			cocMainIntroScene0();
 		} else {
 			move("COC_CAMP");
@@ -136,21 +135,24 @@ public function EnterVRIAmYourBloodyChampionYouVapidCunt():void {
 		return;
 	}
 	
+	if (chars["PC_COC"] != undefined || pc.characterClass == GLOBAL.CLASS_ADVENTURER) move("COC_CAMP");
 	switchToCoCChampion();
-	if (flags["COC_INTRO_SEEN"] != undefined) move("COC_CAMP");
 }
 
 public function switchToCoCChampion():void
 {
-	chars["PC_TITS"] = chars["PC"];
+	if (pc.characterClass == GLOBAL.CLASS_ADVENTURER) return;
 	
 	if (chars["PC_COC"] == undefined) createYourChampion();
-	else chars["PC"] = chars["PC_COC"];
+	else {
+		chars["PC_TITS"] = chars["PC"];
+		chars["PC"] = chars["PC_COC"];
+	}
 }
 
 public function switchToTiTSSteele():void
 {
-	if (chars["PC_TITS"] == undefined) return;
+	if (chars["PC_TITS"] == undefined || pc.characterClass != GLOBAL.CLASS_ADVENTURER) return;
 	
 	chars["PC_COC"] = chars["PC"];
 	chars["PC"] = chars["PC_TITS"];

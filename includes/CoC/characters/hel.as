@@ -25,32 +25,35 @@ public function HelTimePassedNotify():void {
 	//}
 	
 	if (flags["COC.HEL_PREGNANCY_INCUBATION"] != undefined) {
-		switch (helPregnancyEvent()) {
-			case 2:
-					if(flags["COC.HEL_PREGNANCY_EVENT_1"] != 1 && eventQueue.indexOf(bulgyCampNotice) == -1) {
-						flags["COC.HEL_PREGNANCY_EVENT_1"] = 1;
-						eventQueue.push(bulgyCampNotice);
-					}
-					return;
-			case 3:
-					if(flags["COC.HEL_PREGNANCY_EVENT_2"] != 1 && eventQueue.indexOf(bulgyCampNotice) == -1) {
-						flags["COC.HEL_PREGNANCY_EVENT_2"] = 1;
-						eventQueue.push(heliaSwollenNotice);
-					}
-					return;
-			case 4:
-					if(flags["COC.HEL_PREGNANCY_EVENT_3"] != 1 && eventQueue.indexOf(bulgyCampNotice) == -1) {
-						flags["COC.HEL_PREGNANCY_EVENT_3"] = 1;
-						eventQueue.push(heliaGravidity);
-					}
-					return;
-			default:
-					if (flags["COC.HEL_PREGNANCY_INCUBATION"] < timeAsStamp && (hours == 6 || hours == 7) && inCamp() && eventQueue.indexOf(heliaBirthtime) == -1) {
-						flags["COC.HEL_PREGNANCY_INCUBATION"] = undefined;
-						eventQueue.push(heliaBirthtime);
-						return;
-					}
+		if (flags["COC.HEL_PREGNANCY_INCUBATION"] < timeAsStamp)
+		{
+			if (flags["COC.HEL_PREGNANCY_INCUBATION"] < timeAsStamp && (hours == 6 || hours == 7) && inCamp() && eventQueue.indexOf(heliaBirthtime) == -1) {
+				flags["COC.HEL_PREGNANCY_INCUBATION"] = undefined;
+				eventQueue.push(heliaBirthtime);
+				return;
+			}
 		}
+		else
+			switch (helPregnancyEvent()) {
+				case 2:
+						if(flags["COC.HEL_PREGNANCY_EVENT_1"] != 1 && eventQueue.indexOf(bulgyCampNotice) == -1) {
+							flags["COC.HEL_PREGNANCY_EVENT_1"] = 1;
+							eventQueue.push(bulgyCampNotice);
+						}
+						return;
+				case 3:
+						if(flags["COC.HEL_PREGNANCY_EVENT_2"] != 1 && eventQueue.indexOf(bulgyCampNotice) == -1) {
+							flags["COC.HEL_PREGNANCY_EVENT_2"] = 1;
+							eventQueue.push(heliaSwollenNotice);
+						}
+						return;
+				case 4:
+						if(flags["COC.HEL_PREGNANCY_EVENT_3"] != 1 && eventQueue.indexOf(bulgyCampNotice) == -1) {
+							flags["COC.HEL_PREGNANCY_EVENT_3"] = 1;
+							eventQueue.push(heliaGravidity);
+						}
+						return;
+			}
 	}
 	
 	//Helia's morning surprise!

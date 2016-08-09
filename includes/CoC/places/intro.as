@@ -8,6 +8,7 @@ public function cocMainIntroScene0():void {
 	clearOutput();
 	clearMenu();
 	processTime(3);
+	flags["COC_INTRO_SEEN"] = 1;
 	
 	output("You are prepared for what is to come. Most of the last year has been spent honing your body and mind to prepare for the challenges ahead. You are the Champion of Ingnam. The one who will journey to the demon realm and guarantee the safety of your friends and family, even though you’ll never see them again. You wipe away a tear as you enter the courtyard and see Elder Nomur waiting for you. You are ready.");
 	output("\n\nThe walk to the tainted cave is long and silent. Elder Nomur does not speak. There is nothing left to say. The two of you journey in companionable silence. Slowly the black rock of Mount Ilgast looms closer and closer, and the temperature of the air drops. You shiver and glance at the Elder, noticing he doesn’t betray any sign of the cold. Despite his age of nearly 80, he maintains the vigor of a man half his age. You’re glad for his strength, as assisting him across this distance would be draining, and you must save your energy for the trials ahead.");
