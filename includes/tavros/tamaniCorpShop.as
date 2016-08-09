@@ -100,6 +100,13 @@ public function lerrisMenu():void
 
 public function lerrisProducts():void
 {
+	// Unlocks
+	if(flags["PLANET_3_UNLOCKED"] != undefined) // Lerris after clearing Tarkus makes sense.
+	{
+		if(!chars["LERRIS"].hasItem(new Anusoft())) chars["LERRIS"].inventory.push(new Anusoft());
+	}
+	else chars["LERRIS"].destroyItem(new Anusoft());
+	
 	CodexManager.unlockEntry("Bubble Buddy");
 	shopkeep = lerris;
 	buyItem();
@@ -500,8 +507,8 @@ public function lerrisBendHerOver():void
 	output("\n\nSpreading her cheeks wide, you plunge into the slimy embrace of Lerris’s [lerris.vagOrAss].");
 
 	pc.cockChange(true, false);
-	if (lerris.hasVagina()) lerris.cuntChange(0, (pc.hasCock() ? pc.cockVolume(cockIdx) : lerris.vaginalCapacity()), true, true, false);
-	else lerris.buttChange((pc.hasCock() ? pc.cockVolume(cockIdx) : lerris.analCapacity()), true, true, false);
+	if (lerris.hasVagina()) lerris.cuntChange(0, (pc.hasCock() ? pc.cockVolume(cockIdx) : pc.hardLightVolume()), true, true, false);
+	else lerris.buttChange((pc.hasCock() ? pc.cockVolume(cockIdx) : pc.hardLightVolume()), true, true, false);
 
 	output(" She squeals, bucking forward under the sheer pressure of your entrance until her face is pressed against the back of the sofa. Her breasts bounce hypnotically while she moves, tempting you into reaching forward and taking them both in your hands, squeezing until she sprays milk between your fingers and her");
 	if (lerris.hasVagina()) output(" pussy");

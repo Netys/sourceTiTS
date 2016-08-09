@@ -247,7 +247,7 @@ public function jeromePeggingIIITaur():void
 	output(" nestled in that ass, and you’re going to take as much time as it needs to make that happen.");
 
 	output("\n\nJerome seems to be enjoying himself, if the firm little thrusts of hips serving to grind the ribbed underside of his fat cock into your underbelly are anything to go by. Every inch you feed into his greedy ass seems to trigger another wiggle from his spine and another needy hump into your [pc.skinFurScales].");
-	if (cIdx == -1 || pc.cocks[cIdx].cType() == GLOBAL.TYPE_EQUINE)
+	if (cIdx == -1 || pc.cocks[cIdx].cType == GLOBAL.TYPE_EQUINE)
 	{
 		output(" And the cute little mewl that slips from his throat as your chunky");
 		if (cIdx == -1) output(" simulated");
@@ -533,7 +533,7 @@ public function jeromeHipbuster():void
 		else output(" swings");
 		output(" your"); 
 		if (pc.ballSize() <= 3 && pc.hasStatusEffect("Uniball")) output(" trappy");
-		else if (pc.ballSize()() >= 10) output(" bloated");
+		else if (pc.ballSize() >= 10) output(" bloated");
 		output(" ball");
 		if (pc.balls > 1) output("s");
 		output(" just close enough for");
@@ -579,7 +579,7 @@ public function jeromeHipbuster():void
 	output("\n\nJerome lets out a little defeated grunt.");
 
 	output("\n\n");
-	if (pc.isNice()) output("<i>“Tell me what you want and then maybe I can help you out,”");
+	if (pc.isNice()) output("<i>“Tell me what you want and then maybe I can help you out,”</i>");
 	else if (pc.isMisc()) output("<i>“Tell me what you want and then maybe - </i>maybe<i> - I’ll see what I can do to help,”</i>");
 	else output("<i>“Tell me what you want and then maybe I’ll see what I can do,”</i>");
 	output(" you tell him with an authoritative tone.");
@@ -621,8 +621,8 @@ public function jeromeHipbusterII(s:Object):void
 
 	if (s.vGape < 4)
 	{
-		output("\n\nSlowly you begin to lower yourself down, putting weight on the joining between your "+s.simpleHoleStr()+" and the tree trunk of a dick attempting to batter its way inside you. It’s slow going, but between the bears over productive balls");
-		if ((s.vIdx == -1 && pc.ass.wetness() >= 4) || pc.vaginas[s.vIdx].wetness() >= 4)
+		output("\n\nSlowly you begin to lower yourself down, putting weight on the joining between your "+s.simpleHoleStr()+" and the tree trunk of a dick attempting to batter its way inside you. It’s slow going, but between the bear's over productive balls");
+		if ((s.vIdx == -1 && pc.ass.wetness() >= 4) || (pc.hasVagina() && pc.vaginas[s.vIdx].wetness() >= 4))
 		{
 			output(", your own sopping wet "+s.simpleHoleStr+",");
 		}
@@ -667,7 +667,7 @@ public function jeromeHipbusterII(s:Object):void
 	output("\n\nThe sensation comes to a stop all too soon, and it’s only with its absence that the lust-fueled befuddlement clouding your mind starts to dissipate. Your legs are straight, stood as high as you can, and");
 	if (pc.tallness >= 72) output(" the bears chunky cockhead is still buried in your");
 	else if (pc.tallness >= 60) output(" there’s still a couple of inches of fat bearcock buried in your");
-	else output(" half of the bears thick dick is still buried in your");
+	else output(" half of the bear's thick dick is still buried in your");
 	output(" " + s.simpleHoleStr() + ". Guess there’s only one thing for it then...");
 	
 	processTime(10 + rand(3));
@@ -876,5 +876,5 @@ public function jeromePeggingMerge():void
 	output("\n\nBy the time you step out of steam-infused room and back into your bedroom, Jerome is gone. Presumably he slinked back off to his own bed to recover.");
 
 	clearMenu();
-	mainGameMenu();
+	addButton(0,"Next",mainGameMenu);
 }

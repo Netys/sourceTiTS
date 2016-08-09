@@ -119,7 +119,7 @@ public function getLetterFromShade():void
 		if(MailManager.hasSubject("letter_from_shade", null)) MailManager.updateEntry("letter_from_shade");
 		return;
 	}
-	if(shadeAtTheBar() || !shadeIsActive() || flags["KQ2_SHADE_ENCOUNTERED"] == 1) return;
+	if(shadeAtTheBar() || !shadeIsActive()) return;
 	
 	if(createSubjectFromShade() != "")
 	{
@@ -143,7 +143,7 @@ public function createSubjectFromShade():String
 	else if(shadeIsLover())
 	{
 		// DID encounter Shade in KQ2
-		if(flags["KQ2_SHADE_ENCOUNTERED"] >= 2) subject = "Hi...";
+		if(flags["KQ2_SHADE_ENCOUNTERED"] != undefined) subject = "Hi...";
 		// Did NOT encounter Shade in KQ2
 		else subject = "Welcome to Uveto!";
 	}
@@ -686,6 +686,7 @@ public function approachShadeAtHouse(response:String = "intro"):void
 			
 			currentLocation = "UVI P30";
 			generateMap();
+			removeUvetoCold();
 			
 			output("You step up to the front door of the tiny little hut bearing your lover’s name and tap the doorbell. An electronic chime echoes from inside, just barely audible over the howl of the frozen winds over the high walls of Irestead. A moment passes in the cold before a small holoscreen next to the door shudders to life, showing you the familiar, smiling face of a certain kaithrit huntress.");
 			output("\n\n<i>“Hey!”</i> she grins, angling the camera on her end up towards herself. Unlike the last time you met, Shade’s ditched her heavy blue duster and simply wrapped herself up in a dark tan sweater that hugs her ample curves loosely and a woolen sock stretched around her reptilian tail, sheathing its lurid sex from sight and its jade scales from the chill. For once she almost looks her age: more hot school mom than deadly space huntress, but the way she smiles invitingly at you, the appeal of your feline lover isn’t lost for a moment.");
@@ -780,6 +781,7 @@ public function approachShadeAtHouse(response:String = "intro"):void
 			
 			currentLocation = "UVI P30";
 			generateMap();
+			removeUvetoCold();
 			
 			output("You approach the Irons residence with a nervous twitch in your step. Somehow you know this isn’t going to be easy -- Shade was positively freaking out the last time you met, and God knows how the time apart has changed her mind. But you steel yourself: you can’t leave things the way they are now. Your lover... and your sister... is waiting for you.");
 			output("\n\nTaking a deep breath, you tap the buzzer beside the door. An electronic chime echoes from inside, just barely audible over the howl of the frozen winds over the high walls of Irestead. A moment passes in the cold before a small holoscreen next to the door shudders to life, showing you the familiar face of the kaithrit huntress. Her natural, cool confidence is gone, replaced by a weary, sad look. Still, Shade forces a smile when she sees you on the holo.");
@@ -960,7 +962,7 @@ public function approachShadeAtHouse(response:String = "intro"):void
 			output("\n\nTurns out she wasn’t kidding about cooking as well as she slings a gun: the food’s damn good, but the company’s better. Shade’s happy to make small talk while you eat, letting you talk again this time: before long, your belly is full and your dinner companion has sprawled back out on the couch, sipping at her wineglass while you tell of the first probe you found, and your climactic meeting with [rival.name] and Dane.");
 			output("\n\n<i>“Glad to know I have shitty relatives, too,”</i> Shade laughs. [rival.HeShe] actually shot at you with a gunship? Could have killed you.”</i>");
 			output("\n\nLucky you, [rival.heShe]’s either an awful shot, or just wanted to scare you off.");
-			if(nyreaDungeonFinished()) output(" Either way, you saw [rival.himHer] get thoroughly humiliated by " + (flags["FUCKED_TAIVRA"] != undefined ? "a bug-queen" : "your mated queen") + " on Myrellion. Fair trade, almost.");
+			if(nyreaDungeonFinished()) output(" Either way, you saw [rival.himHer] get thoroughly humiliated by " + ((flags["FUCKED_TAIVRA"] != undefined && flags["KILLED_TAIVRA"] == undefined) ? "your mated queen" : "a bug-queen") + " on Myrellion. Fair trade, almost.");
 			else output(" You’ll get the " + rival.mf("bastard", "bitch") + " back for that some time.");
 			output("\n\n<i>“I’m sure,”</i> Shade smirks. <i>“It’s your adventure and all, but still let me know if I can help out sometime. [rival.name] sounds like [rival.heShe] needs a cousin like me to bend ‘em over my knee.”</i>");
 			output("\n\nOh, that’d be something to see. Still, you gotta ask: does she really have no interest in the Steele fortune? Apparently the probes activate for her, so she could just as easily do what your cousin has and join the race illicitly.");
@@ -1009,6 +1011,17 @@ public function approachShadeAtHouse(response:String = "intro"):void
 			removeButton(14);
 			break;
 	}
+}
+// Inside Shade's House
+public function ironsHouseBonus():Boolean
+{
+	output("9999 - Room Description");
+	
+	removeUvetoCold(true);
+	
+	// 9999 - Shade menu?
+	
+	return false;
 }
 
 

@@ -144,6 +144,7 @@
 		
 		// Misc Events
 		include "../includes/events/atha_lets_fapper.as";
+		include "../includes/events/steph_on_demand.as";
 		include "../includes/events/bimboPennyAndBadgerQuest/badgerGifts.as";
 		include "../includes/events/tentacle_psychic_hatchling.as";
 		include "../includes/events/kiroCrewQuest/buttslutinator.as";
@@ -237,6 +238,7 @@
 		include "../includes/newTexas/millie.as";
 		include "../includes/newTexas/rooms.as";
 		include "../includes/newTexas/roomFunctions.as";
+		include "../includes/newTexas/stocks.as";
 		include "../includes/newTexas/tenTonGym.as";
 		include "../includes/newTexas/treatment.as";
 		include "../includes/newTexas/varmint_wrangling.as";
@@ -411,7 +413,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.66";
+			version = "0.6.70";
 
 			//temporary nonsense variables.
 			temp = 0;
@@ -468,6 +470,8 @@
 			
 			inputManager = new InputManager(stage, false);
 			setupInputControls();
+			
+			initStephEps();
 			
 			// set up the user interface: ------------------------------------------------------------
 			userInterface = new GUI(this, stage);

@@ -381,12 +381,16 @@ public function galoMaxTFProc():void
 				output(" semi-transparent cock that you realize what’s happened.");
 			}
 			else output(", and it isn’t until you see the edge of a finger through a freshly-cleaned nether-lip that you realize what’s happened.");
-			output(" <b>Your genitalia... your whole pubic mound, really, has become [pc.hairColor] and gooey, just like your hair.</b>");
+			output(" <b>Your genitalia... your whole pubic mound, really, has become " + (pc.hairType == GLOBAL.HAIR_TYPE_GOO ? "[pc.hairColor]" : "green") + " and gooey");
+			if(pc.hairType == GLOBAL.HAIR_TYPE_GOO) output(", just like your hair");
+			output(".</b>");
 		}
 		else
 		{
 			output(", and it isn’t until you see the edge of a finger through the skin that you realize what’s happened.");
-			output(" <b>Your... your whole “pubic” area really has become gooey, just like your hair.</b>");
+			output(" <b>Your... your whole “pubic” area really has become gooey");
+			if(pc.hairType == GLOBAL.HAIR_TYPE_GOO) output(", just like your hair");
+			output(".</b>");
 		}
 		output("\n\n<i>Maybe you can shift things around down there too...</i>");
 		pc.createStatusEffect("Goo Crotch");
@@ -1251,15 +1255,28 @@ public function revertGooBodyColor(part:String = "menu"):void
 			addDisabledGhostButton(0,"Hair","Hair","Your hair and body colors already match!");
 			addDisabledGhostButton(1,"Skin","Skin","Your hair and skin colors already match!");
 		}
+		if(pc.hasBeard())
+		{
+			if(pc.beardColor != pc.hairColor)
+			{
+				output2("Your [pc.beardColor] beard doesn’t quite match your [pc.hairColor] hair. ");
+				if(gooBiomass() >= 10) addGhostButton(5,"Beard",revertGooBodyColor,"beard","Beard","Shift your beard color to match your [pc.hairColor] hair.\n\n<b>10 mLs Biomass</b>");
+				else addDisabledGhostButton(5,"Beard","Beard","You don’t have enough biomass for that.\n\n<b>10 mLs Biomass</b>");
+			}
+			else
+			{
+				addDisabledGhostButton(5,"Beard","Beard","Your beard and hair colors already match!");
+			}
+		}
 		if(gooMismatchedGenitals(sColor) > 0)
 		{
-			output2("Your genital colors seem to be off compared to the rest of your body.");
+			output2("Your genital colors seem to be off compared to the rest of your body. ");
 			if(gooBiomass() >= 10) addGhostButton(2,"FixGenitals",revertGooGenitalColor,sColor,"Revert Genital Color","Shift your genital color to match your " + sColor + " body.\n\n<b>10 mLs Biomass</b>");
 			else addDisabledGhostButton(2,"FixGenitals","Revert Genital Color","You don’t have enough biomass for that.\n\n<b>10 mLs Biomass</b>");
 		}
 		else
 		{
-			if(pc.hairColor == pc.skinTone) output2("You might be able to shift your colors if they are ever mismatched.");
+			if(pc.hairColor == pc.skinTone) output2("You might be able to shift your colors if they are ever mismatched. ");
 			addDisabledGhostButton(2,"FixGenitals","Revert Genital Color","Your genital and body colors already match!");
 		}
 		addGhostButton(14,"Back",gooBodyCustomizer);
@@ -1301,6 +1318,16 @@ public function revertGooBodyColor(part:String = "menu"):void
 			addGhostButton(1,"No",revertGooGenitalColor);
 		}
 		else addGhostButton(0,"Next",revertGooBodyColor,"menu");
+	}
+	else if(part == "beard")
+	{
+		output2("Concentrating hard, you try to allow the pigmentation to climb from your head and into your facial hair.");
+		output2("\n\nTiny dots of [pc.hairColor] bubble up and grow within the [pc.beardColor] [pc.beardNoun]. After a brief moment, you complete the color transformation and admire your changes.");
+		output2(" <b>Your beard color now matches your hair color!</b>");
+		pc.beardColor = pc.hairColor;
+		gooBiomass(-10);
+		clearGhostMenu();
+		addGhostButton(0,"Next",revertGooBodyColor,"menu");
 	}
 }
 public function revertGooGenitalColor(sColor:String = "null"):void
@@ -1996,6 +2023,8 @@ public function nutShrinkGo():void
 	output2("You sag with relief as your body reabsorbs some of the weight from your [pc.sack]. Getting around will certainly be a little easier!");
 	gooBiomass(nutShrinkCost());
 	pc.ballSizeRaw = (pc.ballSizeRaw/Math.PI-1) * Math.PI;
+	//Failsafe!
+	if(pc.ballSizeRaw < 0.5) pc.ballSizeRaw = 0.5;
 	trace("FINAL ACTUAL VOL: " + pc.ballVolume());
 	clearGhostMenu();
 	addGhostButton(0,"Next",gooBallsMenu);
@@ -2046,6 +2075,12 @@ public function expandoNuts():void
 	}
 	gooBiomass(nutExpansionCost() * -1);
 	pc.ballSizeRaw = (pc.ballSizeRaw/Math.PI+1) * Math.PI;
+	//Failsafe!
+	if(pc.ballSizeRaw < 0.5) 
+	{
+		output2("\n\n<b>Something went wrong! BallSizeRaw reported as " + pc.ballSizeRaw + ". Too low. Resetting to 1. Please report this as a bug on the bug report forums with a copy/paste of this message as well as any other pertinent information.</b>");
+		pc.ballSizeRaw = 1;
+	}
 	trace("FINAL ACTUAL VOL: " + pc.ballVolume());
 	pc.lust(15);
 	while(pc.lust() < 33) { pc.lust(5); }

@@ -278,13 +278,14 @@ public function availableFaps(roundTwo:Boolean = false):/*FapCommandContainer*/A
 		fap.func = cuffSelfRouter;
 		faps.push(fap);
 	}
-	if(MailManager.isEntryViewed("lets_fap_unlock") && InShipInterior())
+	if((MailManager.isEntryViewed("lets_fap_unlock") || MailManager.isEntryViewed("steph_on_demand")) && InShipInterior())
 	{
 		fap = new FapCommandContainer();
 		fap.text = "Smut";
 		fap.ttHeader = "Smut"
 		fap.ttBody = "You could go check out some smutty videos on the extranet.";
 		fap.func = smutFapMenu;
+		fap.ignoreRandomSelection = true
 		faps.push(fap);
 	}
 	if(hasRedDildo() || hasGoldDildo())
@@ -1682,7 +1683,7 @@ public function wutwutindabuttbuttFap():void
 	}
 
 	output("\n\nYou moan");
-	if (pc.isLactating() && pc.milkQ() >= 500) output(", muffled as you are with a mouthful of your own tit,");
+	if (pc.isLactating() && pc.milkQ() >= 500 && pc.biggestTitSize() >= 5) output(", muffled as you are with a mouthful of your own tit,");
 	output(" as your pleasure builds. Your [pc.hips] involuntarily twist back and forth as you drive your finger");
 	if (pc.ass.looseness() > 2 || pc.analCapacity() >= 100 || pc.ass.wetness() >= 3) output("s");
 	output(" with increasing fervor into your [pc.asshole], trying to inch");

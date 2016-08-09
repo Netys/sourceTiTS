@@ -649,7 +649,7 @@ public function talkToGianna(display:Boolean = true):void
 				return;
 			}
 			output(".");
-			output("\n\nGianna’s eyes widen and brighten. <i>\"Like... really?”</i> She slowly folds her legs into a prim posture. <i>\"All the new " + pc.mfn("bull","cows","people") + " I’ve met usually just want to take me for a roll in the hay. Synthetic creatures that can do what I can are something of a rarity here.”</i> She sighs wistfully. <i>\"Not much reason to import artificial pussies when there’s a buffet of all-naturals lined up, I guess.”</i> She leans against the wall and lets a welcoming smile return to her features, primly crossing her legs. <i>\"Don’t expect me to start bothering with clothes any time soon, but I’d love to talk. Just pick a topic!”</i>");
+			output("\n\nGianna’s eyes widen and brighten. <i>\"Like... really?”</i> She slowly folds her legs into a prim posture. <i>\"All the new " + pc.mfn("bulls","cows","people") + " I’ve met usually just want to take me for a roll in the hay. Synthetic creatures that can do what I can are something of a rarity here.”</i> She sighs wistfully. <i>\"Not much reason to import artificial pussies when there’s a buffet of all-naturals lined up, I guess.”</i> She leans against the wall and lets a welcoming smile return to her features, primly crossing her legs. <i>\"Don’t expect me to start bothering with clothes any time soon, but I’d love to talk. Just pick a topic!”</i>");
 			flags["MET_GIANNAS_TALK_MENU"] = 1;
 		}
 		//Repeat
@@ -3681,7 +3681,7 @@ public function phatBootyHotdogging():void
 	//Gianna lube me up, cap’n - no new pg
 	else
 	{
-		output("Reaching between Gianna’s legs, you find Gianna’s clit with a finger and circle it a few times. <i>“");
+		output(" Reaching between Gianna’s legs, you find Gianna’s clit with a finger and circle it a few times. <i>“");
 		if(pc.isNice()) output("A little lube, please.");
 		else if(pc.isMischievous()) output("Lube me up, baby.");
 		else output("I need some lubrication.");

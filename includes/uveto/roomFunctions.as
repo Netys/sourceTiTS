@@ -32,7 +32,7 @@ public function TundraEncounterBonus():Boolean
 
 public function uvetoShipDock():Boolean
 {
-	removeUvetoCold();
+	removeUvetoCold(true);
 	
 	//Shade Uveto welcome message.
 	getLetterFromShade();
@@ -143,8 +143,16 @@ public function rideSpaceElevatorUp():void
 	output("\n\n<i>“Welcome back to Uveto Station,”</i> an artificial voice intones as you disembark. <i>“Please enjoy your stay.”</i>");
 
 	processTime(45);
-	clearMenu();
-	addButton(7,"Exit",move,rooms[currentLocation].outExit);
+	
+	if (flags["UVETO_HUSKAR_FOURSOME"] == undefined && annoIsCrew() && flags["ANNO_MISSION_OFFER"] == 3)
+	{
+		annoUvetoHuskarFoursome();
+	}
+	else
+	{
+		clearMenu();
+		addButton(7, "Exit", move, rooms[currentLocation].outExit);
+	}
 }
 
 public function uvetoSpaceElevatorBonus():Boolean
@@ -373,11 +381,17 @@ public function hookUvetoRoomRemoveCold(direction:String):void
 	move(rooms[currentLocation][direction]);
 }
 
-public function removeUvetoCold():void
+public function removeUvetoCold(notice:Boolean = false):void
 {
 	if (pc.hasStatusEffect("Bitterly Cold"))
 	{
 		pc.removeStatusEffect("Bitterly Cold");
+		
+		if(notice)
+		{
+			output("\n\nThe tempurature gradually changes around you.");
+			if (pc.willTakeColdDamage()) output(" With relief, you can finally take some time to defrost and enjoy the warmth!");
+		}
 	}
 }
 
@@ -387,11 +401,18 @@ public function hookUvetoRoomAddCold(direction:String):void
 	move(rooms[currentLocation][direction]);
 }
 
-public function addUvetoCold():void
+public function addUvetoCold(notice:Boolean = false):void
 {
 	if (!pc.hasStatusEffect("Bitterly Cold"))
 	{
 		(pc as PlayerCharacter).createStatusEffect("Bitterly Cold", 0, 0, 0, 0, false, "Icon_Snowflake", "The bitter, piercing cold of Uveto's icy tundra threatens to chill you to the bone. Better wrap up nice and tight, maybe even find something to heat you up to better stave off the freezing winds.", false, 0, UIStyleSettings.gColdStatusColour);
+		
+		if(notice)
+		{
+			output("\n\nA burst of cold air reminds you of the surface’s natural weather conditions.");
+			if (pc.willTakeColdDamage()) output(" It’s cold out here! You’ve got to find shelter or some way to warm yourself up as soon as you can.");
+			else if (pc.hasHeatBelt()) output(" Even with the warmth provided by your heat belt, it’s still freezing cold out here.");
+		}
 	}
 }
 
@@ -613,8 +634,14 @@ public function uvetoAwakenInMedCenter(rescuer:String):void
 	addButton(0, "Next", mainGameMenu);
 }
 
+public function meadStreetBonus():Boolean
+{
+	addUvetoCold(true);
+	return false;
+}
 public function templeStreetBonus():Boolean
 {
+	addUvetoCold(true);
 	// Buzzer for Shade's house.
 	meetingShadeAtHouse(0);
 	return false;
@@ -622,6 +649,8 @@ public function templeStreetBonus():Boolean
 
 public function uvetoBarBonus():Boolean
 {
+	removeUvetoCold();
+	
 	addButton(0, flags["MET_HANA"] == undefined ? "Bartender" : "Hana", approachHana);
 
 	//STEPH IRSON!
@@ -641,6 +670,9 @@ public function uvetoBarBonus():Boolean
 
 	var jeromePresent:Boolean = jeromeAtBar(3);
 	// jerynnAtBar(jeromePresent);
+	
+	// Randoms
+	roamingBarEncounter(4);
 
 	return false;
 }
@@ -651,6 +683,7 @@ public function uvetoBarBonus():Boolean
 public function tankKannonBiopic():void
 {
 	clearOutput();
+	showBust("TANK_KANNON");
 	showName("TANK\nKANNON");
 	output("You swivel to watch, your attention caught by the sight of the fox/horse hybrid struggling to drag his twelve foot dick behind him. It doesn’t work of course, the poor guy’s erection invariably stiffens, thickening, and in the span of a few seconds, he starts pumping his hips, grinding his dick an inch across the floor at a time in an effort to attain great stimulation.");
 	output("\n\nThe announcer’s voice cuts in, <i>“Tank’s life was at an all time low. After years of struggling with throbb addiction, he had finally hit rock bottom.”</i> The camera cuts to a grainy security feed of Tank’s bedroom. There, the hyper-endowed vulquine appears to be struggling to stay above a flood of white. <i>“Wet dreams were no longer a pleasant treat - they were a life or death struggle, one that soon saw the struggling stud evicted from his residence, destitute and alone.”</i>");
@@ -670,6 +703,7 @@ public function tankKannonBiopic():void
 public function watchTankBlowFirstPornLoad():void
 {
 	clearOutput();
+	showBust("TANK_KANNON");
 	showName("TANK\nKANNON");
 	output("After a brief commercial intermission for Intimints, the mints that get the hint, the show returns, cutting to a feed of a younger, nervous-looking Tank.");
 	output("\n\nStanding a little too close to the camera, the young hybrid scratches the back of his neck nervously. <i>“H-hey ‘net! My name’s... Tank. Yeah. Tank Kannon...”</i> He grins to himself, apparently pleased with his own trite cleverness. <i>“...and I’m got something to show you.”</i> He hops down from his perch, allowing the wide-angle lens to capture every inch of sizable body - and more sizable endowments. His cock, half-hard but rapidly thickening, is laid out across an expanse of slick-looking plastic, ending in a ramp leading up to an expansive bathtub. It’s obvious from the size of the room and the niceties on display that Tank's station has already started to improve at the time of this recording.");
@@ -719,8 +753,8 @@ public function watchTankBlowFirstLoadEpilogue():void
 public function watchUvetoStephIrson():void
 {
 	clearOutput();
-	stephHeader(6);
-	author("Savin");
+	stephHeader(5);
+	
 	output("You slide into one of the booths tucked against the Freezer’s walls and relax, letting your attention drift to the small holoscreen bolted over the bar. You’re just in time to catch the title card of the program about to start: a large pair of fleshtone twin planets with the words <b>Steph Irson: Galactic Huntress</b> superimposed over them. Beneath the title script, a warning appears in large red letters: “<i>This Show Rated X, Adults Only, by the Galactic Entertainment Ratings Board for Graphic, Sexual, and Disturbing Imagery. You Have Been Warned.</i>”");
 	output("\n\nA smaller notice underneath announces <i>“This show brought to you by the Council for Interspecies Understanding on Myrellion,”</i> printed over the image of both a red and a gold-colored ant-person holding hands.");
 	output("\n\nAfter a moment, the introduction fades out, replaced by a crackling white of static. You briefly think that something’s gone futzy with the quantum connection, but before someone can go up and give the screen a good bonking, the fuzzy white resolves into a more recognizable shape: a torrent of snow, blasting past a shaky camera at breakneck speeds. After a few seconds of staring at vague shapes obscured by a thick glaze of ice and snow, something off-screen grabs the camera drone and wipes away at the caked-on ice, clearing it off enough for you to see what’s going on.");
@@ -740,12 +774,15 @@ public function watchUvetoStephIrson():void
 public function uvetoIrson2():void
 {
 	clearOutput();
-	showBust(stephBustDisplay(6, true),"KORGONNE_MALE_NUDE","KORGONNE_MALE_NUDE");
+	showBust(stephBustDisplay(5, true),"KORGONNE_MALE_NUDE","KORGONNE_MALE_NUDE");
+	author("Savin");
+	
 	output("Steph giggles and turns towards the crevasse, which is only a hair more than a foot wide you notice. She starts trying to squeeze, but predictably her over-sized tits catch on the rock, making her squirm and strain to pull herself into the tight passage. Though the wind’s still howling, you’re half-sure you hear a <i>“Moo!”</i> under her breath before, with a grunt of effort, she pulls herself through. A pair of buttons go flying, beaning the camera drone; when it catches back up to her, Steph’s coat is open-fronted enough to show off a healthy dose of milky cleavage heaving under her khaki top.");
 	output("\n\nPoking out of the crevasse’s far end, Steph glances around what seems to be a deep caldera - a basin below the ice around the plains, shielded from the storm. Pillars of dark obsidian lance up from the ground all around her, and smoke is rising from somewhere nearby. A village, maybe? <i>“Tight squeeze! Meant to keep biggies like me out. I bet we’re-”</i>");
 	output("\n\n<i>“YOU!”</i> a sharp, high-pitched voice shrieks from somewhere off camera. Steph spins around, taking the drone with her to look up at the top of a nearby snowbank. A half-dozen small, squat, fur-covered creatures are standing atop it with spears and axes in their hands. <i>“");
 	if(silly) output("MUCH TRESPASS. VERY INTRUDE!");
-	else output("UNWELCOME ALIEN. AVALANCHE OF MISTAKE!”</i>");
+	else output("UNWELCOME ALIEN. AVALANCHE OF MISTAKE!");
+	output("”</i>");
 	output("\n\n<i>“What.”</i> Steph blinks at them. <i>“Oh! They’re korgonne! Ohmygod they’re even cuter in person. Don’tcha just wanna run up and hug them!?”</i>");
 	output("\n\nOne of the creatures barks <i>“");
 	if(silly) output("NO HUG. VERY FIERCE. SO INTIMIDATE!");
@@ -772,8 +809,8 @@ public function uvetoIrson2():void
 public function uvetoIrson3():void
 {
 	clearOutput();
-	stephHeader(6,true);
-	showBust(stephBustDisplay(6, true),"FROSTWYRM");
+	showBust(stephBustDisplay(5, true),"FROSTWYRM");
+	author("Savin");
 
 	//Display Frostwyrm and Steph busts; -Korgonne busts
 	output("When the fuck-happy puppy-folk have finished, Steph’s frontside is glazed in white from her lips, through her heaving milky rack, and right down to her pussy and thighs. The five korgonne flop off of her one by one, panting and leaking seed as they go soft in the chill. The drone pans around, looking over the sordid affair, before re-focusing on the last man standing... or rather, woman sitting.");
@@ -800,7 +837,7 @@ public function uvetoIrson3():void
 	}
 	output("\n\nThe frosty drake’s front legs slam into the ground on either side of Steph, and its broad flanks rock forward until its titanic cockhead is grinding heavily against her sex. ");
 	//not seen Tarkus ep: 
-	if(9999) output("By some miracle, ");
+	if(flags["STEPH_GOOED"] == undefined) output("By some miracle, ");
 	else output("Thanks to her gray-gooification, ");
 	output("Steph’s silver quim parts for the battering ram of a monster-cock, stretching wide to accommodate its girth. Steph’s breath catches in her throat, lips twisting into a silent gasp of unspeakable pleasure. The wyrm snarls and inches its hips forward, force-feeding more and more cockmeat into the helpless - yet seemingly willing - starlet.");
 	output("\n\nSteph’s belly is bulging before long, struggling to take the sheer size of breeding tool sawing into her slit. The wyrm’s breath comes in foggy huffs over her, billowing around them so hard that the camera has trouble penetrating");
@@ -822,8 +859,22 @@ public function uvetoIrson3():void
 	output("\n\n<i>“BREED!”</i> several other voices echo.");
 	output("\n\n<i>“Tune in next week for - oh no!”</i> Steph yelps as several dark doggy-cocks flop onto her face, even as she’s being hauled off. Before one of them can plug itself in her lips, she manages to shout <i>“Uh, commercials! See ya next time!”</i>");
 	output("\n\n...Somehow she didn’t seem too distressed about her fate, there. Maybe she liked the korgonnes’ <i>“hugs”</i> a little too much...");
+	
+	watchStephEpisodeBroadcast("STEPH_DARGONED");
+	
 	pc.lust(10);
 	processTime(10);
 	clearMenu();
 	addButton(0,"Next",mainGameMenu);
+}
+
+public function uvetoStationLoungeFunc():Boolean
+{
+	if (flags["UVETO_HUSKAR_FOURSOME"] != undefined && flags["UVETO_HUSKAR_FOURSOME"] == 1 && hours >= 12 && hours <= 15 && annoIsCrew() && flags["ANNO_MISSION_OFFER"] != undefined && flags["ANNO_MISSION_OFFER"] == 3 && flags["UVETO_HUSKAR_LAST_DAY"] != undefined && flags["UVETO_HUSKAR_LAST_DAY"] < days)
+	{
+		output("\n\nGalina and Marina are lounging around in the cafe, probably on their lunch break. Though they're happily chattering away over their plates and fooling around with data-pads loaded with more science than you can shake a textbook at, they're perfectly willing to stop and flash you inviting smiles when you pass by.");
+		addButton(0, "Huskars", annoUvetoHuskarFoursomeRepeat, undefined, "Huskar Twins", "Go over and see if you can stir up some sexy trouble with the bimbo-geniuses.");
+	}
+
+	return false;
 }

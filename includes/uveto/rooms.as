@@ -125,6 +125,7 @@ public function initUvetoRooms():void
 	rooms["UVS B7"].southExit = "UVS B9";
 	rooms["UVS B7"].moveMinutes = 1;
 	rooms["UVS B7"].addFlag(GLOBAL.INDOOR);
+	rooms["UVS B7"].runOnEnter = uvetoStationLoungeFunc;
 	
 	/* Docking 1 */
 	/*
@@ -236,6 +237,7 @@ public function initUvetoRooms():void
 	rooms["UVS H11"].addFlag(GLOBAL.INDOOR);
 	rooms["UVS H11"].addFlag(GLOBAL.NPC);
 	rooms["UVS H11"].runOnEnter = rhenesunneOfficeBonus;
+
 
 	/** IRESTEAD -------------------------------------------------------------------- */
 	/** ----------------------------------------------------------------------------- */
@@ -468,6 +470,7 @@ public function initUvetoRooms():void
 	rooms["UVI N32"].southExit = "UVI N34";
 	rooms["UVI N32"].eastExit = "UVI P32";
 	rooms["UVI N32"].moveMinutes = 3;
+	rooms["UVI N32"].runOnEnter = meadStreetBonus;
 	rooms["UVI N32"].addFlag(GLOBAL.OUTDOOR);
 
 	rooms["UVI N30"] = new RoomClass(this);
@@ -490,6 +493,7 @@ public function initUvetoRooms():void
 	rooms["UVI P30"].system = "SYSTEM: SIRETTA";
 	rooms["UVI P30"].westExit = "UVI N30";
 	rooms["UVI P30"].moveMinutes = 1;
+	rooms["UVI P30"].runOnEnter = ironsHouseBonus;
 	rooms["UVI P30"].addFlag(GLOBAL.INDOOR);
 
 	rooms["UVI P32"] = new RoomClass(this);
