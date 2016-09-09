@@ -266,6 +266,9 @@
 			// More complex target selection to leverage some of Annos abilities
 			for (var i:int = 0; i < hostileCreatures.length; i++)
 			{
+				// skip deadies
+				if ((hostileCreatures[i] as Creature).isDefeated()) continue;
+				
 				if (hostileCreatures[i].hasStatusEffect("Stunned") || hostileCreatures[i].hasStatusEffect("Blinded"))
 				{
 					target = hostileCreatures[i] as Creature;
@@ -319,12 +322,13 @@
 					gPrime.createStatusEffect("Grapple Cooldown", 3);
 					
 					removeStatusEffect("Grappled");
-					output(" Anno finally brings her gun to bear and fires, pumping her entire magazine into the goo\’s tits. The gray body explodes in a rain of goop, only to reform a moment later across the room as Anno slams a new mag into her holdout. <i>“I’m fine, I’m fine!”</i> Anno groans, rubbing at her throat, now visibly bruising.");
+					output(" Anno finally brings her gun to bear and fires, pumping her entire magazine into the goo’s tits. The gray body explodes in a rain of goop, only to reform a moment later across the room as Anno slams a new mag into her holdout. <i>“I’m fine, I’m fine!”</i> Anno groans, rubbing at her throat, now visibly bruising.");
 				}
 				else
 				{
 					addStatusValue("Grappled", 1, 1);
 				}
+				output("\n");
 			}
 		}
 		

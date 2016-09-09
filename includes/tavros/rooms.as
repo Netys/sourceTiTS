@@ -124,7 +124,7 @@ public function initTavrosRooms():void
 	rooms["SHEAR BEAUTY"].runOnEnter = shearBeautyBonusFunc;
 	rooms["SHEAR BEAUTY"].addFlag(GLOBAL.INDOOR);
 	rooms["SHEAR BEAUTY"].addFlag(GLOBAL.PUBLIC);
-	rooms["SHEAR BEAUTY"].addFlag(GLOBAL.NUDITY_ILLEGAL);
+	//rooms["SHEAR BEAUTY"].addFlag(GLOBAL.NUDITY_ILLEGAL);
 	rooms["SHEAR BEAUTY"].addFlag(GLOBAL.COMMERCE);
 
 	//104 "LIFT: MERCHANT DECK". In The Lift - Merchant's Thoroughfare
@@ -219,8 +219,9 @@ public function initTavrosRooms():void
 	rooms["MI AMOUR"].southExit = "9005";
 	rooms["MI AMOUR"].moveMinutes = 1;
 	rooms["MI AMOUR"].addFlag(GLOBAL.INDOOR);
-	rooms["MI AMOUR"].addFlag(GLOBAL.NPC);
+	//rooms["MI AMOUR"].addFlag(GLOBAL.NPC);
 	rooms["MI AMOUR"].addFlag(GLOBAL.PUBLIC);
+	rooms["MI AMOUR"].addFlag(GLOBAL.COMMERCE);
 	rooms["MI AMOUR"].runOnEnter = miAmoreBonusShit;
 	
 	rooms["TAVROS TAMANICORP SHOP"] = new RoomClass(this);
@@ -231,8 +232,9 @@ public function initTavrosRooms():void
 	rooms["TAVROS TAMANICORP SHOP"].southExit = "9007";
 	rooms["TAVROS TAMANICORP SHOP"].moveMinutes = 1;
 	rooms["TAVROS TAMANICORP SHOP"].addFlag(GLOBAL.INDOOR);
-	rooms["TAVROS TAMANICORP SHOP"].addFlag(GLOBAL.NPC);
+	//rooms["TAVROS TAMANICORP SHOP"].addFlag(GLOBAL.NPC);
 	rooms["TAVROS TAMANICORP SHOP"].addFlag(GLOBAL.PUBLIC);
+	rooms["TAVROS TAMANICORP SHOP"].addFlag(GLOBAL.COMMERCE);
 	rooms["TAVROS TAMANICORP SHOP"].runOnEnter = tavrosTamaniCorpStoreEntry;
 
 	//9003 - 110 MERCHANT'S THOROUGHFARE
@@ -425,7 +427,7 @@ public function initTavrosRooms():void
 	//9016
 	rooms["9016"] = new RoomClass(this);
 	rooms["9016"].roomName = "MERCHANT'S\nTHOROUGHFARE";
-	rooms["9016"].description = "The cold metal flooring gives way to a high-dollar screen under your [pc.feet], advertising the latest “Sphinxes of Arachnu” flick, subtitled, “This Time, It’s Purrsonal.” It looks like the kind of movie that spent half its budget on special effects and the other half on feminine eye-candy. You doubt they spend more than twenty credits on the script.";
+	rooms["9016"].description = "The cold metal flooring gives way to a high-dollar screen under your [pc.feet], advertising the latest “Sphinxes of Arachnu” flick, subtitled, “This Time, It’s Purrsonal.” It looks like the kind of movie that spent half its budget on special effects and the other half on feminine eye-candy. You doubt they spent more than twenty credits on the script.";
 	rooms["9016"].planet = "TAVROS STATION";
 	rooms["9016"].system = "SYSTEM: KALAS";
 	rooms["9016"].westExit = "9017";

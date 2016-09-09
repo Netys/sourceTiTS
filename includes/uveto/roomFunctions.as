@@ -41,6 +41,15 @@ public function uvetoShipDock():Boolean
 	return false;
 }
 
+// Save failsafe (due to huskar puppysloots!)
+public function uvetoSpaceElevatorInBonus():Boolean
+{
+	output("\n\nWhere do you want to get off at?");
+	addButton(5,"Up",rideSpaceElevatorUp,undefined,"Space Elevator: Up","Ride the space elevator up to the station.");
+	addButton(7,"Down",rideSpaceElevatorDown,undefined,"Space Elevator: Down","Ride the space elevator down to the ice moon's surface.");
+	return true;
+}
+
 public function uvetoSpaceElevatorBaseBonus():Boolean
 {
 	if (flags["UVETO_GREETING_PARTY"] == undefined)
@@ -87,7 +96,10 @@ public function uvetoGreetingParty():void
 	
 	output("\n\n<i>“[pc.HeShe] would have a hard time finding one anywhere else,”</i> the fourth and final member of the group adds, stepping up and giving you a curt nod. You blink back a hint of surprise as the final voice draws your attention to a tall, sleek feminine form, much less curvaceous than the others - almost athletic, even, though not without a distinctly feminine figure. One that is very, very obviously synthetic. Silver-grey skin is shaped in roughly ausar form, packed into an Akkadi jumpsuit you’re not entirely convinced isn’t integrated with her body, the way it seamlessly fits her supple hourglass curves.");
 	
-	output("\n\n<i>“We’re not the </i>only<i> ice colony in the Federation, Senrah,”</i> the male of the group grunts, leaning against the side of the elevator tube. <i>“Anyway, we didn’t stop you to show off. Well, not just,”</i> he chuckles, making a very obvious flexing gesture. His coat finally gives way enough to let you see the dark blue and purple of the Xenogen Biotech uniform underneath.");
+	output("\n\n<i>“We’re not the </i>only<i> ice colony in the Federation, Senrah,”</i> the male of the group grunts, leaning against the side of the elevator tube. <i>“Anyway, we didn’t stop you to show off. Well, not just,”</i> he chuckles, making a very obvious flexing gesture. His coat finally gives way enough to let you see the");
+	//output(" dark blue and purple of the Xenogen Biotech");
+	output(" green and brown of the RhenWorld");
+	output(" uniform underneath.");
 	
 	output("\n\nThe Akkadi-dressed girl sticks her tongue out at him. <i>“Who </i>wouldn’t<i> want to show off for a rich, hot play"+ pc.mf("boy", "girl") +"?”</i>");
 	
@@ -99,7 +111,10 @@ public function uvetoGreetingParty():void
 	
 	output("\n\nHandy. You take the chip and plug it into one of your Codex’s dataports. It updates in the blink of an eye, registering new software.");
 	
-	output("\n\n<i>“Still,”</i> the Xenogen man adds, patting the Steele-girl’s head between the ears. <i>“Most of the moon’s surface is feral. Poorly mapped, full of milodan and korgonne raiders who haven’t gotten civilized yet. Worse things, if you go too far out. <b>Stay away from the Rift - that’s way east of the town - unless you’re looking for trouble.</b>”</i>");
+	output("\n\n<i>“Still,”</i> the");
+	//output(" Xenogen");
+	output(" RhenWorld");
+	output(" man adds, patting the Steele-girl’s head between the ears. <i>“Most of the moon’s surface is feral. Poorly mapped, full of milodan and korgonne raiders who haven’t gotten civilized yet. Worse things, if you go too far out. <b>Stay away from the Rift - that’s way east of the town - unless you’re looking for trouble.</b>”</i>");
 	
 	output("\n\nYou nod your understanding and pocket the Codex again. Anything else?");
 	
@@ -146,6 +161,7 @@ public function rideSpaceElevatorUp():void
 	
 	if (flags["UVETO_HUSKAR_FOURSOME"] == undefined && annoIsCrew() && flags["ANNO_MISSION_OFFER"] == 3)
 	{
+		rooms["UVS LIFT"].outExit = null;
 		annoUvetoHuskarFoursome();
 	}
 	else
@@ -216,7 +232,7 @@ public function flyToUveto():void
 		if (flags["MET_ORRYX"] != undefined) output(" You recognize the creature as a tove, the tiny, stuffed-animal-like race.");
 		else output(" You’re not sure what this plush-furred, squat creature is, but its beak clacks open and shut comically as it speaks.");
 		
-		output("\n\n<i>“You’ve entered into privately-owned orbital space. If you would like to dock with Camarilla station number six-three-two-oh-one, a wabeshift will intercept your path in approximately 1 hour.  Please use the time to fill out all waivers and declarations for quick and easy processing.”</i>");
+		output("\n\n<i>“You’ve entered into privately-owned orbital space. If you would like to dock with Camarilla station number six-three-two-oh-one, a wabeshift will intercept your path in approximately 1 hour. Please use the time to fill out all waivers and declarations for quick and easy processing.”</i>");
 		
 		output("\n\nYou hear multiple bings as a side monitor opens a cascade of pure-text forms and contracts. <i>“If you do not have business with the Camarilla at this time, I encourage you to adjust your orbit elsewhere, as any undocumented entry onto this planet will be construed as a breach of corporate treaty and we will be forced to sue with extreme prejudice.”</i>");
 
@@ -228,7 +244,7 @@ public function flyToUveto():void
 		
 		output("\n\nFrom what you’ve seen of the monetary penalties mentioned on every line of these documents, you’re pretty sure that means a lot coming from him.");
 		
-		output("\n\n<i>“Nono, no Tove sets down on there for more than a day or so.  However, we are the official representatives of the multi-corporate trade conglomerate that owns Uveto, pursuant to Confederate Mega-Corporate bylaws. The Camarilla is also of course responsible for the safety and security of a nativized race of ausar, who we care for greatly.”</i>");
+		output("\n\n<i>“Nono, no Tove sets down on there for more than a day or so. However, we are the official representatives of the multi-corporate trade conglomerate that owns Uveto, pursuant to Confederate Mega-Corporate bylaws. The Camarilla is also of course responsible for the safety and security of a nativized race of ausar, who we care for greatly.”</i>");
 		
 		output("\n\nHis beaked, four-eyed face is very hard to read, but you have your suspicions about that last part.");
 		
@@ -269,11 +285,11 @@ public function actuallyArriveAtUvetoStation():void
 	
 	processTime(50 + rand(16));
 	
-	output("\n\nJust as you’re getting through with the mountain of legal gobbledygook the tove sent you, your proximity sensors alert you to the approach of a large ship bearing the trade IDs of the Camarilla. You respond to a message blip ordering you to power down weapons and shields and follow the <i>“wabeshift”</i> to Uveto Station’s docking terminal. You do as you’re ordered and switch the autopilot on, letting it dog the Camarilla ship in towards the station.");
+	output("\n\nJust as you’re getting through with the mountain of legal gobbledygook the tove sent you, your proximity sensors alert you to the approach of a large ship bearing the trade IDs of the Camarilla. You respond to a message blip ordering you to power down weapons and shields and follow the “wabeshift” to Uveto Station’s docking terminal. You do as you’re ordered and switch the autopilot on, letting it dog the Camarilla ship in towards the station.");
 	
 	output("\n\nUveto Station is a small affair, one of the pre-fab low-orbit control stations common on frontier worlds too inhospitable to support a full colony. Why it’s in what has been a core world for centuries, you have no idea. A thick tether connects it to the planet below - a space elevator, you imagine - and several long, curving arms extend from the central unit of the station, providing a great deal of docking space. You suppose there must not be a spaceport on the surface of the planet.");
 	
-	output("\n\nThe wabeshift guides you to one of the docking arms, and shunts you into one of the many empty berths. Most of the other ships you can see look like heavy freighters, the kind used to haul thousands of tonnes of cargo across Confederate space - usually raw materials or industrial equipment. You allow the station to extend a docking clamp and access tunnel to your airlock, sealing with an audible <i>thump</i> that shudders through your ship.");
+	output("\n\nThe " + (CodexManager.entryUnlocked("Toves") ? "wabeship" : "wabeshift") + " guides you to one of the docking arms, and shunts you into one of the many empty berths. Most of the other ships you can see look like heavy freighters, the kind used to haul thousands of tonnes of cargo across Confederate space - usually raw materials or industrial equipment. You allow the station to extend a docking clamp and access tunnel to your airlock, sealing with an audible <i>thump</i> that shudders through your ship.");
 	
 	output("\n\nYou grab your gear");
 	if(leaveShipOK()) output(" and head onto the station.");
@@ -365,6 +381,8 @@ public function tryApplyUvetoColdDamage(timeExposed:Number):Boolean
 
 			output("\n\nBlackness takes you.");
 			if (damageResult.totalDamage > 0) outputDamage(damageResult);
+			
+			generateMapForLocation("GAME OVER");
 			
 			clearMenu();
 			addButton(0, "Next", uvetoFallToColdDamage);
@@ -671,8 +689,10 @@ public function uvetoBarBonus():Boolean
 	var jeromePresent:Boolean = jeromeAtBar(3);
 	// jerynnAtBar(jeromePresent);
 	
+	// Natalie Irson
+	natalieFreezerAddendum(4);
 	// Randoms
-	roamingBarEncounter(4);
+	roamingBarEncounter(5);
 
 	return false;
 }
@@ -762,7 +782,7 @@ public function watchUvetoStephIrson():void
 	output("\n\nSatisfied with her work on the drone, Steph releases it and pulls up a pair of goggles from her grey eyes. <i>“Welcome to Uveto Seven, everyone!”</i> she shouts over the howl of the blizzard, barely audible without a hell of a lot of boosting from the drone that leaves her sounding husky and strained. <i>“Thanks to our friends at RhenWorld Stellar Excavations, we’re taking a break from the dangerous and untamed frontier to look coreward at some of the galaxy’s least understood sapients. As you can probably see, Uveto is a totally hostile world. I can barely, like, feel any of my limbs and I’m wearing three heat belts! Because it’s so cold and stormy, and the natives remain resistant to uplifting, there’s been very little proper study done here on the frozen moon. But we’re here to change that!”</i>");
 	output("\n\nShe gives a big thumbs up to the camera drone and twists around, gazing out over the seemingly endless plains of snow stretching out in every direction. Under the light of the massive gas giant in the heavens, the whole moonscape seems to take on a reddish-white hue. Pretty, in its way, but also as foreboding as a blood moon. Steph wraps her arms around herself and starts creeping forward. <i>“So today, we’re on the hunt for a Korgonne! They’re a cute little race of caniforms, fluffy and pudgy as they come, but super fierce when provoked. I’ve gotta be slow and careful if I don’t wanna end up bushwhacked and dragged off to who-knows-where. Remember: if you get stuck or lost out here, you’re on your own gettin’ back!”</i>");
 	output("\n\nWhile she’s talking, Steph slinks forward, bent just enough that the camera drone gets confused and zooms in on her big, jiggly behind as she moves. Her butt strains the fabric of even her heavy winter gear, swaying hypnotically with every motion. The green, plant-like tail poking out of the back of her pants wiggles at the drone, idly pawing at it with a big, bulbous purple crown shaped suspiciously like a fat dick.");
-	output("\n\nThe drone wobbles and zips back out of reach before the willful tail can interfere with it too much, panning out to reveal a ridge of icy outcroppings that form a valley just ahead of where Steph’s going. She waves for the drone to follow her, pausing at a small crevasse a few yards later. <i>“Oh, here we go!”</i> she cheers, wiping away some crusted ice near the entrance. <i>“Tribal drawings! Aww, there’s so cute! We must be gettin’ close to korgonne territory now, see?”</i>");
+	output("\n\nThe drone wobbles and zips back out of reach before the willful tail can interfere with it too much, panning out to reveal a ridge of icy outcroppings that form a valley just ahead of where Steph’s going. She waves for the drone to follow her, pausing at a small crevasse a few yards later. <i>“Oh, here we go!”</i> she cheers, wiping away some crusted ice near the entrance. <i>“Tribal drawings! Aww, they’re so cute! We must be gettin’ close to korgonne territory now, see?”</i>");
 	output("\n\nShe grabs the drone and uses it like a hand-held, showing you a pair of charcoal drawings on the rock. Two tiny, crude dog-people are shown with immaculately drawn phalluses ganging up on some kind of cat-woman, drilling her from either end while making what looks like a high-five over her arched back. Tribal unity at its best, you guess.");
 	processTime(7);
 	//[Next]
@@ -870,7 +890,7 @@ public function uvetoIrson3():void
 
 public function uvetoStationLoungeFunc():Boolean
 {
-	if (flags["UVETO_HUSKAR_FOURSOME"] != undefined && flags["UVETO_HUSKAR_FOURSOME"] == 1 && hours >= 12 && hours <= 15 && annoIsCrew() && flags["ANNO_MISSION_OFFER"] != undefined && flags["ANNO_MISSION_OFFER"] == 3 && flags["UVETO_HUSKAR_LAST_DAY"] != undefined && flags["UVETO_HUSKAR_LAST_DAY"] < days)
+	if (uvetoStationLoungeHuskarBimboActive())
 	{
 		output("\n\nGalina and Marina are lounging around in the cafe, probably on their lunch break. Though they're happily chattering away over their plates and fooling around with data-pads loaded with more science than you can shake a textbook at, they're perfectly willing to stop and flash you inviting smiles when you pass by.");
 		addButton(0, "Huskars", annoUvetoHuskarFoursomeRepeat, undefined, "Huskar Twins", "Go over and see if you can stir up some sexy trouble with the bimbo-geniuses.");

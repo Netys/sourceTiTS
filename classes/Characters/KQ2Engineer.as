@@ -240,9 +240,14 @@ package classes.Characters
 			
 			var attacks:Array = [];
 			
-			attacks.push( { v: pistolShot, w: 50 } );
+			if (!target.hasStatusEffect("Stunned") && !target.hasStatusEffect("Disarmed")) attacks.push( { v: pistolShot, w: 50 } );
 			if (CombatAttacks.Overcharge.IsAvailable(this) && !target.hasStatusEffect("Stunned")) attacks.push( { v: CombatAttacks.Overcharge, w: 20 } );
 			if (CombatAttacks.WeaponHack.IsAvailable(this) && !target.hasStatusEffect("Disarmed")) attacks.push( { v: CombatAttacks.WeaponHack, w: 10 } );
+			if (attacks.length <= 0)
+			{
+				attackPass();
+				return;
+			}
 			
 			var selection:* = weightedRand(attacks);
 			
@@ -252,6 +257,11 @@ package classes.Characters
 				var s:SingleCombatAttack = selection as SingleCombatAttack;
 				s.execute(alliedCreatures, hostileCreatures, this, target);
 			}
+		}
+		
+		private function attackPass():void
+		{
+			output("The engineer is unable to attack!");
 		}
 		
 		private function pistolShot(target:Creature):void

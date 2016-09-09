@@ -247,6 +247,7 @@ public function queenOfTheDeepPCLoss():void
 		pc.loadInAss(queenOfTheDeep);
 		(pc as Creature).buttChange(queenOfTheDeep.biggestCockVolume(), false, false, false);
 		if (pc.ass.wetnessRaw < 5) pc.ass.wetnessRaw += 1;
+		imbibeVenomEffects();
 	}
 
 	for (vi = 0; vi < pc.vaginas.length; vi++)
@@ -256,8 +257,10 @@ public function queenOfTheDeepPCLoss():void
 			pc.loadInCunt(queenOfTheDeep, vi);
 			(pc as Creature).cuntChange(vi, queenOfTheDeep.biggestCockVolume(), false, false, false);
 			if (pc.vaginas[vi].wetnessRaw < 5) pc.vaginas[vi].wetnessRaw += 1;
+			imbibeVenomEffects();
 		}
 	}
+	imbibeVenomEffects();
 	pc.libido(10);
 
 	output("\n\nAnother scream of unparalleled pleasure rips itself from your throat as the first of the queen’s young penetrates your now-gaping ass, stretching you unbearably wide around even its seemingly tiny frame before it rushes into your deepest depths, squirted out into the sticky wad of chemicals left for it by the thrashing tentacle ravaging your bowels. A second spawn quickly follows the first, bloating your belly with the growing occupation of the queen’s alien brood.");
@@ -506,6 +509,7 @@ public function queenOfTheDeepSurrenderIISplit(fromCombat:Boolean):void
 	{
 		pc.loadInAss(queenOfTheDeep);
 		(pc as Creature).buttChange((queenOfTheDeep as Creature).biggestCockVolume(), false, false, false);
+		imbibeVenomEffects();
 	}
 
 	for (vi = 0; vi < pc.vaginas.length; vi++)
@@ -514,9 +518,10 @@ public function queenOfTheDeepSurrenderIISplit(fromCombat:Boolean):void
 		{
 			pc.loadInCunt(queenOfTheDeep, vi);
 			(pc as Creature).cuntChange(vi, queenOfTheDeep.biggestCockVolume(), false, false, false);
+			imbibeVenomEffects();
 		}
 	}
-
+	imbibeVenomEffects();
 	output("\n\nThe tentacle");
 	if (bMultiTentacle) output("s");
 	output(" inside you waste");
@@ -849,11 +854,12 @@ public function queenOfTheDeepGetEgged():void
 	if (numEmptyHoles > 1)
 	{
 		output(" Other tentacles squirm around your body, finding their way towards your other hole");
-		if (numEmptyHoles > 2) output("s");
+		if (numEmptyHoles > 1) output("s");
 		output(" and following the example of the first, sliding in through your now-nonexistent defenses and squirting what feels like gallons of aphrodisiacs into");
-	 	if (numEmptyVaginas > 1) output(" your womb");
-	 	if (numEmptyVaginas > 2) output("s");
-	 	else output(" your bowels");
+	 	if (numEmptyVaginas > 0) output(" your womb");
+	 	if (numEmptyVaginas > 1) output("s");
+	 	if (numEmptyVaginas > 0 && numEmptyHoles > numEmptyVaginas) output(" and");
+		if (numEmptyHoles > numEmptyVaginas) output(" your bowels");
 	 	output(".");
 	}
 
@@ -871,6 +877,7 @@ public function queenOfTheDeepGetEgged():void
 		pc.loadInAss(queenOfTheDeep);
 		(pc as Creature).buttChange(queenOfTheDeep.biggestCockVolume(), false, false, false);
 		if (pc.ass.wetnessRaw < 5) pc.ass.wetnessRaw += 1;
+		imbibeVenomEffects();
 	}
 
 	for (vi = 0; vi < pc.vaginas.length; vi++)
@@ -880,9 +887,11 @@ public function queenOfTheDeepGetEgged():void
 			pc.loadInCunt(queenOfTheDeep, vi);
 			(pc as Creature).cuntChange(vi, queenOfTheDeep.biggestCockVolume(), false, false, false);
 			if (pc.vaginas[vi].wetnessRaw < 5) pc.vaginas[vi].wetnessRaw += 1;
+			imbibeVenomEffects();
 		}
 	}
 	
+	imbibeVenomEffects();
 	pc.libido(10);
 	
 	output("\n\nAnother scream of unparalleled pleasure rips itself from your throat as the first of the queen’s young penetrates your now-gaping hole, stretching you unbearably wide around its seemingly tiny frame before it rushes into your deepest depths, squirted out into the sticky wad of chemicals left for it by the thrashing tentacle ravaging your bowels. A second spawn quickly follows the first, bloating your belly with the growing occupation of the queen’s alien brood.");
@@ -1173,7 +1182,7 @@ public function queenPregnancyEnds():void
 	output("\n\nYou surrender to the chemical pleasure, moaning and shuddering as the first of your children crests");
 	if (cuntPreggers) output(" the lips of your cunt");
 	else output(" the ring of your ass");
-	output(", surging out of your body with an explosively wet <i>POP!</i> You arch your back and scream, thrashing in orgasmic bliss as you deliver new life into the world - as you fulfil the duty the Queen of the Deep Lake set before you.");
+	output(", surging out of your body with an explosively wet <i>POP!</i> You arch your back and scream, thrashing in orgasmic bliss as you deliver new life into the world - as you fulfill the duty the Queen of the Deep Lake set before you.");
 
 	output("\n\nLooking down, you see the newborn creature: it still resembles the pale jellyfish you saw before, but now that form is but a cocoon surrounding the eight-legged crab-drider body you’re familiar with, a paper-thin veneer protecting the tiny life form just opening its eyes and wailing. You scoop it up, tearing away the veneer still clinging to its soft, fragile body: inside is a tiny blue body attached to the slender, tall red bestial underside you remember from the queen.");
 
@@ -1185,6 +1194,8 @@ public function queenPregnancyEnds():void
 	
 	output("\n\nThere isn’t time to dwell on the bliss of surrogate motherhood, however, as you’re quickly reminded that the queen laid more than one of her tiny offspring inside you....");
 
+	imbibeVenomEffects();
+	
 	clearMenu();
 	addButton(0, "Next", queenPregnancyEndsII);
 }

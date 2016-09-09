@@ -2,7 +2,7 @@ public function showHana(asNude:Boolean = false):void
 {
 	author("Magic Ted");
 	showName("\nHANA");
-	showBust(asNude ? "HANA" : "HANA_NUDE");
+	showBust(!asNude ? "HANA" : "HANA_NUDE");
 }
 
 public function approachHana():void
@@ -46,7 +46,7 @@ public function approachHanaMet():void
 	clearOutput();
 	showHana(false);
 
-	output("You’re standing before Hana, whom is working the bar. A huskar like most of the locals, she’s surprisingly tall and willowy in stature despite her older, maternal appearance, making her curvy waist line and immodest bosom subtle in her silhouette. Beyond her mere figure the woman is raven haired, the black strands framing her head in a bob cut with a bang hanging across the side of her face, concealing the black, simplistic eyepatch over her right eye in the process. The usual ausar fur lines her arms and, you presume, her leg - though you can’t see the latter through the bar.");
+	output("You’re standing before Hana, whom is working the bar. A huskar like most of the locals, she’s surprisingly tall and willowy in stature despite her older, maternal appearance, making her curvy waist line and immodest bosom subtle in her silhouette. Beyond her mere figure the woman is raven haired, the black strands framing her head in a bob cut with a bang hanging across the side of her face, concealing the black, simplistic eyepatch over her right eye in the process. The usual ausar fur lines her arms and, you presume, her legs - though you can’t see the latter through the bar.");
 	
 	output("\n\nUnlike typical ausar, though, she also has furr puffing up around her neckline as if she is wearing a particularly fluffy scarf or shawl, given her huskar nature. All of the fur is black, but you can see a few aging grey strands stand out both in her hair and fuzzier fur. To accentuate this, or simply to avoid being <i>too</i> warm, the beige, cozy and body hugging wool sweater she wears opens in the chest, though where there’d be cleavage on any other woman lies a massive puff of fur overshadowing it");
 	if (pc.isBimbo() || pc.isBro() || pc.LQ() >= 75 || (pc.lust() > pc.lustMax() * 0.75)) output(", disappointingly");
@@ -82,7 +82,7 @@ public function hanaDrinkMenu():void
 
 	output("<i>“Well, I wouldn’t mind a drink.”</i> You quip, leaning against the wood stained bartop expectantly.");
 	
-	output("\n\nHana merely nods her head and lifts a hand away from her rag to tap at some interface hidden away beneath the bar, silently. Your codex chirps soon after with the menu - after a brief permission prompt, anyway. It’s surprisingly robust, so much so that you spend a good minute or so just flicking through the multitude of menus. Some of it also gets prohibitively expensive, too, but you’ve come to expect that with some esoteric vintages. Quietly your narrow down the listings in your head, ready to make an easy order.");
+	output("\n\nHana merely nods her head and lifts a hand away from her rag to tap at some interface hidden away beneath the bar, silently. Your codex chirps soon after with the menu - after a brief permission prompt, anyway. It’s surprisingly robust, so much so that you spend a good minute or so just flicking through the multitude of menus. Some of it also gets prohibitively expensive, too, but you’ve come to expect that with some esoteric vintages. Quietly you narrow down the listings in your head, ready to make an easy order.");
 
 	clearMenu();
 	
@@ -128,7 +128,7 @@ public function hanaDrinkMead():void
 
 	output("There are a dizzying amount of options just for mead alone, but you end up just going with one of the simple, cheap varieties. Can’t get too special with mead - but you can’t go wrong, either. As you tap the screen to make your order, you jealously note that there’s quite a discount for local residents - it might as well be free!");
 	
-	output("\n\nBy the time you look up from your codex again the <i>“busy”</i> barkeep has already placed the pale-golden drink in front of you in a tall glass, complete with a little glass coaster. No sooner are you served, she’s back busily cleaning glasses and paying you little mind again, leaving you with nothing to do but relax and enjoy the smooth, easy going, honey sweet booze. There really is nothing wrong with going for mead.");
+	output("\n\nBy the time you look up from your codex again the “busy” barkeep has already placed the pale-golden drink in front of you in a tall glass, complete with a little glass coaster. No sooner are you served, she’s back busily cleaning glasses and paying you little mind again, leaving you with nothing to do but relax and enjoy the smooth, easy going, honey sweet booze. There really is nothing wrong with going for mead.");
 
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
@@ -156,7 +156,7 @@ public function hanaDrinkPBlasterII():void
 
 	if (!pc.isBimbo() && !pc.isBro())
 	{
-		output("For a brief moment you become woozy, your [pc.skinfurscales] feeling flush, particularly in your arms.");
+		output("For a brief moment you become woozy, your [pc.skin] feeling flush, particularly on your arms.");
 		
 		output("\n\nYour vision grows hazy, the warm lights of the bar and central fireplace superimposing over one another into a blurry, blinding mess. Shapes swirl in your eyes - no, in your head? You can barely parse it and soon you don’t have to, the swirling mess shifting away into a white, empty void.");
 		
@@ -303,7 +303,7 @@ public function hanaTalkEyepatch():void
 	
 	output("\n\n<i>“My eyepatch.”</i> Hana repeated, the tension growing as the woman gently places the mug down on the counter top with a heavy thunk. Maybe this was a bad idea, though with the barkeep leaning forward, both hands firmly on the bar, it is far too late for second thoughts.");
 	
-	output("\n\n<i>“This... this was </i>my<i> reward for somebody else’s mistake. From someone playing hero - and </i>failing<i>. It came when my dear husband got himself killed trying to save someone else.... I don’t want to </i>talk<i> about it, traveler.”</i> Her tone is gravelly, stern with the unmistakable harsh edge of somebody speaking through gritted teeth. A sore subject, obviously. <i>“I am haleogentic. I can’t ‘fix’ it. I don’t </i>want<i> to fix it. Don’t ask about it again.”</i>");
+	output("\n\n<i>“This... this was </i>my<i> reward for somebody else’s mistake. From someone playing hero - and</i> failing<i>. It came when my dear husband got himself killed trying to save someone else.... I don’t want to </i>talk<i> about it, traveler.”</i> Her tone is gravelly, stern with the unmistakable harsh edge of somebody speaking through gritted teeth. A sore subject, obviously. <i>“I am haleogentic. I can’t ‘fix’ it. I don’t </i>want<i> to fix it. Don’t ask about it again.”</i>");
 	
 	output("\n\nSurprisingly, the ausar woman softens pretty quickly afterwards. Her glowering stare shifts into something that looks more... sad. Somber? It sounds like you dredged up a pretty sordid memory, unfortunately, so that isn’t much of a shock. Glumly, Hana snatches the mug back up and you take the cue to leave her in peace for a while, citing an apology as you backpedal right out of the mess you’ve just caused.");
 
@@ -321,7 +321,7 @@ public function hanaTalkRescue():void
 
 	output("Come to think of it, who - or what - brought you back to the meadhall in the first place? You’re rather thankful to avoid the whole, you know, freezing to death on some random snowball of a world schtick. And the recuperation, but nevermind that.");
 	
-	output("\n\nHana’s prickly demeanor shatters with your follow up quip as she barks a laugh, lips turning upwards in a wry smile that just <i>screams</i> <i>“you cheeky git.”</i> Still, she doesn’t respond immediately, leaning back to glance around the rather voluminous bar, ostentatiously to point someone out to you - and coming up empty, it seems. Oh well.");
+	output("\n\nHana’s prickly demeanor shatters with your follow up quip as she barks a laugh, lips turning upwards in a wry smile that just <i>screams</i> “you cheeky git.” Still, she doesn’t respond immediately, leaning back to glance around the rather voluminous bar, ostentatiously to point someone out to you - and coming up empty, it seems. Oh well.");
 	
 	output("\n\n<i>“One of the rangers. They’re a group employed by the local authority and, really, make up the core of it. Bunch of lone ‘wolves’ that patrol the colony outskirts to make sure none of the natives wander into town. They also quietly keep track of people wandering out, especially random tourists. It would be pretty bad publicity for our ‘corporate overlords’ if one of our visitors were to freeze to death, after all.”</i>");
 	
@@ -446,7 +446,7 @@ public function hanaSexBackroomII():void
 		output("\n\nShifting leisurely, you drive your length along her smooth, just-cushy abdomen,");
 		if (!isHardlight && pc.smallestCockLength() > 9)
 		{
-			output("easily prodding into her plush bosom with lazy, idly humps.");
+			output(" easily prodding into her plush bosom with lazy, idle humps.");
 		}
 		else
 		{
@@ -466,7 +466,7 @@ public function hanaSexBackroomII():void
 		else output(" until your waist collides firmly with her own, mashing until both are flush together.");
 		output(" It doesn’t take very long for her to get used to the feel, but you still proactively take the time to start squeezing and playing with her exposed bosom, digging your fingers into the plush, malleable tit-flesh to further hitched gasps and weak, restrained moans.");
 
-		output("\n\nNow that you feel that sloppy cunt squeezing around your length you start humping, leisurely drawing your waist back and forth in slow, albeit powerful and thorough thrusts. Based on her reaction that melting expression and her thighs squeezing around you it’s the correct choice! You’re not sure how effective it is, but Hana even goes as far to press her hand on her belly, squeezing down as if to rub your");
+		output("\n\nNow that you feel that sloppy cunt squeezing around your length you start humping, leisurely drawing your waist back and forth in slow, albeit powerful and thorough thrusts. Based on her reaction, that melting expression and her thighs squeezing around you it’s the correct choice! You’re not sure how effective it is, but Hana even goes as far to press her hand on her belly, squeezing down as if to rub your");
 		if (isHardlight) output(" toy");
 		else output(" prick");
 		output(" through her body. Still, even if it’s not doing anything the rest of her has got you snuggly wrapped in a vice-like grip, sending little trickles of her cunny-honey down onto the mat each time you pull back.");
@@ -530,7 +530,7 @@ public function hanaFiresideRecovery():void
 	{
 		output("Some religions say that the afterlife is a comfortable place, something conceptually different from life itself where you might recline in blissful nothingness, awaiting your next go at things.");
 		
-		output("\n\nDimly, you think that must all be hogwash because right now you’re feeling altogether uncomfortable; the first thing you’re consciously aware of is the heat sweltering down on your body, something your instincts start to gradually realize ought to be <i>dangerous</i> , as though you were right next to something burning!");
+		output("\n\nDimly, you think that must all be hogwash because right now you’re feeling altogether uncomfortable; the first thing you’re consciously aware of is the heat sweltering down on your body, something your instincts start to gradually realize ought to be <i>dangerous</i>, as though you were right next to something burning!");
 		
 		output("\n\nAs your brain reconnoiters with the rest of your senses one by one, you hear the roaring and crackling of flame beside you - yet despite your sense of danger kicking into overdrive, you can barely work the effort to tug your eyelids apart. A heavy fatigue is overwhelming you, every minute portion of your body <i>aching</i>, yet not overtly in pain. The sort of ache that you just wanted to sprawl out and groan over like a useless lump, not the kind that would have you clutching your side and mewling pathetically for help. The afterlife fucking sucks.");
 		
@@ -602,7 +602,7 @@ public function hanaFiresideRecovery():void
 	output("\n\nAll the while, Hana keeps up her work.");
 	if (pc.hasCock())
 	{
-		output("\n\nHer fingers squeeze along your girth as her palm grinds along the length of it, making milking motions as if it is a cow’s udder. Each motion stops just shy of your [pc.biggestSheath] yet also perilously close to your sensitive [pc.biggestHead], though in either case the husky ausar isn’t a perfect automaton, going beyond both - or, more often, further away. Wet, squelching sounds are hard to hear over the roaring din of the roasting pillar of fire, yet ever so often you can make them out through the crackles of flame, particularly whenever her fingers go across some blemish of feature of your prick. She must’ve lubricated herself before hand, but with those fuzzy hands you’re not sure she had to!");
+		output("\n\nHer fingers squeeze along your girth as her palm grinds along the length of it, making milking motions as if it is a cow’s udder. Each motion stops just shy of your [pc.biggestSheath] yet also perilously close to your sensitive [pc.biggestCockHead], though in either case the husky ausar isn’t a perfect automaton, going beyond both - or, more often, further away. Wet, squelching sounds are hard to hear over the roaring din of the roasting pillar of fire, yet ever so often you can make them out through the crackles of flame, particularly whenever her fingers go across some blemish of feature of your prick. She must’ve lubricated herself before hand, but with those fuzzy hands you’re not sure she had to!");
 
 		output("\n\nYour caretaker isn’t taking a particularly lively pace but, instead, a slow, methodical one, not entirely concerned with actually getting you off. It’s a lazy Sunday sort of handjob, one that you grow to enjoy more and more as time goes on.");
 	}
@@ -620,7 +620,7 @@ public function hanaFiresideRecovery():void
 
 	output("\n\nAnd then, abruptly, Hana stops. H-hey!");
 	
-	output("\n\n<i>“You’re feeling better!”</i> she titters, suddenly sitting upright along the side of the bench. The <i>“molesting”</i> hand is quickly plucked away, instead unceremoniously wiping itself along the fuzzy lining of the blanket over you.");
+	output("\n\n<i>“You’re feeling better!”</i> she titters, suddenly sitting upright along the side of the bench. The “molesting” hand is quickly plucked away, instead unceremoniously wiping itself along the fuzzy lining of the blanket over you.");
 	
 	output("\n\nHuh? Blanket? Oh... you’re naked in the middle of the bar, a blanket is probably good. Though all this heat is getting pretty uncomfortable. Tempering your worked up arousal, you shift to make yourself passingly decent while looking up to Hana in a mixture of thanks and desire.");
 

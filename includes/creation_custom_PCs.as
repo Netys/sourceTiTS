@@ -66,6 +66,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			if(!pc.hasVagina()) pc.createVagina();
 			pc.vaginas[0].wetnessRaw = 2;
 			pc.fertilityRaw = 10;
+			pc.removePerk("Infertile");
 			pc.pregnancyIncubationBonusMotherRaw = 10;
 			bonusTexts = "You've always been ridiculously fertile. The doctors warned you at a young age. Just a glance at the wrong alien and you'll blow up with babies! But that's not new.";
 			pc.tallness = 59;
@@ -196,6 +197,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			if(!pc.hasCock()) pc.createCock();
 			if(!pc.hasVagina()) pc.createVagina();
 			if(pc.fertilityRaw < 1.5) pc.fertilityRaw = 1.5;
+			pc.removePerk("Infertile");
 			pc.cumQualityRaw = 3;
 			if(pc.femininity < 70) pc.femininity = 70;
 			bonusTexts += "You've always had an amazing physique, and the best of both genders - the better to colonate new worlds with your young.";
@@ -316,7 +318,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			pc.addStatusValue("Gel Body",1,1);
 			pc.createStatusEffect("Goo Vent");
 			pc.createStatusEffect("Goo Crotch");
-			flags["GALOMAX_DOSES"] == 5;
+			flags["GALOMAX_DOSES"] = 5;
 			if(pc.elasticity < 3) pc.elasticity = 3;
 			var x:int = 0;
 			for(x = 0; x < pc.totalCocks(); x++)
@@ -390,6 +392,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			pc.reflexes(10);
 			pc.armor = new ArmstrongSuitViolet();
 			pc.fertilityRaw = 1.5;
+			pc.removePerk("Infertile");
 			pc.libidoRaw = 50;
 			break;
 		//Skyhusky I would like a tall husky girl to play, Haha. Vague! <3
@@ -728,6 +731,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 			pc.breastRows[0].breastRatingRaw = 5;
 			pc.cumMultiplierRaw = 10;
 			pc.ballEfficiency = 30;
+			pc.removePerk("Infertile");
 			pc.pregnancyIncubationBonusMotherRaw = 3;
 			pc.hipRatingRaw = 7;
 			pc.buttRatingRaw = 6;
@@ -877,6 +881,7 @@ public function customPCCheck(TF:Boolean = false):Boolean
 		case "peppercotton":
 			if(!TF) break;
 			pc.fertilityRaw = 4;
+			pc.removePerk("Infertile");
 			if(!pc.hasCock()) pc.createCock();
 			if(!pc.cocks[0].hasFlag(GLOBAL.FLAG_OVIPOSITOR)) pc.cocks[0].addFlag(GLOBAL.FLAG_OVIPOSITOR);
 			pc.tallness = 67;

@@ -154,7 +154,7 @@ package classes.Items.Transformatives
 						var newSkinTone:String = RandomInCollection(plantSkinColor);
 						if(InCollection(target.skinTone, ["green", "verdant", "viridescent", "emerald", "olive"]) && rand(4) != 0) newSkinTone = target.skinTone;
 						
-						msg += ParseText("The cool, tingling sensation on your [pc.skin] has grown as time has gone on, making you feel like your whole body is bathed in toothpaste. It’s difficult to worry about it; the more the sensation ebbs, the more peaceful you feel and the clearer your perception seems. When you look down with a lazy, happy smile, it’s not really a surprise to see [pc.skinFurScalesNoun] falling off your arms, replaced by a smooth, hairless " + newSkinTone + " complexion across your entire body. Nor does it bother you, because more than anything it feels like a lot of frustrations and distractions are drifting away from you, replaced by an all-encompassing sensual clarity.");
+						msg += ParseText("The cool, tingling sensation on your [pc.skin] has grown as time has gone on, making you feel like your whole body is bathed in toothpaste. It’s difficult to worry about it; the more the sensation ebbs, the more peaceful you feel and the clearer your perception seems. When you look down with a lazy, happy smile, it’s not really a surprise to see [pc.skinFurScalesNounSimple] falling off your arms, replaced by a smooth, hairless " + newSkinTone + " complexion across your entire body. Nor does it bother you, because more than anything it feels like a lot of frustrations and distractions are drifting away from you, replaced by an all-encompassing sensual clarity.");
 						
 						target.skinType = GLOBAL.SKIN_TYPE_PLANT;
 						target.skinTone = newSkinTone;
@@ -382,7 +382,7 @@ package classes.Items.Transformatives
 						if(cocks > 12) cocks = 12;
 						
 						if(target.wingType != 0) msg += ParseText("Your [pc.wings] " + (target.wingCount == 1 ? "is" : "are") + " drooping, losing sensation and unable to maintain " + (target.wingCount == 1 ? "its" : "their") + " shape. It’s no surprise when " + (target.wingCount == 1 ? "it sloughs" : "they slough") + " off.");
-						msg += ParseText("Pressure is building in multiple spots on your upper back. It’s unlike the cool, calming energy which has informed the transformations Cerespirin has induced so far; it feels more like several over-eager erections trapped in incredibly tight undies. You can’t help but groan with relief when finally the pressure peaks and " + num2Text(cocks) + " thick protrusions burst impatiently out of your [pc.skin]. The hot, thick, vine-like growths thrust their way into being, feet of oily green tentacles, alarmingly energetic and prehensile, thrashing around your [pc.hips].");
+						msg += ParseText("\n\nPressure is building in multiple spots on your upper back. It’s unlike the cool, calming energy which has informed the transformations Cerespirin has induced so far; it feels more like several over-eager erections trapped in incredibly tight undies. You can’t help but groan with relief when finally the pressure peaks and " + num2Text(cocks) + " thick protrusions burst impatiently out of your [pc.skin]. The hot, thick, vine-like growths thrust their way into being, feet of oily green tentacles, alarmingly energetic and prehensile, thrashing around your [pc.hips].");
 						msg += "\n\nYour mind is a mire of pleasure and shock, and it takes you a little while to work out how to flex your nervous system in order to rear one of these growths around into your hand to take a closer look at it. It feels unmistakably dick-like - bulging, tender flesh under the fibrous skin, urging you to plunge it into the nearest wet and willing hole at the earliest opportunity - but it’s much more flexible, able to bend all along its length and dart its wet, distended head in any direction you wish.";
 						
 						// If can use as cock:
@@ -440,7 +440,7 @@ package classes.Items.Transformatives
 						if(target.hasVaginaType(GLOBAL.TYPE_FLOWER)) msg += ", petals fully opened";
 						msg += ". You decide to find a quiet spot to find what is going on.";
 						msg += "\n\n";
-						if(!removePants && target.isCrotchExposed()) msg += ParseText("You are slightly blown back when you gingerly pull down your undergarment - the smell! It’s a sweet, rich funk that puts you in mind of sticky juices and overripe fruit. A dab of your fingers against " + (target.totalVaginas() == 1 ? "your" : "a") + " wet pussy brought to your lips confirm what your nose is telling you - your natural lubrication is now a " + RandomInCollection(["fizzy citrus", "juicy pear", "sweet apple"]) + " flavor.");
+						if(!removePants && !target.isCrotchExposed()) msg += ParseText("You are slightly blown back when you gingerly pull down your undergarment - the smell! It’s a sweet, rich funk that puts you in mind of sticky juices and overripe fruit. A dab of your fingers against " + (target.totalVaginas() == 1 ? "your" : "a") + " wet pussy brought to your lips confirm what your nose is telling you - your natural lubrication is now a " + RandomInCollection(["fizzy citrus", "juicy pear", "sweet apple"]) + " flavor.");
 						else msg += ParseText("You have noticed a slightly sweet, flavorful smell emanating from somewhere and are slightly shocked to discover it’s you - or at least, [pc.eachVagina]. A dab of your fingers against " + (target.totalVaginas() == 1 ? "your" : "a") + " wet pussy brought to your lips confirm what your nose is telling you - your natural lubrication is now a " + RandomInCollection(["fizzy citrus", "juicy pear", "sweet apple"]) + " flavor.");
 						
 						target.girlCumType = GLOBAL.FLUID_TYPE_FRUIT_GIRLCUM;
@@ -551,7 +551,7 @@ package classes.Items.Transformatives
 						var newTailGenitalColor:String = target.tailGenitalColor;
 						if(target.statusEffectv3("Cerespirin") >= 5 || target.tailGenitalColor == "") newTailGenitalColor = RandomInCollection(flowerColors);
 						
-						msg += ParseText("[pc.EachTail] twists and flexes widly, reacting to some sort of change. Quickly grabbing [pc.oneTail], you find the [pc.tailVagina] closes up on itself and balloons out until it looks very much like a plant bulb. Curious, you take a finger and gently rub along its lip. Like a reflex reaction, the tip swells and spreads out to reveal its new form. Beautiful " + newTailGenitalColor + " pedals open and rearrange to become a lewdly-shaped flower. Finally, a dewy aroma escapes its opening, seemingly inviting a hungry cock to be milked... It seems <b>your cunt tail" + (target.tailCount == 1 ? " is capped with a pretty orchid" : "s are capped with pretty orchids") + " now!</b>");
+						msg += ParseText("[pc.EachTail] twists and flexes widly, reacting to some sort of change. Quickly grabbing [pc.oneTail], you find the [pc.tailVagina] closes up on itself and balloons out until it looks very much like a plant bulb. Curious, you take a finger and gently rub along its lip. Like a reflex reaction, the tip swells and spreads out to reveal its new form. Beautiful " + newTailGenitalColor + " petals open and rearrange to become a lewdly-shaped flower. Finally, a dewy aroma escapes its opening, seemingly inviting a hungry cock to be milked... It seems <b>your cunt tail" + (target.tailCount == 1 ? " is capped with a pretty orchid" : "s are capped with pretty orchids") + " now!</b>");
 						
 						target.tailGenitalArg = GLOBAL.TYPE_FLOWER;
 						target.tailGenitalColor = newTailGenitalColor;
@@ -567,7 +567,7 @@ package classes.Items.Transformatives
 			}
 			if(msg.length > 0) 
 			{
-				kGAMECLASS.eventBuffer += "\n\n<u>The Cerespirin drug has an effect....</u>";
+				kGAMECLASS.eventBuffer += "\n\n" + kGAMECLASS.logTimeStamp("passive") + " <u>The Cerespirin drug has an effect....</u>";
 				kGAMECLASS.eventBuffer += msg;
 			}
 			return;
@@ -582,7 +582,7 @@ package classes.Items.Transformatives
 			if((target.getStatusMinutes("Cerespirin") % 40) != 0) return;
 			
 			//Cut from here and appended just before output at the bottom of plantMutations(target)
-			//kGAMECLASS.eventBuffer += "\n\n<u>The Cerespirin drug has an effect....</u>";
+			//kGAMECLASS.eventBuffer += "\n\n" + kGAMECLASS.logTimeStamp("passive") + " <u>The Cerespirin drug has an effect....</u>";
 			
 			plantMutations(target);
 			
@@ -603,7 +603,7 @@ package classes.Items.Transformatives
 		// Bye bye flower (unknown condition but hey it’s here so it ain’t permanent)
 		public function loseHairFlower(target:Creature):String
 		{
-			return "\n\nYour head orchid droops, loses its petals one by one, and then finally withers from your scalp entirely. Slightly annoying it might have been flopping around near your ear, but you can’t help feel rather sad at your bloom’s passing.";
+			return "\n\n" + kGAMECLASS.logTimeStamp("passive") + " Your head orchid droops, loses its petals one by one, and then finally withers from your scalp entirely. Slightly annoying it might have been flopping around near your ear, but you can’t help feel rather sad at your bloom’s passing.";
 		}
 		
 		//METHOD ACTING!

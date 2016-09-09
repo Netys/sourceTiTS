@@ -750,7 +750,7 @@ public function applySkinTone(skinTone:String = "pale"):void {
 	pc.skinTone = skinTone;
 	if(pc.hasCock())
 	{
-		if(pc.cocks[x].cType == GLOBAL.TYPE_HUMAN)
+		if(pc.cocks[0].cType == GLOBAL.TYPE_HUMAN)
 		{
 			if(skinTone == "dark" || skinTone == "ebony")
 			{
@@ -1115,6 +1115,10 @@ public function chooseSexualGift():void {
 	{
 		pc.removePerk("Ice Cold");
 	}
+	if(pc.hasPerk("Infertile"))
+	{
+		pc.removePerk("Infertile");
+	}
 	addButton(0,"Virile",applySexualGift,"virile","Virile","Increases the quality, or impregnation chance, of the sperm you produce. <i>This perk also applies if your character is female and gains a penis in the future.</i>");
 	addButton(1,"Potent",applySexualGift,"potent","Potent","Increases the quantity - the sheer amount - of sperm you produce. <i>This perk also applies if your character is female and gains a penis in the future.</i>");
 	addButton(2,"Elasticity",applySexualGift,"elasticity","Elasticity","Allows you to take larger insertions, both vaginally and anally, with less chance of permanent orifice stretching.");
@@ -1126,6 +1130,7 @@ public function chooseSexualGift():void {
 	addButton(8,"Bulgy",applySexualGift,"bulgy","Bulgy","Increases the size of your testicles and causes them to be more receptive to future size-increasing modifications. <i>This perk also applies if your character is female and gains testicles in the future.</i>");
 	addButton(9,"Extra Ardor",applySexualGift,"extra ardor","Extra Ardor","Ensures that you will have a higher sex drive than normal.");
 	addButton(10,"Ice Cold",applySexualGift,"ice cold","Ice Cold","Ensures that you will have a lower sex drive than normal.");
+	addButton(11,"Infertile",applySexualGift,"infertile","Infertile","No matter what changes are made to your virility or fertility levels, you will be unable to produce offspring naturally.");
 	addButton(13,"None",applySexualGift,"none","No Sexual Gift","You will not begin with a natural sexual gift.");
 	if(pc.hasVagina()) 
 		addButton(14,"Back",chooseYourVagina);
@@ -1185,6 +1190,9 @@ public function applySexualGift(arg:String = "none"):void {
 	}
 	else if(arg == "ice cold") {
 		pc.createPerk("Ice Cold",0,0,0,0,"Slows lust gain over time.");
+	}
+	else if(arg == "infertile") {
+		pc.createPerk("Infertile",0,0,0,0,"You are unable to reproduce offspring naturally.");
 	}
 	chooseAPhysicalAffinity();
 }
@@ -1355,6 +1363,7 @@ public function chooseAlignment():void {
 
 public function alignConfirm(arg:int):void {
 	pc.personality = arg;
+	resetBabyValues();
 	chooseClass();
 	//chooseGenderIdentity();
 }
@@ -1730,7 +1739,7 @@ public function takeCelise():void {
 		output("\n\nYour only reaction is to grind your " + pc.hipsDescript() + " more forcefully into her face, whimpering as " + pc.eachVagina() + " begins to spasm. You’re so very close to orgasm that it’s getting hard to control your movements. You jerk and shake whenever Celise’s tongue finds your G-spot, something she does with increasing regularity, and you’re glad to be supported by her as she pushes and rubs against it, increasing the pressure.");
 		output("\n\nMind-numbing explosions of bliss erupt from the cunt-shattering orgasm that wracks your body; you arch your back so violently that you almost crack your head on the shelf above. Luckily, Celise’s arms pop out to grab you around the waist, steadying your lusty thrashing. She gleefully swallows, her throat bobbing as she drinks down your juices. A reverse imprint of your pussy forms on her lips, caressing your entire mound with perfect green synchronicity while her tongue swells wider inside you. As it expands, there’s a sudden shift inside you along with the sensation of something draining away, almost like she’s turned her busy pseudopod into a quim-sucking straw, ensuring that her feeding continues uninterrupted while you’re brought to new heights of climax. The pleasure continues with no end in sight. Your genitals ache, tender after an eternity of stimulation. Whenever you think relief is at hand, the inverse hood around the tip of your " + pc.clitDescript() + " vibrates and sets you off in a blaze of fresh orgasm all over again.");
 		output("\n\nBy the time you piece your consciousness back together, you find yourself babbling incoherently in the midst of a continuous, mind-shattering orgasm. Once Celise has her fill, you’re an incoherent mess. Aftershocks of pleasure quake through your still-twitching body as she detaches. She slowly separates from you, shuddering a little bit herself as you’re pulled out of her gooey embrace. The sucking holes holding your " + pc.legOrLegs() + " close up, but not before you get a glimpse of vaginal lips topped with soaked nubs. This goo-girl was fucking herself on your " + pc.legOrLegs() + " as she ate you out! The whole of your lower body is soaked and dripping with her jade moisture, particularly your " + pc.feet() + ". Your " + pc.buttDescript() + " touches the cold, metal floor as she daintily wipes her mouth on the back of a juicy palm, allowing you a moment to recover.");
-		output("\n\n<i>“That was great, and your cunny was super tasty, too! Can I come on your ship? Like Vik said, I’m super thankful you stopped to feed me!”</i> Celes bubbles.");
+		output("\n\n<i>“That was great, and your cunny was super tasty, too! Can I come on your ship? Like Vik said, I’m super thankful you stopped to feed me!”</i> Celise bubbles.");
 		output("\n\nDespite your exhaustion, you manage to give her a stern look.");
 		output("\n\n<i>“I promise not to try and force myself on you or nothing! ‘Sides, you know just how to make me melt anyhow! I can get by on water and protein paste, but if a mean ol’ alien ever gets you all wet and juicy...”</i> Celise nibbles on her lower lip, and with every tiny bite, it grows puffier and poutier, looking softer by the minute. <i>“...I’ll be the perfect little lesbian, girlspunk-dump. Or, if you grow a dick I’ll be totally happy to suck on that,”</i> she adds, nodding enthusiastically. <i>“You’ll be yummy either way!”</i>");
 		output("\n\nDo you take Celise on as your first crew member?");
@@ -1900,6 +1909,331 @@ public function ohShitGameStarts():void {
 		addButton(0,"Next",mainGameMenu);
 	
 }
+
+
+/* UPBRINGING CORRECTION */
+
+public function fixPcUpbringing():void
+{
+	clearOutput();
+	creationHeader("CODEX\nALERT");
+	author("Gedan");
+	
+	output("Your trusty codex vibrates incessantly, demanding your attention for something. The means are unusual, which piques your interest; you’ve been wearing the thing for long enough now to have most of its features down pat, and whatever it’s doing right now is most certainly out of the ordinary.");
+	
+	output("\n\nSafely shuffled off to one side, hopefully out of the way - and out of sight - of any one or any thing that might come by, you bring your handy forearm-mounted helper to the fore to see exactly what it’s complaining about....");
+	
+	output("\n\n<i>DATA CORRUPTION DETECTED</i>");
+	
+	output("\n\nWell, shit.");
+	
+	output("\n\n<i>FIX NOW?</i>");
+	
+	output("\n\n<i>“Fucking computers,”</i> you mutter under your breath, a [pc.finger] already tapping on the key labeled ‘Okay’. The thing chugs away for a second or two, seemingly hard at work repairing itself... you’re about set to move on rather than wind up waiting all day for the Codex to");
+	if (!silly) output(" fix itself");
+	else output(" do the needful");
+	output(" before it’s vibrating away, demanding its masters dutiful attention again.");
+	
+	output("\n\n<i>UNRECOVERABLE DATA FRAGMENT LOCATED IN FILE: [pc.fullName]</i>");
+	output("\n<i>MISSING SEGMENT: SCHOOL HISTORY</i>");
+	output("\n<i>PLEASE RE-ENTER VALID DATA...</i>");
+	
+	output("\n\nThere doesn’t seem to be any way around the prompt other than to give the fucking thing an acceptable answer to devices question...");
+	
+	clearMenu();
+	addButton(0,"Pampered",fixPcUpbringingSetNew,GLOBAL.UPBRINGING_PAMPERED);
+	addButton(1,"Athletic",fixPcUpbringingSetNew,GLOBAL.UPBRINGING_ATHLETIC);
+	addButton(2,"Bookworm",fixPcUpbringingSetNew,GLOBAL.UPBRINGING_BOOKWORM);
+	addButton(3,"Austere",fixPcUpbringingSetNew,GLOBAL.UPBRINGING_AUSTERE);
+	addButton(4,"Balanced",fixPcUpbringingSetNew,GLOBAL.UPBRINGING_BALANCED);
+}
+
+public function fixPcUpbringingSetNew(upType:uint):void
+{
+	clearOutput();
+	creationHeader("CODEX\nALERT");
+	author("Gedan");
+	
+	flags["PC_UPBRINGING"] = upType;
+	
+	output("<i>INPUT REGISTERED: " + (GLOBAL.UPBRINGING_NAMES[upType] as String).toUpperCase() + "</i>");
+	output("\n<i>THANK YOU FOR YOUR COMPLIANCE.</i>");
+	
+	output("\n\nLooks like that was all the cheeky little bastard wanted from you. Another ‘Okay’ key tap and you’re back on your travels.");
+	
+	clearMenu();
+	addButton(0, "Next", mainGameMenu);
+}
+
+
+/* OFFSPRING CORRECTION */
+
+public function resetBabyValues():void
+{
+	// Initialize all baby values to match player character.
+	baby.originalRace = pc.originalRace;
+	baby.skinTone = pc.skinTone;
+	baby.lipColor = pc.lipColor;
+	baby.nippleColor = pc.nippleColor;
+	baby.eyeColor = pc.eyeColor;
+	baby.hairColor = pc.hairColor;
+	baby.scaleColor = pc.scaleColor;
+	baby.furColor = pc.furColor;
+}
+
+public function clearBabyValues():void
+{
+	baby.originalRace = "NOT SET";
+	baby.skinTone = "NOT SET";
+	baby.lipColor = "NOT SET";
+	baby.nippleColor = "NOT SET";
+	baby.eyeColor = "NOT SET";
+	baby.hairColor = "NOT SET";
+	baby.scaleColor = "NOT SET";
+	baby.furColor = "NOT SET";
+}
+
+public function setBabyValuesOptions(response:String = "intro"):void
+{
+	clearOutput();
+	creationHeader("CODEX\nALERT");
+	author("IVIysteriousPerson");
+	clearMenu();
+	
+	var i:int = 0;
+	var colorList:Array = [];
+	
+	switch(response)
+	{
+		// Intro:
+		case "intro":
+			output("Your Codex beeps several times, and you grab it to see a priority message from the U.G.C. Department of Public Health and Wellness. You raise your eyebrows, slightly perturbed, and tap the screen to open it.");
+			output("\n\n<i>Attention [pc.fullName]:</i>");
+			output("\n\n<i>We have detected an irregularity in your birth records. Please fill out the following form with accurate information to correct this issue. We appreciate your cooperation, and apologize for any inconvenience.</i>");
+			output("\n\nAn “irregularity” in your birth records? Well, you didn’t have the most conventional entry into the world, so it’s not terribly surprising. If anyone’s birth records were going to be screwed up, you’re a pretty likely candidate.");
+			output("\n\nWith a sigh, you tap your Codex once more, and the message is replaced by a form with several empty fields. You see your name at the top, and a box labeled “Birth Race” with “" + StringUtil.toDisplayCase(pc.originalRace) + "” already filled in. They got that right, at least...");
+			
+			// [Next] -- Go to Hair Color
+			addButton(0, "Next", setBabyValuesOptions, (pc.originalRace != "half-gryvain" ? "hair" : "gryvain"));
+			break;
+			
+		// Restart:
+		case "restart":
+			output("You clear your current inputs and decide to start over...");
+			
+			clearBabyValues();
+			
+			// [Next] -- Go to Hair Color
+			addButton(0, "Next", setBabyValuesOptions, (pc.originalRace != "half-gryvain" ? "hair" : "gryvain"));
+			break;
+		
+		// Hair Color:
+		case "hair":
+			output("The first empty box asks you for the hair and/or fur color you were born with, if applicable.");
+			
+			// {button list of starting hair/fur/scale colors available to the PC's starting race?} -- Go to Eye Color
+			if(pc.originalRace == "half-leithan")
+			{
+				colorList.push(["Black", "black"]);
+				colorList.push(["Gray", "gray"]);
+				colorList.push(["Silver", "silver"]);
+				colorList.push(["Dark Gold", "dark gold"]);
+			}
+			else if(pc.originalRace == "half kui-tan")
+			{
+				colorList.push(["Brown", "brown"]);
+				colorList.push(["Chocolate", "chocolate"]);
+				colorList.push(["D.Brown", "dark brown"]);
+				colorList.push(["Black", "black"]);
+			}
+			else
+			{
+				colorList.push(["Black", "black"]);
+				colorList.push(["Brown", "brown"]);
+				colorList.push(["Dirty Blond", "dirty blond"]);
+				colorList.push(["Blond", "blond"]);
+				colorList.push(["Auburn", "auburn"]);
+				colorList.push(["Red", "red"]);
+				colorList.push(["Gray", "gray"]);
+				if (pc.originalRace == "half-kaithrit") {
+					colorList.push(["Blue", "blue"]);
+					colorList.push(["Green", "green"]);
+					colorList.push(["Purple", "purple"]);
+				}
+				if(pc.originalRace == "half-ausar") {
+					colorList.push(["White", "white"]);
+				}
+			}
+			for(i = 0; i < colorList.length; i++)
+			{
+				addButton(i, colorList[i][0], setBabyHairColor, colorList[i][1], StringUtil.toDisplayCase(colorList[i][1]), ("Your original hair color " + (pc.hairColor == colorList[i][1] ? "is" : "was") + " " + colorList[i][1] + "."));
+			}
+			break;
+		
+		// Eye Color:
+		case "eyes":
+			output("The next box asks you for the eye color you were born with, if applicable.");
+			
+			// {button list of starting eye colors available to the PC's starting race?} -- Go to Skin Color
+			if(pc.originalRace == "half kui-tan")
+			{
+				colorList.push(["Brown", "brown"]);
+				colorList.push(["Green", "green"]);
+				colorList.push(["Hazel", "hazel"]);
+				colorList.push(["Amber", "amber"]);
+				colorList.push(["Gold", "gold"]);
+				colorList.push(["Copper", "copper"]);
+			}
+			else
+			{
+				colorList.push(["Blue", "blue"]);
+				colorList.push(["Green", "green"]);
+				colorList.push(["Hazel", "hazel"]);
+				colorList.push(["Brown", "brown"]);
+				if (pc.originalRace == "half-kaithrit") {
+					colorList.push(["Amber", "amber"]);
+					colorList.push(["Yellow", "yellow"]);
+					colorList.push(["Orange", "orange"]);
+					colorList.push(["Violet", "violet"]);
+					colorList.push(["Copper", "copper"]);
+				}
+				if(pc.originalRace == "half-ausar") {
+					colorList.push(["Gold", "gold"]);
+				}
+			}
+			for(i = 0; i < colorList.length; i++)
+			{
+				addButton(i, colorList[i][0], setBabyEyesColor, colorList[i][1], StringUtil.toDisplayCase(colorList[i][1]), ("Your original eye color " + (pc.eyeColor == colorList[i][1] ? "is" : "was") + " " + colorList[i][1] + "."));
+			}
+			break;
+		
+		// Gryvain:
+		case "gryvain":
+			output("The first empty box asks you for the overall color scheme of your body--this includes your hair and scales, if applicable.");
+			
+			// {button list of starting eye colors available to the PC's starting race?} -- Go to Skin Color
+			clearMenu();
+			colorList.push(["DarkBlue", "dark blue"]);
+			colorList.push(["DarkGreen", "dark green"]);
+			colorList.push(["Black", "black"]);
+			if(pc.short == "Geddy") colorList.push(["Red", "red"]);
+			for(i = 0; i < colorList.length; i++)
+			{
+				addButton(i, colorList[i][0], setBabyGryvainColor, colorList[i][1], StringUtil.toDisplayCase(colorList[i][1]), ("Your original color scheme " + (pc.scaleColor == colorList[i][1] ? "is" : "was") + " " + colorList[i][1] + " with dark yellow eyes."));
+			}
+			break;
+		
+		// Skin Color:
+		case "skin":
+			output("The final unfilled box asks you for the skin pigmentation you had when you were born, if applicable.");
+			
+			// {button list of skin pigments available to PC's starting race} -- Go to Finish
+			if (pc.originalRace == "half-gryvain")
+			{
+				colorList.push(["Pale", "pale"]);
+				colorList.push(["Tanned", "tanned"]);
+				colorList.push(["Pink", "pink"]);
+				colorList.push(["DarkRed", "dark red"]);
+				colorList.push(["DarkGreen", "dark green"]);
+			}
+			else
+			{
+				if(pc.originalRace == "half-leithan")
+				{
+					colorList.push(["Pale", "pale"]);
+					colorList.push(["Fair", "fair"]);
+					colorList.push(["Gray", "gray"]);
+					colorList.push(["Black", "black"]);
+				}
+				else
+				{
+					colorList.push(["Pale", "pale"]);
+					colorList.push(["Fair", "fair"]);
+					colorList.push(["Tan", "tan"]);
+					colorList.push(["Olive", "olive"]);
+					colorList.push(["Dark", "dark"]);
+					colorList.push(["Ebony", "ebony"]);
+				}
+			}
+			for(i = 0; i < colorList.length; i++)
+			{
+				addButton(i, colorList[i][0], setBabySkinColor, colorList[i][1], StringUtil.toDisplayCase(colorList[i][1]), ("Your original skin tone " + (pc.skinTone == colorList[i][1] ? "is" : "was") + " " + colorList[i][1] + "."));
+			}
+			break;
+		
+		// End:
+		case "end":
+			output("You have almost reached the end of the form. Are these values correct? If so, feel free to finish and submit the document.");
+			
+			addButton(0, "Finish", setBabyValuesOptions, "finish", "Finish Survey", "Complete and submit the form.");
+			addButton(1, "Restart", setBabyValuesOptions, "restart", "Restart Survey", "Try again from the beginning.");
+			break;
+		
+		// Finish:
+		case "finish":
+			output("You finish filling in the blanks, then scroll to the bottom of the form and hit “Submit.” Your Codex beeps in affirmation, then sends the data off into the extranet, where it will no doubt be received and reviewed by a bored government clerk on some faraway planet. All things considered, it was a pretty simple process, and you put your Codex away to continue onward.");
+			
+			baby.originalRace = pc.originalRace;
+			
+			addButton(0, "Next", mainGameMenu);
+			break;
+	}
+	
+	if(!InCollection(response, ["intro", "finish"]))
+	{
+		output("\n");
+		output("\n<b>Birth Race:</b> " + StringUtil.toDisplayCase(pc.originalRace));
+		output("\n<b>Hair Color:</b> " + StringUtil.toDisplayCase(baby.hairColor));
+		if(InCollection(pc.originalRace, ["half-ausar", "half-kaithrit", "half kui-tan"]))
+			output("\n<b>Fur Color:</b> " + StringUtil.toDisplayCase(baby.furColor));
+		output("\n<b>Eye Color:</b> " + StringUtil.toDisplayCase(baby.eyeColor));
+		if(InCollection(pc.originalRace, ["half-leithan", "half-gryvain"]))
+			output("\n<b>Scale Color:</b> " + StringUtil.toDisplayCase(baby.scaleColor));
+		//output("\n<b>Nipple Color:</b> " + StringUtil.toDisplayCase(baby.nippleColor));
+		//output("\n<b>Lip Color:</b> " + StringUtil.toDisplayCase(baby.lipColor));
+		output("\n<b>Skin Tone:</b> " + StringUtil.toDisplayCase(baby.skinTone));
+	}
+}
+public function setBabyHairColor(arg:String = "black"):void
+{
+	baby.hairColor = arg;
+	baby.furColor = arg;
+	
+	setBabyValuesOptions("eyes");
+}
+public function setBabyEyesColor(arg:String = ""):void
+{
+	baby.eyeColor = arg;
+	
+	setBabyValuesOptions("skin");
+}
+public function setBabyGryvainColor(arg:String = "black"):void
+{
+	baby.hairColor = arg;
+	baby.furColor = arg;
+	baby.scaleColor = arg;
+	baby.nippleColor = arg;
+	baby.lipColor = arg;
+	baby.eyeColor = "dark yellow";
+	
+	setBabyValuesOptions("skin");
+}
+public function setBabySkinColor(arg:String = "albino"):void
+{
+	if(pc.originalRace != "half-gryvain")
+	{
+		baby.scaleColor = (pc.originalRace == "half-leithan" ? "black" : "blue");
+		baby.nippleColor = (InCollection(pc.nippleColor, ["pink", "peach", "tan", "brown", "ebony"]) ? pc.nippleColor : "pink");
+		baby.lipColor = (InCollection(pc.lipColor, ["pink", "peach", "tan", "brown", "ebony"]) ? pc.lipColor : "peach");
+	}
+	baby.skinTone = arg;
+	
+	setBabyValuesOptions("end");
+}
+
+
+/* DEMO FUNCTIONS */
+
 public function demoOver():void {
 	clearOutput();
 	setLocation("DEMO\nCOMPLETE","THANKS FOR PLAYING","AND SUPPORTING ME.");

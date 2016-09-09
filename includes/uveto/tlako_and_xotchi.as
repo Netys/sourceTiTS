@@ -26,10 +26,10 @@ public function officeOfTheCamarillaButtsBonus():Boolean
 	output("\n\n<i>“The Camarilla welcomes you to Uveto VII Station! Please enjoy your stay!”</i>");
 	output("\n<i>“Looking for the latest in Uveto VII fashion? Try Eimear's Clothes Shop! Eimear's Clothes Shop - servicing Uveto VII for 20 solar cycles!”</i>");
 	output("\n<i>“You can barely spell \"style\" without Spinnaran Silk and Steel! Spinnaran Silk and Steel - It's what separates a Rusher from a drifter colony bum!”</i>");
-	output("\n<i>“It's warm here on Uveto Station, but you'll need a thermal regulation to make planetfall. Try The Last Chance for all of your sub-zero preparations!”</i>");
+	output("\n<i>“It's warm here on Uveto Station, but you'll need thermal regulation to make planetfall. Try The Last Chance for all of your sub-zero preparations!”</i>");
 	output("\n\nUnder the advertisements, in small, quickly scrolling letters, is a wordy message: <i>“The Camarilla is not responsible for death, cryogenic suspension, pregnancy, biological manipulation, sexual assault, or atomic disintegration via protonic drills encountered on the surface of Uveto VII. By entering this station you are agreeing to abide by Camarilla regulations. A full copy of Camarilla regulations may be obtained by contacting your local Camarilla representative.”</i>");
 	output("\n\nAs you pass under the billboard, you feel a buzz from your Codex, but a glance at it shows nothing on the display.");
-	output("\n\nFlexsteel doors whoosh open, exhaling a gust of balmy air. The interior of the Camarilla office seems less suitable for an ice planet, and closer to a tropical island. Sunken lighting bathes a grassy floor with orange light, while the walls project a somewhat flat display of a sun setting on an ocean.In a series of shallow steps, the floor gradually rises up to a dias opposite the entrace, atop which sit three, meter-high doorways. The rest of the walls are lined with jutting benches. You run your [pc.foot] against the floor, confirming that the shiny grass is artificial and look around in bemusement at the synthetic paradise around you.");
+	output("\n\nFlexsteel doors whoosh open, exhaling a gust of balmy air. The interior of the Camarilla office seems less suitable for an ice planet, and closer to a tropical island. Sunken lighting bathes a grassy floor with orange light, while the walls project a somewhat flat display of a sun setting behind an ocean. In a series of shallow steps, the floor gradually rises up to a dais opposite the entrace, atop which sit three one-meter-high doorways. The rest of the walls are lined with jutting benches. You run your [pc.foot] against the floor, confirming that the shiny grass is artificial and look around in bemusement at the synthetic paradise around you.");
 	output("\n\n<i>“I'm coming! Don't be perplexitated! I'll be there in a moment!”</i> calls out a high voice from the dias.");
 	if(flags["TLAKO_BASKETS"] != undefined && flags["TLAKO_BASKETS"] >= 5 && flags["TLAKO_THANKED"] == undefined)
 	{
@@ -57,8 +57,8 @@ public function officeOfTheCamarillaButtsBonus():Boolean
 	}
 	else
 	{
-		output("\n\nThe rightmost door wooshes open, revealing the diminutive pink form of Tlako. <i>“Oh! Frabjous!”</i> she squeaks, seeing you. The tove scampers down the dias steps on all six legs, righting herself when she reaches your feet, looking up at you from her three-foot height.");
-		output("\n\nAs before, Tlako wears a simple, white bustier, forming the suggestion of feminine hips and a chest on her body. She's covered in candy-pink feathers from the tips of her rabbit like ears to her thick, raccoon-like tail. The only other color on her is the pale-gold tips of the plumage atop her head, matched by her beak and bird-like talons. She looks up at you, smiling as she adjusts the white headband holding her head plumes back.");
+		output("\n\nThe rightmost door wooshes open, revealing the diminutive pink form of Tlako. <i>“Oh! Frabjous!”</i> she squeaks, seeing you. The tove scampers down the dias steps on all six legs, righting herself when she reaches your [pc.feet], looking up at you from her three-foot height.");
+		output("\n\nAs before, Tlako wears a simple, white bustier, forming the suggestion of feminine hips and a chest on her body. She's covered in candy-pink feathers from the tips of her rabbit-like ears to her thick, raccoon-like tail. The only other color on her is the pale-gold tips of the plumage atop her head, matched by her beak and bird-like talons. She looks up at you, smiling as she adjusts the white headband holding her head plumes back.");
 		output("\n\n<i>“Hello, [pc.Name],”</i> she says with a giggle, <i>“Welcome to Uveto VII Station. On behalf of the Camarilla, how may I accommodate you?”</i> she asks, grinning. <i>“Would you like to know about the history of Uveto VII Station, the Camarilla, ");
 		//If player has not met Xotchi Tzall:
 		if(flags["MET_XOTCHI"] == undefined) output("would you like to schedule an appointment with Sub-Madam Xochi Tzall, ");
@@ -186,9 +186,9 @@ public function buyAStupidSluttyWhaleCumBasket():void
 	}
 	else
 	{
-		output(" <i>“You know you didn't have to buy one again,\"<i> she says, a reproachful look briefly on her beaked face. <i>“But I'm very glad you did!”</i> she says with a grin. <i>“Every basket bought means I get a little closer to paying back Sub-Madam Xotchi Tzall!”</i>");
+		output(" <i>“You know you didn't have to buy one again,”</i> she says, a reproachful look briefly on her beaked face. <i>“But I'm very glad you did!”</i> she says with a grin. <i>“Every basket bought means I get a little closer to paying back Sub-Madam Xotchi Tzall!”</i>");
 		output("\n\n<i>“I don't know if word got out, but since you bought one, people have been actually coming in to buy them! Thank you so much! If this keeps up, I won't have to worry about Sub-Madam Xotchi Tzall making me sell my body!”</i> she says, leaning forward to wrap all four of her arms around ");
-		if(pc.tallness > 48) output("your [pc.legs].");
+		if(pc.tallness > 48) output("your [pc.legOrLegs].");
 		else output("your midsection.");
 		output(" She's actually flat against you, looking a little awkward. <i>“Am I doing this right? Toves don't do physical affection. I'm still researching how you touchy-feely races do it.”</i>");
 		output("\n\nYou give her a look, but she's too cheerful to notice. <i>“Thank you again!”</i> Tlako burbles! <i>“I owe Sub-Madam Xotchi Tzall a lot for the first run of these, so you can believe what a relief it is to finally start to move them! You're a credit saver!”</i>");
@@ -216,17 +216,17 @@ public function tlakoHerselfTopic():void
 	output("\n\n<i>“Me? I'm just a run-of-the-mill bureaucrat!”</i> Tlako says, looking up at you.");
 	output("\n\nYou pat the seat next to you and ask her what she means by that.");
 	output("\n\n<i>“Oh, in tove society, it's considered a poor investment to raise more than two children,”</i> she begins as she clambers up onto the bench next to you, her legs kicking as she takes her seat. <i>“So when a third child is born, they're given to the government to raise,”</i> she says, looking up at you with a smile. <i>“I'm a third child.”</i>");
-	output("\n\nYou reflect on your own childhood and how big a role your father played in it ");
+	output("\n\nYou reflect on your own childhood and how big a role your father played in it.");
 	//pc.Nature
-	if(flags["PC_UPBRINGING"] == GLOBAL.UPBRINGING_ATHLETIC) output("You remember kicking off the wall of a zero-g court, and the burst of joy at catching the ricocheting grav ball that your father threw to you.");
+	if(flags["PC_UPBRINGING"] == GLOBAL.UPBRINGING_ATHLETIC) output(" You remember kicking off the wall of a zero-g court, and the burst of joy at catching the ricocheting grav ball that your father threw to you.");
 	//pc. Nature= Bookworm:
-	else if(flags["PC_UPBRINGING"] == GLOBAL.UPBRINGING_BOOKWORM) output("Quite suddenly you recall the faint buzz of the old lamp in your father's library, being picked up by him and carried to your bed after falling asleep in a pile of books.");
+	else if(flags["PC_UPBRINGING"] == GLOBAL.UPBRINGING_BOOKWORM) output(" Quite suddenly you recall the faint buzz of the old lamp in your father's library, being picked up by him and carried to your bed after falling asleep in a pile of books.");
 	//c. Nature=Pampered:
-	else if(flags["PC_UPBRINGING"] == GLOBAL.UPBRINGING_PAMPERED) output("You run your thumb across your fingernails, remembering the spa days you and your father would schedule. You remember the long hours of talking about nothing in particular over massages, saunas, and manicures.");
+	else if(flags["PC_UPBRINGING"] == GLOBAL.UPBRINGING_PAMPERED) output(" You run your thumb across your fingernails, remembering the spa days you and your father would schedule. You remember the long hours of talking about nothing in particular over massages, saunas, and manicures.");
 	//pc Nature=Austere:
-	else if(flags["PC_UPBRINGING"] == GLOBAL.UPBRINGING_AUSTERE) output("You remember the cabin by the purple lake on Dorlin IV, the long hours spent with your father, enjoying the silence of the woods around you, and all those times he fished you out of the lake.");
+	else if(flags["PC_UPBRINGING"] == GLOBAL.UPBRINGING_AUSTERE) output(" You remember the cabin by the purple lake on Dorlin IV, the long hours spent with your father, enjoying the silence of the woods around you, and all those times he fished you out of the lake.");
 	//pc.Nature=Balanced:
-	else output("Unbidden, your fingers touch a small spot on your midsection. You remember a year spent building a treehouse under the twin suns of a garden planet. You fell, hitting several branches on your way down. Your father was there in a flash, picking you up and carrying you to the nearest med station.");
+	else output(" Unbidden, your fingers touch a small spot on your midsection. You remember a year spent building a treehouse under the twin suns of a garden planet. You fell, hitting several branches on your way down. Your father was there in a flash, picking you up and carrying you to the nearest med station.");
 	output(" You try to imagine life without that memory, and you wince.");
 
 	output("\n\n<i>“Oh, it's really not that bad,”</i> she says, gesturing energetically. <i>“You see, tove children that grow up with their parents get billed for the cost of raising them once they're adults. Bureaucrats don't get billed - we just work for the government. That's my job here on Uveto Station - I'm a Camarilla-assigned assistant for Sub-Madam Xotchi Tzall, since this is largely a government endeavor.”</i>");
@@ -276,7 +276,7 @@ public function florkDatFuckinMuppet():void
 	else output("It still feels a little weird at first.");
 	output("”</i> she says, her feathers ruffling up.");
 
-	output("\n\nYou assure her that you will and lead her to the bench reach down to ");
+	output("\n\nYou assure her that you will and lead her to the bench, reaching down to ");
 	if(pc.tallness > 48) output("pick up");
 	else output("heft");
 	output(" the round fluffball off the artificial grass. She chirps in surprise at being lifted, her tail trailing along the grass behind her.");
@@ -288,7 +288,7 @@ public function florkDatFuckinMuppet():void
 	{
 		output("\n\n<i>“It looks soft, though,”</i> Tlako says, tilting her pink head from one side to the other. <i>“Does it squish inside me?”</i>");
 		output("\n\nYou inform her that it gets hard with stimulation.");
-		output("\n\n<i>“Like this?”</i> she asks, reaching forward with one of her scaled hands. She grazes your shaft softly, as if cautiously petting a strange animal, and chirps loudly as your dick twitches light.");
+		output("\n\n<i>“Like this?”</i> she asks, reaching forward with one of her scaled hands. She grazes your shaft softly, as if cautiously petting a strange animal, and chirps loudly as your dick twitches lightly.");
 		output("\n\n<i>“It moved!”</i> she says, looking at you, her eyes wide. <i>“Is it supposed to move like that?”</i>");
 		output("\n\nYou stifle a laugh and confirm that yes, it's supposed to move, and that it's a good sign.");
 	}
@@ -297,7 +297,7 @@ public function florkDatFuckinMuppet():void
 	output("\n\nThe tove lets out a satisfied trilling noise, her movements birdlike as she tilts her head this way and that, continuing the stroking motion, letting out a musical whistle as you grow in her grip.");
 	output("\n\n<i>“Wow!”</i> she breathes. <i>“That's so neat!”</i>");
 	output("\n\n<i>“It's ready now,”</i> you smile.");
-	output("\n\nShe looks up at you, a faint trace of nervousness on her face. She looks down at you cock and clicks her beak, her expression steeling with resolve. <i>“Yes, let's do this!”</i> she chirps.");
+	output("\n\nShe looks up at you, a faint trace of nervousness on her face. She looks down at your cock and clicks her beak, her expression steeling with resolve. <i>“Yes, let's do this!”</i> she chirps.");
 	output("\n\nYou reach over to her gently, sliding your hand under her tail. Her feathers poof out and you pause.");
 	output("\n\n<i>“I'm good,”</i> she says, looking at you over her shoulder. <i>“You can keep going.”</i>");
 	output("\n\nYour fingers push through her plush feathers and soon discover ");
@@ -329,11 +329,11 @@ public function florkDatFuckinMuppet():void
 	pc.cockChange();
 	output("\n\n<i>“Did that feel good?”</i> she asks. <i>“Am I making you feel good?”</i>");
 	output("\n\nYou nod and, after making sure she's ready for the next part, hold her by her waist and begin to slide her up and down your dick.");
-	output("\n\n<i>“I... woah! Hee! This is fun!”</i> she burbles, squeaking each time you plunge her down. Her hole is permanently slippery, it seems, and produced a constant stream of lube down your dick, oozing down");
+	output("\n\n<i>“I... woah! Hee! This is fun!”</i> she burbles, squeaking each time you plunge her down. Her hole is permanently slippery, it seems, and produces a constant stream of lube down your dick, oozing down");
 	if(pc.balls > 0) output(" your [pc.balls]");
 	output(".");
 	output("\n\n<i>“I think I can get some muscles working down there, too,”</i> she says, as you pump her up and down, treating Tlako like a living onahole.");
-	output("\n\nShe tenses her body, flexing her muscles, and you feel her tighten around her. The effort makes her squeak a bit, panting in rhythm with you. She's not experiencing the same rush of pleasure as you, but she certainly seems to be enjoying herself, given the happy smile on her face.");
+	output("\n\nShe tenses her body, flexing her muscles, and you feel her tighten around you. The effort makes her squeak a bit, panting in rhythm with you. She's not experiencing the same rush of pleasure as you, but she certainly seems to be enjoying herself, given the happy smile on her face.");
 	output("\n\nYou thrust her up and down, the little pink tove bouncing up and down on your cock as you feel pressure building inside you.");
 	output("\n\n<i>“I'm gonna... gonna...”</i> you gasp.");
 	output("\n\n<i>“Oooh! Y-youou're g-onna c-um, ri-ight?”</i> she pants, her words broken by her bouncing ride. <i>“Cu-um inside me! I wanna see-ee what tha-at feels luh-like! Please cum insi-ide me! Ple-ee-ease!”</i>");

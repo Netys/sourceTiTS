@@ -93,13 +93,21 @@ public function useMiscreantManor2():void
 	else if(hours >= 20 && hours <= 22) output("under the brilliantly-colored evening sky’s radiance");
 	else output("under the stars' crystalline light");
 	output(" to be released.");
-	var inCunt:int = rand(6);
+	var inCunt:int = -1;
 	//0 - Kiro
 	//1 - Zephyr
 	//2 - hellhound
 	//3 - kaithrit futa
 	//4 - texan farmer
 	//5 - Leithan boyslut
+	var options:Array = [];
+	if(roamingKiroAvailable()) options.push(0);
+	options.push(1);
+	options.push(2);
+	options.push(3);
+	options.push(4);
+	inCunt = options[rand(options.length)];
+	
 	//Kiro first
 	if(inCunt == 0)
 	{
@@ -197,6 +205,7 @@ public function useMiscreantManor2():void
 			output("\n\n\n\n\n\n\n\n\n\n\n\n(OR IS IT?)");
 			processTime(15);
 			pc.lust(10);
+			pc.exhibitionism(1);
 			clearMenu();
 			addButton(0,"Next",mainGameMenu);
 			return;
@@ -272,7 +281,7 @@ public function stocksOralIntros(args:Array):void
 	//4 - texan farmer
 	//5 - Leithan boyslut
 	var options:Array = [];
-	if(inCunt != 0) options.push(0);
+	if(inCunt != 0 && roamingKiroAvailable()) options.push(0);
 	if(inCunt != 1) options.push(1);
 	if(inCunt != 2) options.push(2);
 	if(inCunt != 3) options.push(3);
@@ -478,7 +487,7 @@ public function stocksMiddleUsageAndCumStart(args:Array):void
 	//Kaithrit
 	else if(inCunt == 3)
 	{
-		output("\n\n<i>“O-oh! Oh! Ohhhh!”</i> the kaithrit cries from behind you, thrusting in as hard as her petite body will allow. Her jiggling udders bounce hard enough to slap into the small of your back, and then you feel her cumming, pouring her all of her pent-up lusts directly into your sweltering pussy. It’s a lovely little orgasm, one that bathes your g-spot in warm, delicious cum. The feeling almost restarts your own orgasm, making your [pc.hips] shudder in hyper-sensitive aftershocks.");
+		output("\n\n<i>“O-oh! Oh! Ohhhh!”</i> the kaithrit cries from behind you, thrusting in as hard as her petite body will allow. Her jiggling udders bounce hard enough to slap into the small of your back, and then you feel her cumming, pouring all of her pent-up lusts directly into your sweltering pussy. It’s a lovely little orgasm, one that bathes your g-spot in warm, delicious cum. The feeling almost restarts your own orgasm, making your [pc.hips] shudder in hyper-sensitive aftershocks.");
 		output("\n\nCat-cum pools along the bottom of your [pc.vagina " + x + "] by the time the sex-kitten finishes releasing her load. When she pulls out, some of it slops out with her, smacking wetly to the boards below, but you’re fairly certain that some got into your womb as well, if the pleasant glow emanating from your belly is any indication.");
 		output("\n\n<i>“Thanks for that. If I see your boss, I’ll be sure to recommend you for a promotion,”</i> the panting kaithrit purrs, <i>“I swear it felt like your pussy was actually begging for me to cum inside it.”</i> She staggers away, shaking her head, mumbling, <i>“What a pro...”</i>");
 		output("\n\nYour [pc.vagina " + x + "] may have acquired a healthy glaze, but without the warm, pulsing rod inside. It just feels empty.");
@@ -667,6 +676,7 @@ public function stocksEpilogue(args:Array):void
 		pc.loadInCunt(ppRando,x);
 		pc.loadInMouth(ppRando);
 		pc.orgasm();
+		pc.exhibitionism(2);
 	}
 	pc.libido(1);
 	processTime(18);

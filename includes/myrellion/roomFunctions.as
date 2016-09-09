@@ -508,6 +508,8 @@ public function kressiaWarehouseExterior():Boolean
 {
 	if (kressiaBasicBonusBitches()) return true;
 	
+	setNavDisabled(NAV_EAST_DISABLE);
+	
 	if (flags["FAZIAN_QUEST_RESCUE_TIMER"] != undefined)
 	{
 		if (flags["FAZIAN_QUEST_RESCUE_TIMER"] + (6 * 60) >= GetGameTimestamp())
@@ -518,13 +520,15 @@ public function kressiaWarehouseExterior():Boolean
 		{
 			output("\n\nTo the east looms the warehouse. A grim-faced kui-tan is in terse discussion with a group of red myr military brass in front of the main gate. Three other reds are popping the flashbulbs of their primitive recording devices at every inch of the warehouse’s grim facade.");
 		}
+		return false;
 	}
-	else if (flags["FAZIAN_QUEST_STATE"] == FAZIAN_QUEST_RESCUE)
+	
+	output("\n\nTo the east is a huge warehouse, built partially into the cave wall, shadow and harsh light thrown across it by sparsely spaced spotlights. A rifle-armed red myr guards the timber entrance.");
+	
+	if (flags["FAZIAN_QUEST_STATE"] == FAZIAN_QUEST_RESCUE)
 	{
 		addButton(0, "Approach", fazianQuestApproachWarehouse);
 	}
-	
-	setNavDisabled(NAV_EAST_DISABLE);
 	
 	return false;
 }
@@ -737,7 +741,7 @@ public function pillarsBonusFunc():Boolean
 public function deepCavesEntranceBonus():Boolean
 {
 	if(!reclaimedProbeMyrellion()) output(" Something tells you Dad's probe is down there somewhere...");
-	output("\n\nTo the south, you can see a glowing lake, illuminated by luminescent fungus and surrounded by pillars of stone that guard a passage eastward, back to the myrmedion tunnel network");
+	output("\n\nTo the south, you can see a glowing lake, illuminated by luminescent fungus and surrounded by pillars of stone that guard a passage eastward, back to the myrmedion tunnel network.");
 	addButton(7,"Descend",deepCavesDescend,undefined,"Descend","Climbing down will take at least an hour and wear you out a good bit. Who knows what terrors lie down there.");
 	return false;
 }
@@ -1000,7 +1004,7 @@ public function publicUseForDickedPCsInGildenmere():void
 	{
 		output("\n\n<i>“You there!”</i> The voice is heavy with authority, but almost casual in how it is handled. Whoever it is, they’ve grown accustomed to barking orders. <i>“Hey, you!”</i>");
 		output("\n\nYou turn back to look, coming face-to-face with a severe-looking gold myr - one wearing a few too many medals to ignore. Worse still, she’s backed up by a column of twenty grim-faced soldiers. <i>“Me?”</i>");
-		output("\n\n<i>“Yes, you.”</i> Her antennae stab accusingly in your direction. <i>“Your were due at the barracks over twenty minutes ago. I don’t care how big your dick");
+		output("\n\n<i>“Yes, you.”</i> Her antennae stab accusingly in your direction. <i>“You were due at the barracks over twenty minutes ago. I don’t care how big your dick");
 		if(pc.cockTotal() > 1) output("s are");
 		else output(" is");
 		output(". There’s no excuse for failing to keep an appointment.”</i>");
@@ -1179,7 +1183,7 @@ public function antOrgyPartDues(voluntary:Boolean):void
 {
 	clearOutput();
 	showAntOrgy();
-	output("Some unspoken signal goes through the horde of armored ant-girls, and as the first lucky lady steps over you, a dozen of the aroused ant-girls advance. Your lover-to-be smiles down at you, then lowers herself down so that her crotch sits on your chest and [pc.oneCock] has no choice but to slide up and into her descending abdomen, filling the air with the sloppy, wet-sounding ‘squish’ of penetration. Another, exponentially more decadent sound fills the air but a second later: all twelve of the eager myr maidens mounting their substitute members. Some do it from behind, facing away from you as they watch you being taken. Others face forward, pressing their breasts against one another, shading you beneath a quartette of sapphic kisses.");
+	output("Some unspoken signal goes through the horde of armored ant-girls, and as the first lucky lady steps over you, a dozen of the aroused ant-girls advance. Your lover-to-be smiles down at you, then lowers herself down so that her crotch sits on your chest and [pc.oneCock] has no choice but to slide up and into her descending abdomen, filling the air with the sloppy, wet-sounding ‘squish’ of penetration. Another, exponentially more decadent sound fills the air but a second later: all twelve of the eager myr maidens mounting their substitute members. Some do it from behind, facing away from you as they watch you being taken. Others face forward, pressing their breasts against one another, shading you beneath a quartet of sapphic kisses.");
 	pc.cockChange();
 	var x:int = pc.cockThatFits(1000);
 	if(x < 0) x = pc.smallestCockIndex();

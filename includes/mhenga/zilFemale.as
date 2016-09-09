@@ -360,6 +360,7 @@ public function suckleFuckZilFemaleYouSuckleFucker():void {
 	processTime(20+rand(10));
 	pc.orgasm();
 	pc.milkInMouth(chars["ZILFEMALE"]);
+	applyPussyDrenched(pc);
 	clearMenu();
 	addButton(0,"Next",mainGameMenu);
 }
@@ -564,7 +565,7 @@ public function sixtyNineZil():void {
 	if(pc.hasCock() && pc.hasVagina()) output("Her hand grasps your cock, stroking it just beside her face, occasionally letting her tongue slip from your cunt to tease and curl around the base of your rigid prick. ");
 	output("You give your lover a quick swat on the black-chitined ass, grinning as her cunt clamps down on your invading tongue, forming a tight little channel for you to thrust into. Your tongue comes back to you glazed with thick honey juice, unleashing an even more potent cloud of sexual pheromones to assault your senses and leave you in a lusty haze; almost on its own accord, your tongue redoubles its assault on the zil's sexy snatch, mouth-fucking her until she's squirming in your gasp with honey dripping freely onto your cheeks. You barely notice when she cums, screaming into your [pc.vagina " + x + "] as you lick and thrust unerringly onward, never missing a beat as she squirts her sweet juices into your face.");
 	
-	output("\n\nStill crying aloud, the zil girl's tongue slams into you, ramming against your cervix until you're sure she's bound to penetrate your womb with her alien tongue. Your [pc.legOrLegs] curl around her, entire body trembling as her tongue desperately delves your depths. Your orgasm follows hers by a few mere minutes, causing you to arch your back and scream your pleasure as her wondrous tongue brings you to an explosive orgasm that leaves her face drenches in your femcum");
+	output("\n\nStill crying aloud, the zil girl's tongue slams into you, ramming against your cervix until you're sure she's bound to penetrate your womb with her alien tongue. Your [pc.legOrLegs] curl around her, entire body trembling as her tongue desperately delves your depths. Your orgasm follows hers by a few mere minutes, causing you to arch your back and scream your pleasure as her wondrous tongue brings you to an explosive orgasm that leaves her face drenched in your femcum");
 	//if Herm:
 	if(pc.hasCock() && pc.hasVagina()) {
 		output(" as your [pc.cock] explode");
@@ -1592,6 +1593,7 @@ public function normalZilgirlCockfuck():void
 		output(", you shift yourself forward to stare directly into her eyes, then plunge into her depths with a single, powerful thrust. She spasms, letting out a yelp as her muscles disobey her and her abdomen flops onto the ground. <i>“No,”</i> you reply.");
 	}
 	//End Cockvirgin Vars.
+	pc.cockChange();
 	
 	output("\n\nYou pump your hips, the insectile woman’s voice rising in response to your movements. She pulls you down to pant into your ear, pressing her breasts against your [pc.chest]");
 	if (pc.isLactating()) output(", and teasing out a few droplets of [pc.milk]");

@@ -54,6 +54,7 @@ package classes.Resources.Busts
 		
 		[Embed(source = "../../../assets/images/npcs/jacques00/gray_goo.png", mimeType = "image/png")]
 		public var Bust_GRAY_GOO:Class;
+		public var Bounds_GRAY_GOO:Rectangle = new Rectangle(39, 0, 60, 60);
 		
 		[Embed(source = "../../../assets/images/npcs/jacques00/gray_goo_prime.png", mimeType = "image/png")]
 		public var Bust_GRAY_GOO_PRIME:Class;
@@ -180,6 +181,11 @@ package classes.Resources.Busts
 		public var Bust_PENNY_BIMBO_HORSE_1:Class;
 		[Embed(source = "../../../assets/images/npcs/jacques00/penny_bimbo_equine_2.png", mimeType = "image/png")]
 		public var Bust_PENNY_BIMBO_HORSE_2:Class;
+		
+		[Embed(source = "../../../assets/images/npcs/jacques00/ramis.png", mimeType = "image/png")]
+		public var Bust_RAMIS:Class;
+		[Embed(source = "../../../assets/images/npcs/jacques00/ramis_nude.png", mimeType = "image/png")]
+		public var Bust_RAMIS_NUDE:Class;
 		
 		[Embed(source = "../../../assets/images/npcs/jacques00/scalla.png", mimeType = "image/png")]
 		public var Bust_SCALLA:Class;
@@ -360,6 +366,11 @@ package classes.Resources.Busts
 			public var Full_PENNY_BIMBO_HORSE_1:Class;
 			[Embed(source = "../../../assets/images/npcs/jacques00/hr/penny_bimbo_equine_2.png", mimeType = "image/png", compression = true)]
 			public var Full_PENNY_BIMBO_HORSE_2:Class;
+			
+			[Embed(source = "../../../assets/images/npcs/jacques00/hr/ramis.png", mimeType = "image/png", compression = true)]
+			public var Full_RAMIS:Class;
+			[Embed(source = "../../../assets/images/npcs/jacques00/hr/ramis_nude.png", mimeType = "image/png", compression = true)]
+			public var Full_RAMIS_NUDE:Class;
 			
 			[Embed(source = "../../../assets/images/npcs/jacques00/hr/scalla.png", mimeType = "image/png", compression = true)]
 			public var Full_SCALLA:Class;

@@ -103,6 +103,7 @@
 
 		[Embed(source = "../../../assets/images/npcs/gats/Gray_Goo.png", mimeType = "image/png")]
 		public var Bust_GRAY_GOO:Class;
+		public var Bounds_GRAY_GOO:Rectangle = new Rectangle(9, 0, 70, 70);
 
 		[Embed(source = "../../../assets/images/npcs/gats/Rival_Jack.png", mimeType = "image/png")]
 		public var Bust_JACK:Class;
@@ -249,6 +250,7 @@
 
 		[Embed(source = "../../../assets/images/npcs/gats/Tamwolf.png", mimeType = "image/png")]
 		public var Bust_TAMWOLF:Class;
+		public var Bounds_TAMWOLF:Rectangle = new Rectangle(48, 16, 64, 64);
 		
 		[Embed(source = "../../../assets/images/npcs/gats/una.png", mimeType = "image/png")]
 		public var Bust_UNA:Class;

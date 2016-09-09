@@ -179,6 +179,7 @@ package classes.Characters
 			this.ass.wetnessRaw = 0;
 			
 			createStatusEffect("Flee Disabled", 0, 0, 0, 0, true, "", "", false, 0);
+			createStatusEffect("Disarm Immune");
 			createPerk("Attack Drone", 0, 0, 0, 0, "Attack Drone!");
 			
 			isUniqueInFight = true;
@@ -263,7 +264,7 @@ package classes.Characters
 			}
 			else
 			{
-				output(" bathing" + (target is PlayerCharacter ? "you":"her") +" in fire!");
+				output(" bathing " + (target is PlayerCharacter ? "you":"her") +" in fire!");
 				
 				applyDamage(damageRand(new TypeCollection( { burning: 25 } ), 15), this, target, "minimal");
 				

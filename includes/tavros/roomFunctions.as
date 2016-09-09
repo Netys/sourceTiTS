@@ -19,7 +19,7 @@ public function puntToShip():Boolean
 	showLocationName();
 	processTime(1);
 	clearMenu();
-	addButton(14,"Back",mainGameMenu);
+	addButton(0,"Next",mainGameMenu);
 	return true;
 }
 
@@ -120,7 +120,8 @@ public function anonsBarAddendums():Boolean {
 	alexManHermIntro(1);
 	ShellyBlurb(2);
 	annoAtAnonsAddendum(4);
-	roamingBarEncounter(5);
+	ramisAtAnonsAddendum(5);
+	roamingBarEncounter(7);
 	return false;
 }
 

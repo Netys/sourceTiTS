@@ -8,17 +8,20 @@ public const FAZIAN_QUEST_INVESTIGATED:int = 6;
 public const FAZIAN_QUEST_RESCUE:int = 7;
 public const FAZIAN_QUEST_BRIBED:int = 8;
 
-public function showHepane():void
+public function showHepane(nude:Boolean = false):void
 {
 	author("Nonesuch");
-	showBust("HEPANE");
-	showName("CABARET\nENTRANCE");
+	if (flags["MET_HEPANE"] == undefined) showName("MYR\nWOMAN");
+	else showName("\nHEPANE");
+	if (!nude) showBust("HEPANE");
+	else showBust("HEPANE_NUDE");
 }
 
 public function nozzleShowFirstTime():void
 {
 	clearOutput();
 	showHepane();
+	showName("CABARET\nENTRANCE");
 
 	output("<i>“Hello!”</i> smiles the smartly-dressed myr when you approach her. <i>“Are you here for the cabaret? 160 credits entry.”</i>");
 
@@ -53,6 +56,7 @@ public function nozzleShowRepeat():void
 {
 	if (flags["FAZIAN_QUEST_STATE"] == FAZIAN_QUEST_COMPLETE)
 	{
+		CodexManager.unlockEntry("Tarratch");
 		fazianQuestCompleteBlurbs();
 		return;
 	}
@@ -136,6 +140,8 @@ public function nozzleGoPerformance():void
 	if (days % 3 == 0) nozzlePerformanceQuaramarta();
 	else if (days % 3 == 1) nozzlePerformanceShrike();
 	else nozzlePerformanceParadise();
+	
+	CodexManager.unlockEntry("Anatae");
 }
 
 public function nozzlePerformanceParadise():void
@@ -272,11 +278,12 @@ public function nozzlePerformanceQuaramarta():void
 	addButton(0, "Next", mainGameMenu);
 }
 
-public function showFazian():void
+public function showFazian(nude:Boolean = false):void
 {
 	author("Nonesuch");
 	showName("\nFAZIAN");
-	showBust("FAZIAN");
+	if (!nude) showBust("FAZIAN");
+	else showBust("FAZIAN_1");
 }
 
 public function fazianApproach():void
@@ -305,6 +312,8 @@ public function fazianApproach():void
 		output("<i>“Per Steele!”</i> Fazian’s eyes smile warmly at you as you sidle up to him at the bar. After only half a second’s pause, the anat dancer grasps your hand and shakes it, not so vigorously it might dislocate your wrist. He’s getting better at it.");
 		fazianMenu();
 	}
+	
+	CodexManager.unlockEntry("Anatae");
 }
 
 public function fazianLikedIt():void
@@ -858,7 +867,7 @@ public function fazianDanceFive(isSunwalker:Boolean = false):void
 		
 		output("\n\nYou go back to the drills, and each time you pull the whole sequence off, you learn the fine art of grasping your groin and pumping your hips.");
 		// No front genitals:
-		if(pc.genitalLocation() >= 2) output(" Or as in your case, grasping a featureless expanse of flesh and pumping your hips, but it’s the thought that counts.");
+		if (pc.genitalLocation() >= 2) output(" Or as in your case, grasping a featureless expanse of flesh and pumping your hips, but it’s the thought that counts.");
 		
 		output("\n\n<i>“You’ve got it, per!”</i> Fazian says, eyes twinkling. <i>“Lead with your hips, bring in your chest, shake your backside, back to your hips, and finish it off with your crotch. Do it with confidence and no girl or guy in the galaxy will be able to resist you. Come back any time if you want to practice.”</i>");
 		
@@ -1698,7 +1707,7 @@ public function fazianQuestApproachBackWindow():void
 			flags["FAZIAN_BACK_WINDOW"] = 1
 
 			output("\n\nYour heart leaps when, with a rusty bark, the window opens, coughing decades of age into your face, allowing you to see into a darkened storeroom. Your heart sinks when, after several optimistic attempts, it becomes very obvious that there is no way you are going to fit your considerable frame through it. You almost hurt your");
-			if(pc.hasWings()) output(" [pc.wingsNoun]");
+			if (pc.hasWings()) output(" [pc.wingsNoun]");
 			else output("self");
 			output(" at the third attempt, and reluctantly you glide your way back down. You are going to have to try something else.");
 
@@ -1971,6 +1980,8 @@ public function fazianQuestWarehouseMainChamber():void
 	
 	output("\n\n<i>“This way, sweet maidens,”</i> says a smooth voice, close enough to be discernable beneath the clamor. You turn to see thin androgynes with moth-like antennae neck-ruffs, dressed in sleek, modern, purple armor, gracefully picking happily dazed gold myr out of the crowd near you and leading them towards a door behind the stage. <i>“Where you are going, there are plenty more like him. No honeysweet, do not worry about your injuries. The tarratch shall see to them. We shall fix you, and take you somewhere better...”</i>");
 	
+	CodexManager.unlockEntry("Tarratch");
+	
 	output("\n\n<i>“Per [pc.name]?”</i> says Fazian hoarsely, catching sight of you. Most of the room turns to you.");
 	
 	output("\n\n<i>“What,”</i> snarls a husky voice, <i>“do you think you’re doing here?”</i> A tall, thin red myr, a crimson eye-patch slung across her face, marches over to you. By the number of medals on her jacket and the look of fury on her face, you’re guessing she’s the one in charge here.");
@@ -2193,7 +2204,7 @@ public function fazianQuestEhstraffeLoss():void
 			pc.tongueType = GLOBAL.TYPE_DRACONIC;
 			pc.tongueFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_SMOOTH, GLOBAL.FLAG_PREHENSILE];
 			for(i = 0; i < pc.breastRows.length ; i++) { pc.breastRows[i].nippleType == GLOBAL.NIPPLE_TYPE_FUCKABLE; }
-			if(pc.hasVagina())
+			if (pc.hasVagina())
 			{
 				for(i = 0; i < pc.vaginas.length ; i++) { pc.cuntChange(i, pp.cockVolume(0), false); }
 				for(i = 0; i < pc.vaginas.length ; i++) { pc.cuntChange(i, pp.cockVolume(1), false); }
@@ -2329,7 +2340,7 @@ public function fazianQuestCompleteBlurbs():void
 
 	output("When Hepane sees you coming, she immediately puts down her clipboard and hurries across to give you a four-armed embrace.");
 	
-	if(flags["MET_HEPANE"] <= 1)
+	if (flags["MET_HEPANE"] <= 1)
 	{
 		output("\n\n<i>“Thank you so much for what you did,”</i> she says, her fair-sized bosom pressed into your [pc.chest]. Her high voice is rather choked. <i>“I couldn’t sleep after I sent you to Kressia. I kept thinking that I’d sent one of my guests to face danger I wouldn’t have - for nothing at all. Fazian told me about what was going on in that place, and - you are brave and selfless beyond words, starwalker. I hope one day my people and the reds can join you above the sky, so we too can learn the lessons of nobility your race clearly have.”</i>");
 		

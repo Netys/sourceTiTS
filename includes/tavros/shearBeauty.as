@@ -117,7 +117,6 @@ public function buyFromCeria():void
 	chars["CERIA"].keeperBuy = "Ceria gestures to the shelf of hair care products on your left. <i>“Alright, grab whatever you want off the shelf and I’ll ring it up for you.”</i>\n\nYou let your eyes roam across the various shampoos and conditioners on sale. You also see a rack with several teardrop-shaped medipens in a variety of colors.";
 	if(flags["CERIA_BOUGHT"] == undefined)
 	{
-		flags["CERIA_BOUGHT"] = 1;
 		chars["CERIA"].keeperBuy += "\n\n<i>“What are those?”</i> you ask, pointing towards the medipens.\n\n<i>“Oh, those are our Sylvanol-brand transformatives. I’ve gotten pretty into them myself. If you’re jealous of these-”</i> She gives you a wink as she twitches her lengthy ears. <i>“-you should give them a try. They’re an adjustable medipen, you just twist that dial near the top and they cycle between a few different settings.”</i>";
 	}
 	else
@@ -180,6 +179,11 @@ public function hairworkFromCeria():void
 	if(pc.hasPartFur()) addButton(4,"Fur Color",furColorMenu,undefined,"Fur Color","Get your fur dyed too!");
 	else addDisabledButton(4,"Fur Color","Fur Color","You don't have fur to dye!");
 	addButton(14,"Back",approachCeria);
+}
+public function serviceFromCeriaFinish():void
+{
+	flags["CERIA_BOUGHT"] = 1;
+	approachCeria();
 }
 
 //Ceria Lengthens Your Hair
@@ -265,7 +269,7 @@ public function payTheLadyForLongHair(hairInches:Number):void
 	pc.hairStyle = "null";
 	pc.credits -= cost;
 	clearMenu();
-	addButton(0,"Next",approachCeria);
+	addButton(0,"Next",serviceFromCeriaFinish);
 }
 
 //Ceria Does Your Haircut
@@ -365,7 +369,7 @@ public function cutHair(hairInches:Number):void
 	pc.hairStyle = "null";
 	pc.credits -= 200;
 	clearMenu();
-	addButton(0,"Next",approachCeria);
+	addButton(0,"Next",serviceFromCeriaFinish);
 }
 
 //Ceria Does Your Hair Color
@@ -545,7 +549,7 @@ public function hairColorizing(newColor:String = "black"):void
 	if(newColor.indexOf("glowing") != -1 || newColor.indexOf("luminous") != -1 || newColor == "iridescent") pc.credits -= 100;
 	processTime(20);
 	clearMenu();
-	addButton(0,"Next",approachCeria);
+	addButton(0,"Next",serviceFromCeriaFinish);
 }
 
 //Ceria Does Your Hairstyle
@@ -626,7 +630,7 @@ public function styleDatHairGo(hStyle:String):void
 	pc.hairStyle = hStyle;
 	//[Next] Go To Ceria Main
 	clearMenu();
-	addButton(0,"Next",approachCeria);
+	addButton(0,"Next",serviceFromCeriaFinish);
 }
 
 //Ceria Does Your Fur
@@ -650,7 +654,7 @@ public function furColorMenu():void
 	else addDisabledButton(1,"Metallic","Metallic","You can't afford this.");
 	if(pc.credits >= 1800) addButton(2,"Glowing",glowFurGo,undefined,"Glowing","Glowing colors.");
 	else addDisabledButton(2,"Glowing","Glowing","You can't afford this.");
-	addButton(14,"Back",mainGameMenu);
+	addButton(14,"Back",hairworkFromCeria);
 }
 
 //Standard Fur Color
@@ -806,7 +810,7 @@ public function furColorApplication(newColor:String):void
 	//[Next] Go to Ceria Main
 	processTime(22);
 	clearMenu();
-	addButton(0,"Next",approachCeria);
+	addButton(0,"Next",serviceFromCeriaFinish);
 }
 
 //Chatting Up The Hairstylist
@@ -1128,7 +1132,8 @@ public function fuckCeria():void
 	output(".");
 
 	output("\n\nYou bring your own hands up under her shirt, your kiss briefly interrupted as you pull the elf’s top up and off. She makes sure to pick it back up right where you left off as soon as her shirt falls to the side. You untie her bra as well, allowing you to get at Ceria’s bubblegum-pink nipples and give one a tweak. She moans around the kiss in response, reflexively pulling you in closer. Her pants and panties come off next, and your own gear shortly after. Each shed piece of clothing causes Ceria to step up the kiss a bit more, gradually going from just tasting to a wet, sloppy makeout session that has your tongues vying for dominance");
-	if(pc.hasTongueFlag(GLOBAL.FLAG_PREHENSILE)) output(", though with your superior flexibility it’s not even remotely a contest.");
+	if(pc.hasTongueFlag(GLOBAL.FLAG_PREHENSILE)) output(", though with your superior flexibility it’s not even remotely a contest");
+	output(".");
 
 	output("\n\nCeria only breaks off the kiss when one of her hands slips down between your thighs, taking a feel of your ");
 	if(pc.cockTotal() == 1) output("dick");
@@ -1357,7 +1362,7 @@ public function earFuckCeriaPart2():void
 		output(" against Ceria's silken locks, pressed between your body and hers. The human clitoris was never designed to be so big or so phallic, and you have to yank the elf back immediately lest you be overwhelmed by sensation. There's so much that you could get off in a moment if you stayed there, impaled on her ear and grinding against her head, yet you know all too well that rushing to the peak so early would be ultimately unsatisfying.");
 	}
 	output("\n\nThe trembling stylist appears to be handling herself a little better now that you're confining your attentions to a single point of contact. Her eyes are half open, and she's moaning words again, things like <i>\"yes,\"</i> <i>\"fuck,\"</i> and <i>\"faster!\"</i> Looking down at her, you smile when you see her hands on her breasts, roughly handling her well-formed breasts, making the pliant breastflesh wobble and bounce, her rigid nipples slightly crinkled as fingers slide around their areolae.");
-	output("\n\nAny attempt at conversation is abandoned, replaced by the heavy bump and grind of one sweaty body against another. Your [pc.vagina " + x + "] squelches lewdly with each back-and-forth movement, splattering more [pc.girlCumNoun] into Ceria's hair with each passing second. The scent of your pussy fills the air, tinted with the strawberry flavor of the elf's fruity ejaculations. You moan with her, tangling your fingers in her sodden locks, curling them around your knuckles as you slap your cheek with your cunt.");
+	output("\n\nAny attempt at conversation is abandoned, replaced by the heavy bump and grind of one sweaty body against another. Your [pc.vagina " + x + "] squelches lewdly with each back-and-forth movement, splattering more [pc.girlCumNoun] into Ceria's hair with each passing second. The scent of your pussy fills the air, tinted with the strawberry flavor of the elf's fruity ejaculations. You moan with her, tangling your fingers in her sodden locks, curling them around your knuckles as you slap her cheek with your cunt.");
 	output("\n\nHot, liquid twinges roll through your belly and into your [pc.vaginas], making your passage");
 	if(pc.totalVaginas() > 1) output("s");
 	output(" clench and squeeze. Your [pc.legOrLegs] tremble");
@@ -1370,7 +1375,7 @@ public function earFuckCeriaPart2():void
 		if(pc.cockTotal() == 1) output("es");
 		output(", spraying thick lines of [pc.cumColor] across her once perfectly arranged hair.");
 	}
-	output("\n\nYour fingers lose their strength, and you fall away from Ceria, her ear loudly slipping free from your twat, flinging girlish goo into the air as it snaps up to its usual angle. Aftershock roll through your sensitized quim one after another, keeping you on the floor, cumming");
+	output("\n\nYour fingers lose their strength, and you fall away from Ceria, her ear loudly slipping free from your twat, flinging girlish goo into the air as it snaps up to its usual angle. Aftershocks roll through your sensitized quim one after another, keeping you on the floor, cumming");
 	if(pc.hasCock()) output(" all over yourself");
 	else output(" everywhere");
 	output(". Ceria lies right next to you, doing the same, her panties unable to hold back her gushing strawberry flavor.");

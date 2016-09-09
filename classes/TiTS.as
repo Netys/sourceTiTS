@@ -32,6 +32,7 @@
 	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
+	import flash.display.StageQuality;
 	import classes.RoomClass;
 	
 	// Game content managers
@@ -160,6 +161,7 @@
 		include "../includes/tavros/inessa.as";
 		include "../includes/tavros/jade.as";
 		include "../includes/tavros/oviliumBonus.as";
+		include "../includes/tavros/ramis.as";
 		include "../includes/tavros/reaha.as";
 		include "../includes/tavros/reaha.expansion.as";
 		include "../includes/tavros/rooms.as";
@@ -297,11 +299,17 @@
 		include "../includes/events/karaquest2/rooms.as";
 		include "../includes/events/karaquest2/roomFunctions.as";
 		
+		// Kashima
+		include "../includes/events/kashimaIncident/kashimaIncident.as";
+		include "../includes/events/kashimaIncident/rooms.as";
+		include "../includes/events/kashimaIncident/roomfunctions.as";
+		
 		// Uveto
 		include "../includes/uveto/freezer.as";
 		include "../includes/uveto/jerome.as";
 		include "../includes/uveto/kaede.as";
 		include "../includes/uveto/korgonneFemaleHostile.as";
+		include "../includes/uveto/natalie.as";
 		include "../includes/uveto/nayna.as";
 		include "../includes/uveto/nerrasa.as";
 		include "../includes/uveto/rhenworld.as";
@@ -403,6 +411,8 @@
 		{	
 			loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, uncaughtErrorHandler);
 			
+			stage.quality = StageQuality.BEST;
+			
 			kGAMECLASS = this;
 			dataManager = new DataManager();
 			gameOptions = new GameOptions();
@@ -413,7 +423,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.70";
+			version = "0.6.78";
 
 			//temporary nonsense variables.
 			temp = 0;
@@ -462,6 +472,7 @@
 			initializeMyrellionRooms();
 			kquest2InitRooms();
 			initUvetoRooms();
+			kiInitRooms();
 			
 			mapper = new Mapper(this.rooms)
 
@@ -1006,6 +1017,10 @@
 		public function get pc():PlayerCharacter
 		{
 			return chars["PC"];
+		}
+		public function get baby():PlayerOffspring
+		{
+			return chars["PC_BABY"];
 		}
 
 		/* The following three accessors provide indirection during certain scenes, allowing generic, semantically-distict access to different characters.

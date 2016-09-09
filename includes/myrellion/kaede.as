@@ -164,7 +164,7 @@ public function kaedeMyrellionTalkJob():void
 	
 	output("\n\n<i>“You bought a ship? That’s not cheap,”</i> you say, remembering what Kaede mentioned about noodles and crackers just a few minutes ago.");
 	
-	output("\n\nShe gives you a wry look. <i>“It wasn’t. I’m still paying </i>Talon<i>  off, a chunk out of every paycheck I get. I’m so far in debt over her I can barely see the light, but she’s worth every credit. Every single one,”</i> Kaede says, her lips softening into a far-away smile.");
+	output("\n\nShe gives you a wry look. <i>“It wasn’t. I’m still paying </i>Talon<i> off, a chunk out of every paycheck I get. I’m so far in debt over her I can barely see the light, but she’s worth every credit. Every single one,”</i> Kaede says, her lips softening into a far-away smile.");
 	
 	output("\n\n<i>“Being out here, in space, seeing these strange planets... this is everything I ever wanted. I wouldn’t trade it for the world.”</i>");
 	
@@ -248,7 +248,7 @@ public function kaedeMyrellionTalkHerself():void
 	
 	output("\n\nThinking for a moment, you ask if her dad happens be a fellow by the name of Zeke - the big guy that put your father’s Casstech back together before you quest began.");
 	
-	output("\n\n<i>“Yeah, that’s him!”</i> Kaede laughs, <i>“Zeke Entara. Y’know, I walked in on him talking about some big Steele Tech contract way back.  Months ago now, it must have been. Must have been your ship, now that I think about it.”</i>");
+	output("\n\n<i>“Yeah, that’s him!”</i> Kaede laughs, <i>“Zeke Entara. Y’know, I walked in on him talking about some big Steele Tech contract way back. Months ago now, it must have been. Must have been your ship, now that I think about it.”</i>");
 	
 	output("\n\n<i>“Must have,”</i> you say, smiling now that Kaede’s opening up a little more. <i>“So, your dad’s the mechanic who put my");
 	if (9999 == 0) output(" old");
@@ -458,7 +458,7 @@ public function kaedeMyrellionSexIntroII():void
 	clearOutput();
 	kaedeHeader();
 
-	output("After a couple of minutes, you hear the hiss of the cabin door sliding open. Kaede takes a long-legged stride back into the main chamber, drawing your eyes back her way. She’s mostly naked, save for a translucent pink bra that cups her small breasts, and a pair of lacey pink stockings clipped to a garter that hugs her slender hips. She’s got no panties on, showing off an eight-inch shaft of canine cock dangling freely between her legs, only just concealing a tight little sack hugging her groin");
+	output("After a couple of minutes, you hear the hiss of the cabin door sliding open. Kaede takes a long-legged stride back into the main chamber, drawing your eyes back her way. She’s mostly naked, save for a translucent pink bra that cups her small breasts, and a pair of lacey pink stockings clipped to a garter that hugs her slender hips. She’s got no panties on, showing off an eight-inch shaft of canine cock dangling freely between her legs, only just concealing a tight little sack hugging her groin.");
 	
 	output("\n\nKaede’s holding a pair of small glasses in one hand, and a dark bottle of whiskey in the other.");
 	
@@ -648,7 +648,7 @@ public function kaedeMyrellionSucknRide():void
 	else output(",");
 	output(" but you’ve got other plans for that sweet cock of hers. You switch your grip, going from the half-ausar’s sex to her hips, grabbing her and flipping the pair of you over. Kaede yelps, tail and ears tucking in defensively as she’s rolled onto her back. You end up on top now, straddling the dazed halfbreed with her juicy red prick nestled flush against your thigh. It’d be so easy to just sink down and spear yourself on it, take its full length into your [pc.vagOrAss] and ride it until the cows come home.");
 	
-	output("\n\n<i>Patience</i>, you have to tell yourself, slinking down off the couch and between Kaede’s splayed legs. She shivers, her tail flicking in your face as you fingers brush along her pale thighs and up to the tight little pouch of her balls. You can feel her body tremble as your fingertips brush the taut flesh of Kaede’s sack; her prick jumps to attention, though, and you can see the dark star of her ass clench when you draw near.");
+	output("\n\n<i>Patience</i>, you have to tell yourself, slinking down off the couch and between Kaede’s splayed legs. She shivers, her tail flicking in your face as your fingers brush along her pale thighs and up to the tight little pouch of her balls. You can feel her body tremble as your fingertips brush the taut flesh of Kaede’s sack; her prick jumps to attention, though, and you can see the dark star of her ass clench when you draw near.");
 	
 	output("\n\nYou trace your way up the swell of the shemale’s sack, all the way up to the base of her red puppy pecker. She moans as you wrap your digits around her shaft, sheathing all but the tapered tip in your grip. Nice and slow, you angle her shaft towards your [pc.lips] and lean in, letting your [pc.tongue] play out and caress her crown. Her back arches, putting her whole body into the approach of your mouth like she’s trying to meet you halfway. Eager girl! You push her down again, pinning her to the sofa, and wrap your lips around the tip of her cock.");
 	
@@ -809,7 +809,7 @@ public function kaedeThreeSomesOrSpawnOrSomethingCassTits():void
 
 	output("\n\n<i>“I’m Cass,”</i> the part kaithrit, part cow answers, taking a jiggly step closer and giving you a lascivious wink. Now that she’s in arm’s reach, you ");
 	//if (half-)ausar/kaithrit:
-	if(InCollection(pc.race(), "kaithrit", "half-kaithrit", "ausar", "half-ausar","leithan","half-leithan")) 
+	if(pc.horseScore() >= 3 || pc.ausarScore() >= 2 || pc.kaithritScore() >= 3 || pc.leithanScore() >= 3 || pc.felineScore() >= 5 || pc.canineScore() >= 5)
 	{
 		output("suddenly get hit with an overwhelming aura of fuck-pheromones billowing off her, positively seeping through her sexy suit. You instantly feel a flush of arousal as the giggling bimbo sidles up even closer, clearly aware of the effect she’s having on you, and enjoying every second of it. You half expect her to");
 		if(pc.hasCock()) output(" bend over on the spot for you.");
@@ -839,7 +839,7 @@ public function kaedeThreeSomesOrSpawnOrSomethingCassTits():void
 	//if PC is topless and milky!:
 	if(pc.isLactating() && pc.isChestExposed()) 
 	{
-		output("\n\nKayla pays them exactly not attention, though, as the baby does what babies do when a milky tit’s anywhere near them. You go wide-eyed in surprise as Kaede’s kid helps herself to a snack.");
+		output("\n\nKayla pays them exactly no attention, though, as the baby does what babies do when a milky tit’s anywhere near them. You go wide-eyed in surprise as Kaede’s kid helps herself to a snack.");
 		output("\n\n<i>“Oh my gosh!”</i> Kaede yelps, somehow managing to get redder than before. <i>“I-I’m so sorry I...”</i>");
 		output("\n\n<i>“I think [pc.heShe] likes it!”</i> Cass grins, giving you a wink.");
 	}

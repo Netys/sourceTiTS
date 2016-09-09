@@ -74,6 +74,47 @@ public function naynaClothes():String
 	else return RandomInCollection("fluffy, pink-furred winter wear","poofy winter coat","cold-weather outfit","fur-lined parka","pink-accented parka","fluffy, furry coat","squishy, warm-looking winter wear","poofy, white and pink parka");
 }
 
+public function naynaDroneBonus():Boolean
+{
+	if(flags["DRONED_UVIP F20"] == undefined && currentLocation == "UVIP F20"
+		|| flags["DRONED_UVIP T6"] == undefined && currentLocation == "UVIP T6"
+		|| flags["DRONED_UVIP V14"] == undefined && currentLocation == "UVIP V14"
+		|| flags["DRONED_UVIP X34"] == undefined && currentLocation == "UVIP X34"
+		|| flags["DRONED_UVIP L28"] == undefined && currentLocation == "UVIP L28")
+	{
+		output("\n\nA glint of shining metal peeks out of the snow.");
+		addButton(0,"Metal Glint",lookAtWeatherDrone);
+	}
+	return TundraEncounterBonus();
+}
+
+public function lookAtWeatherDrone():void
+{
+	clearOutput();
+	showName("WEATHER\nDRONE");
+	output("A closer look reveals the metal to be a piece of a beat-up looking weather drone. ");
+	if(flags["NAYNA_QUEST_STARTED"] == 1) output("This must be what Nayna was looking for. Maybe you should bring it back to her. ");
+	else output("Maybe someone back in Irestead is looking for a missing drone. Or you could just sell it. Whichever. ");
+	output("Do you take it?");
+	if(flags["NAYNA_QUEST_STARTED"] == 1) output(" ")
+	clearMenu();
+	addButton(0,"Take It",takeANaynaDrone);
+	addButton(4,"Back",mainGameMenu);
+}
+
+public function takeANaynaDrone():void
+{
+	clearOutput();
+	if(currentLocation == "UVIP F20") flags["DRONED_UVIP F20"] = 1;
+	else if(currentLocation == "UVIP T6") flags["DRONED_UVIP T6"] = 1;
+	else if(currentLocation == "UVIP V14") flags["DRONED_UVIP V14"] = 1;
+	else if(currentLocation == "UVIP X34") flags["DRONED_UVIP X34"] = 1;
+	else if(currentLocation == "UVIP L28") flags["DRONED_UVIP L28"] = 1;
+	output("You dig the poor drone out. ");
+	output("\n\n");
+	quickLoot(new WeatherDrone());
+}
+
 public function naynaSexMenu():void
 {
 	clearMenu();
@@ -81,7 +122,7 @@ public function naynaSexMenu():void
 	if(pc.hasCock()) addButton(1,"Fuck Her",fuckNayna,undefined,"Fuck Her","Fuck Nayna using a penis.");
 	else addDisabledButton(1,"Fuck Her","Fuck Her","You don't have a penis to fuck her with.");
 	addButton(2,"Anal Catch",naynaFucksYourButt,undefined,"Anal Catch","Get the shy bunny to put it in your butt.");
-	if(pc.hasCock() && pc.biggestCockThickness() >= 5) addButton(3,"DickDock",naynaDockingForHyperPCs,undefined,"Dick Docking","Get Nayna to put her penis inside you far, far, far... FAR larger one. It'll probably feel great.");
+	if(pc.hasCock() && pc.biggestCockThickness() >= 5) addButton(3,"DickDock",naynaDockingForHyperPCs,undefined,"Dick Docking","Get Nayna to put her penis inside your far, far, far... FAR larger one. It'll probably feel great.");
 	else addDisabledButton(3,"DickDock","DickDock","You need an exceedingly large penis for this - something big enough for Nayna to put her dick inside of.");
 	addButton(14,"Back",repeatNaynaApproach,true);
 }
@@ -114,8 +155,8 @@ public function upstairsGeoSurveyBonus():Boolean
 	if(flags["MET_NAYNA"] == undefined)
 	{
 		output("\n\nA lone scientist seems to have claimed this place for her own, ");
-		if(naynaViewNice()) output("dismal");
-		else output("amazing");
+		if(naynaViewNice()) output("amazing");
+		else output("dismal");
 		output(" view and all. She’s a short, chubby little thing with floppy bunny ears and an animalistic nose that quivers with every breath she takes. Presently, she’s pacing back and forth, looking over an incomprehensible projection from her Codex and as completely unaware of your presence as someone could possibly be.");
 		output("\n\nYour Codex seems to indicate that she’s a laquine, though she’s much shorter than any you’ve ever seen.");
 		CodexManager.unlockEntry("Laquine");
@@ -314,11 +355,11 @@ public function volunteerToHelp(late:Boolean = false):void
 	output("\n\n<i>“Just so you know, you shouldn’t use that word other laquines. It’s sort of </i>our<i> word. I mean, it’s okay for a laquine to call another laquine cute, but when other people use it, it can take on this sort of nasty connotation that’s best just avoided. Personally, I don’t really mind. I’d rather be a cute bunny than a dumb bunny.”</i> She claps her hands over her mouth and blushes hard enough for pink to peek through her fluffy, white fur.");*/
 	output("\n\n<i>“Sorry. Okay... I’m collecting extremely high resolution data on temperature anomalies on cold weather planets. The idea is that if we can perfectly understand how heat spikes or cool spots affect the flora, fauna, and geological formations, we can better predict the results of terraforming other planets - cold ones in particular, but the data is useful across a broad spectrum.”</i> Nayna smiles brightly at that, bouncing up on the balls of her feet. <i>“And not </i>just<i> for terraforming either. Extreme weather modeling has all sorts of uses. The code monkeys back at campus are begging me for more data - particularly our actual code monkey. I’m no slouch with a compiler, but that simii’s brain is magic.”</i>");
 	output("\n\nYou arch an eyebrow, wondering where you come in to all this.");
-	output("\n\nOn a roll now, Nayna grabs you by the shoulder and pulls you toward a small, inactive drone that’s lying on the floor. <i>“Satellites suck for getting fine detail thanks to all the storms this planet has, electromagnetic or otherwise, so I’m stuck using these drones. The problem is that half of them don’t make it back. I’m not sure if the locals are taking them out or if the weather is doing the job for them, but I need them back. These kinds of losses aren’t in the budget...”</i>");
+	output("\n\nOn a roll now, Nayna grabs you by the " + (pc.tallness <= 54 ? "shoulder" : "arm") + " and pulls you toward a small, inactive drone that’s lying on the floor. <i>“Satellites suck for getting fine detail thanks to all the storms this planet has, electromagnetic or otherwise, so I’m stuck using these drones. The problem is that half of them don’t make it back. I’m not sure if the locals are taking them out or if the weather is doing the job for them, but I need them back. These kinds of losses aren’t in the budget...”</i>");
 	output("\n\n");
 	if(!pc.isBimbo()) output("Ahhh, she wants you to go find her missing drones.");
 	else output("You chew on your lip and wonder when she’s going to tell you about the reward. Will it be sex? You hope it’ll be sex.");
-	output("\n\nNayna grabs hold of one of her ears in both hands and nervously kneads the tip. <i>“Do you think you bring me back any you find out there? You’d be doing a service to science... and I’d appreciate it too.”</i>");
+	output("\n\nNayna grabs hold of one of her ears in both hands and nervously kneads the tip. <i>“Do you think you can bring me back any you find out there? You’d be doing a service to science... and I’d appreciate it too.”</i>");
 	processTime(3);
 	flags["NAYNA_REJECTED"] = undefined;
 	//[No Reward?]
@@ -345,10 +386,11 @@ public function sureNaynaIllHelp():void
 {
 	clearOutput();
 	showNayna();
-	output("<i>“Sure”</i>");
+	output("<i>“Sure.”</i>");
 	output("\n\nNayna grabs hold of your hands and bounces up and down in excitement, hopping happily in the way that only a laquine can. <i>“Thankyouthankyou! You won’t regret this. The others involved in the project will be glad to hear that someone’s finally looking out for us academics!”</i>");
 	output("\n\nYou assure her that it’s no problem.");
 	output("\n\n<i>“Okay, well... I better not keep you. Come see me if you find any, okay?”</i>");
+	flags["NAYNA_QUEST_STARTED"] = 1;
 	processTime(3);
 	clearMenu();
 	addButton(0,"Next",mainGameMenu);
@@ -384,7 +426,7 @@ public function repeatNaynaApproach(backsies:Boolean = false):void
 		//Help her out routes to the earlier help her out offer.
 		clearMenu();
 		addButton(0,"Help Her Out",volunteerToHelp,true);
-		addButton(4,"Leave",mainGameMenu);
+		addButton(14,"Back",mainGameMenu);
 		return;
 	}
 	//Took Quest
@@ -394,7 +436,7 @@ public function repeatNaynaApproach(backsies:Boolean = false):void
 		{
 			output("Nayna’s ear lifts higher and higher, pivoting to follow your progress through the room. When you’re a few steps away, the other joins it, swiveling to regard you a half-second before the rest of the laquine. <i>“[pc.name]! How goes your adventures? Have you come across any of my drones yet?”</i>");
 			//No drones
-			if(9999 == 9999) 
+			if(!pc.hasItem(new WeatherDrone(),1))
 			{
 				output("\n\nYou shake your head apologetically.");
 				output("\n\n<i>“Hey, don’t worry about it,”</i> Nayna chirps. <i>“I’m sure you’ll find some before too long. After all, you’re the brave rusher, out looking for adventure!”</i>");
@@ -415,7 +457,7 @@ public function naynaMainMenu():void
 	//[Appearance] [Talk] [Give Drone] [Flirt]
 	addButton(0,"Appearance",appearanceOfNayna);
 	addButton(1,"Talk",talkToNayna);
-	if(9999 == 9999) addButton(2,"Give Drone",giveHerADrone,undefined,"Give Her A Drone","Give Nayna one of the drones she's missing. Turns out these are the drones she's looking for.");
+	if(pc.hasItem(new WeatherDrone(),1)) addButton(2,"Give Drone",giveHerADrone,undefined,"Give Her A Drone","Give Nayna one of the drones she's missing. Turns out these are the drones she's looking for.");
 	addButton(3,"Flirt",flirtWithNayna,undefined,"Flirt","Flirt with the cuddly bunny.");
 	addButton(14,"Leave",mainGameMenu);
 }
@@ -588,11 +630,12 @@ public function uvetoTalkWithNayna():void
 	output("<i>“What brought you to Uveto?”</i>");
 	output("\n\nNayna wrinkles her nose at you. <i>“My study, silly. I can’t go into the specifics until after I get it published, but suffice to say that it is going to revolutionize cold weather modeling as well as terraforming. I’m connecting data points that everyone else ignores as inconsequential, stitching them together into a gestalt that most climatologists have waved off as random variation.”</i>");
 	//Not saved enough drones
-	if(9999 == 9999)
+	if(flags["NAYNA_DRONES_TURNED_IN"] == undefined) flags["NAYNA_DRONES_TURNED_IN"] = 0;
+	if(flags["NAYNA_DRONES_TURNED_IN"] < 3)
 	{
 		output("\n\nPausing, she looks at her toes, sighing heavily. <i>“That’s assuming I don’t get my funding cut and have to wallow in obscurity. Why couldn’t these drones be as cold tolerant as me?”</i> She kicks a loose panel, and looks over at you. <i>“I hope you can find ");
-		if(9999) output("them");
-		else if(9999) output("a few more of them");
+		if(flags["NAYNA_DRONES_TURNED_IN"] == 0) output("them");
+		else if(flags["NAYNA_DRONES_TURNED_IN"] == 1) output("a few more of them");
 		else output("another one");
 		output(".”</i>");
 	}
@@ -706,7 +749,7 @@ public function giveHerADrone():void
 		}
 	}
 	IncrementFlag("NAYNA_DRONES_TURNED_IN");
-	//9999 pc.destroyItem(new WeatherDrone());
+	pc.destroyItem(new WeatherDrone(),1);
 	processTime(2);
 	//[Accept Hug] [Nah]
 	clearMenu();
@@ -1100,7 +1143,7 @@ public function blowNayna2():void
 	else output("You should see yourself.");
 	output("”</i>");
 	output("\n\nNayna groans, and pulls back, lining her slick dick up with your mouth and stroking herself while you continue to pleasure her spasming nutsack and tight cunt. <i>“J-just shut up and open wide. I want to feel your mouth.”</i> Her nipples are jutting out like tentpoles, hard enough that you doubt even the universe’s most padded bra could conceal them. She adds, <i>“");
-	if(flags["NAYNA_BLOWN"] == undefined) output("I want to see what it’s like to cum in someone’s mouth");
+	if(flags["NAYNA_BLOWN"] == undefined) output("I want to see what it’s like to cum in someone’s mouth.");
 	else output("I want to fill you up again, cover you in cum...");
 	output("”</i>");
 
@@ -1349,7 +1392,7 @@ public function naynaFuckEppiloggie(cum:Number):void
 {
 	clearOutput();
 	showNayna();
-	output("When you come too, Nayna is stretching next to you and smiling, watching a small robot zip over her body, harmlessly vaporizing the last patches of cum out of her hair.");
+	output("When you come to, Nayna is stretching next to you and smiling, watching a small robot zip over her body, harmlessly vaporizing the last patches of cum out of her hair.");
 	output("\n\nIt’s then that you realize all signs of your tryst are gone. No puddle remains. The console you fucked over is spotless, and you’re almost as clean as if you took a shower.");
 	if(flags["NAYNA_FUCKED"] != undefined) output(" That little bot is almost as good as a galotian.");
 	else 
@@ -1391,7 +1434,7 @@ public function naynaFucksYourButt():void
 	output(" and clarify that you’d like her to fuck your ass.");
 
 	output("\n\n<i>“Oh! ...Ohhhhhhh!”</i> she says, wide-eyed, her lips a perfect “o” of surprise. She frowns, her chin resting on one hand, considering it.");
-	output("\n\nYou let the laquine think it through, glancing down at the the pert bulge just above her thighs. It gives a small twitch, resulting in a faint squeaking noise as she looks back up to you. It looks like the chubby scientist's body has come to a decision, even if her mind is too shell-shocked to reply.");
+	output("\n\nYou let the laquine think it through, glancing down at the pert bulge just above her thighs. It gives a small twitch, resulting in a faint squeaking noise as she looks back up to you. It looks like the chubby scientist's body has come to a decision, even if her mind is too shell-shocked to reply.");
 
 	output("\n\nShe smiles shyly and ");
 	if(!naynaWarm()) output("slowly begins to undo her " + naynaClothes() + " then ");
@@ -1452,7 +1495,7 @@ public function naynaFucksYourButt():void
 	output(" Nayna adjusts herself, her fingers grabbing your [pc.hips] tight. Before you can say anything, she shoves her dick into you.");
 	output("\n\nYour eyes widen and your breath catches in your throat as you feel her length jam all the way up into your ass. The flared ridge of her horse cock drives first, running wide and thick up into you, followed by her throbbing shaft, pulsing hard against your insides. You can’t move for a moment, riding out the wave of sudden fullness and an immediate soreness from her rough intrusion.");
 	output("\n\nShe slides all the way in, letting you feel the thick veins and rings of her cock as they push all the way into you. When her furry, apple-sized balls finally rest against your ass, she lets out a happy moan. <i>“Oh, oh yeah... that’s the stuff,”</i> she groans. You feel a warm drop somewhere on your back. It’s not too hard to imagine that Nayna is drooling with pleasure as she buries herself inside you. She rests there for a moment, rocking softly against you, letting you feel the soft tug and push of her cock nine inches deep in your ass.");
-	output("\n\nWhen you finally do breath again, you feel her shifting her position. Her hands grasp your hips with surprising strength, raising your ass. You glance over your shoulder, seeing her sitting on her haunches, resting on the the balls of her feet. Her dick is still inside you, and you see her give a few experimental bounces. Her dick shifts an inch out of you and then back in. You moan, your hole twitching around her thick shaft");
+	output("\n\nWhen you finally do breathe again, you feel her shifting her position. Her hands grasp your hips with surprising strength, raising your ass. You glance over your shoulder, seeing her sitting on her haunches, resting on the balls of her feet. Her dick is still inside you, and you see her give a few experimental bounces. Her dick shifts an inch out of you and then back in. You moan, your hole twitching around her thick shaft");
 	if(pc.hasCock())
 	{
 		output(", your ");
@@ -1476,7 +1519,7 @@ public function naynaFucksYourButt():void
 	}
 	output("\n\n<i>“It's a - ung - a good thing you like it,”</i> says Nayna. <i>“I don't think I can stop! I don't think I'll ever stop!”</i>");
 	output("\n\nNayna pushes down against you. You feel the soft squish of her balls as they nestle against your ass, her dick pushing as deep as possible inside you. You glance over her shoulder again, just in time to see her massive thighs flex, pushing her up.");
-	output("\n\nYou gasp as her cock pistons out of you. Her horse-head drags along your inner passage, feeling like she’s scraping you out. Your hips rise to meet her, but her hand slam down against the small of your back, resting half her weight on you-keeping you pinned down. Up and up and up her cock goes until her tip bumps against your pliant ring, leaving you with a sense of absolute emptiness.");
+	output("\n\nYou gasp as her cock pistons out of you. Her horse-head drags along your inner passage, feeling like she’s scraping you out. Your hips rise to meet her, but her hands slam down against the small of your back, resting half her weight on you-keeping you pinned down. Up and up and up her cock goes until her tip bumps against your pliant ring, leaving you with a sense of absolute emptiness.");
 	output("\n\nIt’s only for a moment, though, as she pauses at her apex, then drives back down. You moan, more out of pleasure than pain as she drives her cock back down into you, filling you up so quickly that the breath whooshes out of you.");
 	output("\n\n<i>“Up we go!”</i> she says cheerfully. She bounces back up, dragging her dick out of you. Once more, her weight pauses at the top of her bounce, before she plunges back into your ass. Over and over, she bounces, until you lose count, completely lost in the feeling of Nayna pumping in and out of your ass.");
 	output("\n\nFinally, she pauses on a downstroke. She wiggles her hips a bit, adjusting her weight on you. <i>“S-stars, I love this. Am... am I doing it right?”</i> she asks, waiting until you weakly affirm. <i>“Then brace yourself,”</i> she chirps.");
@@ -1534,7 +1577,7 @@ public function naynaFucksYourButt():void
 	output("\n\n<i>“OOF!”</i>");
 	output("\n\nYou both collapse to the floor in a heap, and you feel a MASSIVE surge of pressure in your swollen gut. All her cum! And you were fit to burst!");
 	output("\n\nThe sudden impact against your stomach pops Nayna’s cock free, your ass disgorging her massive dick along with a near-literal river of cum. You squeal in discomfort as her pleasure-swollen head swings out of you, slapping wetly against your leg. She grunts as her chin collides with the back of your head. Her breasts moosh against your back, her limbs splayed awkwardly atop yours. You moan in a heap under Nayna, the snow bunny groaning in pain atop you, her panting breath in your ear. You can’t seem to focus on any one thing-you’re still riding on waves of endorphins, and dealing with the sudden aches and pains of your sudden collapse.");
-	output("\n\n<i>“Owwww,”</i> she moans. You open your mouth to say something, but Nayna shifts her weight atop you, sending another gush of cum from your ass. You gasp, frozen in the sensation of being splayed out as hot, laquine spunk flows out of you. She flops off your back, sitting next to you as a small lake of he cum gradually grows around you.");
+	output("\n\n<i>“Owwww,”</i> she moans. You open your mouth to say something, but Nayna shifts her weight atop you, sending another gush of cum from your ass. You gasp, frozen in the sensation of being splayed out as hot, laquine spunk flows out of you. She flops off your back, sitting next to you as a small lake of her cum gradually grows around you.");
 	output("\n\nYou turn your head toward her, the rest of your body not particularly cooperating. She’s sitting on her butt, her spooge-drenched cock flopped out against her thighs, one hand massaging her chin, and the other cradling her breasts. She looks at you, aghast, a look of unbridled embarassment on her face.");
 
 	if(pc.isNice()) output("\n\nYou take one look at her horrified expression and start " + pc.mf("laughing","giggling") + ".");
@@ -1608,7 +1651,7 @@ public function naynaDockingForHyperPCs():void
 	output("\n\nNayna’s self-control falls apart like a house of cards held up to an X1 racer’s engine wash. Leaning over your mammoth member, she gingerly shifts, brushing her swollen glans against your dick-slit and shivering in delight. She closes her eyes, and with her lips curling in a shy smile, she edges forward, spreading your cock around her own enormous girth. It’s a feeling unlike any other in the universe, hard and throbbing, wet and hot with your pre-cum mixing around in your urethra.");
 	output("\n\nYou try to hold yourself still. Thrusting forward would only knock Nayna on her ass, and every other instinctive movement seems magnified out at the end of your enormous tentpole.");
 	output("\n\nNayna, on the other hand, has no compunctions about manhandling your member, but she does ease her way in with care. Maybe she’s afraid that she might hurt you, or that something could tear without enough lubrication. Maybe she’s just enjoying the delightful feeling of sliding inch after inch into a passage tighter than she’s likely to find anywhere else in the quadrant. She works it nice and slow, gyrating her hips in small circles to gradually widen the opening at your tip. Pre dribbles down your length and across her balls, a mixed slew of sensuous eagerness.");
-	output("\n\nYou groan delightedly, and Nayna moans right along with you, head lolling backwards. Her ears sag join in her going limp, sagging back of her full-throated ecstasy until they hang limply against the back of her head. Not even her grip on your [pc.cockHead " + x + "] escapes her pleasured slackening. She’s clearly drunk on pleasure, loving the silken caress of your oversized dong’s pulsating interior.");
+	output("\n\nYou groan delightedly, and Nayna moans right along with you, head lolling backwards. Her ears join her in going limp, sagging back in her full-throated ecstasy until they hang limply against the back of her head. Not even her grip on your [pc.cockHead " + x + "] escapes her pleasured slackening. She’s clearly drunk on pleasure, loving the silken caress of your oversized dong’s pulsating interior.");
 	output("\n\nYou can feel it too. Each beat of your heart makes your [pc.cock " + x + "] tremble, pushing back against the intruder within, bearing down on her with your own biological imperative to engorge. Nayna is harder somehow, perhaps due to her smaller size. Whatever the case, her dick is barely affected by your member’s incessant squeezing. It plunges in and out without a single care for anything beyond its own pleasure, drooling so much liquid anticipation that it feels like she’s literally pumping up your prick, inflating you with her ludicrously copious fluids.");
 	processTime(6);
 	pc.lust(100);
@@ -1638,7 +1681,7 @@ public function cumInsideWhileDockingNayna():void
 	showNayna(true);
 	var x:int = pc.biggestCockIndex();
 	output("<i>“Do it,”</i> you urge, wondering just how good it’ll feel to let the bunny-girl release her gallons inside you.");
-	output("\n\nPermission is apparently all it takes to set the curvy laquine off. She grabs hold of your [pc.cock " + x + "] in both hands and leans over, wrapping her entire upper body around her. Her plush, fuzzy tits squish down against it, the soft texture of her fur contrasting wonderfully with the slippery smoothness of her rubbery-looking undergarment.");
+	output("\n\nPermission is apparently all it takes to set the curvy laquine off. She grabs hold of your [pc.cock " + x + "] in both hands and leans over, wrapping her entire upper body around it. Her plush, fuzzy tits squish down against it, the soft texture of her fur contrasting wonderfully with the slippery smoothness of her rubbery-looking undergarment.");
 	output("\n\nThen you feel it, the torrential outflow of bunny-spunk pouring into your dick, filling an already stuffed urethra to capacity with steaming hot jism. And that’s just the first squirt. Nayna quivers like a fully drawn bowstring and unloads once more. This time, that torrid fluid burrows further back into you, pushing her spunk into your deepest recesses. It’s as bizarre as it is hot, a strong ecstasy approximating ejaculation in reverse. Bolts of delight radiate up from your core as it is filled, then stretched, then stretched some more.");
 	//Balls
 	if(pc.balls > 1)
@@ -1649,14 +1692,14 @@ public function cumInsideWhileDockingNayna():void
 		output("\n\nNayna babbles, <i>“Good... good... That’s good.”</i> She spurts hard enough to bulge the underside of your cock. A second later an equal amount of fluid rushes into your straining gonads, displaced from your internal plumbing by the fresh wave. <i>“It’s so good!”</i> Whimpering, Nayna humps away at your dick, sending squirts of her seed flying in every direction with her backstrokes, but she shoots more than an equal measure back in.");
 		output("\n\nThe skin of your [pc.sack] is taut and shiny. The slightest details in your juggling, cum-swollen nads are reflected through the straining veneer.");
 		if(pc.legCount > 1) output(" They’re so big that they force your [pc.legs] apart.");
-		output(" You can feel the cold floor pressing up from beneath. Greater amounts of skin make contact as the seconds tick by, distorting the rounded, jiggly shapes. In no time at all, you’re resting on your balls more than you [pc.feet], and Nayna is still cumming, still forcing more inside.");
+		output(" You can feel the cold floor pressing up from beneath. Greater amounts of skin make contact as the seconds tick by, distorting the rounded, jiggly shapes. In no time at all, you’re resting on your balls more than your [pc.feet], and Nayna is still cumming, still forcing more inside.");
 		output("\n\nThe once-meek climatologist is watching with feverish intensity, soft paws holding your twitching, dripping member in both hands as she fucks it like her own personal pocket-pussy, only instead of flooding a condom, it’s your balls that drown in her jism. She trembles one last time, firing dick-bulging gouts of seed into your nuts, then sags down atop it. Her eyes widen when she realizes the edge of your sack is within an inch or two of her fuzzy toes. She could reach out and caress her cummy prize with the tiniest effort.");
 		output("\n\nYou’ve never felt fuller... or hornier. Maybe it’s the sensation of her sperm swimming around inside you with your own. Maybe it’s the decadent lewdness of the act itself. Maybe its the feeling of your every movement making your [pc.sack] increasingly jiggly and wobbly, one nut sliding against another in exquisite delight. Or you could forget all about it the moment Nayna presses her footpaw to the gently-curving swell of an enormous testicle. Her skin is just as warm as the cum swirling inside, and as she gropes you, you lose all control.");
 		output("\n\nYou don’t even manage to warn the poor bun. Climax hits you like a bolt of lightning, faster than the speed of the nonsense words spilling from your maw. A lurid gurgle fills the air while your internal muscles clench, and Nayna abruptly grunts.");
 		output("\n\n<i>“Ohh...”</i> she giggles, still clutching onto your dick, <i>“...Is this what you f-felt? It’s warm...”</i>");
 		output("\n\nYou nod, reveling in the relief of shooting what feels like gallons of bunny-spunk right back into its source. This time, you get to watch her balls bloat. She’s lucky she already yanked her underthings to the side, giving her fuzzy sack the room it needs to expand. Two squirts have her packing grapefruits. Soon, Nayna’s bloated testes are the size of basketballs. The stuffed laquine sinks to her knees, letting them rest on her thighs, but your dick bends right down with her, continuing to flood her over-gorged, melon-sized gonads.");
-		output("\n\nNayna whimpers, <i>“So full,”</i> when her balls spill out over the tops of her legs, pinning her to the ground. They expand upward as well, reaching up around either side of your dick, pinning you between the hermaphrodites luscious lower orbs. When you ejaculate, you feel them wobble against you, enhancing your pleasure. Your every shot results in what feels like a self-propelled titty fuck, squeezing Nayna’s tremendous nuts tighter around your incredible girth.");
-		output("\n\nIt’s heaven. Giggling madly, you hump, and you pump, and you cum and cum and cum. Nayna doesn’t protest; she just groans deliriously, rubbing her nuts with languid, confused strokes. You cum until you balls are almost back to their normal size, and then you cum some more. The harlot of a hare is nearly obscured by her masculine endowments, the tips of her ears barely reaching above. You clench and flex, trying to pump her up enough to hide her entirely, but your body chooses that moment to finally run dry.");
+		output("\n\nNayna whimpers, <i>“So full,”</i> when her balls spill out over the tops of her legs, pinning her to the ground. They expand upward as well, reaching up around either side of your dick, pinning you between the hermaphrodite’s luscious lower orbs. When you ejaculate, you feel them wobble against you, enhancing your pleasure. Your every shot results in what feels like a self-propelled titty fuck, squeezing Nayna’s tremendous nuts tighter around your incredible girth.");
+		output("\n\nIt’s heaven. Giggling madly, you hump, and you pump, and you cum and cum and cum. Nayna doesn’t protest; she just groans deliriously, rubbing her nuts with languid, confused strokes. You cum until your balls are almost back to their normal size, and then you cum some more. The harlot of a hare is nearly obscured by her masculine endowments, the tips of her ears barely reaching above. You clench and flex, trying to pump her up enough to hide her entirely, but your body chooses that moment to finally run dry.");
 		output("\n\nYour dick twitches powerfully, yanking itself off Nayna’s cock, dripping residual whiteness");
 		if(pc.fluidColorSimple(pc.cumType) != "white") output(" and [pc.cumColor] mixed together");
 		output(". You can’t see it from here, but it feels like your urethra is absolutely gaped.");
@@ -1730,7 +1773,7 @@ public function makeNaynaCumOutsideAfterHyperFun():void
 	output("Shaking your head, you answer, <i>“Rub it out on me instead!”</i>");
 	output("\n\nNayna moans in orgasmic bliss, pulling out not a moment too soon, already spilling a river of salty cream against your [pc.cockHead " + x + "]. She grabs hold with both hands in an attempt to wrangle her rebelliously erupting phallus, yet only succeeds in pleasuring herself further. Thrusting through her palms hard enough to bend her spine almost double, Nayna whimpers, fling long ropes across your [pc.cock " + x + "].");
 	output("\n\nThey land in cross-crossing, patternless stripes, splattering flecks of the bunny’s cream from your [pc.sheathOrKnot " + x + "] to your apex and everywhere in between. In a matter of seconds, you’re glazed in her salty release. The feverish, oozing warmth feels good, but mostly it reminds you of just how much you need to get off yourself.");
-	output("\n\nYour grab on, two-handed, and start jacking it, watching the laquine erupt. She’s squirting and squirting, stumbling up so that she can rub against the top side of your prick. Her cum is the perfect lube, just warm and slick enough to make every touch, every caress feel like the silkiest sextoy. Stroking with both hands is... quite frankly, it’s too much. Thick flows of Nayna’s pre-cum pour out of you as your [pc.cock " + x + "] flexes in climax, making way for the thick spunk behind.");
+	output("\n\nYou grab on, two-handed, and start jacking it, watching the laquine erupt. She’s squirting and squirting, stumbling up so that she can rub against the top side of your prick. Her cum is the perfect lube, just warm and slick enough to make every touch, every caress feel like the silkiest sextoy. Stroking with both hands is... quite frankly, it’s too much. Thick flows of Nayna’s pre-cum pour out of you as your [pc.cock " + x + "] flexes in climax, making way for the thick spunk behind.");
 	output("\n\n<i>“Cum on me!”</i> Nayna cries, still squirting. <i>“Paint me like a filthy fucking slut!”</i>");
 	output("\n\nYou thrust forward, unable to repress it, grinding your dick against her, squirting your [pc.cum] over her latex-like underthings and fur alike.");
 	if(pc.cumQ() >= 90000) output(" The spermy deluge washes over in her volume enough to stand up to Nayna’s own. You each paint the other, silently competing to see who can make the bigger mess, neither giving an inch until you’re both absolutely drenched and standing in an ankle-deep lake of the stuff.");

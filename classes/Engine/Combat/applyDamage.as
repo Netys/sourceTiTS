@@ -68,24 +68,24 @@ package classes.Engine.Combat
 			{
 				if (target.isPlural) 
 				{
-					if (target.shieldDisplayName.toLowerCase().indexOf("shield") != -1)
+					if (target.hasShields())
 					{
-						output(" " + target.capitalA + possessive(target.short) + " shields crackle but hold.");
+						output(" " + possessive(target.getCombatName()) + " shields crackle but hold.");
 					}
 					else
 					{
-						output(" " + target.capitalA + possessive(target.short) + " armored coatings absorb the brunt of the damage but remain intact.");
+						output(" " + possessive(target.getCombatName()) + " armored coatings absorb the brunt of the damage but remain intact.");
 					}
 				}
 				else
 				{
-					if (target.shieldDisplayName.toLowerCase().indexOf("shield") != -1)
+					if (target.hasShields())
 					{
-						output(" " + target.capitalA + possessive(target.short) + " shield crackles but holds."); 
+						output(" " + possessive(target.getCombatName()) + " shield crackles but holds."); 
 					}
 					else
 					{
-						output(" " + target.capitalA + possessive(target.short) + " armor absorbs the brunt of the damage but remains intact.");
+						output(" " + possessive(target.getCombatName()) + " armor absorbs the brunt of the damage but remains intact.");
 					}
 				}
 			}
@@ -101,41 +101,44 @@ package classes.Engine.Combat
 			{
 				if (target.isPlural) 
 				{
-					if (target.shieldDisplayName.toLowerCase().indexOf("shield") != -1)
+					if (target.hasShields())
 					{
-						output(" There is a concussive boom and tingling aftershock of energy as " + target.a + possessive(target.short) + " shields are breached.");
+						output(" There is a concussive boom and tingling aftershock of energy as " + possessive(target.getCombatName()) + " shields are breached.");
 					}
 					else
 					{
-						output(" A series of loud ‘thunks’ ring out as " + target.a + possessive(target.short) + " armored coatings finally fail!");
+						output(" A series of loud ‘thunks’ ring out as " + possessive(target.getCombatName()) + " armored coatings finally fail!");
 					}
 				}
 				else 
 				{
-					if (target.shieldDisplayName.toLocaleLowerCase().indexOf("shield") != -1)
+					if (target.hasShields())
 					{
-						output(" There is a concussive boom and tingling aftershock of energy as " + target.a + possessive(target.short) + " shield is breached.");
+						output(" There is a concussive boom and tingling aftershock of energy as " + possessive(target.getCombatName()) + " shield is breached.");
 					}
 					else
 					{
-						output(" A loud ‘thunk’ rings out as " + target.a + possessive(target.short) + " armored coating finally fails!");
+						output(" A loud ‘thunk’ rings out as " + possessive(target.getCombatName()) + " armored coating finally fails!");
 					}
 				}
 			}
 		}
 		
 		//Magic shield drain shit
-		if (damageResult.shieldDamage >= 2 && baseDamage.hasFlag(DamageFlag.DRAINING) && attacker.shields() < attacker.shieldsMax())
+		if (attacker.hasShields() && target.hasShields())
 		{
-			if(attacker is PlayerCharacter) output(" Your weapon drains half of the energy into your own shield!");
-			else output(" Your foes shields strengthen at your expense!");
-			attacker.shields(Math.round(damageResult.shieldDamage * .5))
-		}
-		else if (damageResult.shieldDamage > 0 && baseDamage.hasFlag(DamageFlag.GREATER_DRAINING) && attacker.shields() < attacker.shieldsMax())
-		{
-			if(attacker is PlayerCharacter) output(" Your weapon drains most of the energy into your own shield!");
-			else output(" Your foes shields strengthen at your expense!");
-			attacker.shields(Math.round(damageResult.shieldDamage * .9))
+			if (damageResult.shieldDamage >= 2 && baseDamage.hasFlag(DamageFlag.DRAINING) && attacker.shields() < attacker.shieldsMax())
+			{
+				if(attacker is PlayerCharacter) output(" Your weapon drains half of the energy into your own shield!");
+				else output(" Your foes shields strengthen at your expense!");
+				attacker.shields(Math.round(damageResult.shieldDamage * .5))
+			}
+			else if (damageResult.shieldDamage > 0 && baseDamage.hasFlag(DamageFlag.GREATER_DRAINING) && attacker.shields() < attacker.shieldsMax())
+			{
+				if(attacker is PlayerCharacter) output(" Your weapon drains most of the energy into your own shield!");
+				else output(" Your foes shields strengthen at your expense!");
+				attacker.shields(Math.round(damageResult.shieldDamage * .9))
+			}
 		}
 
 		// HP Damage
@@ -147,7 +150,7 @@ package classes.Engine.Combat
 			}
 			else 
 			{
-				output(" The attack continues on to connect with " + target.a + target.uniqueName + "!");
+				output(" The attack continues on to connect with [target.combatName]!");
 			}
 		}
 		// HP damage, didn't pass through shield
@@ -159,7 +162,7 @@ package classes.Engine.Combat
 			}
 			else
 			{
-				output(" The attack connects with " + target.a + target.uniqueName + "!");
+				output(" The attack connects with [target.combatName]!");
 			}
 		}
 		
@@ -193,7 +196,7 @@ package classes.Engine.Combat
 			// Any special resistance message overrides
 			if (special == "goovolver")
 			{
-				output("\n<b>" + target.capitalA + target.short + " ");
+				output("\n<b>[target.CombatName] ");
 				if (target.isPlural) output(" don't");
 				else output(" doesn't");
 				output(" seem the least bit bothered by the miniature goo crawling over them.</b>\n");
@@ -204,7 +207,7 @@ package classes.Engine.Combat
 				if (target is PlayerCharacter) output("You don’t");
 				else
 				{
-					output(target.capitalA + target.short + " ");
+					output("[target.CombatName] ");
 					if (target.isPlural) output(" don’t");
 					else output(" doesn’t");
 				}
@@ -215,7 +218,7 @@ package classes.Engine.Combat
 				// Only if the incoming damage is pure-lust
 				if (damageResult.shieldDamage == 0 && damageResult.hpDamage == 0)
 				{
-					output("\n<b>" + target.capitalA + target.short + " ");
+					output("\n<b>[target.CombatName] ");
 					if (target.isPlural) output(" don't");
 					else output(" doesn't");
 					output(" seem at all interested in your teasing.</b>\n");
@@ -227,7 +230,7 @@ package classes.Engine.Combat
 		{
 			if (special == "goovolver")
 			{
-				output(" A tiny " + (attacker.rangedWeapon as Goovolver).randGooColour() + " goo, vaguely female in shape, pops out and starts to crawl over " + target.mf("him", "her") + ", teasing " + target.mf("his", "her") + " most sensitive parts!");
+				output(" A tiny " + (attacker.rangedWeapon as Goovolver).randGooColour() + " goo, vaguely female in shape, pops out and starts to crawl over [target.combatHimHer], teasing [target.combatHisHer] most sensitive parts!");
 			}
 			else if (special == "slut ray")
 			{
@@ -237,8 +240,8 @@ package classes.Engine.Combat
 				
 				output("\n");
 				if(target is PlayerCharacter) output("Suddenly, your mind is filled with sexual fantasies, briefly obscuring your vision with " + lewdAdjective + " images!");
-				else if(target.isPlural) output(target.capitalA + target.short + " are mentally filled with sexual fantasies, briefly obscuring their vision with " + lewdAdjective + " images!");
-				else output(target.capitalA + target.short + " is mentally filled with sexual fantasies, briefly obscuring " + target.mfn("his", "her", "its") + " vision with " + lewdAdjective + " images!");
+				else if(target.isPlural) output("[target.CombatName] are mentally filled with sexual fantasies, briefly obscuring their vision with " + lewdAdjective + " images!");
+				else output("[target.CombatName] is mentally filled with sexual fantasies, briefly obscuring [target.combatHisHer] vision with " + lewdAdjective + " images!");
 				output(" " + CombatContainer.teaseReactions(damageResult.lustDamage, target));
 			}
 			else

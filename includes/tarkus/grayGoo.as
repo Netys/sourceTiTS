@@ -281,10 +281,7 @@ public function mutualGooMasturbation():void
 	author("Savin");
 	userInterface.showBust("GRAY_GOO");
 	userInterface.showName("DEFEATED:\nGRAY GOO");
-	output("Time to put this cybernetic goo-girl's endurance to the test. You shuck your [pc.gear] and approach the defeated goo. Seeing your bared [pc.cock] hanging half-hard");
-	if(pc.legCount > 1) (" between");
-	else (" on");
-	output(" your [pc.legOrLegs], she quickly reforms into the ultra-busty babe she attacked you as, big lips pursed in a curious expression as you loom over her.");
+	output("Time to put this cybernetic goo-girl's endurance to the test. You shuck your [pc.gear] and approach the defeated goo. Seeing your bared [pc.cock] hanging half-hard " + (pc.legCount > 1 ? "between" : "on") + " your [pc.legOrLegs], she quickly reforms into the ultra-busty babe she attacked you as, big lips pursed in a curious expression as you loom over her.");
 	output("\n\n<i>\"Oooh, that's a nice [pc.cockNounSimple] you've got there,\"</i> the silver goo giggles to herself, her gray eyes locked on your stiffening shaft, crossing each other as you present it to her lips for a sucking. <i>\"Y-you want me to... but... why'd you fight me? I was gonna make you feel good anyway!\"</i>");
 	output("\n\nYou scowl down at the goo and thrust your hips forward, prodding her lips open around the [pc.cockHead] of your prick. She tries to speak, but her words are quickly muffled around the head of your cock as you take the opportunity to thrust into her open mouth; her throat is as stretchy as you might imagine, easily taking every inch you can offer the insatiable goo before you can blink. Her voice breaks into a sultry moan as your ");
 	if(pc.balls > 1) output("[pc.balls]");
@@ -371,8 +368,8 @@ public function divideAndConquerGinasWithGoos():void
 	output("\n\nBetween the two dicks thrusting deep into your [pc.vagina] and [pc.asshole], you can't hold out for long. You let out a wild, animalistic cry of pleasure into the goo's mouth as her and her sister pound you right over the edge. Your cunt and ass contract mercilessly around the twin cocks inside them, your whole body writhing madly as pleasure overtakes you. All you can think of is more - you need more! You buck your hips against the cocks, bouncing in the goo's lap, trying to get every last inch of cyber-cock inside you, pinching and twisting your nipples, and arching your back as sharp as you can.");
 	output("\n\nYour orgasm seems to last a blissful eternity, waves of pleasure crashing through your body until you're leaning exhausted in the googirl's arms, panting and moaning as her sister continues to fuck your butt. The first goo coos happily, cradling you in her arms as she sets your head back to rest on the soft, comfy cushion of her tits. It doesn't look like they're done yet....");
 	output("\n\nWhat must be an hour passes like that. The first goo sister holds you tenderly as her sister fucks your ass again until you cum once more, then switches to your pussy, joining her sister's cock to stretch you until you're screaming into your bed of boob-flesh. A third and fourth orgasm are wrung out of you, your pussy-fluids drooling into the waiting pool of goo");
-	if(pc.legCount > 1) (" between");
-	else (" around");
+	if(pc.legCount > 1) output(" between");
+	else output(" around");
 	output(" your [pc.legOrLegs], swallowed eagerly by the cyber-babes between fuckings.");
 	output("\n\nWhen you cum a fifth time, they finally relent, your chest heaving and mind nearly blank with overwhelming pleasure. Giggling to themselves, the goo sisters rest you back onto the ground, finally withdrawing their cocks from you and unleashing a torrent of pent-up goo-spunk and fem-cum in the process, which they quickly lap up.");
 	output("\n\n<i>\"" + pc.mf("He","She") + "'s so much fun!\"</i> one of the giddy girls giggles, leaning down to plant a sweet parting kiss on your brow. You merely moan in response, too weak to speak.");

@@ -105,6 +105,7 @@ public function appearance(forTarget:Creature):void
 			else if(target.skinType == GLOBAL.SKIN_TYPE_SCALES) output2("Your face is fairly human in shape, but is covered in " + target.skinFurScales(true,true,false,true) + " over " + target.skin(true,true,true) + ".");
 			else if(target.skinType == GLOBAL.SKIN_TYPE_FEATHERS) output2("Your face is human-shaped with " + target.skin(true,true,true) + " and lightly framed with " + target.skinFurScales(true,true,false,true) + ".");
 			else if(target.skinType == GLOBAL.SKIN_TYPE_CHITIN) output2("Your face is mostly human in shape, decorated with " + target.skinFurScales(true,true,false,true) + " over " + target.skin(true,true,true) + ".");
+			else if(target.skinType == GLOBAL.SKIN_TYPE_BARK) output2("Your face is mostly human in shape, with hints of " + target.skinFurScales(true,true,false,true) + " over " + target.skin(true,true,true) + ".");
 			// Special addons
 			if(target.faceType == GLOBAL.TYPE_SHARK || target.faceType == GLOBAL.TYPE_SIREN) output2(" A set of razor-sharp, retractable shark-teeth fill your mouth and gives your visage a slightly angular appearance.");
 			else if(target.faceType == GLOBAL.TYPE_LAPINE) output2(" The constant twitches of your nose and the length of your incisors gives your visage a hint of bunny-like cuteness.");
@@ -256,8 +257,8 @@ public function appearance(forTarget:Creature):void
 			output2(" Your eyes have a curious mix of feline and dragonic features; a pair of black vertical slits instead of rounded pupils, ");
 			if (hasMetallicEyes) output2(" sat amongst metallically glistening pools of " + target.eyeColor + " irises.");
 			else if (hasGemstoneEyes) output2(" each nestled in a shimmering gemstone-like " + target.eyeColor + " iris.");
-			else if (hasLuminousEyes) output2(" each nestled within a glowing " + target.eyeColor + " iris.");
-			else output2(" each sat within a " + target.eyeColor + " iris.");
+			else if (hasLuminousEyes) output2(" each nestled within " + indefiniteArticle(target.eyeColor) + " iris.");
+			else output2(" each sat within " + indefiniteArticle(target.eyeColor) + " iris.");
 			
 			output2(" Tendrils of black crawl across your eyeballs proper, extending from a dark ring just barely visible at the edges.");
 		}
@@ -645,16 +646,22 @@ public function appearance(forTarget:Creature):void
 				if (target.isBimbo()) output2(" They’d make the most <i>adorable</i> handlebars for anybody looking to bust a nut down your throat!");
 			}
 			//Antlers!
-			else if(InCollection(target.hornType, GLOBAL.TYPE_DEER, GLOBAL.TYPE_DRYAD))
+			else if(target.hornType == GLOBAL.TYPE_DEER)
+			{
+				if(target.horns > 0)
+				{
+					if(rand(2) == 0) output2(" A pair of antlers sprout from your head, covered in velvet and indicating your status as a desirable mate.");
+					else output2(" Velvet-covered antlers sprout from your head, declaring your status as a desirable mate and formidable opponent.");
+					if(target.hornLength > 1) output2(" They are " + num2Text(int(target.hornLength)) + "-inch long and fork into " + num2Text(target.horns) + " points.");
+				}
+			}
+			else if(target.hornType == GLOBAL.TYPE_DRYAD)
 			{
 				if(target.horns > 0)
 				{
 					output2(" Two");
 					if(target.hornLength > 1) output2(" " + num2Text(int(target.hornLength)) + "-inch long");
-					output2(" antlers, forking into " + num2Text(target.horns) + " points, have sprouted from the top of your head, forming a spiky, regal crown of ");
-					if(target.hornType == GLOBAL.TYPE_DRYAD) output2("branches");
-					else output2("bone");
-					output2(".");
+					output2(" antlers, forking into " + num2Text(target.horns) + " points, have sprouted from the top of your head, forming a spiky, regal crown of branches.");
 				}
 			}
 			//Goatliness is next to godliness.
@@ -1280,8 +1287,8 @@ public function appearance(forTarget:Creature):void
 			else if(target.hasTailFlag(GLOBAL.FLAG_GOOEY)) cuntSnakeTexture += target.skinTone + " goo";
 			else cuntSnakeTexture += target.skinFurScales(true) + " like the rest of you";
 			
-			if(target.tailCount <= 1) output2(" A sinuous, almost snake-like tail waves behind you, covered in " + cuntSnakeTexture + " except at the tip. There, it terminates in " + indefiniteArticle(target.tailVaginaDescript()) + " that always seems to crave fresh sperm.");
-			else output2(" " + StringUtil.upperCase(num2Text(target.tailCount)) + "  sinuous, almost snake-like tails wave behind you, covered in " + cuntSnakeTexture + " except at the tip. There, they terminate in " + plural(target.tailVaginaDescript()) + " that always seem to crave fresh sperm.");
+			if(target.tailCount <= 1) output2(" A sinuous, almost snake-like tail waves behind you, covered in " + cuntSnakeTexture + " except at the tip. There, it terminates in " + indefiniteArticle(target.tailVaginaDescript(false, true, true)) + " that always seems to crave fresh sperm.");
+			else output2(" " + StringUtil.upperCase(num2Text(target.tailCount)) + "  sinuous, almost snake-like tails wave behind you, covered in " + cuntSnakeTexture + " except at the tip. There, they terminate in " + plural(target.tailVaginaDescript(false, true, true)) + " that always seem to crave fresh sperm.");
 		}
 		else if(target.tailType == GLOBAL.TYPE_PANDA) {
 			if(target.hasTailFlag(GLOBAL.FLAG_GOOEY)) output2(" A short, slimy panda tail sprouts just above your " + target.buttDescript() + ". It just kind of sits there, not doing much beyond being a gooey little accent.");
@@ -1444,6 +1451,12 @@ public function appearance(forTarget:Creature):void
 			else if(target.legCount < 4) output2(" Your legs are muscled and jointed oddly, covered in " + (target.hasLegFlag(GLOBAL.FLAG_GOOEY) ? "goo" : "fur") + ", and end in bestial hooves.");
 			else output2(" You have oddly-jointed legs that end in " + target.feet(true,true) + ".");
 		}
+		else if(target.legType == GLOBAL.TYPE_DEER) 
+		{
+			if(target.legCount < 4) output2(" Your legs are lithe and agile, covered in " + (target.hasLegFlag(GLOBAL.FLAG_GOOEY) ? "goo" : "fur") + ", and end in hooves");
+			else output2(" You have thin, deer-like legs that are capped with hooves");
+			output2(", enabling you to nimbly leap and prance from place to place.");
+		}
 		else if(target.legType == GLOBAL.TYPE_CANINE) 
 		{
 			if (target.legCount < 4) 
@@ -1582,8 +1595,8 @@ public function appearance(forTarget:Creature):void
 		else if(target.legType == GLOBAL.TYPE_KUITAN) output2(" Your legs, though covered in " + (target.hasLegFlag(GLOBAL.FLAG_GOOEY) ? "goo" : "fur") + ", are humanlike. Long feet on the ends bear equally long toes, and the pads on the bottoms are quite sensitive to the touch.");
 		else if(target.legType == GLOBAL.TYPE_PANDA)
 		{
-			if(target.isTaur()) output2(" Your digitigrade legs end in " + (target.hasLegFlag(GLOBAL.FLAG_GOOEY) ? "gummi-like" : "fluffy") + " panda-paws.");
-			else output2(" " + StringUtil.upperCase(num2Text(target.legCount)) + " digitigrade legs grow downwards from your waist, ending in " + (target.hasLegFlag(GLOBAL.FLAG_GOOEY) ? "gummi-like" : "fluffy") + " panda-paws.");
+			if(target.isTaur()) output2(" Your " + (target.hasLegFlag(GLOBAL.FLAG_DIGITIGRADE) ? "digitigrade" : "plantigrade") + " legs end in " + (target.hasLegFlag(GLOBAL.FLAG_GOOEY) ? "gummi-like" : "fluffy") + " panda-paws.");
+			else output2(" " + StringUtil.upperCase(num2Text(target.legCount)) + " " + (target.hasLegFlag(GLOBAL.FLAG_DIGITIGRADE) ? "digitigrade" : "plantigrade") + " legs grow downwards from your waist, ending in " + (target.hasLegFlag(GLOBAL.FLAG_GOOEY) ? "gummi-like" : "fluffy") + " panda-paws.");
 			output2(" You even have " + (target.hasLegFlag(GLOBAL.FLAG_GOOEY) ? "blunt" : "sharp-looking") + " claws growing from the tips of your short toes.");
 		}
 		else if(target.legType == GLOBAL.TYPE_FROG)
@@ -1625,7 +1638,7 @@ public function appearance(forTarget:Creature):void
 				if(target.hasFeet())
 				{
 					output2(", ending in ");
-					if(target.legCount == 1) output2("a " + target.foot(true, true));
+					if(target.legCount == 1) output2(indefiniteArticle(target.foot(true, true)));
 					else output2(target.feet(true, true));
 				}
 				output2(".");
@@ -2192,7 +2205,7 @@ public function crotchStuff(forTarget:Creature = null):void
 		
 		//SINGLE DICKS!
 		if(target.cockTotal() == 1) {
-			output2("Your " + target.cockDescript(0) + " is " + Math.floor(10*target.cocks[0].cLength())/10 + " inches long and ");
+			output2("Your " + target.simpleCockNoun(0) + " is " + Math.floor(10*target.cocks[0].cLength())/10 + " inches long and ");
 			if(Math.floor(10*target.cocks[0].thickness())/10 < 2) {
 				if(Math.floor(10*target.cocks[0].thickness())/10 == 1) output2(int(10*target.cocks[0].thickness())/10 + " inch thick.");
 				else output2(Math.round(10*target.cocks[0].thickness())/10 + " inches across.");
@@ -2214,7 +2227,7 @@ public function crotchStuff(forTarget:Creature = null):void
 				if(rando == 0) {
 					if(temp == 0)output2("\nYour first ");
 					else output2("\nYour next ");
-					output2(target.cockDescript(temp));
+					output2(target.simpleCockNoun(temp));
 					output2(" is ");
 					output2(int(10*target.cocks[temp].cLength())/10 + " inches long and ");
 					if(Math.floor(target.cocks[temp].thickness()) >= 2) output2(num2Text(Math.round(target.cocks[temp].thickness() * 10)/10) + " inches wide.");
@@ -2225,7 +2238,7 @@ public function crotchStuff(forTarget:Creature = null):void
 				}
 				if(rando == 1) {
 					output2("\nYour " + num2Ordinal(temp + 1) + " ");
-					output2(target.cockDescript(temp) + " is " + Math.round(10*target.cocks[temp].cLength())/10 + " inches long and ");
+					output2(target.simpleCockNoun(temp) + " is " + Math.round(10*target.cocks[temp].cLength())/10 + " inches long and ");
 					if(Math.floor(target.cocks[temp].thickness()) >= 2) output2(num2Text(Math.round(target.cocks[temp].thickness() * 10)/10) + " inches thick.");
 					else {
 						if(target.cocks[temp].thickness() == 1) output2("one-inch thick.");
@@ -2234,7 +2247,7 @@ public function crotchStuff(forTarget:Creature = null):void
 				}
 				if(rando == 2) {
 					output2("\nThe " + num2Ordinal(temp + 1) + " ");
-					output2(target.cockDescript(temp) + " is " + Math.round(10*target.cocks[temp].cLength())/10 + " inches long and ");
+					output2(target.simpleCockNoun(temp) + " is " + Math.round(10*target.cocks[temp].cLength())/10 + " inches long and ");
 					if(Math.floor(target.cocks[temp].thickness()) >= 2) output2(num2Text(Math.round(target.cocks[temp].thickness() * 10)/10) + " inches thick.");
 					else {
 						if(target.cocks[temp].thickness() == 1) output2("one-inch thick.");
@@ -2244,7 +2257,7 @@ public function crotchStuff(forTarget:Creature = null):void
 				if(rando == 3) {
 					if(temp > 0) output2("\nYour next ");
 					else output2("\nYour first ");
-					output2(target.cockDescript(temp) + " is " + Math.round(10*target.cocks[temp].cLength())/10 + " inches long and ");
+					output2(target.simpleCockNoun(temp) + " is " + Math.round(10*target.cocks[temp].cLength())/10 + " inches long and ");
 					if(Math.floor(target.cocks[temp].thickness()) >= 2) output2(num2Text(Math.round(target.cocks[temp].thickness() * 10)/10) + " inches in diameter.");
 					else {
 						if(Math.round(target.cocks[temp].thickness()*10)/10 == 1) output2("one inch in diameter.");
@@ -2315,6 +2328,11 @@ public function crotchStuff(forTarget:Creature = null):void
 	if(target.vaginas.length > 0) {
 		if(target.hasCock()) output2("\n\n");
 		if(!target.hasCock() && target.isTaur()) output2("As a tauric creature, your womanly parts lie between your rear legs in a rather equine fashion. ");
+		
+		var vagSwellBonus:int = 0;
+		if(target.vaginas[0].hasFlag(GLOBAL.FLAG_SLIGHTLY_PUMPED)) vagSwellBonus++;
+		if(target.vaginas[0].hasFlag(GLOBAL.FLAG_PUMPED)) vagSwellBonus++;
+		
 		//Vaginal Numbers
 		if(target.vaginaTotal() == 1) {
 			output2("You have " + indefiniteArticle(target.vaginaDescript(0,false,false,true)) + ", with " + num2Text(target.vaginas[0].clits) + " " + Math.round(target.clitLength*10)/10 + "-inch clit");
@@ -2326,14 +2344,22 @@ public function crotchStuff(forTarget:Creature = null):void
 			{
 				if (target.statusEffectv3("Mimbrane Pussy") < 8)
 				{
-					output2("Your pussy appears slightly swollen. ");
+					output2("Your pussy appears");
+					if(vagSwellBonus <= 0) output2(" slightly");
+					else if(vagSwellBonus <= 1) output2(" a bit");
+					else output2(" very");
+					output2(" swollen. ");
 				}
 				else if (target.statusEffectv3("Mimbrane Pussy") < 13)
 				{
 					output2("Your pussy appears noticably inflated");
 					if (!target.isCrotchExposed())
 					{
-						output2(" and creates a slight bulge beneath your");
+						output2(" and creates");
+						if(vagSwellBonus <= 0) output2(" a slight");
+						else if(vagSwellBonus <= 1) output2(" a large");
+						else output2(" an enormous");
+						output2(" bulge beneath your");
 						if (target.armor.type == GLOBAL.ARMOR) output2(" armor");
 						else output2(" clothing");
 					}
@@ -2344,7 +2370,11 @@ public function crotchStuff(forTarget:Creature = null):void
 					output2("Your pussy appears delightfully plump");
 					if (!target.isCrotchExposed())
 					{
-						output2(", creating an undeniable bulge in your");
+						output2(", creating");
+						if(vagSwellBonus <= 0) output2(" an undeniable");
+						else if(vagSwellBonus <= 1) output2(" a massive");
+						else output2(" a gargantuan");
+						output2(" bulge in your");
 						if (target.armor.type == GLOBAL.ARMOR) output2(" armor");
 						else output2(" clothing");
 					}
@@ -2431,14 +2461,22 @@ public function crotchStuff(forTarget:Creature = null):void
 				{
 					if (target.statusEffectv3("Mimbrane Pussy") < 8)
 					{
-						output2(" It appears slightly swollen from the mimbrane.");
+						output2(" It appears");
+						if(vagSwellBonus <= 0) output2(" slightly");
+						else if(vagSwellBonus <= 1) output2(" a bit");
+						else output2(" very");
+						output2(" swollen from the mimbrane.");
 					}
 					else if (target.statusEffectv3("Mimbrane Pussy") < 13)
 					{
 						output2(" It appears noticably inflated");
 						if (!target.isCrotchExposed())
 						{
-							output2(" and creates a slight bulge beneath your");
+							output2(" and creates");
+							if(vagSwellBonus <= 0) output2(" a slight");
+							else if(vagSwellBonus <= 1) output2(" a large");
+							else output2(" an enormous");
+							output2(" bulge beneath your");
 							if (target.armor.type == GLOBAL.ARMOR) output2(" armor");
 							else output2(" clothing");
 						}
@@ -2449,7 +2487,11 @@ public function crotchStuff(forTarget:Creature = null):void
 						output2(" It appears delightfully plump");
 						if (!target.isCrotchExposed())
 						{
-							output2(", creating an undeniable bulge in your");
+							output2(", creating");
+							if(vagSwellBonus <= 0) output2(" an undeniable");
+							else if(vagSwellBonus <= 1) output2(" a massive");
+							else output2(" a gargantuan");
+							output2(" bulge in your");
 							if (target.armor.type == GLOBAL.ARMOR) output2(" armor");
 							else output2(" clothing");
 						}
@@ -2626,7 +2668,7 @@ public function dickBonusForAppearance(forTarget:Creature = null, x:int = 0):voi
 	//Snake cock flavor
 	else if(target.cocks[x].cType == GLOBAL.TYPE_SNAKE) {
 		if(target.originalRace == "snake" || target.originalRace == "naga" || target.originalRace == "naleen" || target.originalRace == "leithan" || target.originalRace == "half-leithan") output2(" It’s a deep, iridescent " + target.cocks[x].cockColor + " in color. The shaft is patterned with multiple bulbous bumps to stimulate potential partners, and the whole of its length is glossy and smooth.");
-		else output2(" It’s a deep, iridescent " + target.cocks[x].cockColor + " in color. Unlike a " + target.originalRace + " penis, the shaft is patterned with multiple bulbous bumps to stimulate potential partners, and the whole of its length is glossy and smooth.");
+		else output2(" It’s a deep, iridescent " + target.cocks[x].cockColor + " in color. Unlike " + indefiniteArticle(target.originalRace) + " penis, the shaft is patterned with multiple bulbous bumps to stimulate potential partners, and the whole of its length is glossy and smooth.");
 	}
 	//Anemone cock flavor
 	else if(target.cocks[x].cType == GLOBAL.TYPE_ANEMONE || target.cocks[x].cType == GLOBAL.TYPE_SIREN) {
@@ -2832,6 +2874,11 @@ public function vaginaBonusForAppearance(forTarget:Creature = null, x:int = 0, e
 	else if(target.vaginas[x].type == GLOBAL.TYPE_FLOWER) {
 		if(!eachOne) output2(" Like an orchid, the exterior opening is framed in beautifully-colored flower petals and has a cute freckle dotting " + (target.vaginas[x].clits == 1 ? "its" : "every") + " clit.");
 		else output2("\nLike a " + (target.totalVaginas(GLOBAL.TYPE_FLOWER) == 2 ? "pair" : "bouquet") + " of orchids, each vagina’s exterior openings are framed in beautifully-colored flower petals and has a cute freckle dotting every clit.");
+	}
+	//Deer flavor
+	else if(target.vaginas[x].type == GLOBAL.TYPE_DEER) {
+		if(!eachOne) output2(" Your labia are swollen and fat, outlining your vagina, and often shine with a wet sheen regardless of your arousal. You’re told that they wink when you’re aroused.");
+		else output2("\nEach vagina’s labia are swollen and fat, often shining with a wet sheen regardless of your arousal. You’re told that they wink when you’re aroused.");
 	}
 	
 	//Nubby

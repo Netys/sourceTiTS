@@ -200,20 +200,32 @@ package classes.Characters
 			
 			// enemy AI
 			var enemyAttacks:Array = [];
-			enemyAttacks.push({ v: rangedAttack, 				w: 40 });
-			enemyAttacks.push({ v: machinePistols, 				w: 40 });
-
+			if (!target.hasStatusEffect("Stunned") && !target.hasStatusEffect("Disarmed"))
+			{
+				enemyAttacks.push({ v: rangedAttack, 				w: 40 });
+				enemyAttacks.push({ v: machinePistols, 				w: 40 });
+			}
 			if (nadesAvail)
 			{
 				enemyAttacks.push({ v: groupFlashbang, 			w: 15 });
 				enemyAttacks.push({ v: sx1GroupSmokeGrenade,	w: 15 });
 				enemyAttacks.push({ v: concGrenade, 			w: 15 });
 			}
+			if (enemyAttacks.length <= 0)
+			{
+				attackPass();
+				return;
+			}
 
 			var attack:Function = weightedRand(enemyAttacks);
 			
 			if (attack == rangedAttack || attack == machinePistols) attack(target);
 			else attack(hostileCreatures);
+		}
+		
+		private function attackPass():void
+		{
+			output(StringUtil.capitalize(uniqueName, false) + " is unable to attack!");
 		}
 		
 		private function rangedAttack(target:Creature):void
@@ -223,7 +235,7 @@ package classes.Characters
 		
 		private function machinePistols(target:Creature):void
 		{
-			output(StringUtil.capitalize(uniqueName, false) + " brings his machine pistol to bear, firing a burst of toward " + (target is PlayerCharacter ? "you" : target.a + target.short) + "!");
+			output(StringUtil.capitalize(uniqueName, false) + " brings his machine pistol to bear, firing off a burst toward " + (target is PlayerCharacter ? "you" : target.a + target.short) + "!");
 			if (rangedCombatMiss(this, target, -1, 3))
 			{
 				output(" The burst misses!");

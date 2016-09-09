@@ -75,9 +75,10 @@ public function initUvetoRooms():void
 	/* Space Elevator */
 	rooms["UVS LIFT"] = new RoomClass(this);
 	rooms["UVS LIFT"].roomName = "SPACE\nELEVATOR";
-	rooms["UVS LIFT"].description = "";
+	rooms["UVS LIFT"].description = "You find yourself inside the huge Uveto Station space elevator.";
 	rooms["UVS LIFT"].planet = "UVETO STATION";
 	rooms["UVS LIFT"].system = "SYSTEM: SIRETTA";
+	rooms["UVS LIFT"].runOnEnter = uvetoSpaceElevatorInBonus;
 	rooms["UVS LIFT"].addFlag(GLOBAL.INDOOR);
 
 	/* Store? */
@@ -188,7 +189,7 @@ public function initUvetoRooms():void
 
 	rooms["UVS H7"] = new RoomClass(this);
 	rooms["UVS H7"].roomName = "EXECUTIVE\nLOBBY";
-	rooms["UVS H7"].description = "A very plush, posh lobby is seated at the end of the eastern wing, behind several security doors and a very threatening pair of gun pods bolted to the ceiling. The door east is labeled “Station Manager”; the one to the south indicates its the office of one Anyxine Rhenesunne, a Vice President of RhenWorld Stellar Excavations.\n\nSeveral tove are seated against the far walls, dug in behind computer banks and flickering holo-screens. Their beaked, fuzzy faces barely acknowledge you.";
+	rooms["UVS H7"].description = "A very plush, posh lobby is seated at the end of the eastern wing, behind several security doors and a very threatening pair of gun pods bolted to the ceiling. The door east is labeled “Station Manager”; the one to the south indicates it’s the office of one Anyxine Rhenesunne, a Vice President of RhenWorld Stellar Excavations.\n\nSeveral tove are seated against the far walls, dug in behind computer banks and flickering holo-screens. Their beaked, fuzzy faces barely acknowledge you.";
 	rooms["UVS H7"].planet = "UVETO STATION";
 	rooms["UVS H7"].system = "SYSTEM: SIRETTA";
 	rooms["UVS H7"].eastExit = "UVS J7";
@@ -346,7 +347,7 @@ public function initUvetoRooms():void
 	/* Entrance */
 	rooms["UVI L34"] = new RoomClass(this);
 	rooms["UVI L34"].roomName = "CENTRAL HUB\nENTRANCE";
-	rooms["UVI L34"].description = "A huge steel door leads out from the central hub of Irestead, Uveto's hub city, out onto the snowy main street. You're buffeted by strong, icy winds that bite at your [pc.skinFurScales], forcing you to wrap your arms around yourself... and this is underneath the protective walls that surrounds the city. ";
+	rooms["UVI L34"].description = "A huge steel door leads out from the central hub of Irestead, Uveto's hub city, out onto the snowy main street. You're buffeted by strong, icy winds that bite at your [pc.skinFurScales], forcing you to wrap your arms around yourself... and this is within the boundaries the protective walls that surround the city. ";
 	rooms["UVI L34"].planet = "PLANET: UVETO VII";
 	rooms["UVI L34"].system = "SYSTEM: SIRETTA";
 	rooms["UVI L34"].eastExit = "UVI N34";
@@ -441,7 +442,7 @@ public function initUvetoRooms():void
 	
 	rooms["UVI P38"] = new RoomClass(this);
 	rooms["UVI P38"].roomName = "GUARD\nPOST";
-	rooms["UVI P38"].description = "Several ausars are standing inside a small, sealed building beside the gates, all dressed in military uniforms and carrying rifles slung over their shoulders. The gate to the town is just a few yards east of you, underneath a pair of intimidating gun turrets on the walls. To the south, you see a large set of sliding glass doors under an awning with the words ‘MAGLEV STATION’ written in bright, cheerful letters.";
+	rooms["UVI P38"].description = "Several ausar are standing inside a small, sealed building beside the gates, all dressed in military uniforms and carrying rifles slung over their shoulders. The gate to the town is just a few yards east of you, underneath a pair of intimidating gun turrets on the walls. To the south, you see a large set of sliding glass doors under an awning with the words ‘MAGLEV STATION’ written in bright, cheerful letters.";
 	rooms["UVI P38"].planet = "PLANET: UVETO VII";
 	rooms["UVI P38"].system = "SYSTEM: SIRETTA";
 	rooms["UVI P38"].eastExit = "UVIP D38"; /* To Ice Plains */
@@ -475,7 +476,7 @@ public function initUvetoRooms():void
 
 	rooms["UVI N30"] = new RoomClass(this);
 	rooms["UVI N30"].roomName = "TEMPLE\nSTREET";
-	rooms["UVI N30"].description = "The main street comes to a head here, leading up to a huge wooden building with a pair of blazing fires flickering in metal braziers outside. Wide marble steps lead up to a pair of metal-reinforced doors. A pair of armored human are standing outside, clad in snow-white ceramic plates with dark scarves, capes, and kilts over them. Each has a longspear grasped in his hands, and an energy pistol on his hip.\n\nTo the east, you can see a the nearest house to the temple. It's a small, dark gray building that you imagine must be largely built underground. A small plate beside it gives the street address, and says in flowing letters ‘Shade and Astra Irons’.";
+	rooms["UVI N30"].description = "The main street comes to a head here, leading up to a huge wooden building with a pair of blazing fires flickering in metal braziers outside. Wide marble steps lead up to a pair of metal-reinforced doors. A pair of armored humans are standing outside, clad in snow-white ceramic plates with dark scarves, capes, and kilts over them. Each has a longspear grasped in his hands, and an energy pistol on his hip.\n\nTo the east, you can see the nearest house to the temple. It's a small, dark gray building that you imagine must be largely built underground. A small plate beside it gives the street address, and says in flowing letters ‘Shade and Astra Irons’.";
 	rooms["UVI N30"].planet = "PLANET: UVETO VII";
 	rooms["UVI N30"].system = "SYSTEM: SIRETTA";
 	//rooms["UVI N30"].northExit = "UVI N28"; // 9999 CUT UNTIL READY
@@ -498,7 +499,7 @@ public function initUvetoRooms():void
 
 	rooms["UVI P32"] = new RoomClass(this);
 	rooms["UVI P32"].roomName = "THE\nFREEZER";
-	rooms["UVI P32"].description = "There is only a brief landing to kick the snow off your feet before the floor immediately plunges downwards in the form of a staircase, though the steps are mercifully wide and drunkard friendly. Each step downwards brings you further away from the biting chill and, instead, to the warm, cozy atmosphere of what is a tavern. Emphasis on warm, thankfully.\n\nDespite its name, the Freezer is actually a decidedly homely establishment. Heaters in nearly every corner of the room keep the air from dipping into Uveto's usually frigid temperatures, and a scattering of cracked peanut shells on the floor lend the place a homey, if rustic, feel.\n\nThere's plenty of space between the various tables, varying from long bench seats to more intimate two seat square tables and everything in between - it feels a bit like a collection of various ways to <i>do</i> tables.\n\nThere's a subfloor to the west; slightly lower than the main tavern floor, but only by a few steps.";
+	rooms["UVI P32"].description = "There is only a brief landing to kick the snow off your feet before the floor immediately plunges downwards in the form of a staircase, though the steps are mercifully wide and drunkard friendly. Each step downwards brings you further away from the biting chill and, instead, to the warm, cozy atmosphere of what is a tavern. Emphasis on warm, thankfully.\n\nDespite its name, the Freezer is actually a decidedly homely establishment. Heaters in nearly every corner of the room keep the air from dipping into Uveto's usually frigid temperatures, and a scattering of cracked peanut shells on the floor lend the place a homey, if rustic, feel.\n\nThere's plenty of space between the various tables, varying from long bench seats to more intimate two seat square tables and everything in between - it feels a bit like a collection of various ways to <i>do</i> tables.\n\nThere's a subfloor to the east; slightly lower than the main tavern floor, but only by a few steps.";
 	rooms["UVI P32"].planet = "PLANET: UVETO VII";
 	rooms["UVI P32"].system = "SYSTEM: SIRETTA";
 	rooms["UVI P32"].eastExit = "UVI R32"; // 9999 TEMP CHECK THIS
@@ -657,7 +658,7 @@ public function initUvetoRooms():void
 
 	rooms["UVIP J40"] = new RoomClass(this);
 	rooms["UVIP J40"].roomName = "TWISTING\nRISE";
-	rooms["UVIP J40"].description = "The snow-packed valley to the west gives way to a slight incline, bringing you up to nearly the surface of the plains. In the distance to the north, you can see a glistening lake of ice, surrounding by sloping snowbanks and distant pillars of black mineral.";
+	rooms["UVIP J40"].description = "The snow-packed valley to the west gives way to a slight incline, bringing you up to nearly the surface of the plains. In the distance to the north, you can see a glistening lake of ice, surrounded by sloping snowbanks and distant pillars of black mineral.";
 	rooms["UVIP J40"].planet = "PLANET: UVETO VII";
 	rooms["UVIP J40"].system = "SYSTEM: SIRETTA";
 	rooms["UVIP J40"].northExit = "UVIP J38";
@@ -742,7 +743,7 @@ public function initUvetoRooms():void
 
 	rooms["UVIP N46"] = new RoomClass(this);
 	rooms["UVIP N46"].roomName = "WINDING\nPATHS";
-	rooms["UVIP N46"].description = "You're making your way through shallow paths winding through the snow, faint trails to follow towards what you hope is some worthy destination -- or at least somewhere warm. The path here twists northwards and back east, though not quite towards Irestead.";
+	rooms["UVIP N46"].description = "You're making your way through shallow paths winding through the snow, faint trails to follow towards what you hope is some worthy destination -- or at least somewhere warm. The path here twists northwards and back west, though not quite towards Irestead.";
 	rooms["UVIP N46"].planet = "PLANET: UVETO VII";
 	rooms["UVIP N46"].system = "SYSTEM: SIRETTA";
 	rooms["UVIP N46"].northExit = "UVIP N44";
@@ -940,12 +941,12 @@ public function initUvetoRooms():void
 	rooms["UVIP X34"].moveMinutes = 12;
 	rooms["UVIP X34"].addFlag(GLOBAL.FROZENTUNDRA);
 	rooms["UVIP X34"].addFlag(GLOBAL.HAZARD);
-	rooms["UVIP X34"].runOnEnter = TundraEncounterBonus;
+	rooms["UVIP X34"].runOnEnter = naynaDroneBonus;
 
 	/* SOUTH EXIT TO RIFT */
 	rooms["UVIP Z34"] = new RoomClass(this); // 9999
-	rooms["UVIP Z34"].roomName = "[PH]\nGLACIAL RIFT";
-	rooms["UVIP Z34"].description = "[PH] GLACIAL RIFT MAP";
+	rooms["UVIP Z34"].roomName = "[PH] GLACIAL\nRIFT";
+	rooms["UVIP Z34"].description = "(Placeholder) GLACIAL RIFT MAP";
 	rooms["UVIP Z34"].planet = "PLANET: UVETO VII";
 	rooms["UVIP Z34"].system = "SYSTEM: SIRETTA";
 	rooms["UVIP Z34"].westExit = "UVIP X34";
@@ -1077,7 +1078,7 @@ public function initUvetoRooms():void
 	rooms["UVIP L28"].moveMinutes = 6;
 	rooms["UVIP L28"].addFlag(GLOBAL.ICYTUNDRA);
 	rooms["UVIP L28"].addFlag(GLOBAL.HAZARD);
-	rooms["UVIP L28"].runOnEnter = TundraEncounterBonus;
+	rooms["UVIP L28"].runOnEnter = naynaDroneBonus;
 
 	rooms["UVIP L30"] = new RoomClass(this);
 	rooms["UVIP L30"].roomName = "LAKESIDE\nAPPROACH";
@@ -1157,7 +1158,7 @@ public function initUvetoRooms():void
 	/* BLU ROOM */
 	rooms["UVIP D22"] = new RoomClass(this);
 	rooms["UVIP D22"].roomName = "SNOWBANK\nCAVE";
-	rooms["UVIP D22"].description = "You stand in a snowy cave, clearly dug out by hand from the titanic snowbank around you. An animal belt is spread out on the ground, providing some relief from the constant cold should you desire it. Perhaps whoever made this cave intended it to be a waystation between Irestead and the Rift? Or are you treading in someone's home...?\n\n<b>It's safe to sleep in here, even without a heat belt.</b>";
+	rooms["UVIP D22"].description = "You stand in a snowy cave, clearly dug out by hand from the titanic snowbank around you. An animal pelt is spread out on the ground, providing some relief from the constant cold should you desire it. Perhaps whoever made this cave intended it to be a waystation between Irestead and the Rift? Or are you treading in someone's home...?\n\n<b>It's safe to sleep in here, even without a heat belt.</b>";
 	rooms["UVIP D22"].planet = "PLANET: UVETO VII";
 	rooms["UVIP D22"].system = "SYSTEM: SIRETTA";
 	rooms["UVIP D22"].eastExit = "UVIP F22";
@@ -1174,7 +1175,7 @@ public function initUvetoRooms():void
 	rooms["UVIP F20"].moveMinutes = 6;
 	rooms["UVIP F20"].addFlag(GLOBAL.ICYTUNDRA);
 	rooms["UVIP F20"].addFlag(GLOBAL.HAZARD);
-	rooms["UVIP F20"].runOnEnter = TundraEncounterBonus;
+	rooms["UVIP F20"].runOnEnter = naynaDroneBonus;
 
 	rooms["UVIP H20"] = new RoomClass(this);
 	rooms["UVIP H20"].roomName = "SNOWBANK\nNORTH";
@@ -1191,7 +1192,7 @@ public function initUvetoRooms():void
 	/* BLU ROOM */
 	rooms["UVIP J20"] = new RoomClass(this);
 	rooms["UVIP J20"].roomName = "ICE-HEWN\nCAVERN";
-	rooms["UVIP J20"].description = "You're standing in the mouth of a gaping cavern, a natural formation in the ice by the looks like things. Shards of a half-sunken black pillar can be seen through the northern wall, creating a kind of archway around a tunnel leading deeper. The way out is back east, up a slight incline.\n\n<b>It's safe to sleep in here, even without a heat belt.</b>";
+	rooms["UVIP J20"].description = "You're standing in the mouth of a gaping cavern, a natural formation in the ice by the looks like things. Shards of a half-sunken black pillar can be seen through the northern wall, creating a kind of archway around a tunnel leading deeper. The way out is back west, up a slight incline.\n\n<b>It's safe to sleep in here, even without a heat belt.</b>";
 	rooms["UVIP J20"].planet = "PLANET: UVETO VII";
 	rooms["UVIP J20"].system = "SYSTEM: SIRETTA";
 	rooms["UVIP J20"].northExit = "UVIP J18";
@@ -1371,8 +1372,8 @@ public function initUvetoRooms():void
 	rooms["UVIP R10"].runOnEnter = function():Boolean {
 		if (flags["UVIP_R10_PROBE_ACTIVE"] == undefined)
 		{
-			output("\n\nIt looks like the probe was damage in the crash. It's silent and dark.");
-			addButton(0, "Reactivate", uvetoReactivateProbe, undefined, "Reactivate Probe", "You could probably give this probe a repair job and use it to broadcast a signal back to Irestead. If you do, you might be able to quick transportation...");
+			output("\n\nIt looks like the probe was damaged in the crash. It's silent and dark.");
+			addButton(0, "Reactivate", uvetoReactivateProbe, undefined, "Reactivate Probe", "You could probably give this probe a repair job and use it to broadcast a signal back to Irestead. If you do, you might be able to call for quick transportation...");
 		}
 		else
 		{
@@ -1478,7 +1479,7 @@ public function initUvetoRooms():void
 	rooms["UVIP T6"].moveMinutes = 12;
 	rooms["UVIP T6"].addFlag(GLOBAL.FROZENTUNDRA);
 	rooms["UVIP T6"].addFlag(GLOBAL.HAZARD);
-	rooms["UVIP T6"].runOnEnter = TundraEncounterBonus;
+	rooms["UVIP T6"].runOnEnter = naynaDroneBonus;
 
 	rooms["UVIP V6"] = new RoomClass(this);
 	rooms["UVIP V6"].roomName = "RIFT\nAPPROACH";
@@ -1506,8 +1507,8 @@ public function initUvetoRooms():void
 
 	/* NORTH RIFT EXIT */
 	rooms["UVIP Z6"] = new RoomClass(this);
-	rooms["UVIP Z6"].roomName = "[PH] GLACIAL\nRIFT";
-	rooms["UVIP Z6"].description = "[PH] GLACIAL RIFT MAP";
+	rooms["UVIP Z6"].roomName = "[PH] GLACIAL\nRIFT"; // 9999
+	rooms["UVIP Z6"].description = "(Placeholder) GLACIAL RIFT MAP";
 	rooms["UVIP Z6"].planet = "PLANET: UVETO VII";
 	rooms["UVIP Z6"].system = "SYSTEM: SIRETTA";
 	rooms["UVIP Z6"].westExit = "UVIP X6";
@@ -1563,7 +1564,7 @@ public function initUvetoRooms():void
 	rooms["UVIP V14"].moveMinutes = 6;
 	rooms["UVIP V14"].addFlag(GLOBAL.ICYTUNDRA);
 	rooms["UVIP V14"].addFlag(GLOBAL.HAZARD);
-	rooms["UVIP V14"].runOnEnter = TundraEncounterBonus;
+	rooms["UVIP V14"].runOnEnter = naynaDroneBonus;
 
 	rooms["UVIP V16"] = new RoomClass(this);
 	rooms["UVIP V16"].roomName = "TOWER\nROAD";
@@ -1592,8 +1593,8 @@ public function initUvetoRooms():void
 
 	/* RELAY TOWER */
 	rooms["UVIP X18"] = new RoomClass(this);
-	rooms["UVIP X18"].roomName = "[PH] RELAY\nTOWER";
-	rooms["UVIP X18"].description = "[PH] RELAY TOWER";
+	rooms["UVIP X18"].roomName = "[PH] RELAY\nTOWER"; // 9999
+	rooms["UVIP X18"].description = "(Placeholder) RELAY TOWER";
 	rooms["UVIP X18"].planet = "PLANET: UVETO VII";
 	rooms["UVIP X18"].system = "SYSTEM: SIRETTA";
 	rooms["UVIP X18"].westExit = "UVIP V18";
@@ -1640,8 +1641,8 @@ public function initUvetoRooms():void
 
 	/* CENTER EXIT TO RIFT */
 	rooms["UVIP Z22"] = new RoomClass(this);
-	rooms["UVIP Z22"].roomName = "[PH] GLACIAL\nRIFT";
-	rooms["UVIP Z22"].description = "[PH] GLACIAL RIFT";
+	rooms["UVIP Z22"].roomName = "[PH] GLACIAL\nRIFT"; // 9999
+	rooms["UVIP Z22"].description = "(Placeholder) GLACIAL RIFT";
 	rooms["UVIP Z22"].planet = "PLANET: UVETO VII";
 	rooms["UVIP Z22"].system = "SYSTEM: SIRETTA";
 	rooms["UVIP Z22"].westExit = "UVIP X22";
