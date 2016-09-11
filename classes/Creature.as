@@ -3864,7 +3864,7 @@
 			var scalar:int = 1;
 			if(hasPerk("Resin")) scalar = perkv1("Resin");
 			
-			return level * 5 * scalar + bonuses;
+			return base * scalar + bonuses;
 		}
 		public function aimMax(): Number {
 			var base:int = level * 5;
@@ -3892,7 +3892,7 @@
 				bonuses += level;
 				if(perkv1("Dumb4Cum") > 24) bonuses -= (perkv1("Dumb4Cum") - 24);
 			}
-			return level * 5 + bonuses;
+			return base + bonuses;
 		}
 		public function willpowerMax(): Number {
 			var base:int = level * 5;
