@@ -65,7 +65,7 @@ package classes.UIComponents.ContentModuleComponents
 				{
 					if (item.levelLimit > kGAMECLASS.pc.level) continue;
 					if (kGAMECLASS.pc.hasPerk(item.perkName)) continue; // don't show already claimed perks
-					if (!item.isAccessable) continue;
+					//if (!item.isAccessable) continue;
 					//trace("Perk: " + item.perkName);
 					counter++;
 					
@@ -122,7 +122,7 @@ package classes.UIComponents.ContentModuleComponents
 		
 		public function setInitialState(creature:Creature):void
 		{
-			if (_configured == false || _configuredForClass != creature.characterClass || kGAMECLASS.pc.characterClass == GLOBAL.CLASS_ADVENTURER) // Adventurer has dynamic list
+			if (_configured == false || _configuredForClass != creature.characterClass || creature.characterClass == GLOBAL.CLASS_ADVENTURER) // Adventurer has dynamic list
 			{
 				this.Build();
 				_configuredForClass = creature.characterClass;
@@ -131,6 +131,13 @@ package classes.UIComponents.ContentModuleComponents
 			// Check each perk from each group
 			for (var i:int = 0; i < _perkGroups.length; i++)
 			{
+				if (creature.characterClass == GLOBAL.CLASS_ADVENTURER)
+				{
+					var perk:PerkButton = _perkGroups[i].buttonOne;
+					if (!perk.perkReference.isAccessable) perk.setUnavailable();
+					else perk.setAvailable();
+					continue;
+				}
 				// Quick checks -- level < group tier, both unavailable
 				if (creature.level < i + 2) 
 				{
