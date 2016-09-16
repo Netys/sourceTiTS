@@ -81,7 +81,7 @@ public function SphinxRiddle1(riddles:Array):void {
 //Special Occurrence: Pick [A Sphinx]
 public function riddleOneSphinx():void {
 	clearOutput();
-	output("The sphinx narrows her eyes at you, crossing her arms over her chest.  \"<i>You don't say?  Come on, step it up, [name].  Sorry, but that's wrong.  Let's try again.</i>\"");
+	output("The sphinx narrows her eyes at you, crossing her arms over her chest.  \"<i>You don't say?  Come on, step it up, [pc.name].  Sorry, but that's wrong.  Let's try again.</i>\"");
 	clearMenu();
 	addButton(0, "Next", sphinxRiddlePicker, riddleGameReset());
 }

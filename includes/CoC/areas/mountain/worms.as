@@ -226,7 +226,7 @@ public function infestOrgasm():void {
 	//}
 	//if(monster.findStatusAffect(StatusAffects.TwuWuv) >= 0) {
 		//output("You expose yourself and attempt to focus on expelling your squirming pets toward Sheila but as you picture launching a flood of parasites from [eachCock], the fantasy she sent returns to you, breaking your concentration!  Your hand darts automatically to your crotch, stroking [oneCock] as you imagine unloading into her cunt... only with effort do you pull it away!\n\n");
-		//output("\"<i>Oh, my,</i>\" the demon teases.  \"<i>You don't have to masturbate yourself, [name]... I'll be happy to do it for you.</i>\"\n\n");
+		//output("\"<i>Oh, my,</i>\" the demon teases.  \"<i>You don't have to masturbate yourself, [pc.name]... I'll be happy to do it for you.</i>\"\n\n");
 		//dynStats("lus", 5 + pc.sens/10, "resisted");
 		//enemyAI();
 		//return;
