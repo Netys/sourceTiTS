@@ -4122,7 +4122,7 @@ private function highAffectionEmberLustFuck():void
 	output("\n\nEmber has already made [ember.himHer]self comfortable, laying flat on [ember.hisHer] back, [ember.hisHer] wings outspread amidst the leaves for stability, [ember.hisHer] legs lifted up in front of [ember.himHer] with hands wrapped around the curled crooks of [ember.hisHer] knees to hold them out of the way.");
 
 	//If Ember is male:
-	if (!pc.hasVagina()) {
+	if (!ember.hasVagina()) {
 		output("\n\n\"<i>I... um... well, the postures you've shown me are kind of meant more for a female dragon in the receiving position, but since I'm a boy you'll kind of have to... er... use what I do have,</i>\" he looks away in shame, though whether it's due to what he's trying to say or at the fact he lacks the parts that the poses are for is hard to say.  He swivels one arm to use his hand to spread apart his ass-cheeks, letting you get a clear look at his anus; the invitation is obvious.");
 		output("\n\nYou lean over beside the embarrassed dragon and put a hand over his shoulder, then promise him to make him feel good and that you'll be gentle.");
 		output("\n\nEmber looks embarrassed as he can get without blushing, then smiles happily and stares up at you with a doting smile.  His tongue slicks out to lick your cheek in an affectionate gesture.");
