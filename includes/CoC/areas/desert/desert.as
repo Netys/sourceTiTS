@@ -31,7 +31,7 @@ public function exploreDesert():void
 	
 	if ((pc.level >= 4 || flags["COC.EXPLORED_DESERT"] > 45) && Flag("COC.DISCOVERED_WITCH_DUNGEON") == 0) {
 		choice.push(TravelToDesertCave);
-		chance.push(5);
+		chance.push(2);
 	}
 	
 	//int over 50?  Chance of alice encounter!

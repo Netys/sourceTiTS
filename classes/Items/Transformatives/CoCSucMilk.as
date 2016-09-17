@@ -471,6 +471,7 @@ package classes.Items.Transformatives
 			target.createVagina();
 			target.clitLength = .25;
 			target.shiftVagina(0, Mutator.guessVagType(target));
+			output("\n\nAn itching starts in your crotch and spreads vertically. You reach down and discover an opening. You have grown a <b>new " + target.vaginaDescript(0) + "</b>!");
 		}
 	}
 }

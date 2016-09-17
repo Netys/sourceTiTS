@@ -51,8 +51,7 @@ public function giveTwoOviElix():void
 	output("You hand over two elixirs, the harpy more than happy to take them from you.  In return, she unties a corner of the sheet atop the cart, allowing you to take a look at her collection of eggs.");
 	//[Black][Blue][Brown][Pink][Purple]
 	clearMenu();
-	//addButton(0, "Black", getHarpyEgg, consumables.BLACKEG);
-	addDisabledButton(0, "Black", "Black", "Black eggs are not implemented.");
+	addButton(0, "Black", getHarpyEgg, new CoCBlackEgg());
 	addButton(1, "Blue", getHarpyEgg, new CoCBlueEgg());
 	addButton(2, "Brown", getHarpyEgg, new CoCBrownEgg());
 	addButton(3, "Pink", getHarpyEgg, new CoCPinkEgg());
@@ -69,8 +68,7 @@ public function giveThreeOviElix():void
 	output("You hand over three elixirs, the harpy ecstatic over the fact that you're willing to part with them.  In return, she unties a side of the sheet atop the cart, allowing you to take a look at a large collection of her eggs.");
 	//[Black][Blue][Brown][Pink][Purple]
 	clearMenu();
-	//addButton(0, "Black", getHarpyEgg, consumables.L_BLKEG);
-	addDisabledButton(0, "Black", "Black", "Black eggs are not implemented.");
+	addButton(0, "Black", getHarpyEgg, new CoCBlackEggLarge());
 	addButton(1, "Blue", getHarpyEgg, new CoCBlueEggLarge());
 	addButton(2, "Brown", getHarpyEgg, new CoCBrownEggLarge());
 	addButton(3, "Pink", getHarpyEgg, new CoCPinkEggLarge());

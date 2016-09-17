@@ -168,7 +168,7 @@ public function pcBeatsATrap():void {
 		CombatManager.genericVictory();
 	});
 
-	addDisabledButton(0, "UseYourCock", "Use Your Cock", "This scene requires you to have cock.");
+	addDisabledButton(0, "UseYourCock", "Use Your Cock", "This scene requires you to have cock and to be strong enough to pull it out from sand.");
 	addDisabledButton(1, "RideVaginal", "RideVaginal", "This scene requires you to have vagina.");
 	addDisabledButton(2, "Handjob", "Handjob", "This scene requires you to have genitals.");
 	addDisabledButton(3, "Naga3Some", "Naga3Some", "This scene requires you to have friendly naga around, your own naga tail, snake tongue and genitals.");

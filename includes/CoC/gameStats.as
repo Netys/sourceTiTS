@@ -262,6 +262,20 @@ public function displayEncounterLogCoCVarious():int
 		}
 	}
 	
+	if(flags["COC.BAZAAR_ENTERED"] > 0) {
+		output2("\n\n" + blockHeader("Encounters: Bizzare Bazaar", false));
+		
+		if(flags["COC.TIMES_IN_BENOITS"] > 0) {
+			output2("\n<b><u>[benoit.name]</u></b>");
+			if (benoitAffection() > 0) output2("\n<b>* Affection: </b>" + benoitAffection());
+			if ((int(flags["COC.BENOIT_TIMES_SEXED_FEMPCS"]) + int(flags["COC.BENOITE_TIMES_SEXED"])) > 0) output2("\n<b>* Times Sexed: </b>" + (int(flags["COC.BENOIT_TIMES_SEXED_FEMPCS"]) + int(flags["COC.BENOITE_TIMES_SEXED"])));
+			output2("\n<b>* Attitude: </b>");
+			if (benoit.hasVagina() && int(flags["COC.BENOITE_TIMES_SEXED"]) == 0) output2(" Friend");
+			else if (benoitLover() || flags["COC.BENOITE_TIMES_SEXED"] > 0) output2(" Lover");
+			else output2(" Neutral");
+		}
+	}
+	
 	// Plains
 	if(flags["COC.EXPLORED_PLAINS"] > 0) {
 		output2("\n\n" + blockHeader("Encounters: Plains", false));

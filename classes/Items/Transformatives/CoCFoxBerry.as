@@ -376,6 +376,8 @@ package classes.Items.Transformatives
 				pc.tone -= 4;
 			}
 			
+			if ((enhanced || pc.faceType == GLOBAL.TYPE_VULPINE) && changes < changeLimit && rand(3) == 0 && Mutator.changeEyes(pc, GLOBAL.TYPE_VULPINE, ["yellow", "yellow", "amber", "amber", "hazel", "hazel", "brown", "gold", "blue"])) changes++;
+			
 			// foxgina
 			if (changes < changeLimit && rand(3) == 0 && pc.hasVagina() && pc.vaginas[0].type != GLOBAL.TYPE_VULPINE) {
 				output("\n\nSomething invisible brushes against your sex, making you twinge.  ");

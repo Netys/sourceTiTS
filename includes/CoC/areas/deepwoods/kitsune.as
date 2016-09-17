@@ -2621,10 +2621,10 @@ public var corruptKitsuneEyeColors:Array = ["sable"];
 
 public function validatePlayerKitsuneElderColor():void {
 	if (pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Nine-tails")) {
-		if (pc.eyeType != GLOBAL.TYPE_HUMAN && pc.eyeType != GLOBAL.TYPE_VULPINE) {
-			pc.eyeType = GLOBAL.TYPE_HUMAN;
+		if (pc.eyeType != GLOBAL.TYPE_VULPINE) {
+			pc.eyeType = GLOBAL.TYPE_VULPINE;
 			pc.eyeColor = RandomInCollection(elderKitsuneEyeColors);
-			output("\n\nYour eyes have changed! <b>They're now human-like with large [pc.eyeColor] irises</b>, unfathomable and serene, like a clear summer sky.");
+			output("\n\nYour eyes have changed! <b>They're now fox-like with slitted pupils and large, [pc.eyeColor] irises</b>, unfathomable and serene, like a clear summer sky.");
 		}
 		else if (!InCollection(pc.eyeColor, elderKitsuneEyeColors)) {
 			pc.eyeColor = RandomInCollection(elderKitsuneEyeColors);
@@ -2660,10 +2660,10 @@ public function validatePlayerKitsuneElderColor():void {
 	}
 	else 
 	if (pc.hasPerk("Corrupted Nine-tails")) { // imma lazy, yep
-		if (pc.eyeType != GLOBAL.TYPE_HUMAN && pc.eyeType != GLOBAL.TYPE_VULPINE) {
-			pc.eyeType = GLOBAL.TYPE_HUMAN;
+		if (pc.eyeType != GLOBAL.TYPE_VULPINE) {
+			pc.eyeType = GLOBAL.TYPE_VULPINE;
 			pc.eyeColor = RandomInCollection(corruptKitsuneEyeColors);
-			output("\n\nYour eyes have changed! <b>They're now human-like with large [pc.eyeColor] irises</b>, cold and dull, like a cloudy winter sky.");
+			output("\n\nYour eyes have changed! <b>They're now human-like fox-like with slitted pupils and large, [pc.eyeColor] irises</b>, cold and dull, like a cloudy winter sky.");
 		}
 		else if (!InCollection(pc.eyeColor, corruptKitsuneEyeColors)) {
 			pc.eyeColor = RandomInCollection(corruptKitsuneEyeColors);

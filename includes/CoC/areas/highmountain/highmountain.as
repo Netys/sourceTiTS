@@ -48,7 +48,7 @@ public function exploreHighMountain():void {
 	}
 
 	//Harpy odds!
-	if (pc.hasItem(new CoCOvipositionElixir()) || IncrementFlag("COC.TIMES_MET_CHICKEN_HARPY", false) <= 0) {
+	if (pc.hasItem(new CoCOvipositionElixir()) || int(flags["COC.TIMES_MET_CHICKEN_HARPY"]) <= 0) {
 		choice.push(chickenHarpy);
 		chance.push(pc.hasItem(new CoCOvipositionElixir(), 2) ? 2 : 6);
 	}

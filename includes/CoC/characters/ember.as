@@ -195,7 +195,7 @@ public function emberGroinDesc(cock:String, pussy:String, herm:String = " and ")
 
 public function emberChildren():int
 {
-	return (flags["COC.EMBER_CHILDREN_MALES"] + flags["COC.EMBER_CHILDREN_FEMALES"] + flags["COC.EMBER_CHILDREN_HERMS"]);
+	return (int(flags["COC.EMBER_CHILDREN_MALES"]) + int(flags["COC.EMBER_CHILDREN_FEMALES"]) + int(flags["COC.EMBER_CHILDREN_HERMS"]));
 }
 
 //Approaching Ember (Z)
@@ -2110,7 +2110,7 @@ private function getMilkFromEmber():void
 		output("\n\nEmber gets so flustered that [ember.heShe] just stares at you in stunned silence, wearing a goofy smile.  \"<i>Wha... you know, there's no point in saying anything.  I know you'll just sneak another opportunity like this in the future... doesn't mean I won't make you pay for this when I catch you later.</i>\"");
 		output("\n\nYou whisper into her ear that you're looking forward to it, and gently raise yourself from [ember.hisHer] lap to leave.");
 		//(no new PG, PC has dragon-morph status and is opposite Ember's sex:
-		if (rand(2) == 0 && pc.dragonScore() >= 4 && pc.hasGenitals() && (pc.hasVagina() && ember.hasCock() || ember.hasVagina() && pc.hasCock())) {
+		if (rand(2) == 0 && pc.dragonScore() >= 4 && pc.hasGenitals() && (pc.hasVagina() && ember.hasCock() && !pc.hasWombPregnancy() || ember.hasVagina() && pc.hasCock())) {
 			output("  Though, a sudden swell of lust races through your [pc.crotch], making you wish Ember hadn't run you off.  All you can think about now is fucking [ember.hisHer]; ");
 			if (pc.hasCock() && ember.hasVagina()) {
 				output("filling her womb with your seed and fertilizing her eggs");
@@ -3895,15 +3895,14 @@ public function giveBirthToEmberKids(pregSlot:int):void
 	if (!pc.hasVagina(pregSlot)) {
 		pc.createVagina();
 		pregSlot = pc.vaginas.length - 1; // failsafe
-		output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
-		output("\n\n");
+		output("\n\nYou feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
 	}
 	
 	var roll:int = rand(100);
 	//PC Gives Live Birth
 	if (!ember.hasPerk("Oviposition")) {
 		//40% chance of boy, 40% chance of girl and 20% chance of both
-		output("You find yourself doubling over - well, as far as you can given your hugely gravid stomach, letting out a hollow cry of pain.  You can feel the muscles in your midriff starting to squeeze and ripple in a fashion you just know signifies the onset of labor.  You cry out for Ember to come and attend you.  Ember rushes towards you in a blur, stopping mere inches from you, panting.  \"<i>What is it?  Is it time!?  Are you in labor!?</i>\" [ember.heShe] asks in a hurry.  You nod and tell [ember.himHer] that you are.");
+		output("\n\nYou find yourself doubling over - well, as far as you can given your hugely gravid stomach, letting out a hollow cry of pain.  You can feel the muscles in your midriff starting to squeeze and ripple in a fashion you just know signifies the onset of labor.  You cry out for Ember to come and attend you.  Ember rushes towards you in a blur, stopping mere inches from you, panting.  \"<i>What is it?  Is it time!?  Are you in labor!?</i>\" [ember.heShe] asks in a hurry.  You nod and tell [ember.himHer] that you are.");
 
 		output("\n\nEmber wastes no time, [ember.heShe] hefts you into [ember.hisHer] arms and takes you to [ember.hisHer] den, gently setting you down on the soft leaves; then [ember.heShe] starts undressing you, stripping your [pc.gear] as quickly as [ember.heShe] can.  \"<i>Okay, Okay...  What do you need?  W-what should I do!?  Do you need anything!?  How are you feeling!?</i>\" Ember asks in panic, the excitement of what's about to happen too much to bear for the dragon" + ember.mf("-boy", "-girl") + ".");
 		output("\n\nYou grit out between your teeth that you are feeling very sore, and what you want is for [ember.himHer] to help you somewhere comfortable so you can get this slithering snake of a baby out of your guts - preferably before he or she kicks his-her way out straight through your belly rather than coming down the birth canal!");
@@ -3974,15 +3973,14 @@ public function giveBirthToEmberKids(pregSlot:int):void
 		else output("She");
 		output(" coos, giggles and nuzzles into your neck, clearly happy to be here in the real world at last.");
 
-		output("\n\n\"<i>I'll tend to the little one, you can just rest for a while longer,</i>\" Ember offers, taking the cute little dragon up in [ember.hisHer] arms.  You sigh and nod your head gratefully, then lay back down to get some more rest.\n");
+		output("\n\n\"<i>I'll tend to the little one, you can just rest for a while longer,</i>\" Ember offers, taking the cute little dragon up in [ember.hisHer] arms.  You sigh and nod your head gratefully, then lay back down to get some more rest.");
 		if (roll < 40) IncrementFlag("COC.EMBER_CHILDREN_MALES");
 		else if (roll < 80) IncrementFlag("COC.EMBER_CHILDREN_FEMALES");
 		else IncrementFlag("COC.EMBER_CHILDREN_HERMS");
 	}
 	//PC Lays Egg
 	else {
-		//(If the PC has no pussy)
-		output("You find yourself doubling over - well, as far as you can given your hugely gravid stomach, letting out a hollow cry of pain.  You can feel the muscles in your midriff starting to squeeze and ripple in a fashion you just know signifies the onset of labor.  You cry out for Ember to come and attend you.  Ember rushes towards you in a blur, stopping mere inches from you, panting.  \"<i>What is it? Is it time!? Are you ready to lay!?</i>\" [ember.heShe] asks in a hurry.  You nod and tell [ember.himHer] that you are.");
+		output("\n\nYou find yourself doubling over - well, as far as you can given your hugely gravid stomach, letting out a hollow cry of pain.  You can feel the muscles in your midriff starting to squeeze and ripple in a fashion you just know signifies the onset of labor.  You cry out for Ember to come and attend you.  Ember rushes towards you in a blur, stopping mere inches from you, panting.  \"<i>What is it? Is it time!? Are you ready to lay!?</i>\" [ember.heShe] asks in a hurry.  You nod and tell [ember.himHer] that you are.");
 
 		output("\n\nEmber wastes no time - [ember.heShe] hefts you into [ember.hisHer] arms and takes you to [ember.hisHer] den, gently setting you down on the soft leaves.  Then [ember.heShe] starts undressing you, stripping your [pc.gear] as quickly as [ember.heShe] can.  \"<i>Okay, Okay...  What do you need?  W-what should I do!?  Do you need anything!?  How are you feeling!?</i>\" Ember asks in panic, the excitement of what's about to happen too much to bear for the dragon" + ember.mf("-boy", "-girl") + ".");
 
@@ -4030,9 +4028,10 @@ public function giveBirthToEmberKids(pregSlot:int):void
 		else output(" hatches");
 		output(", anyway.  The dragon ");
 		if (!ember.hasScales()) output("blushes and then ");
-		output("scurries away, even as you pull yourself upright and get ready to go about your business.\n");
+		output("scurries away, even as you pull yourself upright and get ready to go about your business.");
 		IncrementFlag("COC.EMBER_EGGS");
 	}
+	StatTracking.track("coc/pregnancy/pc ember");
 	flags["COC.EMBER_NAPPING"] = 5 * 60;
 	
 	processTime(2 * 60);

@@ -280,7 +280,7 @@ private function joeysMassageWithEXTRASpooge():void {
 	if(pc.cumQ() >= 1500) output("  Joey's jaw drops from the unexpectedly large volume you're producing, and he watches in awe as each huge globule of cum rolls off you towards the floor.");
 	output("\n\n");
 	
-	output("The bunny-boy springs back atop you, landing hard just below your hips.  His dripping seed washes over [pc.eachCock], and the sudden onslaught of fresh, liquid warmth on your groin sets off a small explosion of jism that splatters into your chin, leaving a long trail of slime behind like a snail.  The long-eared girly-boy smiles and shifts to rub his small cock against your [pc.cock], frotting you aggressively while you both spray cum like faucets with the knobs torn off.  You don't mind that he seems to have forgotten the massage, and you run your hands up and down your[pc.chest] to smear the heavy loads ");
+	output("The bunny-boy springs back atop you, landing hard just below your hips.  His dripping seed washes over [pc.eachCock], and the sudden onslaught of fresh, liquid warmth on your groin sets off a small explosion of jism that splatters into your chin, leaving a long trail of slime behind like a snail.  The long-eared girly-boy smiles and shifts to rub his small cock against your [pc.cock], frotting you aggressively while you both spray cum like faucets with the knobs torn off.  You don't mind that he seems to have forgotten the massage, and you run your hands up and down your [pc.chest] to smear the heavy loads ");
 	if(pc.skinType != GLOBAL.SKIN_TYPE_FUR) output("over your [pc.skinFurScales]");
 	else output("through your [pc.skinFurScales]");
 	output(".\n\n");

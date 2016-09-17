@@ -43,7 +43,7 @@ package classes.Items.Armor
 			this.defense = 3;
 			this.shieldDefense = 0;
 			this.shields = 0;
-			this.sexiness = 4;
+			this.sexiness = 6;
 			this.critBonus = 0;
 			this.evasion = 1;
 			this.fortification = 0;

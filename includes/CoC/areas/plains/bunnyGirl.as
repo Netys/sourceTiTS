@@ -69,7 +69,7 @@ public function bunnbunbunMeet():void {
 		addDisabledButton(2, "69", "69", "This scene requires you to have genitals.");
 		
 		if (pc.hasVagina()) addButton(0, "Your Vagina", bunbunFucksYourVag);
-		if (pc.cockThatFits(40) >= 0) addButton(1, "Her Vagina", bunbunGetsFucked);
+		if (pc.cockThatFits(cockVolume(40)) >= 0) addButton(1, "Her Vagina", bunbunGetsFucked);
 		if (pc.hasGenitals() && (pc.IQ() < 20 || !pc.isTaur())) addButton(2, "69", bunbun69);
 		
 		addButton(3, "Your Ass", bunbunFucksPCInAss);
@@ -101,7 +101,7 @@ private function talkToBunnyBunBun():void {
 	addDisabledButton(2, "69", "69", "This scene requires you to have genitals.");
 	
 	if (pc.hasVagina()) addButton(0, "Your Vagina", bunbunFucksYourVag);
-	if (pc.cockThatFits(40) >= 0) addButton(1, "Her Vagina", bunbunGetsFucked);
+	if (pc.cockThatFits(cockVolume(40)) >= 0) addButton(1, "Her Vagina", bunbunGetsFucked);
 	if (pc.hasGenitals()) addButton(2, "69", bunbun69);
 	
 	addButton(3, "Your Ass", bunbunFucksPCInAss);

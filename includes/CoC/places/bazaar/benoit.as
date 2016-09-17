@@ -285,7 +285,7 @@ public function benoitIntro():void {
 		addOverrideItemButton(10, new CoCFlintlockPistol(), "Flintlock", buyFlintlock);
 	
 	//Feminize & Herminize
-	//if (Flag("COC.FEMOIT_UNLOCKED") == 1 && int(flags["COC.BENOIT_STATUS"]) == 0) addButton(3, "Feminize", benoitFeminise);
+	if (Flag("COC.FEMOIT_UNLOCKED") == 1 && int(flags["COC.BENOIT_STATUS"]) == 0) addButton(3, "Feminize", benoitFeminise);
 	if (int(flags["COC.BENOIT_STATUS"]) > 0 && int(flags["COC.BENOIT_STATUS"]) < 3) addButton(3, "Herminize", benoitHerminise);
 	//Basilisk Womb
 	if(Flag("COC.BENOIT_WOMB_TALK_UNLOCKED") == 1 && !pc.hasPerk("Basilisk Womb") && Flag("COC.BENOIT_TESTED_BASILISK_WOMB") == 0 && int(flags["COC.BENOIT_STATUS"]) == 0) addButton(4, "Basil. Womb", tryToConvertToBassyWomb);
@@ -386,13 +386,13 @@ private function talkToBenoit():void {
 	clearOutput();
 
 	//(+5 Affection per day if used)
-	if(flags["COC.BENOIT_TALKED_TODAY"] == 0) {
-		flags["COC.BENOIT_TALKED_TODAY"] = 1;
+	if(int(flags["COC.BENOIT_TALKED_TODAY"]) != days) {
+		flags["COC.BENOIT_TALKED_TODAY"] = days;
 		benoitAffection(5);
 	}
 	//Basilisk Womb
 	//Requires: Had sex with Benoit at least twice, have vagina, select talk
-	if(((flags["COC.BENOIT_TIMES_SEXED_FEMPCS"] > 2 && pc.IQ() >= 60 && flags["COC.BENOIT_WOMB_TALK_UNLOCKED"] == 0) || flags["COC.BENOIT_TIMES_SEXED_FEMPCS"] == 2) && pc.hasVagina()) {
+	if(((flags["COC.BENOIT_TIMES_SEXED_FEMPCS"] > 2 && pc.IQ() >= 60 && int(flags["COC.BENOIT_WOMB_TALK_UNLOCKED"]) == 0) || int(flags["COC.BENOIT_TIMES_SEXED_FEMPCS"]) == 2) && pc.hasVagina()) {
 		output("You ask [benoit.short] if [benoit.heShe] has ever thought about trying to do something to help his people's plight.");
 		
 		output("\n\nThe basilisk is silent for a time, running his claws along the counter pensively.  \"<i>Yes,</i>\" [benoit.heShe] says eventually, in a quiet tone.  \"<i>I 'ave.  Away from ze mountains, I 'ave 'ad time to sink.  I am not ze demons' slave anymore, and I am a funny joke of a basilisk anyway, so I 'ave often thought about... making certain zacrifices.  If we 'ad just one female, away from zeir corruption, zen...</i>\" [benoit.heShe] trails off, sighing heavily before smiling ruefully at you.  \"<i>Zose were ze kind of soughts I 'ad before I met you.  Crazy, yes?  Even more crazy to be still sinking zem when a good woman is giving me 'er love for no reason except through ze kindness of 'er 'art.  Still... it is so frustrating, being able to sink clearly about zese sings and not being able to do anysing about it.</i>\"");
@@ -408,11 +408,11 @@ private function talkToBenoit():void {
 			output("\n\nYou rack your brain but can't think of anything that could help Benoit, so you end up simply sympathising with [benoit.himHer].  \"<i>Do not beat yourself up over it,</i>\" says the basilisk, touching the tips of your fingers and smiling warmly.  \"<i>It is just foolishness.  And anyway, I told you: we are a race of bastards.  We are ze last guys who deserve someone sinking after us.</i>\"");
 			//don't trigger event again until the PC is smart enough!
 		}
-		doNext(returnToCampUseOneHour);
+		addNextButton(function():*{ processTime(5 + rand(2)); enterTheBazaarAndMenu(); } );
 	}
 	//First time Talk: 
-	else if(flags["COC.BENOIT_TALKED_TO_PROPERLY"] == 0) {
-		flags["COC.BENOIT_TALKED_TO_PROPERLY"]++;
+	else if(int(flags["COC.BENOIT_TALKED_TO_PROPERLY"]) == 0) {
+		flags["COC.BENOIT_TALKED_TO_PROPERLY"] = 1;
 		output("You take a moment to look the strange merchant over.  Although blind, [benoit.heShe] doesn't seem very old - [benoit.heShe] retains the tight, thin muscular frame of other basilisks you've seen, but looks to be slightly shorter and for all his proud, cruel profile seems slightly shabby around the edges.  In what is presumably a nod towards civilized manners, [benoit.heShe] is wearing a pair of denim long johns as well as his fez, perched upon one of his head spines.  You introduce yourself, and then decide to ask [benoit.himHer] about basilisks.");
 		
 		output("\n\n\"<i>We were a proud race once,</i>\" sighs Benoit.  \"<i>A noble race, who carried our 'eads 'igh, and...</i>\" the blind basilisk bursts into throaty laughter, which eventually subsides into a coughing fit.  You watch, bemused.  \"<i>Hahaha!  Aha.  Sorry.  No, we were always a race of egg-thieving bastards.  The lizans,</i>\" [benoit.heShe] flicks his snout in the general direction of the bonfire with disdain, \"<i>absolutely 'ate us.  Zey drove us to live in ze mountains, far away from zeir precious clutches, to live like savages.  'Ze family with ze evil eye over it', zat's what zey call us.  Eh... in basilisk it's more snappy.</i>\"  Benoit pauses, running his fingers over the counter ruminatively.  \"<i>But it wasn't so bad, up zair.  We kept ze harpies under control, and we collected scrap, sold it to zose who were brave enough to trade blindfolded.  We've always been good at zat.  Zen ze demons came to ze mountains.</i>\"");
@@ -420,9 +420,9 @@ private function talkToBenoit():void {
 		output("\n\nHe shrugs. \"<i>What were we going to do?  Go down and throw ourselves on the mercy of the races 'oo despise us?  Ze demons offered to set us high in zeir service, augment our natural abilities if we agreed to help zem.  I suppose zey did, at zat.</i>\"  Benoit scratches a long groove in his counter, trembling with anger.  \"<i>By making us all male zey made sure we are always fixated on finding egg bearers, on keeping ze harpies down, and bringing scrap and statues to zem so zey don't do anysing worse to us.  We are just a brainless natural defence to zem now, in zeir mountain hideaways.  Don't go up ze mountain or ze evil basilisks will get you!  Bastards.  Bastards.</i>\"  Benoit finishes mutilating the wood in front of [benoit.himHer] and sighs.  \"<i>But zat is by ze by.  Are you going to buy sumsing or not?</i>\"");
 	}
 	// First time Femoit talk
-	else if (flags["COC.FEMOIT_TALKED_TO"] == 0 && flags["COC.BENOIT_STATUS"] != 0)
+	else if (int(flags["COC.FEMOIT_TALKED_TO"]) == 0 && int(flags["COC.BENOIT_STATUS"]) != 0)
 	{
-		flags["COC.FEMOIT_TALKED_TO"]++;
+		IncrementFlag("COC.FEMOIT_TALKED_TO");
 		output("You ask Benoite if she intends to go back to the mountains now.  She laughs long and hard at this.  One thing the transformation has certainly gifted her is an extraordinarily filthy laugh.");
 
 		output("\n\n\"<i>Oh [pc.name], you are so silly,</i>\" she says fondly.  \"<i>'Ow long do you sink a blind female basilisk would last up zair, eh?  If I was really lucky ze minotaurs would get me before ze demons did.  No, I will stay ere.  Ze uzzer basilisks, I cannot trust zem - zey are always exposed to ze corruption, some of zem even like it.  I will lay eggs far away from zere, I will raise my children to be different; away from ze corruption and with equal numbers of males and females, it will be different.  Zere are many empty places in zis world now zey can go to and be left alone.</i>\"  She pauses. \"<i>Or at least zese sings will 'appen once I work up ze courage to find a, er, donor.</i>\"");
@@ -436,14 +436,12 @@ private function talkToBenoit():void {
 			output("\n\nYou ask if she's had any thoughts on that front. \"<i>Well, I do 'ave zis one customer 'oo seems very kind.  And 'oo knows me a great deal better zan anyone else around 'ere,</i>\" Benoite mumbles, twiddling her fingers.  \"<i>But zis person 'as already done a great deal for me, so I don't know if... per'aps zis is asking too much. I will find someone though, never fear.  As I said before...</i>” Benoite points two fingers at her blind eyes and then at the stall entrance.  There’s a distinct gleam in those cloudy grey depths you think would scare the hell out of most things with a penis. “<i>I ‘ave a purpose now.</i>");
 
 			clearMenu();
-			addButton(0, "PLACEHOLDER", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
-			//addButton(0, "Yes", femoitFirstTimeYes);
-			//addButton(1, "No", femoitFirstTimeNo);
+			addButton(0, "Yes", femoitFirstTimeYes);
+			addButton(1, "No", femoitFirstTimeNo);
+			return;
 		}
-
-		return;
 	}
-	else if (flags["COC.BENOIT_TALKED_TO_PROPERLY"] != 0 && benoitAffection() >= 40 && flags["COC.BENOIT_TIMES_SEXED_FEMPCS"] == 0 && flags["COC.FEMOIT_UNLOCKED"] == 0)
+	else if (int(flags["COC.BENOIT_TALKED_TO_PROPERLY"]) != 0 && benoitAffection() >= 40 && (int(flags["COC.BENOIT_TIMES_SEXED_FEMPCS"]) == 0 || !pc.hasVagina()) && int(flags["COC.FEMOIT_UNLOCKED"]) == 0)
 	{
 		femoitInitialTalk();
 		clearMenu();
@@ -466,7 +464,7 @@ private function talkToBenoit():void {
 			choices[choices.length] = 13;
 		}
 		// Femoit specials
-		if (flags["COC.BENOIT_STATUS"] != 0)
+		if (int(flags["COC.BENOIT_STATUS"]) != 0)
 		{
 			choices.push(14);
 			choices.push(15);
@@ -482,7 +480,7 @@ private function talkToBenoit():void {
 		}
 		else if(choice == 1) {
 			output("You ask [benoit.short] about the dog.");
-			output("\n\n\"<i>Pierre 'asn't been giving you trouble, as 'e?  Big stupid mutt does not know 'is mouth from 'is arse.  Which is why 'e checks so often,</i>\" says the basilisk fondly, rubbing the Alsatian behind his ear.  \"<i>I found 'im prowling around eating scraps from ze food sellers when I first got ere; I sink 'e must 'ave belonged to anuzzer trader 'oo left [benoit.himHer] behind.  I do not sink I could run this shop without [benoit.himHer] - every evening I go out into the wilds with [benoit.himHer] and 'unt down more salvage.  'Ee is so good at finding perfectly good sings other people 'ave left behind.  Particularly cloze.  'E loves robes, Pierre.  Don't you, boy?</i>\"  Pierre whines.");
+			output("\n\n\"<i>Pierre 'asn't been giving you trouble, as 'e?  Big stupid mutt does not know 'is mouth from 'is arse.  Which is why 'e checks so often,</i>\" says the basilisk fondly, rubbing the Alsatian behind his ear.  \"<i>I found 'im prowling around eating scraps from ze food sellers when I first got ere; I sink 'e must 'ave belonged to anuzzer trader 'oo left [benoit.himHer] behind.  I do not sink I could run this shop without him - every evening I go out into the wilds with him and 'unt down more salvage.  'Ee is so good at finding perfectly good sings other people 'ave left behind.  Particularly cloze.  'E loves robes, Pierre.  Don't you, boy?</i>\"  Pierre whines.");
 		}
 		else if(choice == 2) {
 			output("You ask [benoit.himHer] about the sign above the shop.");
@@ -582,7 +580,7 @@ private function talkToBenoit():void {
 				output("She smiles shyly at you. “<i>One sing I ‘ave definitely ‘ad to resink is what I find attractive.  I did not find ze male form attractive before, so for my body to... respond... when you are close, zat is when I most feel ze disconnect between my experience and what I am now.  Per’aps zis is also why I ‘ave not sought about it too much; it is better just to rely on instinct.</i>”");
 				output("\n\nCharming, you say.");
 				output("\n\nBenoite grins wider at your affected hurt. “<i>Oh do not worry [pc.name], you ‘ave a beautiful personality.  And ow important exactly do you sink your personal appearance is to me?</i>”");
-	}
+			}
 			else
 			{
 				output("\n\nShe smiles shyly at you. “<i>Listen to me, ow you say, riveting on.  You I am guessing do not see what ze big fuss is- you ‘umans can chop and change whenever you feel like, so to speak.  Must be nice.</i>”");
@@ -592,7 +590,7 @@ private function talkToBenoit():void {
 		}
 		else if (choice == 15)
 		{
-			output("\n\nYou ask Benoite if she isn’t worried that demon customers won’t notice what she is.");
+			output("You ask Benoite if she isn’t worried that demon customers won’t notice what she is.");
 
 			output("\n\n“<i>Zat is why I am wearing zis cunning disguise,</i>” she says, patting her large beret.  She lowers her voice to a growl. “<i>And I talk like zis when I am serving zem.  Grr.  To be honest I do not sink I ‘ave to be worrying much,</i>” she goes on in her normal tone, tightening her apron. “<i>Most of ze demons 'oo come 'ere are not very bright, zey are not very interested in anysing except when zey are next banging zair bits together.  Also I sink most mammals are 'aving trouble telling ze difference between male and female reptiles wizzout looking closely.  Am I right?</i>” She grins her long, meandering smile at you and you take her point.");
 		}
@@ -604,6 +602,7 @@ private function talkToBenoit():void {
 		}
 	}
 	processTime(10);
+	clearMenu();
 	addButton(0, "Next", enterTheBazaarAndMenu);
 }
 
@@ -1438,7 +1437,7 @@ public function femoitSexIntro():void
 			pc.orgasm();
 		}
 	}
-	
+	IncrementFlag("COC.BENOITE_TIMES_SEXED");
 	addNextButton(function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 }
 
