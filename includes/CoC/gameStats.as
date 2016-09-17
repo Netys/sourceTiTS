@@ -268,10 +268,10 @@ public function displayEncounterLogCoCVarious():int
 		if(flags["COC.TIMES_IN_BENOITS"] > 0) {
 			output2("\n<b><u>[benoit.name]</u></b>");
 			if (benoitAffection() > 0) output2("\n<b>* Affection: </b>" + benoitAffection());
-			if ((int(flags["COC.BENOIT_TIMES_SEXED_FEMPCS"]) + int(flags["COC.BENOITE_TIMES_SEXED"])) > 0) output2("\n<b>* Times Sexed: </b>" + (int(flags["COC.BENOIT_TIMES_SEXED_FEMPCS"]) + int(flags["COC.BENOITE_TIMES_SEXED"])));
+			if ((int(flags["COC.BENOIT_TIMES_SEXED_FEMPCS"]) + int(flags["COC.BENOITE_TIMES_SEXED"])) > 0) output2("\n<b>* Times Sexed: </b>" + (int(flags["COC.BENOIT_TIMES_SEXED_FEMPCS"]) + int(flags["COC.TIMES_FUCKED_FEMOIT"])));
 			output2("\n<b>* Attitude: </b>");
-			if (benoit.hasVagina() && int(flags["COC.BENOITE_TIMES_SEXED"]) == 0) output2(" Friend");
-			else if (benoitLover() || flags["COC.BENOITE_TIMES_SEXED"] > 0) output2(" Lover");
+			if (benoit.hasVagina() && int(flags["COC.TIMES_FUCKED_FEMOIT"]) == 0) output2(" Friend");
+			else if (benoitLover() || flags["COC.TIMES_FUCKED_FEMOIT"] > 0) output2(" Lover");
 			else output2(" Neutral");
 		}
 	}
@@ -301,6 +301,35 @@ public function displayEncounterLogCoCVarious():int
 			if (flags["COC.ISABELLA_ANGRY"] > 0) output2(" Upset");
 			else if (isabellaFollower()) output2(" Lover");
 			else output2(" Undecided");
+		}
+		
+		if(flags["COC.SHEILA_XP"] > 0) {
+			output2("\n<b><u>Sheila</u></b>");
+			if (flags["COC.SHEILA_DEMON"] != 1)
+				output2("\n<b>* Corruption: </b> " + sheilaCorruption());
+			else output2("\n<b>* Corruption: </b> Demon");
+			
+			if (flags["COC.SHEILA_DEMON"] != 1)
+			{
+				output2("\n<b>* Attitude: </b>");
+				switch(flags["COC.SHEILA_XP"])
+				{
+					case -1: output2(" Sorry"); break;
+					case -2: output2(" Confused"); break;
+					case -3: output2(" Angry"); break;
+					case -4: output2(" Very Angry"); break;
+					case 1: output2(" Neutral"); break;
+					case 2: 
+					case 3: output2(" Friendly"); break;
+					case 4: output2(" Buddy"); break;
+					default: output2(" Unknown " + flags["COC.SHEILA_XP"]);
+				}
+			}
+			
+			if (StatTracking.getStat("coc/pregnancy/sheila joeys") > 0)
+				output2("\n<b>* Children, Joeys: </b> " + StatTracking.getStat("coc/pregnancy/sheila joeys"));
+			if (StatTracking.getStat("coc/pregnancy/sheila imps") > 0)
+				output2("\n<b>* Children, Imps: </b> " + StatTracking.getStat("coc/pregnancy/sheila imps"));
 		}
 	}
 	

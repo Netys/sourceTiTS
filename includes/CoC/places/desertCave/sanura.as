@@ -38,6 +38,7 @@ public function answerCorrectSmartAss(riddles:Array):void {
 		if(flags["COC.BEATEN_SANURA_COUNT"] == 0) {
 			output("\"<i>W-what!?</i>\"  the sphinx gasps as you correctly answer the last of her riddles.   \"<i>I-I don't... but how?  No one's ever had the wits to answer all three riddles!</i>\"");
 			output("\n\nShe takes a moment to collect herself, then shrugs her shoulders lightly, \"<i>Well, that <i>was</i> unexpected.  My apologies, but I never actually expected you to win... still, I did offer you recompense for your efforts.  I am Sanura,</i>\" she bows, and over her shoulder you suddenly see a small door in the face of a dune emerge.  \"<i>You may enter the lair of the Sand Witches at your leisure.  Or... if you so desire... my body is yours to do with as you will,</i>\" she adds playfully.");
+			flags["NAV_DISABLED"] = undefined;
 		}
 		//BEAT THE SPHINX AT HER OWN GAME (REPEAT)
 		else {
@@ -240,6 +241,7 @@ public function fuckItAttackSphinx():void {
 	output("To hell with this. You [pc.readyWeapon] to beat your way through the damned sphinx, but as soon as you make a threatening move, the half-lion makes a shrill \"<i>EEEP</i>\" and throws her hands up in surrender. \"<i>Please, th-there's no need for violence! I've no loyalty to these witches, they </i>force<i> me to guard the door. I've no desire to fight you; I'll not stop you if you wish to enter the lair.</i>\"");
 	//[Options: Enter, Leave. Either way, Sanura won't be encountered again]
 	flags["COC.SANURA_DISABLED"] = 1;
+	flags["NAV_DISABLED"] = undefined;
 	clearMenu();
 	addButton(0, "Next", mainGameMenu);
 }

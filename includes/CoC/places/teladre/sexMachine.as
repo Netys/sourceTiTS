@@ -10,6 +10,7 @@ public function get sexMachine():PregnancyPlaceholder
 	if(!pp.hasCock()) pp.createCock();
 	pp.cocks[0].cLengthRaw = 8;
 	pp.impregnationType = RandomInCollection("CoCMinotaurPregnancy", "CoCMousePregnancy", "CoCMousePregnancy", "CoCCentaurPregnancy", "CoCCentaurPregnancy", "CoCCentaurPregnancy");
+	pp.cumQualityRaw = 5;
 	return pp;
 }
 
@@ -250,25 +251,6 @@ private function useTheSexMachine():void {
 			output("You pant as you are let down, the straps loosening. Once more toweling yourself off, more from cum than sweat this time, you walk out of the room, heading to the showers.");
 		}
 	}
-	//PREG IT UP!
-	// FIXME: eeeh...
-	//if(pc.hasVagina()) {
-		//temp = rand(6);
-		//switch(temp) {
-			//case 0:
-				//pc.knockUp(PregnancyStore.PREGNANCY_MINOTAUR, PregnancyStore.INCUBATION_MINOTAUR);
-				//break;
-			//case 1:
-				//pc.knockUp(PregnancyStore.PREGNANCY_MOUSE, PregnancyStore.INCUBATION_MOUSE);
-				//break;
-			//case 2:
-				//pc.knockUp(PregnancyStore.PREGNANCY_MOUSE, PregnancyStore.INCUBATION_MOUSE); //I'm betting this was meant to be dog morph chance
-				//break;
-			//default:
-				//pc.knockUp(PregnancyStore.PREGNANCY_CENTAUR, PregnancyStore.INCUBATION_CENTAUR);
-				//break;
-		//}
-	//}
 	pc.loadInMouth(sexMachine);
 	pc.loadInAss(sexMachine);
 	if (pc.hasVagina()) pc.loadInCunt(sexMachine);

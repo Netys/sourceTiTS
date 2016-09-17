@@ -896,7 +896,7 @@ private function noogaisNippleRape():void {
 		//if(pc.lactationQ() >= 500) output("  Rivulets of your milk run down his forearms as he inexpertly milks you.");
 	//}
 	////[If cock: 
-	//else if(pc.hasCock()) output("the rise of his swollen belly soon presses against [oneCock] and the rhythm of your thrusts strokes his shiny red stomach against your sensitive organ.");
+	//else if(pc.hasCock()) output("the rise of his swollen belly soon presses against [pc.oneCock] and the rhythm of your thrusts strokes his shiny red stomach against your sensitive organ.");
 	//else if(pc.hasVagina()) output("the impвЂ™s tiny, clawed feet scrabble against you as he flails in pleasure.  By mistake, one slips between the lips of your pussy, small toes wriggling against your inner walls, and you instinctively push down against the small limb, fucking yourself with his foot.");
 	//else output("you feel a firm pressure at your [asshole] as the tip of the impвЂ™s lashing tail prods frantically against you, manically shoving in and out of your [asshole].");
 	//

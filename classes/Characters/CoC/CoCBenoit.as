@@ -59,7 +59,7 @@ package classes.Characters.CoC
 			this.tallness = 6 * 12 + 2;
 			this.thickness = 40;
 			this.tone = 75;
-			this.hairColor = "gray";
+			this.hairColor = "iridescent red";
 			this.scaleColor = "gray";
 			this.furColor = "none";
 			this.hairLength = 0;
@@ -126,11 +126,15 @@ package classes.Characters.CoC
 			this.buttRatingRaw = 4;
 			//No dicks here!
 			this.cocks = new Array();
-			this.createCock(12, 0.5);
-			this.shiftCock(0, GLOBAL.TYPE_SNAKE);
 			
-			this.balls = 2;
-			this.ballSizeRaw = 2;
+			if (kGAMECLASS.flags["COC.BENOIT_STATUS"] == 3 || int(kGAMECLASS.flags["COC.BENOIT_STATUS"]) == 0)
+			{
+				this.createCock(12, 0.5);
+				this.shiftCock(0, GLOBAL.TYPE_SNAKE);
+				
+				this.balls = 2;
+				this.ballSizeRaw = 2;
+			}
 			
 			this.impregnationType = "CoCBenoitPregnancy";
 			
@@ -141,6 +145,18 @@ package classes.Characters.CoC
 			this.milkMultiplier = 1;
 			this.milkType = GLOBAL.FLUID_TYPE_MILK;
 			this.milkRate = 1;
+			
+			if (kGAMECLASS.flags["COC.BENOIT_STATUS"] > 0)
+			{
+				this.breastRows[0].breastRatingRaw = 1;
+				this.createVagina();
+				this.shiftVagina(0, GLOBAL.TYPE_SNAKE);
+				this.femininity = 75;
+				this.hipRatingRaw = 12;
+				this.buttRatingRaw = 8;
+				this.hairLength = 4;
+				
+			}
 			
 			this.analVirgin = false;
 			this.ass.wetnessRaw = 0;

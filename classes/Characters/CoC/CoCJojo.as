@@ -137,6 +137,8 @@ package classes.Characters.CoC
 			this.createCock(7.5);
 			this.balls = 2;
 			this.ballSizeRaw = 1;
+			this.cumMultiplierRaw = 5;
+			this.impregnationType = "CoCMousePregnancy";
 			
 			this.ass.wetnessRaw = 0;
 			this.ass.loosenessRaw = 1;

@@ -1,4 +1,6 @@
+import classes.Characters.CoC.CoCMinotaur;
 import classes.Characters.PlayerCharacter;
+import classes.Characters.PregnancyPlaceholder;
 import classes.GLOBAL;
 import classes.Items.Drinks.CoCBimboChampagne;
 import classes.Items.Drinks.CoCBlackCatBeer;
@@ -765,7 +767,7 @@ private function barBeerOrgyTits():void {
 	clearOutput();
 	showNiamh();
 	//If [player has pussy]
-	if(pc.hasVagina()) output("The drooling of your [pc.vagina] gets worse as the constant \"tapping of your kegs\" drives your sense of self-restraint to its limits.  The hands of various drunks start moving more aggressively over your breasts, eventually winding their way down between your thighs.");
+	if(pc.hasVagina()) output("The drooling of your [pc.vagina] gets worse as the constant \"tapping of your kegs\" drives your sense of self-restraint to its limits.  The hands of various drunks start moving more aggressively over your breasts, eventually winding their way down between your thighs. ");
 	//IF [player has cock/s]
 	if(pc.hasCock()) {
 		output("[pc.EachCock] grows to its full length.  You try to keep ");
@@ -801,7 +803,7 @@ private function barBeerOrgyTits():void {
 	else if(pc.hasVagina()) {
 		output("\n\nHands grip your legs and spread you apart while slathering your thighs with your own pussy juices until every square inch of your lower body is slick and slippery.  A pair of dog morphs clamor for position between your thighs.");
 		//IF [player has less than a gaping pussy]
-		if(pc.vaginalCapacity() < 60) output("  One is sporting a cock that is obviously too massive for your pussy, and eventually backs down so that the other one, despite still being on the large size, can take the honor of fucking your cunt silly.");
+		if(pc.vaginalCapacity() < cockVolume(60)) output("  One is sporting a cock that is obviously too massive for your pussy, and eventually backs down so that the other one, despite still being on the large size, can take the honor of fucking your cunt silly.");
 		//ELSE IF [player has a gaping pussy or bigger]
 		else output("  They're both sporting large canine cocks, but one is particularly massive while the other would likely be a loose fit for a pussy as naturally stretched out as yours.  The largest one wins out and positions himself to give your overly wide fuck hole a much needed stretching.");
 		output("\n\nThe bulbous cock presses in between your sopping labia, forcing your entrance apart and penetrating you until it manages to bottom out inside.  Your impromptu lover's thighs press against your own with only the knot of his manhood remaining outside your pussy.  You squeal out loud as he thrusts in and out, each time burying himself down to the fat knot.  Your cervix feels like it'll snap at any moment.");
@@ -861,6 +863,7 @@ private function barBeerOrgyTits():void {
 		// If [player has multiple cocks]
 		else if(pc.cockTotal() > 1) output("  The heads of your cocks press in between Edryn's labia causing her to cry out, \"<i>Oh gawd!  How many dicks are y-you f-f-fucking meeee with???</i>\"  Edryn's orgasm cuts her voice off and every muscle in her cunt contracts around your [pc.cocksLight].");
 		output("\n\nAs Edryn's cunt literally sucks you in deeper you feel Urta move up behind you.  As her horse-cock pokes against your pussy lips you realize just before the first thrust what is about to happen.  Tel'Adre's finest guard rams her massive member inside you, making you the center of a fuck sandwich.");
+		pc.cuntChange(0, urta.cockVolume());
 		// IF[player is pregnant]
 		if(pc.isPregnant() && pc.bellyRatingMod >= 50) output("  Your pregnant belly presses up against Edryn's ass as both Urta's cock and Edryn's pussy keeps you pinned in place between them.");
 		// IF[player is not pregnant]
@@ -884,7 +887,8 @@ private function barBeerOrgyTits():void {
 		output("\n\nThe next thing you're aware of is feeling an intense pressure in your gut.  As your vision returns you weakly make out the desert outside Tel'Adre passing you by.  As your senses return you realize you're riding on Edryn's back and Urta is sitting behind you.  \"<i>Hellooooo...</i>\"  A very drunk Urta whispers in your ear.  \"<i>Looks like you're awake.</i>\"  She reaches around and pats your bloated belly.  \"<i>You really took a lot.  We sort of felt we overdid it, so we decided to give you a lift back to your camp.</i>\"  Urta's cum is still spilling out of your crotch, soaking Edryn's sides.  Edryn's own hindquarters are leaking from the many loads you gave her.");
 		// IF [Player is pregnant but not with eggs] You pat your pregnant belly and silently hope Urta's ocean of cum hasn't drowned the child, if that's even possible.
 		output("\n\nThe two of them drop you off along with your clothes and gear back at camp.  Each of them winks and blows you a kiss as they travel back to Tel'Adre.  Your breasts are leaking milk again, and they appear to have grown permanently larger.");
-		Mutator.growTits(pc, 2, pc.bRows(), false, 2);
+		pc.loadInCunt(urta);
+		Mutator.growTits(pc, 2, pc.bRows(), false, 2, 20);
 	}
 	// IF [Urta but not Edryn is present in the bar and sex with her is unlocked and character has pussy]
 	else if(pc.hasVagina() && hours < 15 && flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"] > 0) {
@@ -901,7 +905,7 @@ private function barBeerOrgyTits():void {
 		if(!pc.isPregnant()) output("  Urta's small ocean of sperm streams out from your pussy like a river down your legs as you try to stand.");
 
 		output("\n\nWhen you're finally on your feet all the cum covering your body and filling your cleavage begins dripping down and pooling around your feet.  Milk is dripping from your nipples, signaling that the effects of Niamh's beer have finally worn off.  \"<i>Oi lass, I think ye be needin' a dip in a river.  Pity ye in a desert eh?</i>\"  She grins.  Still half drunk off booze and sex you haphazardly gather your things.  Urta graciously helps you out of the bar and through the streets of Tel'Adre until you've gathered your senses enough to find your way back to camp.  Your breasts ache from the pleasant ordeal, each one feeling fuller and larger than it was before this all began.");
-		Mutator.growTits(pc, 2, pc.bRows(), false, 2);
+		Mutator.growTits(pc, 2, pc.bRows(), false, 2, 20);
 	}
 	//=====
 	//Generic ending if the first two don't trigger
@@ -909,14 +913,14 @@ private function barBeerOrgyTits():void {
 		output("\n\nFor what seems like forever your body is used as a cum dump and fuck toy.");
 		// IF [player has pussy]
 		if(pc.hasVagina()) output("  The giant knot of the dog morph finally breaks its way inside causing your pussy to become overstretched.  The pleasurable torture only gets worse as he begins unloading a river of his cum inside you.  It begins squirting out around his cock and soaks both of your thighs in the process.");
-		pc.cuntChange(0, 60, true, true, false);
+		pc.cuntChange(0, cockVolume(60), true, true, false);
 
 		output("  Niamh finally has her fill and dismounts you, but no sooner has her pussy left your face than a determined cock belonging to some sort of cat morph fills your mouth.  Your eyes bug out as it thrusts down your throat.");
 		// If [player has pussy]
 		if(pc.hasVagina()) output("  You gag on it at the same time a new cock fills your cunt, ready to renew the thrusting that's been causing your tits to bounce all over the place.");
 
 		//IF [player has single cock small-med cock]
-		if(pc.cockTotal() == 1 && pc.cockVolume(0) < 75) output("\n\nA cat girl with six C-cup breasts jumps up onto the table and mounts you.  She grabs your cock and proceeds to shove it up between the folds of her tight pussy.");
+		if(pc.cockTotal() == 1 && pc.cockVolume(0) < cockVolume(75)) output("\n\nA cat girl with six C-cup breasts jumps up onto the table and mounts you.  She grabs your cock and proceeds to shove it up between the folds of her tight pussy.");
 		//OR IF [player has single huge cock]
 		else if(pc.cockTotal() == 1) output("\n\nA cow girl with six large tits and quad nipples crawls with difficulty up and onto the table, carefully positioning her bare bovine cunt above your massive member, and proceeds to thrust her ridiculously wide hips down around it.");
 		// FOR BOTH COCK SIZES -
@@ -941,23 +945,27 @@ private function barBeerOrgyTits():void {
 			//IF [player is not pregnant]
 			if (!pc.isPregnant()) output("  You can't help but wonder how virile those dog morphs might have been as their cum and the cum of other customers sloshes around inside your uterus.");
 			// FIXME: pregz...
-			//temp = rand(6);
-			//switch(temp) {
-				//case 0:
-					//pc.knockUp(PregnancyStore.PREGNANCY_MINOTAUR, PregnancyStore.INCUBATION_MINOTAUR);
-					//break;
-				//case 1:
-					//pc.knockUp(PregnancyStore.PREGNANCY_MOUSE, PregnancyStore.INCUBATION_MOUSE);
-					//break;
-				//case 2:
-					//pc.knockUp(PregnancyStore.PREGNANCY_MOUSE, PregnancyStore.INCUBATION_MOUSE); //I'm betting this was meant to be dog morph chance
-					//break;
-				//default:
-					//pc.knockUp(PregnancyStore.PREGNANCY_CENTAUR, PregnancyStore.INCUBATION_CENTAUR);
-					//break;
-			//}
+			var temp = rand(6);
+			var pp:PregnancyPlaceholder = new PregnancyPlaceholder();
+			pp.cumQualityRaw = 5;
+			switch(temp) {
+				case 0:
+					pp.impregnationType = "CoCMinotaurPregnancy";
+					break;
+				case 1:
+					pp.impregnationType = "CoCMousePregnancy";
+					break;
+				case 2:
+					pp.impregnationType = "CoCMousePregnancy"; //I'm betting this was meant to be dog morph chance
+					break;
+				default:
+					pp.impregnationType = "CoCCentaurPregnancy";
+					break;
+			}
+			pc.loadInMouth(pp);
+			pc.loadInCunt(pp);
 		}
-		Mutator.growTits(pc, 2, pc.bRows(), false, 2);
+		Mutator.growTits(pc, 2, pc.bRows(), false, 2, 20);
 	}
 	pc.orgasm();
 	processTime(60 * 2 + rand(60));

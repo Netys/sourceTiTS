@@ -443,7 +443,7 @@ private function eggsInButt(eggButt:Boolean = false):void {
 	else output("Your asshole winks and clenches, aching for release that Joey is kind, and skilled, enough to give.");
 	
 	output("\n\nIn no time at all, your body is arching on the bed under Joey's ministrations.  You gasp as his fingers twirl around your groin, expertly bringing you to the edge.  More of his chocolate-flavored cum drizzles into your open mouth; you can't help but gulp it down eagerly.  Every mouthful of that rich, sweet cum seems better than the last.  Sadly, Joey switches positions, straddling your waist, leaving your chocolate-smeared mouth empty once more.  He ");
-	if(pc.hasCock()) output("takes hold of [oneCock] and strokes gently, rubbing his thumb against the head");
+	if(pc.hasCock()) output("takes hold of [pc.oneCock] and strokes gently, rubbing his thumb against the head");
 	else if(pc.hasVagina()) output("reaches between his legs, slipping two fingers inside you while his thumb gently rubs your clit");
 	else output("reaches between his legs, slipping two fingers inside your ass while his thumb rubs against your perineum");
 	output(", and with his free hand he leans forward, tweaking a [pc.nipple] softly.");

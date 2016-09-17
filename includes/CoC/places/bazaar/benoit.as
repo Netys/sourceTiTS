@@ -279,7 +279,10 @@ public function benoitIntro():void {
 	addButton(2, "Talk", talkToBenoit);
 	addButton(14, "Leave", enterTheBazaarAndMenu);
 	
-	if (Flag("COC.BENOIT_SUGGEST_UNLOCKED") > 0) addButton(5, "Suggest", eggySuggest);
+	if (Flag("COC.BENOIT_SUGGEST_UNLOCKED") > 0) {
+		if (pc.hasCock() && pc.lust() >= 33) addButton(5, "Suggest", eggySuggest);
+		else addDisabledButton(5, "Suggest", "Suggest", "This option requires you to have vagina and sufficient arousal.");
+	}
 	
 	if (Flag("COC.BENOIT_PISTOL_BOUGHT") != 1)
 		addOverrideItemButton(10, new CoCFlintlockPistol(), "Flintlock", buyFlintlock);
@@ -290,7 +293,11 @@ public function benoitIntro():void {
 	//Basilisk Womb
 	if(Flag("COC.BENOIT_WOMB_TALK_UNLOCKED") == 1 && !pc.hasPerk("Basilisk Womb") && Flag("COC.BENOIT_TESTED_BASILISK_WOMB") == 0 && int(flags["COC.BENOIT_STATUS"]) == 0) addButton(4, "Basil. Womb", tryToConvertToBassyWomb);
 	
-	//if (pc.hasCock() && int(flags["COC.BENOIT_STATUS"]) > 0 && pc.lust() >= 33) addButton(6, "Sex", femoitSexIntro);
+	if (int(flags["COC.BENOIT_STATUS"]) > 0)
+	{
+		if (pc.hasCock() && pc.lust() >= 33) addButton(6, "Sex", femoitSexIntro);
+		else addDisabledButton(6, "Sex", "Sex", "This option requires you to have cock and sufficient arousal.");
+	}
 }
 
 //Buy or Sell First Time, only if prelover/prefem: You ask him what the deal is with his shop.
@@ -392,7 +399,7 @@ private function talkToBenoit():void {
 	}
 	//Basilisk Womb
 	//Requires: Had sex with Benoit at least twice, have vagina, select talk
-	if(((flags["COC.BENOIT_TIMES_SEXED_FEMPCS"] > 2 && pc.IQ() >= 60 && int(flags["COC.BENOIT_WOMB_TALK_UNLOCKED"]) == 0) || int(flags["COC.BENOIT_TIMES_SEXED_FEMPCS"]) == 2) && pc.hasVagina()) {
+	if(benoit.hasCock() && ((flags["COC.BENOIT_TIMES_SEXED_FEMPCS"] > 2 && pc.IQ() >= 60 && int(flags["COC.BENOIT_WOMB_TALK_UNLOCKED"]) == 0) || int(flags["COC.BENOIT_TIMES_SEXED_FEMPCS"]) == 2) && pc.hasVagina()) {
 		output("You ask [benoit.short] if [benoit.heShe] has ever thought about trying to do something to help his people's plight.");
 		
 		output("\n\nThe basilisk is silent for a time, running his claws along the counter pensively.  \"<i>Yes,</i>\" [benoit.heShe] says eventually, in a quiet tone.  \"<i>I 'ave.  Away from ze mountains, I 'ave 'ad time to sink.  I am not ze demons' slave anymore, and I am a funny joke of a basilisk anyway, so I 'ave often thought about... making certain zacrifices.  If we 'ad just one female, away from zeir corruption, zen...</i>\" [benoit.heShe] trails off, sighing heavily before smiling ruefully at you.  \"<i>Zose were ze kind of soughts I 'ad before I met you.  Crazy, yes?  Even more crazy to be still sinking zem when a good woman is giving me 'er love for no reason except through ze kindness of 'er 'art.  Still... it is so frustrating, being able to sink clearly about zese sings and not being able to do anysing about it.</i>\"");
@@ -648,9 +655,11 @@ private function eggySuggest():void {
 		output("\n\n“You- I- what?” [benoit.heShe] replies, looking slightly stunned. “You don't? Are you...I don't know if...” you reach across and squeeze [benoit.short]'s hands until [benoit.hisHer] nervous babble dies out and hesitantly, [benoit.heShe] squeezes back.  Still holding [benoit.hisHer] hand, you move behind the crates and then gently lead [benoit.himHer] behind the stall's canopy.");
 		output("\n\nWhat passes for [benoit.short]'s back office is perfect for your purposes; the two wagons between which [benoit.hisHer] stall is sandwiched close together here and the triangular space is filled with crates and unsorted salvage.  You carefully inch your blind charge to a clear cranny and push [benoit.himHer] against a wooden wall, standing back to slowly peel off your [pc.gear].  You grin as you ostentatiously drop each piece onto the packed earth, allowing [benoit.himHer] to guess what it is by the sound it makes.  [benoit.HisHer] breathing comes heavier as your undergarments make a feathery sound as they fall.");
 		output("\n\n“Zis will sound strange,” says [benoit.short] in a thick voice, “But- would you mind if I just touched you a bit first? All I know about you is ze sound of your voice.”  You acquiesce and draw close, taking [benoit.hisHer] hands once again and gently laying them upon you.  You sigh as, holding [benoit.hisHer] index claws back, [benoit.heShe] begins to move them slowly up and down.");
-		output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your [pc.face], your [pc.belly], your [pc.hips]; you feel like you're being read like a book in Braille.  “Good Gods,” [benoit.heShe] murmurs as [benoit.hisHer] hands lead back onto your flanks.  “Good Gods!” [benoit.heShe] cries out as [benoit.heShe] follows you all the way back to your mighty, powerful rear.  “I knew you were a taur because of all ze tramping,” [benoit.heShe] says, rubbing your side back and forth in wonder.  “But to know it and actually feel it, zey are somesing very different.” [benoit.HeShe] sighs.  “I 'ope you do not mind zis being a bit... awkward, but I am guessing you are probably used to zat by now, yes?”");
+		
+		benoitExploresPc();
+		
 		// Herm: 
-		if(pc.isHerm()) {
+		if(pc.hasCock()) {
 			output("\n\n[benoit.HisHer] hands travel down your behind until, with a sharp intake of breath, [benoit.heShe] touches [pc.oneCock].  “Aren't you just full of surprises,” [benoit.heShe] says dryly.  After a pause, [benoit.heShe] slowly wraps [benoit.hisHer] dry, smooth grasp around your semi-erect cock and moves it up and down, rubbing and coiling you until you are straining.");
 			//[cock 10 inches or less: 
 			if(pc.longestCockLength() <= 10) output("  Although this is evidently an uncanny experience for [benoit.himHer], [benoit.heShe] does manage a cocky smile as [benoit.hisHer] hand moves around your male sex. “Mine is bigger,” [benoit.heShe] teases.  Unable to reward [benoit.hisHer] cheek from where [benoit.heShe] is, you simply snort and shuffle your [pc.feet], impatient now with need.");
@@ -686,24 +695,7 @@ private function eggySuggest():void {
 		
 		output("\n\n\"<i>Zis will sound strange,</i>\" says [benoit.short] in a low, thick voice, \"<i>But - would you mind if I just touched you a bit first?  All I know about you is your smell and ze sound of your voice.</i>\"  You acquiesce and draw close, taking [benoit.hisHer] hands once again and gently laying them upon your body.  You sigh as, holding [benoit.hisHer] index claws back, [benoit.heShe] begins to move them slowly up and down.");
 		
-		//[Taur: 
-		if (pc.isTaur()) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  \"<i>Good Gods,</i>\" [benoit.heShe] murmurs as [benoit.hisHer] hands lead back onto your flanks.  \"<i>Good Gods!</i>\" [benoit.heShe] cries out as [benoit.heShe] follows you all the way back to your mighty, powerful rear.  \"<i>I knew you were a taur because of all ze tramping,</i>\" [benoit.heShe] says, rubbing your flank back and forth in wonder.  \"<i>But to know it and actually feel it, zey are very different.</i>\"  [benoit.HeShe] sighs.  \"<i>Zis is going to be a bit... awkward, but I am guessing you are all too used to zat by now, yes?</i>\"");
-		//[Demon: 
-		else if(pc.hasHorns(GLOBAL.TYPE_DEMONIC) && pc.hasTail(GLOBAL.TYPE_DEMONIC) && pc.demonScore() >= 3) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  [benoit.HeShe] touches your horns and pauses; [benoit.heShe] reaches around, finds and grips your tail, running [benoit.hisHer] pads up to the spaded point.  \"<i>So,</i>\" [benoit.heShe] says quietly.  \"<i>You are one of zem.</i>\"  [benoit.HeShe] is silent for a while before finding a warm smile.  \"<i>But I am being silly.  I know you are different inside.</i>\"");
-		//[Dog enough for ears and tail: 
-		else if(pc.earType == GLOBAL.TYPE_CANINE && pc.hasTail(GLOBAL.TYPE_CANINE) && pc.canineScore() >= 3) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  [benoit.HeShe] grins as [benoit.heShe] finds your floppy ears and outright laughs when [benoit.heShe] reaches around and touches your tail. \"<i>I like dogs, but not ZAT much, [pc.name],</i>\" [benoit.heShe] laughs.");
-		//[Reptile/Naga: 
-		else if(pc.skinType == GLOBAL.SKIN_TYPE_SCALES && (pc.lizardScore() >= 3 /*|| pc.nagaScore() >= 3*/ || pc.dragonScore() >= 3)) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  [benoit.HeShe] starts slightly when [benoit.heShe] touches your scales, and then caresses the reptilian parts of your body with increasing interest.  \"<i>I cannot believe I did not realize you were a sister of ze scales,</i>\" [benoit.heShe] says huskily.  \"<i>Zat is very... interesting.</i>\"  You can see real arousal in the tense lines of [benoit.hisHer] face now.");
-		//[Cat/Bunny enough for ditto: 
-		else if(pc.felineScore() >= 3 && pc.hasTail(GLOBAL.TYPE_FELINE) && pc.earType == GLOBAL.TYPE_FELINE) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  [benoit.HeShe] grins as [benoit.heShe] finds your ears, outright laughs when [benoit.heShe] reaches around and touches your soft tail.  \"<i>I always wondered why Pierre gets all excited when 'e sees you,</i>\" [benoit.heShe] chuckles huskily.");
-		//[Avian with wings and feet:  
-		else if(pc.legType == GLOBAL.TYPE_AVIAN && pc.wingType == GLOBAL.TYPE_AVIAN) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  [benoit.HeShe] finds your wings and follows them up as far as [benoit.heShe] can reach, making you twitch as [benoit.heShe] caresses your delicate pinfeathers; [benoit.heShe] carefully shifts [benoit.hisHer] feet forward to touch at your own clawed toes.  \"<i>So,</i>\" [benoit.heShe] sighs, a smile playing on [benoit.hisHer] lips as [benoit.heShe] touches your shoulder.  \"<i>What is in front of me is a terrible 'arpy.  Come from ze skies to ravish me.</i>\"");
-		//[Bee: 
-		else if((pc.hasWings(GLOBAL.TYPE_BEE) || pc.hasWings(GLOBAL.TYPE_SMALLBEE)) && pc.legType == GLOBAL.TYPE_BEE) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  [benoit.HeShe] finds your diaphanous wings and follows them up as far as [benoit.heShe] can reach, [benoit.hisHer] grip on your sensitive membranes making you twitch a bit; then [benoit.heShe] sends [benoit.hisHer] hands trailing down your carapace-armored limbs.  \"<i>I sought you just liked wearing big boots,</i>\" [benoit.heShe] murmurs.  \"<i>But zis is actually a part of you?  'Ow... interesting.</i>\"");
-		else if(pc.isDrider()) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  \"<i>Good Gods,</i>\" [benoit.heShe] murmurs as [benoit.hisHer] hands lead back onto your tough exoskeleton. \"<i>Good Gods!</i>\" [benoit.heShe] cries out as [benoit.heShe] follows your bulging abdomen all the way back to your spinnerets. \"<i>I knew you were a spider because of all ze click-clacking,</i>\" [benoit.heShe] says, [benoit.hisHer] fingers feeling around one of your intricate, many-jointed legs in wonder.  \"<i>But to know it and actually feel it, zey are very different.</i>\"");
-		//[Slime: 
-		else if(pc.isGoo()) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  \"<i>I knew you were different from ze squishy sounds you made,</i>\" [benoit.heShe] murmurs as [benoit.hisHer] hands sink into your soft, amorphous mass.  \"<i>But zis is...good Gods, zis is strange.  And zis doesn't 'urt you at all?</i>\" [benoit.heShe] asks incredulously as [benoit.heShe] gently pokes a finger into you.  You answer [benoit.hisHer] question by giggling.  \"<i>Zat must come in very useful,</i>\" [benoit.heShe] says, shaking [benoit.hisHer] head in wonder.  You push yourself slowly up [benoit.hisHer] arms and tell [benoit.himHer] [benoit.heShe] has no idea.");
-		else output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  \"<i>You 'umans are so squishy, fuzzy and 'ot,</i>\" [benoit.heShe] says huskily. \"<i>'Ow can you stand it?</i>\"");
+		benoitExploresPc();
 		
 		if(pc.hasCock()) {
 			output("\n\n[benoit.HisHer] hands travel downwards until, with a sharp intake of breath, [benoit.heShe] touches [pc.oneCock].  \"<i>Aren't you just full of surprises,</i>\" [benoit.heShe] says dryly.  After a pause, [benoit.heShe] slowly wraps [benoit.hisHer] smooth hand around your semi-erect cock and moves it up and down, rubbing and coiling you until you are straining."); 
@@ -1211,6 +1203,7 @@ public function femoitNextDayEvent():void
 	benoit.femininity = 75;
 	benoit.hipRatingRaw = 12;
 	benoit.buttRatingRaw = 8;
+	benoit.hairLength = 4;
 	benoit.breastRows[0].breastRatingRaw = 1;
 	benoit.createVagina();
 	benoit.shiftVagina(0, GLOBAL.TYPE_SNAKE);
@@ -1257,16 +1250,7 @@ public function femoitFirstTimeYes():void
 
 	output("\n\n\"<i>Zis will sound strange,</i>\" says Benoite in a shivery voice, as you eventually stand before her naked, \"<i>But... would you mind if I just touched you a bit first?  All I know about you is ze sound of your voice.</i>\"  You acquiesce and draw close, sighing as she gently lays her hands upon you, holding her index claws back as she begins to move them slowly up and down.");
 
-	if (pc.isTaur()) output("\n\nHer warm fingers travel over your body, brushing over your [pc.face], your [pc.belly], your [pc.hips]; you feel as though you're being read like a book.  \"<i>Good Gods,</i>\" she murmurs as her hands lead back onto your flanks.  \"<i>Good Gods!</i>\" she cries out as she follows you all the way back to your mighty, powerful rear.  \"<i>I knew you were a 'taur because of all ze tramping,</i>\" she says, rubbing your side back and forth in wonder.  \"<i>But to know it and actually feel it, zey are very different.</i>\"  She sighs.  \"<i>Zis is going to be... awkward, but I guess you are probably used to zat by now, yes?</i>\"");
-	else if (pc.isDrider()) output("\n\nHer warm fingers travel over your body, brushing over your [pc.face], your [pc.belly], your [pc.hips]; you feel as though you're being read like a book.  \"<i>Good Gods,</i>\" she murmurs as her hands lead back onto your abdomen. \"<i>Good Gods!</i>\" she cries out as she follows your bulging abdomen all the way back to your spinnerets. \"<i>I knew you were a spider because of all ze click clacking,</i>\" she says, her fingers feeling around one of your intricate, many-jointed legs in wonder . \"<i>But to know it and actually feel it, zey are very different.</i>\"");
-	else if (pc.demonScore() > 4 && pc.hasHorns() && pc.hasTail(GLOBAL.TYPE_DEMONIC)) output("\n\nHer warm fingers travel over your body, brushing over your [pc.face], your [pc.belly], your [pc.hips]; you feel as though you're being read like a book.  She touches your horns and pauses; she reaches around, finds and grips [pc.oneTail], running her grasp up to the spaded point. \"<i>So,</i>\" she says quietly. \"<i>You are one of zem.</i>\" She is silent for a while before finding a warm smile. \"<i>But I am being zilly.  I know you are different inside.</i>\"")
-	else if (pc.canineScore() >= 4 && pc.earType == GLOBAL.TYPE_CANINE && pc.hasTail(GLOBAL.TYPE_CANINE)) output("\n\nHer warm fingers travel over your body, brushing over your [pc.face], your [pc.belly], your [pc.hips]; you feel as though you're being read like a book.  She grins as she finds your [pc.ears] and outright laughs when she reaches around and touches [pc.oneTail]. \"<i>I like dogs but not ZAT much, \"<i>[pc.name],</i>\" she giggles. \"<i>No wonder Pierre 'as been acting jealous recently.</i>\"");
-	else if ((pc.bunnyScore() >= 4 && pc.earType == GLOBAL.TYPE_LAPINE && pc.hasTail(GLOBAL.TYPE_LAPINE)) || (pc.felineScore() >= 4 && pc.earType == GLOBAL.TYPE_FELINE && pc.hasTail(GLOBAL.TYPE_FELINE))) output("\n\nHer warm fingers travel over your body, brushing over your [pc.face], your [pc.belly], your [pc.hips]; you feel as though you're being read like a book. She grins as she finds your ears, outright laughs when she reaches around and touches [pc.oneTail]. \"<i>I always wondered why Pierre gets all excited when 'e sees you,</i>\" she giggles.");
-	else if (pc.harpyScore() >= 4 && (pc.hasWings(GLOBAL.TYPE_AVIAN) || pc.hasWings(GLOBAL.TYPE_DOVE)) && pc.legType == GLOBAL.TYPE_AVIAN) output("\n\nHer warm fingers travel over your body, brushing over your [pc.face], your [pc.belly], your [pc.hips]; you feel as though you're being read like a book.  She finds your [pc.wings] and follows them up as far as she can reach; she carefully shifts her feet forward to touch at your own clawed toes.  \"<i>So zis is what irony is,</i>\" she murmurs, a smile playing on her lips as she touches your shoulder.  \"<i>My saviour is an 'arpy, come to ravish me.</i>\"");
-	else if (pc.zilScore() >= 4 && (pc.hasWings(GLOBAL.TYPE_BEE) || pc.hasWings(GLOBAL.TYPE_SMALLBEE) || pc.hasWings(GLOBAL.TYPE_DRAGONFLY) || pc.hasWings(GLOBAL.TYPE_SYLVAN) || pc.hasWings(GLOBAL.TYPE_DARK_SYLVAN)) && (pc.legType == GLOBAL.TYPE_BEE || pc.legType == GLOBAL.TYPE_ARACHNID)) output("\n\nHer warm fingers travel over your body, brushing over your [pc.face], your [pc.belly], your [pc.hips]; you feel as though you're being read like a book.  She finds your diaphanous wings and follows them up as far as she can reach, her grip on your sensitive membranes making you twitch a bit; then she sends her hands trailing down your carapace-armored limbs. \"<i>I always sought you just liked wearing big boots,</i>\" she murmurs. \"<i>But zis is actually a part of you?  'Ow... interesting.</i>\"");
-	else if (pc.gooScore() >= 4 && pc.skinType == GLOBAL.SKIN_TYPE_GOO) output("\n\nHer warm fingers travel over your body, brushing over your [pc.face], your [pc.belly], your [pc.hips]; you feel as though you're being read like a book.  \"<i>I knew you were different from ze squishy sounds you made,</i>\" she murmurs as her hands sink into your soft, amorphous mass.  \"<i>But zis is... good Gods, zis is strange.  And zis doesn't 'urt you at all?</i>\" she asks incredulously as she gently pokes a finger into you.  You answer her question by laughing.  \"<i>Zat must come in very useful,</i>\" she says.  You push yourself slowly up her arms and tell her she has no idea.");
-	else if (pc.skinType == GLOBAL.SKIN_TYPE_SCALES) output("\n\nHer warm fingers travel over your body, brushing over your [pc.face], your [pc.belly], your [pc.hips]; you feel as though you're being read like a book.  She starts slightly when she touches your scales, and then caresses the reptilian parts of your body with increasing interest.  \"<i>You didn't do zis just for me, did you [pc.name]?</i>\" she murmurs.  \"<i>I 'ave to admit - it feels very good.</i>\"");
-	else output("\n\nHer warm fingers travel over your body, brushing over your [pc.face], your [pc.belly], your [pc.hips]; you feel as though you're being read like a book.  \"<i>You 'umans are so squishy, fuzzy and 'ot,</i>\" she giggles huskily. \"<i>'Ow can you stand it?</i>\"");
+	benoitExploresPc();
 
 	output("\n\nBenoite's hands travel down your torso until, with a sharp intake of breath, she touches your [pc.cock].  After a pause, she slowly wraps her dry, smooth grasp around your semi-erect cock and moves it up and down, rubbing and coiling you until you are straining.");
 	if (pc.biggestCockLength() <= 10) output("  Although this is evidently an uncanny experience for her, she does manage a cocky smile as her hand moves around your sex.  \"<i>Mine was bigger,</i>\" she teases.  You reward her cheek by doing some feeling yourself, grasping her large, supple behind, making her squeak as you move into her.");
@@ -1298,6 +1282,32 @@ public function femoitFirstTimeYes():void
 	
 	clearMenu();
 	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
+}
+
+public function benoitExploresPc():void
+{
+	//[Taur: 
+	if (pc.isTaur()) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  \"<i>Good Gods,</i>\" [benoit.heShe] murmurs as [benoit.hisHer] hands lead back onto your flanks.  \"<i>Good Gods!</i>\" [benoit.heShe] cries out as [benoit.heShe] follows you all the way back to your mighty, powerful rear.  \"<i>I knew you were a taur because of all ze tramping,</i>\" [benoit.heShe] says, rubbing your flank back and forth in wonder.  \"<i>But to know it and actually feel it, zey are very different.</i>\"  [benoit.HeShe] sighs.  \"<i>Zis is going to be a bit... awkward, but I am guessing you are all too used to zat by now, yes?</i>\"");
+	//[Drider:
+	else if(pc.isDrider()) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  \"<i>Good Gods,</i>\" [benoit.heShe] murmurs as [benoit.hisHer] hands lead back onto your tough exoskeleton. \"<i>Good Gods!</i>\" [benoit.heShe] cries out as [benoit.heShe] follows your bulging abdomen all the way back to your spinnerets. \"<i>I knew you were a spider because of all ze click-clacking,</i>\" [benoit.heShe] says, [benoit.hisHer] fingers feeling around one of your intricate, many-jointed legs in wonder.  \"<i>But to know it and actually feel it, zey are very different.</i>\"");
+	//[Demon: 
+	else if(pc.demonScore() > 4 && pc.hasHorns() && pc.hasTail(GLOBAL.TYPE_DEMONIC)) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  [benoit.HeShe] touches your horns and pauses; [benoit.heShe] reaches around, finds and grips your tail, running [benoit.hisHer] pads up to the spaded point.  \"<i>So,</i>\" [benoit.heShe] says quietly.  \"<i>You are one of zem.</i>\"  [benoit.HeShe] is silent for a while before finding a warm smile.  \"<i>But I am being silly.  I know you are different inside.</i>\"");
+	//[Dog enough for ears and tail: 
+	else if(pc.earType == GLOBAL.TYPE_CANINE && pc.hasTail(GLOBAL.TYPE_CANINE) && pc.canineScore() >= 4) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  [benoit.HeShe] grins as [benoit.heShe] finds your floppy ears and outright laughs when [benoit.heShe] reaches around and touches your tail. \"<i>I like dogs, but not ZAT much, [pc.name],</i>\" [benoit.heShe] laughs.");
+	//[Reptile/Naga: 
+	else if(pc.skinType == GLOBAL.SKIN_TYPE_SCALES && (pc.lizardScore() >= 3 || pc.isNaga() || pc.dragonScore() >= 3)) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  [benoit.HeShe] starts slightly when [benoit.heShe] touches your scales, and then caresses the reptilian parts of your body with increasing interest.  \"<i>I cannot believe I did not realize you were a sister of ze scales,</i>\" [benoit.heShe] says huskily.  \"<i>Zat is very... interesting.</i>\"  You can see real arousal in the tense lines of [benoit.hisHer] face now.");
+	//[Cat/Bunny enough for ditto: 
+	else if((pc.bunnyScore() >= 4 && pc.earType == GLOBAL.TYPE_LAPINE && pc.hasTail(GLOBAL.TYPE_LAPINE))
+		|| (pc.felineScore() >= 4 && pc.earType == GLOBAL.TYPE_FELINE && pc.hasTail(GLOBAL.TYPE_FELINE))
+		|| (pc.vulpineScore() >= 4 && pc.earType == GLOBAL.TYPE_VULPINE && pc.hasTail(GLOBAL.TYPE_VULPINE))) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  [benoit.HeShe] grins as [benoit.heShe] finds your ears, outright laughs when [benoit.heShe] reaches around and touches your soft tail.  \"<i>I always wondered why Pierre gets all excited when 'e sees you,</i>\" [benoit.heShe] chuckles huskily.");
+	//[Avian with wings and feet:  
+	else if(pc.harpyScore() >= 4 && (pc.hasWings(GLOBAL.TYPE_AVIAN) || pc.hasWings(GLOBAL.TYPE_DOVE)) && pc.legType == GLOBAL.TYPE_AVIAN) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  [benoit.HeShe] finds your wings and follows them up as far as [benoit.heShe] can reach, making you twitch as [benoit.heShe] caresses your delicate pinfeathers; [benoit.heShe] carefully shifts [benoit.hisHer] feet forward to touch at your own clawed toes.  \"<i>So,</i>\" [benoit.heShe] sighs, a smile playing on [benoit.hisHer] lips as [benoit.heShe] touches your shoulder.  \"<i>What is in front of me is a terrible 'arpy.  Come from ze skies to ravish me.</i>\"");
+	//[Bee: 
+	else if(pc.zilScore() >= 4 && (pc.hasWings(GLOBAL.TYPE_BEE) || pc.hasWings(GLOBAL.TYPE_SMALLBEE) || pc.hasWings(GLOBAL.TYPE_DRAGONFLY) || pc.hasWings(GLOBAL.TYPE_SYLVAN) || pc.hasWings(GLOBAL.TYPE_DARK_SYLVAN)) && pc.hasLegFlag(GLOBAL.FLAG_CHITINOUS)) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  [benoit.HeShe] finds your diaphanous wings and follows them up as far as [benoit.heShe] can reach, [benoit.hisHer] grip on your sensitive membranes making you twitch a bit; then [benoit.heShe] sends [benoit.hisHer] hands trailing down your carapace-armored limbs.  \"<i>I sought you just liked wearing big boots,</i>\" [benoit.heShe] murmurs.  \"<i>But zis is actually a part of you?  'Ow... interesting.</i>\"");
+	//[Slime: 
+	else if (pc.isGoo()) output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  \"<i>I knew you were different from ze squishy sounds you made,</i>\" [benoit.heShe] murmurs as [benoit.hisHer] hands sink into your soft, amorphous mass.  \"<i>But zis is...good Gods, zis is strange.  And zis doesn't 'urt you at all?</i>\" [benoit.heShe] asks incredulously as [benoit.heShe] gently pokes a finger into you.  You answer [benoit.hisHer] question by giggling.  \"<i>Zat must come in very useful,</i>\" [benoit.heShe] says, shaking [benoit.hisHer] head in wonder.  You push yourself slowly up [benoit.hisHer] arms and tell [benoit.himHer] [benoit.heShe] has no idea.");
+	//[Catch-all:
+	else output("\n\n[benoit.HisHer] warm fingers travel over your body, brushing over your face, your belly, your [pc.hips]; you feel as though you're being read like a book.  \"<i>You 'umans are so squishy, fuzzy and 'ot,</i>\" [benoit.heShe] says huskily. \"<i>'Ow can you stand it?</i>\"");
 }
 
 // Subsequent Sex
@@ -1437,7 +1447,7 @@ public function femoitSexIntro():void
 			pc.orgasm();
 		}
 	}
-	IncrementFlag("COC.BENOITE_TIMES_SEXED");
+	IncrementFlag("COC.TIMES_FUCKED_FEMOIT");
 	addNextButton(function():*{ processTime(10 + rand(10)); mainGameMenu(); });
 }
 
@@ -1560,7 +1570,12 @@ public function benoitHerminise():void
 		output("\n\nYou instruct her to drink the concoction.  She nods and slowly drinks the concoction until the bottle is empty.  \"<i>I can feel it...</i>\" she slowly mutters.  A bulge starts to form under her robes. \"<i>Ohhh... It is coming!</i>\" she announces.  She opens her robes to reveal her new reptilian prick and a set of balls just above her vagina.  \"<i>Thank you.  Wis that, I can help you to lay some eggs,</i>\" she says.");
 		
 		output("\n\nYou assure her that she can do it someday when you're ready.");
+		
 		flags["COC.BENOIT_STATUS"] = 3; //Hermaphrodite Benoite.
+		benoit.createCock(12, 0.5);
+		benoit.shiftCock(0, GLOBAL.TYPE_SNAKE);
+		benoit.balls = 2;
+		benoit.ballSizeRaw = 2;
 
 		processTime(25);
 		clearMenu();

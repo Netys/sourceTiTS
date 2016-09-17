@@ -595,7 +595,7 @@ public function loseToSandMotherBadEnd():void {
 	if(pc.hasVagina()) output(" and ignored womanhood");
 	output(", but there is a hint of foreign female musk that you can detect as well.  Four bullet-like nipples are visible in the Sand Mother's thin silk robe, pressing out lewdly and staining it with damp, milky moisture.  The sight sends a pleasant tingle to your overloaded groin, adding to the heavy heat that's been building under the practiced fondling.");
 	
-	output("\n\n[pc.EachCock] thickens in anticipation, flexing hard enough to lift clear of your middle.  Internal muscles clench and quiver, pumping slick warmth through your middle, a bubbling load just ready to burst.  Without warning, the enchantress pushes her foot down harder, squeezing [oneCock] back into your pre-puddle.  \"<i>Go on, let it out,</i>\" she encourages, quickly sliding up and down while keeping up the pleasure.  \"<i>I promise, I'll make your new life enjoyable.</i>\"  The agonizingly intense sensation triggers an gigantic wave of hot bliss inside you, and you arch your back, pinned as you are.  Lewdly pumping your [cock biggest] into the slippery arch, you cum, [pc.EachCock] bouncing and dilating as it fires ribbons of fresh, salty cream across your body.");
+	output("\n\n[pc.EachCock] thickens in anticipation, flexing hard enough to lift clear of your middle.  Internal muscles clench and quiver, pumping slick warmth through your middle, a bubbling load just ready to burst.  Without warning, the enchantress pushes her foot down harder, squeezing [pc.oneCock] back into your pre-puddle.  \"<i>Go on, let it out,</i>\" she encourages, quickly sliding up and down while keeping up the pleasure.  \"<i>I promise, I'll make your new life enjoyable.</i>\"  The agonizingly intense sensation triggers an gigantic wave of hot bliss inside you, and you arch your back, pinned as you are.  Lewdly pumping your [cock biggest] into the slippery arch, you cum, [pc.EachCock] bouncing and dilating as it fires ribbons of fresh, salty cream across your body.");
 	if(pc.cumQ() >= 500) output("  Wave after wave of jism washes across you, thoroughly drenching you with your spooge, the alabaster spunk soaking you from crown to waist with sticky slickness.");
 	if(pc.cumQ() >= 3000) output("  A puddle pools around you, deepening nicely as your boundless virility does its work, inching up your body until you feel as if you'll float away in your own pearly jism.");
 	
@@ -805,7 +805,7 @@ public function friendlySandMotherFuck():void {
 	
 	output("\n\nFeeling more than a little ready yourself, you step up to her, ");
 	if(!pc.isTaur()) {
-		output("holding [oneCock] in ");
+		output("holding [pc.oneCock] in ");
 		if(y >= 0) output("one");
 		else output("your");
 		output(" hand");
@@ -878,7 +878,7 @@ public function friendlySandMotherFuck():void {
 		else output("erupts");
 		output(", splattering the throne with a fresh, lactic offering.  If you weren't mindlessly jamming yourself into her cunt, you'd wonder if she approves of your offering, but every neuron is busy sending your body to a mind-blowing climax.");
 	}
-	output("  You grunt as the heat inside your clenching [pc.balls] radiates through your groin and towards [pc.EachCock].");
+	output("  You grunt as the heat inside your clenching [pc.balls] radiates through your groin and towards [pc.eachCock].");
 	//Newline
 	output("\n\n");
 	//More than 2 dongs or one doesn't fit

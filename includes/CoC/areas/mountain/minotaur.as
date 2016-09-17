@@ -1327,7 +1327,7 @@ private function minotaurBlowjob():void {
 	//
 	//if(pc.gender > 0) {
 		//output("\n\n");
-		//if(pc.hasCock()) output("Forcing [oneCock] between his bound thighs, you frot his flared bull-cock, your mixed pre soaking into the fur of his belly as you thrust against him.");
+		//if(pc.hasCock()) output("Forcing [pc.oneCock] between his bound thighs, you frot his flared bull-cock, your mixed pre soaking into the fur of his belly as you thrust against him.");
 		//if(pc.hasVagina()) output("Grasping his bull-cock, you pull it against your pussy, rubbing your juices up and down his impressive length as your lips and clit grind on him, adding to your pleasure.");
 	//}
 //

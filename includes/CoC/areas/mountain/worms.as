@@ -225,7 +225,7 @@ public function infestOrgasm():void {
 		//return;
 	//}
 	//if(monster.findStatusAffect(StatusAffects.TwuWuv) >= 0) {
-		//output("You expose yourself and attempt to focus on expelling your squirming pets toward Sheila but as you picture launching a flood of parasites from [eachCock], the fantasy she sent returns to you, breaking your concentration!  Your hand darts automatically to your crotch, stroking [oneCock] as you imagine unloading into her cunt... only with effort do you pull it away!\n\n");
+		//output("You expose yourself and attempt to focus on expelling your squirming pets toward Sheila but as you picture launching a flood of parasites from [eachCock], the fantasy she sent returns to you, breaking your concentration!  Your hand darts automatically to your crotch, stroking [pc.oneCock] as you imagine unloading into her cunt... only with effort do you pull it away!\n\n");
 		//output("\"<i>Oh, my,</i>\" the demon teases.  \"<i>You don't have to masturbate yourself, [pc.name]... I'll be happy to do it for you.</i>\"\n\n");
 		//dynStats("lus", 5 + pc.sens/10, "resisted");
 		//enemyAI();
@@ -276,7 +276,7 @@ public function infestOrgasm():void {
 	//if(pc.cockTotal() > 1) output("s");
 	//output(", one after another!  No!  You reach for your [cock biggest] to somehow try and stop the infestation, but it's a futile gesture.  The worm pile on your [legs] is as big as the rest of you.  Worse still, you doubt you can pull out the ones that have already crawled inside.");
 	//
-	//output("\n\nGrabbing hold of [oneCock] with both hands, you pinch your fingers around ");
+	//output("\n\nGrabbing hold of [pc.oneCock] with both hands, you pinch your fingers around ");
 	//if(pc.cocks[pc.biggestCockIndex()].cockThickness >= 6) output("as tight around the girth as you can");
 	//else output("tightly around your girth");
 	//output(", hoping to contain the squiggling menace in the upper reaches of your erection.");
@@ -308,7 +308,7 @@ public function infestOrgasm():void {
 	//
 	//output("\n\nThe big one bathes in your jism, moving faster and faster to spur you to release even more.  Glittering spunk drains out of your tip mixed with a few white creatures until [eachCock] is twitching against you, convulsing with pleasure but unable to leak a single drop.  Only after you've given everything does the internal prostate massage subside, the uncomfortable weight settling into a steady throb.  They feel so good, and a hot wave of contentment slowly rolls through you.  Maternal pride wells up unbidden - these things are a part of you now, and keeping them fed feels so good.");
 	//
-	//output("\n\nYou relax in the afterglow, pondering just how you'll handle living with the constant desire, barely noticing the colony slinking off, freshly lubricated by your sexual fluids.  You drink into a lusty slumber, absently fingering [oneCock].");
+	//output("\n\nYou relax in the afterglow, pondering just how you'll handle living with the constant desire, barely noticing the colony slinking off, freshly lubricated by your sexual fluids.  You drink into a lusty slumber, absently fingering [pc.oneCock].");
 	//output("\n\n<b>You are infested, again!</b>");
 	////Reinfest
 	//if(pc.findStatusAffect("Infested") >= 0) {trace("BWUH?");}

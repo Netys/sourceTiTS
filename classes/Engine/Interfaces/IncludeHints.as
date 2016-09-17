@@ -60,6 +60,7 @@ package classes.Engine.Interfaces
 	import classes.Characters.CoC.*;
 	public function get kath():CoCKatherine { return kGAMECLASS.kath(); }
 	public function get kelt():CoCKelt { return kGAMECLASS.kelt(); }
+	public function get kiha():CoCKiha { return kGAMECLASS.kiha(); }
 	public function get urta():CoCUrta { return kGAMECLASS.urta(); }
 	
 }

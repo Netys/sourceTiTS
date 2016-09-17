@@ -293,7 +293,7 @@ public function repeatLoseToCumWitchForDudes():void {
 		if(pc.balls > 0) output(", and your [pc.balls] are practically quaking with need");
 		output(".  The ebony futanari laughs at you as she confidently strides forward and discards her hat.  \"<i>Did you really have any intention of fighting me, or did you ask the Sand Mother to send us out so that we could abuse your insatiable libido?  I don't know how you didn't wind up captured, but I suppose I can tend to your needs... this time.</i>\"");
 		
-		output("\n\nKneeling next to you, the witch runs her hands across your " + pc.skinFurScales() + " toward your groin.  She grabs hold of [oneCock], hefting the rigid weight as she gauges your size.  Her fingers are soon glossy with your dribbling pre-cum, and she slowly pumps you to make sure she has your undivided attention.  \"<i>So helpless...  Still, hopefully this can produce a decent cum-shot.</i>\"  Her eyes twinkle with mirth, and she finishes, \"<i>If not, I can always encourage it.</i>\"");
+		output("\n\nKneeling next to you, the witch runs her hands across your " + pc.skinFurScales() + " toward your groin.  She grabs hold of [pc.oneCock], hefting the rigid weight as she gauges your size.  Her fingers are soon glossy with your dribbling pre-cum, and she slowly pumps you to make sure she has your undivided attention.  \"<i>So helpless...  Still, hopefully this can produce a decent cum-shot.</i>\"  Her eyes twinkle with mirth, and she finishes, \"<i>If not, I can always encourage it.</i>\"");
 	}
 	//*Dick No Fit Male Loss Scene
 	//Frotting -> Double Facial?

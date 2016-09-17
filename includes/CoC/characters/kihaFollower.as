@@ -721,7 +721,7 @@ private function jumpDaBitches():void {
 	}
 	//[Else, If Multicock]
 	else {
-		output("\n\nNot wanting to let such a lewd mouth as Hel's go to waste, you grab your [pc.cock 2] out of your armor and press its head against Hel's lips.  She starts to protest, but just like you did with Kiha, as soon as she opens her mouth to complain you ram your secondary cock in, burying its length in her face.  She gags and gasps, but you just grab both girls by the hair and start to fellate yourself with them, ramming their faces down your cocks until you're a spit-slicked mess, until both girls have become completely compliant, simply allowing you to use them.");
+		output("\n\nNot wanting to let such a lewd mouth as Hel's go to waste, you grab your other [pc.cock 1] out of your armor and press its head against Hel's lips.  She starts to protest, but just like you did with Kiha, as soon as she opens her mouth to complain you ram your secondary cock in, burying its length in her face.  She gags and gasps, but you just grab both girls by the hair and start to fellate yourself with them, ramming their faces down your cocks until you're a spit-slicked mess, until both girls have become completely compliant, simply allowing you to use them.");
 	}
 	//[scenes recombine]
 	output("\n\nTiring of the scaly girls' oral ministrations, you pull them back off your [pc.cocksLight], grinning as thick ropes of saliva and pre still connect their gaping, well-used mouths to you.  Roughly, you throw the girls on their backs, side by side as you loom over them.  Grinning, you say that since they've been such good girls and got your [pc.cocksLight] nice and spotless, you'll be kind enough to get them off.");
@@ -733,7 +733,7 @@ private function jumpDaBitches():void {
 	output("\n\nYou yank your cum-soaked [pc.cock] out of Hel's quivering pussy and roll her off the dragoness.  You leer at Kiha, but with Hel's spasming tail thrashing about in her slit, she hardly even notices you - she's much too busy desperately keeping in her moans of pleasure, trying to maintain her unwilling facade.  Taking advantage of her helpless state, you grab Kiha's legs and throw them over your shoulders, spreading her legs and the cheeks of her big butt nicely.");
 
 	output("\n\nGrinning, you shift around until your cockhead's lined up with the tight, dark ring of the dragoness's asshole.  The pressure of your tip brushing against her sphincter is enough to break Kiha out of her reverie, but it's too late to help her.  She can only throw her head back and scream as you thrust in, burying yourself ");
-	if (pc.cockVolume(0) < cockVolume(36)) output("up to the hilt");
+	if (pc.cockVolume(0) < kiha.analCapacity()) output("up to the hilt");
 	else output("until she simply can't take any more of you, her anus already stretched beyond its capacity");
 	output(".  grabbing her big, soft tits, you start to pull out of her, savaging her nipples and digging into her sensitive titflesh as you bring your cock out until just the head remains inside her.");
 

@@ -1253,7 +1253,7 @@ public function deathBySnuSnuIMeanGiantOniTits():void
 	if(pc.totalCocks() > 1) output("s");
 	output(" trapped in the hottest point of all - directly between you.  Assaulted on all sides by the rising heat and the increasingly slippery sensation of rubbing against Izumi’s sweat-soaked body, your cock feels as though it has been transformed into a supernova of arousal, burning with desire and incredibly sensitive.\n\n");
 
-	output("The two of you remain there in this strange half-standing, half-fucking position for what feels like the best part of an hour as you grind and groan, suckle and slurp.  If just rubbing away at her from the outside feels this good, how much better must it feel to actually feel [oneCock] inside her, part of you wonders... and then another quieter, darker part of you wonders if it wouldn’t be so much hotter if you never found out.\n\n");
+	output("The two of you remain there in this strange half-standing, half-fucking position for what feels like the best part of an hour as you grind and groan, suckle and slurp.  If just rubbing away at her from the outside feels this good, how much better must it feel to actually feel [pc.oneCock] inside her, part of you wonders... and then another quieter, darker part of you wonders if it wouldn’t be so much hotter if you never found out.\n\n");
 
 	output("Finally, you start to feel an ominous pressure building up in your groin, your breathing growing laboured and desperate.  Izumi clearly notices your animalistic intent, as she looks down at you and speaks, massaging the back of your neck vigorously as you suck forcefully at her breast.\n\n");
 

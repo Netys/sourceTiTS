@@ -269,7 +269,7 @@ private function sheila1ndEncLookCloserPtII():void {
 	clearOutput();
 	output("You subject yourself to her examination; she seems to take professional interest in the way you hold your [pc.mainWeapon].  ");
 	//[(PC weapon = Scarred Blade)]
-	//if (pc.meleeWeapon is CoCScarredBlade) output("As the blade feels her gaze, it vibrates eagerly toward her, sliding partway out of the oiled scabbard; she stares into the exposed metal transfixed, as if looking into the diary of a past life.  Abruptly, she shakes her head and turns away, and the saber calms down.  ");
+	if (pc.meleeWeapon is CoCScarredBlade) output("As the blade feels her gaze, it vibrates eagerly toward her, sliding partway out of the oiled scabbard; she stares into the exposed metal transfixed, as if looking into the diary of a past life.  Abruptly, she shakes her head and turns away, and the saber calms down.  ");
 	output("Meanwhile, you use the opportunity to take your own look at her.  She's about six and a half feet unbent, though her legs are crooked like an animal's and could conceivably push her up to seven if straightened.  Her tapered tail only reaches a little past her hips.  The straight hair on her head is colored like her fur and chopped off at the jawline, and her bangs are tucked behind one of her long ears.  They slip forward whenever she bends her head down, only to be retucked with a free hand when she looks up again.  Her face is rather pretty overall, with an egg or oval shape that tapers at the chin and slight cheekbones, but falls short of true beauty by being a shade too commonplace.  She has a small, even nose, and her eyes are a very light brown - amber, even, depending on the angle of the light.  Looking downwards, you can see her shirt is cut with a v-neck, revealing cleavage from a pair of medium-sized breasts; probably C-cup, though it's hard to say with the vest in the way.  Her body is toned and her skin is somewhat tan, you'd guess she spends a lot of time out of doors.");
 	output("\n\nFinally satisfied with looking you over, she says, \"<i>She'll be apples.  Sorry to put y'out, but you never know what sort you'll find in the back of nowhere, right?</i>\"");
 	//[(libido>=50)
@@ -3283,7 +3283,7 @@ private function normalSheilaPregNotifREPEATEDED():void {
 	clearMenu();
 	//[Help(requires >80 speed, centaur >= 5', naga, or big wings and archery)][Walk With Her][Let Her Go]
 	addDisabledButton(0, "Help", "Help", "This option requirs you to have useful abilities.");
-	if (pc.reflexes() >= 40 || pc.isTaur() || pc.isNaga() || (pc.canFly() && (pc.hasKeyItem("Bow") || pc.hasBowWeaponAvailable())))
+	if (pc.RQ() >= 80 || pc.isTaur() || pc.isNaga() || (pc.canFly() && (pc.hasKeyItem("Bow") || pc.hasBowWeaponAvailable())))
 		addButton(0,"Help",normalSheilaPregNotifREPEATEDEDHelpABitchOut);
 	addButton(1,"WalkWithHer",normalSheilaPregNotifREPEATEDEDWalkWithHer);
 	addButton(2,"Let Her Go",normalSheilaPregNotifREPEATEDEDLetHerGo);
