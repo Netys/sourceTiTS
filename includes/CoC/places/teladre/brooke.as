@@ -48,7 +48,8 @@ public function get brooke():PregnancyPlaceholder // since there are no TFs... s
 	if (!pp.hasVagina()) pp.createVagina();
 	pp.shiftVagina(0, GLOBAL.TYPE_CANINE);
 	
-	pc.ass.bonusCapacity = 20;
+	Mutator.ajustCapacity(pp, cockVolume(60));
+	Mutator.ajustCapacity(pp, cockVolume(60), 3);
 	
 	return pp;
 }
@@ -474,11 +475,11 @@ public function gropeDatBrooke():void {
 	addDisabledButton(5, "Double-Dick", "Double-Dick", "This scene requires you to have at least two fitting cocks.");
 	
 	if (pc.hasCock() && pc.cockThatFits(brooke.vaginalCapacity()) >= 0) addButton(0, "Penetrate", penetrateBrooke);
-	if (pc.hasCock() && pc.cockThatFits(brooke.vaginalCapacity()) >= 0) addButton(1, "Anal", brookeAnal);
+	if (pc.hasCock() && pc.cockThatFits(brooke.analCapacity()) >= 0) addButton(1, "Anal", brookeAnal);
 	if(pc.hasVagina()) addButton(2,"Tribadism",tribadism);
 	addButton(3,"Go Down On",goDownOnBrooke);
 	if(pc.hasCock() && pc.cockThatFits(brooke.vaginalCapacity()) >= 0) addButton(4,"Get Laid",getLaidByBrooke);
-	if(pc.cockThatFits(brooke.vaginalCapacity()) >= 0 && pc.cockThatFits2(brooke.vaginalCapacity()) >= 0) addButton(5,"Double-Dick",doubleDicked);
+	if(pc.cockThatFits(brooke.vaginalCapacity()) >= 0 && pc.cockThatFits2(brooke.analCapacity()) >= 0) addButton(5,"Double-Dick",doubleDicked);
 }
 
 //[=Penetrate her=]
@@ -539,9 +540,9 @@ public function penetrateBrooke():void {
 public function brookeAnal():void {
 	clearOutput();
 	var x:int = pc.cockThatFits(brooke.analCapacity());
-
+	
 	//[if {cockFit >= 61}
-	if (pc.cockVolume(x) == -1) {
+	if (x == -1) {
 		x = pc.smallestCockIndex();
 		output("Bluntly, you ask Brooke what her opinion is on anal.  <i>\"What, with you?\"</i> she asks, leaning her ass back and trapping your [pc.cock " + x + "] between her asscheeks expertly.  You moan with pleasure, but before you get the wrong idea, she hums disapprovingly.  She was actually using her ass to measure your [pc.cock " + x + "]!  <i>\"Sorry, sweet thing, but maybe not this time.  I just got in from the gym, and working a beast like that into my ass would be a workout in of itself.  I'm up for anything else, though.\"</i>");
 		//Go back to 'grope' menu

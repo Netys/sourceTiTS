@@ -945,7 +945,7 @@ private function barBeerOrgyTits():void {
 			//IF [player is not pregnant]
 			if (!pc.isPregnant()) output("  You can't help but wonder how virile those dog morphs might have been as their cum and the cum of other customers sloshes around inside your uterus.");
 			// FIXME: pregz...
-			var temp = rand(6);
+			var temp:int = rand(6);
 			var pp:PregnancyPlaceholder = new PregnancyPlaceholder();
 			pp.cumQualityRaw = 5;
 			switch(temp) {
