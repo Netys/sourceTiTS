@@ -99,7 +99,7 @@ package classes.Characters.CoC
 			this.buttRatingRaw = 2;
 			//No dicks here!
 			this.cocks = [];
-			this.createCock(8, 4 / 3);
+			this.createCock(8, 9. / 8);
 			this.shiftCock(0, GLOBAL.TYPE_CANINE);
 			this.cocks[0].knotMultiplier = 4;
 			this.cumMultiplierRaw = 10;

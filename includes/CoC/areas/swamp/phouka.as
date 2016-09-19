@@ -44,7 +44,7 @@ public function phoukaEncounter():void
 	
 	if (choiceChance < 2)
 		phoukaFaerieFire();
-	else if (choiceChance < 5)
+	else if (choiceChance <= 5)
 		phoukaStuck();
 	else phoukaMasturbating();
 }
@@ -64,13 +64,13 @@ protected function phoukaFaerieFire():void
 	}
 	
 	clearMenu();
-	if (flags["COC.PHOUKA_ENCOUNTER_STATUS"] != 0 || pc.hasKeyItem("Traveler's Guide")) addButton(14, "Leave", phoukaFaerieFireLeave);
+	if (int(flags["COC.PHOUKA_ENCOUNTER_STATUS"]) != 0 || pc.hasKeyItem("Traveler's Guide")) addButton(14, "Leave", phoukaFaerieFireLeave);
 	addButton(0, "Follow", phoukaStuck);
 }
 
 protected function phoukaFaerieFireLeave():void
 {
-	if (flags["COC.PHOUKA_ENCOUNTER_STATUS"] == 0)
+	if (int(flags["COC.PHOUKA_ENCOUNTER_STATUS"]) == 0)
 	output("\n\nYou decide it's best not to mess with weird floating lights out in the bog and return to your camp.")
 	else output("\n\nAt the moment you don't feel the need to meet one of those " + phoukaNameText("phouka", "creatures") + " again.");
 	

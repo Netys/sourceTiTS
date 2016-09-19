@@ -2845,11 +2845,11 @@ private function giveKatACaninePepper():void {
 		var oldKnot:Number = kath.cocks[0].knotMultiplier;
 		kath.shiftCock(0, GLOBAL.TYPE_CANINE);
 		kath.cocks[0].knotMultiplier = oldKnot;
-		kath.cocks[0].cThicknessRatioRaw = 1;
+		kath.cocks[0].cThicknessRatioRaw = 9. / 8;
 		if (kath.cockTotal() > 1) {
 			kath.shiftCock(1, GLOBAL.TYPE_CANINE);
 			kath.cocks[1].knotMultiplier = oldKnot;
-			kath.cocks[1].cThicknessRatioRaw = 1;
+			kath.cocks[1].cThicknessRatioRaw = 9. / 8;
 		}
 		
 		output("The pepper doesn't disappoint and you watch the magic stretch her cock" + (kath.cockTotal() == 1 ? "" : "s") + " outwards, absorbing " + (kath.cockTotal() == 1 ? "its" : "their") + " barbs.  Kath once again sports a " + kath.multiCockDescript() + " and a happy, horny grin to go with " + (kath.cockTotal() == 1 ? "it" : "them") + ".");
@@ -2876,11 +2876,11 @@ private function giveKatABulbousPepper():void {
 			oldKnot = kath.cocks[0].knotMultiplier;
 			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
 			kath.cocks[0].knotMultiplier = oldKnot;
-			kath.cocks[0].cThicknessRatioRaw = 1;
+			kath.cocks[0].cThicknessRatioRaw = 9. / 8;
 			if (kath.cockTotal() > 1) {
 				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
 				kath.cocks[1].knotMultiplier = oldKnot;
-				kath.cocks[1].cThicknessRatioRaw = 1;
+				kath.cocks[1].cThicknessRatioRaw = 9. / 8;
 			}
 			if (kath.cockTotal() > 1)
 				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
@@ -2901,11 +2901,11 @@ private function giveKatABulbousPepper():void {
 			oldKnot = kath.cocks[0].knotMultiplier;
 			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
 			kath.cocks[0].knotMultiplier = oldKnot;
-			kath.cocks[0].cThicknessRatioRaw = 1;
+			kath.cocks[0].cThicknessRatioRaw = 9. / 8;
 			if (kath.cockTotal() > 1) {
 				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
 				kath.cocks[1].knotMultiplier = oldKnot;
-				kath.cocks[1].cThicknessRatioRaw = 1;
+				kath.cocks[1].cThicknessRatioRaw = 9. / 8;
 			}
 			if (kath.cockTotal() > 1)
 				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
@@ -2932,11 +2932,11 @@ private function giveKatABulbousPepper():void {
 			oldKnot = kath.cocks[0].knotMultiplier;
 			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
 			kath.cocks[0].knotMultiplier = oldKnot;
-			kath.cocks[0].cThicknessRatioRaw = 1;
+			kath.cocks[0].cThicknessRatioRaw = 9. / 8;
 			if (kath.cockTotal() > 1) {
 				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
 				kath.cocks[1].knotMultiplier = oldKnot;
-				kath.cocks[1].cThicknessRatioRaw = 1;
+				kath.cocks[1].cThicknessRatioRaw = 9. / 8;
 			}
 			if (kath.cockTotal() > 1)
 				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
@@ -2988,11 +2988,11 @@ private function giveKatAKnottyPepper():void {
 			oldKnot = kath.cocks[0].knotMultiplier;
 			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
 			kath.cocks[0].knotMultiplier = oldKnot;
-			kath.cocks[0].cThicknessRatioRaw = 1;
+			kath.cocks[0].cThicknessRatioRaw = 9. / 8;
 			if (kath.cockTotal() > 1) {
 				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
 				kath.cocks[1].knotMultiplier = oldKnot;
-				kath.cocks[1].cThicknessRatioRaw = 1;
+				kath.cocks[1].cThicknessRatioRaw = 9. / 8;
 			}
 			if (kath.cockTotal() > 1)
 				output("Her cocks stretch outwards, absorbing their barbs and getting fatter along their whole length.  In a few moments Kath is once again sporting a pair of " + kath.multiCockDescript() + ".");
@@ -3017,11 +3017,11 @@ private function giveKatAKnottyPepper():void {
 				oldKnot = kath.cocks[0].knotMultiplier;
 				kath.shiftCock(0, GLOBAL.TYPE_CANINE);
 				kath.cocks[0].knotMultiplier = oldKnot;
-				kath.cocks[0].cThicknessRatioRaw = 1;
+				kath.cocks[0].cThicknessRatioRaw = 9. / 8;
 				if (kath.cockTotal() > 1) {
 					kath.shiftCock(1, GLOBAL.TYPE_CANINE);
 					kath.cocks[1].knotMultiplier = oldKnot;
-					kath.cocks[1].cThicknessRatioRaw = 1;
+					kath.cocks[1].cThicknessRatioRaw = 9. / 8;
 				}
 				if (kath.cockTotal() > 1)
 					output("Her cocks stretch outwards, absorbing their barbs and getting fatter along their whole length.  In a few moments Kath is once again sporting a pair of " + kath.multiCockDescript() + ".");
@@ -3045,11 +3045,11 @@ private function giveKatAKnottyPepper():void {
 				oldKnot = kath.cocks[0].knotMultiplier;
 				kath.shiftCock(0, GLOBAL.TYPE_CANINE);
 				kath.cocks[0].knotMultiplier = oldKnot;
-				kath.cocks[0].cThicknessRatioRaw = 1;
+				kath.cocks[0].cThicknessRatioRaw = 9. / 8;
 				if (kath.cockTotal() > 1) {
 					kath.shiftCock(1, GLOBAL.TYPE_CANINE);
 					kath.cocks[1].knotMultiplier = oldKnot;
-					kath.cocks[1].cThicknessRatioRaw = 1;
+					kath.cocks[1].cThicknessRatioRaw = 9. / 8;
 				}
 				if (kath.cockTotal() > 1)
 					output("Her cocks stretch outwards, absorbing their barbs and getting fatter along their whole length.  In a few moments Kath is once again sporting a pair of " + kath.multiCockDescript() + ".");
@@ -3084,11 +3084,11 @@ private function giveKatADoublePepper():void {
 			oldKnot = kath.cocks[0].knotMultiplier;
 			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
 			kath.cocks[0].knotMultiplier = oldKnot;
-			kath.cocks[0].cThicknessRatioRaw = 1;
+			kath.cocks[0].cThicknessRatioRaw = 9. / 8;
 			if (kath.cockTotal() > 1) {
 				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
 				kath.cocks[1].knotMultiplier = oldKnot;
-				kath.cocks[1].cThicknessRatioRaw = 1;
+				kath.cocks[1].cThicknessRatioRaw = 9. / 8;
 			}
 			if (kath.cockTotal() > 1)
 				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
@@ -3112,11 +3112,11 @@ private function giveKatADoublePepper():void {
 			oldKnot = kath.cocks[0].knotMultiplier;
 			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
 			kath.cocks[0].knotMultiplier = oldKnot;
-			kath.cocks[0].cThicknessRatioRaw = 1;
+			kath.cocks[0].cThicknessRatioRaw = 9. / 8;
 			if (kath.cockTotal() > 1) {
 				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
 				kath.cocks[1].knotMultiplier = oldKnot;
-				kath.cocks[1].cThicknessRatioRaw = 1;
+				kath.cocks[1].cThicknessRatioRaw = 9. / 8;
 			}
 			if (kath.cockTotal() > 1)
 				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
@@ -3149,11 +3149,11 @@ private function giveKatAOverlyLargePepper():void {
 			oldKnot = kath.cocks[0].knotMultiplier;
 			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
 			kath.cocks[0].knotMultiplier = oldKnot;
-			kath.cocks[0].cThicknessRatioRaw = 1;
+			kath.cocks[0].cThicknessRatioRaw = 9. / 8;
 			if (kath.cockTotal() > 1) {
 				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
 				kath.cocks[1].knotMultiplier = oldKnot;
-				kath.cocks[1].cThicknessRatioRaw = 1;
+				kath.cocks[1].cThicknessRatioRaw = 9. / 8;
 			}
 			if (kath.cockTotal() > 1)
 				output(" At the same time her cocks stretch outwards, absorbing their barbs. In a few moments Kath is once again sporting a " + kath.multiCockDescript() + ".");
@@ -3188,11 +3188,11 @@ private function giveKatAOverlyLargePepper():void {
 			oldKnot = kath.cocks[0].knotMultiplier;
 			kath.shiftCock(0, GLOBAL.TYPE_CANINE);
 			kath.cocks[0].knotMultiplier = oldKnot;
-			kath.cocks[0].cThicknessRatioRaw = 1;
+			kath.cocks[0].cThicknessRatioRaw = 9. / 8;
 			if (kath.cockTotal() > 1) {
 				kath.shiftCock(1, GLOBAL.TYPE_CANINE);
 				kath.cocks[1].knotMultiplier = oldKnot;
-				kath.cocks[1].cThicknessRatioRaw = 1;
+				kath.cocks[1].cThicknessRatioRaw = 9. / 8;
 			}
 			output("  The effects of the pepper have also changed " + (kath.cockTotal() == 1 ? "it" : "them") + " back into canine cocks.");
 		}
