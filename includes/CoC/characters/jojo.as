@@ -849,8 +849,8 @@ public function apparantlyJojoDOESlift():void
 			output("As you finish training you decide to meditate alone; you close your eyes and begin to breathe.  Then the world around you begins to sing.\n\n");
 			output("The camp is alive with the sounds of voices on the wind, of the ominous sizzling of the great scar between worlds that is the portal that brought you here.  You feel open to the universe as if it were a lady in a dress sitting next to you, that you could easily reach out and touch.  You feel liberated and free despite the fact that you are not moving a muscle.  You are ready for anything but expecting nothing.  You are neither thinking nor dreaming, you simply are.\n\n");
 
-			output("<b>(Perk Gained: Enlightened -</b> Grants the ability to meditate alone. White magic threshold reduced.<b>)</b>");
-			pc.createPerk("Enlightened", 0, 0, 0, 0, "Grants the ability to meditate alone. White magic threshold reduced.");
+			output("<b>(Perk Gained: Enlightened -</b> Grants an ability to meditate alone. White magic threshold reduced.<b>)</b>");
+			pc.createPerk("Enlightened", 0, 0, 0, 0, "Grants an ability to meditate alone. White magic threshold reduced.");
 		}
 	}
 	//{after PC has gained the Enlightened Perk}

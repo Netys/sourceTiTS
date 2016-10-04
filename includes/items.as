@@ -1387,7 +1387,7 @@ public function populateTakeMenu(items:Array, type:String, func:Function = null)
 		pgIdx = i / maxPerPage;
 		var pgOset:int = 15 * pgIdx;
 		
-		addItemButton(btnIdx + pgIdx, items[i], func, [items[i], type]);
+		addItemButton(btnIdx + pgIdx * pgOset, items[i], func, [items[i], type]);
 	}
 	
 	var menuInserts:int = 0;
@@ -1407,7 +1407,7 @@ public function populateTakeMenu(items:Array, type:String, func:Function = null)
 		
 		addButton((menuInserts * 15) + 14, "Back", shipStorageMenuRoot);
 		menuInserts++;
-	} while (menuInserts < pgIdx);
+	} while (menuInserts <= pgIdx);
 }
 
 public function getListOfType(from:Array, type:String):Array

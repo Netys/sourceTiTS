@@ -44,7 +44,7 @@ public function phoukaEncounter():void
 	
 	if (choiceChance < 2)
 		phoukaFaerieFire();
-	else if (choiceChance <= 5)
+	else if (choiceChance < 6)
 		phoukaStuck();
 	else phoukaMasturbating();
 }

@@ -13271,7 +13271,7 @@
 				}
 			}
 			if (adjectives < adjectiveLimit && !multi && rand(5) == 0 && cock.sock != "" && (!multi || multiOkay)) {
-				if(adjectives > 0) descript += ", ";descript += "pierced";
+				if(adjectives > 0) descript += ", ";
 				descript += RandomInCollection(["sock-sheathed","garment-wrapped","wrapped","smartly dressed","cloth-shrouded","sock-shrouded","fabric swaddled","covered"]);
 				adjectives++;
 			}

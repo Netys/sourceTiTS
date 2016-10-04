@@ -415,6 +415,7 @@
 			_buttonData[slot].setData(name, func, arg, ttHeader, ttBody);
 			_buttonData[slot].itemQuantity = quantity;
 			_buttonData[slot].tooltipComparison = ttComparison;
+			CheckPages();
 		}
 		
 		/**

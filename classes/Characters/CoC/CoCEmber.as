@@ -346,7 +346,7 @@ package classes.Characters.CoC
 				var damageResult:DamageResult = calculateDamage(new TypeCollection( { kinetic : 12 }, DamageFlag.EXPLOSIVE, DamageFlag.BYPASS_SHIELD ).rand(), this, target, "melee");
 				
 				output("Try as you might, you can't seem to protect yourself; and the blast hits you like a stone, throwing you to the ground. ");
-				if (!target.hasStatusEffect("Stun Immune")) {
+				if (!target.hasStunImmunity()) {
 					output("Your head swims - it'll take a moment before you can regain your balance. ");
 					target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Cannot act for 2 turns.", true, 0, 0xFF0000);
 				}

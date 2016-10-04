@@ -143,7 +143,9 @@ public function followerKiha():Boolean {
 	return false;
 }
 
-private function kihaAffection(changes:Number = 0):Boolean {
+private function kihaAffection(changes:Number = 0):Number {
+	if (flags["COC.KIHA_AFFECTION"] == undefined || !(flags["COC.KIHA_AFFECTION"] is Number)) flags["COC.KIHA_AFFECTION"] = 0;
+	
 	if (flags["COC.KIHA_AFFECTION_LEVEL"] == 2) flags["COC.KIHA_AFFECTION"] += changes;
 	if (flags["COC.KIHA_AFFECTION"] > 100) flags["COC.KIHA_AFFECTION"] = 100;
 	return flags["COC.KIHA_AFFECTION"];
@@ -1109,7 +1111,7 @@ private function kihaSexMenu(display:Boolean = true, allowBack:Boolean = true):v
 	clearMenu();
 	addDisabledButton(0, "Anal", "Anal", "This option requires you to have fitting cock.");
 	addDisabledButton(1, "???");
-	addDisabledButton(3, "Get HJ", "Get HJ", "This option requires you to have fitting cock.");
+	addDisabledButton(3, "Get HJ", "Get HJ", "This option requires you to have overly large cock.");
 	addDisabledButton(4, "Girl69", "Girl69", "This option requires you to have vagina.");
 	addDisabledButton(5, "???");
 	addDisabledButton(6, "???");

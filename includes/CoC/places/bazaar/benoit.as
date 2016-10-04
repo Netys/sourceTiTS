@@ -1200,6 +1200,7 @@ public function femoitNextDayEvent():void
 	flags["COC.BENOIT_STATUS"] = 1;
 	flags["COC.FEMOIT_NEXTDAY_EVENT_DONE"] = 2;
 	
+	benoit.short = "Benoite";
 	benoit.femininity = 75;
 	benoit.hipRatingRaw = 12;
 	benoit.buttRatingRaw = 8;

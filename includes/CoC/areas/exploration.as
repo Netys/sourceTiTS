@@ -40,10 +40,9 @@ public function doExplore():void
 		
 	if (flags["COC.EXPLORED_HIGH_MOUNTAIN"] != undefined) 
 		addButton(8, "HighMountain", exploreHighMountain, null, "Explore high mountains", "Visit the high mountains. \n\nRecommended level: 10\n\nTimes explored: " + flags["COC.EXPLORED_HIGH_MOUNTAIN"]);
-	
-	
-	// bog is such meh...
-	//if (flags[kFLAGS.BOG_EXPLORED] > 0) addButton(9, "Bog", kGAMECLASS.bog.exploreBog, null, null, null, "Visit the dark bog. \n\nRecommended level: 14" + (debug ? "\n\nTimes explored: " + flags[kFLAGS.BOG_EXPLORED] : ""));
+		
+	if (flags["COC.EXPLORED_BOG"] != undefined) 
+		addButton(9, "Bog", exploreBog, null, "Explore bog", "Visit the dark bog. \n\nRecommended level: 14\n\nTimes explored: " + flags["COC.EXPLORED_BOG"]);
 	
 	// revamp content...
 	//if (flags[kFLAGS.DISCOVERED_GLACIAL_RIFT] > 0) addButton(10, "Glacial Rift", kGAMECLASS.glacialRift.exploreGlacialRift, null, null, null, "Visit the chilly glacial rift. \n\nRecommended level: 16" + (debug ? "\n\nTimes explored: " + flags[kFLAGS.DISCOVERED_GLACIAL_RIFT] : ""));

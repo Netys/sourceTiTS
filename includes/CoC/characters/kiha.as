@@ -23,6 +23,11 @@ public function encounterKiha():void {
 		kihaBitchesOutCorruptPCs();
 		return;
 	}
+	//If currently paid up on toll, don't run into her!
+	//Count meetings
+	if (!followerKiha())
+		IncrementFlag("COC.TIMES_MET_KIHA");
+	
 	//kihaUnBitchesOutCorruptPCs()
 	if(pc.cor() < 66 && flags["COC.KIHA_CORRUPTION_BITCH"] == 1) {
 		kihaUnbitchesUncorruptedFolks();
@@ -37,9 +42,6 @@ public function encounterKiha():void {
 		kihaFriendlyGreeting();
 		return;
 	}
-	//If currently paid up on toll, don't run into her!
-	//Count meetings
-	IncrementFlag("COC.TIMES_MET_KIHA");
 	//PLOT FIGHT TIME!
 	if(pc.cor() < 66 && int(flags["COC.KIHA_AFFECTION_LEVEL"]) == 0 && flags["COC.KIHA_TALK_STAGE"] >= 3 && pc.hasGenitals()) {
 		kihaSpiderEventIntro();

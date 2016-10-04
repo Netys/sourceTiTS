@@ -635,7 +635,7 @@ package classes.GameData
 			var HoldWithBothHands:PerkData = new PerkData();
 			HoldWithBothHands.classLimit = GLOBAL.CLASS_ADVENTURER;
 			HoldWithBothHands.perkName = "Hold With Both Hands";
-			HoldWithBothHands.perkDescription = "Gain +20% physique modifier with melee weapons when not using a ranged weapons.";
+			HoldWithBothHands.perkDescription = "Gain +20% physique modifier with melee weapons when not using a ranged weapon.";
 			HoldWithBothHands.levelLimit = 12;
 			HoldWithBothHands.accessFunction = function():Boolean { return kGAMECLASS.pc.PQ() >= 80; };
 			insertPerkData(HoldWithBothHands);

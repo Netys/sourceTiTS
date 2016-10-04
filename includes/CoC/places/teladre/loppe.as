@@ -616,7 +616,7 @@ private function playAlongWivLoppesesUrtaGossip():void {
 	clearOutput();
 	output("And... what would she do if, hypothetically, you <i>did</i> have a fetish for dickgirls ready to give a stallion an inferiority complex?");
 	output("\n\nLoppe gives it some thought.  \"<i>There's not enough paper in Tel'Adre to list the things I would do, sugar.  It'd be a long, hard punishment, but I'm sure we could eventually come - to a mutual understanding.</i>\" Loppe winks at you, laying special emphasis on the last words.");
-	output("\n\nYou exaggeratedly shiver at the prospect, and tell her she's starting to paint a very pretty picture... reaching out with a [foot], you gently stroke her calf, asking if she's sure she'd be okay with that.");
+	output("\n\nYou exaggeratedly shiver at the prospect, and tell her she's starting to paint a very pretty picture... reaching out with a [pc.foot], you gently stroke her calf, asking if she's sure she'd be okay with that.");
 	output("\n\n\"<i>As sure as the day is bright,</i>\" she replies with a smile.  Her paw twitches and starts brushing against you as well.");
 	output("\n\nWell then, maybe it's her lucky day, but...  Loppe clearly likes the idea of you having a fetish for her body, but are you going to like what Loppe wants to do to you with it?");
 	output("\n\n\"<i>Sugar... you have no idea.  I'd take you home and let you get <b>very</b> acquainted with all the finer anatomical features of my body.  While you're doing that, I'd be getting <b>very</b> acquainted with all of yours.  And then I'd let you do whatever you want to me and my 'little' horsey.  Then we could 'ride' all day long...</i>\"  Loppe says dreamily, giving you a winning smile.");
