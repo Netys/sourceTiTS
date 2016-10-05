@@ -2183,7 +2183,7 @@ public function beeGirlsGetsDildoed():void {
 	//output("\n\nWith a powerful wet-sounding slap, you bottom out inside her, and your moan of satisfaction mixes with her panicked gasp as your egg-tube flares deep inside her, filling her innards with its thick lube.");
 	//if (pc.gender > 0) {
 		//output("  With another lewd groan,  you wrap your arms around her bee abdomen, grinding ");
-		//if (pc.hasCock()) output("[eachCock]");
+		//if (pc.hasCock()) output("[pc.eachCock]");
 		//else output("your [vagina]");
 		//output(" against her in bliss, leaving a sticky trail dripping down onto her gropable cheeks.");
 	//}

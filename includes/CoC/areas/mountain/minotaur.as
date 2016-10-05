@@ -1413,7 +1413,7 @@ private function getMinoHawtDawged():void {
 	if (pc.lustQ() >= 99) {
 		output("You collapse to your knees, hands racing to your crotch and your ");
 		//(If Male or Herm: 
-		if(pc.hasCock()) output("[cock biggest], which you frantically try to stroke and rub through your [pc.armor], its throbbing arousal clearly evident.");
+		if(pc.hasCock()) output("[pc.cockBiggest], which you frantically try to stroke and rub through your [pc.armor], its throbbing arousal clearly evident.");
 		//If Herm: 
 		if(pc.isHerm()) output("  Your other hand races to your ");
 		//(If Female or Herm: 

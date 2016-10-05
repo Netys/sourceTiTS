@@ -1223,7 +1223,7 @@ private function nagaCoilForHelCampWithGirls():void {
 	
 	output("\n\n\"<i>Alright, alright, enough,</i>\" she groans, rubbing your hair.  \"<i>Let's just do it already... I need you, lover.</i>\"");
 	
-	output("\n\nWell, you suppose you could have a little mercy on your salamander... and besides, your tit-feast has left your [pc.vagina] soaked and ready, and brushing up against Hel's wet thighs leaves you trembling with electric pleasure.  A wicked grin spreads across your [face] as you wriggle your tail up through the coil, letting the tip pop between your entwined body, pressing against Hel's loose, slick cunt.  She groans as the tip of your tail flicks across her lower lips, but is still aware enough to bring her own scaly tail to bare, wrapping it around your [pc.hips] before its warm, firm tip pokes your [pc.vagina].");
+	output("\n\nWell, you suppose you could have a little mercy on your salamander... and besides, your tit-feast has left your [pc.vagina] soaked and ready, and brushing up against Hel's wet thighs leaves you trembling with electric pleasure.  A wicked grin spreads across your [pc.face] as you wriggle your tail up through the coil, letting the tip pop between your entwined body, pressing against Hel's loose, slick cunt.  She groans as the tip of your tail flicks across her lower lips, but is still aware enough to bring her own scaly tail to bare, wrapping it around your [pc.hips] before its warm, firm tip pokes your [pc.vagina].");
 	
 	output("\n\nHelia locks eyes with you, and you both grin and nod.  As one, you both slide your tails forward, and both groan as the ever-thickening members slide into your wet cunts.  You squirm and moan as Hel's warm, flexible tail slides into you, first as thin as a gentle finger, but soon thicker than any cock around, stretching you wide as she slithers more and more tail-meat into you until you feel her hot scales on every inch of your inner walls.  An errant waggle of her tail sends shivers through your spine, making you contract your own tail, squeezing your bodies together, your [pc.chest] pressing into Hel's soft bosom.  She laughs and kisses you, grabbing your [pc.butt] and pulling you down on a little more of her tail.");
 	
@@ -1767,14 +1767,14 @@ private function dudeHeliaAndKihaThreeSome():void {
 	output("You put a hand on each lizard-girl's shoulder and push them down onto their knees, giving them a good view of the bulge [pc.eachCock] is making in your [pc.gear].  Eagerly, they start stripping you of your grab until [pc.oneCock] is freed, falling out of its restraints to bop Kiha on the nose.  The dragoness recoils, giving Hel the chance to snatch it in her mouth, her lips wrapping around your shaft like a silky wet vice.  Kiha recovers, but too late to get a taste of your head, nor the first thick dollop of pre that rolls off onto Hel's reptilian tongue, but she soon busies herself tending to ");
 	//if 1 cock: 
 	if (pc.cockTotal() == 1) output("the rest of your shaft, her own tongue coiling around your tool");
-	else output("your second erection, taking it in both hands and giving it long, loving strokes before slurping up the [cockHead 1]");
+	else output("your second erection, taking it in both hands and giving it long, loving strokes before slurping up the [pc.cockHead 1]");
 	output(".");
 	
 	output("\n\nA pleasured groan escapes you as the fiery ladies tend to your cock");
 	if (pc.cockTotal() > 1) output("s");
 	output(", licking and sucking with expert skill until you can feel a powerful wave of pleasure building up in your [pc.balls], aching for release.  Just as your orgasm swells, though, Hel looks up at you with a coy grin and lets your prick pop out of her mouth, wet ropes of saliva still connecting you, and pushes Kiha back as well.");
 	
-	output("\n\n\"<i>What the hell, firebutt?</i>\" Kiha snaps, scowling at the salamander.  Hel gives her a cheeky look and, before you can blink, you're swept off your balance and come to rest firmly in the girls' embrace, your [face] pressed between the soft mounds of Kiha's chest.  You start to complain, but fall silent when the dragoness rolls you over and locks her powerful legs around your waist, the leathery soles of her feet brushing the sensitive skin of your [pc.cock].");
+	output("\n\n\"<i>What the hell, firebutt?</i>\" Kiha snaps, scowling at the salamander.  Hel gives her a cheeky look and, before you can blink, you're swept off your balance and come to rest firmly in the girls' embrace, your [pc.face] pressed between the soft mounds of Kiha's chest.  You start to complain, but fall silent when the dragoness rolls you over and locks her powerful legs around your waist, the leathery soles of her feet brushing the sensitive skin of your [pc.cock].");
 	
 	output("\n\n\"<i>What's better than one lizard footjob...?</i>\"  Hel starts, moving around to loom over you, resting her heel on your groin, her claws teasing your [pc.cockHead].");
 

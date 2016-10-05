@@ -892,7 +892,7 @@ private function hotdogTheAnemone():void
 	if (dick) output("excited by the feel and sight of your pre-cum");
 	else output("looking almost bored");
 	output(", obliges and snakes several toward you; they stop just inside the range of your furthest stroke, flitting tantalizingly as if begging you to push into them.  Wary at first, you do so and they gently caress ");
-	if (dick) output("your [cockHead " + (x + 1) + "]");
+	if (dick) output("your [pc.cockHead " + (x + 1) + "]");
 	else output("the nerve-packed end of your [pc.clit]");
 	output(", responding almost autonomously to wrap around it.  The grip is not enough to keep you from pulling back out, though, and they relinquish your shaft, leaving the tip covered in a warm lattice of venom that soaks through you.  A shudder wracks you, and you eagerly push in again, sliding first into her cheeks, then down the slick passageway made by your lube, and finally into the body-heating embrace of her tentacles.  As your ");
 	if (dick) output("now-throbbing prick");
@@ -1038,7 +1038,7 @@ private function fuckingAssholelessAnemoneeeez():void
 //
 	//output("\n\nGrasping the nettle, you gather her squirming, writhing hair in your hands and pull it taut, then lasso it with a spray of silk, directing it with your foremost legs.  The feeling of your spinnerets weaving long criss-crossing strands down her hair to restrain it - of spewing white, sticky strings all over it - becomes increasingly sexual as her venom suffuses your bloodstream through your hands");
 	////[(cock)
-	//if (pc.hasCock()) output(", and your [pc.gear] tightens as [eachCock] swells");
+	//if (pc.hasCock()) output(", and your [pc.gear] tightens as [pc.eachCock] swells");
 	//else if (pc.hasVagina()) output(", and the inside of your [pc.gear] dampens with the lube your [vagina] leaves as it clenches around empty air");
 	//output("; you have to push yourself to finish working before you can lose yourself to it.  Completing your restraints, you release her tentacles.  They bob behind her in one mass like a long, cute ponytail, and only the ends are free to wiggle.  When she realizes this, her behavior changes dramatically.");
 //

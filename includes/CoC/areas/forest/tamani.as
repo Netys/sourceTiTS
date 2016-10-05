@@ -859,7 +859,7 @@ public function getRapedByTamaniYouHypnoSlut():void {
 		else if(pc.cocks[primary].cType == GLOBAL.TYPE_DEMONIC && pc.hasCockFlag(GLOBAL.FLAG_NUBBY, primary)) output("The corrupted nodules along your [cock " + primary + "] pulsate in rippling, wave-like motions, massaging the interior of Tamani's twat");
 		else if(pc.cocks[primary].cType == GLOBAL.TYPE_TENTACLE && pc.hasCockFlag(GLOBAL.FLAG_FLARED, primary)) output("Your tentacle-cock's tip widens, becoming mushroom-like inside Tamani's womb");
 		else if(pc.hasCockFlag(GLOBAL.FLAG_FLARED, primary)) output("Your flare widens, actually holding itself inside Tamani's womb");
-		else output("Your sensitive [cockHead " + primary + "] swells slightly in time with the contractions of your orgasm");
+		else output("Your sensitive [pc.cockHead " + primary + "] swells slightly in time with the contractions of your orgasm");
 		output(" as you begin to fill your wife's womb with seed.   The orgasm is intense");
 		if(pc.cumQ() < 50) output(", but brief, and after a few moments of spasming pleasure, the flood of cum slows to a trickle.");
 		else if(pc.cumQ() < 300) output(" and voluminous, forcing more and more seed into Tamani's uterus until she sloshes with each new squirt.  After a few long moments of spasming pleasure, the flood of cum slows to a trickle.");
@@ -981,7 +981,7 @@ public function tamaniAnalShits():void {
 //internal function tamaniBeaten():void {
 	//clearOutput();
 	//output("With the goblin defeated, you're finally free to tend to your body's true desires, even if they may be different than the ones the goblin was intent on stoking.  You shed your [pc.gear] like a second skin, shrugging out of the offending garments with ease.  With your nude form revealed, Tamani ");
-	//if(pc.hasCock()) output("licks her lips in anticipation, eyes locked on [eachCock]");
+	//if(pc.hasCock()) output("licks her lips in anticipation, eyes locked on [pc.eachCock]");
 	//else output("frowns in displeasure, noting your lack of a penis");
 	//output(".  She's clueless to the growing size that dangles beneath your spider-half, the secret drider treasure that you usually keep retracted.  A dollop of green goo drips from the tip of the semi-hard organ, still hidden from the goblin matron.");
 	//
@@ -1003,7 +1003,7 @@ public function tamaniAnalShits():void {
 	//output("\n\nStill holding her fast, you simply enjoy the sensation, slowly stuffing Tamani's womb full of round orbs and gushy green padding.  A trickle of extra ooze escapes the curvy skank's thighs, mixed with her own clear juices.  It forms a sticky puddle beneath her that only grows larger as the goblin bloats.  Trickles of milk suddenly burst from the darkened nipples to wet your fingers, so you squeeze harder, milking the little slut like the whore-cow she is.  She cries, \"<i>FUCK YES!  Make me carry your babes and squirt milk everywhere!  Gods... so... pregnant...</i>\"");
 //
 	//output("\n\nTamani's hands begin to roam across the taut dome of her gravid belly as it swells still bigger, and with a jubilant shriek, she climaxes, spraying gouts of green-tinged pussy-juice in a fan beneath her.  She goes limp in your grip, though her milk keeps flowing unimpeded.  You let her go, though she's held to your prong by the pressure of the last few eggs that pass into her stretchy, fertile womb.  You hum happily, feeling completely relieved, utterly languid and satisfied.");
-	//if(pc.hasCock()) output("  White coats the goblin from her shoulders up, the only evidence of your male satisfaction.  You were so focused on the act of impregnation and the unique pleasure that it provides that you barely noticed [eachCock] erupting in sympathetic pleasure.");
+	//if(pc.hasCock()) output("  White coats the goblin from her shoulders up, the only evidence of your male satisfaction.  You were so focused on the act of impregnation and the unique pleasure that it provides that you barely noticed [pc.eachCock] erupting in sympathetic pleasure.");
 	//output("\n\nAt last, the bloated bitch slides into the gooey green puddle with a splash, freeing your ovipositor to retract.  She immediately begins snoring, clearly as satisfied as you.  What a strange creature.");
 	//flags[kFLAGS.TIMES_OVIPOSITED_TAMANI]++;
 	////Don't encounter Tamani for 3 days if fertilized

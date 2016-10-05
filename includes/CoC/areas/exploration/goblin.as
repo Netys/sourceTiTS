@@ -779,7 +779,7 @@ private function gatsGoblinBoners():void
 //
 	//outputText("\n\nYou feel its slow path up into the goblin, your egg-tube flaring out around it, until it stops just short of her womb's entrance.  She looks up from her stomach, her wide-eyed stare meeting yours for only a second before a powerful spasm forces the egg past her clenched cervix.  The miniature whore convulses, her eyes rolling back, tongue lolling as she cums hard, a torrent of girlcum spraying across your chitin.");
 	//if (pc.hasCock()) {
-		//outputText("  Your own orgasm is just as strong, [eachCock] spraying powerfully across your torso");
+		//outputText("  Your own orgasm is just as strong, [pc.eachCock] spraying powerfully across your torso");
 		//if (pc.hasVagina()) outputText("and y");
 	//}
 	//else if (pc.hasVagina()) outputText("  Y");
