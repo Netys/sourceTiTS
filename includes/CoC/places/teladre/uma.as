@@ -1882,7 +1882,7 @@ private function sexGetABJFromDisMilfyLesboSlut():void
 	output("\n\nGrunting softly at her ministrations, you let your [pc.hips] shiver as she passes over your [pc.cockHead " + x + "] once more.  Her tightly sealed lips glide over your spit-slicked length at an even, nerve-tickling pace");
 	if(pc.cocks[x].cLength() < 9) output(" until she hits your [sheath]");
 	else output(" until she has her mouth as full as she can handle");
-	output(".  She holds you like that, letting you feel her hot breath wash over the [skinFurScales] of your crotch.  Her tongue wags back and forth underneath you, slipping and sliding against you. Inside her mouth, your [pc.cock " + x + "] twitches and jumps in her maw.  Beads of pre-cum are beading and dripping out onto her busy organ.");
+	output(".  She holds you like that, letting you feel her hot breath wash over the [pc.skinFurScales] of your crotch.  Her tongue wags back and forth underneath you, slipping and sliding against you. Inside her mouth, your [pc.cock " + x + "] twitches and jumps in her maw.  Beads of pre-cum are beading and dripping out onto her busy organ.");
 	
 	output("\n\nUma's shaft-muffled voice mumbles, \"<i>");
 	if(flags["COC.UMA_TIMES_SUCKED_YOU"] < 2) output("Girls taste better.");
@@ -2041,7 +2041,7 @@ private function sexUmaEatHerOut():void
 
 	output("\"<i>Mmm oh yes dear, yes, that feels good.  It's been awhile since someone would do that for me...</i>\"  She croons in her pleasure.\n\n");
 	output("You take your mouth off her plush netherlips to pant and regain your breath, licking around your mouth to taste more of her.  You don't take long before you plunge yourself back between her legs, licking, slurping, drinking and tasting.\n\n");
-	output("\"<i>Oh! Oh-oh-OH!</i>\"  Uma's legs close tightly around your neck, humping her cunt against your [face] before she shudders violently in orgasm, the wetness of her climax splashing across your lips and running down your chin.  One last pleasure-stoked spasm and she slumps in release, her legs unclenching and then sliding off of your shoulders to clop against the floor.  Breathing heavily, she smiles at you.  \"<i>Mmm my dear, my little Loppe is a lucky girl indeed to have you willing to do that for her.</i>\"\n\n");
+	output("\"<i>Oh! Oh-oh-OH!</i>\"  Uma's legs close tightly around your neck, humping her cunt against your [pc.face] before she shudders violently in orgasm, the wetness of her climax splashing across your lips and running down your chin.  One last pleasure-stoked spasm and she slumps in release, her legs unclenching and then sliding off of your shoulders to clop against the floor.  Breathing heavily, she smiles at you.  \"<i>Mmm my dear, my little Loppe is a lucky girl indeed to have you willing to do that for her.</i>\"\n\n");
 	output("You lick your lips and wipe the aftermath from your face, smiling broadly at the mare's flattery.  Shaking herself, Uma yawns loudly, one hand in front of her face to be more demure.  \"<i>That really felt wonderful... I think... I think I'm going to take a little rest.  Would you be a dear and flip the sign to Closed on your way out, dear?</i>\" she asks, settling back on her table as if she really is about to have a nap here in her own workroom. \n\n");
 	output("You rub her thigh affectionately, promising to do so, then redress yourself and head back to camp.\n\n");
 

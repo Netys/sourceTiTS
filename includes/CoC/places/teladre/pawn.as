@@ -14,14 +14,13 @@ public function oswaldPawn():void {
 		if(pc.cor() < 75) output("Who would've thought that seeing someone NOT aroused would ever shock you?");
 		else output("What a shame, but maybe you can give him a reason to stand up straight?");
 		output("  His stand is a disheveled mess, in stark contrast to its well-groomed owner.  He doesn't appear to be selling anything at all right now.\n\n");
-		output("The dog introduces himself as Oswald and gives his pitch, \"<i>Do you have anything you'd be interested in selling?  The name's Oswald, and I'm the best trader in Tel'Adre.</i>\"\n\n");
-		output("(You can sell an item here, but Oswald will not let you buy them back, so be sure of your sales.)");
+		output("The dog introduces himself as Oswald and gives his pitch, \"<i>Do you have anything you'd be interested in selling?  The name's Oswald, and I'm the best trader in Tel'Adre.</i>\"");
 		flags["COC.MET_OSWALD"] = 1;
 	}
 	else {
-		output("You see Oswald fiddling with a top hat as you approach his stand again.  He looks up and smiles, padding up to you and rubbing his furry hands together.  He asks, \"<i>Have any merchandise for me " + pc.mf("sir","dear") + "?</i>\"\n\n");
-		output("(You can sell an item here, but Oswald will not let you buy them back, so be sure of your sales.  You can shift-click to sell all items in a selected stack.)");
+		output("You see Oswald fiddling with a top hat as you approach his stand again.  He looks up and smiles, padding up to you and rubbing his furry hands together.  He asks, \"<i>Have any merchandise for me " + pc.mf("sir","dear") + "?</i>\"");
 	}
+	output("\n\n(You can sell an item here, but Oswald will not let you buy them back, so be sure of your sales.)");
 	oswaldPawnMenu();
 	
 	if(!pc.hasKeyItem("Carrot") && flags["COC.NIEVE_STAGE"] == 3)

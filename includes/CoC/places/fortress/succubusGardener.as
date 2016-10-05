@@ -292,7 +292,7 @@ private function femGenderlessLossII():void
 	clearOutput();
 	output("Your fall doesn't take you very far. A cushion of interceding plants stops you long before any harm could befall you, holding you nearly horizontally above the rich, loamy earth. There's a bit of a salty-sweat scent in the air. You can't quite identify it, but then again, you don't really have time to. Bands of floral flesh are circling around your arms and [pc.legs]. They aren't constrictive. As a matter of fact, they're kind of comforting - like being surrounded in a lovers arms. Of course, these arms conform perfectly to your flesh, pressing down on you from all sides.");
 	
-	output("\n\nIt grows dark as the tentacles adjust to your presence within their midst. Those not actively engaged in sliding across your [skinFurScales] are straightening once more, blocking the light and warmth of the sun out for what is perhaps the last time. Bands of slick, wet plant roll across your shoulders and [pc.chest], enveloping them much like your limbs a moment before. A narrow band slides over your collarband and worms around your neck into an impromptu collar, tight enough that it's impossible to ignore but loose enough to allow you to breathe.");
+	output("\n\nIt grows dark as the tentacles adjust to your presence within their midst. Those not actively engaged in sliding across your [pc.skinFurScales] are straightening once more, blocking the light and warmth of the sun out for what is perhaps the last time. Bands of slick, wet plant roll across your shoulders and [pc.chest], enveloping them much like your limbs a moment before. A narrow band slides over your collarband and worms around your neck into an impromptu collar, tight enough that it's impossible to ignore but loose enough to allow you to breathe.");
 	
 	output("\n\nWetness drizzles your [pc.vagina]");
 	if (pc.hasCock()) output(" and [pc.cocks]");
@@ -535,7 +535,7 @@ private function maleLossFeeder():void
 
 	output("\n\nThe succubus's lips curl cruelly. <i>\"Oh. You still think you'll get a chance to escape, don't you?\"</i> She throws her head back and laughs. <i>\"How wrong you are, Champion. How wrong you are...\"</i> Turning to the botanical wall, the enchanting gardener at you, giving you quite the view of her well-formed backside.");
 
-	output("\n\nSomething slick and smooth wraps around your [pc.leg], moving slowly and patiently but with great strength. You can feel the firmness of its grip tightening while a second latches on. The twinned tentacles circle up your body in alternating corkscrew patterns, gliding across your [skinFurScales] with self-lubricated ease. You try to scrabble away, but the tendrils merely lift you aloft like a child would a toy. Meanwhile, the succubus merely flicks");
+	output("\n\nSomething slick and smooth wraps around your [pc.leg], moving slowly and patiently but with great strength. You can feel the firmness of its grip tightening while a second latches on. The twinned tentacles circle up your body in alternating corkscrew patterns, gliding across your [pc.skinFurScales] with self-lubricated ease. You try to scrabble away, but the tendrils merely lift you aloft like a child would a toy. Meanwhile, the succubus merely flicks");
 	if (pc.cocks.length > 1) output(" [pc.oneCock].");
 	else output(" your dick.");
 

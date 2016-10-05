@@ -1798,6 +1798,7 @@ public function heliaPlusFoxyFluffs():void {
 
 		output("Amused, Hel gives Miko's bountiful bosom a playful grope and says, \"<i>My, my, " + pc.short + ", looking for a little foxy foursome?  Well, I think that can be arranged, what do you say, girls?</i>\"");
 		//(NEXT button, to Foursome)
+		clearMenu();
 		addButton(0, "Next", heliasFoxyFourSomeFluffs);
 	}
 }
@@ -1819,11 +1820,11 @@ private function heliasFoxyFourSomeFluffs():void {
 
 	output("The four of you slide into your room for the evening, a small affair with a large, plush bed.  The fox-twins waste no time in undressing, revealing their large D-cups, 8-inch red cocks, and glistening loose cunts.  Hel tosses her scale bikini aside, letting her hefty E-cups bounce free, and puts an arm around the twins' lithe, tan shoulders so all three nude bodies are on display together for you.\n\n");
 	
+	clearMenu();
 	//[If Herm]
 	if (pc.isHerm()) {
 		output("\"<i>So what parts do you want to use?</i>\" she asks, looking to your mixed endowments.");
 		//(Display Options: [As Male] [As Female])
-		clearMenu();
 		addButton(0, "As Male", foxyFluffsFoursomeAsMale);
 		addButton(1, "As Female", foxyFluffGirlsFuckSex);
 	}

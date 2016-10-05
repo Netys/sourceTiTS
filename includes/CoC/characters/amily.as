@@ -8698,7 +8698,7 @@ private function amilyNurseCheckupV2(repeat:Boolean):void {
 
 	output("\n\nYou moan, \"<i>Oohhh, what is it?</i>\"");
 
-	output("\n\nAmily abruptly releases your over-engorged pecker and lifts her leg high enough to place it on your shoulder, stretching the obscene skirt up on to her hips, her womanhood laid bare just inches from your [face].  \"<i>Mouse-cunt,</i>\" she breathes.  \"<i>Again and again, until the naughty spunk is out and your ");
+	output("\n\nAmily abruptly releases your over-engorged pecker and lifts her leg high enough to place it on your shoulder, stretching the obscene skirt up on to her hips, her womanhood laid bare just inches from your [pc.face].  \"<i>Mouse-cunt,</i>\" she breathes.  \"<i>Again and again, until the naughty spunk is out and your ");
 	if (pc.balls > 0) output("plump balls are");
 	else output("stiff shaft is");
 	output(" freed from the perverted needs that afflict you.</i>\"");

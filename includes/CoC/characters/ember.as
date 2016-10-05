@@ -3892,17 +3892,18 @@ public function emberGivesBirth():void
 
 public function giveBirthToEmberKids(pregSlot:int):void
 {
+	clearOutput();
 	if (!pc.hasVagina(pregSlot)) {
 		pc.createVagina();
 		pregSlot = pc.vaginas.length - 1; // failsafe
-		output("\n\nYou feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].");
+		output("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a [pc.vagina " + pregSlot + "].\n\n");
 	}
 	
 	var roll:int = rand(100);
 	//PC Gives Live Birth
 	if (!ember.hasPerk("Oviposition")) {
 		//40% chance of boy, 40% chance of girl and 20% chance of both
-		output("\n\nYou find yourself doubling over - well, as far as you can given your hugely gravid stomach, letting out a hollow cry of pain.  You can feel the muscles in your midriff starting to squeeze and ripple in a fashion you just know signifies the onset of labor.  You cry out for Ember to come and attend you.  Ember rushes towards you in a blur, stopping mere inches from you, panting.  \"<i>What is it?  Is it time!?  Are you in labor!?</i>\" [ember.heShe] asks in a hurry.  You nod and tell [ember.himHer] that you are.");
+		output("You find yourself doubling over - well, as far as you can given your hugely gravid stomach, letting out a hollow cry of pain.  You can feel the muscles in your midriff starting to squeeze and ripple in a fashion you just know signifies the onset of labor.  You cry out for Ember to come and attend you.  Ember rushes towards you in a blur, stopping mere inches from you, panting.  \"<i>What is it?  Is it time!?  Are you in labor!?</i>\" [ember.heShe] asks in a hurry.  You nod and tell [ember.himHer] that you are.");
 
 		output("\n\nEmber wastes no time, [ember.heShe] hefts you into [ember.hisHer] arms and takes you to [ember.hisHer] den, gently setting you down on the soft leaves; then [ember.heShe] starts undressing you, stripping your [pc.gear] as quickly as [ember.heShe] can.  \"<i>Okay, Okay...  What do you need?  W-what should I do!?  Do you need anything!?  How are you feeling!?</i>\" Ember asks in panic, the excitement of what's about to happen too much to bear for the dragon" + ember.mf("-boy", "-girl") + ".");
 		output("\n\nYou grit out between your teeth that you are feeling very sore, and what you want is for [ember.himHer] to help you somewhere comfortable so you can get this slithering snake of a baby out of your guts - preferably before he or she kicks his-her way out straight through your belly rather than coming down the birth canal!");
@@ -3980,7 +3981,7 @@ public function giveBirthToEmberKids(pregSlot:int):void
 	}
 	//PC Lays Egg
 	else {
-		output("\n\nYou find yourself doubling over - well, as far as you can given your hugely gravid stomach, letting out a hollow cry of pain.  You can feel the muscles in your midriff starting to squeeze and ripple in a fashion you just know signifies the onset of labor.  You cry out for Ember to come and attend you.  Ember rushes towards you in a blur, stopping mere inches from you, panting.  \"<i>What is it? Is it time!? Are you ready to lay!?</i>\" [ember.heShe] asks in a hurry.  You nod and tell [ember.himHer] that you are.");
+		output("You find yourself doubling over - well, as far as you can given your hugely gravid stomach, letting out a hollow cry of pain.  You can feel the muscles in your midriff starting to squeeze and ripple in a fashion you just know signifies the onset of labor.  You cry out for Ember to come and attend you.  Ember rushes towards you in a blur, stopping mere inches from you, panting.  \"<i>What is it? Is it time!? Are you ready to lay!?</i>\" [ember.heShe] asks in a hurry.  You nod and tell [ember.himHer] that you are.");
 
 		output("\n\nEmber wastes no time - [ember.heShe] hefts you into [ember.hisHer] arms and takes you to [ember.hisHer] den, gently setting you down on the soft leaves.  Then [ember.heShe] starts undressing you, stripping your [pc.gear] as quickly as [ember.heShe] can.  \"<i>Okay, Okay...  What do you need?  W-what should I do!?  Do you need anything!?  How are you feeling!?</i>\" Ember asks in panic, the excitement of what's about to happen too much to bear for the dragon" + ember.mf("-boy", "-girl") + ".");
 

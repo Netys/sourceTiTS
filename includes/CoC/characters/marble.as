@@ -531,7 +531,7 @@ private function apologizetoWalkingTitsIMEANMARBLE():void {
 	else output("It isn't too hard to figure out that Marble isn't really trying, and you easily catch her off guard on one of her double backs.  She doesn't even notice you until you peek out from between the stalks next to her, reaching out and getting a handful of her backside.  \"<i>Clever " + pc.mf("boy","girl") + "...</i>\" she says.");
 	output("\n\nMarble pulls you to the ground, and you fall onto the lovely lady's lap.  Before you can say anything, Marble shushes you with a finger to your lips.  She pulls up her top, stopping for a moment and winking at you when she reveals underboob, then lets her nipples slip out.");
 	output("\n\n\"<i>Care to have some of my bountiful breasts, you sweet thing?</i>\" she says, smiling eagerly and presenting you with one of her half-inch long reddish nipples.  You notice that each nipple has a sore-looking swollen ring around it, probably the source of Marble's discomfort.");
-	output("\n\nYou knew she was going to get around to this, so you figure you might as well get it over with.  It's not like they're not really nice breasts, after all...  You lower your [face] to her nipple, and gently wrap your lips around it.  Marble sighs contentedly as you do so, and starts to groan slightly in pleasure as the first of the milk leaks from her teats.  You certainly can't argue with the taste, sweet and creamy, and start to down the delicious fluid with relish.  Marble doesn't seem to mind at all; in fact, the sounds of her pleasure only increase.");
+	output("\n\nYou knew she was going to get around to this, so you figure you might as well get it over with.  It's not like they're not really nice breasts, after all...  You lower your [pc.face] to her nipple, and gently wrap your lips around it.  Marble sighs contentedly as you do so, and starts to groan slightly in pleasure as the first of the milk leaks from her teats.  You certainly can't argue with the taste, sweet and creamy, and start to down the delicious fluid with relish.  Marble doesn't seem to mind at all; in fact, the sounds of her pleasure only increase.");
 	output("\n\nAfter several minutes, Marble puts her hand on your forehead, and gently asks you to take care of her other breast.  You don't disappoint her, and deeply draw milk from the other nipple with just as much vigor as before.");
 	pc.refillHunger(20);
 	output("\n\nAfter another few minutes, you finally have drawn your fill, and pull back from Marble, as she looks down at you with a kindly and pleased face.  \"<i>Thank you so much for that, sweetie.  I can't possibly refuse your apology after that.  You're welcome to come and visit me here on the farm any time.</i>\"  The cow-girl gives you a peck on the check and redresses her bountiful bosoms - a small part of you is sad to see them go.  She helps you to stand up and walks you back to the main barn, then returns to her chores.");
@@ -2506,7 +2506,7 @@ private function marbleCampSexNew():void {
 			//- PC has a sex
 			//- PC has Marble's Milk perk
 			clearOutput();
-			output("You tell Marble you're a little bit horny and you're wondering if she'd be willing to do something special for you in private.  Hearing you whisper your idea, she giggles and strokes your [face].");
+			output("You tell Marble you're a little bit horny and you're wondering if she'd be willing to do something special for you in private.  Hearing you whisper your idea, she giggles and strokes your [pc.face].");
 			output("\n\n\"<i>That's so cute, sweetie!  Of course I could do that for you.</i>\"");
 			output("  She leads you by the hand to sit in a more comfortable place.");
 			output("\n\nYou remove the lower part of your [pc.gear] and prepare to lie down, resting right in her lap and placing your head right under her ");
@@ -3969,7 +3969,7 @@ private function milkMarbleCunnilingling():void
 	
 	output( "\n\nYou ask your lover if that was good." );
 	
-	output( "\n\n\"<i>Lovely. Thanks for giving me the best start to being milked sweetie.</i>\"  She notices that you're all wet, \"<i>Oh, here, let me get that for you.</i>\" and she wipes the fluid off your [face] with a grin." );
+	output( "\n\n\"<i>Lovely. Thanks for giving me the best start to being milked sweetie.</i>\"  She notices that you're all wet, \"<i>Oh, here, let me get that for you.</i>\" and she wipes the fluid off your [pc.face] with a grin." );
 	
 	output( "\n\nYou then tie her bow back up on her tail and say you'll save the rest for later." );
 	
@@ -4277,7 +4277,7 @@ private function milkMarbleBarCunnilingling():void
 	
 	output( "\n\nA careful dab here, a deeper scope there, and you think she's ready to be harvested.  You get a drop of her fluids of off your brush and give it a taste test.  A quick word of approval to Marble of the quality of her fluids, and you dive into her snatch.  Her deep earthy aroma fills your head as you drink deeply of her fluids, licking around her folds and tasting everything she has to offer.  You hear soft moans of pleasure in approval of your efforts, just barely audible over the hum of the milking machine above you." );
 	
-	output( "\n\nNow free to do as it wills, you find that Marble's tail has curled around the back of your head, and is trying its hardest to push you deeper into her rear as possible.  At the same time, your lover's hips are rocking side to side, dragging your face across her gash and spreading her fluids all over your [face].  Trying to steady yourself, you grab two big handfuls of her expansive touch, and lower your head slightly.  This act brings her love-button in line with your mouth, and her passage in line with your nose.  Once again you're overwhelmed by the olfactory sensations, and mindlessly lap away at her fluids and engorged clitoris." );
+	output( "\n\nNow free to do as it wills, you find that Marble's tail has curled around the back of your head, and is trying its hardest to push you deeper into her rear as possible.  At the same time, your lover's hips are rocking side to side, dragging your face across her gash and spreading her fluids all over your [pc.face].  Trying to steady yourself, you grab two big handfuls of her expansive touch, and lower your head slightly.  This act brings her love-button in line with your mouth, and her passage in line with your nose.  Once again you're overwhelmed by the olfactory sensations, and mindlessly lap away at her fluids and engorged clitoris." );
 	
 	output( "\n\n\"<i>Oh yes, yes!  That's so wonderfuuuuuuul!</i>\"  Marble cries out several more times, as she rides out the orgasm you've brought her to through your efforts to harvest her.  Your reward is to be absolutely drenched in the sweet nectar you've been harvesting all this time, and every drop you catch in your mouth and on your [tongue] is swallowed in an instant.  In the end, you're actually a bit disappointed when her fluids run out." );
 	

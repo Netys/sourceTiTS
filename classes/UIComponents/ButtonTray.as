@@ -133,7 +133,7 @@
 				newBtn.addEventListener(MouseEvent.CLICK, _buttonHandlerFunc);
 			}
 			
-			for (var btnD:int = 0; btnD < 60; btnD++)
+			for (var btnD:int = 0; btnD < 150; btnD++)
 			{
 				_buttonData.push(new ButtonData());
 			}
@@ -197,7 +197,7 @@
 			}
 			
 			if (buttonPage < 1) buttonPage = 1;
-			if (buttonPage > 4) buttonPage = 4;
+			if (buttonPage > 10) buttonPage = 10;
 			
 			resetButtons();
 			

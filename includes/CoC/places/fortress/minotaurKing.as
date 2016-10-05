@@ -641,9 +641,9 @@ public function hailToTheKingBaby():void
 	{
 		output(", shaking your whole body with the force of his passion");
 	}
-	output(". His flare somehow grows even fatter, wide enough to be visible through the [skinFurScales] of your belly and hard enough for you to stroke through the intervening flesh.");
+	output(". His flare somehow grows even fatter, wide enough to be visible through the [pc.skinFurScales] of your belly and hard enough for you to stroke through the intervening flesh.");
 	output("\n\nHis orgasm rocks your entire world. The first squirt alone fills your stomach to capacity, giving you a nicely-rounded cum paunch. The second stretches your tummy into gravid obscenity. Your eyes roll back, both from lack of oxygen and the super-sized load of druggy, mind-obliterating minotaur spunk. You barely register the feeling of his cannon-like ejaculations pushing you off his spasming member. You definitely don’t remember opening wide and letting him paint your face and hair in a mask of it.");
-	output("\n\nEverything is too hazy to clearly piece together, just flashes of memories, sensations, and an all-consuming bliss. Excellia’s hands on your [pc.chest], stroking and squeezing, massaging her lord’s copious ejaculation into your [skinFurScales] until you gleam with it. Imps jacking off high above, mixing their tainted spooge in with the pure love of your majestic master. Lethice may have even fucked your ass. Somebody definitely did.");
+	output("\n\nEverything is too hazy to clearly piece together, just flashes of memories, sensations, and an all-consuming bliss. Excellia’s hands on your [pc.chest], stroking and squeezing, massaging her lord’s copious ejaculation into your [pc.skinFurScales] until you gleam with it. Imps jacking off high above, mixing their tainted spooge in with the pure love of your majestic master. Lethice may have even fucked your ass. Somebody definitely did.");
 	clearMenu();
 	addButton(0, "Next", gurglegurgle);
 }

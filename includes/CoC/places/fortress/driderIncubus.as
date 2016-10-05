@@ -102,7 +102,7 @@ public function spooderbuttGetsANewCockSleeveIII():void
 	output("Your bindings are cut from you by something short and sharp, the point pressing hard enough that you worry it will score your [pc.skin]");
 	if (pc.skinType != 0)
 	{
-		output(" through your [skinFurScales]");
+		output(" through your [pc.skinFurScales]");
 	}
 	output(". It doesn’t. Lethice is too skilled to physically damage what she sees as her future property. To think, you believed you’d be able to defeat her all by yourself, and now you’re on the floor, unable to stop her from handling your supine form as she will.");
 	output("\n\nThe webbing falls away, and a firm hand rolls you to your back for your first good look at your captor. She’s beautiful. You want to hate her. You want her to be an ugly, wretched hag, but she isn’t. Her face is perfectly proportioned and topped with luxurious purple hair. Curling demonic crowns grow from her temples like two halves of a majestic, white crown while smaller, nubbier growths protrude cutely from her forehead.");

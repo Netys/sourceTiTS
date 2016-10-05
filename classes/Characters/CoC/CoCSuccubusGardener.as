@@ -499,7 +499,7 @@ package classes.Characters.CoC
 			}
 			else if (pc.lustQ() < 70)
 			{
-				output("You groan at the warm slipperiness enveloping your [skinFurScales] as the tainted tentacles' fluids go to work on you. There's nothing you can do but try to endure it. If only it didn't feel so... hot to be drenched in. If you wind up losing, you hope she'll do this again....\n\n");
+				output("You groan at the warm slipperiness enveloping your [pc.skinFurScales] as the tainted tentacles' fluids go to work on you. There's nothing you can do but try to endure it. If only it didn't feel so... hot to be drenched in. If you wind up losing, you hope she'll do this again....\n\n");
 			}
 			else if (pc.lustQ() < 80)
 			{
@@ -511,7 +511,7 @@ package classes.Characters.CoC
 			}
 			else if (pc.lustQ() < 100)
 			{
-				output("Ohhhh, you're close now. You can feel the need hammering inside of you, soaking in through your [skinFurScales] to stoke the fires between your [pc.legs] into a blazing inferno, one you couldn't resist even if you wanted to. Then... then you'll be free to cum. You shake your head. Gotta hold it together");
+				output("Ohhhh, you're close now. You can feel the need hammering inside of you, soaking in through your [pc.skinFurScales] to stoke the fires between your [pc.legs] into a blazing inferno, one you couldn't resist even if you wanted to. Then... then you'll be free to cum. You shake your head. Gotta hold it together");
 				if (pc.hasCock())
 				{
 					output(", even while your rigid cock" + ((pc.cocks.length > 1) ? "s are":" is") + " drizzling ropes of pre unimpeded.");

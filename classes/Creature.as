@@ -2526,8 +2526,8 @@
 			if(hasStatusEffect("Disarmed") && hasKeyItem("Lasso")) return "lasso";
 			if(!fromStat)
 			{
-				if (!(rangedWeapon is EmptySlot)) return rangedWeapon.longName;
-				if (!(meleeWeapon is EmptySlot)) return meleeWeapon.longName;
+				if (hasRangedWeapon()) return rangedWeapon.longName;
+				if (hasMeleeWeapon()) return meleeWeapon.longName;
 			}
 			else
 			{

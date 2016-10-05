@@ -253,14 +253,14 @@ public function fuckHarpyQueen():void {
 	//If Herm: All Above
 	//If Genderless: \"<i>You don't really see how this is going to work out...</i>\" (NO SMUT 4 U)
 	clearMenu();
-	if (!pc.hasGenitals())
-	{
-		output("\n\n<b>Unfortunately, you lack the endowments needed to perform this action.</b>");
-		if (silly) output("<b> Another reason not to be genderless.</b>");
-	}
+	
 	if (pc.hasCock()) {
 		addButton(0, "Anal", harpyQueenSexAnal);
 		addButton(1, "Vaginal", vaginalHarpyQueenSex);
+	} else {
+		output("\n\n<b>Unfortunately, you lack the endowments needed to perform this action.</b>");
+		if (!pc.hasGenitals() && silly) output("<b> Another reason not to be genderless.</b>");
+		
 	}
 	addButton(14, "Back", mainGameMenu);
 }

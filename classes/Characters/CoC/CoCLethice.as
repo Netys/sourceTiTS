@@ -603,7 +603,7 @@ package classes.Characters.CoC
 			{
 				if (pc.lustQ() <= 33)
 				{
-					output("\n\nYou try and push back, to ignore the lustful bodies and lurid performances going on around you, but the effect they have on you is undeniable -- heat spreads like wildfire through your [skinFurScales], and your [pc.gear] suddenly feels a whole lot less comfortable. ");
+					output("\n\nYou try and push back, to ignore the lustful bodies and lurid performances going on around you, but the effect they have on you is undeniable -- heat spreads like wildfire through your [pc.skinFurScales], and your [pc.gear] suddenly feels a whole lot less comfortable. ");
 				}
 				else if (pc.lustQ() <= 66)
 				{
