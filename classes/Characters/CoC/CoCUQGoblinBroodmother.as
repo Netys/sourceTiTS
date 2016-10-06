@@ -56,6 +56,7 @@ package classes.Characters.CoC
 			this.breastRows[0].breastRatingRaw = 24;
 			
 			this.createStatusEffect("Disarm Immune");
+			this.createStatusEffect("Plot Fight");
 			
 			inventory = [];
 			

@@ -156,6 +156,7 @@ package classes.Characters.CoC
 			this.analVirgin = false; // blame bees
 			
 			this.createStatusEffect("Disarm Immune");
+			this.createStatusEffect("Plot Fight");
 			
 			this.impregnationType = "CoCAmilyPregnancy";
 			

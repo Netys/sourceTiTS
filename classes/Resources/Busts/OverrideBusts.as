@@ -187,9 +187,6 @@
 		[Embed(source = "../../../assets/images/npcs/jacques00/nehzara_nude.png", mimeType = "image/png")]
 		public var Bust_NEHZARA_NUDE:Class;
 		
-		[Embed(source = "../../../assets/images/npcs/nemo.png", mimeType = "image/png")]
-		public var Bust_NEMO:Class;	
-		
 		[Embed(source = "../../../assets/images/npcs/adjatha/ovir_dancer.png", mimeType = "image/png")]
 		public var Bust_OVIR_DANCER:Class;
 		[Embed(source = "../../../assets/images/npcs/adjatha/ovir_dancer_nude.png", mimeType = "image/png")]

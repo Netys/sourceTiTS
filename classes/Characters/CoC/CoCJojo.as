@@ -10,8 +10,12 @@ package classes.Characters.CoC
 	import classes.GLOBAL;
 	import classes.Items.Melee.CoCDagger;
 	import classes.Items.Melee.Fists;
+	import classes.Items.Miscellaneous.CoCBookBlack;
 	import classes.Items.Miscellaneous.EmptySlot;
 	import classes.ItemSlotClass;
+	import classes.Items.Transformatives.CoCIncubiD;
+	import classes.Items.Transformatives.CoCSucMilk;
+	import classes.Util.RandomInCollection;
 	import classes.kGAMECLASS;
 	
 	public class CoCJojo extends Creature
@@ -144,6 +148,8 @@ package classes.Characters.CoC
 			this.ass.loosenessRaw = 1;
 			this.ass.bonusCapacity = 20;
 			
+			inventory = [];
+			
 			if (kGAMECLASS.flags["COC.JOJO_STATE"] == 3) {
 				this.lust(30);
 				this.cocks[0].cLengthRaw += 1.5;
@@ -171,6 +177,7 @@ package classes.Characters.CoC
 				this.HPRaw = this.HPMax();
 				this.ballSizeRaw += 3;
 				this.long = "Jojo is an anthropomorphic mouse with immaculate white fur.  Though he stands only four feet tall, he is covered in lean muscle and moves with incredible speed.  He's naked, with a large tainted throbbing member bouncing at attention.  A fuzzy sack with painfully large looking balls dangles between his legs.";
+				inventory = [RandomInCollection(new CoCBookBlack(), new CoCIncubiD(), new CoCSucMilk())];
 			}
 			
 			this.vaginas = [];
@@ -182,8 +189,6 @@ package classes.Characters.CoC
 			this.milkRate = 1;
 			
 			this.createStatusEffect("Disarm Immune");
-			
-			inventory = [];
 			
 			this._isLoading = false;
 		}

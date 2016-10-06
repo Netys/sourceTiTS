@@ -499,9 +499,9 @@ public function unlockLuststickResistance():void {
 	}
 	else output("\nYou've gotten so used to having harpy lipstick on your lips that you're sure you're immune to it, even if you were to sprout a dick.  You would even feel comfortable wearing it around to use on male enemies, if you could find any.\n\n");
 	
-	output("<b>(Perk Unlocked: Luststick Adapted - your minimum lust is permanently raised, but you are more lust resistant.  In combat, you're immune to it, though it still gives you a rush during sex.  You're also comfortable enough with it to use it like a harpy if you find any.)</b>\n");
+	output("<b>(Perk Unlocked: Luststick Adapted - your minimum lust is permanently raised, but you are more lust resistant. In combat, you're immune to it, though it still gives you a rush during sex. You're also comfortable enough with it to use it like a harpy if you find any.)</b>\n");
 	
-	pc.createPerk("Luststick Adapted", 0, 0, 0, 0, "Your minimum lust is permanently raised, but you are more lust resistant.  In combat, you're immune to it, though it still gives you a rush during sex.  You're also comfortable enough with it to use it like a harpy if you find any.");
+	pc.createPerk("Luststick Adapted", 0, 0, 0, 0, "Your minimum lust is permanently raised, but you are more lust resistant. In combat, you're immune to it, though it still gives you a rush during sex. You're also comfortable enough with it to use it like a harpy if you find any.");
 	
 	addNextButton();
 }

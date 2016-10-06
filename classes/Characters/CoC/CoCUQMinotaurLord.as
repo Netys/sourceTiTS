@@ -64,6 +64,7 @@ package classes.Characters.CoC
 			this.cocks[0].cLengthRaw = 36;
 			this.ballSizeRaw = 8 * Math.PI;
 			this.inventory = [];
+			this.createStatusEffect("Plot Fight");
 			
 			_isLoading = false;
 		}

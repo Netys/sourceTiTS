@@ -175,6 +175,7 @@ package classes.Characters.CoC
 			
 			this.createStatusEffect("Disarm Immune");
 			this.createStatusEffect("Flee Disabled", 0, 0, 0, 0, true, "", "", false, 0);
+			this.createStatusEffect("Plot Fight");
 			
 			sexualPreferences.setRandomPrefs(2 + rand(3));
 			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.REALLY_LIKES_SEXPREF);

@@ -1,3 +1,4 @@
+import classes.Characters.CoC.CoCCumWitch;
 import classes.Characters.CoC.CoCSandWitchMob;
 import classes.GameData.CombatManager;
 import classes.GLOBAL;
@@ -203,9 +204,11 @@ public function DesertCaveCumWitchOffice():Boolean {
 			
 			output("\n\nThe soot-skinned futanari delicately opens one of her palms and murmurs an unintelligible word. Before your eyes, flickers of light flash into existence and align themselves vertically, slowly sliding together like pieces of a flawless crystal jigsaw puzzle.  The glimmering phantasmal luminance slowly fades as all the pieces come together, leaving a flawless ivory staff in the woman's hand.  She slams the base into the ground, sending ripples of magical force through the many pools of cum scattered around the room.  <b>It looks like you'll have to fight her!</b>");
 			//{START CUM WITCH FIGHT}
+			var witch:CoCCumWitch = new CoCCumWitch()
+			witch.createStatusEffect("Plot Fight");
 			CombatManager.newGroundCombat();
 			CombatManager.setFriendlyCharacters(pc);
-			CombatManager.setHostileCharacters(new CoCCumWitch());
+			CombatManager.setHostileCharacters(witch);
 			CombatManager.victoryScene(cumWitchDefeated);
 			CombatManager.lossScene(defeatedByCumWitch);
 			CombatManager.displayLocation("CUM WITCH");

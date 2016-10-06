@@ -1160,6 +1160,7 @@
 			"LAPINBEAU",
 			"MANIACPAINT",
 			"NUBATTORI",
+			"OTHER",
 			"PEEKAY",
 			"RENEZUO",
 			"SHOU",

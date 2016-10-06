@@ -524,9 +524,9 @@ public function heliaFollowerMenu(display:Boolean = true):void {
 	}
 	addButton(4, "Talk", heliaOptions, null, "Talk", "Discuss with Helia about various topics.");
 	
-	if (helPregnant()) addButton(5, "Spar", sparWithHeliaFirebuttsAreHot, null, "Spar", "Do some quick fight sessions!");
+	if (!helPregnant()) addButton(5, "Spar", sparWithHeliaFirebuttsAreHot, null, "Spar", "Do some quick fight sessions!");
 	else addDisabledButton(5, "Spar", "Spar", "Helia will not spar while pregnant.");
-	if (helPregnant()) addButton(6, "Box", boxWithInCampHel, null, "Box", "Box with Helia and train your strength and toughness.");
+	if (!helPregnant()) addButton(6, "Box", boxWithInCampHel, null, "Box", "Box with Helia and train your strength and toughness.");
 	else addDisabledButton(6, "Box", "Box", "Helia will not box while pregnant.");
 	
 	if (flags["COC.HEL_LOVE"] == 1 || flags["COC.HEL_LOVE"] == -1) {

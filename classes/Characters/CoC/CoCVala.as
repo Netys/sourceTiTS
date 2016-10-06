@@ -162,6 +162,7 @@ package classes.Characters.CoC
 			this.ass.bonusCapacity = 10;
 			
 			this.createStatusEffect("Disarm Immune");
+			this.createStatusEffect("Plot Fight");
 			
 			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.REALLY_LIKES_SEXPREF);
 			sexualPreferences.setPref(GLOBAL.SEXPREF_BALLS,			GLOBAL.KINDA_LIKES_SEXPREF);

@@ -68,6 +68,7 @@ package classes.Characters.CoC
 
 			this.createStatusEffect("Disarm Immune");
 			this.createStatusEffect("Flee Disabled", 0, 0, 0, 0, true, "", "", false, 0);
+			this.createStatusEffect("Plot Fight");
 			
 			this.inventory = [];
 			

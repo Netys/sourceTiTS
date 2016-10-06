@@ -163,108 +163,78 @@ public function switchToTiTSSteele():void
 //////////////////////////////////////////
 
 public function showNemo():void {
-	author("Etis");
-	if(flags["COC.PLOT_END"] == 1) showName("\nnemo");
-	else showName("\n{ nemo }");
+	showName("\nNEMO");
 	showBust("NEMO");
 }
 
 // note: he totally can talk normally, he just having some fun
 public function guildEmbassyBonusFunction():Boolean {
 	author("Etis");
+	showName("STELLAR\nFURNACE");
+	showBust("NEMO");
 	
-	if (flags["COC.PLOT_END"] == 1)
-	{
-		showName("STELLAR\nFURNACE");
-		output("Seems like nemo is still here, and still seemingly doing nothing. Somehow his presence is not pressing on you anymore. You can only guess why and what is really going on here. He only greeted you with a flick of a tail, not even bothering to look at you. Seems like you have no subject for conversation.");
-		return false;
-	}
-	
-	showName("{ STELLAR		\nFURNACE }");
 	if (flags["COC.NEMO_INTRODUCED"] == undefined)
 	{
 		flags["COC.NEMO_INTRODUCED"] = 1;
-		output("Lead by curiocity, you enter Stellar Furnace. You look ar^#R*&\n\n");
-		output("{ location: name 'Stellar Furnace'; function 'shop (presumably)' }\n\n");
-		//output("{status: embassy=enabled; shop=disabled}\n");
-		output("*@#&%#hat the? It feels a bit like direct condection with holodeck interface, but such things can only work with direct contact. It is hard to think in norm&^@%#$*\n\n");
-		output("{ protocol: verbose deprecated; stream/representation enabled }\n\n");
-		output("{ connection request: from object; id vendor; race 'arctic fox morph (presumably)'; gender unclear; location 'behind counter'; position 'chair (presumably); hind paws on counter; arms (presumably, possibly paws) behind head' }\n\n");
-		output("{ input from vendor: welcome; this name undefined; this id nemo; notify { shop state disabled; embassy state enabled }; request response }\n\n");
-		output("{ output to nemo; greeting; this name '[pc.fullName]'; request { protocol; shop state extended; embassy faction; nemo race } }\n\n");
-		output("{ input from nemo: protocol 'mind connection, limited'; shop state 'trading license pending, expected time over 100 years'; embassy faction { name undefined; id { guild, 'stellar furnace' } one of }; this race { kitsune; action 'jumps over counter to show nine fluffy tails' }; request response }\n\n");
-		processTime(6);
+		output("Lead by curiosity, you enter Stellar Furnace. It doesn't look like a proper shop inside as well as outside, being pretty messy, with strange devices scattered around. It's owner, white-furred kitsune-morph, seems to be oblivious to your presence, but greets you when you come closer. <i>“So, this is [pc.fullName]? Interesting... This one has no name for now, so you can call me ‘nemo.’ Or don't. It's not like there is someone else here, so what is the point of using names? By how confused you are, I can say you have no idea where you are. Let me enlighten you: this is an Embassy of the Guild. Stellar Furnace, the largest OEM manufacturer in the U.G.C. space. Usually, we act as a contract manufacturer, hidden under the shadows of many well-known brands. But we have some own brand lines as well. If you need a power core to feed a capital ship or a capital city - it's our specialty! Not that this is exactly much known, most people only know that power origins from the power sockets. We also have a small sideline of transformatives, which are mostly my own pet project. And, sometimes, weapons of mass destruction. Not exactly high sales last millennia, U.G.C. is not happy when we sell such things freely, and we don't want to be government lapdogs, so we using them to rig out our own ships.”</i>");
+		if (!CodexManager.entryViewed("Stellar Furnace"))
+		{
+			output("\n\n<i>“But why did you call this place an Embassy?”</i> you ask.");
+			output("\n\nHe grins widely, strange sight on his vulpine muzzle. <i>“So, Steele's heir has no idea about political situation with one of [pc.hisHer] biggest contractors? Nice. Long story short: we are independent. It can happen when you have an army.”</i>");
+		}
+		processTime(3);
 		clearMenu();
-		addButton(0, "{ next }", approachNemo);
+		addButton(0, "Next", approachNemo);
 	}
 	else
 	{
-		output("{ protocol: verbose deprecated; stream/representation enabled }\n\n");
-		output("{ location: name 'Stellar Furnace'; function embassy }\n\n");
-		output("{ interactions: nemo; exit }\n\n");
+		output("Once again you visit the familiar mix of a shop, exhibition, museum, and junkyard. Nemo greets you with a flick of a tail.");
 		clearMenu();
-		addButton(0, "{ next }", approachNemo);
+		addButton(0, "Next", approachNemo);
 	}
 	return true;
 }
 
 public function approachNemo():void {
 	clearOutput();
+	author("Etis");
 	showNemo();
-	output("{ input from nemo: welcome; request input }\n\n");
+	
+	output("Nemo smiles subtly. <i>“So, I don't think you want to place an order for a capital ship, right?</i>”");
 	
 	processTime(1);
 	clearMenu();
-	addDisabledButton(0, "{ buy }", "{ buy }", "{ shop closed }");
+	addDisabledButton(0, "Order", "Order", "You have no use for his wares for now.");
+	addButton(1, "Collection", nemoCollection, undefined, "Collection", "Look at his collection of things which are not exactly for sale.");
+	addButton(2, "Talk", nemoTalk, undefined, "Talk", "Ask him about things.");
+	addButton(10, "Appearance", nemoAppearance, undefined, "Appearance", "Examine him.");
 	
-	addButton(1, "{ stock }", nemoCollection, undefined, "{ stock }", "{ request: stock examine }");
-	addButton(2, "{ talk }", nemoTalk, undefined, "{ talk }", "{ request: conversation }");
-	addButton(4, "{ look }", nemoLook, undefined, "{ look }", "{ action: nemo examine }");
-	
-	addButton(14, "{ leave }", leaveNemo);
+	addButton(14, "Leave", move, rooms[currentLocation].northExit);
 }
 
-
-public function leaveNemo():void {
+public function nemoAppearance():void {
 	clearOutput();
 	author("Etis");
-	showName("{ STELLAR		\nFURNACE }");
-	output("{ input from nemo: bye }\n\n");
-	output("^%$@$adache after this chat. No doubts, little prankster is mocking you.");
-	
-	processTime(2);
-	clearMenu();
-	addButton(0, "Next", move, rooms[currentLocation].northExit);
-}
-
-public function nemoLook():void {
-	clearOutput();
 	showNemo();
-	output("{\n");
-	output("	nemo {\n");
 	
-	output("		species: kitsune;\n");
-	output("		size: { height: 4' 9\"; weight: 66 lb };\n");
-	output("		color: { fur: white; skin: white; accents: azure; eyes: azure };\n");
-	if (flags["COC.NEMO_GENDER_KNOWN"] == undefined) output("		gender: ambiguous;\n");
-	else output("		gender: male;\n");
-	output("		age: '800+ (presumably)';\n");
-	output("		form: 'semi-anthropomorphic vulpine';\n");
-	output("		tails: fluffy;\n");
+	output("Nemo is an arctic kitsune, and very animalistic one - exquisitely fluffy, snowy white fur, lean vulpine muzzle, perky ears, and a wriggling bunch of fluffy tails behind. His eyes are celestial blue and slitted vertically, and glowing azure lines mark his body with mystical patterns. His body is lean and short, well below 5\".");
 	
-	output("	}\n");
-	output("}\n");
+	output("\n\nHe wears only a toolbelt and a cloth collar, but you barely can accuse him in a public indecency, considering how well his fur coat covers him. He apparently doesn't mind his exposure at all, neither covering nor showing himself.");
+	
+	output("\n\nYou can't exactly descry his genitals, but you are pretty sure that he has an animalistic sheath.");
 	
 	clearMenu();
-	addButton(0, "{ next }", approachNemo);
+	addButton(0, "Next", approachNemo);
 }
 
 // one can understand why he have no hopes to get license within 100 years after one look on his wares... not that he actually want it, he just mocking authorities
 public function nemoCollection():void {
 	clearOutput();
 	clearMenu();
+	author("Etis");
 	showNemo();
-	output("{ input from nemo: display enabled; shop disabled }\n\n");
+	
+	output("Nemo shrugs and waves his tail. <i>“Feel free to look, but most of the things that worth buying are not for sale.</i>”");
 	
 	flags["COC.NEMO_STOCK_SEEN"] = 1;
 	
@@ -485,84 +455,55 @@ public function nemoCollection():void {
 		addOverrideItemButton(btn++, tmp, tmp.shortName, nemoTalkVRPod);
 	}
 	
-	addButton(14, "{ back }", approachNemo);
+	addButton(14, "Back", approachNemo);
 }
 
-public function nemoTalk():void {
+public function nemoTalk(arg:Function = undefined):void {
 	clearOutput();
+	author("Etis");
 	showNemo();
-	output("{ input from nemo: request topic }\n\n");
+	
+	output("Nemo arches his brow. <i>“Some personal questions, I guess? Ask, but I can't promise to answer.</i>”");
 	
 	clearMenu();
 	var btn:int = 0;
-	if (flags["COC.NEMO_STOCK_SEEN"] == 1) addButton(btn++, "{ stock }", nemoTalkStock);
-	else addDisabledButton(btn++, "{ stock }", "{ stock }", "{ subject unknown }");
 	
-	if (flags["COC.NEMO_STOCK_SEEN"] == undefined) addDisabledButton(btn++, "{ 'vr pod' }", "{ 'vr pod' }", "{ subject unknown }");
-	else if(flags["COC.NEMO_VR_POD_TAKEN"] == undefined) addButton(btn++, "{ 'vr pod' }", nemoTalkVRPod);
-	else addDisabledButton(btn++, "{ 'vr pod' }", "{ 'vr pod' }", "{ subject exhausted }");
+	if (flags["COC.NEMO_STOCK_SEEN"] != 1) addDisabledButton(btn++, "VR Pod", "VR Pod", "You should look at his collection before asking about it.");
+	else if (flags["COC.NEMO_VR_POD_TAKEN"] != undefined) addDisabledButton(btn++, "VR Pod", "VR Pod", "You've already got it.");
+	else addButton(btn++, "VR Pod", nemoTalkVRPod);
 	
-	if (flags["COC.NEMO_GENDER_KNOWN"] == undefined) addButton(btn++, "{ gender }", nemoTalkGender);
-	else addDisabledButton(btn++, "{ gender }", "{ gender }", "{ subject exhausted }");
-	
-	addButton(14, "{ back }", approachNemo);
-}
-
-public function nemoTalkGender():void {
-	clearOutput();
-	showNemo();
-	output("{ input from nemo: gender male }\n\n");
-	
-	flags["COC.NEMO_GENDER_KNOWN"] = 1;
-	processTime(1);
-	clearMenu();
-	addButton(0, "{ next }", nemoTalk);
-}
-
-public function nemoTalkStock():void {
-	clearOutput();
-	showNemo();
-	output("{ output to nemo: stock wmd; legality }\n\n");
-	output("{ input from nemo: illegal }\n\n");
-	output("{ output to nemo: illegal; license }\n\n");
-	output("{ input from nemo: hopeless }\n\n");
-	output("{ output to nemo: license; declined }\n\n");
-	output("{ input from nemo: stock wmd; action 'mischievous smile' }\n\n");
-	output("{ output to nemo: reason }\n\n");
-	output("{ input from nemo: bored }\n\n");
-	// yep, he totally can appear with fuckton of WMD in cargo hold and innocently ask if he can sell them to civilians just to see what happens...
-	// of course, he would decline any offers to trade with U.G.C. only - all or nothing
-	
-	processTime(4);
-	clearMenu();
-	addButton(0, "{ next }", nemoTalk);
+	addButton(14, "Back", approachNemo);
 }
 
 public function nemoTalkVRPod():void {
 	clearOutput();
+	author("Etis");
 	showNemo();
-	output("{ output to nemo: 'vr pod'; info }\n\n");
-	output("{ input from nemo: not stock; unknown origin; possibly alive; confusion; offer; barter; payment telemetry }\n\n");
+	
+	output("<i>“Is this a derelict VR pod?</i>” you ask.");
+	output("\n\nNemo nods. <i>“Yep. Bought it on a strange occasion, and trying to fix it. Actually, it works, but it looks like safety protocols are not responding, and I have no idea what would happen if anyone tries to use it. I have no idea how it would work with my mods as well, so it has no use for me. If you wish, you can take it. No fee, no warranty.”</i>");
 	
 	processTime(1);
 	clearMenu();
-	addButton(0, "{ accept }", nemoTakeVRPod);
-	addButton(1, "{ decline }", nemoTalk);
+	addButton(0, "Take", nemoTakeVRPod);
+	addButton(1, "Decline", nemoTalk, nemoTalkVRPod);
 }
 
 public function nemoTakeVRPod():void {
 	clearOutput();
+	author("Etis");
 	showNemo();
-	output("{ output to nemo: 'vr pod'; trade; accept }\n\n");
-	output("{ input from nemo: sold; delivered; installed; enjoy }\n\n");
 	
-	output("<b>You’ve a VR POD installed in your ship! You can access it from the storage menu.</b>");
+	output("<i>“An ancient artifact of unknown origin and unknown quirks? Wrap it up!</i>”");
+	output("\n\nNemo grins. <i>“Feeling adventurous? Good luck with it.”</i>");
+	
+	output("\n\n<b>You have a VR POD installed in your ship! You can access it from the storage menu.</b>");
 	
 	flags["COC.NEMO_VR_POD_TAKEN"] = 1;
 	flags["COC.VR_POD_INSTALLED"] = 1;
 	processTime(2);
 	clearMenu();
-	addButton(0, "{ next }", nemoTalk);
+	addButton(0, "Next", nemoTalk);
 }
 
 public function abortVRAfterVictory():void {
@@ -592,6 +533,7 @@ public function abortVRAfterVictoryII():void {
 }
 
 public function abortVRAfterVictoryIII():void {
+	author("Etis");
 	showNemo();
 	shipLocation = "TAVROS HANGAR";
 	currentLocation = "GUILD EMBASSY"; // not using move to prevent events
@@ -599,7 +541,7 @@ public function abortVRAfterVictoryIII():void {
 	showLocationName();
 	clearOutput();
 	
-	output("<i>\"Look who has honored us with a visit!\"</i>. Familiar place, almost familiar voice, though you've previously only heard it with your mind rather than ears. And you are pretty sure that your entry point was in other place. <i>\"Don't look at me that way. Yes, I know, you think that I owe you few answers. Problem is... I don't think so. I've already done too much for you.\"</i>");
+	output("<i>\"Look who has honored us with a visit!\"</i>. Familiar place, familiar voice. And you are pretty sure that your entry point was in another place. <i>\"Don't look at me that way. Yes, I know, you think that I owe you few answers. Problem is... I don't think so. I've already done too much for you.\"</i>");
 	
 	output("\n\nLooks like he is not really in a mood for a talk. But this could be your chance to actually inquire something. Or you could ask for something...");
 	
@@ -612,6 +554,7 @@ public function abortVRAfterVictoryIII():void {
 
 public function abortVRAfterVictoryFixIt():void {
 	clearOutput();
+	author("Etis");
 	showNemo();
 	
 	output("You make your choice and ask him to fix the pod.");
@@ -630,6 +573,7 @@ public function abortVRAfterVictoryFixIt():void {
 
 public function abortVRAfterVictoryRecompense():void {
 	clearOutput();
+	author("Etis");
 	showNemo();
 	
 	//output("<i>\"Now, I'm taking this thing back. You really don't want to use it anymore. Unless you want to be torn apart by glitched reality, of course. No? Thought so. Bifurcation point is left behind.\"</i> Well, if he is taking your favorite toy, he can give you something instead of it, right?");
@@ -653,6 +597,7 @@ public function abortVRAfterVictoryRecompense():void {
 
 public function applyGuildImplant(arg:String):void {
 	clearOutput();
+	author("Etis");
 	showNemo();
 	
 	output("<i>\"This one? Your choise. Now...\"</i> Suddenly he appears right before your [pc.face], and you feel his paw-like palm on your forehead, soft and surprisingly hot. Your vision hazes for a moment, then everything snaps back, and you see him is on his usual place again. That's all? You are not feeling any different, right? Seems like your Codex knows you better than youself - it already reports about <b>potential for improvement in your " + arg + "</b>.");

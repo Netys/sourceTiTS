@@ -15,6 +15,7 @@ package classes.Characters.CoC
 	import classes.GameData.CombatManager;
 	import classes.GLOBAL;
 	import classes.Items.Apparel.CoCWizardRobes;
+	import classes.Items.Combat.CoCLustStick;
 	import classes.Items.Drinks.*;
 	import classes.Items.Miscellaneous.*;
 	import classes.Items.Transformatives.*;
@@ -176,6 +177,7 @@ package classes.Characters.CoC
 			sexualPreferences.setPref(GLOBAL.SEXPREF_NEUTER,		GLOBAL.REALLY_DISLIKES_SEXPREF);
 			
 			if (rand(10) == 0) inventory.push(new CoCWizardRobes());
+			else if (rand(3) == 0 && kGAMECLASS.pc.hasPerk("Luststick Adapted")) inventory.push(new CoCLustStick());
 			else inventory.push(new CoCGoldenSeed());
 			
 			this._isLoading = false;

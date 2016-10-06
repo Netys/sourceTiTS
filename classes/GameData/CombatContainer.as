@@ -4,12 +4,30 @@ package classes.GameData
 	import classes.Characters.PlayerCharacter;
 	import classes.Creature;
 	import classes.Engine.Combat.DamageTypes.DamageResult;
+	import classes.Engine.Combat.combatMiss;
 	import classes.Engine.Utility.enum;
 	import classes.Items.Armor.GooArmor;
 	import classes.ItemSlotClass;
+	import classes.Items.Transformatives.CoCBimboLiqueur;
+	import classes.Items.Transformatives.CoCBroBrew;
+	import classes.Items.Transformatives.CoCDyes.CoCDyeRainbow;
+	import classes.Items.Transformatives.CoCEggs.CoCBlackEgg;
+	import classes.Items.Transformatives.CoCEggs.CoCBlackEggLarge;
+	import classes.Items.Transformatives.CoCEggs.CoCBlueEgg;
+	import classes.Items.Transformatives.CoCEggs.CoCBlueEggLarge;
+	import classes.Items.Transformatives.CoCEggs.CoCBrownEgg;
+	import classes.Items.Transformatives.CoCEggs.CoCBrownEggLarge;
+	import classes.Items.Transformatives.CoCEggs.CoCPinkEgg;
+	import classes.Items.Transformatives.CoCEggs.CoCPinkEggLarge;
+	import classes.Items.Transformatives.CoCEggs.CoCPurpleEgg;
+	import classes.Items.Transformatives.CoCEggs.CoCPurpleEggLarge;
+	import classes.Items.Transformatives.CoCEggs.CoCWhiteEgg;
+	import classes.Items.Transformatives.CoCEggs.CoCWhiteEggLarge;
+	import classes.Items.Transformatives.CoCNeonPinkEgg;
 	import classes.StorageClass;
 	import classes.Engine.Interfaces.*;
 	import classes.Characters.*;
+	import classes.Util.RandomInCollection;
 	import classes.kGAMECLASS;
 	import classes.Engine.Utility.rand;
 	import classes.Engine.Utility.possessive;
@@ -2027,6 +2045,15 @@ package classes.GameData
 			if (pc.hasPerk("Incorporeality"))
 			teaseList.push(["Possess", possess, target, "Possess", "Attempt to temporarily possess a foe and force them to raise their own lusts."]);
 			
+			// Ghost mode
+			if (pc.hasStatusEffect("LustStick Makeup") && target.isLustImmune == false)
+				if (pc.hasStatusEffect("Blinded"))
+					teaseList.push(["Kiss", null, null, "Kiss", "There's no way you'd be able to find their lips while you're blind!"]);
+				else if (target.hasAirtightSuit())
+					teaseList.push(["Kiss", null, null, "Kiss", "Your target is wearing airtight armor."]);
+				else
+					teaseList.push(["Kiss", kiss, target, "Kiss", "Attempt to kiss your foe on the lips with drugged lipstick. It has no effect on those without a penis."]);
+			
 			clearMenu();
 			for(i = 0; i < teaseList.length; i++)
 			{
@@ -2606,6 +2633,78 @@ package classes.GameData
 			}
 			processCombat();
 		}
+		private function kiss(target:Creature):void
+		{
+			clearOutput();
+			
+			var attack:Number = rand(6);
+			switch(attack) {
+				case 1:
+					//Attack text 1:
+					output("You hop up to " + target.a + target.short + " and attempt to plant a kiss on " + target.mfn("him", "her", "it") + ".");
+					break;
+				//Attack text 2:
+				case 2:
+					output("You saunter up and dart forward, puckering your golden lips into a perfect kiss.");
+					break;
+				//Attack text 3: 
+				case 3:
+					output("Swaying sensually, you wiggle up to " + target.a + target.short + " and attempt to plant a nice wet kiss on " + target.mfn("him", "her", "it") + ".");
+					break;
+				//Attack text 4:
+				case 4:
+					output("Lunging forward, you fly through the air at " + target.a + target.short + " with your lips puckered and ready to smear drugs all over " + target.mfn("him", "her", "it") + ".");
+					break;
+				//Attack text 5:
+				case 5:
+					output("You lean over, your lips swollen with lust, wet with your wanting slobber as you close in on " + target.a + target.short + ".");
+					break;
+				//Attack text 6:
+				default:
+					output("Pursing your drug-laced lips, you close on " + target.a + target.short + " and try to plant a nice, wet kiss on " + target.mfn("him", "her", "it") + ".");
+					break;
+			}
+			//Dodged!
+			if (combatMiss(pc, target)) {
+				attack = rand(3);
+				switch(attack) {
+					//Dodge 1:
+					case 1:
+						if (target.isPlural) output(" " + target.capitalA + target.short + " sees it coming and moves out of the way in the nick of time!");
+						break;
+					//Dodge 2:
+					case 2:
+						if (target.isPlural) output(" Unfortunately, you're too slow, and " + target.a + target.short + " slips out of the way before you can lay a wet one on one of them.");
+						else output("  Unfortunately, you're too slow, and " + target.a + target.short + " slips out of the way before you can lay a wet one on " + target.mfn("him", "her", "it") + ".");
+						break;
+					//Dodge 3:
+					default:
+						if (target.isPlural) output(" Sadly, " + target.a + target.short + " moves aside, denying you the chance to give one of them a smooch.");
+						else output(" Sadly, " + target.a + target.short + " moves aside, denying you the chance to give " + target.mfn("him", "her", "it") + " a smooch.");
+						break;
+				}
+				processCombat();
+				return;
+			}
+			//Success but no effect:
+			else if (target.isLustImmune || !target.hasCock()) {
+				if (target.isPlural) output(" Mouth presses against mouth, and you allow your tongue to stick out to taste the saliva of one of their number, making sure to give them a big dose. Pulling back, you look at " + target.a + target.short + " and immediately regret wasting the time on the kiss. It had no effect!");
+				else output(" Mouth presses against mouth, and you allow your tongue to stick to taste " + target.mfn("his", "her", "their") + " saliva as you make sure to give them a big dose. Pulling back, you look at " + target.a + target.short + " and immediately regret wasting the time on the kiss. It had no effect!\n\n");
+				processCombat();
+				return;
+			}
+			applyTeaseDamage(pc, target, 100, "KISS");
+			
+			if (target is CrystalGooT1 && (target as CrystalGooT1).ShouldIntercept({ isTease: true }))
+			{
+				(target as CrystalGooT1).SneakSqueezeAttackReaction( { isTease: true } );
+			}
+			else if (target is CrystalGooT2 && (target as CrystalGooT2).ShouldIntercept( { isTease: true } ))
+			{
+				(target as CrystalGooT2).SpecialAction( { isTease: true } );
+			}
+			processCombat();
+		}
 		private function crotchTeaseText(target:Creature):void 
 		{
 			var msg:String = "";
@@ -3090,6 +3189,12 @@ package classes.GameData
 					output(" (<b>0</b>)");
 					teaseSkillUp(teaseType);
 				}
+				else if(teaseType == "KISS")
+				{
+					output("\n\nUnfortunately, it seems " + target.mfn("he", "she", "it") + " was more mentally prepared than you hoped, and you're summarily thrown out of " + target.mfn("his", "her", "its") + " body before you're even able to have fun with " + target.mfn("him", "her", "it") + ". Darn, you muse. Gotta get smarter.");
+					output(" (<b>0</b>)");
+					teaseSkillUp(teaseType);
+				}
 				else if (target is HuntressVanae || target is MaidenVanae)
 				{
 					output("\n\n");
@@ -3152,6 +3257,40 @@ package classes.GameData
 				if(teaseType == "POSSESS")
 				{
 					output("Recorporealizing, you notice " + possessive(target.a + target.uniqueName) + " blush, and know your efforts were somewhat successful. ");
+				}
+				if(teaseType == "KISS")
+				{
+					var attack:int = rand(4);
+					switch(attack) {
+						//Success 1:
+						case 1:
+							if (target.isPlural) output(" Success! A spit-soaked kiss lands right on one of their mouths. The victim quickly melts into your embrace, allowing you to give them a nice, heavy dose of sloppy oral aphrodisiacs.");
+							else output(" Success!  A spit-soaked kiss lands right on " + target.a + target.short + "'s mouth.  " + target.mf("He","She") + " quickly melts into your embrace, allowing you to give them a nice, heavy dose of sloppy oral aphrodisiacs.");
+							damage *= 1.0;
+							break;
+						//Success 2:
+						case 2:
+							if (target.isPlural) output(" Gold-gilt lips press into one of their mouths, the victim's lips melding with yours. You take your time with your suddenly cooperative captive and make sure to cover every bit of their mouth with your lipstick before you let them go.");
+							else output(" Gold-gilt lips press into " + target.a + target.short + ", " + target.mfn("his", "her", "their") + " mouth melding with yours.  You take your time with your suddenly cooperative captive and make sure to cover every inch of " + target.mfn("his", "her", "their") + " with your lipstick before you let " + target.mfn("him", "her", "them") + " go.");
+							damage *= 1.1;
+							break;
+						//CRITICAL SUCCESS (3)
+						case 3:
+							if (target.isPlural) output("  You slip past " + target.a + target.short + "'s guard and press your lips against one of them.  " + target.mf("He","She") + " melts against you, " + target.mf("his","her") + " tongue sliding into your mouth as " + target.mf("he","she") + " quickly succumbs to the fiery, cock-swelling kiss.  It goes on for quite some time.  Once you're sure you've given a full dose to " + target.mf("his","her") + " mouth, you break back and observe your handwork.  One of " + target.a + target.short + " is still standing there, licking " + target.mf("his","her") + " his lips while " + target.mf("his","her") + " dick is standing out, iron hard.  You feel a little daring and give the swollen meat another moist peck, glossing the tip in gold.  There's no way " + target.mf("he","she") + " will go soft now.  Though you didn't drug the rest, they're probably a little 'heated up' from the show.");
+							else output("  You slip past " + target.a + target.short + "'s guard and press your lips against " + target.mfn("his", "her", "their") + ".  " + target.mf("He","She") + " melts against you, " + target.mfn("his", "her", "their") + " tongue sliding into your mouth as " + target.mfn("he", "she", "it") + " quickly succumbs to the fiery, cock-swelling kiss.  It goes on for quite some time.  Once you're sure you've given a full dose to " + target.mfn("his", "her", "their") + " mouth, you break back and observe your handwork.  " + target.capitalA + target.short + " is still standing there, licking " + target.mfn("his", "her", "their") + " lips while " + target.mfn("his", "her", "their") + " dick is standing out, iron hard.  You feel a little daring and give the swollen meat another moist peck, glossing the tip in gold.  There's no way " + target.mfn("he", "she", "it") + " will go soft now.");
+							damage *= 1.3;
+							break;
+						//Success 4:
+						default:
+							output(" With great effort, you slip through an opening and compress " + target.mfn("his", "her", "their") + " lips against your own, lust seeping through the oral embrace along with a heavy dose of drugs.");
+							damage *= 0.5;
+							break;
+					}
+					////Add status if not already drugged
+					//if (!target.hasStatusEffect("Luststick"))
+						//pc.createStatusEffect("Luststick", 0, 0, 0, 0, false, "LustUp", "Harpy’s drugged lipstick is keeping " + target.mfn("him","her","it") + " aroused.", true, power);
+					////Else add bonus to round damage
+					//else target.addStatusValue(StatusEffects.LustStick,2,Math.round(damage/10));
 				}
 				if(teaseType == "DICK SLAP")
 				{
@@ -4416,7 +4555,10 @@ package classes.GameData
 			{
 				var t:Creature = _hostiles[i];
 				sumXP += t.XP();
-				sumCredits += t.credits;
+				if (pc.hasPerk("History: Whore") && t.lustQ() >= 100)
+					sumCredits += Math.round(t.credits * 1.2);
+				else
+					sumCredits += t.credits;
 				
 				for (var ii:int = 0; ii < t.inventory.length; ii++)
 				{
@@ -4426,6 +4568,18 @@ package classes.GameData
 					{
 						loot.push(tt.makeCopy());
 					}
+				}
+				
+				if (kGAMECLASS.inMareth() && !t.hasStatusEffect("Plot Fight")) {
+					var itype:ItemSlotClass = null;
+					//Chance of eggs if Easter!
+					if (rand(6) == 0 && kGAMECLASS.isEaster()) {
+						itype = RandomInCollection(new CoCBrownEgg(), new CoCBrownEggLarge(), new CoCPurpleEgg(), new CoCPurpleEggLarge(), new CoCBlueEgg(), new CoCBlueEggLarge(), new CoCPinkEgg(), new CoCPinkEggLarge(), new CoCNeonPinkEgg(), new CoCWhiteEgg(), new CoCWhiteEggLarge(), new CoCBlackEgg(), new CoCBlackEggLarge());
+					}
+					if (rand(200) == 0 && pc.level >= 7) itype = new CoCBroBrew();
+					if (rand(200) == 0 && pc.level >= 7) itype = new CoCBimboLiqueur();
+					if (rand(1000) == 0 && pc.level >= 7) itype = new CoCDyeRainbow();
+					if (itype != null) loot.push(itype);
 				}
 				
 				if (enemyNames[t.short] == undefined)
@@ -4440,6 +4594,7 @@ package classes.GameData
 			}
 			
 			if (pc.hasPerk("History: Fortune")) sumCredits = Math.round(sumCredits * 1.15);
+			if (pc.hasSock("gilded")) sumCredits = Math.round(sumCredits * 1.2);
 			
 			pc.credits += sumCredits;
 			

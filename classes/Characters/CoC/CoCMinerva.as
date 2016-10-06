@@ -172,6 +172,7 @@ package classes.Characters.CoC
 			this.ass.loosenessRaw = 1;
 			
 			//this.createStatusEffect("Disarm Immune");
+			this.createStatusEffect("Plot Fight");
 			
 			sexualPreferences.setPref(GLOBAL.SEXPREF_COCKS,			GLOBAL.KINDA_LIKES_SEXPREF);
 			sexualPreferences.setPref(GLOBAL.SEXPREF_PUSSIES,		GLOBAL.KINDA_LIKES_SEXPREF);
