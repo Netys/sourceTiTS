@@ -30,6 +30,32 @@ public function TundraEncounterBonus():Boolean
 	return false;
 }
 
+public function HereBeDragonBonus():Boolean
+{
+	if(flags["ENCOUNTERS_DISABLED"] != undefined || flags["FROSTWYRMSLAIN"] == 1) return false;
+	
+	//Always encounter Frostwyrm first time
+	if(flags["MET_FROSTWYRM"] == undefined)
+	{
+		flags["UVETOCOAST_STEP"] = 0;
+		encounterFrostwyrm();
+		return true;
+	}
+	
+	IncrementFlag("UVETOCOAST_STEP");
+
+	var choices:Array = new Array();
+	//If walked far enough w/o an encounter (temporary values, should be replaced when moved to Glacial Rift)
+	if(flags["UVETOCOAST_STEP"] >= 2 && rand(2) == 0) {
+		//Reset step counter
+		flags["UVETOCOAST_STEP"] = 0;
+		//Build encounter
+		encounterFrostwyrm();
+		return true;
+	}
+	return false;
+}
+
 public function uvetoShipDock():Boolean
 {
 	removeUvetoCold(true);
@@ -652,9 +678,14 @@ public function uvetoAwakenInMedCenter(rescuer:String):void
 	addButton(0, "Next", mainGameMenu);
 }
 
-public function meadStreetBonus():Boolean
+public function addUvetoColdBonus():Boolean
 {
 	addUvetoCold(true);
+	return false;
+}
+public function removeUvetoColdBonus():Boolean
+{
+	removeUvetoCold(true);
 	return false;
 }
 public function templeStreetBonus():Boolean

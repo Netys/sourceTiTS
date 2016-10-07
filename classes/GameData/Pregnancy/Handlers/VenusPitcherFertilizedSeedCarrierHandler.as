@@ -8,6 +8,8 @@
 	import classes.Engine.Interfaces.ParseText;
 	import classes.Engine.Utility.rand;
 	import classes.GameData.Pregnancy.PregnancyManager;
+	import classes.GameData.ChildManager;
+	import classes.GameData.Pregnancy.Child;
 	
 	/**
 	 * ...
@@ -32,6 +34,10 @@
 			_pregnancyQuantityMinimum = 4;
 			_pregnancyQuantityMaximum = 9;
 			_pregnancyChildType = GLOBAL.CHILD_TYPE_SEED;
+			_pregnancyChildRace = GLOBAL.TYPE_VENUSPITCHER;
+			_childMaturationMultiplier = 1.0;
+			_childGenderWeights.Male = 0;
+			_childGenderWeights.Female = 1;
 			
 			this.addStageProgression(600, kGAMECLASS.rumblyInYourTummy);
 			this.addStageProgression(240, kGAMECLASS.poppingSoonAlert1);
@@ -102,6 +108,16 @@
 			}
 			
 			var pData:PregnancyData	= target.getPregnancyOfType("VenusPitcherFertilizedSeedCarrier");
+			
+			ChildManager.addChild(
+				Child.NewChild(
+					GLOBAL.TYPE_VENUSPITCHER,
+					1.0,
+					1,
+					0, 1, 0, 0
+				)
+			);
+			
 			pData.pregnancyQuantity--;
 			pData.pregnancyIncubation = 240 + rand(30);
 			pData.pregnancyBellyRatingContribution -= 14;
@@ -112,6 +128,30 @@
 				if (target.hasStatusEffect("Venus Pitcher Egg Incubation Finished")) target.removeStatusEffect("Venus Pitcher Egg Incubation Finished");
 				pData.reset();
 			}
+		}
+		
+		override public function nurseryEndPregnancy(mother:Creature, pregSlot:int, useBornTimestamp:uint):Child
+		{
+			if (mother.hasStatusEffect("Venus Pitcher Seed Residue")) mother.removeStatusEffect("Venus Pitcher Seed Residue");
+			
+			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
+			
+			var c:Child = Child.NewChild(GLOBAL.TYPE_VENUSPITCHER, 1.0, pData.pregnancyQuantity, 0, 1, 0, 0);
+			c.BornTimestamp = useBornTimestamp;
+			ChildManager.addChild(c);
+			
+			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
+			pData.reset();
+			
+			return c;
+		}
+		
+		override public function getRemainingDuration(target:Creature, slot:int):int
+		{
+			var pData:PregnancyData = target.pregnancyData[slot];
+			var remains:int = pData.pregnancyIncubation / pData.pregnancyIncubationMulti;
+			if (pData.pregnancyQuantity > 1) remains += ((240 + rand(30)) * (pData.pregnancyQuantity - 1));
+			return remains;
 		}
 		
 		/**

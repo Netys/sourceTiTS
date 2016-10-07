@@ -9,6 +9,8 @@ package classes.GameData.Pregnancy.Handlers
 	import classes.StorageClass;
 	import classes.Engine.Utility.rand;
 	import classes.Engine.Interfaces.ParseText;
+	import classes.GameData.ChildManager;
+	import classes.GameData.Pregnancy.Child;
 	
 	/**
 	 * ...
@@ -33,6 +35,8 @@ package classes.GameData.Pregnancy.Handlers
 			_pregnancyQuantityMaximum = 3;
 			_definedAverageLoadSize = 800;
 			_pregnancyChildType = GLOBAL.CHILD_TYPE_LIVE;
+			_pregnancyChildRace = GLOBAL.TYPE_HUMAN;
+			_childMaturationMultiplier = 1.0;
 			
 			_onDurationEnd = sydianOnDurationEnd;
 			
@@ -148,13 +152,41 @@ package classes.GameData.Pregnancy.Handlers
 		public static function sydianCleanupData(mother:Creature, pregSlot:int, thisPtr:BasePregnancyHandler):void
 		{
 			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
+			
+			ChildManager.addChild(
+				Child.NewChildWeights(
+					thisPtr.pregnancyChildRace,
+					thisPtr.childMaturationMultiplier,
+					pData.pregnancyQuantity,
+					thisPtr.childGenderWeights
+				)
+			);
+			
 			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
 			
 			StatTracking.track("pregnancy/sydian births", pData.pregnancyQuantity);
 			StatTracking.track("pregnancy/total births", pData.pregnancyQuantity);
 			
 			pData.reset();
-		}		
+		}
+		
+		override public function nurseryEndPregnancy(mother:Creature, pregSlot:int, useBornTimestamp:uint):Child
+		{
+			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
+			
+			var c:Child = Child.NewChildWeights(pregnancyChildRace, childMaturationMultiplier, pData.pregnancyQuantity, childGenderWeights);
+			c.BornTimestamp = useBornTimestamp;
+			ChildManager.addChild(c);
+			
+			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
+			
+			StatTracking.track("pregnancy/sydian births", pData.pregnancyQuantity);
+			StatTracking.track("pregnancy/total births", pData.pregnancyQuantity);
+			
+			pData.reset();
+			
+			return c;
+		}
 	}
 
 }

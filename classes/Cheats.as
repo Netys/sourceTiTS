@@ -212,5 +212,38 @@
 				kGAMECLASS.pc.createKeyItem("Key of the Twillight", 0, 0, 0, 0, "Dream or reality? Same things, for the one who owns the Key of the Twillight.");
 			}
 		}
+		
+		// Treatment Haxxx
+		public static function TryTreatmentHaxCowGirl():void { TryTreatmentHax(0); }
+		public static function TryTreatmentHaxBull():void { TryTreatmentHax(1); }
+		public static function TryTreatmentHaxCumCow():void { TryTreatmentHax(2); }
+		public static function TryTreatmentHaxFauxCow():void { TryTreatmentHax(3); }
+		public static function TryTreatmentHaxAmazon():void { TryTreatmentHax(4); }
+		public static function TryTreatmentHaxDouble():void { TryTreatmentHax(5); }
+		public static function TryTreatmentHaxMini():void { TryTreatmentHax(6); }
+		private static function TryTreatmentHax(variant:int = -1):void
+		{
+			if(variant >= 0)
+			{
+				var msg:String = "\nNext Treatment dose is a guaranteed ";
+				
+				switch(variant)
+				{
+					case 0: msg += "Cow-Girl"; break;
+					case 1: msg += "Bull"; break;
+					case 2: msg += "Cum-Cow"; break;
+					case 3: msg += "Faux-Cow"; break;
+					case 4: msg += "Amazon"; break;
+					case 5: msg += "Double Stud"; break;
+					case 6: msg += "Undersized"; break;
+				}
+				msg += "!";
+				
+				kGAMECLASS.flags["TREATMENT_HAX"] = variant;
+				
+				Cheats.OutputStuff();
+				kGAMECLASS.output(msg);
+			}
+		}
 	}
 }

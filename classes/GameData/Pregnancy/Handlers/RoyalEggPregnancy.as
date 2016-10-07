@@ -9,6 +9,8 @@ package classes.GameData.Pregnancy.Handlers
 	import classes.GLOBAL;
 	import classes.Engine.Interfaces.ParseText;
 	import classes.Engine.Utility.rand;
+	import classes.GameData.ChildManager;
+	import classes.GameData.Pregnancy.Child;
 	
 	/**
 	 * ...
@@ -34,6 +36,8 @@ package classes.GameData.Pregnancy.Handlers
 			_pregnancyQuantityMaximum = 10;
 			_definedAverageLoadSize = 720;
 			_pregnancyChildType = GLOBAL.CHILD_TYPE_EGGS;
+			_pregnancyChildRace = GLOBAL.TYPE_NYREA;
+			_childMaturationMultiplier = 1.0;
 			
 			this.addStageProgression(8000, function(pregSlot:int):void {
 				kGAMECLASS.pc.bellyRatingMod += 5;
@@ -145,6 +149,15 @@ package classes.GameData.Pregnancy.Handlers
 		{
 			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
 			
+			ChildManager.addChild(
+				Child.NewChildWeights(
+					thisPtr.pregnancyChildRace,
+					thisPtr.childMaturationMultiplier,
+					pData.pregnancyQuantity,
+					thisPtr.childGenderWeights
+				)
+			);
+			
 			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
 			
 			StatTracking.track("pregnancy/royal nyrea eggs", pData.pregnancyQuantity);
@@ -156,6 +169,29 @@ package classes.GameData.Pregnancy.Handlers
 			}
 			
 			pData.reset();
+		}
+		
+		override public function nurseryEndPregnancy(mother:Creature, pregSlot:int, useBornTimestamp:uint):Child
+		{
+			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
+			
+			var c:Child = Child.NewChildWeights(pregnancyChildRace, childMaturationMultiplier, pData.pregnancyQuantity, childGenderWeights);
+			c.BornTimestamp = useBornTimestamp;
+			ChildManager.addChild(c);
+			
+			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
+			
+			StatTracking.track("pregnancy/royal nyrea eggs", pData.pregnancyQuantity);
+			StatTracking.track("pregnancy/total births", pData.pregnancyQuantity);
+			
+			if (mother.hasStatusEffect("Royal Eggs Messages Available"))
+			{
+				mother.removeStatusEffect("Royal Eggs Messages Available");
+			}
+			
+			pData.reset();
+			
+			return c;
 		}
 		
 		override public function pregBellyFragment(target:Creature, slot:int):String

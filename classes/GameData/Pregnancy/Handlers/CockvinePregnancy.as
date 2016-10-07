@@ -7,6 +7,9 @@ package classes.GameData.Pregnancy.Handlers
 	import classes.kGAMECLASS;
 	import classes.Engine.Interfaces.ParseText;
 	import classes.GameData.StatTracking;
+	import classes.GLOBAL;
+	import classes.GameData.ChildManager;
+	import classes.GameData.Pregnancy.Child;
 	
 	/**
 	 * ...
@@ -31,6 +34,10 @@ package classes.GameData.Pregnancy.Handlers
 			_pregnancyQuantityMinimum = 8;
 			_pregnancyQuantityMaximum = 20;
 			_definedAverageLoadSize = 100;
+			_pregnancyChildRace = GLOBAL.TYPE_COCKVINE;
+			_childMaturationMultiplier = 2.5;
+			_childGenderWeights.Male = 1;
+			_childGenderWeights.Female = 0;
 			
 			this.addStageProgression(6200, function(pregSlot:int):void {
 				var pData:PregnancyData = (kGAMECLASS.pc as PlayerCharacter).pregnancyData[pregSlot];
@@ -107,12 +114,37 @@ package classes.GameData.Pregnancy.Handlers
 		{
 			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
 			
+			// Creating the child during a capture is handled by the actual birthing scene
+			
 			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
 			
 			StatTracking.track("pregnancy/cockvine seedlings birthed", pData.pregnancyQuantity);
 			StatTracking.track("pregnancy/total births", pData.pregnancyQuantity);
 			
 			pData.reset();
+		}
+		
+		override public function nurseryEndPregnancy(mother:Creature, pregSlot:int, useBirthTimestamp:uint):Child
+		{
+			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
+			
+			var c:Child = Child.NewChildWeights(
+					pregnancyChildRace,
+					childMaturationMultiplier,
+					pData.pregnancyQuantity,
+					childGenderWeights
+				);
+			c.BornTimestamp = useBirthTimestamp;			
+			ChildManager.addChild(c);
+			
+			kGAMECLASS.flags["COCKVINE_SEEDLING_CAPTURED"] = 1;
+			StatTracking.track("pregnancy/cockvine seedlings captured", pData.pregnancyQuantity);
+			StatTracking.track("pregnancy/total births", pData.pregnancyQuantity);
+			
+			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
+			pData.reset();
+			
+			return c;
 		}
 	}
 

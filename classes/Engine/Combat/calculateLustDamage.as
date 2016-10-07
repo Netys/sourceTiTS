@@ -42,6 +42,13 @@ package classes.Engine.Combat
 		if (lustDamage.tease.damageValue > 0 && attacker != null && attacker.hasPerk("Seduction")) lustDamage.tease.damageValue *= 1.15;
 		if (lustDamage.tease.damageValue > 0 && attacker != null && attacker.hasPerk("Pheromone Cloud")) lustDamage.pheromone.damageValue += 1 + rand(4);
 		if (lustDamage.hasLustDamage() && attacker != null && attacker.hasPerk("Arousing Aura")) lustDamage.psionic.damageValue += 1 + rand(4);
+		if (lustDamage.tease.damageValue > 0 && attacker != null && attacker.hasPerk("Alpha Scent")) lustDamage.pheromone.damageValue += 1 + rand(4);
+		if (lustDamage.tease.damageValue > 0 && attacker != null && attacker.hasPerk("Pheromone Sweat") && attacker.statusEffectv1("Sweaty") > 0)
+		{
+			var sweatBonus:Number = attacker.statusEffectv1("Sweaty");
+			if (sweatBonus > 5) sweatBonus = 5;
+			lustDamage.pheromone.damageValue += 1 + rand(sweatBonus);
+		}
 		if (lustDamage.tease.damageValue > 0 && target != null && target.hasCock() && attacker != null && attacker.hasStatusEffect("Cum Soaked")) 
 		{
 			var spunkBonus:Number = attacker.statusEffectv1("Cum Soaked");

@@ -8,6 +8,8 @@ package classes.GameData.Pregnancy.Handlers
 	import classes.GLOBAL;
 	import classes.Engine.Interfaces.ParseText;
 	import classes.GameData.StatTracking;
+	import classes.GameData.ChildManager;
+	import classes.GameData.Pregnancy.Child;
 	
 	/**
 	 * ...
@@ -33,6 +35,11 @@ package classes.GameData.Pregnancy.Handlers
 			_pregnancyQuantityMaximum = 1;
 			_definedAverageLoadSize = 100;
 			_pregnancyChildType = GLOBAL.CHILD_TYPE_LIVE;
+			_pregnancyChildRace = GLOBAL.TYPE_TENTACLE;
+			_childGenderWeights.Male = 0;
+			_childGenderWeights.Female = 0;
+			_childGenderWeights.Neuter = 1;
+			_childMaturationMultiplier = 2.5;
 			
 			this.addStageProgression(25260, function(pregSlot:int):void {
 				var pData:PregnancyData = (kGAMECLASS.pc as PlayerCharacter).pregnancyData[pregSlot];
@@ -96,7 +103,7 @@ package classes.GameData.Pregnancy.Handlers
 				kGAMECLASS.pc.bellyRatingMod += 10;
 				pData.pregnancyBellyRatingContribution += 10;
 				
-				kGAMECLASS.eventBuffer += ParseText("\n\n" + kGAMECLASS.logTimeStamp() + " Walking around is hard with such a huge middle, but you manage. <i>You don't mind.</i> Really.");
+				kGAMECLASS.eventBuffer += "\n\n" + kGAMECLASS.logTimeStamp() + ParseText(" Walking around is hard with such a huge middle, but you manage. <i>You don't mind.</i> Really.");
 			}, true);
 			
 			_onSuccessfulImpregnation = psychicTentacleSuccessfulImpregnantion;
@@ -132,12 +139,46 @@ package classes.GameData.Pregnancy.Handlers
 		{
 			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
 			
+			ChildManager.addChild(
+				Child.NewChildWeights(
+					thisPtr.pregnancyChildRace,
+					thisPtr.childMaturationMultiplier,
+					pData.pregnancyQuantity,
+					thisPtr.childGenderWeights
+				)
+			);
+			
 			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
 			
 			StatTracking.track("pregnancy/psychic tentacle beast birthed", pData.pregnancyQuantity);
 			StatTracking.track("pregnancy/total births", pData.pregnancyQuantity);
 			
 			pData.reset();
+		}
+		
+		override public function nurseryEndPregnancy(mother:Creature, pregSlot:int, useBornTimestamp:uint):Child
+		{
+			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
+		
+			var c:Child = Child.NewChildWeights(
+				pregnancyChildRace,
+				childMaturationMultiplier,
+				pData.pregnancyQuantity,
+				childGenderWeights
+			);
+			
+			c.BornTimestamp = useBornTimestamp;
+			
+			ChildManager.addChild(c);
+			
+			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
+			
+			StatTracking.track("pregnancy/psychic tentacle beast birthed", pData.pregnancyQuantity);
+			StatTracking.track("pregnancy/total births", pData.pregnancyQuantity);
+			
+			pData.reset();
+			
+			return c;
 		}
 	}
 

@@ -112,7 +112,7 @@ public function treatmentHourProcs():void
 		//6
 		else if(treatedHours == 12)
 		{
-			eBuffer += "\n\n" + logTimeStamp("passive") + " All that eating must be paying off! You've feel like you have enough energy to propel you all the way to the nearest warpgate. Maybe you should start working out. With all the calories floating around inside you, you could probably put on some muscle pretty easily. You could be the biggest, baddest cow on the ranch, pinning down dumb sluts and shoving your face between their thighs, milking them for the real honey.\n\nOooh, now there's an idea that leaves you shivering! You bet those whores would love every minute of it too.";
+			eBuffer += "\n\n" + logTimeStamp("passive") + " All that eating must be paying off! You feel like you have enough energy to propel you all the way to the nearest warpgate. Maybe you should start working out. With all the calories floating around inside you, you could probably put on some muscle pretty easily. You could be the biggest, baddest cow on the ranch, pinning down dumb sluts and shoving your face between their thighs, milking them for the real honey.\n\nOooh, now there's an idea that leaves you shivering! You bet those whores would love every minute of it too.";
 			pc.lust(4);
 		}
 		//7
@@ -136,7 +136,7 @@ public function treatmentHourProcs():void
 		//8
 		else if(treatedHours == 16)
 		{
-			eBuffer += "\n\n" + logTimeStamp("passive") + " Your nostrils flare, delivering a symphony of scents to your mind. You can pick out your own natural odor with ease, and not in unpleasant way. It's like breathing in an aromatic version of your name. You're fairly certain that you could identify flowers with a simple whiff and other people with only slightly more effort. Are the Treated cows and bulls of New Texas all like this? No wonder they can say so much with so little. They're communicating on a whole other level!";
+			eBuffer += "\n\n" + logTimeStamp("passive") + " Your nostrils flare, delivering a symphony of scents to your mind. You can pick out your own natural odor with ease, and not in an unpleasant way. It's like breathing in an aromatic version of your name. You're fairly certain that you could identify flowers with a simple whiff and other people with only slightly more effort. Are the Treated cows and bulls of New Texas all like this? No wonder they can say so much with so little. They're communicating on a whole other level!";
 			if(pc.hasCock())
 			{
 				eBuffer += "\n\nFor instance, you can smell your " + pc.cocksDescript() + ". You can tell just how aroused you are, whether ";
@@ -153,7 +153,7 @@ public function treatmentHourProcs():void
 		//9
 		else if(treatedHours == 18)
 		{
-			eBuffer += "\n\n" + logTimeStamp("passive") + ParseText(" In a slow moment, you let yourself daydream, imagining just how things will be once you knock some sense into your cousin and claim your birthright. It starts out as little more than a lead-up to your economic rewards, but the longer you dwell on the imaginary scenario, the less you care about the credits and the more you look forward to putting your cuz in his [rival.hisHer] place. The look on [rival.hisHer] face will be priceless.");
+			eBuffer += "\n\n" + logTimeStamp("passive") + ParseText(" In a slow moment, you let yourself daydream, imagining just how things will be once you knock some sense into your cousin and claim your birthright. It starts out as little more than a lead-up to your economic rewards, but the longer you dwell on the imaginary scenario, the less you care about the credits and the more you look forward to putting your cuz in [rival.hisHer] place. The look on [rival.hisHer] face will be priceless.");
 		}
 		//10
 		else if(treatedHours == 20)
@@ -170,7 +170,7 @@ public function treatmentHourProcs():void
 		//11
 		else if(treatedHours == 22)
 		{
-			eBuffer += "\n\n" + logTimeStamp("passive") + " Something occurs to you. You’re getting more confident. You’re sure of it. If you walked into a bar on the wrong planet, you’d look everyone you met in the eye without thinking twice about it. Best case scenario, you’d pick yourself up a punky lay. Worst case scenario, you get shut up a few punks with excess ego.\n\n...You hope that the Treatment gives you the muscles to back up the newfound confidence. Otherwise you're going to have to be agile as hell.";
+			eBuffer += "\n\n" + logTimeStamp("passive") + " Something occurs to you. You’re getting more confident. You’re sure of it. If you walked into a bar on the wrong planet, you’d look everyone you met in the eye without thinking twice about it. Best case scenario, you’d pick yourself up a punky lay. Worst case scenario, you get to shut up a few punks with excess ego.\n\n...You hope that the Treatment gives you the muscles to back up the newfound confidence. Otherwise you're going to have to be agile as hell.";
 		}
 		//12
 		else if(treatedHours == 24)
@@ -264,7 +264,7 @@ public function treatmentHourProcs():void
 				eBuffer += "\n\n" + logTimeStamp("passive") + ParseText(" You growl in dissatisfaction. You can’t seem to quell the feeling of building eroticism or odd desires. Playing with your [pc.asshole] or [pc.nipples] just won’t be enough for you anymore. You want to be <i>fucked properly</i>, not just reamed. If only had a pussy, this would be so much easier... a nice, wet, welcoming hole to please your partners. You gently press at your [pc.asshole] and smile. It's no cunt, but you bet you can make some wannabe stud melt inside.");
 			}
 			//Merge
-			eBuffer += "\n\nBesides, the real takeaway is just how hot and horny you’re able to get without going off. You’re able to sit there fantasizing about a pair of petite cow-boys with enormous dicks, imagining their delectible tools hardening down the legs of their jeans until the robust fabric shreds from the force of their engorging lust. Just two days ago, dwelling on something like this for so long would have driven you to masturbation. Today? You're free to think of all the things you could do them, all while continuing on your merry way. You suppose you’re getting better at it - being aroused that is. You could walk around ";
+			eBuffer += "\n\nBesides, the real takeaway is just how hot and horny you’re able to get without going off. You’re able to sit there fantasizing about a pair of petite cow-boys with enormous dicks, imagining their delectible tools hardening down the legs of their jeans until the robust fabric shreds from the force of their engorging lust. Just two days ago, dwelling on something like this for so long would have driven you to masturbation. Today? You're free to think of all the things you could do to them, all while continuing on your merry way. You suppose you’re getting better at it - being aroused that is. You could walk around ";
 			if(pc.hasCock()) eBuffer += "with a pant-straining stiffy for hours";
 			else if(pc.hasVagina()) eBuffer += "with soaked panties";
 			else eBuffer += "with overwhelming desire";
@@ -461,7 +461,7 @@ public function treatmentHourProcs():void
 		{
 			eBuffer += "\n\n" + logTimeStamp("passive") + ParseText(" You grow increasingly aware of how productive your [pc.breasts] are. The Treatment has given you the ability to produce so much!");
 			if(pc.milkType == GLOBAL.FLUID_TYPE_MILK) eBuffer += " You squeeze a droplet onto a finger and try it, just to sample it. It tastes exactly like the freshest, most delicious milk you've ever tasted - way better than normal. No wonder New Texas is able to export so much milk; Texan cow-milk is amazing!";
-			else eBuffer += ParseText(" You squeeze a droplet onto your finger to try it, amazed at how much richer the richer the [pc.milk] tastes.");
+			else eBuffer += ParseText(" You squeeze a droplet onto your finger to try it, amazed at how much richer the [pc.milk] tastes.");
 			eBuffer += " Perhaps a mid-fuck snack will allow your lovers to keep up with you.";
 			//Perk Unlocked: Treated Milk - Your milk tastes delicious, and milk production takes much longer to slow. The only way you'd stop producing is if you made a conscious effort to keep your roving hands off your milky nipples.
 			eBuffer += "\n\n(<b>Perk Gained: Treated Milk</b> - Your milk tastes delicious, and milk production takes much longer to slow. The only way you'd stop producing is if you made a conscious effort to keep your roving hands off your milky nipples.)";
@@ -984,7 +984,7 @@ public function treatmentHourProcs():void
 			}
 			else if(pc.hornLength < 7)
 			{
-				eBuffer += "\n\n" + logTimeStamp("passive") + " You grunt as the familiar feeling of horn growth sets in. Grabbing hold of the curved, steer-like protrusions, you give them a tug, easing more gleaming ivory into the air. The more horn you grow, the wider their stance and the more threatening you become. You could probably just tip your head an inch forward, snort, and send half the galaxy running. The thought makes you smile almost as much as the idea of a faux cow squeezing them like handlebars while you give suck his balls dry.";
+				eBuffer += "\n\n" + logTimeStamp("passive") + " You grunt as the familiar feeling of horn growth sets in. Grabbing hold of the curved, steer-like protrusions, you give them a tug, easing more gleaming ivory into the air. The more horn you grow, the wider their stance and the more threatening you become. You could probably just tip your head an inch forward, snort, and send half the galaxy running. The thought makes you smile almost as much as the idea of a faux cow squeezing them like handlebars while you suck his balls dry.";
 				pc.hornLength = 7;
 			}
 			else if(pc.hornLength < 8)
@@ -1799,7 +1799,7 @@ public function treatmentHourProcs():void
 					eBuffer += ", polishing every square inch of cock-skin that you can lay your tongue on. Maybe next time you can squeeze more than one into your mouth...";
 				}
 				//Realize how fucking awesome it is and that you feel totes my goats refreshed.
-				eBuffer += ParseText("\n\nFuck yes, that was awesome! All that cumming, and if anything you feel even less tired than before. Is the Treatment like, making you better at sucking your own cock so that you can do it all the time? Or maybe it did something to your [pc.cumNoun] to help it restore your energy. Who cares! If you get tired, you can just lean down and get a cock-snack, then go right back to adventuring... or fucking, you suppose. You pat your ");
+				eBuffer += ParseText("\n\nFuck yes, that was awesome! All that cumming, and if anything you feel even less tired than before. Is the Treatment, like, making you better at sucking your own cock so that you can do it all the time? Or maybe it did something to your [pc.cumNoun] to help it restore your energy. Who cares! If you get tired, you can just lean down and get a cock-snack, then go right back to adventuring... or fucking, you suppose. You pat your ");
 				if(dickBiggered) eBuffer += "bigger ";
 				eBuffer += "dick and giggle delightedly, convinced that your mouth is going to taste like sex for the rest of your life.";
 				//Gain Autofellatio Queen perk
@@ -1860,7 +1860,7 @@ public function treatmentHourProcs():void
 			//Plays the next time the PC is in a public place
 			if(treatedHours == 155 && pc.hasCock() && pc.exhibitionism() < 66)
 			{
-				pc.createStatusEffect("Treatment Exhibitionism Gain 4 DickGirls")
+				pc.createStatusEffect("Treatment Exhibitionism Gain 4 DickGirls");
 			}
 			//160 Hours:
 			//Possible Milk Fountain Perk
@@ -2421,7 +2421,7 @@ output("\n\nYour fancy-pants tablet informs you that you’ve gotten a pretty un
 			{
 				for(var cuntCount2:int = 0; cuntCount2 < pc.totalVaginas(); cuntCount2++)
 				{
-					if(pc.vaginas[cuntCount2].bonusCapacity < 150) pc.vaginas[cuntCount2].bonusCapacity  = 150;
+					if(pc.vaginas[cuntCount2].bonusCapacity < 150) pc.vaginas[cuntCount2].bonusCapacity = 150;
 				}
 			}
 			else 
@@ -3582,18 +3582,42 @@ public function dumb4CumReset():void
 		eBuffer += "\n\n" + logTimeStamp("passive") + ParseText(" With the warm feeling of reproductive juices in your body, you find you're able to think clearly once more.");
 	}
 	pc.setPerkValue("Dumb4Cum",1,0);
+	// Regain lost intellience
+	if(pc.perkv2("Dumb4Cum") > 0)
+	{
+		pc.intelligence(pc.perkv2("Dumb4Cum"));
+		pc.setPerkValue("Dumb4Cum",2,0);
+		pc.setPerkValue("Dumb4Cum",3,0);
+	}
+	
+	// Ditz Speech Removal
+	// Dr. Badger bimbofication and Dumbfuck sneezes are permanent though...
+	if(pc.hasPerk("Ditz Speech") && flags["DR_BADGER_BIMBOED_PC"] == undefined && (flags["DUMBFUCK_SNEEZES"] == undefined || flags["DUMBFUCK_SNEEZES"] < 20))
+	{
+		eBuffer += "\n\n(<b>Perk Lost: Ditz Speech</b>)";
+		pc.removePerk("Ditz Speech");
+	}
+	
 	eventBuffer += eBuffer;
 }
 
 public function dumb4CumUpdate():void
 {
 	var eBuffer:String = "";
+	
+	// Pool intelligence into a reserve...
+	if(pc.perkv1("Dumb4Cum") >= 24)
+	{
+		if(pc.perkv2("Dumb4Cum") < pc.perkv3("Dumb4Cum")) pc.addPerkValue("Dumb4Cum",2,1);
+	}
 	pc.addPerkValue("Dumb4Cum",1,1);
 	var tics:Number = pc.perkv1("Dumb4Cum");
 	
 	if(tics == 24)
 	{
 		eBuffer += "\n\n" + logTimeStamp("passive") + ParseText(" You lick your lips, vividly imagining what cum would taste like on your tongue. You shake your head, feeling a little absentminded, and go on your way.");
+		// Just in case:
+		pc.intelligence();
 	}
 	else if(tics == 30)
 	{
@@ -3611,6 +3635,14 @@ public function dumb4CumUpdate():void
 	{
 		eBuffer += "\n\n" + logTimeStamp("passive") + ParseText(" You can't seem to go more than a minute without thinking of getting fucked or sucking someone off. When you close your eyes, all you can think about is penises. When someone asks you a question, you have to pause for a few seconds, dragging your thoughts through a melange of pink-tinged fucking. <b>You need some cum.</b>");	
 	}
+	
+	// Ditz Speech Add-on
+	if(tics >= 40 && !pc.hasPerk("Ditz Speech"))
+	{
+		eBuffer += "\n\n(<b>Gained Perk: Ditz Speech</b> - You will now sound like a total bimbo in scenes that support it.)";
+		pc.createPerk("Ditz Speech",0,0,0,0,"Alters dialogue in certain scenes.");
+	}
+	
 	eventBuffer += eBuffer;
 }
 

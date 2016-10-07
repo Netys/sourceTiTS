@@ -8,6 +8,8 @@ package classes.GameData.Pregnancy.Handlers
 	import classes.GLOBAL;
 	import classes.Engine.Interfaces.ParseText;
 	import classes.Engine.Utility.rand;
+	import classes.GameData.ChildManager;
+	import classes.GameData.Pregnancy.Child;
 	
 	/**
 	 * This is effectively very similar to the Renvra pregnancy implementation, so I'm copypasting it over
@@ -34,6 +36,7 @@ package classes.GameData.Pregnancy.Handlers
 			_pregnancyQuantityMaximum = 10;
 			_definedAverageLoadSize = 720;
 			_pregnancyChildType = GLOBAL.CHILD_TYPE_EGGS;
+			_pregnancyChildRace = GLOBAL.TYPE_NYREA;
 			
 			this.addStageProgression(8000, function(pregSlot:int):void {
 				kGAMECLASS.pc.addPregnancyBellyMod(pregSlot, 2, true);
@@ -121,6 +124,15 @@ package classes.GameData.Pregnancy.Handlers
 		{
 			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
 			
+			ChildManager.addChild(
+				Child.NewChildWeights(
+					thisPtr.pregnancyChildRace,
+					thisPtr.childMaturationMultiplier,
+					pData.pregnancyQuantity,
+					thisPtr.childGenderWeights
+				)
+			);
+			
 			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
 			
 			StatTracking.track("pregnancy/nyrea eggs", pData.pregnancyQuantity);
@@ -137,6 +149,35 @@ package classes.GameData.Pregnancy.Handlers
 		override public function pregBellyFragment(target:Creature, slot:int):String
 		{
 			return "Your belly is bulging heavily. At first glance, people might be mistaken for thinking you're properly pregnant, but closer inspection reveals your belly to be lumpy and slightly misshapen, bulging with eggs as you are.";
+		}
+		
+		override public function nurseryEndPregnancy(mother:Creature, pregSlot:int, useBirthTimestamp:uint):Child
+		{
+			var pData:PregnancyData = mother.pregnancyData[pregSlot] as PregnancyData;
+			
+			var c:Child = Child.NewChildWeights(
+				pregnancyChildRace,
+				childMaturationMultiplier,
+				pData.pregnancyQuantity,
+				childGenderWeights
+			);
+			c.BornTimestamp = useBirthTimestamp;
+			
+			ChildManager.addChild(c);
+			
+			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
+			
+			StatTracking.track("pregnancy/nyrea eggs", pData.pregnancyQuantity);
+			StatTracking.track("pregnancy/total births", pData.pregnancyQuantity);
+			
+			pData.reset();
+			
+			if (mother.hasStatusEffect("Nyrea Eggs Messages Available") && !mother.hasPregnancyOfType(handlesType))
+			{
+				mother.removeStatusEffect("Nyrea Eggs Messages Available");
+			}
+			
+			return c;
 		}
 	}
 

@@ -410,13 +410,26 @@ public function initUvetoRooms():void
 
 	rooms["UVI N42"] = new RoomClass(this);
 	rooms["UVI N42"].roomName = "SOUTHERN\nCOMMERCE";
-	rooms["UVI N42"].description = "Several shops are set up around the southern end of the main street, advertising their wares. Most are simple things like grocery stores, a computer shop, and the like. To the west, though, you spot a shop that catches your eye: the Hunter's Dream. ";
+	rooms["UVI N42"].description = "Several shops are set up around the southern end of the main street, advertising their wares. Most are simple things like grocery stores, a computer shop, and the like. To the west, though, you spot a shop that catches your eye: the Hunter's Dream. Opposite is a holographic sign above a storefront featuring a decal of a multi-legged, tauric alien and the words, <i>“Spinarran Silk & Steel”</i>. The display windows to the east show off samples: polished weapons, exotic body armor, and even mundane clothing.";
 	rooms["UVI N42"].planet = "PLANET: UVETO VII";
 	rooms["UVI N42"].system = "SYSTEM: SIRETTA";
 	rooms["UVI N42"].northExit = "UVI N40";
 	rooms["UVI N42"].westExit = "UVI L42";
+	rooms["UVI N42"].eastExit = "S&S_KIRILA";
 	rooms["UVI N42"].moveMinutes = 3;
+	rooms["UVI N42"].runOnEnter = addUvetoColdBonus;
 	rooms["UVI N42"].addFlag(GLOBAL.OUTDOOR);
+
+	rooms["S&S_KIRILA"] = new RoomClass(this);
+	rooms["S&S_KIRILA"].roomName = "SPINARRAN\nSILK & STEEL";
+	rooms["S&S_KIRILA"].description = "";
+	rooms["S&S_KIRILA"].planet = "PLANET: UVETO VII";
+	rooms["S&S_KIRILA"].system = "SYSTEM: SIRETTA";
+	rooms["S&S_KIRILA"].westExit = "UVI N42";
+	rooms["S&S_KIRILA"].moveMinutes = 3;
+	rooms["S&S_KIRILA"].runOnEnter = spinarranSilkAndSteelBonusFunc;
+	rooms["S&S_KIRILA"].addFlag(GLOBAL.INDOOR);
+	rooms["S&S_KIRILA"].addFlag(GLOBAL.COMMERCE);
 
 	/* Another Store */
 	rooms["UVI L42"] = new RoomClass(this);
@@ -437,6 +450,9 @@ public function initUvetoRooms():void
 		{
 			output("\n\nWHO THE FUCK KNOWS, WHY WOULD WE EVER HAVE ONE CONCISE LIST OF FUCKING ROOM DESCRIPTIONS?????");
 		}
+		
+		removeUvetoCold(true);
+		
 		return false;
 	}
 	
@@ -449,6 +465,7 @@ public function initUvetoRooms():void
 	rooms["UVI P38"].southExit = "UVI P40";
 	rooms["UVI P38"].westExit = "UVI N38";
 	rooms["UVI P38"].moveMinutes = 3;
+	rooms["UVI P38"].runOnEnter = addUvetoColdBonus;
 	rooms["UVI P38"].addFlag(GLOBAL.OUTDOOR);
 
 	/* Maglev Station */
@@ -459,6 +476,7 @@ public function initUvetoRooms():void
 	rooms["UVI P40"].system = "SYSTEM: SIRETTA";
 	rooms["UVI P40"].northExit = "UVI P38";
 	rooms["UVI P40"].moveMinutes = 1;
+	rooms["UVI P40"].runOnEnter = removeUvetoColdBonus;
 	rooms["UVI P40"].addFlag(GLOBAL.INDOOR);
 	rooms["UVI P40"].addFlag(GLOBAL.TAXI); // 9999 TRAIN?
 
@@ -471,7 +489,7 @@ public function initUvetoRooms():void
 	rooms["UVI N32"].southExit = "UVI N34";
 	rooms["UVI N32"].eastExit = "UVI P32";
 	rooms["UVI N32"].moveMinutes = 3;
-	rooms["UVI N32"].runOnEnter = meadStreetBonus;
+	rooms["UVI N32"].runOnEnter = addUvetoColdBonus;
 	rooms["UVI N32"].addFlag(GLOBAL.OUTDOOR);
 
 	rooms["UVI N30"] = new RoomClass(this);
@@ -953,7 +971,7 @@ public function initUvetoRooms():void
 	rooms["UVIP Z34"].moveMinutes = 12;
 	rooms["UVIP Z34"].addFlag(GLOBAL.FROZENTUNDRA);
 	rooms["UVIP Z34"].addFlag(GLOBAL.HAZARD);
-	rooms["UVIP Z34"].runOnEnter = TundraEncounterBonus;
+	rooms["UVIP Z34"].runOnEnter = HereBeDragonBonus; //Frostwyrm placeholder location
 
 	/* NORTH END */
 	rooms["UVIP F36"] = new RoomClass(this);
@@ -1516,6 +1534,8 @@ public function initUvetoRooms():void
 	rooms["UVIP Z6"].addFlag(GLOBAL.ICYTUNDRA);
 	rooms["UVIP Z6"].addFlag(GLOBAL.HAZARD);
 	rooms["UVIP Z6"].runOnEnter = TundraEncounterBonus;
+	rooms["UVIP Z6"].runOnEnter = HereBeDragonBonus; //Frostwyrm placeholder location
+	
 
 	/* CENTER BRANCH */
 	rooms["UVIP R12"] = new RoomClass(this);
@@ -1650,4 +1670,5 @@ public function initUvetoRooms():void
 	rooms["UVIP Z22"].addFlag(GLOBAL.FROZENTUNDRA);
 	rooms["UVIP Z22"].addFlag(GLOBAL.HAZARD);
 	rooms["UVIP Z22"].runOnEnter = TundraEncounterBonus;
+	rooms["UVIP Z22"].runOnEnter = HereBeDragonBonus; //Frostwyrm placeholder location
 }

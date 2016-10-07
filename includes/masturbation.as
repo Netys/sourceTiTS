@@ -157,7 +157,7 @@ public function availableFaps(roundTwo:Boolean = false):Array
 	}
 	if (pc.hasCock() && pc.canAutoFellate(-1))
 	{
-		if(pc.isCumCow())
+		if(pc.isCumCow() && pc.perkv1("Auto-Autofellatio") > 0)
 		{
 			fap = new FapCommandContainer();
 			fap.text = "Autofellatio";
@@ -1171,7 +1171,6 @@ public function multiCockFap():void {
 		else if(pc.cumQ() <= 750) output("stuffing your cheeks with so much that even with you hurriedly gulping there's still blobs of [pc.cumColor] squrting at leaking out of the corners of your mouth, making a mess of your face and your cock.");
 		else output("flooding your cheeks so effectively with the first pulse that the second pushes your mouth clean off your [pc.cockHead], forcing you to get a head-drenching facial so thick that you're likely unrecognizable.");
 		output(" ");
-		pc.loadInMouth(pc);
 	}
 	//Bits for nipplefucking
 	else if(nippleFucked) {
@@ -1181,7 +1180,6 @@ public function multiCockFap():void {
 		else if(pc.cumQ() <= 150) output("large");
 		else output("tunnel-flooding");
 		output(" deposit of your liquid love. ");
-		pc.loadInNipples(pc);
 	}
 	//Everybody gets dese
 	if(!titFucked) {
@@ -1216,6 +1214,9 @@ public function multiCockFap():void {
 	else output("\n\nYou get your gear back on without bothering to clean up. You're just going to find something to fuck anyway.");
 	processTime(45 + rand(5));
 	pc.orgasm();
+	if(tailPussied) pc.loadInCuntTail(pc);
+	if(sucked) pc.loadInMouth(pc);
+	if(nippleFucked) pc.loadInNipples(pc);
 	applyCumSoaked(pc);
 	if(pc.cumQ() > 5000) applyCumSoaked(pc);
 	if(pc.cumQ() > 10000) applyCumSoaked(pc);
@@ -3369,7 +3370,7 @@ public function cumCowAutoFellatio(special:Boolean = false, timeStuff:Number = 1
 	if(!silly) output("more efficiently than a custom-designed sex-toy");
 	else output("more efficiently than some kind of cock-sucking machine");
 	output(". That leaves your mind free to gorge itself on the incredible sensory buffet. The ever present, subtle dickmusk swirls around inside your head, captured in happy pink bubbles so that you’ll never forget a mote of the delectable odor. They float on a lovely, cummy ocean distilled from the salty taste of cock, itself rocking in gentle waves, stirred by the all-consuming sight of prick bouncing in and out of [pc.lipColor] lips.");
-	output("\n\nPart of you wishes you could climb out of your body just to watch. It must look so fucking good, seeing some big-breasted cow-slut short-circuiting her brain-cells on the feelings from her own [pc.cock " + x + "]. You want to see your mouth straining to take the girth");
+	output("\n\nPart of you wishes you could climb out of your body just to watch. It must look so fucking good, seeing " + (pc.biggestTitSize() >= 6 ? "some big-breasted" : "a giddy") + " cow-slut short-circuiting her brain-cells on the feelings from her own [pc.cock " + x + "]. You want to see your mouth straining to take the girth");
 	if(pc.biggestTitSize() >= 6) output(", the way your tits deform and ripple around the unyielding pole");
 	output(", the glossy shine of drooling spit covering every inch, and the way your eyes must be rolling back, dilated as wide as dinner plates by pleasure and passion.");
 	output("\n\nIf someone found you like this, they could pick you up and fuck you. You wouldn’t mind. If anything, you’d thank you for helping drain the swirling, sensuous heat from ");
@@ -3403,7 +3404,7 @@ public function cumCowAutoFellatio(special:Boolean = false, timeStuff:Number = 1
 	//If auto-suck, always this. Otherwise 50/50.
 	if(special || rand(2) == 0)
 	{
-		output("\n\nYour chrono says " + num2Text(Math.floor(timeStuff/60)) + " hours have passed.");
+		output("\n\nYour chrono says " + (Math.floor(timeStuff/60) <= 1 ? ("about an hour has") : (num2Text(Math.floor(timeStuff/60)) + " hours have")) + " passed.");
 		if(pc.perkv1("Auto-Autofellatio") == 0) output(" Did you spend the whole time sucking your own dick?");
 		else output(" What a great way to spend your time!");
 	}
@@ -3436,15 +3437,15 @@ public function cumCowAutoFellatio(special:Boolean = false, timeStuff:Number = 1
 	//First time post-script addendum
 	if(pc.perkv1("Auto-Autofellatio") == 0) autoautofellatioNotice(); 
 	//Voluntary Beej gives 1 week cooldown
-	if(!special) pc.addPerkValue("Auto-Autofellatio",2,7);
+	if(!special) pc.setPerkValue("Auto-Autofellatio",2,7);
 	//Involuntary give 3 day autocooldown
-	else pc.addPerkValue("Auto-Autofellatio",2,3);
+	else pc.setPerkValue("Auto-Autofellatio",2,3);
 	//Keep count, whynot.
 	pc.addPerkValue("Auto-Autofellatio",1,1);
-	pc.loadInMouth(pc);
 	processTime(timeStuff);
 	restHeal();
 	pc.orgasm();
+	pc.loadInMouth(pc);
 	clearMenu();
 	addButton(0,"Next",mainGameMenu);
 }
@@ -3453,7 +3454,7 @@ public function cumCowAutoFellatio(special:Boolean = false, timeStuff:Number = 1
 public function autofellatioForNormies():void
 {
 	clearOutput();
-	showName("\nAUTO-\nFELLATIO");
+	showName("AUTO-\nFELLATIO");
 	var x:int = pc.aCockToSuck();
 	if(x < 0) x = pc.biggestCockIndex();
 	
@@ -3579,8 +3580,8 @@ public function autofellatioForNormies():void
 		else if(celiseIsCrew()) output(" It's a good thing Celise will have a field day with this mess.");
 	}
 	processTime(20);
-	pc.loadInMouth(pc);
 	pc.orgasm();
+	pc.loadInMouth(pc);
 	IncrementFlag("PC_SELF_SUCKED_STANDARD");
 	clearMenu();
 	addButton(0,"Next",mainGameMenu);

@@ -660,13 +660,13 @@ public function gooArmorIsCrew():Boolean
 }
 public function hasGooArmor():Boolean
 {
-    if(InShipInterior() && (pc.hasItemInStorage(new GooArmor()) || gooArmorIsCrew())) return true;
-    return hasGooArmorOnSelf();
+	if(InShipInterior() && (pc.hasItemInStorage(new GooArmor()) || gooArmorIsCrew())) return true;
+	return hasGooArmorOnSelf();
 }
 public function hasGooArmorOnSelf():Boolean
 {
-    if(pc.armor is GooArmor || pc.hasItemByName("Goo Armor")) return true;
-    return false;
+	if(pc.armor is GooArmor || pc.hasItemByName("Goo Armor")) return true;
+	return false;
 }
 public function hasGooArmorUpgrade(upgrade:String = "none", bInv:Boolean = true):Boolean
 {
@@ -691,7 +691,7 @@ public function hasGooArmorUpgrade(upgrade:String = "none", bInv:Boolean = true)
 			}
 		}
 	}
-    return hasUpgrade;
+	return hasUpgrade;
 }
 public function gooArmorDefense(def:Number = 0):Number
 {
@@ -898,7 +898,7 @@ public function approachGooArmorCrewMenu(fromCrew:Boolean = true):void
 	else if(pc.hasStatusEffect("Goo Armor Healed")) gooArmorAddDisabledButton(fromCrew, 5, "Heal", "Restore Health", "[goo.name] has already healed you in the past hour. She may need some time to recover before trying it again.");
 	else gooArmorAddButton(fromCrew, 5, "Heal", gooArmorCrewOption, ["heal", fromCrew], "Restore Health", "Ask [goo.name] to help mend your wounds.");
 	
-	if(fromCrew && flags["GOO_ARMOR_ON_SHIP"] == undefined)
+	if(flags["GOO_ARMOR_ON_SHIP"] == undefined)
 	{
 		if(InShipInterior()) gooArmorAddButton(fromCrew, 4, "Stay", gooArmorCrewOption, ["stay", fromCrew], "Stay Here, " + chars["GOO"].short + ".", "Ask [goo.name] to stay on your ship.");
 		else gooArmorAddDisabledButton(fromCrew, 4, "Stay", "Stay Here, " + chars["GOO"].short + ".", "This is probably not a good place to leave [goo.name] wandering around... Maybe you should head inside your ship first?");
@@ -1099,7 +1099,7 @@ public function gooArmorCrewOption(arg:Array):void
 				if(annoIsCrew() && InShipInterior()) chats.push(msg);
 				
 				msg = " a discussion about a particular product.";
-				msg += "\n\n<i>“... like, BIG-big! Hmmm... do you think [bess.name] would know if JoyCo sells something that?”</i> she asks.";
+				msg += "\n\n<i>“... like, BIG-big! Hmmm... do you think [bess.name] would know if JoyCo sells something like that?”</i> she asks.";
 				msg += "\n\n" + (pc.isBimbo() ? "Wow, that’s pretty big! You pout while pondering... You don’t think they have any <i>that</i> big. But maybe you could call in and make a request!" : "You are pretty sure those are a part of JoyCo’s line-up somewhere... just not anywhere near <i>that</i> big.");
 				if(flags["BESS_FULLY_CONFIGURED"] != undefined && bessIsCrew()) chats.push(msg);
 				
@@ -1286,8 +1286,13 @@ public function gooArmorCrewOption(arg:Array):void
 			{
 				if(silly && pc.isBimbo() && pc.hasBreasts())
 				{
-					txt += "With a serious face, you look at your gooey friend and command, <i>“" + chars["GOO"].short.toUpperCase() + ", GRAB MY BOOBS.”</i>";
-					txt += "\n\nShe takes her hand and places it on your right-most breast, then squeezes. <i>HONK!</i>";
+					txt += "With a serious face, you look at your gooey friend and command, <i>“" + chars["GOO"].short.toUpperCase() + ", GRAB MY BOOB";
+					if(pc.totalBreasts() >= 2) txt += "S";
+					txt += ".”</i>";
+					txt += "\n\nShe takes her hand and places it on your";
+					if(pc.totalBreasts() >= 2) txt += " right";
+					if(pc.totalBreasts() > 2) txt += "-most";
+					txt += " breast, then squeezes. <i>HONK!</i>";
 					txt += "\n\nIn sync, you both chorus the word, <i>“ADVENTURE...!”</i>";
 					txt += "\n\nThe console monitors around you flicker different colors to simulate a discothèque-like rainbow for added emphasis. [goo.name] quickly engulfs herself around your body, changing into your fitted armor, then popping her top half out to meet you as the light show finally stops and everything returns to normal.";
 					txt += "\n\nThe two of you look at each other for a good few seconds, then burst into high-pitched giggles.";
@@ -1459,7 +1464,7 @@ public function gooArmorCrewTalk(arg:Array):void
 			txt += "\n\n<i>“Ahhh... This really is nice, isn’t it, [pc.name]?”</i> she coos. When she turns to you she finds you completely soaked... and you haven’t even started swimming yet! <i>“Oops! I totally over-did it, didn’t I?”</i>";
 			txt += "\n\nYou answer her question by sweeping your arms from behind you and letting loose two handfuls of cool water right at her face, payback for the drenching she gave you.";
 			txt += "\n\n<i>“Ack!”</i> she squeaks, then lets out a joyful giggle and splashes back.";
-			txt += "\n\nThe two of you splash-fight for a bit, which eventually leads to some friendly, competitive swimming. When you are all swimmed out, you take some time to relax with [goo.name] and chat a little. She talks about all the different swimsuits she’s seen so far and the ones she likes the most. She also offers <i>be</i> your swimsuit if you ever need one. That definitetly would come in handy, you think.";
+			txt += "\n\nThe two of you splash-fight for a bit, which eventually leads to some friendly, competitive swimming. When you are all swimmed out, you take some time to relax with [goo.name] and chat a little. She talks about all the different swimsuits she’s seen so far and the ones she likes the most. She also offers <i>be</i> your swimsuit if you ever need one. That definitely would come in handy, you think.";
 			txt += "\n\nStepping out of the pool, you approach the shower to rinse yourself off. However, all [goo.name] does is shake like a wet ausar and she is instantly dry, also having reshaped back to her previous form. Before you can get to your gear and dry yourself, you feel two big smacks, one on each of your [pc.butts]. Arching your back in surprise, you turn around to find [goo.name], her hands behind her, looking at you and smiling innocently. She’s so naughty!";
 			txt += "\n\n<b>[goo.name] has learned how to change into swimwear!</b>";
 			
@@ -2347,9 +2352,9 @@ public function gooArmorChangeStyle(arg:Array):void
 					if(pc.hasGenitals() || (pc.balls > 0 && pc.ballSize() > 3))
 					{
 						txt += ", leaving behind a visible ";
-						var buldges:int = pc.cockTotal();
-						if(pc.ballSize() > 3) buldges += pc.balls;
-						if(buldges > 0) txt += (buldges == 1 ? "buldge" : (buldges == 2 ? "pair" : "set") + " of buldges");
+						var bulges:int = pc.cockTotal();
+						if(pc.ballSize() > 3) bulges += pc.balls;
+						if(bulges > 0) txt += (bulges == 1 ? "bulge" : (bulges == 2 ? "pair" : "set") + " of bulges");
 						else txt += (pc.totalVaginas() == 1 ? "camel toe" : (pc.totalVaginas() == 2 ? "pair" : "set") + " of camel toes");
 					}
 					if(pc.libido() > 50) txt += "--and a zipper forms below, just for the added lewdness";

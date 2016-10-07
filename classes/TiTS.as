@@ -40,6 +40,7 @@
 	import classes.GameData.CodexManager;
 	import classes.GameData.GameOptions;
 	import classes.GameData.Pregnancy.Handlers.*;
+	import classes.GameData.ChildManager;
 	
 	import fl.transitions.easing.None;
 
@@ -128,6 +129,7 @@
 		include "../includes/follower.anno.as";
 		include "../includes/follower.celise.as";
 		include "../includes/follower.celiseGiga.as";
+		include "../includes/follower.siegwulfe.as";
 		include "../includes/follower.yammi.as";
 		
 		//Sidequest shit
@@ -158,12 +160,15 @@
 		include "../includes/tavros/alex.as";
 		include "../includes/tavros/beths.as";
 		include "../includes/tavros/fyn.as";
+		include "../includes/tavros/ilaria.as";
 		include "../includes/tavros/inessa.as";
 		include "../includes/tavros/jade.as";
+		include "../includes/tavros/nursery.as";
 		include "../includes/tavros/oviliumBonus.as";
 		include "../includes/tavros/ramis.as";
 		include "../includes/tavros/reaha.as";
 		include "../includes/tavros/reaha.expansion.as";
+		include "../includes/tavros/reaha.cured_expansion.as";
 		include "../includes/tavros/rooms.as";
 		include "../includes/tavros/roomFunctions.as";
 		include "../includes/tavros/saendraXPack1.as";
@@ -212,6 +217,7 @@
 		include "../includes/tarkus/drBadger.as";
 		include "../includes/tarkus/drLash.as";
 		include "../includes/tarkus/dumbfuckBonus.as";
+		include "../includes/tarkus/edan.as";
 		include "../includes/tarkus/goblinPool.as";
 		include "../includes/tarkus/grayGoo.as";
 		include "../includes/tarkus/grayGooArmor.as";
@@ -233,6 +239,7 @@
 		include "../includes/newTexas/newTexas.as";
 		include "../includes/newTexas/bigT.as";
 		include "../includes/newTexas/brynn.as";
+		include "../includes/newTexas/busky.as";
 		include "../includes/newTexas/ellie.as";
 		include "../includes/newTexas/haley.as";
 		include "../includes/newTexas/gianna.as";
@@ -306,8 +313,10 @@
 		
 		// Uveto
 		include "../includes/uveto/freezer.as";
+		include "../includes/uveto/frostwyrm.as";
 		include "../includes/uveto/jerome.as";
 		include "../includes/uveto/kaede.as";
+		include "../includes/uveto/kirila.as";
 		include "../includes/uveto/korgonneFemaleHostile.as";
 		include "../includes/uveto/natalie.as";
 		include "../includes/uveto/nayna.as";
@@ -423,7 +432,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.78";
+			version = "0.6.85";
 
 			//temporary nonsense variables.
 			temp = 0;
@@ -1232,6 +1241,26 @@
 		public function get jerome():Jerome
 		{
 			return chars["JEROME"];
+		}
+		public function get inessa():Inessa
+		{
+			return chars["INESSA"];
+		}
+		public function get edan():Edan
+		{
+			return chars["EDAN"];
+		}
+		public function get ilaria():Ilaria
+		{
+			return chars["ILARIA"];
+		}
+		public function get wulfe():Siegwulfe
+		{
+			return chars["WULFE"];
+		}
+		public function get busky():Busky
+		{
+			return chars["BUSKY"];
 		}
 		
 		private var _dbgtestvar:int = 0;

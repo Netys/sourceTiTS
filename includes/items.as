@@ -8,6 +8,7 @@ import classes.ItemSlotClass;
 import classes.StorageClass;
 import classes.StringUtil;
 import classes.TiTS;
+import classes.Items.Accessories.SiegwulfeItem;
 import classes.Items.Armor.Unique.Omnisuit;
 import classes.Items.Armor.Unique.OmnisuitCollar;
 import classes.Items.Armor.Unique.StrangeCollar;
@@ -341,16 +342,18 @@ public function buyItemGo(arg:ItemSlotClass):void {
 		arbetzPetrBuyGo(arg);
 		return;
 	}
-	else if(shopkeep is Ellie && arg is SumaCream)
+	//Emmy magic!
+	else if(shopkeep is Emmy) flags["PURCHASED_FROM_EMS"] = 1;
+	else if(shopkeep is Sera) flags["PURCHASED_FROM_SERA"] = 1;
+	else if(shopkeep is Ceria) flags["CERIA_BOUGHT"] = 1;
+	
+	//Suma swap
+	if(arg is SumaCream)
 	{
 		// Buying Suma Cream has a 1 in 20 chance of getting a “Black Cream” pearl instead, due to J’ejune’s lax oversight
 		if(rand(20) == 0) arg = new SumaCreamBlack();
 		else arg = new SumaCreamWhite();
 	}
-	//Emmy magic!
-	else if(shopkeep is Emmy) flags["PURCHASED_FROM_EMS"] = 1;
-	else if(shopkeep is Sera) flags["PURCHASED_FROM_SERA"] = 1;
-	else if(shopkeep is Ceria) flags["CERIA_BOUGHT"] = 1;
 	
 	// Apply and destroy coupons!
 	var usedCoupon:Boolean = false;
@@ -371,7 +374,7 @@ public function buyItemGo(arg:ItemSlotClass):void {
 		pc.removeKeyItem("Coupon - TamaniCorp");
 	}
 	
-	output("You purchase " + arg.description + " for " + num2Text(price) + " credits.\n\n");
+	output("You purchase " + arg.description + " for " + num2Text(price) + " credits.");
 	pc.credits -= price;
 	
 	// Renamed from lootList so I can distinguish old vs new uses
@@ -391,11 +394,30 @@ public function buyItemGo(arg:ItemSlotClass):void {
 			chars["SERA"].destroyItem(new GaloMax());
 		}
 	}
+	// Siegwulfe Special
+	if(arg is SiegwulfeItem)
+	{
+		purchasedItems = [];
+		output("\n\nThe display model of the droid is much too big and lofty to carry around, especially unpowered. Instead, an order has been placed for a brand-new model and is currently being delivered straight to your ship. <b>Be sure to check your ship’s storage for it!</b>");
+		chars["WULFE"].accessory = new SiegwulfeItem();
+		shopkeep.destroyItem(new SiegwulfeItem());
+		flags["WULFE_ON_SHIP"] = false;
+		IncrementFlag("WULFE_PURCHASED");
+	}
+	output("\n\n");
 	//Set everything to take us back to buyItem!
 	itemScreen = buyItem;
 	lootScreen = buyItem;
 	useItemFunction = buyItem;
-	itemCollect(purchasedItems);
+	if(purchasedItems.length > 0)
+	{
+		itemCollect(purchasedItems);
+	}
+	else
+	{
+		clearMenu();
+		addButton(0, "Next", lootScreen);
+	}
 }
 
 public function sellItem():void {
@@ -746,9 +768,19 @@ public function generalInventoryMenu():void
 	output("What item would you like to use?");
 	output("\n\n");
 	inventoryDisplay();
-	this.clearMenu();
+	clearMenu();
 	var adjustment:int = 0;
 	for(x = 0; x < pc.inventory.length || x < 14; x++) {
+		//special slot 1
+		if(x+adjustment == 10) {
+			/* Nothing yet! */
+			adjustment++;
+		}
+		//interaction menu
+		if(x+adjustment == 11) {
+			if(itemInteractMenu(true) > 0) addButton(x+adjustment,"Interact",itemInteractMenu,undefined,"Interact","Interact with some of your items.");
+			adjustment++;
+		}
 		//key item menu
 		if(x+adjustment == 12) {
 			addButton(x+adjustment,"Key Item",keyItemDisplay,undefined,"Key Items","View your list of key items.");
@@ -773,7 +805,38 @@ public function generalInventoryMenu():void
 	}
 	//Set user and target.
 	itemUser = pc;
-	this.addButton(14,"Back",mainGameMenu);
+	addButton(14,"Back",mainGameMenu);
+}
+
+public function itemInteractMenu(counter:Boolean = false):Number
+{
+	if(!counter) {
+		clearOutput();
+		clearMenu();
+	}
+	
+	var itemMessages:String = "";
+	var count:int = 0;
+	
+	if (hasSiegwulfeOnSelf())
+	{
+		count++;
+		if (!counter)
+		{
+			itemMessages += siegwulfeOnShipBonus((count - 1), true);
+		}
+	}
+	
+	if(!counter) {
+		if(count > 0) {
+			clearBust();
+			showName("\nINTERACT");
+			output("What do you wish to interact with?" + itemMessages);
+		}
+		addButton(14, "Back", mainGameMenu);
+	}
+	
+	return count;
 }
 
 public function combatInventoryMenu():void
@@ -912,6 +975,10 @@ public function unequip(arg:String, next:Boolean = true):void
 			itemDisabledMessage(GLOBAL.ACCESSORY);
 			return;
 		}
+		if(pc.accessory is SiegwulfeItem)
+		{
+			SiegwulfeUnequip();
+		}
 		unequippedItems[unequippedItems.length] = pc.accessory;
 		pc.accessory = new classes.Items.Miscellaneous.EmptySlot();
 	}
@@ -987,6 +1054,10 @@ public function equipItem(arg:ItemSlotClass):void {
 		}
 		arg = new Omnisuit();
 	}
+	else if(arg is SiegwulfeItem)
+	{
+		SiegwulfeEquip();
+	}
 	else
 	{
 		//No undies with Omnisuit!
@@ -997,6 +1068,10 @@ public function equipItem(arg:ItemSlotClass):void {
 			//Take the arg off! Ha ha!
 			removedItem = arg;
 		}
+		else if((pc.accessory is SiegwulfeItem) && arg.type == GLOBAL.ACCESSORY)
+		{
+			SiegwulfeUnequip();
+		}
 		else
 		{
 			output("You");
@@ -1006,6 +1081,7 @@ public function equipItem(arg:ItemSlotClass):void {
 			output(" your " + arg.longName + ".");
 		}
 	}
+	
 	//A quick check to skip equipping if we've bailed out
 	if(removedItem == arg)
 	{
@@ -1279,6 +1355,14 @@ public function shipStorageMenuRoot():void
 		campStorageMenuRoot();
 		return;
 	}
+	
+	// Special Events
+	if(flags["WULFE_ON_SHIP"] == false)
+	{
+		activateSiegwulfe();
+		return;
+	}
+	
 	clearOutput();
 	output("You turn to your ship's storage.");
 	
@@ -1319,19 +1403,23 @@ public function shipStorageMenuRoot():void
 	}
 	else addDisabledButton(4, "Toys");
 	
+	var btnSlot:int = 5;
+	
 	if (kGAMECLASS.flags["DONG_DESIGNER_INSTALLED"] == 1)
 	{
 		output("\n\nNearby, the TamaniCorp Dong Designer hums with life.");
-		addButton(5,"D.Designer",useInstalledDickBox,undefined,"Dong Designer","Use the TamaniCorp Hora Series Dong Designer you found on Tarkus.");
+		addButton(btnSlot,"D.Designer",useInstalledDickBox,undefined,"Dong Designer","Use the TamaniCorp Hora Series Dong Designer you found on Tarkus.");
+		btnSlot++;
 	}
 	if(kGAMECLASS.flags["EGG_TRAINER_INSTALLED"] == 1) 
 	{
 		output("\n\nYour bright pink Egg Trainer is sitting in the corner, rumbling slightly as the heating and cleaning processes inside it percolate.");
 		//if PC has a belly full of eggs:
-		if(9999 == 0) output(" You run a hand across your swollen belly, vaguely wishing you could squat the current load out... only to get another mind-melting orgasm from the next batch going in!");
+		if(pc.hasPregnancyOfType("EggTrainerCarryTraining")) output(" You run a hand across your swollen belly, vaguely wishing you could squat the current load out... only to get another mind-melting orgasm from the next batch going in!");
 		//if PC has a faux-preg egg: 
-		else if(9999 == 0) output(" You run a hand across your [pc.belly]. You could get your Faux Preg Egg out at any time with the device, if you wanted to.");
-		addButton(6,"EggTrainer",repeatEggTrainerApproach,undefined,"Egg Trainer","Put your Egg Trainer to use.");
+		else if(pc.hasPregnancyOfType("EggTrainerFauxPreg")) output(" You run a hand across your [pc.belly]. You could get your Faux Preg Egg out at any time with the device, if you wanted to.");
+		addButton(btnSlot,"EggTrainer",repeatEggTrainerApproach,undefined,"Egg Trainer","Put your Egg Trainer to use.");
+		btnSlot++;
 	}
 	if ((kGAMECLASS.flags["COC.VR_POD_INSTALLED"] == 1) && !inMareth())
 	{
@@ -1618,7 +1706,7 @@ public function takeItem(args:Array):void
 		{
 			var sItem:ItemSlotClass = pc.inventory[i] as ItemSlotClass;
 			//if (sItem.shortName == item.shortName && sItem.quantity < sItem.stackSize)
-			if (isSameItem(sItem, item) &&  sItem.quantity < sItem.stackSize)
+			if (isSameItem(sItem, item) && sItem.quantity < sItem.stackSize)
 			{
 				if (sItem.quantity + item.quantity <= sItem.stackSize)
 				{

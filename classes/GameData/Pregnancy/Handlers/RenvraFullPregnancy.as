@@ -6,6 +6,9 @@ package classes.GameData.Pregnancy.Handlers
 	import classes.kGAMECLASS;
 	import classes.PregnancyData;
 	import classes.GameData.StatTracking;
+	import classes.GLOBAL;
+	import classes.GameData.ChildManager;
+	import classes.GameData.Pregnancy.Child;
 	
 	/**
 	 * ...
@@ -30,6 +33,8 @@ package classes.GameData.Pregnancy.Handlers
 			_pregnancyQuantityMinimum = 1;
 			_pregnancyQuantityMaximum = 4;
 			_definedAverageLoadSize = 720;
+			_pregnancyChildRace = GLOBAL.TYPE_NYREA;
+			_childMaturationMultiplier = 1.0;
 			
 			// First stage messages/reminders
 			addStageProgression(58 * 24 * 60, function(pregSlot:int):void {
@@ -136,6 +141,16 @@ package classes.GameData.Pregnancy.Handlers
 		public static function cleanupPregnancy(mother:Creature, pregSlot:int, thisPtr:BasePregnancyHandler):void
 		{
 			var pData:PregnancyData = mother.pregnancyData[pregSlot];
+			
+			ChildManager.addChild(
+				Child.NewChildWeights(
+					thisPtr.pregnancyChildRace,
+					thisPtr.childMaturationMultiplier,
+					pData.pregnancyQuantity,
+					thisPtr.childGenderWeights
+				)
+			);
+			
 			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
 			StatTracking.track("pregnancy/renvra kids", pData.pregnancyQuantity);
 			StatTracking.track("pregnancy/total births", pData.pregnancyQuantity);
@@ -164,6 +179,53 @@ package classes.GameData.Pregnancy.Handlers
 					}
 				}
 			}
+		}
+		
+		override public function nurseryEndPregnancy(mother:Creature, pregSlot:int, useBornTimestamp:uint):Child
+		{
+			var pData:PregnancyData = mother.pregnancyData[pregSlot];
+			
+			var c:Child = Child.NewChildWeights(
+				pregnancyChildRace,
+				childMaturationMultiplier,
+				pData.pregnancyQuantity,
+				childGenderWeights
+			);
+			
+			c.BornTimestamp = useBornTimestamp;
+			
+			ChildManager.addChild(c);
+			
+			mother.bellyRatingMod -= pData.pregnancyBellyRatingContribution;
+			StatTracking.track("pregnancy/renvra kids", pData.pregnancyQuantity);
+			StatTracking.track("pregnancy/total births", pData.pregnancyQuantity);
+			
+			pData.reset();
+			
+			if (!mother.hasPregnancyOfType(handlesType))
+			{
+				var effects:Array =
+				[
+					"Renvra Full Pregnancy Message 1",
+					"Renvra Full Pregnancy Message 2",
+					"Renvra Full Pregnancy Bellyrubs",
+					"Renvra Full Pregnancy Message 3",
+					"Renvra Full Pregnancy Message 4",
+					"Renvra Milky Titties Go",
+					"Renvra Full Pregnancy Message 5",
+					"Renvra Full Pregnancy Almost Due"
+				];
+				
+				for (var i:int = 0; i < effects.length; i++)
+				{
+					if (mother.hasStatusEffect(effects[i]))
+					{
+						mother.removeStatusEffect(effects[i]);
+					}
+				}
+			}
+			
+			return c;
 		}
 		
 		override public function pregBellyFragment(target:Creature, slot:int):String

@@ -38,7 +38,7 @@
 			this.version = this._latestVersion;
 			this._neverSerialize = true;
 			
-			this.short = "infected crewmemeber";
+			this.short = "infected crew member";
 			this.originalRace = "human";
 			this.a = "the ";
 			this.capitalA = "The ";
@@ -204,6 +204,8 @@
 			
 			credits = rand(200);	
 			sexualPreferences.setRandomPrefs(4 + rand(3),1);
+			
+			createStatusEffect("Force It Gender");
 			
 			_randomBustSelection = RandomInCollection("LUSTOMORPH_AUSAR", "LUSTOMORPH_GRYVAIN", "LUSTOMORPH_RASKVEL");
 			

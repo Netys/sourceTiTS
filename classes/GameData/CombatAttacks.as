@@ -871,11 +871,6 @@ package classes.GameData
 		 */
 		public static function RangedAttack(attacker:Creature, target:Creature):void
 		{
-			if (attacker.hasCombatDrone())
-			{
-				attacker.droneTarget = target;
-			}
-			
 			// Tutorial hook
 			if (target is Celise)
 			{
@@ -933,11 +928,6 @@ package classes.GameData
 		
 		public static function MeleeAttack(attacker:Creature, target:Creature):void
 		{
-			if (attacker.hasCombatDrone())
-			{
-				attacker.droneTarget = target;
-			}
-			
 			if (target is Celise)
 			{
 				output(target.customBlock);
@@ -1083,12 +1073,12 @@ package classes.GameData
 		{
 			if (rand(10) <= 2)
 			{
-				output("Tam-wolf leaps forward at " + target.a + target.uniqueName + "... but his bum leg catches, and he goes tumbling into the ground. Dammit, Tam-wolf!");
+				output("Tam-wolf leaps forward at " + target.getCombatName() + "... but his bum leg catches, and he goes tumbling into the ground. Dammit, Tam-wolf!");
 			}
 			//Attack!
 			else
 			{
-				output("<i>“ENEMY DETECTED, MISTRESS TAM! I WILL DEFEND YOU,”</i> Tam-wolf loudly announces as he lunges at " + target.a + target.uniqueName + ". He hits!");
+				output("<i>“ENEMY DETECTED, MISTRESS TAM! I WILL DEFEND YOU,”</i> Tam-wolf loudly announces as he lunges at " + target.getCombatName() + ". He hits!");
 				var d:Number = attacker.untypedDroneDamage();
 				var dmg:TypeCollection = new TypeCollection( { kinetic: d * 0.9 }, DamageFlag.PENETRATING);
 
@@ -1113,9 +1103,48 @@ package classes.GameData
 			if (attacker is PlayerCharacter) output(" Good boy!");
 		}
 		
+		public static function SiegwulfeAttack(attacker:Creature, target:Creature):void
+		{
+			var ownerName:String = attacker.getCombatName();
+			if(attacker is PlayerCharacter) ownerName = attacker.short;
+			
+			var d:Number = attacker.untypedDroneDamage() + 1 + rand(2);
+			var dmg:TypeCollection;
+			var damageResult:DamageResult;
+			
+			if(attacker is PlayerCharacter)
+			{
+				if(kGAMECLASS.chars["WULFE"].isBimbo())
+				{
+					output("“Don’t you worry your pretty head, " + attacker.mf("master", "mistress") + "!” " + kGAMECLASS.chars["WULFE"].short + " giggles, prancing forward with her massive milk-tanks on display. “I’ll, like, distract ‘em and stuff!” She sure does, bouncing around with jiggling tits and a wiggling ass, putting herself between you and " + target.getCombatName() + ".");
+					
+					dmg = new TypeCollection( { tease: 20 } );
+					damageResult = applyDamage(dmg, kGAMECLASS.chars["WULFE"], target, "suppress");
+					output("\n");
+					output(CombatContainer.teaseReactions(damageResult.lustDamage, target));
+				}
+				else
+				{
+					output(kGAMECLASS.chars["WULFE"].short + " brandishes her hardlight claws, putting herself between you and " + target.getCombatName() + ". “Don’t worry, " + attacker.mf("master", "mistress") + ", I’ll protect you!” She lunges forward, sweeping her blades across her target.");
+					
+					dmg = new TypeCollection( { kinetic: d * 0.9 }, DamageFlag.PENETRATING);
+					damageResult = applyDamage(dmg, attacker, target, "suppress");
+				}
+			}
+			else
+			{
+				output(ownerName + "’s Siegwulfe brandishes its hardlight claws and lunges forward, sweeping its blades at " + ((target is PlayerCharacter) ? "you!" : (target.getCombatName() + ".")));
+				
+				dmg = new TypeCollection( { kinetic: d * 0.9 }, DamageFlag.PENETRATING);
+				damageResult = applyDamage(dmg, attacker, target, "suppress");
+			}
+
+			outputDamage(damageResult);
+		}
+		
 		public static function ACECannonAttack(attacker:Creature, target:Creature):void
 		{
-			output("The gun on " + (attacker is PlayerCharacter ? "your" : possessive(attacker.getCombatName())) +" shoulder tracks towards " + (target is PlayerCharacter ? "you" : target.getCombatName()) +", charging up with power. As " + (attacker is PlayerCharacter ? target.getCombatName() : attacker.getCombatName()) +" moves, it works on its own, targeting and firing at " + (target is PlayerCharacter ? "you" : "[target.combatName]") +".");
+			output("The gun on " + (attacker is PlayerCharacter ? "your" : possessive(attacker.getCombatName())) +" shoulder tracks towards " + (target is PlayerCharacter ? "you" : target.getCombatName()) +", charging up with power. As " + (attacker is PlayerCharacter ? target.getCombatName() : attacker.getCombatName()) +" moves, it works on its own, targeting and firing at " + (target is PlayerCharacter ? "you" : target.getCombatName()) +".");
 			
 			if (target.reflexes() / 2 + rand(20) + 1 >= 35)
 			{
@@ -1132,10 +1161,10 @@ package classes.GameData
 		
 		public static function TamedVarmintAttack(attacker:Creature, target:Creature):void
 		{
-			if (attacker is PlayerCharacter) output("Your pet varmint hoots and hisses at [target.combatName],");
-			else output("[attacker.CombatName] pet varmint hoots and hisses at you,");
-			if (attacker.isGrappled()) output(" pacing about defensively near " + (attacker is PlayerCharacter ? "you" : "[attacker.combatHimHer]"));
-			else output(" standing protectively in front of " + (attacker is PlayerCharacter ? "you" : "[attacker.combatHimHer]"));
+			if (attacker is PlayerCharacter) output("Your pet varmint hoots and hisses at " + target.getCombatName() + ",");
+			else output(attacker.getCombatName() + "’s pet varmint hoots and hisses at you,");
+			if (attacker.isGrappled()) output(" pacing about defensively near " + (attacker is PlayerCharacter ? "you" : attacker.getCombatPronoun("o")));
+			else output(" standing protectively in front of " + (attacker is PlayerCharacter ? "you" : attacker.getCombatPronoun("o")));
 			output(" and raising its spiky hackles.");
 			if (rand(10) <= 2)
 			{
@@ -1143,7 +1172,7 @@ package classes.GameData
 			}
 			else
 			{
-				if (attacker is PlayerCharacter) output(" It lunges towards [target.combatName], shrieking like a banshee. Its fangs sink into your enemy, rending viciously at [target.combatHimHer]!");
+				if (attacker is PlayerCharacter) output(" It lunges towards " + target.getCombatName() + ", shrieking like a banshee. Its fangs sink into your enemy, rending viciously at " + target.getCombatPronoun("o") + "!");
 				else output(" Shrieking like a banshee, it lunges towards you and its fangs sink in, rending at you viciously!");
 				applyDamage(attacker.droneDamage(), attacker, target, "minimal");
 			}
@@ -1154,7 +1183,7 @@ package classes.GameData
 			if (attacker.hasStatusEffect("Disarmed"))
 			{
 				if (attacker is PlayerCharacter) output("You try to attack until you remember that you’ve been disarmed!");
-				else output("[attacker.CombatName] scrabbles about, trying to find [attacker.combatHisHer] missing weapon.");
+				else output(attacker.getCombatName() + " scrabbles about, trying to find " + attacker.getCombatPronoun("pa") + " missing weapon.");
 				return;
 			}
 			
@@ -1166,7 +1195,7 @@ package classes.GameData
 			if (attacker.hasStatusEffect("Disarmed"))
 			{
 				if (attacker is PlayerCharacter) output("You try to attack until you remember that you’ve been disarmed!");
-				else output("[attacker.CombatName] scrabbles about, trying to find [attacker.combatHisHer] missing weapon.");
+				else output(attacker.getCombatName() + " scrabbles about, trying to find " + attacker.getCombatPronoun("pa") + " missing weapon.");
 				return;
 			}
 			
@@ -1247,11 +1276,6 @@ package classes.GameData
 		public static var PowerStrike:SingleCombatAttack;
 		private static function PowerStrikeImpl(fGroup:Array, hGroup:Array, attacker:Creature, target:Creature):void
 		{
-			if (attacker.hasCombatDrone())
-			{
-				attacker.droneTarget = target;
-			}
-			
 			if (combatMiss(attacker, target))
 			{
 				if (target.customDodge.length > 0) output(target.customDodge);
@@ -1315,7 +1339,7 @@ package classes.GameData
 		{
 			if (attacker is PlayerCharacter) output("You toss a bundle of explosives in the direction of [target.combatName]!");
 			else if (target is PlayerCharacter) output("[attacker.CombatName] throws a bundle of explosives in your direction!");
-			else output("[attacker.CombatName] throws a bundle of explosives in " + target.a + possessive(target.uniqueName) + " direction!");
+			else output("[attacker.CombatName] throws a bundle of explosives in " + possessive(target.getCombatName()) + " direction!");
 			
 			var d:int = 15 + (attacker.level * 4) + attacker.intelligence();
 			var damage:TypeCollection = damageRand(new TypeCollection( { burning: d } ), 15);
