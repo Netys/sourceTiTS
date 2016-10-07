@@ -2775,10 +2775,10 @@ private function amilyMenu(displayOutput:Boolean = true):void {
 		addButton(0, "Appearance", amilyAppearance, undefined, "Appearance", "Examine Amily's appearance.");
 		addButton(1, "Talk", talkToAmilyCamp, undefined, "Talk", "Discuss with Amily about something");
 		addButton(2, "Make Love", fuckTheMouseBitch, undefined, "Sex", "Proposition Amily for some sexy-times.");
-		addButton(3, "Give Present", giveAmilyAPresent, "Give Item", "Give Amily something to give her clothes or possibly alter how she looks.");
+		addButton(3, "Give Present", giveAmilyAPresent, undefined, "Give Item", "Give Amily something to give her clothes or possibly alter how she looks.");
 		addButton(4, (amily.hasFur() ? "Defur" : "Refuzz"), (amily.hasFur() ? amilyDefurryOfferAtCamp: refuzzAmily), undefined, (amily.hasFur() ? "Defur" : "Refuzz"), (amily.hasFur() ? "Give Amily something to remove her fur." : "Give Amily something to re-grow her fur."));
 		//If no fight yet, have option to introduce Urta and Amily
-		if (gender(pc) > 0 && flags["COC.AMILY_FOLLOWER"] == 1 && flags["COC.AMILY_VISITING_URTA"] == undefined && (flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"] >= 5 || urtaLove()))// && !kGAMECLASS.urtaQuest.urtaBusy())
+		if (gender(pc) > 0 && flags["COC.AMILY_FOLLOWER"] == 1 && flags["COC.AMILY_VISITING_URTA"] == undefined && (flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"] >= 5 || urtaLove()) && !urtaBusy())
 		{
 			if (displayOutput) output("<b>You could take Amily on a date to Tel'Adre, and perhaps even introduce her to Urta!</b>\n\n");
 			addButton(5, "Date", dateNightFirstTime, undefined, "Date", "Take Amily on a date to Tel'Adre?");
@@ -5287,7 +5287,7 @@ public function pcBirthsAmilysKidsQuestVersion(pregSlot:int):void
 	
 	// tou -2
 	pc.slowStatGain("p", -1);
-	pc.slowStatGain("r", 3);
+	pc.slowStatGain("r", 4);
 	pc.slowStatGain("l", 1);
 	// sen +0.5
 	

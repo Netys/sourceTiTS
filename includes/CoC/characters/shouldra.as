@@ -18,7 +18,7 @@ public function shouldraCombatStart():void {
 	CombatManager.setHostileCharacters(shouldra);
 	CombatManager.victoryScene(defeatDannyPhantom);
 	CombatManager.lossScene(loseToShouldra);
-	CombatManager.displayLocation("SHOULDRA");
+	CombatManager.displayLocation(shouldra.short.toUpperCase());
 	CombatManager.beginCombat();
 }
 

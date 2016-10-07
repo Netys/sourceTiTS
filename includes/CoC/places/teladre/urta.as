@@ -131,7 +131,7 @@ public function urtaLove(love:Number = 0):Boolean {
 public function urtaAvailableForSex():Boolean { return urtaFuckbuddy() && scyllaAction != SCYLLA_ACTION_FUCKING_URTA && int(flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"]) == 0; }
 
 public function urtaFuckbuddy():Boolean { //Returns true if Urta is either the player's fuckbuddy or lover
-	if (/*kGAMECLASS.urtaQuest.urtaBusy() ||*/ flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"] == -1) return false;
+	if (urtaBusy() || flags["COC.URTA_COMFORTABLE_WITH_OWN_BODY"] == -1) return false;
 	if (urtaJustFriends()) return false;
 	return (flags["COC.TIMES_FUCKED_URTA"] > 0);
 }
