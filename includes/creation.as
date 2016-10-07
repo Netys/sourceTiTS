@@ -21,7 +21,8 @@ public function hasIllegalInput(sText:String = ""):Boolean
 	// Cheat codes check
 	if(chars["PC"].short.length >= 1)
 	{
-		switch(sText)
+		if(sText == "forcenext") mainGameMenu();
+		else switch(sText)
 		{
 			// Gameplay/Debug
 			case "furfag": eventQueue.push(Cheats.infiniteItemUse); break;
@@ -34,9 +35,8 @@ public function hasIllegalInput(sText:String = ""):Boolean
 			case "bull": eventQueue.push(Cheats.TryTreatmentHaxBull); break;
 			case "cumcow": eventQueue.push(Cheats.TryTreatmentHaxCumCow); break;
 			case "amazon": eventQueue.push(Cheats.TryTreatmentHaxAmazon); break;
+			case "keyofthetwillight": eventQueue.push(Cheats.toggleKeyOfTheTwillight); break;
 		}
-		else if(sText == "keyofthetwillight") eventQueue.push(Cheats.toggleKeyOfTheTwillight);
-		else if(sText == "forcenext") mainGameMenu();
 	}
 	
 	//return r.test(sText);
