@@ -136,7 +136,7 @@ public function EmberTimePassedNotify():void
 		//Reset lust counter if not max lust'ed
 		else flags["COC.EMBER_LUST_BITCHING_COUNTER"] = undefined;
 	}
-	if (hours == 0) {
+	if (hours == 0 && minutes == 0) {
 		if (!pc.isPregnant()) flags["COC.EMBER_BITCHES_ABOUT_PREGNANT_PC"] = 0;
 		flags["COC.DRANK_EMBER_BLOOD_TODAY"] = 0;
 	}

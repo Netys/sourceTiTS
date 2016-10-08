@@ -67,7 +67,7 @@ public function UrtaTimePassedNotify():void
 		flags["COC.URTA_INCUBATION_EGGS_TYPE"] = undefined;
 	}
 	
-	if (hours == 0) {
+	if (hours == 0 && minutes == 0) {
 		//if (Flag("COC.URTA_TIME_SINCE_LAST_CAME") == 0) IncrementFlag("COC.URTA_CUM_NO_CUM_DAYS");
 		//else flags["COC.URTA_CUM_NO_CUM_DAYS"] = 0;
 		if (flags["COC.URTA_PC_AFFECTION_COUNTER"] > 0 && flags["COC.URTA_PC_AFFECTION_COUNTER"] < 30) {

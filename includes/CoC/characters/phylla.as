@@ -78,7 +78,7 @@ public function PhyllaTimePassedNotify():void
 	if (minutes != 0) return;
 	//trace("\nPhylla time change: Time is " + model.time.hours + ", incubation: " + pregnancy.incubation + ", event: " + pregnancy.event);
 	if (flags["COC.PHYLLA_EGG_LAYING"] > 0 && rand(5) == 0 && int(flags["COC.ANT_KIDS"]) < 5000) IncrementFlag("COC.ANT_KIDS");
-	if (hours == 0) {
+	if (hours == 0 && minutes == 0) {
 		//The pregnancyStore doesn't handle Phylla's ant eggs because they are continuous. The regular egg production is all handled here.
 		if (flags["COC.PHYLLA_EGG_LAYING"] > 0) IncrementFlag("COC.DAYS_PHYLLA_HAS_SPENT_BIRTHING");
 		if (phyllaWaifu()) IncrementFlag("COC.DAYS_PHYLLA_IN_CAMP");

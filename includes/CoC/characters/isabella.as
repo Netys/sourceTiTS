@@ -36,7 +36,7 @@ public function timeChange():Boolean
 	if (flags["COC.ISABELLA_ACCENT_TRAINING_COOLDOWN"] > 1) {
 		flags["COC.ISABELLA_ACCENT_TRAINING_COOLDOWN"]--;
 	}
-	if (hours == 0) {
+	if (hours == 0 && minutes == 0) {
 		if (flags["COC.FOUND_ISABELLA_AT_FARM_TODAY"] == 1) flags["COC.FOUND_ISABELLA_AT_FARM_TODAY"] = 0;
 		if (isabellaFollower() && flags["COC.ISABELLA_MILKED_YET"] >= 0 && int(flags["COC.FOLLOWER_AT_FARM_ISABELLA"]) == 0) {
 			flags["COC.ISABELLA_MILKED_YET"]++;

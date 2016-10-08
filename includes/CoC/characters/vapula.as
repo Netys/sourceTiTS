@@ -7,7 +7,7 @@ import classes.Engine.Utility.*;
 
 public function VapulaTimePassedNotify():void
 {
-	if (hours == 0) {
+	if (hours == 0 && minutes == 0) {
 		if (vapulaSlave() && int(flags["COC.FOLLOWER_AT_FARM_VAPULA"]) == 0) {
 			if (int(flags["COC.VAPULA_HAREM_FUCK"]) == 0) IncrementFlag("COC.VAPULA_DAYS_SINCE_FED");
 			else flags["COC.VAPULA_DAYS_SINCE_FED"] = 0;

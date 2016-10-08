@@ -859,7 +859,7 @@ public function LynetteTimePassedNotify():void {
 	flags["COC.SALON_PAID"] = 0;
 	if (flags["COC.LYNNETTE_PREGNANCY_CYCLE"] == undefined) flags["COC.LYNNETTE_PREGNANCY_CYCLE"] = 0;
 	
-	if (hours == 0) {
+	if (hours == 0 && minutes == 0) {
 		if (flags["COC.LYNNETTE_CARRYING_COUNT"] == 0 || flags["COC.LYNNETTE_PREGNANCY_CYCLE"] != 4)
 		{
 			flags["COC.LYNNETTE_PREGNANCY_CYCLE"]++;
