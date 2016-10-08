@@ -2286,14 +2286,14 @@ private function vixenAndCreamPart1(teased:Boolean = false):void {
 	output("\n\n");
 	if (teased) output("You want to have a few drinks");
 	else output("You're here to enjoy a few drinks and chat");
-	output(" with the love of your life ");
-	//if (urtaPregs.urtaKids() > 0) { 
-		//output("and the "); 
-		//if (flags["COC.URTA_TIMES_BIRTHED"] > 0) output("mother");
-		//if (flags["COC.URTA_TIMES_BIRTHED"] > 0 && flags["COC.URTA_TIMES_PC_BIRTHED"] > 0) output(" and ");
-		//if (flags["COC.URTA_TIMES_PC_BIRTHED"] > 0) output("father");
-		//output(" of your children");
-	//}
+	output(" with the love of your life");
+	if (urtaKids() > 0) { 
+		output(" and the "); 
+		if (flags["COC.URTA_TIMES_BIRTHED"] > 0) output("mother");
+		if (flags["COC.URTA_TIMES_BIRTHED"] > 0 && flags["COC.URTA_TIMES_PC_BIRTHED"] > 0) output(" and ");
+		if (flags["COC.URTA_TIMES_PC_BIRTHED"] > 0) output("father");
+		output(" of your children");
+	}
 	output(". You deliberately announce this out loud and cause her to flush as people look over. In response, she digs her claws pointedly into your back, though not hard enough to actually hurt.");
 	//End of dynamic text
 	output("\n\n\"<i>Alright, </i>later<i> then - but you better deliver. I'll go get us a more 'private' booth in case you change your mind. And you're paying!</i>\" She pokes out her tongue and you go to fetch the drinks. Urta requests a pitcher of beer and a bottle of 'Crafter's Stamp' - clearly she's making you pay for high end whisky for holding out on her. Just like whisky, however, you know the taste is better the longer you wait.");

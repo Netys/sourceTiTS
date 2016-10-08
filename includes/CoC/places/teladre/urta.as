@@ -388,7 +388,7 @@ public function urtaBarApproach():void {
 			else addButton(1, "Suck Off", blowUrtaUnderTheTableLuv, null, "Suck Off", "Suck Urta's dick until she cums!");
 			
 			addButton(2, "Eat Out", eatUrtaOutNomNomPussy, null, "Eat Out", "Get a taste of Urta's vagina! (And optionally, drink a glass of her cum.)");
-			if (pc.hasCock() && !pc.isTaur()) addButton(3, "Vixen & Cream", vixenAndCreamPart1, false, "Vixen & Cream", "Try something special! \n\nNOTE: This is very long! Don't select this if you have ADHD.");
+			if (pc.hasCock() && !pc.isTaur()) addButton(3, "Vixen&Cream", vixenAndCreamPart1, false, "Vixen & Cream", "Try something special! \n\nNOTE: This is very long! Don't select this if you have ADHD.");
 			
 			addButton(14, "Leave", barTelAdre);
 			return;
@@ -1396,7 +1396,7 @@ private function urtaDiscussionTeaseAfterRomance():void {
 		addButton(0, "Her Place", goBackToUrtasForLuvinz, null, "Her Place", "Go to Urta's apartment for sex.");
 		addButton(1, "Suck Off", blowUrtaUnderTheTableLuv, null, "Suck Off", "Suck Urta's dick until she cums!");
 		addButton(2, "Eat Out", eatUrtaOutNomNomPussy, null, "Eat Out", "Get a taste of Urta's vagina! (And optionally, drink a glass of her cum.)");
-		if (pc.hasCock() && !pc.isTaur()) addButton(3, "Vixen & Cream", vixenAndCreamPart1, true, "Vixen & Cream", "Try something special! \n\nNOTE: This is very long! Don't select this if you have ADHD.");
+		if (pc.hasCock() && !pc.isTaur()) addButton(3, "Vixen&Cream", vixenAndCreamPart1, true, "Vixen & Cream", "Try something special! \n\nNOTE: This is very long! Don't select this if you have ADHD.");
 		//if (pregnancy.type == PregnancyStore.PREGNANCY_PLAYER) removeButton(1); //Disables button.
 	}
 	addButton(14, "Leave", barTelAdre);
