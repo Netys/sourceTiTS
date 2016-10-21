@@ -750,6 +750,11 @@ package classes.GameData
 			a.push(AFL);
 		}
 		
+		public static function regsterAttack(attack:SingleCombatAttack):void
+		{
+			a.push(attack);
+		}
+		
 		/**
 		 * This is a SINGLE ranged attack with no "before" or "after" stuff.
 		 * It does not call or repeat itself- this is a single application of damage

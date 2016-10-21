@@ -1,5 +1,11 @@
 import classes.Characters.CoC.CoCArian;
+import classes.Creature;
+import classes.Engine.Combat.DamageTypes.TypeCollection;
+import classes.Engine.Combat.applyDamage;
+import classes.Engine.Combat.damageRand;
 import classes.GLOBAL;
+import classes.GameData.CombatAttacks;
+import classes.GameData.SingleCombatAttack;
 import classes.Items.Miscellaneous.*;
 import classes.Items.Transformatives.*;
 import classes.Items.Transformatives.CoCEggs.*;
@@ -7,6 +13,7 @@ import classes.ItemSlotClass;
 import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
+import classes.kGAMECLASS;
 
 // ARIAN_FOLLOWER:int = 933;
 // ARIAN_PARK:int = 934; //-1 = disabled, 1 = helped.
@@ -3549,6 +3556,58 @@ private function arianSpellPlace(spell:String):void {
 public function clearTalisman():void {
 	pc.removeKeyItem("Arian's Talisman");
 	pc.createKeyItem("Arian's Talisman", 0, 0, 0, 0, "Not charged now.");
+}
+
+public static var AriansShield:SingleCombatAttack;
+private static function AriansShieldImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
+{
+	output("You gather energy in your Talisman and unleash the spell contained within. A barrier of light engulfs you, before turning completely transparent. Your defense has been increased.");
+	kGAMECLASS.clearTalisman();
+	attacker.createStatusEffect("Shielding", 0, 0, 0, 0, false, "Icon_DefUp", "Arian's shield is protecting you!", true);
+}
+
+public static var AriansImmolation:SingleCombatAttack;
+private static function AriansImmolationImpl(fGroup:/*Creature*/Array, hGroup:/*Creature*/Array, attacker:Creature, target:Creature):void
+{
+	output("You gather energy in your Talisman and unleash the spell contained within. A wave of burning flames gathers around " + target.a + target.uniqueName + ", slowly burning " + target.mfn("him", "her", "it") + ". ");
+	kGAMECLASS.clearTalisman();
+	
+	var d:int = (75 + attacker.intelligence() + rand(attacker.intelligence())) * attacker.spellMod();
+	var damage:TypeCollection = damageRand(new TypeCollection( { burning: d } ), 15);
+	
+	applyDamage(damage, attacker, target);
+	if (!target.hasStatusEffect("Burning")) target.createStatusEffect("Burning", Math.ceil(2 + attacker.intelligence() / 25), Math.ceil(target.maxHP()) * 0.06, 0, 0, false, "DefenseDown", "Reduces defense by five points and causes damage over time.", true);
+	else {
+		target.addStatusValue("Burning", 1, Math.ceil(2 + attacker.intelligence() / 25));
+		target.setStatusValue("Burning", 2, Math.max(Math.ceil(target.maxHP()) * 0.06, target.statusEffectv2("Burning")));
+	}
+	
+	output(kGAMECLASS.onSpellCast(attacker));
+}
+{
+	AriansShield = new SingleCombatAttack();
+	AriansShield.ButtonName = "Talisman";
+	AriansShield.ExtendedDisplayabilityCheck = function():Boolean {
+				return kGAMECLASS.pc.keyItemv1("Arian's Talisman") == 1;
+			}
+	AriansShield.TooltipTitle = "Arian's Shield";
+	AriansShield.TooltipBody = "Increases defense for the duration of the battle.";
+	AriansShield.Implementor = AriansShieldImpl;
+	AriansShield.SetAttackTypeFlags(SingleCombatAttack.ATF_MAGIC);
+	AriansShield.RequiresTarget = true;
+	CombatAttacks.regsterAttack(AriansShield);
+	
+	AriansImmolation = new SingleCombatAttack();
+	AriansImmolation.ButtonName = "Talisman";
+	AriansImmolation.ExtendedDisplayabilityCheck = function():Boolean {
+				return kGAMECLASS.pc.keyItemv1("Arian's Talisman") == 2;
+			}
+	AriansImmolation.TooltipTitle = "Arian's Immolation";
+	AriansImmolation.TooltipBody = "Inflicts heavy burning damage.";
+	AriansImmolation.Implementor = AriansImmolationImpl;
+	AriansImmolation.SetAttackTypeFlags(SingleCombatAttack.ATF_MAGIC);
+	AriansImmolation.RequiresTarget = true;
+	CombatAttacks.regsterAttack(AriansImmolation);
 }
 
 //Follower Stuff:

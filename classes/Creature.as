@@ -342,6 +342,15 @@
 				r.kinetic.damageValue += 10;
 				r.corrosive.damageValue += 10;
 			}
+			if (hasStatusEffect("Shielding"))
+			{
+				r.kinetic.damageValue += Math.max(50 - r.kinetic.damageValue, 10);
+				r.electric.damageValue += Math.max(50 - r.electric.damageValue, 10);
+				r.burning.damageValue += Math.max(50 - r.burning.damageValue, 10);
+				r.freezing.damageValue += Math.max(50 - r.freezing.damageValue, 10);
+				r.corrosive.damageValue += Math.max(50 - r.corrosive.damageValue, 10);
+				r.poison.damageValue += Math.max(50 - r.poison.damageValue, 10);
+			}
 			
 			return r;
 		}
@@ -2902,7 +2911,7 @@
 			if(msg.length > 0) kGAMECLASS.eventBuffer += msg;
 			
 			lustRaw = 0;
-			if(!hasPerk("Amazonian Endurance")) energy(-5);
+			if(!hasPerk("Amazonian Endurance") && !kGAMECLASS.inMareth()) energy(-5);
 			minutesSinceCum = 0;
 			timesCum++;
 		}

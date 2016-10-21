@@ -18,7 +18,7 @@ package classes.Characters.CoC
 			this._neverSerialize = true;
 			
 			this.short = "Urta";
-			this.originalRace = "fox-morph";
+			this.originalRace = "vulpine-morph";
 			this.a = "";
 			this.capitalA = "";
 			this.long = "";
@@ -68,18 +68,13 @@ package classes.Characters.CoC
 			this.hairColor = "gray";
 			
 			this.skinType = GLOBAL.SKIN_TYPE_FUR;
-			this.eyeType = GLOBAL.TYPE_HUMAN;
+			this.eyeType = GLOBAL.TYPE_VULPINE;
 			this.tallness = 71;
 			this.hairLength = 12;
 			this.hairType = GLOBAL.HAIR_TYPE_REGULAR;
 			this.beardLength = 0;
 			this.beardStyle = 0;
-			this.skinType = GLOBAL.TYPE_HUMAN;
-			this.skinFlags = new Array();
-			this.faceType = GLOBAL.TYPE_HUMAN;
-			this.faceFlags = new Array();
-			this.tongueType = GLOBAL.TYPE_HUMAN;
-			this.tongueFlags = [GLOBAL.FLAG_LONG, GLOBAL.FLAG_PREHENSILE];
+			this.skinFlags = [GLOBAL.FLAG_FURRED, GLOBAL.FLAG_FLUFFY];
 			this.lipMod = 1;
 			
 			this.legType = GLOBAL.TYPE_VULPINE;
@@ -104,7 +99,7 @@ package classes.Characters.CoC
 			this.cocks[0].cLengthRaw = 20;
 			this.cocks[0].cThicknessRatioRaw = 0.9; // 3"
 			this.balls = 2;
-			this.ballSizeRaw = 4 * Math.PI;
+			this.ballSizeRaw = 3 * Math.PI;
 			this.cumMultiplierRaw = 80;
 			
 			this.vaginas = [];

@@ -1167,7 +1167,8 @@ private function condomlessUrtaInHouseSmex():void {
 	if (pc.hasVagina()) addButton(1, "Fill Me Up", fillMeUpPleaseUrta);
 	if (pc.hasGenitals() && pc.isNaga()) addButton(2, "Tail Fun", nagaOnUrtaMess);
 	
-	addButton(14,"Back", goBackToUrtasForLuvinz);
+	if (flags["COC.URTA_PC_LOVE_COUNTER"] > 0) addButton(14,"Back", urtaHomeLuvLuvinsMenu);
+	else addButton(14,"Back", goBackToUrtasForLuvinzII);
 }
 
 //[Peg Her Ass]

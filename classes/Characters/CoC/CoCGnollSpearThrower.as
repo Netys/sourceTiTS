@@ -193,6 +193,11 @@ package classes.Characters.CoC
 			RandomInCollection(hyenaPhysicalAttack, hyenaJavelinAttack, hyenaSnapKicku, hyenaArousalAttack)(target);
 		}
 		
+		public function additionalCombatMenuEntries():void
+		{
+			if(short == "alpha gnoll") kGAMECLASS.urtaAdditionalCombatMenuEntries();
+		}
+		
 		private function hyenaPhysicalAttack(target:Creature):void {
 			var damage:Number = 0;
 			//Blind dodge change
