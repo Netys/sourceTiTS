@@ -38,6 +38,7 @@ public function appearance(forTarget:Creature):void
 	showName("\nAPPEARANCE");
 	author("");
 	clearGhostMenu();
+	if(debug) addGhostButton(13, ("Debug: " + (debug ? "ON" : "OFF")), Cheats.toggleDebug, undefined, "Toggle Debug", "Turn debug mode off.");
 	addGhostButton(14, "Back", pcAppearance);
 	
 	var rando:int = 0;
@@ -803,6 +804,24 @@ public function appearance(forTarget:Creature):void
 			}
 		}
 		else output2(".");
+		// Neck mane stuff
+		if (target.hasPerk("Regal Mane"))
+		{
+			output2(" Above your shoulders and around your neck grows a");
+			switch(target.perkv1("Regal Mane"))
+			{
+				case GLOBAL.FLAG_FURRED: output2(" mane of fluffy, " + target.furColor + " fur"); break;
+				case GLOBAL.FLAG_SCALED: output2(" retractable frill covered in " + target.scaleColor + " scales"); break;
+				case GLOBAL.FLAG_CHITINOUS: output2(" collar of spiky, " + target.chitinColor() + " chitin"); break;
+				case GLOBAL.FLAG_GOOEY: output2(" flexible shell of smooth, " + target.skinTone + " goo"); break;
+				case GLOBAL.FLAG_FEATHERED: output2(" mane of poofy, " + target.furColor + " feathers"); break;
+				case GLOBAL.FLAG_SPIKED: output2(" collar of sinister-looking spikes"); break;
+				case GLOBAL.FLAG_TENDRIL: output2(" wreath of plant-like vines"); break;
+				case GLOBAL.FLAG_AMORPHOUS: output2("n amorphous brace of translucent slime"); break;
+				default: output2(" magnificent mane"); break;
+			}
+			output2(", making you appear quite royal.");
+		}
 		// Fluff stuff
 		if (target.hasSkinFlag(GLOBAL.FLAG_FLUFFY))
 		{
@@ -964,6 +983,17 @@ public function appearance(forTarget:Creature):void
 		{
 			if(!target.hasFur() || !target.hasFeathers()) output2(" Your arms are incredibly smooth with a tendency to glisten in the light.");
 			output2(" Your webbed hands are very amphibious in appearance. Each of your elongated fingers are capped with a round bulb, capable of sticking to flat surfaces like a suction cup.");
+		}
+		else if(target.armType == GLOBAL.TYPE_OVIR) 
+		{
+			output2(" Your arms and hands appear very human");
+			if(target.skinType == GLOBAL.SKIN_TYPE_SCALES || target.hasArmFlag(GLOBAL.FLAG_SCALED) || target.hasArmFlag(GLOBAL.FLAG_GOOEY))
+			{
+				output2(", if not for them being covered in");
+				if(target.hasArmFlag(GLOBAL.FLAG_GOOEY)) output2(" gooey");
+				output2(" " + target.scaleColor + " scales, giving them a subtle reptilian feel");
+			}
+			output2(".");
 		}
 		else if(target.armType == GLOBAL.TYPE_FLOWER)
 		{

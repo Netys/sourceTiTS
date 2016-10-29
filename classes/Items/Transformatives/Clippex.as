@@ -5,10 +5,12 @@
 	import classes.ItemSlotClass;
 	import classes.GLOBAL;
 	import classes.Creature;
+	import classes.StorageClass;
 	import classes.kGAMECLASS;	
 	import classes.Characters.PlayerCharacter;
 	import classes.GameData.TooltipManager;
 	import classes.StringUtil;
+	import classes.Engine.Interfaces.*;
 	
 	public class Clippex extends ItemSlotClass
 	{
@@ -81,36 +83,38 @@
 			}
 			return false;
 		}
-		// Lust increase: 
-		public function itemClippexLustIncrease():void
+		
+		// Lust increase:
+		public static function ClippexLustIncrease(deltaT:uint, doOut:Boolean, target:Creature, effect:StorageClass):void
 		{
-			var target:Creature = kGAMECLASS.chars["PC"];
+			// Number of potential lust increases that could occur this update
+			var numProcs:int = Math.floor((Math.min(deltaT, effect.minutesLeft) + effect.value4) / 30);
+			var firstProcOffset:int = kGAMECLASS.minutes + (30 - effect.value4);
 			
-			if(target.getStatusMinutes("Clippex Gel") % 30 != 0) return;
+			// Remainder of time to next potential proc stashed in v4
+			effect.value4 = (effect.value4 + deltaT) - (numProcs * 30);
 			
-			// Each half hour, 0.4 chance to increase lust.
-			if(rand(5) < 2)
+			if (numProcs == 0) return;
+			
+			for (var i:int = 0; i < numProcs; i++)
 			{
-				kGAMECLASS.eventBuffer += "\n\n" + kGAMECLASS.logTimeStamp("passive") + " <u>The Clippex drug has an effect....</u>";
+				if (rand(5) < 2)
+				{
+					kGAMECLASS.eventBuffer += "\n\n" + kGAMECLASS.logTimeStamp("passive", firstProcOffset + (30 * i)) + " <u>The Clippex drug has an effect....</u>";
+					kGAMECLASS.eventBuffer += "\n\nYour breath catches in your throat as";
+					if(!target.isChestExposed()) kGAMECLASS.eventBuffer += " your [pc.nipples] rub against your [pc.upperGarment]";
+					else kGAMECLASS.eventBuffer += " sensation twinges and nibbles through your [pc.nipple]";
+					kGAMECLASS.eventBuffer += ". They really are very tender right now...";
 				
-				kGAMECLASS.eventBuffer += "\n\nYour breath catches in your throat as";
-				if(!target.isChestExposed()) kGAMECLASS.eventBuffer += " your [pc.nipples] rub against your [pc.upperGarment]";
-				else kGAMECLASS.eventBuffer += " sensation twinges and nibbles through your [pc.nipple]";
-				kGAMECLASS.eventBuffer += ". They really are very tender right now...";
-				
-				target.lust(5);
-				
-				//kGAMECLASS.clearMenu();
-				//kGAMECLASS.addButton(0, "Next", kGAMECLASS.mainGameMenu);
+					target.lust(5);
+				}
 			}
 		}
-		public function itemClippexTFPlus():void
+		
+		// This only triggers during removal afaik, so deltaT is kinda irrelevent
+		public static function ClippexTF(deltaT:uint, doOut:Boolean, target:Creature, effect:StorageClass):void
 		{
-			itemClippexTF(true);
-		}
-		public function itemClippexTF(isPresistentTF:Boolean = false):void
-		{
-			var target:Creature = kGAMECLASS.chars["PC"];
+			var isPlus:Boolean = effect.value2 > 1;
 			
 			var msg:String = "";
 			var totalTFs:Number = 2;
@@ -138,25 +142,29 @@
 			if(target.nippleLength(smallestTitIndex) < 3)
 				TFList.push(2);
 			//#3 If nipples 3”, morph to nipple cunts
-			if(isPresistentTF && target.nippleLength(smallestTitIndex) >= 1 && nonCuntNipIndex >= 0 && nonLippleNipIndex >= 0)
+			if(isPlus && target.nippleLength(smallestTitIndex) >= 1 && nonCuntNipIndex >= 0 && nonLippleNipIndex >= 0)
 				TFList.push(3);
 			//#4 If nipple cunts, morph to nipple mouths
-			if(isPresistentTF && nonCuntNipIndex < 0 && nonLippleNipIndex >= 0)
+			if(isPlus && nonCuntNipIndex < 0 && nonLippleNipIndex >= 0)
 				TFList.push(4);
 			
 			// TF texts
-			msg += "\n\n<u>The Clippex drug has an effect....</u>";
+			msg += "\n\n" + kGAMECLASS.logTimeStamp("passive") + " <u>The Clippex drug has an effect....</u>";
+			var changed:Boolean = false;
 			
 			while(totalTFs > 0)
 			{
-				msg += "\n\n";
 				//Pick a TF	
 				x = rand(TFList.length);
 				select = TFList[x];
 				//Cull 'dat TF from the list.
 				TFList.splice(x,1);
+				
+				if(select == 0 && changed) { /* No new line */ }
+				else msg += "\n\n";
+				
 				//#0 Catch all
-				if(select == 0)
+				if(select == 0 && !changed)
 				{
 					msg += ParseText("Your [pc.nipples] tingle for a brief moment but nothing seems to happen...");
 					if((target.hasCuntNipples() || target.hasLipples()) && target.nippleLengthRatio >= 0.8 && target.smallestTitSize() >= 3)
@@ -179,7 +187,7 @@
 							if (target.breastRows[i].breastRatingRaw < 3) target.breastRows[i].breastRatingRaw++;
 						}
 						// Increase breasts to D cup
-						if(isPresistentTF)
+						if(isPlus)
 						{
 							if(target.breastRatingUnlocked(smallestTitIndex, (target.breastRows[smallestTitIndex].breastRatingRaw + 1)))
 							{
@@ -193,6 +201,7 @@
 								}
 							}
 						}
+						changed = true;
 					}
 					else
 					{
@@ -204,11 +213,11 @@
 				{
 					var newNipLengthRatio:Number = target.nippleLengthRatio + 0.5;
 					// Increase size of nipples towards 3” by 0.8 per dose
-					if(isPresistentTF) newNipLengthRatio = target.nippleLengthRatio + 0.8;
+					if(isPlus) newNipLengthRatio = target.nippleLengthRatio + 0.8;
 					
-					if(!isPresistentTF && target.nippleLengthRatioUnlocked(newNipLengthRatio))
+					if(target.nippleLengthRatioUnlocked(newNipLengthRatio))
 					{
-						if(!isPresistentTF)
+						if(!isPlus)
 						{
 							msg += ParseText("You flinch as your [pc.nipples] engorge, becoming incredibly tender as they absorb fluid and bulk from your breasts proper. The sensation eventually passes - however");
 							if(!removedTop && !target.isChestExposed()) msg += ParseText(" the feeling in your [pc.upperGarment]");
@@ -228,6 +237,7 @@
 							target.lust(10);
 						}
 						target.nippleLengthRatio = newNipLengthRatio;
+						changed = true;
 					}
 					else
 					{
@@ -257,6 +267,7 @@
 						}
 						target.nippleLengthRatio = (Math.round(target.nippleLengthRatio * 0.25 * 100) / 100);
 						if(target.nippleLengthRatio < 0.25) target.nippleLengthRatio = 0.25;
+						changed = true;
 					}
 					else
 					{
@@ -285,6 +296,7 @@
 								target.slowStatGain("libido", 3);
 							}
 						}
+						changed = true;
 					}
 					else
 					{

@@ -52,6 +52,7 @@
 			PregnancyManager.insertNewHandler(new EggTrainerFauxPreg());
 			PregnancyManager.insertNewHandler(new PsychicTentacles());
 			PregnancyManager.insertNewHandler(new SydianPregnancyHandler());
+			PregnancyManager.insertNewHandler(new SeraSpawnPregnancyHandler());
 		}
 		
 		// Would use a vector, but vectors can't store derived types. WORST VECTOR CLASS EVER.

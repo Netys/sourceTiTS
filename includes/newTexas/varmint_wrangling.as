@@ -343,7 +343,7 @@ public function lassoAVarmint(attacker:Creature, target:Creature):void
 {
 	clearOutput();
 	//Set drone target
-	attacker.droneTarget = target;
+	//attacker.droneTarget = target;
 	output("You twirl your light lasso, trying to get a bead on " + target.getCombatName() + ". When you've got enough spin, you let the lasso go, hurling it toward " + target.getCombatName() + "!");
 	//Miss
 	if(rangedCombatMiss(attacker, target)) output(" The glowing rope goes wide, scattering into the ground. You quickly reel it back in.");
@@ -526,7 +526,7 @@ public function pcVictoryVsVarmintPack():void
 	showName("DEFEATED:\nVARMINT PACK");
 	author("Jacques00");
 	
-	output("Realizing defeat, the varmints give into their survivalist instinct and break free from the lapse with a burst of renewed energy. They each scatter and sprint off--though one of them struggles and lags behind...");
+	output("Realizing defeat, the varmints give into their survivalist instinct and break free from you with a burst of renewed energy. They each scatter and sprint off--though one of them struggles and lags behind...");
 	
 	clearMenu();
 	addButton(0, "Next", pcVictoryVsVarmints, true);
@@ -537,7 +537,7 @@ public function pcLosesToVarmintPack():void
 	showName("LOST VS:\nVARMINT PACK");
 	author("Jacques00");
 	
-	output("Howling in victory, the varmints quickly surround you. They are pretty coordinated for a bunch of scavengers! Then, one - the <i>alpha</i> you take it - rears its head at you, looking you in the eyes...");
+	output("Howling in victory, the varmints quickly surround you. They are pretty coordinated for a bunch of scavengers! Then, one - the <i>alpha</i> you take it - rears its head at you, looking you dead in the eye...");
 	
 	clearMenu();
 	addButton(0, "Next", pcLosesToVarmint, true);
@@ -925,14 +925,21 @@ public function doVarmintPlayTime(response:String = "none"):void
 
 // Varmint Disappears
 // 10% chance per day when landed on a planet with an untamed varmint.
-public function varmintDisappearChance():void
+public function varmintDisappearChance(deltaT:uint, doOut:Boolean):void
 {
 	if(!InShipInterior() || !varmintIsCrew() || pc.hasStatusEffect("Varmint Buddy") || pc.hasStatusEffect("Varmint Leashed") || pc.hasStatusEffect("Varmint Unleashed Cooldown") || flags["NATALIE_TAMES_VARMINT"] != undefined) return;
 	
-	var runawayChance:int = (10 * 2 * 60);
-	if(varmintIsTame()) runawayChance *= 2;
+	var runawayChance:int = 1200;
+	if (varmintIsTame()) runawayChance *= 2;
 	
-	if(rand(runawayChance) == 0 && eventQueue.indexOf(varmintDisappears) == -1)
+	// 1199/1200 to not run
+	// (1199/1200)^minutes to not run over n minutes
+	// 1 - ((1199/1200)^minutes) to run
+	
+	// Calculate the probability and scale it to 1-1000 to play nice with our implementation of rand()
+	var runProbability = Math.round((1 - Math.pow(((runawayChance - 1) / runawayChance), deltaT)) * 1000);	
+	
+	if(rand(1000) < runProbability && eventQueue.indexOf(varmintDisappears) == -1)
 	{
 		eventQueue.push(varmintDisappears);
 	}

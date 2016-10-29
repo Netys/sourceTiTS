@@ -24,7 +24,7 @@
 			this._neverSerialize = false;
 			
 			this.short = "Kaska";
-			this.originalRace = "Dzaan";
+			this.originalRace = "dzaan";
 			this.a = ""; 
 			this.capitalA = "";
 			this.long = "Kaska is an imposing woman, standing seven and a half feet tall and toting a weapon bigger than a fair number of coreward races. Half her reddish purple hair is bound in tightly-cropped dreadlocks while the rest hangs over one bare shoulder. She'd cut an attractive, if oversized, figure in any number of drinking establishments if it wasn't for her aggressive, warlike expression. Then there's the matter of the seven inch python between her legs. It isn't even hard, and it already matches the average size of terran erections. She's unarmored save for a pair of armor plated shinguards. Tight leather wrappings cover her up elsewhere, covering up her nipples in a kind of obscene, faux modesty.";
@@ -346,9 +346,9 @@
 					if (target.customDodge.length > 0) output(target.customDodge);
 					else output("You manage to avoid " + a + possessive(short) + " " + rangedWeapon.attackNoun + ".");
 				}
-				else if (kGAMECLASS.mimbraneFeetBonusEvade(target))
+				else if (kGAMECLASS.mimbraneFeetBonusEvade(target, this))
 				{
-					output("\nYou’re taken by surprise as your [pc.foot] suddenly acts on its own, right as you’re about be attacked. The action is intense enough to slide you right out of the face of danger. Seems your Mimbrane is even more attentive than you are!\n");
+					output(kGAMECLASS.mimbraneFeetBonusEvadeBonus());
 				}
 				else
 				{

@@ -3,6 +3,7 @@ import classes.Characters.MyrGoldFemaleDeserter;
 import classes.Characters.MyrRedFemaleDeserter;
 import classes.Creature;
 import classes.GameData.CombatManager;
+import classes.GameData.Pregnancy.Templates.BrihaUniqueChild;
 //Myr Deserter (Individual) Enemy Encounter
 //Written by JimThermic
 
@@ -726,6 +727,8 @@ public function specialRedAntPreggosShitEvent():void
 		if(flags["BRIHA_INCUBATION_TIMER"] < 120) output("the fragile shell");
 		else output("her baby’s cheek");
 		output(", a tear running down her half-lidded eye. <i>“... With you, off-worlder, she can have a real future. Something better than this scarred dustball. She can make her mother proud.”</i>");
+		
+		addUniqueChildBriha(false, flags["BRIHA_OLDEST_SPAWN_AGE"]);
 	}
 	//SecondKid:
 	else if(flags["RED_MYR_BIRTHS"] == 1)
@@ -740,6 +743,8 @@ public function specialRedAntPreggosShitEvent():void
 		output("\n\n<i>“Just like Aya, he takes after you. His name is Brahn, after my grandfather,”</i> Briha smiles, then adds, <i>“You know the rules. I do all the work, I get to name them.”</i>");
 		output("\n\nA son! You have a son named Brahn Steele. And Aya has a little brother!");
 		output("\n\nSwallowing hard, Briha turns to you, a somber expression on her face. <i>“... You know what to do. He can’t stay here - take him. Every second I look at him, I love him a little more.”</i>");
+		
+		addUniqueChildBriha(true, flags["BRIHA_SECOND_OLDEST_SPAWN_AGE"]);
 	}
 	//Else: Third or more kid:
 	else 
@@ -774,6 +779,8 @@ public function specialRedAntPreggosShitEvent():void
 		if(son) output("him");
 		else output("her");
 		output(" a little more.”</i>");
+		
+		addChildBriha(1, son, flags["BRIHA_LATEST_SPAWN_AGE"]);
 	}
 	output("\n\nWith a heavy heart, you take your infant child and kiss Briha goodbye");
 	if(hasRedDildo())
@@ -806,6 +813,80 @@ public function specialRedAntPreggosShitEvent():void
 	if(son) StatTracking.track("pregnancy/briha sons");
 	else StatTracking.track("pregnancy/briha daughters");
 	StatTracking.track("pregnancy/total births");
+	StatTracking.track("pregnancy/total day care");
+}
+public function addUniqueChildBriha(isMale:Boolean = false, timeOffset:int = 0):void
+{
+	var traitChar:Creature = chars["PC_BABY"];
+	var c:UniqueChild = new BrihaUniqueChild();
+	
+	c.RaceType = GLOBAL.TYPE_MYR;
+	
+	// Male or Female?
+	if(!isMale)
+	{
+		c.NumMale = 0; c.NumFemale = 1; c.NumIntersex = 0; c.NumNeuter = 0;
+		c.Name = "Aya";
+		c.hairColor = flags["BRIHA_SPAWN_1_DEETS"][0];
+		c.eyeColor = flags["BRIHA_SPAWN_1_DEETS"][1];
+	}
+	else
+	{
+		c.NumMale = 1; c.NumFemale = 0; c.NumIntersex = 0; c.NumNeuter = 0;
+		c.Name = "Brahn";
+		c.hairColor = flags["BRIHA_SPAWN_2_DEETS"][0];
+		c.eyeColor = flags["BRIHA_SPAWN_2_DEETS"][1];
+	}
+	
+	// Race modifier (if different races)
+	c.originalRace = c.hybridizeRace(pc.originalRace, c.originalRace, true);
+	
+	// Adopt mother's colors at random (if applicable):
+	if(rand(2) == 0) c.skinTone = traitChar.skinTone;
+	if(rand(2) == 0) c.lipColor = traitChar.lipColor;
+	if(rand(2) == 0) c.nippleColor = traitChar.nippleColor;
+	//if(rand(2) == 0) c.eyeColor = traitChar.eyeColor;
+	//if(rand(2) == 0) c.hairColor = traitChar.hairColor;
+	//if(rand(2) == 0) c.furColor = traitChar.furColor;
+	//if(rand(2) == 0) c.scaleColor = traitChar.scaleColor;
+	//if(rand(2) == 0) c.chitinColor = traitChar.scaleColor;
+	//if(rand(2) == 0) c.featherColor = traitChar.furColor;
+	
+	c.MaturationRate = 1.0;
+	
+	// Offset time (in days)
+	c.BornTimestamp = (GetGameTimestamp() - (timeOffset * 1440));
+	if(c.BornTimestamp < 0) c.BornTimestamp = 0;
+	
+	ChildManager.addChild(c);
+}
+public function addChildBriha(numChild:int = 1, isMale:Boolean = false, timeOffset:int = 0):void
+{
+	var c:Child =
+		Child.NewChild(
+			GLOBAL.TYPE_MYR,
+			1.0,
+			numChild,
+			(isMale ? 1 : 0), (isMale ? 0 : 1), 0, 0
+		);
+	
+	// Offset time (in days)
+	c.BornTimestamp = (GetGameTimestamp() - (timeOffset * 1440));
+	if(c.BornTimestamp < 0) c.BornTimestamp = 0;
+	
+	ChildManager.addChild(c);
+}
+
+public function addChildMyr(numChild:int = 1):void
+{
+	ChildManager.addChild(
+		Child.NewChild(
+			GLOBAL.TYPE_MYR,
+			1.0,
+			numChild,
+			50, 50, 0, 0
+		)
+	);
 }
 
 
@@ -2212,7 +2293,7 @@ public function brihaPantyCollect():void
 	showName("\nPANTIES");
 	author("ASpoopyGhost");
 	flags["BRIHA_PANTY_OFFER"] = 1;
-	output("Hang on a second.... You look down on the ground and notice there’s a piece of fabric on the ground. Leaning down and picking it up, you realise they’re Briha’s panties. Did she leave them behind? They’re pretty standard issue for a military girl; camo t-backs, with a notably wet crotch.");
+	output("Hang on a second.... You look down on the ground and notice there’s a piece of fabric on the ground. Leaning down and picking it up, you realize they’re Briha’s panties. Did she leave them behind? They’re pretty standard issue for a military girl; camo t-backs, with a notably wet crotch.");
 
 	//[Take] [Leave]
 	clearMenu();
@@ -2254,7 +2335,7 @@ public function lysPantyCollect():void
 	author("ASpoopyGhost");
 	showName("\nPANTIES");
 	flags["LYS_PANTY_OFFER"] = 1;
-	output("Hang on a second. You look down on the ground and notice there’s a piece of fabric on the ground. Leaning down and picking it up, you realise they’re Lys’s panties. Did she leave them behind? The black sheer panties are rather alluring and definitely not military issue. You notice they’ve got a noticeably wet crotch.");
+	output("Hang on a second. You look down on the ground and notice there’s a piece of fabric on the ground. Leaning down and picking it up, you realize they’re Lys’s panties. Did she leave them behind? The black sheer panties are rather alluring and definitely not military issue. You notice they’ve got a noticeably wet crotch.");
 	//[Take] [Leave]
 	clearMenu();
 	addButton(0,"Take",takeLysPanties,undefined,"Take","Pick those panties up and keep 'em - they're spoils of war!");

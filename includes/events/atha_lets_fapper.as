@@ -184,48 +184,35 @@ public function athaChampeonConfirmationEmail():String
 	return ret;
 }
 
-//Checks at 1PM everyday.
-public function letsFapUpdateCheck():void
-{
-	if(hours == 13)
-	{
-		trace("FAP RELEASE TIMER:" + flags["LETS_FAP_RELEASE_TIMER"]);
-		if(flags["LETS_FAP_RELEASE_TIMER"] != undefined)
-		{
-			var unlockLength:Number = 10080;
-			if(flags["EARLY_LETS_FAPS"] != undefined) unlockLength = 7200;
-			trace("TIME TO BEAT: " + unlockLength + " CURR DIFF: " + (GetGameTimestamp() - flags["LETS_FAP_RELEASE_TIMER"]));
-			//Time for new episode unlock!
-			if(GetGameTimestamp() - flags["LETS_FAP_RELEASE_TIMER"] >= unlockLength)
-			{
-				eventBuffer += "\n\n" + logTimeStamp("good") + " Atha has posted a new Let's Fap video!";
-				flags["LETS_FAP_RELEASE_TIMER"] = undefined;
-				if(letsFapTrack() == 1) flags["LETS_FAP_LATEST"] = letsFapLaquine;
-				else if(letsFapTrack() == 2) flags["LETS_FAP_LATEST"] = letsFapKuiTan;
-				else if(letsFapTrack() == 3) flags["LETS_FAP_LATEST"] = letsFapUnboxing;
-				else if(letsFapTrack() == 4) flags["LETS_FAP_LATEST"] = letsFapOvir;
-				else if(letsFapTrack() == 5) flags["LETS_FAP_LATEST"] = letsFapRahnScene;
-				else if(letsFapTrack() == 6) flags["LETS_FAP_LATEST"] = letsFapCockTail;
-			}
-		}
-		else if(letsFapUnlockFromName() != "" && rand(10) == 0 && days > 35) letsFapEmailUnlock();
-	}
-}
+public const LETS_FAP_EPISODES:Array =
+[
+	letsFapAusar,
+	letsFapLaquine,
+	letsFapKuiTan,
+	letsFapUnboxing,
+	letsFapOvir,
+	letsFapRahnScene,
+	letsFapCockTail
+];
 
 public function letsFapSelectionMenu():void
 {
 	clearMenu();
 	if(flags["LETS_FAP_LATEST"] == undefined) 
 	{
-		if(letsFapTrack() == 0) flags["LETS_FAP_LATEST"] = letsFapAusar;
-		else if(letsFapTrack() == 1) flags["LETS_FAP_LATEST"] = letsFapLaquine;
-		else if(letsFapTrack() == 2) flags["LETS_FAP_LATEST"] = letsFapKuiTan;
-		else if(letsFapTrack() == 3) flags["LETS_FAP_LATEST"] = letsFapUnboxing;
-		else if(letsFapTrack() == 4) flags["LETS_FAP_LATEST"] = letsFapOvir;
-		else if(letsFapTrack() == 5) flags["LETS_FAP_LATEST"] = letsFapRahnScene;
-		else if(letsFapTrack() == 6) flags["LETS_FAP_LATEST"] = letsFapCockTail;
+		if(letsFapTrack() == 0) flags["LETS_FAP_LATEST"] = LETS_FAP_EPISODES.indexOf(letsFapAusar);
+		else if(letsFapTrack() == 1) flags["LETS_FAP_LATEST"] = LETS_FAP_EPISODES.indexOf(letsFapLaquine);
+		else if(letsFapTrack() == 2) flags["LETS_FAP_LATEST"] = LETS_FAP_EPISODES.indexOf(letsFapKuiTan);
+		else if(letsFapTrack() == 3) flags["LETS_FAP_LATEST"] = LETS_FAP_EPISODES.indexOf(letsFapUnboxing);
+		else if(letsFapTrack() == 4) flags["LETS_FAP_LATEST"] = LETS_FAP_EPISODES.indexOf(letsFapOvir);
+		else if(letsFapTrack() == 5) flags["LETS_FAP_LATEST"] = LETS_FAP_EPISODES.indexOf(letsFapRahnScene);
+		else if(letsFapTrack() == 6) flags["LETS_FAP_LATEST"] = LETS_FAP_EPISODES.indexOf(letsFapCockTail);
 		//if letsFapTrack returns a garbage value, reset
-		else flags["LETS_FAP_LATEST"] = letsFapAusar;
+		else
+		{
+			flags["LETS_FAP_LATEST"] = letsFapAusar;
+			trace("Invalid lets fap unlock value.");
+		}
 	}
 	addButton(0,"Latest Episode",flags["LETS_FAP_LATEST"],undefined,"Latest Episode","Watch the latest episode of Let's Fap!");
 	if(flags["LETS_FAP_ARCHIVES"] != undefined)
@@ -672,6 +659,7 @@ public function liveCumstreamerEpisode():void
 	displayInput();
 	userInterface.textInput.text = "";
 	userInterface.textInput.maxChars = 12;
+	output("\n\n\n");
 	clearMenu();
 	addButton(0,"Next",cumStreamNameSelect);
 }
@@ -680,18 +668,18 @@ public function cumStreamNameSelect():void
 {
 	if(userInterface.textInput.text == "") {
 		liveCumstreamerEpisode();
-		output("\n\n\n<b>You must input a name.</b>");
+		output("<b>You must input a name.</b>");
 		return;
 	}
 	// Illegal characters check. Just in case...
 	if(hasIllegalInput(userInterface.textInput.text)) {
 		liveCumstreamerEpisode();
-		output("\n\n\n<b>To prevent complications, please avoid using code in the name.</b>");
+		output("<b>To prevent complications, please avoid using code in the name.</b>");
 		return;
 	}
 	if(userInterface.textInput.length > 14) {
 		liveCumstreamerEpisode();
-		output("\n\n\n<b>Please select a name no more than fourteen characters long.</b>");
+		output("<b>Please select a name no more than fourteen characters long.</b>");
 		return;
 	}
 	var cName:String = userInterface.textInput.text;

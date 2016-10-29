@@ -5,6 +5,7 @@
 	import classes.ItemSlotClass;
 	import classes.GLOBAL;
 	import classes.Creature;
+	import classes.StorageClass;
 	import classes.kGAMECLASS;	
 	import classes.Characters.PlayerCharacter;
 	import classes.GameData.TooltipManager;
@@ -76,37 +77,37 @@
 			}
 			return false;
 		}
+		
 		// Libido increase:
-		public function itemSemensFriendLibidoIncrease():void
+		public static function LibidoIncrease(deltaT:uint, doOut:Boolean, target:Creature, effect:StorageClass):void
 		{
-			var target:Creature = kGAMECLASS.chars["PC"];
+			if (target.libido() >= 100) return;
 			
-			if(target.libido() >= 100 || target.getStatusMinutes("Semen's Candy") % 60 != 0) return;
+			var numProcs:int = Math.floor((Math.min(deltaT, effect.minutesLeft) + effect.value4) / 60);
+			var firstProcOffset:int = kGAMECLASS.minutes + (60 + effect.value4);
 			
-			var isPresistentTF:Boolean = (target.statusEffectv2("Semen's Candy") > 1);
-			var libGain:int = 1;
-			if(isPresistentTF) libGain = 2;
+			effect.value4 = (effect.value4 + deltaT) - (numProcs * 60);
 			
-			// Each hour, 0.4 chance to increase libido by 1.
-			if(rand(5) < 2)
+			if (numProcs == 0) return;
+			
+			var libGain:int = effect.value2 > 1 ? 2 : 1;
+			
+			for (var i:int = 0; i < numProcs; i++)
 			{
-				kGAMECLASS.eventBuffer += "\n\n" + kGAMECLASS.logTimeStamp("passive") + " <u>The Semen’s Friend candy has an effect....</u>";
+				if (rand(5) < 2)
+				{
+					kGAMECLASS.eventBuffer += "\n\n" + kGAMECLASS.logTimeStamp("passive", firstProcOffset + (60 * i)) + " <u>The Semen’s Friend candy has an effect....</u>";
 				
-				kGAMECLASS.eventBuffer += "\n\nYou exhale, deep and low, as the cold burn in your loins increases, the impatient imperative to get out there and fuck and breed every fertile hole in sight growing stronger.";
-				
-				target.slowStatGain("libido", libGain);
-				
-				//kGAMECLASS.clearMenu();
-				//kGAMECLASS.addButton(0, "Next", kGAMECLASS.mainGameMenu);
+					kGAMECLASS.eventBuffer += "\n\nYou exhale, deep and low, as the cold burn in your loins increases, the impatient imperative to get out there and fuck and breed every fertile hole in sight growing stronger.";
+					
+					target.slowStatGain("libido", libGain);
+				}
 			}
 		}
-		public function itemSemensFriendTFPlus():void
+		
+		public static function TFProcs(deltaT:uint, doOut:Boolean, target:Creature, effect:StorageClass):void
 		{
-			itemSemensFriendTF(true);
-		}
-		public function itemSemensFriendTF(isPresistentTF:Boolean = false):void
-		{
-			var target:Creature = kGAMECLASS.chars["PC"];
+			var isPlus:Boolean = effect.value2 > 1;
 			
 			var msg:String = "";
 			var totalTFs:Number = 1;
@@ -127,7 +128,7 @@
 			if(target.balls > 0 && target.hasStatusEffect("Uniball"))
 				TFList.push(2);
 			//#3 If balls increase towards 6” by 1”
-			if(target.balls > 0 && ((isPresistentTF && ballDiameter < 11) || ballDiameter < 6))
+			if(target.balls > 0 && ((isPlus && ballDiameter < 11) || ballDiameter < 6))
 				TFList.push(3);
 			//#4 Increase male potency
 			if(target.refractoryRate < 80)
@@ -136,25 +137,29 @@
 			if(target.balls > 0 && target.virility() > 0 && target.cumQualityRaw < 1.5)
 				TFList.push(5);
 			//#6 If balls > 5” grow quad
-			if(isPresistentTF && ballDiameter > 5 && target.balls > 0 && target.balls < 4)
+			if(isPlus && ballDiameter > 5 && target.balls > 0 && target.balls < 4)
 				TFList.push(6);
 			//#7 Change cum to chocolate colored and flavored (requires cock)
-			if(isPresistentTF && target.hasCock() && target.cumType != GLOBAL.FLUID_TYPE_CHOCOLATE_CUM)
+			if(isPlus && target.hasCock() && target.cumType != GLOBAL.FLUID_TYPE_CHOCOLATE_CUM)
 				TFList.push(7);
 			
 			// TF texts
-			msg += "\n\n<u>The Semen’s Friend candy has an effect....</u>";
+			msg += "\n\n" + kGAMECLASS.logTimeStamp("passive") + " <u>The Semen’s Friend candy has an effect....</u>";
+			var changed:Boolean = false;
 			
 			while(totalTFs > 0)
 			{
-				msg += "\n\n";
 				//Pick a TF	
 				x = rand(TFList.length);
 				select = TFList[x];
 				//Cull 'dat TF from the list.
 				TFList.splice(x,1);
+				
+				if(select == 0 && changed) { /* No new line */ }
+				else msg += "\n\n";
+				
 				//#0 Catch all
-				if(select == 0)
+				if(select == 0 && !changed)
 				{
 					msg += "Your crotch tingles but nothing seems to happen...";
 					if(target.cumType != GLOBAL.FLUID_TYPE_CHOCOLATE_CUM && target.balls >= 4 && target.ballDiameter() >= 11 && target.refractoryRate >= 80 && target.cumQualityRaw >= 1.5)
@@ -183,6 +188,7 @@
 						target.ballSizeRaw = 2;
 						if(target.hasPerk("Bulgy")) target.ballSizeRaw *= 2;
 						target.ballFullness = 100;
+						changed = true;
 					}
 					else
 					{
@@ -198,6 +204,7 @@
 					else msg += ", forming a more readily recognizable set of bollocks than";
 					msg += " the cutesy boy sphere you had before.";
 					target.removeStatusEffect("Uniball");
+					changed = true;
 				}
 				//#3 If balls increase towards 6” by 1”
 				else if(select == 3)
@@ -215,7 +222,7 @@
 						target.ballSizeRaw = newBallSize;
 						
 						// Increase balls to 11” by 1”
-						if(isPresistentTF)
+						if(isPlus)
 						{
 							newBallSize = target.ballSizeRaw + 1;
 							if(target.hasPerk("Bulgy")) newBallSize++;
@@ -228,6 +235,7 @@
 								target.ballSizeRaw = newBallSize;
 							}
 						}
+						changed = true;
 					}
 					else
 					{
@@ -246,6 +254,7 @@
 					msg += "You feel... juicier.";
 					
 					target.refractoryRate++;
+					changed = true;
 				}
 				//#5 Increase male fertility
 				else if(select == 5)
@@ -256,6 +265,7 @@
 					msg += ParseText(" throbbing with a dense, heavy pulse. The intensity of it fades but a background throb in your [pc.balls] remains, your body purposefully stepping up its sperm production.");
 					
 					target.cumQualityRaw += 0.1;
+					changed = true;
 				}
 				//#6 If balls > 5” grow quad
 				else if(select == 6)
@@ -273,6 +283,7 @@
 						msg += ", giving you four altogether.</b>";
 						
 						target.balls = 4;
+						changed = true;
 					}
 					else
 					{
@@ -296,6 +307,7 @@
 						if(target.isAss()) msg += " Now if only you could work out how to piss money too, you’d have bitches all over you.";
 						
 						target.cumType = GLOBAL.FLUID_TYPE_CHOCOLATE_CUM;
+						changed = true;
 					}
 					else
 					{

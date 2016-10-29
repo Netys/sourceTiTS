@@ -832,85 +832,88 @@ public function removeMimbranes():void
 	flags["MIMBRANE_FACE_APPEARANCE"] = undefined;
 }
 
-public function mimbranesIncreaseDaysSinceFed():void
+public function mimbranesIncreaseDaysSinceFed(totalDays:uint):void
 {
 	var i:int;
 	if (mimbraneDebug) trace("Incrementing Mimbrane days since last fed");
+	
+	var mimStates:Object = { };
 
 	for (i = 0; i < mimbraneEffects.length; i++)
 	{
 		if (pc.hasStatusEffect(mimbraneEffects[i]))
 		{
-			pc.addStatusValue(mimbraneEffects[i], 2, 1);
+			mimStates[mimbraneEffects[i]] = pc.statusEffectv2(mimbraneEffects[i]);;
+			pc.addStatusValue(mimbraneEffects[i], 2, totalDays);
 		}
 	}
 
 	// Always show the state transitions to "hungry" for every mimbrane
 	// These will always show at the time a mimbrane transitions into the "hungry" state. Showing all of them might be overkill, but that can be handled later.
-	if (pc.hasStatusEffect("Mimbrane Cock") && pc.statusEffectv2("Mimbrane Cock") == 7)
+	if (pc.hasStatusEffect("Mimbrane Cock") && mimStates["Mimbrane Cock"] < 7 && pc.statusEffectv2("Mimbrane Cock") == 7)
 	{
 		if (mimbraneDebug) trace("Mimbrane Cock unfed for 7 days!");
 
 		addMimbraneEvent("A sudden burst of lewd moisture surrounding your manhood takes you by surprise. <b>Your hungry Mimbrane is drenching your [pc.cock] in its sweat.</b>");
 	}
 	
-	if (pc.hasStatusEffect("Mimbrane Pussy") && pc.statusEffectv2("Mimbrane Pussy") == 7)
+	if (pc.hasStatusEffect("Mimbrane Pussy") && mimStates["Mimbrane Pussy"] < 7 && pc.statusEffectv2("Mimbrane Pussy") == 7)
 	{
 		if (mimbraneDebug) trace("Mimbrane Pussy unfed for 7 days!");
 
 		addMimbraneEvent("A tidal wave of fluids overcoming your pussy about knocks you over with sexual ferocity. <b>Your hungry Mimbrane is drowning your [pc.vagina] in its sweat.</b>");
 	}
 
-	if (pc.hasStatusEffect("Mimbrane Ass") && pc.statusEffectv2("Mimbrane Ass") == 7)
+	if (pc.hasStatusEffect("Mimbrane Ass") && mimStates["Mimbrane Ass"] < 7 && pc.statusEffectv2("Mimbrane Ass") == 7)
 	{
 		if (mimbraneDebug) trace("Mimbrane Ass unfed for 7 days!");
 		
 		addMimbraneEvent("A sudden, strawberry-scented rain cascades down your butt, almost knocking you out with its sexual nature. <b>Your hungry Mimbrane is casting your [pc.ass] through unending streams of Mimbrane sweat.</b>");
 	}
 
-	if (pc.hasStatusEffect("Mimbrane Balls") && pc.statusEffectv2("Mimbrane Balls") == 7)
+	if (pc.hasStatusEffect("Mimbrane Balls") && mimStates["Mimbrane Balls"] < 7 && pc.statusEffectv2("Mimbrane Balls") == 7)
 	{
 		if (mimbraneDebug) trace("Mimbrane Balls unfed for 7 days!");
 
 		addMimbraneEvent("An abrupt carnal wave grabs you by the balls, its lewd intentions about knocking you over. <b>Your hungry Mimbrane is smothering your [pc.balls] with its sweat.</b>");
 	}
 
-	if (pc.hasStatusEffect("Mimbrane Boobs") && pc.statusEffectv2("Mimbrane Boobs") == 7)
+	if (pc.hasStatusEffect("Mimbrane Boobs") && mimStates["Mimbrane Boobs"] < 7 && pc.statusEffectv2("Mimbrane Boobs") == 7)
 	{
 		if (mimbraneDebug) trace("Mimbrane Boobs unfed for 7 days!");
 
 		addMimbraneEvent("Your titty flesh is suddenly overwhelmed by a downpour of strawberry-scented liquid passion. <b>Your hungry Mimbrane is dousing your [pc.fullChest] in endless amounts of its sweat.</b>");
 	}
 
-	if (pc.hasStatusEffect("Mimbrane Hand Left") && pc.hasStatusEffect("Mimbrane Hand Right") && pc.statusEffectv2("Mimbrane Hand Left") == 7)
+	if (pc.hasStatusEffect("Mimbrane Hand Left") && pc.hasStatusEffect("Mimbrane Hand Right") && mimStates["Mimbrane Hand Left"] < 7 && pc.statusEffectv2("Mimbrane Hand Left") == 7)
 	{
 		if (mimbraneDebug) trace("Mimbrane Hands unfed for 7 days!");
 
 		addMimbraneEvent("An abrupt slickness overtakes your hands out of nowhere accompanied with tingling insidiousness. <b>Your hungry Mimbranes are coating your hands in their sweat.</b>");
 	}
-	else if ((pc.hasStatusEffect("Mimbrane Hand Left") && !pc.hasStatusEffect("Mimbrane Hand Right") && pc.statusEffectv2("Mimbrane Hand Left") == 7)
-		|| (!pc.hasStatusEffect("Mimbrane Hand Left") && pc.hasStatusEffect("Mimbrane Hand Right") && pc.statusEffectv2("Mimbrane Hand Right") == 7))
+	else if ((pc.hasStatusEffect("Mimbrane Hand Left") && !pc.hasStatusEffect("Mimbrane Hand Right") && mimStates["Mimbrane Hand Left"] < 7 && pc.statusEffectv2("Mimbrane Hand Left") == 7)
+		|| (!pc.hasStatusEffect("Mimbrane Hand Left") && pc.hasStatusEffect("Mimbrane Hand Right") && mimStates["Mimbrane Hand Right"] < 7 && pc.statusEffectv2("Mimbrane Hand Right") == 7))
 	{
 		if (mimbraneDebug) trace("Mimbrane Hand unfed for 7 days!");
 
 		addMimbraneEvent("An abrupt slickness overtakes your hand out of nowhere accompanied with tingling insidiousness. <b>Your hungry Mimbrane is coating your hand in its sweat.</b>");
 	}
 
-	if (pc.hasStatusEffect("Mimbrane Foot Left") && pc.hasStatusEffect("Mimbrane Foot Right") && pc.statusEffectv2("Mimbrane Foot Left") == 7)
+	if (pc.hasStatusEffect("Mimbrane Foot Left") && pc.hasStatusEffect("Mimbrane Foot Right") && mimStates["Mimbrane Foot Right"] < 7 && pc.statusEffectv2("Mimbrane Foot Left") == 7)
 	{
 		if (mimbraneDebug) trace("Mimbrane Feet unfed for 7 days!");
 
 		addMimbraneEvent("A powerful humidity wraps around your feet like a snake, followed with a dripping sexual passion. <b>Your hungry Mimbranes have cloaked your [pc.feet] in their oily sweat.</b>");
 	}
-	else if ((pc.hasStatusEffect("Mimbrane Foot Left") && !pc.hasStatusEffect("Mimbrane Foot Right") && pc.statusEffectv2("Mimbrane Foot Left") == 7)
-		|| (!pc.hasStatusEffect("Mimbrane Foot Left") && pc.hasStatusEffect("Mimbrane Foot Right") && pc.statusEffectv2("Mimbrane Foot Right") == 7))
+	else if ((pc.hasStatusEffect("Mimbrane Foot Left") && !pc.hasStatusEffect("Mimbrane Foot Right") && mimStates["Mimbrane Foot Left"] < 7 && pc.statusEffectv2("Mimbrane Foot Left") == 7)
+		|| (!pc.hasStatusEffect("Mimbrane Foot Left") && pc.hasStatusEffect("Mimbrane Foot Right") && mimStates["Mimbrane Foot Right"] < 7 && pc.statusEffectv2("Mimbrane Foot Right") == 7))
 	{
 		if (mimbraneDebug) trace("Mimbrane Foot unfed for 7 days!");
 
 		addMimbraneEvent("A powerful humidity wraps around your foot like a snake, followed with a dripping sexual passion. <b>Your hungry Mimbrane has cloaked your [pc.foot] in its oily sweat.</b>");
 	}
 
-	if (pc.hasStatusEffect("Mimbrane Face") && pc.statusEffectv2("Mimbrane Face") == 7)
+	if (pc.hasStatusEffect("Mimbrane Face") && mimStates["Mimbrane Face"] < 7 && pc.statusEffectv2("Mimbrane Face") == 7)
 	{
 		if (mimbraneDebug) trace("Mimbrane Face unfed for 7 days!");
 
@@ -920,7 +923,7 @@ public function mimbranesIncreaseDaysSinceFed():void
 	// Show on the 8th day since feeding, if applicable
 	for (i = 0; i < mimbraneEffects.length; i++)
 	{
-		if (pc.hasStatusEffect(mimbraneEffects[i]) && pc.statusEffectv2(mimbraneEffects[i]) == 8)
+		if (pc.hasStatusEffect(mimbraneEffects[i]) && mimStates[mimbraneEffects[i]] < 8 && pc.statusEffectv2(mimbraneEffects[i]) == 8)
 		{
 			if (mimbraneDebug) trace("Mimbranes unfed for 8 days!");
 
@@ -2459,7 +2462,7 @@ public function mimbraneFaceReproductionGo(dream:Boolean = false):void
 	output("\n\nMore specifically Mimbrane reproduction. You’ve been feeling a little fat-headed lately, and it doesn’t have anything to do with your intelligence. Someone could rent your lips out as a bounce house, and your [pc.face] feels a little puffy even if it doesn’t look it. You know from your codex that the parasite prefers to wait until their host is in slumber’s embrace before attempting to multiply. Your head-mounted friend already seemed pretty cool with you from the get-go; it must not mind if you wake up to watch it make some children.");
 	output("\n\nYour instincts are to paw at your face, hands desperate to get a grip on the writhing flesh around your head. It takes a lot of willpower to merely keep still, controlling your breathing through your nose with your mouth acting as if it were in great pain. The Mimbrane’s little squeaks and chirps through your bimbo-esque lips are audible enough as it is. One feature you can’t see is the sudden dead-eye glare in the parasite’s miniscule eyes.");
 	output("\n\nIt’s only a sign for what’s to come. A numbness shrouds your head. You can’t decide if it feels like you’re wearing a mask or went through a really lousy trip to the dentist. All that’s certain is that it’s uncomfortable. But you maintain your calm. Freaking out or getting upset won’t get you anywhere, you remind yourself. It’ll only make things worse. And making things worse is stupidly easy when you can’t feel a thing.");
-	output("\n\nThe Mimbrane goes to work underneath the [pc.skin] of your head. Now it definitely feels like you just have excess weight overy your noggin. You can make out your [pc.face] wriggling free, peeling away from its outer shell. Individual strands of hair are imbued with life and push against their thin coating. Though you’re fully aware an organism is posing as the skin to your head, you’ve never really been reminded of the fact quite like you are right now. Down to every cell is some manner of self-locomotion that you could never hope to naturally achieve.");
+	output("\n\nThe Mimbrane goes to work underneath the [pc.skin] of your head. Now it definitely feels like you just have excess weight over your noggin. You can make out your [pc.face] wriggling free, peeling away from its outer shell. Individual strands of hair are imbued with life and push against their thin coating. Though you’re fully aware an organism is posing as the skin to your head, you’ve never really been reminded of the fact quite like you are right now. Down to every cell is some manner of self-locomotion that you could never hope to naturally achieve.");
 	output("\n\nEverything feels heavy. Even your eyelids feel like something’s sitting on them. Your mouth especially feels pinned down by the [pc.lips] atop it. Maintaining a relaxed composure is odd at the very least. You’re used to <i>one</i> sort of facial, but not this. There’s no rhyme or reason as to what parts of your new face smoothly separates from your old one. Your scalp pulls away, cheeks follow, ears bend and flex, nose twitches, lids constrict");
 	if (pc.hasFaceFlag(GLOBAL.FLAG_MUZZLED)) output(", muzzle shifts");
 	output("... it’s a neverending stream of simply bizarre facial movements and sensations.");
@@ -3524,7 +3527,7 @@ public function mimbraneCombatInterference():Boolean
 	if (pc.hasStatusEffect("Mimbrane Hand Left"))
 	{
 		// > 4 days without feed
-		if (pc.statusEffectv3("Mimbrane Hand Left") >= 4)
+		if (pc.statusEffectv2("Mimbrane Hand Left") >= 4)
 		{
 			// <= 2 trust = 5% chance
 			if (pc.statusEffectv1("Mimbrane Hand Left") <= 2)
@@ -3541,7 +3544,7 @@ public function mimbraneCombatInterference():Boolean
 	if (pc.hasStatusEffect("Mimbrane Hand Right"))
 	{
 		// > 4 days without feed
-		if (pc.statusEffectv3("Mimbrane Hand Right") >= 4)
+		if (pc.statusEffectv2("Mimbrane Hand Right") >= 4)
 		{
 			// <= 2 trust = 5% chance
 			if (pc.statusEffectv1("Mimbrane Hand Right") <= 2)
@@ -3571,7 +3574,7 @@ public function mimbraneCombatInterference():Boolean
 	if (pc.hasStatusEffect("Mimbrane Foot Left"))
 	{
 		// > 4 days without feed
-		if (pc.statusEffectv3("Mimbrane Foot Left") >= 4)
+		if (pc.statusEffectv2("Mimbrane Foot Left") >= 4)
 		{
 			// <= 2 trust = 5% chance
 			if (pc.statusEffectv1("Mimbrane Foot Left") <= 2)
@@ -3588,7 +3591,7 @@ public function mimbraneCombatInterference():Boolean
 	if (pc.hasStatusEffect("Mimbrane Foot Right"))
 	{
 		// > 4 days without feed
-		if (pc.statusEffectv3("Mimbrane Foot Right") >= 4)
+		if (pc.statusEffectv2("Mimbrane Foot Right") >= 4)
 		{
 			// <= 2 trust = 5% chance
 			if (pc.statusEffectv1("Mimbrane Foot Right") <= 2)
@@ -3620,19 +3623,19 @@ public function mimbraneHandBonusAttack(target:Creature):void
 
 	if (pc.hasStatusEffect("Mimbrane Hand Left"))
 	{
-		// > 4 days without feed
-		if (pc.statusEffectv1("Mimbrane Hand Left") >= 3 && pc.statusEffectv3("Mimbrane Hand Left") < 7)
+		if (pc.statusEffectv1("Mimbrane Hand Left") >= 3 && pc.statusEffectv2("Mimbrane Hand Left") < 7)
 		{
 			bonusAttackChance += 15;
+			if(pc.hasPerk("Mimbrane Symbiosis")) bonusAttackChance += 5;
 		}
 	}
 
 	if (pc.hasStatusEffect("Mimbrane Hand Right"))
 	{
-		// > 4 days without feed
-		if (pc.statusEffectv1("Mimbrane Hand Right") >= 3 && pc.statusEffectv3("Mimbrane Hand Right") < 7)
+		if (pc.statusEffectv1("Mimbrane Hand Right") >= 3 && pc.statusEffectv2("Mimbrane Hand Right") < 7)
 		{
 			bonusAttackChance += 15;
+			if(pc.hasPerk("Mimbrane Symbiosis")) bonusAttackChance += 5;
 		}
 	}
 
@@ -3651,23 +3654,24 @@ public function mimbraneHandBonusAttack(target:Creature):void
 	}
 }
 
-public function mimbraneFeetBonusEvade(target:Creature):Boolean
+public function mimbraneFeetBonusEvade(target:Creature, attacker:Creature):Boolean
 {
 	var dodgeBonus:int = 0;
 
-	if (enemy is Mimbrane) return false;
+	if (attacker is Mimbrane) return false;
 	if (target != pc) return false;
 
 	if (target.hasStatusEffect("Mimbrane Foot Left") && target.statusEffectv2("Mimbrane Foot Left") <= 6)
 	{
-		if (pc.statusEffectv1("Mimbrane Foot Left") == 3)
+		if (target.statusEffectv1("Mimbrane Foot Left") == 3)
 		{
 			dodgeBonus += 5;
 		}
-		else if (pc.statusEffectv1("Mimbrane Foot Left") >= 4)
+		else if (target.statusEffectv1("Mimbrane Foot Left") >= 4)
 		{
 			dodgeBonus += 10;
 		}
+		if(target.hasPerk("Mimbrane Symbiosis")) dodgeBonus += 5;
 	}
 
 	if (target.hasStatusEffect("Mimbrane Foot Right") && target.statusEffectv2("Mimbrane Foot Right") <= 6)
@@ -3680,6 +3684,7 @@ public function mimbraneFeetBonusEvade(target:Creature):Boolean
 		{
 			dodgeBonus += 10;
 		}
+		if(target.hasPerk("Mimbrane Symbiosis")) dodgeBonus += 5;
 	}
 
 	// Rolls!
@@ -3689,6 +3694,10 @@ public function mimbraneFeetBonusEvade(target:Creature):Boolean
 	}
 	
 	return false;
+}
+public function mimbraneFeetBonusEvadeBonus():String
+{
+	return "You’re taken by surprise as your [pc.foot] suddenly acts on its own, right as you’re about be attacked. The action is intense enough to slide you right out of the face of danger. Seems your Mimbrane is even more attentive than you are!";
 }
 
 /* Bonus tese shit that's not implemented atm due to lack of face/lip/etc teases
@@ -4588,12 +4597,12 @@ public function toggleMimbraneSweat():void
 	addGhostButton(0, "Back", mimbraneMenu);
 }
 
-public function mimbraneSweatHandler():void
+public function mimbraneSweatHandler(numHours:int = 1):void
 {
 	if (flags["PLAYER_MIMBRANE_SWEAT_ENABLED"] != undefined && flags["PLAYER_MIMBRANE_SWEAT_ENABLED"] == 1)
 	{
 		var numSweating:int = mimbranesAtTrustMinimum(3);
-		pc.lust(numSweating);
+		pc.lust(numSweating * numHours);
 	}
 }
 

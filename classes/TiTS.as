@@ -176,11 +176,17 @@
 		include "../includes/tavros/semith.as";
 		include "../includes/tavros/sera.as";
 		include "../includes/tavros/seraXPack1.as";
+		include "../includes/tavros/seraXPreg.as";
 		include "../includes/tavros/shearBeauty.as";
 		include "../includes/tavros/shelly.as";
 		include "../includes/tavros/tamaniCorpShop.as";
 		include "../includes/tavros/terensha.as";
 		include "../includes/tavros/vahn.as";
+
+		//Vesperia/Canadia Station
+		include "../includes/vesperia/kally.as";
+		include "../includes/vesperia/rooms.as";
+		include "../includes/vesperia/roomFunctions.as";
 		
 		//First planet
 		include "../includes/mhenga/burt.as";
@@ -312,6 +318,7 @@
 		include "../includes/events/kashimaIncident/roomfunctions.as";
 		
 		// Uveto
+		include "../includes/uveto/drlessau.as";
 		include "../includes/uveto/freezer.as";
 		include "../includes/uveto/frostwyrm.as";
 		include "../includes/uveto/jerome.as";
@@ -343,7 +350,7 @@
 			var value:uint = 0;
 			value += minutes;
 			value += hours * 60;
-			value += days * (24 * 60);
+			value += days * 1440;
 			return value;
 		}
 
@@ -432,7 +439,7 @@
 
 			trace("TiTS Constructor")
 
-			version = "0.6.86";
+			version = "0.6.90";
 
 			//temporary nonsense variables.
 			temp = 0;
@@ -482,6 +489,7 @@
 			kquest2InitRooms();
 			initUvetoRooms();
 			kiInitRooms();
+			initVesperiaRoom();
 			
 			mapper = new Mapper(this.rooms)
 
@@ -1261,6 +1269,10 @@
 		public function get busky():Busky
 		{
 			return chars["BUSKY"];
+		}
+		public function get kally():Kally
+		{
+			return chars["KALLY"];
 		}
 		
 		private var _dbgtestvar:int = 0;

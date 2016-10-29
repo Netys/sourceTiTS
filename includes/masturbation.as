@@ -35,6 +35,8 @@ public function nonLustFaps():Array
 }
 public function arousalMenu():void {
 	clearOutput();
+	showName("\nAROUSAL");
+	showBust("");
 	clearMenu();
 	
 	var aborted:Boolean = false;
@@ -466,6 +468,8 @@ public function masturbateMenu(roundTwo:Boolean = false):void {
 	}
 	
 	clearOutput();
+	showName("\nMASTURBATE");
+	showBust("");
 	clearMenu();
 	
 	var aborted:Boolean = false;
@@ -3327,6 +3331,7 @@ public function shipShowerFappening(scene:String = ""):void
 public function cumCowAutoFellatio(special:Boolean = false, timeStuff:Number = 110):void
 {
 	clearOutput();
+	showBust("");
 	showName("\nCOCK");
 	var x:int = pc.aCockToSuck();
 	if(x < 0) x = pc.biggestCockIndex();

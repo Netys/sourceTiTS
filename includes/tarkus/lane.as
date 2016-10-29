@@ -479,16 +479,16 @@ public function visitLaneWhilstDetoxing():void
 	addButton(0, "Next", laneGonnaFuckYourDetoxinAssUp);
 }
 
-public function laneHandleCredits():void
+public function laneHandleCredits(totalDays:uint):void
 {
 	if (flags["LANE_PAYS_PC_ERRY_DAY"] == 1)
 	{
-		pc.credits += 200;
-		eventBuffer += "\n\n" + logTimeStamp("good") + " A notification arrives in your codex’s message box with a shrill bleep. Quickly reading it, it's a credit transfer message; Lane has paid you 200 credits, right on time.";
+		pc.credits += (200 * totalDays);
+		eventBuffer += "\n\n" + logTimeStamp("good") + " A notification arrives in your codex’s message box with a shrill bleep. Quickly reading it, it's a credit transfer message; Lane has paid you a total of " + String(200 * totalDays) + " credits, right on time.";
 	}
 	if (flags["PC_PAYS_LANE_ERRY_DAY"] == 1)
 	{
-		pc.credits -= 500;
+		pc.credits -= (500 * totalDays);
 		eventBuffer += "\n\n" + logTimeStamp("bad") + ParseText(" A notification arrives in your codex’s message box with a shrill bleep. Quickly reading it, you recognize it as an automatic payment that you’ve setup to [lane.master] Lane.");
 	}
 }
@@ -3288,14 +3288,14 @@ public function lFollowerName(customName:Boolean = true):String
 {
 	if (customName)
 	{
-		if (InCollection(flags["FOLLOWER_LANE_INTERVENTION"], "Ben-14", "Bess-13")) return "[bess.name]";
+		if (InCollection(flags["FOLLOWER_LANE_INTERVENTION"], ["Ben-14", "Bess-13"])) return chars["BESS"].short;
 	}
 	return flags["FOLLOWER_LANE_INTERVENTION"];
 }
 
 public function lFollowerMF(m:String, f:String):String
 {
-	if (InCollection(flags["FOLLOWER_LANE_INTERVENTION"], "Dane", "Ben-14")) return m;
+	if (InCollection(flags["FOLLOWER_LANE_INTERVENTION"], ["Dane", "Ben-14"])) return m;
 	return f;
 }
 
@@ -3304,8 +3304,8 @@ public function followerLaneIntervention(followerName:String):void
 	flags["FOLLOWER_LANE_INTERVENTION"] = followerName;
 
 	clearOutput();
-	showName("\n" + followerName.toUpperCase());
-	showBust(followerName.toUpperCase());
+	showName("\n" + lFollowerName(true).toUpperCase());
+	showBust(lFollowerName(false).toUpperCase());
 	author("B");
 
 	// I woulda used something like:
@@ -3359,7 +3359,7 @@ public function followerLaneIntervention(followerName:String):void
 public function followerLaneInterventionConfide():void
 {
 	clearOutput();
-	showName("\n" + lFollowerName(false).toUpperCase());
+	showName("\n" + lFollowerName(true).toUpperCase());
 	showBust(lFollowerName(false).toUpperCase());
 	author("B");
 

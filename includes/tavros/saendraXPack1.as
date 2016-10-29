@@ -43,17 +43,6 @@ SAENDRA_XPACK1_CREDITOFFER:
 
 */
 
-public function tryProcSaendraXPackEmail():void
-{
-	if (flags["SAENDRA_XPACK1_STATUS"] != undefined) return;
-	if (shipLocation != "TAVROS HANGAR") return;
-	if (saendraAffection() < 60) return;
-	if (MailManager.isEntryUnlocked("saendraxpack1") && flags["SAENDRA_XPACK1_STATUS"] != undefined) return;
-	if (eventQueue.indexOf(unlockSaendraXPackMail) != -1) return;
-
-	eventQueue.push(unlockSaendraXPackMail);
-}
-
 public function unlockSaendraXPackMail():void
 {
 	clearOutput();
@@ -77,19 +66,19 @@ public function unlockSaendraXPackMail():void
 	addButton(0, "Next", mainGameMenu);
 }
 
-public function updateSaendraXPackTimer(delta:Number = 0):void
+public function updateSaendraXPackTimer(deltaT:Number = 0):void
 {
 	if (flags["SAENDRA_XPACK1_STATUS"] == 1 || flags["SAENDRA_XPACK1_STATUS"] == 5)
 	{
-		flags["SAENDRA_XPACK1_TIMER"] += delta;
+		flags["SAENDRA_XPACK1_TIMER"] += deltaT;
 
 		// Making it to the elevator on time
-		if (flags["SAENDRA_XPACK1_STATUS"] == 1 && GetGameTimestamp() >= flags["SAENDRA_XPACK1_TIMER"] + (6 * 60))
+		if (flags["SAENDRA_XPACK1_STATUS"] == 1 && (GetGameTimestamp() + deltaT) >= flags["SAENDRA_XPACK1_TIMER"] + (6 * 60))
 		{
 			flags["SAENDRA_XPACK1_STATUS"] = 2; // failed, rip you
 		}
 
-		if (flags["SAENDRA_XPACK1_STATUS"] == 5 && GetGameTimestamp() >= flags["SAENDRA_XPACK1_TIMER"] + (7 * 24 * 60))
+		if (flags["SAENDRA_XPACK1_STATUS"] == 5 && (GetGameTimestamp() + deltaT) >= flags["SAENDRA_XPACK1_TIMER"] + (7 * 24 * 60))
 		{
 			flags["SAENDRA_XPACK1_STATUS"] = 6;
 		}
@@ -1359,7 +1348,7 @@ public function zilCallGirlGo(hasSeen:Boolean = false):void
 		{
 			output(" A familiar, seductive voice answers, <i>“Come on in, my baby daddy!”</i>");
 			output("\n\n");
-			if (StatTracking.getStat("pregnancy/zil callgirl kids") > 0) output("You know what that means... more children! You slide the door open and slip inside.");
+			if (StatTracking.getStat("pregnancy/zil call girl kids") > 0) output("You know what that means... more children! You slide the door open and slip inside.");
 			else output("Baby daddy? Does that mean... Before completing the thought, you quickly slide the door open and jump inside.");
 			
 			addButton(0, "Next", zilCallGirlPregScene, false);
@@ -1379,9 +1368,9 @@ public function zilCallGirlGo(hasSeen:Boolean = false):void
 		output(" in the blink of an eye.");
 		
 		output("\n\n<i>“Back again, my friend?”</i> she asks, voice full of lascivious suggestion. <i>“I’m glad!");
-		if(zilCallGirlPregnant() || StatTracking.getStat("pregnancy/zil callgirl kids") > 0)
+		if(zilCallGirlPregnant() || StatTracking.getStat("pregnancy/zil call girl kids") > 0)
 		{
-			if (StatTracking.getStat("pregnancy/zil callgirl kids") > 0) output(" I’m glad the father of my children would take the time to see me again.");
+			if (StatTracking.getStat("pregnancy/zil call girl kids") > 0) output(" I’m glad the father of my children would take the time to see me again.");
 			else if (zilCallGirlPregnant()) output(" And you should be too, honey. This baby bump means that I’m bearing your spawn and I’m so happy that you've come back to see me again.");
 			if (CodexManager.entryViewed("Zil")) output(" Few other zil would be so considerate");
 		}
@@ -1723,14 +1712,14 @@ public function zilCallGirlPregScene(isBirthing:Boolean = false):void
 		// 9999: She is breastfeeding her young, one on each tit. If there is a third, the third is sleeping near her in a crib. Other children may be playing napping beside her. Maybe have a blurb about her sending them off to a nursery or something! After all that, she will ask Steele for privacy so she can ready herself. Steele will wait outside for a few minutes.
 		
 		output("\n\nYou have sired " + num2Text(flags["ZIL_CALLGIRL_EGG_COUNT"]));
-		if (StatTracking.getStat("pregnancy/zil callgirl kids") > 0) output(" more");
+		if (StatTracking.getStat("pregnancy/zil call girl kids") > 0) output(" more");
 		output(" children! They are quite the cute chimeral creatures if you can say so yourself!");
 		
 		processTime(5);
 	}
 	
 	// Tracking number of kids:
-	StatTracking.track("pregnancy/zil callgirl kids", flags["ZIL_CALLGIRL_EGG_COUNT"]);
+	StatTracking.track("pregnancy/zil call girl kids", flags["ZIL_CALLGIRL_EGG_COUNT"]);
 	// Clear preg tracking.
 	flags["ZIL_CALLGIRL_EGG_COUNT"] = undefined;
 	flags["ZIL_CALLGIRL_GESTATION"] = undefined;
