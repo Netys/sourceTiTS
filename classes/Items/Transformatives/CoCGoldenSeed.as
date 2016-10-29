@@ -288,7 +288,7 @@ package classes.Items.Transformatives
 			}
 			
 			if (changes < changeLimit && rand(4) == 0 && (pc.ass.wetness() > 1 && pc.analWetnessUnlocked(pc.ass.wetness() - 1) || pc.ass.looseness() > 1)) {
-				output("\n\nYou feel a tightening up in your colon and your [asshole] sucks into itself.  You feel sharp pain at first but that thankfully fades.  Your ass seems to have dried and tightened up.");
+				output("\n\nYou feel a tightening up in your colon and your [pc.asshole] sucks into itself.  You feel sharp pain at first but that thankfully fades. Your ass seems to have dried and tightened up.");
 				if (pc.ass.wetness() > 1 && pc.analWetnessUnlocked(pc.ass.wetness() - 1)) pc.ass.wetness( -1);
 				if (pc.ass.looseness() > 1) pc.ass.looseness(-1);
 				changes++;

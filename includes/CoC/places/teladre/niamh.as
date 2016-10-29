@@ -507,7 +507,7 @@ public function bimboChampagne(player:PlayerCharacter,clearScreen:Boolean,intro:
 	}
 }
 
-public function removeBimboChampagne():void {
+public function removeBimboChampagne(deltaT:uint, doOut:Boolean = true):void {
 	if (pc.hasStatusEffect("Bimbo Champagne") || !pc.hasStatusEffect("BimboChampagneReverse")) return; // only fire when has status for reverse but champagne itself worn out.
 	
 	output("\n\nWhoah!  Your head is clearing up, and you feel like you can think clearly for the first time in forever.  Niamh sure is packing some potent stuff!  You shake the cobwebs out of your head, glad to once again be <b>less dense than a goblin with a basilisk boyfriend</b>.");

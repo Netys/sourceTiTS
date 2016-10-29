@@ -1235,9 +1235,9 @@ private function fuckKeltsShitUp():void {
 	}
 }
 
-public function KeltSubmissionTimePassedNotify():void {
-	if (hours % 4 == 0 && Flag("COC.KELT_SUBMISSION") > 0) {
-		Flag("COC.KELT_SUBMISSION", -1, true);
+public function KeltSubmissionTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
+	if (int(flags["COC.KELT_SUBMISSION"]) > 0) {
+		flags["COC.KELT_SUBMISSION"] -= deltaT / 240.;
 	}
 }
 private var KeltSubmissionTimePassedNotifyHook: * = KeltSubmissionTimePassedNotifyGrapple();

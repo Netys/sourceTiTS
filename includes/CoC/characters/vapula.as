@@ -5,15 +5,17 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-public function VapulaTimePassedNotify():void
+public function VapulaTimePassedNotify(deltaT:uint, doOut:Boolean = true):void
 {
-	if (hours == 0 && minutes == 0) {
+	var ticks:uint = (timeAsStamp + deltaT) / (60 * 24) - timeAsStamp / (60 * 24);
+	
+	if (ticks > 0) { // once per day
 		if (vapulaSlave() && int(flags["COC.FOLLOWER_AT_FARM_VAPULA"]) == 0) {
-			if (int(flags["COC.VAPULA_HAREM_FUCK"]) == 0) IncrementFlag("COC.VAPULA_DAYS_SINCE_FED");
+			if (int(flags["COC.VAPULA_HAREM_FUCK"]) == 0) flags["COC.VAPULA_DAYS_SINCE_FED"] = int(flags["COC.VAPULA_DAYS_SINCE_FED"]) + ticks;
 			else flags["COC.VAPULA_DAYS_SINCE_FED"] = 0;
 		}
 		if (flags["COC.VAPULA_FOLLOWER"] == .5 || flags["COC.VAPULA_FOLLOWER"] == 1.5) flags["COC.VAPULA_FOLLOWER"]++;
-		IncrementFlag("COC.DAYS_SINCE_LAST_DEMON_DEALINGS");
+		flags["COC.DAYS_SINCE_LAST_DEMON_DEALINGS"] = int(flags["COC.DAYS_SINCE_LAST_DEMON_DEALINGS"]) + ticks;
 	}
 	if (vapulaSlave() && !pc.hasKeyItem("Demonic Strap-On") && (pc.hasVagina() && !pc.hasCock()) && int(flags["COC.FOLLOWER_AT_FARM_VAPULA"]) == 0 && inCamp()) {
 		eventQueue.push(vapulaGivesPCAPresent);

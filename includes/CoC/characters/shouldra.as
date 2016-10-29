@@ -29,11 +29,12 @@ public function shouldraSprite(ghost:Boolean = false):void {
 }
 
 //Implementation of TimeAwareInterface
-public function ShouldraTimePassedNotify():void
+public function ShouldraTimePassedNotify(deltaT:uint, doOut:Boolean = true):void
 {
-	if (minutes != 0) return; // once per hour
+	var ticks:uint = (timeAsStamp + deltaT) / 60 - (timeAsStamp / 60);
+	if (ticks <= 0) return; // once per hour
 	
-	if (flags["COC.SHOULDRA_MAGIC_COOLDOWN"] >= 1) flags["COC.SHOULDRA_MAGIC_COOLDOWN"]--;
+	if (flags["COC.SHOULDRA_MAGIC_COOLDOWN"] >= 1) flags["COC.SHOULDRA_MAGIC_COOLDOWN"] -= ticks;
 	if (followerShouldra()) {
 		if (pc.statusEffectv1("Exgartuan") == 1 && pc.hasCock() && rand(10) == 0) {
 			if (flags["COC.SHOULDRA_EXGARTUDRAMA"] == 1) {
@@ -43,7 +44,7 @@ public function ShouldraTimePassedNotify():void
 				eventQueue.push(exgartumonAndShouldraFightPartIII);
 			}
 		}
-		flags["COC.SHOULDRA_SLEEP_TIMER"]--;
+		flags["COC.SHOULDRA_SLEEP_TIMER"] -= ticks;
 		shouldersWarnings();
 		if (flags["COC.SHOULDRA_SLEEP_TIMER"] == 0 || (flags["COC.SHOULDRA_SLEEP_TIMER"] < 0 && flags["COC.SHOULDRA_SLEEP_TIMER"] % 16 == 0)) {
 			shouldraWakesUpOrPokesPCsForShitsAndGigglesIdunnoHowLongCanIMakeThisFunctionNameQuestionMark();

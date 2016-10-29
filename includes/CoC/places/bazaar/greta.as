@@ -450,10 +450,11 @@ private function removeTargettedSock(index:int):void {
 	addButton(0, "Next", gretasGarments);
 }
 
-public function CockSockTimePassedNotify():void {
+public function CockSockTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
+	var ticks:uint = (timeAsStamp + deltaT) / 5 - (timeAsStamp / 5);
 	// Regeneration tick for green sock.
-	if (minutes % 5 == 0 && pc.hasSock("viridian")) {
-		pc.HP(1);
+	if (ticks > 0 && pc.hasSock("viridian")) {
+		pc.HP(ticks);
 	}
 	
 	// validate cockrings

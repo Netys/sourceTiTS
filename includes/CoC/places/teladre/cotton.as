@@ -71,11 +71,8 @@ public function get cotton():PregnancyPlaceholder // since there are no TFs... s
 		//}
 		//End of Interface Implementation
 
-public function CottonNotify():void {
-	if (flags["COC.COTTON_KID_COUNT"] > 0 && hours == 23 && minutes == 0) flags["COC.COTTON_OLDEST_KID_AGE"]++; // facepalm.jpg
-	if (flags["COC.COTTON_PREGNANCY_INCUBATION"] == undefined) return; // not pregnant
-	
-	flags["COC.COTTON_PREGNANCY_INCUBATION"]--;
+public function CottonNotify(deltaT:uint, doOut:Boolean = true):void {
+	if (flags["COC.COTTON_PREGNANCY_INCUBATION"] != undefined) flags["COC.COTTON_PREGNANCY_INCUBATION"] -= deltaT;
 }
 
 private var CottonHook: * = CottonGrapple();
@@ -1370,7 +1367,7 @@ private function cottonPopsOutAKid():void {
 		output("\n\nYou tell her you'd like that, taking a seat nearby with the 'mother' of your child and watching as your baby foal sleeps soundly.  Eventually, though, you have to leave, and politely excuse yourself to head back to camp.");
 		flags["COC.COTTON_PREGNANCY_INCUBATION"] = undefined; //Clear Pregnancy
 		IncrementFlag("COC.COTTON_KID_COUNT");
-		if (flags["COC.COTTON_KID_COUNT"] == 1) flags["COC.COTTON_OLDEST_KID_AGE"] = 1;
+		if (flags["COC.COTTON_KID_COUNT"] == 1) flags["COC.COTTON_OLDEST_KID_AGE"] = days;
 		StatTracking.track("coc/pregnancy/cotton");
 		processTime(40 + rand(10));
 		clearMenu();
@@ -1434,7 +1431,7 @@ private function cottonPopsOutAKid():void {
 		output(" later.  The two of you head back out to the main section of the gym, while Cotton slaps you on the back, \"<i>We sure do make 'em good, don't we?  Anyway, if you want to work out, just get changed and come on back.</i>\"");
 		flags["COC.COTTON_PREGNANCY_INCUBATION"] = undefined; //Clear Pregnancy
 		IncrementFlag("COC.COTTON_KID_COUNT");
-		if (flags["COC.COTTON_KID_COUNT"] == 1) flags["COC.COTTON_OLDEST_KID_AGE"] = 1;
+		if (flags["COC.COTTON_KID_COUNT"] == 1) flags["COC.COTTON_OLDEST_KID_AGE"] = days;
 		StatTracking.track("coc/pregnancy/cotton");
 		
 		//Cotton menu here
@@ -1687,7 +1684,7 @@ public function birthingCottonsKids(pregSlot:int):void {
 	output("\n");
 	IncrementFlag("COC.COTTON_KID_COUNT");
 	StatTracking.track("coc/pregnancy/pc cotton");
-	if (flags["COC.COTTON_KID_COUNT"] == 1) flags["COC.COTTON_OLDEST_KID_AGE"] = 1;
+	if (flags["COC.COTTON_KID_COUNT"] == 1) flags["COC.COTTON_OLDEST_KID_AGE"] = days;
 	
 	processTime(4 * 60);
 	pc.lust(pc.lustMax());

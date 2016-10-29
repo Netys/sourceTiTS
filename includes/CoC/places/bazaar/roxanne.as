@@ -566,13 +566,14 @@ private function bigBootyRoxanneContestLoss():void {
 	addButton(0, "Next", mainGameMenu);
 }
 
-public function RoxanneTimePassedNotify():void {
-	if(minutes == 0) {
-		// Increase Roxanne's growing dick size...
-		IncrementFlag("COC.ROXANNE_SIZE");
-		// Reset if she finds someone to take it (random at high values)
-		if (Flag("COC.ROXANNE_SIZE") >= 300 && hours == 0 && rand(5) == 0) Flag("COC.ROXANNE_SIZE", 1);
-	}
+public function RoxanneTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
+	var ticks:uint = (timeAsStamp + deltaT) / 60 - (timeAsStamp / 60);
+	if (ticks <= 0) return; // once per hour
+	
+	// Increase Roxanne's growing dick size...
+	IncrementFlag("COC.ROXANNE_SIZE");
+	// Reset if she finds someone to take it (random at high values)
+	if (Flag("COC.ROXANNE_SIZE") >= 300 && hours == 0 && rand(5) == 0) Flag("COC.ROXANNE_SIZE", 1);
 }
 private var RoxanneTimePassedNotifyHook: * = RoxanneTimePassedNotifyGrapple();
 private function RoxanneTimePassedNotifyGrapple():* { timeChangeListeners.push(RoxanneTimePassedNotify); }

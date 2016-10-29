@@ -75,9 +75,9 @@ public function CoCTamaniPCLoss():void
 	}
 }
 
-public function TamaniTimePassedNotify():void {
+public function TamaniTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
 	if (flags["COC.INCUBATION_TAMANI"] == undefined) return;
-	flags["COC.INCUBATION_TAMANI"]--;
+	flags["COC.INCUBATION_TAMANI"]-=deltaT;
 	if (flags["COC.INCUBATION_TAMANI"] <= 0) tamaniGivesBirth(); //Silently clear Tamani's pregnancy if the player doesn't encounter her in time
 }
 

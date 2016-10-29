@@ -11,23 +11,23 @@ public function get helia():CoCHel {
 	return new CoCHel();
 }
 
-public function HelTimePassedNotify():void {
+public function HelTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
+	var newTimestamp:uint = timeAsStamp + deltaT;
+	
 	//checkedHeliaIsabellaThreesome = 0; //Make sure we test just once in timeChangeLarge
 	//pregnancy.pregnancyAdvance();
 	//trace("\nHelia time change: Time is " + model.time.hours + ", incubation: " + pregnancy.incubation + ", event: " + pregnancy.event, false);
-	if (hours == 0 && minutes == 0) {
-		if (flags["COC.HELSPAWN_GROWUP_COUNTER"] > 0) flags["COC.HELSPAWN_GROWUP_COUNTER"]++;
-		//if (flags["COC.HEL_RAPED_TODAY"] == 1) flags["COC.HEL_RAPED_TODAY"] = 0; // using days as flag now
-	}
+	if (flags["COC.HELSPAWN_GROWUP_COUNTER"] > 0) flags["COC.HELSPAWN_GROWUP_COUNTER"] += deltaT / (24 * 60.);
+	//if (flags["COC.HEL_RAPED_TODAY"] == 1) flags["COC.HEL_RAPED_TODAY"] = 0; // using days as flag now
 	//if (hours == 3 && minutes == 0 && followerHel() && flags["COC.SLEEP_WITH"] == "Helia" && rand(10) == 0 && inCamp()) {
 		//sleepyNightMareHel();
 		//return true;
 	//}
 	
 	if (flags["COC.HEL_PREGNANCY_INCUBATION"] != undefined) {
-		if (flags["COC.HEL_PREGNANCY_INCUBATION"] < timeAsStamp)
+		if (flags["COC.HEL_PREGNANCY_INCUBATION"] < newTimestamp)
 		{
-			if (flags["COC.HEL_PREGNANCY_INCUBATION"] < timeAsStamp && (hours == 6 || hours == 7) && inCamp() && eventQueue.indexOf(heliaBirthtime) == -1) {
+			if (flags["COC.HEL_PREGNANCY_INCUBATION"] < newTimestamp /*&& (hours == 6 || hours == 7)*/ && inCamp() && eventQueue.indexOf(heliaBirthtime) == -1) {
 				flags["COC.HEL_PREGNANCY_INCUBATION"] = undefined;
 				eventQueue.push(heliaBirthtime);
 				return;
@@ -57,17 +57,17 @@ public function HelTimePassedNotify():void {
 	}
 	
 	//Helia's morning surprise!
-	if (hours == 0 && minutes == 0 && eventQueue.indexOf(heliaBonusPointsAward) == -1 && inCamp() && followerHel() && flags["COC.HEL_BONUS_POINTS"] >= 150 && int(flags["COC.HELIA_KIDS_CHAT"]) == 0) {
+	if (eventQueue.indexOf(heliaBonusPointsAward) == -1 && inCamp() && followerHel() && flags["COC.HEL_BONUS_POINTS"] >= 150 && int(flags["COC.HELIA_KIDS_CHAT"]) == 0) {
 		eventQueue.push(heliaBonusPointsAward);
 		return;
 	}
-	if (hours == 8 && minutes == 0 && eventQueue.indexOf(helGotKnockedUp) == -1 && inCamp() && followerHel() && flags["COC.HEL_NTR_TRACKER"] == 1) {
+	if (((newTimestamp % (24 * 60)) / 60 == 8) && eventQueue.indexOf(helGotKnockedUp) == -1 && inCamp() && followerHel() && flags["COC.HEL_NTR_TRACKER"] == 1) {
 		eventQueue.push(helGotKnockedUp);
 		return;
 	}
 	if (flags["COC.HEL_FOLLOWER_LEVEL"] == 1 && flags["COC.HEL_HARPY_QUEEN_DEFEATED"] > 0 && helAffection() >= 100 &&
-		int(flags["COC.HELIA_FOLLOWER_DISABLED"]) == 0 && hours == 2 && minutes == 0 && eventQueue.indexOf(heliaFollowerIntro) == -1 && inCamp()) {
-		trace("WSEGF43TFG");
+		int(flags["COC.HELIA_FOLLOWER_DISABLED"]) == 0 && ((newTimestamp % (24 * 60)) / 60 == 2) && eventQueue.indexOf(heliaFollowerIntro) == -1 && inCamp()) {
+		//trace("WSEGF43TFG");
 		eventQueue.push(heliaFollowerIntro);
 		return;   
 	}
@@ -77,12 +77,12 @@ public function HelTimePassedNotify():void {
 		//return true;
 	//}
 	//Helspawn night smex!
-	if (flags["COC.HELSPAWN_AGE"] == 2 && (hours == 2 || hours == 3 || hours == 4) && minutes == 0 && eventQueue.indexOf(helspawnIsASlut) == -1 && flags["COC.HELSPAWN_GROWUP_COUNTER"] == 7 && int(flags["COC.HELSPAWN_FUCK_INTERRUPTUS"]) == 0 && inCamp()) {
+	if (flags["COC.HELSPAWN_AGE"] == 2 && ((newTimestamp % (24 * 60)) / 60 <= 4) && minutes == 0 && eventQueue.indexOf(helspawnIsASlut) == -1 && flags["COC.HELSPAWN_GROWUP_COUNTER"] == 7 && int(flags["COC.HELSPAWN_FUCK_INTERRUPTUS"]) == 0 && inCamp()) {
 		helspawnIsASlut();
 		return;
 	}
 	//Chance of threesomes!
-	if (flags["COC.HEL_FUCKBUDDY"] == 1 && isabellaFollower() && hours == 2 && minutes == 0 && days % 11 == 0 && eventQueue.indexOf(followrIzzyxSallyThreesomePretext) == -1 && eventQueue.indexOf(isabellaXHelThreeSomeCampStart) == -1 && int(flags["COC.FOLLOWER_AT_FARM_ISABELLA"]) == 0 && inCamp()) {
+	if (flags["COC.HEL_FUCKBUDDY"] == 1 && isabellaFollower() && ((newTimestamp % (24 * 60)) / 60 == 2) && days % 11 == 0 && eventQueue.indexOf(followrIzzyxSallyThreesomePretext) == -1 && eventQueue.indexOf(isabellaXHelThreeSomeCampStart) == -1 && int(flags["COC.FOLLOWER_AT_FARM_ISABELLA"]) == 0 && inCamp()) {
 		trace("ISABELLA/HELL TEST");
 		if (int(flags["COC.HEL_ISABELLA_THREESOME_ENABLED"]) == 0) { //Hell/Izzy threesome intro
 			//spriteSelect(31);

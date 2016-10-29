@@ -55,8 +55,9 @@ import classes.Engine.Utility.*;
 private var checkedExgartuan:int;
 
 //Implementation of TimeAwareInterface
-public function ExgartuanTimePassedNotify():void {
-	if (minutes != 0) return; // once per hour
+public function ExgartuanTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
+	var newTimestamp:uint = timeAsStamp + deltaT;
+	if (timeAsStamp / 60 >= newTimestamp / 60) return; // once per hour
 	
 	checkedExgartuan = 0; //Make sure we test just once in timeChangeLarge
 	if (pc.hasStatusEffect("Exgartuan")) { //Update Exgartuan stuff

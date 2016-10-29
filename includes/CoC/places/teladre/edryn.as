@@ -68,10 +68,10 @@ public function showEdryn():void {
 		//}
 		////End of Interface Implementation
 
-public function EdrynNotify():void {
+public function EdrynNotify(deltaT:uint, doOut:Boolean = true):void {
 	if (flags["COC.EDRYN_PREGNANCY_INCUBATION"] == undefined) return; // not pregnant
 	if (flags["COC.EDRYN_PREGNANT_AND_NOT_TOLD_PC_YET"] == undefined) return; //Pregnancy on hold until the PC discovers it
-	flags["COC.EDRYN_PREGNANCY_INCUBATION"]--;
+	flags["COC.EDRYN_PREGNANCY_INCUBATION"] -= deltaT;
 	if (flags["COC.EDRYN_PREGNANCY_INCUBATION"] > 0) return; // not ready yet
 	
 	flags["COC.EDRYN_PREGNANCY_INCUBATION"] = undefined; //Clear Pregnancy

@@ -47,26 +47,37 @@ public function kathLocation(allowOverride:Boolean = true):int {
 	return KLOC_KATHS_APT; // at home
 }
 
-public function KatherineTimePassedNotify():void {
-	if (minutes == 0 ) { // called every hour
+public function KatherineTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
+	var ticks:uint = (timeAsStamp + deltaT) / 60 - (timeAsStamp / 60);
+	if (ticks <= 0) return; // once per hour
+	var curHour:uint = hours;
+	var curDay:uint = days;
+	
+	for (var i:int = 0; i < ticks; i++) {
+		curHour++;
+		if (curHour >= 24) {
+			curHour = 0;
+			curDay++;
+		}
+		
 		if (flags["COC.KATHERINE_UNLOCKED"] < 4) { //Before employment always returns to the alleyway behind Oswald’s after sex.
 			flags["COC.KATHERINE_LOCATION"] = KLOC_STREETS;
 			return; //She only has tattered clothes, so no need to deal with clothing either.
 		}
 		
-		if (hours == 5) {
+		if (curHour == 5) {
 			flags["COC.KATHERINE_LOCATION"] = KLOC_STREETS; //On duty
 			if (flags["COC.KATHERINE_URTA_DATE"] == KDATE_WHENEVER) {
-				if (days % 4 == 0) katherineAndUrtaHadSex(false); //Roughly twice a week
+				if (curDay % 4 == 0) katherineAndUrtaHadSex(false); //Roughly twice a week
 			}
 			else if (flags["COC.KATHERINE_URTA_DATE"] == KDATE_LOTS) katherineAndUrtaHadSex(false); //They fuck at least once a day
 			if (flags["COC.KATHERINE_VALA_DATE"] == KDATE_WHENEVER) {
-				if (days % 4 == 0) katherineAndValaHadSex(); //Roughly twice a week
+				if (curDay % 4 == 0) katherineAndValaHadSex(); //Roughly twice a week
 			}
 			else if (flags["COC.KATHERINE_VALA_DATE"] == KDATE_LOTS) katherineAndValaHadSex(); //They fuck at least once a day
 		}
 		
-		if (hours >= 14) {
+		if (curHour >= 14) {
 			//Once employed Kath goes home from any encounter after 14:00 hours, unless they happened at either Urta’s apartment or Urta’s house.
 			switch (flags["COC.KATHERINE_LOCATION"]) {
 				case KLOC_KATHS_APT:
@@ -87,7 +98,7 @@ public function KatherineTimePassedNotify():void {
 				default: flags["COC.KATHERINE_LOCATION"] = KLOC_KATHS_APT;
 			}
 		}
-		else if (hours >= 10) {
+		else if (curHour >= 10) {
 			//Any time after 10:00 but before 14:00 Kath returns to the bar after encounters, though she will stay at her home if the encounter happened there.
 			switch (flags["COC.KATHERINE_LOCATION"]) {
 				case KLOC_BAR:

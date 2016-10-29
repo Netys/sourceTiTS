@@ -2703,7 +2703,7 @@ public function isNineTails(target:Creature):Boolean {
 	return target.hasTail(GLOBAL.TYPE_VULPINE) && target.tailCount >= 9 && (target.hasPerk("Enlightened Nine-tails") || target.hasPerk("Nine-tails") || target.hasPerk("Corrupted Nine-tails"));
 }
 
-public function NineTailsTimePassedNotify():void {
+public function NineTailsTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
 	if (pc.hasPerk("Enlightened Nine-tails") || pc.hasPerk("Nine-tails") || pc.hasPerk("Corrupted Nine-tails")) {
 		if (!pc.hasTail(GLOBAL.TYPE_VULPINE) || pc.tailCount < 9) {
 			if (pc.hasPerk("Nine-tails")) return;
@@ -2722,11 +2722,11 @@ public function NineTailsTimePassedNotify():void {
 			if (pc.hasPerk("Enlightened Nine-tails")) pc.removePerk("Enlightened Nine-tails");
 			if (pc.hasPerk("Corrupted Nine-tails")) pc.removePerk("Corrupted Nine-tails");
 		}
-		else pc.energy(0.25);
+		else pc.energy(0.25 * deltaT);
 	}
 }
 
-public function IllusoryAttireTimePassedNotify():void {
+public function IllusoryAttireTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
 	if (pc.armor is IllusoryAttire) {
 		(pc.armor as IllusoryAttire).onValidate(pc);
 	}

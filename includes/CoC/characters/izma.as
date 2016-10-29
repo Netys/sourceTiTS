@@ -38,8 +38,8 @@ internal const IZMA_INCUBATION_3:int = 150 * 60;
 internal const IZMA_INCUBATION_4:int = 100 * 60;
 internal const IZMA_INCUBATION_5:int = 50 * 60;
 
-public function IzmaTimePassedNotify():void {
-	if (flags["COC.IZMA_INCUBATION"] != undefined) flags["COC.IZMA_INCUBATION"]--;
+public function IzmaTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
+	if (flags["COC.IZMA_INCUBATION"] != undefined) flags["COC.IZMA_INCUBATION"] -= deltaT;
 }
 
 public function followerCampMenuBlurbIzma(showInteractButton:Boolean):void {

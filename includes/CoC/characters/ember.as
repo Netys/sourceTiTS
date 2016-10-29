@@ -92,7 +92,7 @@ public function followerCampMenuBlurbEmber(showInteractButton:Boolean):void {
 }
 
 //Implementation of TimeAwareInterface
-public function EmberTimePassedNotify():void
+public function EmberTimePassedNotify(deltaT:uint, doOut:Boolean = true):void
 {
 	var needNext:Boolean = false;
 	//pregnancy.pregnancyAdvance();
@@ -135,10 +135,6 @@ public function EmberTimePassedNotify():void
 		}
 		//Reset lust counter if not max lust'ed
 		else flags["COC.EMBER_LUST_BITCHING_COUNTER"] = undefined;
-	}
-	if (hours == 0 && minutes == 0) {
-		if (!pc.isPregnant()) flags["COC.EMBER_BITCHES_ABOUT_PREGNANT_PC"] = 0;
-		flags["COC.DRANK_EMBER_BLOOD_TODAY"] = 0;
 	}
 }
 //End of Interface Implementation

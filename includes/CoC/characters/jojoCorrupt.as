@@ -58,8 +58,10 @@ import classes.Engine.Utility.*;
 //const TIMES_EGGED_JOJO:int = 590;
 //const JOJO_EGGCUBATE_COUNT:int = 591;
 
-public function JojoTimePassedNotify():void {
-	if (hours == 0 && flags["COC.JOJO_DISABLED"] == 1) flags["COC.JOJO_DISABLED"] = undefined;
+public function JojoTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
+	var newTimestamp:uint = timeAsStamp + deltaT;
+	if (timeAsStamp / (60 * 24) < newTimestamp / (60 * 24)) // once per day
+		if (flags["COC.JOJO_DISABLED"] == 1) flags["COC.JOJO_DISABLED"] = undefined;
 }
 
 private var JojoTimePassedNotifyHook: * = JojoTimePassedNotifyGrapple();

@@ -32,22 +32,23 @@ public function sophiePregnancyEvent():int {
 //private var checkedSophie:int; //Make sure we test this event just once in timeChangeLarge
 
 //Implementation of TimeAwareInterface
-public function SophieTimePassedNotify():void
+public function SophieTimePassedNotify(deltaT:uint, doOut:Boolean = true):void
 {
 	if (flags["COC.UNKNOWN_FLAG_NUMBER_00285"] >= 50 && !pc.hasPerk("Luststick Adapted") && eventQueue.indexOf(unlockLuststickResistance) == -1) { //Luststick resistance unlock
 		eventQueue.push(unlockLuststickResistance);
 	}
 	
-	if (flags["COC.SOPHIE_INCUBATION"] != undefined && flags["COC.SOPHIE_INCUBATION"] > 0) flags["COC.SOPHIE_INCUBATION"]--;
+	if (flags["COC.SOPHIE_INCUBATION"] != undefined && flags["COC.SOPHIE_INCUBATION"] > 0) flags["COC.SOPHIE_INCUBATION"] -= deltaT;
 	
-	if (minutes != 0) return;
+	var ticks:uint = (timeAsStamp + deltaT) / 60 - (timeAsStamp / 60);
+	if (ticks <= 0) return; // once per hour
 	
 	if (flags["COC.UNKNOWN_FLAG_NUMBER_00283"] > 0) return; //Nothing can happen if she's been kicked out or disappeared off into the mountains
 	var needNext:Boolean = false;
 	//checkedSophie = 0;
 	//pregnancy.pregnancyAdvance();
 	//trace("\nSophie time change: Time is " + model.time.hours + ", incubation: " + pregnancy.incubation + ", event: " + pregnancy.event);
-	if (flags["COC.SOPHIE_ANGRY_AT_PC_COUNTER"] > 0) flags["COC.SOPHIE_ANGRY_AT_PC_COUNTER"]--;
+	if (flags["COC.SOPHIE_ANGRY_AT_PC_COUNTER"] > 0) flags["COC.SOPHIE_ANGRY_AT_PC_COUNTER"] -= ticks;
 	if (flags["COC.SOPHIES_DAUGHTERS_DEBIMBOED"] == 1 && sophieFollower() && int(flags["COC.FOLLOWER_AT_FARM_SOPHIE"]) == 0 && eventQueue.indexOf(sophieDaughterDebimboUpdate) == -1) {
 		eventQueue.push(sophieDaughterDebimboUpdate);
 		//needNext = true;
@@ -60,19 +61,19 @@ public function SophieTimePassedNotify():void
 	}
 	else { //She might be a bimbo, debimboed or normal, but she's a follower and presently at camp
 		if (flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"] > 0 && eventQueue.indexOf(sophiesEggHatches) == -1) { //Maturation of the egg she laid
-			flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"]--;
-			if (flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"] == 0) {
+			flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"] -= ticks;
+			if (flags["COC.SOPHIE_CAMP_EGG_COUNTDOWN"] <= 0) {
 				eventQueue.push(sophiesEggHatches);
 				//needNext = true;
 			}
 		}
 		if (flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"] > 0) { //Maturation of her daughter into an adult
-			flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"]--;
+			flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"] -= ticks;
 			if (flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"] < 1) {
 				flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"] = 1;
 			}
 			else {
-				switch (flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"]) {
+				switch (flags["COC.SOPHIE_DAUGHTER_MATURITY_COUNTER"]) { // due to batch nature of new time pass it would likely never appear
 					case 100:
 					case 200:
 					case 325:

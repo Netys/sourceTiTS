@@ -57,13 +57,12 @@ import classes.Engine.Utility.*;
 //}
 
 //Implementation of TimeAwareInterface
-public function TamaniDaughtersTimePassedNotify():void
+public function TamaniDaughtersTimePassedNotify(deltaT:uint, doOut:Boolean = true):void
 {
-	if (minutes != 0) return;
-	if (flags["COC.TAMANI_DAUGHTER_PREGGO_COUNTDOWN"] > 0) flags["COC.TAMANI_DAUGHTER_PREGGO_COUNTDOWN"]--;
+	if (flags["COC.TAMANI_DAUGHTER_PREGGO_COUNTDOWN"] > 0) flags["COC.TAMANI_DAUGHTER_PREGGO_COUNTDOWN"] -= deltaT / 60.;
 	//pregnancy.pregnancyAdvance(); //Preg should be 7*24, ends at 0 to -48 --> 9*24, ends at 0
 	//trace("\nTamani's Daughters time change: Time is " + model.time.hours + ", incubation: " + pregnancy.incubation + ", event: " + pregnancy.event);
-	if (flags["COC.TAMANI_DAUGHTER_PREGGO_COUNTDOWN"] == 0) {
+	if (flags["COC.TAMANI_DAUGHTER_PREGGO_COUNTDOWN"] <= 0) {
 		flags["COC.TAMANI_NUMBER_OF_DAUGHTERS"] = int(flags["COC.TAMANI_NUMBER_OF_DAUGHTERS"]) + int(flags["COC.TAMANI_DAUGHTERS_PREGNANCY_COUNT"]);
 		flags["COC.TAMANI_DAUGHTERS_PREGNANCY_COUNT"] = undefined;
 		flags["COC.TAMANI_DAUGHTER_PREGGO_COUNTDOWN"] = undefined; //Clear Pregnancy

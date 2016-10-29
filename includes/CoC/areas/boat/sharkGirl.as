@@ -36,10 +36,11 @@ Sex Life: The shark girls treat sex like a game or a sport, constantly battling 
 */
 
 // Tick down bad end counter every 4 hours
-public function sharkGirlBadEndCounterTimePassedNotify():void {
-	if (hours % 4 == 0 && flags["COC.SHARK_GIRLS_BAD_END_CD"] != undefined && flags["COC.SHARK_GIRLS_BAD_END_CD"] > 0) {
-		flags["COC.SHARK_GIRLS_BAD_END_CD"]--;
-		trace("Shark Girl Bad End counter: " + flags["COC.SHARK_GIRLS_BAD_END_CD"]);
+public function sharkGirlBadEndCounterTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
+	if (flags["COC.SHARK_GIRLS_BAD_END_CD"] != undefined && flags["COC.SHARK_GIRLS_BAD_END_CD"] > 0) {
+		flags["COC.SHARK_GIRLS_BAD_END_CD"] -= deltaT / 240.;
+		if (flags["COC.SHARK_GIRLS_BAD_END_CD"] <= 0) flags["COC.SHARK_GIRLS_BAD_END_CD"] = undefined;
+		//trace("Shark Girl Bad End counter: " + flags["COC.SHARK_GIRLS_BAD_END_CD"]);
 	}
 }
 private var sharkGirlBadEndCounterTimePassedNotifyHook: * = sharkGirlBadEndCounterTimePassedNotifyGrapple();

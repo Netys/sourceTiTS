@@ -887,9 +887,9 @@ public function apparantlyJojoDOESlift():void
 	addButton(0, "Next", mainGameMenu);
 }
 
-public function ControlledBreathTimePassedNotify():void {
+public function ControlledBreathTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
 	if (pc.hasPerk("Controlled Breath")) {
-		pc.energy(1.0 / 15);
+		pc.energy(deltaT / 15.);
 	}
 }
 private var ControlledBreathTimePassedNotifyHook: * = ControlledBreathTimePassedNotifyGrapple();

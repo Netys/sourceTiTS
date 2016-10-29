@@ -48,7 +48,7 @@ import classes.Engine.Utility.*;
 //const URTA_PETPLAY_DONE:int = 857;
 
 //Implementation of TimeAwareInterface
-public function UrtaTimePassedNotify():void
+public function UrtaTimePassedNotify(deltaT:uint, doOut:Boolean = true):void
 {
 	//var needNext:Boolean = false;
 	//drainedByKath = false; //This var will only be set true after Kath licks Urta out - it stops you from going back immediately for more Urta sex
@@ -67,20 +67,17 @@ public function UrtaTimePassedNotify():void
 		flags["COC.URTA_INCUBATION_EGGS_TYPE"] = undefined;
 	}
 	
-	if (hours == 0 && minutes == 0) {
-		//if (Flag("COC.URTA_TIME_SINCE_LAST_CAME") == 0) IncrementFlag("COC.URTA_CUM_NO_CUM_DAYS");
-		//else flags["COC.URTA_CUM_NO_CUM_DAYS"] = 0;
-		if (flags["COC.URTA_PC_AFFECTION_COUNTER"] > 0 && flags["COC.URTA_PC_AFFECTION_COUNTER"] < 30) {
-			flags["COC.URTA_PC_AFFECTION_COUNTER"] -= .5;
-			if (flags["COC.URTA_PC_AFFECTION_COUNTER"] < 0) flags["COC.URTA_PC_AFFECTION_COUNTER"] = 0;
-		}
+	//if (Flag("COC.URTA_TIME_SINCE_LAST_CAME") == 0) IncrementFlag("COC.URTA_CUM_NO_CUM_DAYS");
+	//else flags["COC.URTA_CUM_NO_CUM_DAYS"] = 0;
+	if (flags["COC.URTA_PC_AFFECTION_COUNTER"] > 0 && flags["COC.URTA_PC_AFFECTION_COUNTER"] < 30) {
+		flags["COC.URTA_PC_AFFECTION_COUNTER"] -= deltaT / (48 * 60.);
+		if (flags["COC.URTA_PC_AFFECTION_COUNTER"] < 0) flags["COC.URTA_PC_AFFECTION_COUNTER"] = 0;
 	}
-	if (minutes == 0) {
-		//Urta egg freak out
-		if (flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] > 1) {
-			flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"]--;
-			if (flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] < 1) flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] = 1;
-		}
+	
+	//Urta egg freak out
+	if (flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] > 1) {
+		flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] -= deltaT / 60.;
+		if (flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] < 1) flags["COC.URTA_ANGRY_AT_PC_COUNTDOWN"] = 1;
 	}
 }
 

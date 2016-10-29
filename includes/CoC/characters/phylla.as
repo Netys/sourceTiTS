@@ -71,18 +71,27 @@ public function followerCampMenuBlurbPhylla(showInteractButton:Boolean):void {
 	}
 }
 
-public function PhyllaTimePassedNotify():void
+public function PhyllaTimePassedNotify(deltaT:uint, doOut:Boolean = true):void
 {
 	//pregnancy.pregnancyAdvance();
-	if (flags["COC.PHYLLA_DRIDER_INCUBATION"] > 0) flags["COC.PHYLLA_DRIDER_INCUBATION"]--;
-	if (minutes != 0) return;
+	if (flags["COC.PHYLLA_DRIDER_INCUBATION"] > 0) flags["COC.PHYLLA_DRIDER_INCUBATION"] -= deltaT;
+	
+	var ticks:uint = (timeAsStamp + deltaT) / 60 - (timeAsStamp / 60);
+	if (ticks <= 0) return; // once per hour
+	
 	//trace("\nPhylla time change: Time is " + model.time.hours + ", incubation: " + pregnancy.incubation + ", event: " + pregnancy.event);
-	if (flags["COC.PHYLLA_EGG_LAYING"] > 0 && rand(5) == 0 && int(flags["COC.ANT_KIDS"]) < 5000) IncrementFlag("COC.ANT_KIDS");
-	if (hours == 0 && minutes == 0) {
-		//The pregnancyStore doesn't handle Phylla's ant eggs because they are continuous. The regular egg production is all handled here.
-		if (flags["COC.PHYLLA_EGG_LAYING"] > 0) IncrementFlag("COC.DAYS_PHYLLA_HAS_SPENT_BIRTHING");
-		if (phyllaWaifu()) IncrementFlag("COC.DAYS_PHYLLA_IN_CAMP");
+	if (flags["COC.PHYLLA_EGG_LAYING"] > 0) {
+		for (var i:int = 0; i < ticks; i++) 
+		{
+			if (rand(5) == 0 && int(flags["COC.ANT_KIDS"]) < 5000) IncrementFlag("COC.ANT_KIDS");
+		}
 	}
+	
+	//if (hours == 0 && minutes == 0) {
+		////The pregnancyStore doesn't handle Phylla's ant eggs because they are continuous. The regular egg production is all handled here.
+		//if (flags["COC.PHYLLA_EGG_LAYING"] > 0) IncrementFlag("COC.DAYS_PHYLLA_HAS_SPENT_BIRTHING");
+		//if (phyllaWaifu()) IncrementFlag("COC.DAYS_PHYLLA_IN_CAMP");
+	//}
 	return;
 }
 

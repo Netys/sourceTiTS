@@ -855,32 +855,38 @@ public function lynnetteApproval(arg:int = 0):Number {
 	return flags["COC.LYNNETTE_APPROVAL"];
 }
 
-public function LynetteTimePassedNotify():void {
+public function LynetteTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
 	flags["COC.SALON_PAID"] = 0;
 	if (flags["COC.LYNNETTE_PREGNANCY_CYCLE"] == undefined) flags["COC.LYNNETTE_PREGNANCY_CYCLE"] = 0;
+	var newTimestamp:uint = timeAsStamp + deltaT;
 	
-	if (hours == 0 && minutes == 0) {
+	if (newTimestamp / (24 * 60) > timeAsStamp) {
 		if (flags["COC.LYNNETTE_CARRYING_COUNT"] == 0 || flags["COC.LYNNETTE_PREGNANCY_CYCLE"] != 4)
 		{
-			flags["COC.LYNNETTE_PREGNANCY_CYCLE"]++;
+			flags["COC.LYNNETTE_PREGNANCY_CYCLE"] += newTimestamp / (24 * 60) - days;
 		}
-		if (flags["COC.LYNNETTE_PREGNANCY_CYCLE"] == 7) {
-			flags["COC.LYNNETTE_PREGNANCY_CYCLE"] = 0;
+		if (flags["COC.LYNNETTE_PREGNANCY_CYCLE"] >= 7) {
+			flags["COC.LYNNETTE_PREGNANCY_CYCLE"] = flags["COC.LYNNETTE_PREGNANCY_CYCLE"] % 7;
 		}
 	}
 }
 private var LynetteTimePassedNotifyHook: * = LynetteTimePassedNotifyGrapple();
 private function LynetteTimePassedNotifyGrapple():* { timeChangeListeners.push(LynetteTimePassedNotify); }
 
-public function HairSerumTimePassedNotify():void {			
-	if (flags["COC.INCREASED_HAIR_GROWTH_SERUM_TIME"] > 0 && minutes == 0 && hours % (24 / flags["COC.INCREASED_HAIR_GROWTH_SERUM_POWER"]) == 0) { // every 24/12/8 hours
+public function HairSerumTimePassedNotify(deltaT:uint, doOut:Boolean = true):void { // why it's not an effect, again?
+	if (int(flags["COC.INCREASED_HAIR_GROWTH_SERUM_TIME"]) <= 0 || !inMareth()) return;
+	
+	var newTimestamp:uint = timeAsStamp + deltaT;
+	var ticks:int = (newTimestamp / (24 * 60 / flags["COC.INCREASED_HAIR_GROWTH_SERUM_POWER"])) - (timeAsStamp / (24 * 60 / flags["COC.INCREASED_HAIR_GROWTH_SERUM_POWER"]));
+	ticks = Math.min(ticks, flags["COC.INCREASED_HAIR_GROWTH_SERUM_TIME"]);
+	if (ticks > 0) { // every 24/12/8 hours
 		//trace("Serum tick! Before: " + pc.hairLength);
-		flags["COC.INCREASED_HAIR_GROWTH_SERUM_TIME"]--;
+		flags["COC.INCREASED_HAIR_GROWTH_SERUM_TIME"] -= ticks;
+		pc.hairLength += ticks;
 		
 		eventBuffer += "\n\nYour scalp tingles and you";
-		if (pc.hairLength <= 0)
+		if (pc.hairLength <= 1)
 		{
-			pc.hairLength = 1;
 			eventBuffer += " reach up to scratch it. Instead of [pc.skinFurScalesNoun], your fingers run across";
 			if(pc.hairType == GLOBAL.HAIR_TYPE_REGULAR)
 			{
@@ -894,14 +900,13 @@ public function HairSerumTimePassedNotify():void {
 		}
 		else
 		{
-			pc.hairLength++;
 			if (pc.hairLength <= 2)
 			{
-				eventBuffer += " reach up to touch your short [pc.hairNoun]. <b>It seems longer than it did before, growing out one more inch.</b>";
+				eventBuffer += " reach up to touch your short [pc.hairNoun]. <b>It seems longer than it did before.</b>";
 			}
 			else
 			{
-				eventBuffer += " see your [pc.hairNoun] grow out, right in front of your [pc.eyes]. <b>Your hair has lengthened by another inch!</b>";
+				eventBuffer += " see your [pc.hairNoun] grow out, right in front of your [pc.eyes]. <b>Your hair has lengthened!</b>";
 			}
 		}
 		if(pc.hairStyle != "null" && pc.hairStyle != "tentacle")
@@ -910,7 +915,7 @@ public function HairSerumTimePassedNotify():void {
 			pc.hairStyle = "null";
 		}
 		
-		if (flags["COC.INCREASED_HAIR_GROWTH_SERUM_TIME"] == 0) {
+		if (flags["COC.INCREASED_HAIR_GROWTH_SERUM_TIME"] <= 0) {
 			eventBuffer += "\n\nThe tingling on your scalp slowly fades away as the hair extension serum wears off.  Maybe it's time to go back to the salon for more?";
 			flags["COC.INCREASED_HAIR_GROWTH_SERUM_POWER"] = 0;
 		}

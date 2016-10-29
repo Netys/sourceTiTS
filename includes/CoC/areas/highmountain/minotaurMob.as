@@ -69,10 +69,8 @@ public function showMinoMob():void
 	showName("\nMINOTAURS");
 }
 
-public function MinoMobTimePassedNotify():void
+public function MinoMobTimePassedNotify(deltaT:uint, doOut:Boolean = true):void
 {
-	if (minutes != 0) return; // one tick per hour
-	
 	//326 Number of sons grown
 	//327 Number of sons pending
 	//328 growup countdown
@@ -81,10 +79,10 @@ public function MinoMobTimePassedNotify():void
 	if (flags["COC.MINOTAUR_LAST_SON_BIRTH_TIME"] < 0) flags["COC.MINOTAUR_LAST_SON_BIRTH_TIME"] = 0;
 	//Countdown for son growing up
 	if (flags["COC.MINOTAUR_LAST_SON_BIRTH_TIME"] > 0) {
-		flags["COC.MINOTAUR_LAST_SON_BIRTH_TIME"]--;
+		flags["COC.MINOTAUR_LAST_SON_BIRTH_TIME"] -= deltaT / 60.;
 		//Hit zero, move kid to grown up pile!
 		if (flags["COC.MINOTAUR_LAST_SON_BIRTH_TIME"] <= 0 && flags["COC.MINOTAUR_SONS_PENDING_GROWTH"] > 0) {
-			flags["COC.MINOTAUR_SONS_PENDING_GROWTH"]--;
+			flags["COC.MINOTAUR_SONS_PENDING_GROWTH"] -= deltaT / 60.;
 			IncrementFlag("COC.MINOTAUR_LAST_SONS_ADULT");
 		}
 	}

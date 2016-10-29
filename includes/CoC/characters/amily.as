@@ -164,9 +164,9 @@ public function amilyFollower():Boolean {
 
 	//pregnancy = new PregnancyStore(kFLAGS.AMILY_PREGNANCY_TYPE, kFLAGS.AMILY_INCUBATION, kFLAGS.AMILY_BUTT_PREGNANCY_TYPE, kFLAGS.AMILY_OVIPOSITED_COUNTDOWN);
 
-public function AmilyTimePassedNotify():void {
-	if (flags["COC.AMILY_INCUBATION"] != undefined) flags["COC.AMILY_INCUBATION"]--;
-	if (flags["COC.AMILY_OVIPOSITED_COUNTDOWN"] != undefined) flags["COC.AMILY_OVIPOSITED_COUNTDOWN"]--;
+public function AmilyTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
+	if (flags["COC.AMILY_INCUBATION"] != undefined) flags["COC.AMILY_INCUBATION"] -= deltaT;
+	if (flags["COC.AMILY_OVIPOSITED_COUNTDOWN"] != undefined) flags["COC.AMILY_OVIPOSITED_COUNTDOWN"] -= deltaT;
 }
 
 private var AmilyTimePassedNotifyHook: * = AmilyTimePassedNotifyGrapple();

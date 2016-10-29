@@ -356,9 +356,9 @@ protected function smokeEffect(smokedPipe:Boolean):void
 	pc.lust(lustMod);
 }
 
-public function IzumiSmokeTimePassedNotify():void {
+public function IzumiSmokeTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
 	if (pc.hasStatusEffect("Izumi's Pipe Smoke")) { // REALLY should make some hook for OnEffectEnd, since REALLY don't want to use that statusTick mess
-		pc.addStatusValue("Izumi's Pipe Smoke", 1, -1);
+		pc.addStatusValue("Izumi's Pipe Smoke", 1, -deltaT);
 		if (pc.statusEffectv1("Izumi's Pipe Smoke") <= 0) {
 			pc.reflexesRaw += pc.statusEffectv2("Izumi's Pipe Smoke");
 			//pc.sens -= pc.statusAffect(affectIndex).value3;

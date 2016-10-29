@@ -50,23 +50,23 @@ public function followerCampMenuBlurbKiha(showInteractButton:Boolean):void {
 }
 
 //Implementation of TimeAwareInterface
-public function KihaTimePassedNotify():void
+public function KihaTimePassedNotify(deltaT:uint, doOut:Boolean = true):void
 {
 	var needNext:Boolean = false;
 	//trace("\Kiha time change: Time is " + hours + ", incubation: " + pregnancy.incubation + ", event: " + pregnancy.event);
 	if (flags["COC.KIHA_INCUBATION"] != undefined) {
-		flags["COC.KIHA_INCUBATION"]--;
+		flags["COC.KIHA_INCUBATION"] -= deltaT;
 		if (flags["COC.KIHA_INCUBATION"] <= 0 && inCamp() && followerKiha()) {
 			eventQueue.push(kihaGivesBirth);
 			flags["COC.KIHA_INCUBATION"] = undefined; //Clear Pregnancy
 		}
-		if (flags["COC.KIHA_INCUBATION"] <= -48 * 60) { // Birth without player
+		else if (flags["COC.KIHA_INCUBATION"] <= -48 * 60) { // Birth without player
 			kihaGivesBirth();
 			flags["COC.KIHA_INCUBATION"] = undefined; //Clear Pregnancy
 		}
 	}
-	if (flags["COC.KIHA_CHILD_MATURITY_COUNTER"] > 1 && minutes == 0) {
-		if (flags["COC.KIHA_CHILD_MATURITY_COUNTER"] != 144) flags["COC.KIHA_CHILD_MATURITY_COUNTER"]--;
+	if (flags["COC.KIHA_CHILD_MATURITY_COUNTER"] > 1) {
+		if (flags["COC.KIHA_CHILD_MATURITY_COUNTER"] != 144) flags["COC.KIHA_CHILD_MATURITY_COUNTER"] -= deltaT / 60.;
 		if (flags["COC.KIHA_CHILD_MATURITY_COUNTER"] == 240 && inCamp() && followerKiha()) {
 			eventQueue.push(kihaBreastfeedingTime);
 		}
@@ -74,7 +74,7 @@ public function KihaTimePassedNotify():void
 			eventQueue.push(kihaTrainsHerKids);
 		}
 	}
-	else if (flags["COC.KIHA_CHILD_MATURITY_COUNTER"] == 1 && inCamp() && followerKiha()) {
+	else if (flags["COC.KIHA_CHILD_MATURITY_COUNTER"] <= 1 && inCamp() && followerKiha()) {
 		eventQueue.push(kihaChildGraduationTime);
 	}
 }

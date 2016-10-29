@@ -9,8 +9,10 @@ import classes.Util.*;
 import classes.Engine.Interfaces.*;
 import classes.Engine.Utility.*;
 
-public function GiacomoTimePassedNotify():void {
-	if (flags["COC.CERULEAN_POTION_BAD_END_FUTA_COUNTER"] > 0) flags["COC.CERULEAN_POTION_BAD_END_FUTA_COUNTER"] -= 0.5;
+public function GiacomoTimePassedNotify(deltaT:uint, doOut:Boolean = true):void {
+	if (flags["COC.CERULEAN_POTION_BAD_END_FUTA_COUNTER"] > 0) {
+		flags["COC.CERULEAN_POTION_BAD_END_FUTA_COUNTER"] -= deltaT / (48. * 60);
+	}
 }
 
 private var GiacomoTimePassedNotifyHook: * = GiacomoTimePassedNotifyGrapple();

@@ -59,9 +59,10 @@ public function followerCampMenuBlurbHolli(showInteractButton:Boolean):void {
 }
 
 //Implementation of TimeAwareInterface
-public function HolliTimePassedNotify():void
+public function HolliTimePassedNotify(deltaT:uint, doOut:Boolean = true):void
 {
-	if (hours == 0 && minutes == 0) { // once per day
+	var newTimestamp:uint = timeAsStamp + deltaT;
+	if (timeAsStamp / (60 * 24) < newTimestamp / (60 * 24)) { // once per day
 		if (flags["COC.CORRUPT_MARAE_FOLLOWUP_ENCOUNTER_STATE"] > 0) { //Marae met 2nd time?
 			if (int(flags["COC.FUCK_FLOWER_KILLED"]) == 0) { //If flower hasn't been burned down yet
 				if (int(flags["COC.FUCK_FLOWER_LEVEL"]) < 4 && int(flags["COC.FUCK_FLOWER_GROWTH_COUNTER"]) < 1000) { //Grow flower if it isn't fully grown.
@@ -69,7 +70,7 @@ public function HolliTimePassedNotify():void
 				}
 			}
 		}
-		if (flags["COC.HOLLI_FUCKED_TODAY"] == 1) flags["COC.HOLLI_FUCKED_TODAY"] = 0; //Holli Fuck Tracking
+		//if (flags["COC.HOLLI_FUCKED_TODAY"] == 1) flags["COC.HOLLI_FUCKED_TODAY"] = 0; //Holli Fuck Tracking // now uses days as flag
 	}
 }
 
@@ -219,7 +220,7 @@ private function helpWithFarm():void
 	output("\n\n“<i>Ah yes,</i>” Holli breathes. “<i>The patch of verdant orderliness between me and mother. It feels bright and cold to me... the life that grows there so starchy and dull. Empty calories.</i>” You wait as she hums to herself absently.");
 
 	// PC not had sex with Holli that day:
-	if (int(flags["COC.HOLLI_FUCKED_TODAY"]) == 0)
+	if (int(flags["COC.HOLLI_FUCKED_TODAY"]) != days)
 	{
 		output("\n\n“<i>I could help with your little patch of boringness,</i>” Holli smirks eventually, before closing her eyes and beginning to slowly paw at her flower. “<i>But oh... it’s been so long since you properly fertilised me. How can you expect a goddess to bless your crops if she has not been showered with worship?</i>” You roll your eyes. You can guess what you have to do in order to get this being’s help.");
 
@@ -529,7 +530,7 @@ private function fuckTheFlower():void {
 	pc.energy( -20);
 	if (flags["COC.FUCK_FLOWER_GROWTH_COUNTER"] < 1000) flags["COC.FUCK_FLOWER_GROWTH_COUNTER"] += 5;
 	flags["COC.TIMES_FUCKED_FLOWER"]++;
-	flags["COC.HOLLI_FUCKED_TODAY"] = 1;
+	flags["COC.HOLLI_FUCKED_TODAY"] = days;
 	addNextButton();
 }
 
@@ -575,7 +576,7 @@ private function rideTheWalrusP3():void {
 	//dynStats("lib", 1, "sen", -5);
 	if (flags["COC.FUCK_FLOWER_GROWTH_COUNTER"] < 1000) flags["COC.FUCK_FLOWER_GROWTH_COUNTER"] += 5;
 	flags["COC.TIMES_RIDDEN_FLOWER"]++;;
-	flags["COC.HOLLI_FUCKED_TODAY"] = 1;
+	flags["COC.HOLLI_FUCKED_TODAY"] = days;
 	addNextButton();
 }
 
@@ -730,7 +731,7 @@ private function slapAmilysWhoreFace():void {
 //(FUCK DAT TREE BITCH)
 private function fuckHolliInZeFlowerPuss():void {
 	clearOutput();
-	flags["COC.HOLLI_FUCKED_TODAY"] = 1;
+	flags["COC.HOLLI_FUCKED_TODAY"] = days;
 	var x:int = pc.biggestCockIndex();
 	output("With a knowing smile, you toss your [pc.gear] aside and say, \"<i>Let's do this.</i>\"  [pc.EachCock] juts out, hard and proud from your body, pointed straight towards the entrancing woman before you.  She leans down from her perch in the tree and rolls her shoulders from side to side, jiggling her pale green assets back and forth, traces of syrup hanging from her pendulous melons.");
 	output("\n\n\"<i>Well, come on over then, ");
@@ -829,7 +830,7 @@ private function haveAMapleSyrupSnack():void {
 //Tentacle Ride (looks ok)(C)
 private function level4RideHollisTentacruels():void {
 	clearOutput();
-	flags["COC.HOLLI_FUCKED_TODAY"] = 1;
+	flags["COC.HOLLI_FUCKED_TODAY"] = days;
 	//(PC voluntary gets tentacle pounded, and high from flower pussy spores.  clitoral BJ?  Nipple suckers!}
 	output("You smirk knowingly and suggest to Holli that she take you for a ride... if she knows what you mean.  This earns you a pleased applause from the delighted demon dryad, and she immediately sets to helping you undress, her eager tentacles lowering from the tree and arching up like searching snakes.  You let her remove your [pc.gear] with the patience of a goddess, shivering slightly when the sticky gear is peeled away from your eager undercarriage.");
 	output("\n\n\"<i>Oh, you're going to love this, [pc.name],</i>\" the demon tree promises, \"<i>Just lie back into my tentacles, and let me do the work.  You'll feel so good, you'll NEVER want to leave.</i>\"");
@@ -956,7 +957,7 @@ private function begHolli4Watches():void {
 
 private function domUpSomeHolli():void {
 	clearOutput();
-	flags["COC.HOLLI_FUCKED_TODAY"] = 1;
+	flags["COC.HOLLI_FUCKED_TODAY"] = days;
 	output("You swagger up to the tree and put your hand on the bark beside Holli.  Glancing over, she quips, \"<i>Is that supposed to be intimidating?</i>\"  The dryad smirks ingratiatingly.  \"<i>I'm the offshoot of a demon goddess.  I don't think you thought this through.</i>\"");
 	output("\n\nSlapping your palm down on the other side, you look her right in her oddly gold and black eyes and tell her in no uncertain terms that she is going to serve and service you at your slightest whim.  Any choice she thinks she has is nothing more than an illusion.");
 	var domPowah:Number = (pc.tallness / 12) * (25 + ((pc.thickness - 50) / 10)) * (pc.tallness / 75);
@@ -1063,7 +1064,7 @@ private function holliGetsDickDommed():void {
 	//dynStats("sen", -2, "cor", 1);
 	pc.cor(1);
 	flags["COC.TIMES_FUCKED_FLOWER"]++;
-	flags["COC.HOLLI_FUCKED_TODAY"] = 1;
+	flags["COC.HOLLI_FUCKED_TODAY"] = days;
 	fertilizeHolli();
 	addNextButton();
 }
@@ -1071,7 +1072,7 @@ private function holliGetsDickDommed():void {
 //.PC Has 10 Tentacle Go Full On Monster With Her
 private function fullOnTentacleTasticGangBangForHolli():void {
 	clearOutput();
-	flags["COC.HOLLI_FUCKED_TODAY"] = 1;
+	flags["COC.HOLLI_FUCKED_TODAY"] = days;
 	output("You remove your [pc.gear] and expose your writhing mass of wriggling tendrils to the tree-tart.  She places a hand over her mouth and exhales, \"<i>Oh my, Mother Marae sure knows how to pick them, doesn't she?</i>\"");
 	output("\n\nExercising considerable control over your vegetative peckers, you extend one forward, the phallic tentacle lurching out to silence the troublesome tree in a split-second.  Holli gives up a strangled, \"<i>h-urk!</i>\" and rocks back into her tree's entrances, eyes crossed to look at the green snake protruding from her lips.  Her mouth feels good around the purple-tinged cock-tip you've forced inside, but you think her throat would feel better.  Your tentacle tool stretches, lengthening with supernatural agility, and you push the fresh flesh down Holli's gullet, distending her throat with the imprint of your length.  Her esophagus instinctively works to swallow the obstruction, which serves you just fine.  The tight oral pleasure has you oozing droplets of pre-seed directly into her belly, but you're far from ready to blow.  After all, with nine more penises, satisfaction remains a good ways away.");
 	output("\n\nHolli reaches up at the pioneering phallus.  You aren't sure if she's trying to pull it out or massage it, but her hands could be put to better use.  Snapping out, two tendrils lance forward, twining around the dryad's arms before she can bother the busy cock in her mouth.  They snugly entwine her limbs with warm cockflesh and pull taut.  No matter how she struggles, the oppressive penises hold her restrained.  You push the busy tentacles harder, forcing them to climb higher.  Their heads push into her fingers, then past, giving the demoness a firm hold on your sensitive tendrils.");
@@ -1102,7 +1103,7 @@ private function fullOnTentacleTasticGangBangForHolli():void {
 	pc.slowStatGain("l", 0.4);
 	pc.cor(1);
 	flags["COC.TIMES_FUCKED_FLOWER"]++;
-	flags["COC.HOLLI_FUCKED_TODAY"] = 1;
+	flags["COC.HOLLI_FUCKED_TODAY"] = days;
 	fertilizeHolli();
 	fertilizeHolli();
 	addNextButton();
@@ -1111,7 +1112,7 @@ private function fullOnTentacleTasticGangBangForHolli():void {
 //Vaginally Dominate Tentacles
 private function vaginalDomHollisTentacruels():void {
 	clearOutput();
-	flags["COC.HOLLI_FUCKED_TODAY"] = 1;
+	flags["COC.HOLLI_FUCKED_TODAY"] = days;
 	output("You sashay over to your favorite tentacular tree and trace your finger through Holli's cleavage, purring, \"<i>I'm feeling a little randy.  Do me a favor and bring your 'little' friends down to play, would you?</i>\"  The commanding tone of your voice leaves little doubt that the question is anything but.  With a little bit of fear in her black, tainted eyes, Holli nods meekly.  A rain of green, phallic tentacles pours out of the robust canopy above, hanging behind you idly, though a few of them arch up like snakes sensing prey.  You hold your immobilized pet's chin in your hand and tilt her head up slightly so she sees you eye to eye.");
 	output("\n\n\"<i>Good pet,</i>\" you coo, releasing her and turning about, making sure to sway your [pc.hips] hypnotically and remind her just what she's going to get.  The closest tentacle sways in your direction to nuzzle on your " + pc.skinFurScales() + ".  You raise your palm to support it, gliding your palm along the underside while you shrug out of your [pc.gear].  The phallic vine eagerly rubs against you like an affectionate pet, though clear sap leaks from the moist slit at its tip.  You squeeze it just behind the purple-tinged tip and pull, dragging it over toward Holli.");
 	output("\n\nThe demon-dryad tilts her head uncertainly as she's confronted with one of her own unholy malenesses.  You set the long shaft in between her heavy breasts and step back to observe your handiwork.  The tendril wiggles happily and begins to slide through her cleavage, rocking her back a little from the force of its affections.  Holli gasps, surprised by her lack of control and the masturbatory tit-fuck.  Her eyes cross, trying to lock onto it as it pushes through her tits, the purple tip butting up against her chin at the apex of its path.  You pump the shaft a few feet back to encourage it, and the pulsing prehensile penis plunges through her lips.");
@@ -1150,7 +1151,7 @@ private function vaginalDomHollisTentacruels():void {
 	output(".  The second time, you make it up.  Holli is a mess.  Everything from the shoulders up is glazed white, while the rest of her body has strings of seed dangling like obscene Christmas ornaments.  Around you, there's small puddles of seed rapidly vanishing into the wasted earth - each of the other tentacles erupted with its brothers, spurting uselessly as you ignored it.");
 	output("\n\nYou give Holli a peck on her cheek, savoring the flavor and say, \"<i>Good girl.</i>\"  Then, you get dressed, trying to ignore the squishing wetness between your thighs.");
 	flags["COC.TIMES_RIDDEN_FLOWER"]++;
-	flags["COC.HOLLI_FUCKED_TODAY"] = 1;
+	flags["COC.HOLLI_FUCKED_TODAY"] = days;
 	fertilizeHolli(false);
 	//pc.slimeFeed();
 	processTime(50 + rand(20));

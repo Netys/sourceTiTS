@@ -156,7 +156,7 @@ public function mainGameMenu(minutesMoved:Number = 0):void {
 	{
 		if(eventQueue.indexOf(fixPcUpbringing) == -1) eventQueue.push(fixPcUpbringing);
 	}
-	if(baby.originalRace != pc.originalRace)
+	if(baby.originalRace == "NOT SET")
 	{
 		if(eventQueue.indexOf(setBabyValuesOptions) == -1) eventQueue.push(setBabyValuesOptions);
 	}
@@ -1831,7 +1831,7 @@ public function variableRoomUpdateCheck():void
 		rooms["2I7"].addFlag(GLOBAL.TAXI);
 	}
 	
-	notifyVariableRoomUpdateListenerss(); // for CoC rooms
+	notifyVariableRoomUpdateListeners(); // for CoC rooms
 	
 	/* UVETO */
 	
@@ -1992,7 +1992,8 @@ public function processTime(deltaT:uint, doOut:Boolean = true):void
 		//Other Email Checks!
 		if (rand(100) == 0) emailRoulette();
 	}
-		
+	
+	notifyTimeProcessListeners(deltaT, doOut);
 	flags["HYPNO_EFFECT_OUTPUT_DONE"] = undefined;
 	variableRoomUpdateCheck();
 	updatePCStats();
@@ -2452,7 +2453,6 @@ public function processOmniSuitEvents(deltaT:uint, doOut:Boolean):void
 		{
 			omnisuitChangeUpdate();
 		}
-		notifyTimeProcessListeners(); // for CoC listeners
 	}
 }
 

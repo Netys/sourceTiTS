@@ -8,13 +8,13 @@ import classes.VaginaClass;
 
 public var timeChangeListeners:/*Function*/Array = [];
 
-public function notifyTimeProcessListeners():void {
-	for each (var name:* in timeChangeListeners) name();
+public function notifyTimeProcessListeners(deltaT:uint, doOut:Boolean = true):void {
+	for each (var name:* in timeChangeListeners) name(deltaT, doOut);
 }
 
 public var variableRoomUpdateListeners:/*Function*/Array = [];
 
-public function notifyVariableRoomUpdateListenerss():void {
+public function notifyVariableRoomUpdateListeners():void {
 	for each (var name:* in variableRoomUpdateListeners) name();
 }
 

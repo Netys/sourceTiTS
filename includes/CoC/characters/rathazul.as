@@ -50,15 +50,6 @@ private function followerCampMenuBlurbRathazulGrapple():* {
 	followerCampMenuBlurb.push(followerCampMenuBlurbRathazul);
 }
 
-public function RathazulTimePassedNotify():void {
-	if (hours == 0 && flags["COC.RATHAZUL_MET"] != undefined) {
-		if (flags["COC.RATHAZUL_MET"] == 1) IncrementFlag("COC.RATHAZUL_DAYS_KNOWN");
-		if (flags["COC.RATHAZUL_IN_CAMP"] == 1) IncrementFlag("COC.RATHAZUL_DAYS_IN_CAMP");
-	}
-}
-private var RathazulTimePassedNotifyHook: * = RathazulTimePassedNotifyGrapple();
-private function RathazulTimePassedNotifyGrapple():* { timeChangeListeners.push(RathazulTimePassedNotify); }
-
 // TODO: rewrite all that messy shit for good
 public function encounterRathazul():void {
 	showRathazul();
@@ -85,6 +76,7 @@ public function encounterRathazul():void {
 	else {
 		output("You encounter a hunched figure working as you come around a large bush.  Clothed in tattered robes that obscure most his figure, you can nontheless see a rat-like muzzle protruding from the shadowy hood that conceals most of his form.  A simple glance behind him confirms your suspicions - this is some kind of rat-person.  He seems oblivious to your presence as he stirs a cauldron of viscous fluid with one hand; a neat stack of beakers and phials sit in the dirt to his left.  You see a smile break across his aged visage, and he says, \"<i>Come closer child.  I will not bite.</i>\"\n\nApprehensive of the dangers of this unknown land, you cautiously approach.\n\n\"<i>I am Rathazul the Alchemist.  Once I was famed for my miracle cures.  Now I idle by this lake, helpless to do anything but measure the increasing amounts of corruption that taint its waters,</i>\" he says as he pulls back his hood, revealing the entirety of his very bald and wrinkled head.\n\n");
 		flags["COC.RATHAZUL_MET"] = 1;
+		flags["COC.RATHAZUL_DAYS_KNOWN"] = days;
 	}
 	//Camp offer!
 	if (rathazulMoveToCampOffer()) return;
@@ -92,7 +84,7 @@ public function encounterRathazul():void {
 }
 
 private function rathazulMoveToCampOffer():Boolean {
-	if (flags["COC.RATHAZUL_IN_CAMP"] != 1 && flags["COC.RATHAZUL_DAYS_KNOWN"] >= 3 && pc.cor() < 75) {
+	if (flags["COC.RATHAZUL_IN_CAMP"] != 1 && days - flags["COC.RATHAZUL_DAYS_KNOWN"] >= 3 && pc.cor() < 75) {
 		clearMenu()
 		output("\"<i>You know, I think I might be able to do this worn-out world a lot more good from your camp than by wandering around this lake.  What do you say?</i>\" asks the rat.\n\n(Move Rathazul into your camp? You are quite sure this is one-time offer.)");
 		addButton(0, "Yes", rathazulMoveToCamp);
@@ -106,6 +98,7 @@ private function rathazulMoveToCamp():void {
 	clearOutput();
 	output("Rathazul smiles happily back at you and begins packing up his equipment.  He mutters over his shoulder, \"<i>It will take me a while to get my equipment moved over, but you head on back and I'll see you within the hour.  Oh my, yes.</i>\"\n\nHe has the look of someone experiencing hope for the first time in a long time.");
 	flags["COC.RATHAZUL_IN_CAMP"] = 1;
+	flags["COC.RATHAZUL_DAYS_IN_CAMP"] = days;
 	clearMenu();
 	addButton(0, "Next", function():*{ processTime(10 + rand(10)); mainGameMenu(); } );
 }
@@ -259,7 +252,7 @@ private function rathazulWorkOffer():void {
 	//Offer dyes if offering something else.
 	if(pc.credits >= 500) {
 		output("Rathazul offers, \"<i>Since you have enough gems to cover the cost of materials for my dyes as well, you could buy one of my dyes for your hair.  ");
-		if (flags["COC.RATHAZUL_DAYS_KNOWN"] >= 8) output("I should be able to make exotic-colored dyes if you're interested.  ");
+		if (days - flags["COC.RATHAZUL_DAYS_KNOWN"] >= 8) output("I should be able to make exotic-colored dyes if you're interested.  ");
 		//output("Or if you want some changes to your skin, I have skin oils and body lotions.  I will need 50 gems.</i>\"");
 		output("\n\n");
 		spoken = true;
@@ -275,7 +268,7 @@ private function rathazulWorkOffer():void {
 		output("The rat mentions, \"<i>You know, I could make something new if you're willing to hand over two of vials labeled \"Equinum\", one vial of minotaur blood and one hundred gems. Or five bottles of Lactaid and two bottles of purified LaBova along with 250 gems.</i>\"\n\n");
 	}
 	//Reducto
-	if(flags["COC.RATHAZUL_DAYS_IN_CAMP"] >= 4) {
+	if(days - flags["COC.RATHAZUL_DAYS_IN_CAMP"] >= 4) {
 		output("The rat hurries over to his supplies and produces a container of paste, looking rather proud of himself, \"<i>Good news everyone!  I've developed a paste you could use to shrink down any, ah, oversized body parts.  The materials are expensive though, so I'll need 100 gems for each jar of ointment you want.</i>\"\n\n");
 		totalOffers++;
 		spoken = true;
@@ -352,12 +345,12 @@ private function rathShop():void {
 	shopkeep.inventory = [];
 	shopkeep.sellMarkup = 2;
 	if (amilyFollower() && !amilyCorrupt()) shopkeep.sellMarkup = 1.5;
-	if (flags["COC.RATHAZUL_DAYS_IN_CAMP"] >= 4)
+	if (days - flags["COC.RATHAZUL_DAYS_IN_CAMP"] >= 4)
 		shopkeep.inventory.push(new CoCReducto());
 	shopkeep.inventory.push(new CoCDyeAuburn(), new CoCDyeBlack(), new CoCDyeBlond(), new CoCDyeBrown(), new CoCDyeRed(), new CoCDye(), new CoCDyeGray());
-	if (flags["COC.RATHAZUL_DAYS_KNOWN"] >= 8)
+	if (days - flags["COC.RATHAZUL_DAYS_KNOWN"] >= 8)
 		shopkeep.inventory.push(new CoCDyeBlue(), new CoCDyeGreen(), new CoCDyeOrange(), new CoCDyePurple(), new CoCDyePink());
-	if (flags["COC.RATHAZUL_DAYS_KNOWN"] >= 12)
+	if (days - flags["COC.RATHAZUL_DAYS_KNOWN"] >= 12)
 		shopkeep.inventory.push(new CoCDyeRainbow());
 	shopkeepBackFunctor = campRathazul;
 	buyItem();
@@ -401,7 +394,7 @@ public function rathPurify():void {
 	add({ "MinoCum" : 1, "gems" : 20 }, new CoCMinotaurCumPure());
 	add({ "BeeHony" : 1, "gems" : 25 }, new CoCBeeHoneyPure());
 	
-	if (flags["COC.RATHAZUL_DAYS_KNOWN"] >= 5)
+	if (days - flags["COC.RATHAZUL_DAYS_KNOWN"] >= 5)
 		add({ "MinoBlo" : 1, "Equinum" : 2, "gems" : 100 }, new CoCTaurinum());
 }
 

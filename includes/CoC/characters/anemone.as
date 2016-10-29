@@ -64,17 +64,17 @@ private function AnemoneSceneGrapple():* {
 	followerCampMenuBlurb.push(anemoneBarrelDescription);
 }
 
-public function AnemoneSceneTimeChange():void
+public function AnemoneSceneTimeChange(deltaT:uint, doOut:Boolean = true):void
 {
 	if (flags["COC.ANEMONE_KID"] > 0) {
 		//if (flags[kFLAGS.KID_ITEM_FIND_HOURS] < 20) flags[kFLAGS.KID_ITEM_FIND_HOURS]++;
-		if (int(flags["COC.KID_SITTER"]) == 0 && flags["COC.MARBLE_KIDS"] >= 5 && hours > 10 && hours < 18 && minutes == 0 && rand(4) == 0) {
-			eventQueue.push(kidABabysitsCows);
-		}
-		if (flags["COC.KID_SITTER"] == 1 && hours > 10 && hours < 18 && rand(4) == 0) {
-			flags["COC.KID_SITTER"] = 2;
-		}
-		else if (flags["COC.KID_SITTER"] == 2) flags["COC.KID_SITTER"] = 1;
+		//if (int(flags["COC.KID_SITTER"]) == 0 && flags["COC.MARBLE_KIDS"] >= 5 && hours > 10 && hours < 18 && minutes == 0 && rand(4) == 0) {
+			//eventQueue.push(kidABabysitsCows);
+		//}
+		//if (flags["COC.KID_SITTER"] == 1 && hours > 10 && hours < 18 && rand(4) == 0) {
+			//flags["COC.KID_SITTER"] = 2;
+		//}
+		//else if (flags["COC.KID_SITTER"] == 2) flags["COC.KID_SITTER"] = 1;
 	}
 	//if (pc.findStatusAffect(StatusAffects.AnemoneArousal) >= 0) {
 		//if (pc.pregnancyIncubation > 1) {
@@ -1039,7 +1039,7 @@ private function fuckingAssholelessAnemoneeeez():void
 	//output("\n\nGrasping the nettle, you gather her squirming, writhing hair in your hands and pull it taut, then lasso it with a spray of silk, directing it with your foremost legs.  The feeling of your spinnerets weaving long criss-crossing strands down her hair to restrain it - of spewing white, sticky strings all over it - becomes increasingly sexual as her venom suffuses your bloodstream through your hands");
 	////[(cock)
 	//if (pc.hasCock()) output(", and your [pc.gear] tightens as [pc.eachCock] swells");
-	//else if (pc.hasVagina()) output(", and the inside of your [pc.gear] dampens with the lube your [vagina] leaves as it clenches around empty air");
+	//else if (pc.hasVagina()) output(", and the inside of your [pc.gear] dampens with the lube your [pc.vagina] leaves as it clenches around empty air");
 	//output("; you have to push yourself to finish working before you can lose yourself to it.  Completing your restraints, you release her tentacles.  They bob behind her in one mass like a long, cute ponytail, and only the ends are free to wiggle.  When she realizes this, her behavior changes dramatically.");
 //
 	//output("\n\n\"<i>Off,</i>\" whimpers the anemone, thrashing the water, turning her head and trying reach the silk tie.  \"<i>Off!</i>\"");
