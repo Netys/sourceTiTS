@@ -575,16 +575,6 @@ private function completeCharacterCreation():void {
 	if(pc.affinity == "aim") pc.aimRaw += 5;
 	if(pc.affinity == "willpower") pc.willpowerRaw += 5;
 	
-	var seeds:ItemSlotClass = new CoCGoldenSeed();
-	seeds.quantity = 50;
-	pc.inventory.push(seeds);
-	pc.credits = 50000;
-	pc.createPerk("Oviposition", 0, 0, 0, 0, "Causes you to regularly lay eggs when not otherwise pregnant.");
-	for (var i:int = 0; i < 50; i++) 
-	{
-		CoCGoldenSeed.useGoldenSeed(pc, true);
-	}
-	
 	pc.maxOutHP();
 	
 	pc.removeStatusEffect("In Creation");
