@@ -2867,6 +2867,12 @@
 				}
 				if(this is PlayerCharacter)
 				{
+					kGAMECLASS.mimbraneFeed("cock");
+					if(hasStatusEffect("Blue Balls") && balls >= 1)
+					{
+						msg += "\n\n" + kGAMECLASS.logTimeStamp() + ParseText(" With a satisfied sigh, your [pc.balls] " + (balls <= 1 ? "is" : "are") + " finally relieved of all the pent-up " + (rand(2) == 0 ? "seed" : "[pc.cumNoun]") + ".");
+						removeStatusEffect("Blue Balls");
+					}
 					//'Nuki Ball Reduction
 					if(perkv1("'Nuki Nuts") > 0 && balls >= 1)
 					{
@@ -2891,17 +2897,17 @@
 					}
 				}
 			}
+			if (hasVagina())
+			{
+				if(this is PlayerCharacter)
+				{
+					kGAMECLASS.mimbraneFeed("vagina");
+				}
+			}
 			
 			if (this is PlayerCharacter) 
 			{
-				kGAMECLASS.mimbraneFeed("cock");
-				kGAMECLASS.mimbraneFeed("vagina");
 				StatTracking.track("sex/player/orgasms");
-				if(hasStatusEffect("Blue Balls"))
-				{
-					msg += "\n\n" + kGAMECLASS.logTimeStamp() + ParseText(" With a satisfied sigh, your [pc.balls] " + (balls <= 1 ? "is" : "are") + " finally relieved of all the pent-up " + (rand(2) == 0 ? "seed" : "[pc.cumNoun]") + ".");
-					removeStatusEffect("Blue Balls");
-				}
 				//Slamazon shit
 				if(hasStatusEffect("Amazonian Endurance Report Needed")) 
 				{
@@ -3557,7 +3563,7 @@
 			var bonus:int = 0;
 			bonus += statusEffectv1("Royal Nectar");
 			if(hasPerk("Heroic Reserves")) bonus += 33;
-			return energyMod + 100 + bonus;
+			return (energyMod + 100 + bonus);
 		}
 		public function energyMin(): Number {
 			return 0;
@@ -4046,7 +4052,7 @@
 			if (hasStatusEffect("Perfect Simulant")) bonuses += 50;
 			if (hasPerk("Implant: Hormonal Controller")) bonuses += perkv4("Implant: Hormonal Controller");
 			if(hasPerk("Slut Stamp")) bonuses += perkv3("Slut Stamp");
-			return 100 + bonuses;
+			return (100 + bonuses);
 		}
 		public function libidoMin(): Number {
 			var bonus:int = 0;
@@ -15235,15 +15241,18 @@
 				fluidVolume = cumFrom.cumQ();
 			}
 			
+			var effectDesc:String = ("You’ve got some fluids inside you" + ((cumFrom is PlayerCharacter) ? "" : ", leftovers from a recent lover") + ".");
+			
 			if(hole >= 0 && hole < 3)
 			{
 				// Pregnant vaginas can't get cumflated?
 				if(!hasVagina() || isPregnant(hole)) fluidVolume = 0;
 				if(fluidVolume <= 0) return;
 				
-				if(!hasStatusEffect("Vaginally-Filled")) createStatusEffect("Vaginally-Filled",fluidVolume,fluidVolume,fluidType,0,false,"Icon_Vagina","You've got some fluids inside you, leftovers from a recent lover.",false,0,0xB793C4);
+				if(!hasStatusEffect("Vaginally-Filled")) createStatusEffect("Vaginally-Filled",fluidVolume,fluidVolume,fluidType,0,false,"Icon_Vagina",effectDesc,false,0,0xB793C4);
 				else
 				{
+					setStatusTooltip("Vaginally-Filled",effectDesc);
 					//Track the new type.
 					setStatusValue("Vaginally-Filled",3,fluidType);
 					//Add the liquid volume.
@@ -15256,9 +15265,10 @@
 			{
 				if(fluidVolume <= 0) return;
 				
-				if(!hasStatusEffect("Anally-Filled")) createStatusEffect("Anally-Filled",fluidVolume,fluidVolume,fluidType,0,false,"Icon_Donut","You've got some fluids inside you, leftovers from a recent lover.",false,0,0xB793C4);
+				if(!hasStatusEffect("Anally-Filled")) createStatusEffect("Anally-Filled",fluidVolume,fluidVolume,fluidType,0,false,"Icon_Donut",effectDesc,false,0,0xB793C4);
 				else
 				{
+					setStatusTooltip("Anally-Filled",effectDesc);
 					//Track the hole it's in along with the new type.
 					setStatusValue("Anally-Filled",3,fluidType);
 					//Add the liquid volume.
@@ -15271,9 +15281,10 @@
 			{
 				if(fluidVolume <= 0) return;
 				
-				if(!hasStatusEffect("Orally-Filled")) createStatusEffect("Orally-Filled",fluidVolume,fluidVolume,fluidType,0,false,"Icon_Lips_Glossed","You've got some fluids inside you, leftovers from a recent lover.",false,0,0xB793C4);
+				if(!hasStatusEffect("Orally-Filled")) createStatusEffect("Orally-Filled",fluidVolume,fluidVolume,fluidType,0,false,"Icon_Lips_Glossed",effectDesc,false,0,0xB793C4);
 				else
 				{
+					setStatusTooltip("Orally-Filled",effectDesc);
 					//Track the hole it's in along with the new type.
 					setStatusValue("Orally-Filled",3,fluidType);
 					//Add the liquid volume.
@@ -17352,10 +17363,10 @@
 				// we can treat chained mul/divs as adds/subs to the same factor, thus
 				// add up all the shit then operate once.
 				
-				var reducer:int = 4;
+				var reducer:int = 0.25;
 				
-				if (hasPerk("Ice Cold")) reducer -= 4;
-				if (hasPerk("Extra Ardor")) reducer += 4;
+				if (hasPerk("Ice Cold")) reducer -= 0.25;
+				if (hasPerk("Extra Ardor")) reducer += 0.25;
 				
 				if (reducer >= 0) lust( -producedLust * reducer);
 			}
@@ -17372,7 +17383,7 @@
 			
 			if (fluidSimulate || this is PlayerCharacter)
 			{
-				if (ballFullness < 100) cumProduced(deltaT, doOut);
+				if (hasPerk("'Nuki Nuts") || ballFullness < 100) cumProduced(deltaT, doOut);
 				cumFlationSimulate(deltaT, doOut);
 			}
 		}
@@ -17420,6 +17431,20 @@
 			{
 				var thisStatus:StorageClass = statusEffects[i];
 				
+				// Untimed status effect checks
+				switch (thisStatus.storageName)
+				{
+					case "Foxfire":
+						thisStatus.value4 += deltaT;
+						
+						if (thisStatus.value4 > 0 && rand(thisStatus.value4) > 60)
+						{
+							thisStatus.value4 -= ((2 * 60) + rand(2 * 60));
+							Foxfire.attemptTF(this);
+						}
+						break;
+				}
+				
 				// Effects created with a 0 or less duration aren't handled by this code ever.
 				if (thisStatus.minutesLeft <= 0) continue;
 				
@@ -17432,6 +17457,13 @@
 				
 				switch (thisStatus.storageName)
 				{
+					case "Kally Cummed Out":
+						if(requiresRemoval && kGAMECLASS.currentLocation == "CANADA5")
+						{
+							kGAMECLASS.eventBuffer += "\n\n" + kGAMECLASS.logTimeStamp() + ParseText(" Kally stumbles back into the bar while you’re waiting. Her garb isn’t quite as meticulously arranged. Her hair is damp, and when she thinks nobody is looking, she sighs dreamily, licking her lips.");
+						}
+						break;
+						
 					case "Condensol-A":
 						if (!hasCock())
 						{
@@ -17728,20 +17760,14 @@
 						}
 						break;
 						
-					case "Foxfire":
-						thisStatus.value4 += deltaT;
-						
-						if (thisStatus.value4 > 0 && rand(thisStatus.value4) > 60)
-						{
-							thisStatus.value4 = -2 * 60 - rand(2 * 60);
-							Foxfire.attemptTF(this);
-							break;
-						}
-						
 					case "Ovilium":
 						if (!hasPregnancyOfType("OviliumEggPregnancy"))
 						{
 							requiresRemoval = true;
+						}
+						else
+						{
+							if(thisStatus.minutesLeft < 1) thisStatus.minutesLeft = 1;
 						}
 						break;
 				}

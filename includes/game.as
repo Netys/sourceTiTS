@@ -800,7 +800,7 @@ public function sleep(outputs:Boolean = true):void {
 	if(outputs)
 	{
 		eventBufferXP();
-		}
+	}
 
 	if(InShipInterior(pc))
 	{
@@ -1937,6 +1937,7 @@ public function processTime(deltaT:uint, doOut:Boolean = true):void
 	
 	//Check to see if something changed in body part notices
 	milkMultiplierGainNotificationCheck();
+	milkGainNotes();
 	nutSwellUpdates();
 	immobilizedUpdate();
 
@@ -2017,15 +2018,15 @@ public function processHolidayoweenEvents(deltaT:uint, doOut:Boolean, totalDays:
 
 public function processMimbranesTime(deltaT:uint, doOut:Boolean, totalDays:uint):void
 {
-	if (kGAMECLASS.attachedMimbranes() == 0) return;
+	if (attachedMimbranes() == 0) return;
 		
-	if (kGAMECLASS.flags["MIMBRANES BITCH TIMER"] == undefined) kGAMECLASS.flags["MIMBRANES BITCH TIMER"] = deltaT;
-	else kGAMECLASS.flags["MIMBRANES BITCH TIMER"] += deltaT;
+	if (flags["MIMBRANES BITCH TIMER"] == undefined) flags["MIMBRANES BITCH TIMER"] = deltaT;
+	else flags["MIMBRANES BITCH TIMER"] += deltaT;
 	
-	if (kGAMECLASS.flags["MIMBRANES BITCH TIMER"] >= 300)
+	if (flags["MIMBRANES BITCH TIMER"] >= 300)
 	{
-		kGAMECLASS.flags["MIMBRANES BITCH TIMER"] = 0;
-		if (doOut) kGAMECLASS.mimbranesComplainAndShit();
+		flags["MIMBRANES BITCH TIMER"] = 0;
+		if (doOut) mimbranesComplainAndShit();
 	}
 	
 	var totalHours:int = ((minutes + deltaT) / 60);
@@ -2352,14 +2353,7 @@ public function processSeraEvents(deltaT:uint, doOut:Boolean):void
 			if (h >= 18) totalAttempts++;
 		}
 		
-		if (totalAttempts >= 1 && seraHasKidInNursery())
-		{
-			var prob:int = Math.round((1 - Math.pow((1 / 2), totalAttempts)) * 1000);
-			if (rand(1000) <= prob)
-			{
-				pc.createStatusEffect("Sera at Nursery");
-			}
-		}
+		seraNurseryVisitCheck(totalAttempts);
 	}
 }
 
@@ -2528,14 +2522,14 @@ public function processCuntTailEggs(deltaT:uint, doOut:Boolean):void
 
 public function processDrBadgerEvents(deltaT:uint, doOut:Boolean):void
 {
-	if (flags["BADGET_QUEST"] == -1)
+	if (flags["BADGER_QUEST"] == -1)
 	{
-		if (flags["BADGET_QUEST_TIMER"] == undefined) flags["BADGER_QUEST_TIMER"] = (GetGameTimestamp() + (60 - minutes));
+		if (flags["BADGER_QUEST_TIMER"] == undefined) flags["BADGER_QUEST_TIMER"] = (GetGameTimestamp() + (60 - minutes));
 		
-		if (flags["BADGET_QUEST_TIMER"] != -1 && GetGameTimestamp() + deltaT >= flags["BADGET_QUEST_TIMER"] + 1440)
+		if (flags["BADGER_QUEST_TIMER"] != -1 && GetGameTimestamp() + deltaT >= flags["BADGER_QUEST_TIMER"] + 1440)
 		{
 			pennyBadgerQuestAlert();
-			flags["BADGET_QUEST_TIMER"] = -1;
+			flags["BADGER_QUEST_TIMER"] = -1;
 		}
 	}
 }
