@@ -489,6 +489,13 @@
 					pc.removePerk("Regal Mane");
 				}
 				
+				if (pc.hasPerk("Hollow Bones") && changes < changeLimit && rand(3) == 0)
+				{ // racialPerkUpdateCheck: removal of Icy Veins perk with he loss of fluffy fur (fork on still having fur but not fluffy flag?).
+					kGAMECLASS.output("\n\nYou feel somewhat heavy and clumsy as your bones turn solid again, losing their hollow avian structure.");
+					changes++;
+					pc.removePerk("Hollow Bones");
+				}
+				
 				if(changes == 0)
 				{
 					kGAMECLASS.output("\n\nNothing changed. What a rip-off.");

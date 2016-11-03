@@ -192,6 +192,19 @@ public function appearance(forTarget:Creature):void
 			else if(target.skinType == GLOBAL.SKIN_TYPE_SCALES) output2("Your facial structure blends humanoid features with those of a cat. A moist nose and whiskers are included, but overlaid with " + target.skinFurScales(true,true,false,true) + ".");
 			else output2("You have a cat-like face, complete with a cute, moist nose and whiskers. The " + target.skin(true,true,true) + " that is revealed by your lack of fur looks quite unusual on so feline a face.");
 		}
+		//bird-face
+		else if (target.faceType == GLOBAL.TYPE_AVIAN) {
+			if (target.hasFaceFlag(GLOBAL.FLAG_BEAK)) output2("You have a bird-like face, complete with " + indefiniteArticle(target.lipColor) + " beak");
+			else output2("Your facial structure blends humanoid features with those of a bird, but lacking the signature beak");
+			if (target.hasFaceFlag(GLOBAL.FLAG_MUZZLED)) {
+				if (target.hasFaceFlag(GLOBAL.FLAG_BEAK)) output2(" - rather it looks like a beak, but is more like a muzzle in structure, retaining lips and teeth instead of sharp beak edges. But they are almost impossible to spot without closer inspection");
+				else output2(". Instead you have a toothy reptilian muzzle, making your visage rather unsettling");
+			}
+			output2(".");
+			if (target.hasFeathers() || target.hasScales() && target.hasFaceFlag(GLOBAL.FLAG_MUZZLED) && !target.hasFaceFlag(GLOBAL.FLAG_BEAK)) output2(" It is adorned with " + indefiniteArticle(target.skinFurScales(true,true,false,true)) + ", completing the image.");
+			else output2(" The lack of feathers on your " + target.skinNoun() + " look rather strange.");
+			if (target.hasFaceFlag(GLOBAL.FLAG_BEAK) && !target.hasFeathers() && !target.hasFur() && target.isBald()) output2(" You somewhat resemble a vulture.");
+		}
 		//Minotaaaauuuur-face
 		else if(target.faceType == GLOBAL.TYPE_BOVINE) {
 			if(target.skinType == GLOBAL.SKIN_TYPE_FUR) output2("You have a face resembling that of an anthropomorphic bovine, with cow-like features, particularly a squared off wet nose. Your " + target.skinFurScales(true,true,false,true) + " thickens noticably on your head, looking shaggy and more than a little monstrous once laid over your visage.");
@@ -287,6 +300,11 @@ public function appearance(forTarget:Creature):void
 				else output2(" and nestled within the blacken depths of your sclera.");
 			}
 		}
+		else if (target.eyeType == GLOBAL.TYPE_AVIAN)
+		{
+			if (target.eyeColor == "black") output2(" Your eyes resemble black beads, shiny and expressionless. Only the occasional flickering of your nictitating membranes reveal that they are not made of glass.");
+			else output2(" Your eyes are human-like at first glance, but the black iris, " + target.eyeColor + " sclera, unwinking stare, and the occasional flickering of your nictitating membranes hint at their avian nature.");
+		}
 		else if (target.eyeType == GLOBAL.TYPE_LEITHAN)
 		{
 			output2(" Your eyes each feature a secondary pupil, ");
@@ -359,7 +377,7 @@ public function appearance(forTarget:Creature):void
 		//Hair
 		//if bald
 		if(target.hairLength == 0) {
-			if(target.skinType == GLOBAL.SKIN_TYPE_FUR || target.skinType == GLOBAL.SKIN_TYPE_FEATHERS) output2(" You have no hair, only a thin layer of " + target.skinNoun(false,true) + " where your hair should be.");
+			if(target.skinType == GLOBAL.SKIN_TYPE_FUR || target.skinType == GLOBAL.SKIN_TYPE_FEATHERS) output2(" You have no hair, only a" + (target.hasSkinFlag(GLOBAL.FLAG_FLUFFY) ? "" : " thin") + " layer of " + target.skinNoun(false,true) + " where your hair should be.");
 			else output2(" You have no hair, showing only shiny " + target.skinFurScales() + " where your hair should be.");
 			
 			var headNoun:String = "head";
@@ -387,6 +405,15 @@ public function appearance(forTarget:Creature):void
 				output2(" A pair of cute")
 				if (!nonFurrySkin) output2(", fuzzy");
 				output2(" feline ears, sprout from atop your " + headNoun + ", each pivoting towards any sudden noises.");
+			}
+			else if(target.earType == GLOBAL.TYPE_AVIAN)
+			{
+				output2(" A pair of small holes");
+				if (!nonFurrySkin || target.hasFeathers()) output2(" hidden");
+				output2(" on the sides of your " + headNoun + " make up your ears. Their location is prominently revealed by");
+				if (target.skinType == GLOBAL.SKIN_TYPE_GOO) output2(" fin-like protrusions");
+				else output2(" tufts of feathers");
+				output2(" which act as auricles.")
 			}
 			else if (target.earType == GLOBAL.TYPE_LIZAN)
 			{
@@ -507,6 +534,13 @@ public function appearance(forTarget:Creature):void
 				output2(" The " + target.hairDescript(true,true) + " on your head is parted by a pair of cute");
 				if(!nonFurrySkin) output2(", fuzzy");
 				output2(" feline ears, sprouting from atop your head and pivoting towards any sudden noises.");
+			}
+			else if(target.earType == GLOBAL.TYPE_AVIAN)
+			{
+				output2(" The " + target.hairDescript(true,true) + " atop your head covers two small openings that make up your ears, but the");
+				if (target.skinType == GLOBAL.SKIN_TYPE_GOO) output2(" fin-like protrusions");
+				else output2(" tufts of feathers");
+				output2(" which act as auricles are quite noticeable.")
 			}
 			else if(target.earType == GLOBAL.TYPE_LIZAN) output2(" The " + target.hairDescript(true,true) + " atop your head makes it nigh-impossible to notice the two small rounded openings that are your ears.");
 			else if(target.earType == GLOBAL.TYPE_LAPINE || target.earType == GLOBAL.TYPE_LEITHAN) output2(" A pair of floppy rabbit ears stick up out of your " + target.hairDescript(true,true) + ", bouncing around as you [target.walk].");
@@ -709,7 +743,10 @@ public function appearance(forTarget:Creature):void
 		else if(target.skinType == GLOBAL.SKIN_TYPE_SCALES) output2(", covered in a layer of " + target.skinFurScales(true, true));
 		else if(target.skinType == GLOBAL.SKIN_TYPE_CHITIN) output2(", covered in a layer of " + target.skinFurScales(true, true));
 		else if(target.skinType == GLOBAL.SKIN_TYPE_GOO) output2(", all of them glittering, semi-transparent goo");
-		else if(target.skinType == GLOBAL.SKIN_TYPE_FEATHERS) output2(", covered in patches of " + target.skinFurScales(true, true));
+		else if (target.skinType == GLOBAL.SKIN_TYPE_FEATHERS) {
+			output2(", covered in a layer of " + target.skinFurScales(true, true));
+			if (target.hasLegFlag(GLOBAL.FLAG_FURRED)) output2(" above the waist and similarly colored fur below"); // heraldic avians... since fur and feathers use same color variable, it is impossible to have different colors without dirty hacks or refactoring
+		}
 		else if(target.skinType == GLOBAL.SKIN_TYPE_LATEX)
 		{
 			output2(", sensually wrapped in a layer of");
@@ -823,11 +860,11 @@ public function appearance(forTarget:Creature):void
 			output2(", making you appear quite royal.");
 		}
 		// Fluff stuff
-		if (target.hasSkinFlag(GLOBAL.FLAG_FLUFFY))
+		if ((target.hasFur() || target.hasFeathers()) && target.hasSkinFlag(GLOBAL.FLAG_FLUFFY))
 		{
 			if (target.biggestTitSize() > 2) output2(" Nestled between your breasts");
 			else output2(" Poofing out your chest");
-			output2(" is a fluffy ball of " + target.furColor + " fur.");
+			output2(" is a fluffy ball of " + target.furColor + " " + target.skinNoun(false,true) + ".");
 		}
 		// Cum Splattered!
 		if(target.hasStatusEffect("Cum Soaked") || target.hasStatusEffect("Pussy Drenched"))
@@ -899,9 +936,21 @@ public function appearance(forTarget:Creature):void
 		//Wing arms
 		if(target.armType == GLOBAL.TYPE_AVIAN)
 		{
-			if(target.hasArmFlag(GLOBAL.FLAG_GOOEY)) output2(" Feather-shaped shingles of goo");
-			else output2(" Feathers");
-			output2(" hang off your arms from shoulder to wrist, giving them a slightly wing-like look.");
+			if (target.hasArmFlag(GLOBAL.FLAG_PAWS)) {
+				output2(" Your hands are tipped with sharp claws, like that of a bird, with");
+				if (target.skinType == GLOBAL.SKIN_TYPE_SKIN || target.hasFeathers()) output2(" rough skin,");
+				output2(" short palms and long, padded fingers.");
+				if(target.hasArmFlag(GLOBAL.FLAG_GOOEY)) output2(" Feather-shaped shingles of goo");
+				else output2(" A feathery fringe");
+				output2(" covers them down to your ");
+				if (target.hasArmFlag(GLOBAL.FLAG_FLUFFY)) output2("wrists");
+				else output2("elbows");
+				output2(", leaving your hands bare.");
+			} else {
+				if(target.hasArmFlag(GLOBAL.FLAG_GOOEY)) output2(" Feather-shaped shingles of goo");
+				else output2(" Feathers");
+				output2(" hang off your arms from shoulder to wrist, giving them a slightly wing-like look.");
+			}
 		}
 		else if(target.armType == GLOBAL.TYPE_LEITHAN) 
 		{
@@ -1046,6 +1095,7 @@ public function appearance(forTarget:Creature):void
 			output2(" ending in flat, rounded hooves.");
 		}
 		else if(target.legType == GLOBAL.TYPE_LIZAN && target.legCount == 6) output2(" From the waist down, you have a powerful, " + num2Text(target.legCount) + "-legged body that looks like a crossbreed of a lizard and a horse.");
+		else if(target.legType == GLOBAL.TYPE_AVIAN && target.isTaur()) output2(" From the waist down you possess a sleek, " + num2Text(target.legCount) + "-legged body, appearing much like a crossbreed between a bird and that of an equine.");
 		else if(target.isTaur())
 		{
 			output2(" From the waist down, you have a bestial, " + num2Text(target.legCount) + "-legged form vaguely like that of a");
@@ -1599,8 +1649,21 @@ public function appearance(forTarget:Creature):void
 		}
 		else if(target.legType == GLOBAL.TYPE_AVIAN) 
 		{
-			if(target.legCount < 4) output2(" Your legs are covered with " + (target.hasLegFlag(GLOBAL.FLAG_GOOEY) ? "goo" : target.furColor + " plumage") + ". Thankfully the thick, powerful thighs are perfect for launching you into the air, and your feet remain mostly human, even if they are two-toed and tipped with talons.");
-			else output2(" You have " + (target.hasLegFlag(GLOBAL.FLAG_GOOEY) ? "gooey" : target.furColor + " plumage across your") + " legs. It ends just above your two-toed, taloned feet.");
+			output2(" You have thick, powerful thighs perfect for launching you into the air which ends in slender bird-like legs, covered with ");
+			if (target.hasLegFlag(GLOBAL.FLAG_GOOEY)) {
+				output2("feather-shaped shingles of goo down to your ");
+				if (target.hasSkinFlag(GLOBAL.FLAG_FLUFFY)) output2(" ankles");
+				else output2(" knees");
+			} else {
+				output2(target.furColor + " plumage down to your ");
+				if (target.hasSkinFlag(GLOBAL.FLAG_FLUFFY)) output2(" ankles");
+				else output2(" knees");
+				output2(" and ");
+				if (target.hasFeathers() || target.skinType == GLOBAL.SKIN_TYPE_SKIN) output2("rough, " + target.skinTone + " skin");
+				else output2(target.skinFurScales(true, true, true, true));
+				output2(" below");
+			}
+			output2(". Your feet are digitigrade, with long sharp claw-tipped toes.");
 		}
 		else if(target.legType == GLOBAL.TYPE_KANGAROO) 
 		{
@@ -2684,6 +2747,12 @@ public function dickBonusForAppearance(forTarget:Creature = null, x:int = 0):voi
 		if(target.cocks[x].hasFlag(GLOBAL.FLAG_NUBBY)) output2(", ringed in small, fleshy nubs that terrans have taken to calling “barbs” in spite of their softness. More of these “barbs” line the shaft, but they’re largest at the base, where they are likely to be rubbed against a clit mid-coitus.");
 		else output2(" much like that of a feline.");
 	}
+	//Birdy cock flavor
+	else if (target.cocks[x].cType == GLOBAL.TYPE_AVIAN) {
+		output2(" It is ");
+		if(!target.cocks[x].hasFlag(GLOBAL.FLAG_NUBBY) && !target.cocks[x].hasFlag(GLOBAL.FLAG_RIBBED)) output2("smooth, ");
+		output2(target.cockColor(x) + ", slightly wavy in shape and tapers to a point when erect.");
+	}
 	//Snake cock flavor
 	else if(target.cocks[x].cType == GLOBAL.TYPE_SNAKE) {
 		if(target.originalRace == "snake" || target.originalRace == "naga" || target.originalRace == "naleen" || target.originalRace == "leithan" || target.originalRace == "half-leithan") output2(" It’s a deep, iridescent " + target.cocks[x].cockColor + " in color. The shaft is patterned with multiple bulbous bumps to stimulate potential partners, and the whole of its length is glossy and smooth.");
@@ -2707,7 +2776,6 @@ public function dickBonusForAppearance(forTarget:Creature = null, x:int = 0):voi
 	//Draconic Cawk Flava flav
 	else if(target.cocks[x].cType == GLOBAL.TYPE_DRACONIC || target.cocks[x].cType == GLOBAL.TYPE_GRYVAIN) {
 		output2(" With its tapered tip, there are few holes you wouldn’t be able to get into.");
-		if(target.cocks[x].cType == GLOBAL.TYPE_DRACONIC) output2(" It has a strange, knot-like bulb at its base, but doesn’t usually flare during arousal as a dog’s knot would.");
 	}
 	//Beees
 	else if(target.cocks[x].cType == GLOBAL.TYPE_BEE) {
@@ -2891,7 +2959,20 @@ public function vaginaBonusForAppearance(forTarget:Creature = null, x:int = 0, e
 	else if(target.vaginas[x].type == GLOBAL.TYPE_FELINE) {
 		if(!eachOne) output2(" The exterior lips are vestigial and featureless, making your entrace quite modest");
 		else output2("\nEach vagina’s exterior lips are vestigial and featureless, making your entraces quite modest");
-		if (target.hasFur()) output2(" and barely visible under your " + target.skinFurScales(true));
+		if (target.hasFur() || target.hasFeathers()) {
+			if (target.hasFeathers() && target.hasPartFur("leg")) output2(" and barely visible under your fur"); // for griffins
+			else output2(" and barely visible under your " + target.skinFurScales(false,false,false,true));
+		}
+		output2(".");
+	}
+	//Birdy flavor
+	else if(target.vaginas[x].type == GLOBAL.TYPE_AVIAN) {
+		if(!eachOne) output2(" The exterior lips are thin, flat and mostly featureless, appearing much like a bird’s cloaca at glance");
+		else output2("\nEach vagina’s exterior lips are thin, flat and mostly featureless, appearing much like a bird’s cloaca at glance");
+		if (target.hasFur() || target.hasFeathers()) {
+			if (target.hasFeathers() && target.hasPartFur("leg")) output2(" and barely visible under your fur"); // for chimerical birds
+			else output2(" and barely visible under your " + target.skinFurScales(false,false,false,true));
+		}
 		output2(".");
 	}
 	//Siren flavor

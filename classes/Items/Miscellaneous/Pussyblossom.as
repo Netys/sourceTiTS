@@ -81,7 +81,7 @@
 					pc.clitLength = .25;
 					pc.vaginas[0].hymen = true;
 					var pcRace:String = pc.race();
-					if(InCollection(pcRace, "horse-morph", "part horse-morph", "laquine", "centaur", "horse-taur", target.mlpRace()))
+					if(InCollection(pcRace, "horse-morph", "part horse-morph", "laquine", "centaur", "horse-taur", "hippogriff", "hippogriff-taur", target.mlpRace()))
 					{
 						pc.shiftVagina(0, GLOBAL.TYPE_EQUINE);
 						kGAMECLASS.output("You’ve got ");
@@ -89,7 +89,7 @@
 						else kGAMECLASS.output(indefiniteArticle(pc.vaginaColor(0)));
 						kGAMECLASS.output(" horse-pussy.");
 					}
-					else if(InCollection(pcRace, "naleen", "naga"))
+					else if(InCollection(pcRace, "naleen", "naga", "quetzalcoatl"))
 					{
 						pc.shiftVagina(0, GLOBAL.TYPE_NAGA);
 						kGAMECLASS.output("You’ve got a slim, " + pc.vaginaColor(0) + "-hued snake-pussy.");
@@ -138,7 +138,7 @@
 						pc.shiftVagina(0, GLOBAL.TYPE_CANINE);
 						kGAMECLASS.output("You’ve got " + indefiniteArticle(pc.vaginaColor(0)) + " canine-pussy.");
 					}
-					else if (InCollection(pcRace, "vulpine-morph", "vulpine-taur") || InCollection(pcRace, "kitsune", "kitsune-morph", "kitsune-taur") && pc.hasFur()) // dogina is not exactly appropriate for kemonomimi type kitsune
+					else if (InCollection(pcRace, "vulpine-morph", "vulpine-taur", "vulpogryph", "vulpogryph-taur") || InCollection(pcRace, "kitsune", "kitsune-morph", "kitsune-taur") && pc.hasFur()) // dogina is not exactly appropriate for kemonomimi type kitsune
 					{
 						pc.shiftVagina(0, GLOBAL.TYPE_VULPINE);
 						kGAMECLASS.output("You’ve got " + indefiniteArticle(pc.vaginaColor(0)) + " vulpine pussy.");
@@ -147,6 +147,11 @@
 					{
 						pc.shiftVagina(0, GLOBAL.TYPE_FELINE);
 						kGAMECLASS.output("You’ve got " + indefiniteArticle(pc.vaginaColor(0)) + " feline pussy.");
+					}
+					else if (InCollection(pcRace, "phoenix-morph", "phoenix-taur", "sirin", "sirin-taur", "harpy", "harpy-taur", "avian-morph", "avian-taur"))
+					{
+						pc.shiftVagina(0, GLOBAL.TYPE_AVIAN);
+						kGAMECLASS.output("You’ve got " + indefiniteArticle(pc.vaginaColor(0)) + " avian pussy.");
 					}
 					else if (InCollection(pcRace, "gabilani", "goblin"))
 					{
@@ -159,7 +164,7 @@
 						kGAMECLASS.output("You’ve got a beautiful, " + pc.vaginaColor(0) + " orchid pussy.");
 					}
 					/*
-					else if (InCollection(pcRace, "siren", "anemone"))
+					else if (InCollection(pcRace, "siren", "siren-taur", "anemone", "anemone-taur"))
 					{
 						pc.shiftVagina(0, GLOBAL.TYPE_SIREN);
 						kGAMECLASS.output("You’ve got a tentacled, " + pc.vaginaColor(0) + " alien pussy.");

@@ -515,28 +515,45 @@ public function mhengaHarvestUthra():void
 
 public function mhengaVanaeFernDamage():Boolean
 {
-    if (rand(3) == 0 || pc.armor is EmptySlot)
+	var noArmor:Boolean = pc.armor is EmptySlot;
+	var naturalArmor:Number = 0; // Fur, feathers, scales and chitin can offer some environmental protection.
+	if (pc.hasFur() || pc.hasFeathers() || pc.hasScales() || pc.hasChitin()) {
+		naturalArmor = 4 + rand(2);
+		if (pc.hasSkinFlag(GLOBAL.FLAG_FLUFFY) || pc.hasSkinFlag(GLOBAL.FLAG_THICK)) naturalArmor *= 1.5;
+	}
+	else if (pc.hasPartFur("leg") || pc.hasPartScales("leg") ||  pc.hasPartChitin("leg") ||  pc.hasPartFeathers("leg")) {
+		naturalArmor = 2 + rand(2);
+		if (pc.hasLegFlag(GLOBAL.FLAG_FLUFFY)) naturalArmor *= 1.5;
+	}
+	
+    if (rand(3) == 0 || noArmor && naturalArmor == 0)
     {
         var damage:int = rand(8);
-        if (pc.armor is EmptySlot) damage = 8;
-        else damage -= pc.armor.defense;
-        if (damage < 0)
+        if (noArmor && naturalArmor == 0) damage = 8;
+        damage -= pc.armor.defense;
+		damage -= naturalArmor;
+		if (damage <= 0)
         {
-        output("\n\nThe spiked ferns look pretty damn painful, but your thick armor is doing a fantastic job of keeping the jagged spikes from doing any damage.");
+			output("\n\nThe spiked ferns look pretty damn painful, but your " + (noArmor ? "natural" : "thick") + " armor is doing a fantastic job of keeping the jagged spikes from doing any damage.");
         }
+		else if (pc.canFly())
+		{
+			output("\n\nThe spiked ferns look pretty damn painful, so you've decided to keep clear and fly over them.");
+			return false;
+		}
         else if (damage < 2)
         {
-            output("\n\nThe spiked ferns look pretty damn painful, but thankfully your armor is managing to deflect the worst of it and only allows the odd prick or slash to your [pc.legOrLegs] as you hike through the area. <b>(" + damage + ")</b>");
+            output("\n\nThe spiked ferns look pretty damn painful, but thankfully your" + (noArmor ? " natural" : "") + " armor is managing to deflect the worst of it and only allows the odd prick or slash to your [pc.legOrLegs] as you hike through the area. <b>(" + damage + ")</b>");
             pc.HP( -damage);
         }
         else if (damage < 4)
         {
-            output("\n\nThe spiked ferns look pretty damn painful, your armor not exactly achieving much when it comes to providing protection to your lower extremeties. The sharp points of the ferns are doing a real number on your [pc.legOrLegs]. <b>(" + damage + ")</b>");
+            output("\n\nThe spiked ferns look pretty damn painful, your" + (noArmor ? " natural" : "") + " armor not exactly achieving much when it comes to providing protection to your lower extremeties. The sharp points of the ferns are doing a real number on your [pc.legOrLegs]. <b>(" + damage + ")</b>");
             pc.HP( -damage);
         }
         else if (damage < 8)
         {
-            output("\n\nThe spiked ferns look pretty damn painful, and your armor is nigh-useless when it comes to providing any semblance of protection from the spiked menace infesting the undergrowth in these parts of the lowlands. <b>(" + damage + ")</b>");
+            output("\n\nThe spiked ferns look pretty damn painful, and your" + (noArmor ? " natural" : "") + " armor is nigh-useless when it comes to providing any semblance of protection from the spiked menace infesting the undergrowth in these parts of the lowlands. <b>(" + damage + ")</b>");
             pc.HP( -damage);
         }
         else

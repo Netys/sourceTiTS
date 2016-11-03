@@ -3,6 +3,7 @@
 	import classes.Creature;
 	import classes.GLOBAL;
 	import classes.Items.Miscellaneous.*;
+	import classes.Items.Transformatives.AmberSeed;
 	import classes.Items.Transformatives.Catnip;
 	import classes.Items.Transformatives.Foxfire;
 	import classes.Items.Transformatives.OvirAce;
@@ -16,7 +17,7 @@
 		//constructor
 		public function Jade()
 		{
-			this._latestVersion = 10;
+			this._latestVersion = 11;
 			this.version = _latestVersion;
 			this._neverSerialize = false;
 			
@@ -63,6 +64,7 @@
 			inventory.push(new OvirPositive());
 			this.inventory.push(new Catnip());
 			this.inventory.push(new Foxfire());
+			this.inventory.push(new AmberSeed());
 			this.inventory.push(new DracoGuard());
 			this.typesBought[this.typesBought.length] = GLOBAL.PILL;
 			this.typesBought[this.typesBought.length] = GLOBAL.POTION;
@@ -227,6 +229,10 @@
 		public function UpgradeVersion9(d:Object):void
 		{
 			d.inventory.push(new Foxfire().getSaveObject());
+		}
+		public function UpgradeVersion10(d:Object):void
+		{
+			d.inventory.push(new AmberSeed().getSaveObject());
 		}
 		
 		override public function onLeaveBuyMenu():void

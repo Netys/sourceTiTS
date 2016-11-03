@@ -2228,6 +2228,8 @@ public function reshapeAGooCawkMenu(arg:Array):void
 		cTypes.push(GLOBAL.TYPE_NYREA);
 	if(flags["LIRIEL_MET"] != undefined)
 		cTypes.push(GLOBAL.TYPE_HRAD);
+	if (flags["AMBER_SEED_USED"] != undefined && (flags["AMBER_SEED_USED"] & AmberSeed.FLAG_GOO_COCK) == AmberSeed.FLAG_GOO_COCK)
+		cTypes.push(GLOBAL.TYPE_AVIAN);
 	
 	var newType:Number = 0;
 	var btnName:String = "";
@@ -2240,7 +2242,8 @@ public function reshapeAGooCawkMenu(arg:Array):void
 		newType = cTypes[x];
 		if(newType == GLOBAL.TYPE_HUMAN) btnName = "Terran";
 		else if(newType == GLOBAL.TYPE_SNAKE) btnName = "Snake-like";
-		else if(newType == GLOBAL.TYPE_BEE) btnName = "Zil";
+		else if (newType == GLOBAL.TYPE_BEE) btnName = "Zil";
+		else if (newType == GLOBAL.TYPE_AVIAN && (flags["AMBER_SEED_USED"] & AmberSeed.FLAG_COCK_GRIFFIN) == AmberSeed.FLAG_COCK_GRIFFIN) btnName = "Griffin";
 		else btnName = GLOBAL.TYPE_NAMES[newType];
 		if(pc.cocks[iCock].cType != newType) addGhostButton(btnSlot,btnName,seriouslyThoReshapeDatGooCock,[iCock,newType]);
 		else addDisabledGhostButton(btnSlot,btnName,btnName,"The penis is already this shape.");
@@ -2311,6 +2314,13 @@ public function seriouslyThoReshapeDatGooCock(arg:Array):void
 	pc.shiftCock(x,type);
 	pc.cocks[x].cockColor = colorStore;
 	pc.cocks[x].addFlag(GLOBAL.FLAG_GOOEY);
+	if (type == GLOBAL.TYPE_AVIAN && (flags["AMBER_SEED_USED"] & AmberSeed.FLAG_COCK_GRIFFIN) == AmberSeed.FLAG_COCK_GRIFFIN) {
+		target.cocks[x].cThicknessRatioRaw = 1.3;
+		target.cocks[x].knotMultiplier = 1.5;
+		target.cocks[x].addFlag(GLOBAL.FLAG_KNOTTED);
+		target.cocks[x].addFlag(GLOBAL.FLAG_NUBBY);
+		target.cocks[x].addFlag(GLOBAL.FLAG_SHEATHED);
+	}
 	addGhostButton(0,"Next",gooCockRootMenu);
 }
 
@@ -2839,6 +2849,8 @@ public function pickNewGooCuntMenu(arg:Array):void
 		vTypes.push(GLOBAL.TYPE_GABILANI);
 	if(CodexManager.entryViewed("Nyrea"))
 		vTypes.push(GLOBAL.TYPE_NYREA);
+	if (flags["AMBER_SEED_USED"] != undefined && (flags["AMBER_SEED_USED"] & AmberSeed.FLAG_GOO_CUNT) == AmberSeed.FLAG_GOO_CUNT)
+		vTypes.push(GLOBAL.TYPE_AVIAN);
 	
 	var newType:Number = 0;
 	var btnName:String = "";

@@ -67,7 +67,7 @@ package classes.Items.Transformatives
 			TooltipManager.addFullName(this.shortName, StringUtil.toTitleCase(this.longName));
 			
 			//Longass shit, not sure what used for yet.
-			this.description = "a medipen loaded with 'Catnip'";
+			this.description = "a medipen loaded with “Catnip”";
 			//Displayed on tooltips during mouseovers
 			this.tooltip = "A new-gen designer transformative, featuring the new level of efficiency and consistency. Based on old frontier colonization species project, it causes the user to gain sleek, flexible and very animalistic feline form without any known side effects. No actual catnip included.";
 			
@@ -772,7 +772,7 @@ package classes.Items.Transformatives
 		
 		private function routeTailAvailable(target:Creature, usingCreature:Creature = null):Boolean
 		{
-			return !target.hasTail(GLOBAL.TYPE_FELINE) && (target.tailTypeUnlocked(GLOBAL.TYPE_FELINE) || target.hasTail(GLOBAL.TYPE_COCKVINE));
+			return !target.hasTail(GLOBAL.TYPE_FELINE) && (target.tailTypeUnlocked(GLOBAL.TYPE_FELINE) || target.hasParasiteTail());
 		}
 		
 		private function routeTail(target:Creature, usingCreature:Creature = null):void
@@ -1025,6 +1025,8 @@ package classes.Items.Transformatives
 				output("\n\nTerror overtakes you as you feel your backbone snap. It doesn't stop, as you feel your spine lengthens, growing with new flesh from your backside as the bones of your legs flex and twist. Muscle groups shift and rearrange themselves as the change completes. <b>You now have tauric lower half!</b>");
 				
 				target.legCount = 4;
+				if (!target.hasLegFlag(GLOBAL.FLAG_PREHENSILE))
+					target.addLegFlag(GLOBAL.FLAG_PREHENSILE);
 				
 				if (target.genitalSpot != 2) {
 					if(target.hasGenitals()) output(" After taking a moment to get used to your new body, you notice that your genitals now reside between the hind legs of your [pc.lowerBody].");
@@ -1035,7 +1037,7 @@ package classes.Items.Transformatives
 				for(var x:int = 0; x < target.totalVaginas(); x++)
 					if(target.vaginas[x].bonusCapacity < 200) target.vaginas[x].bonusCapacity = 200;
 				
-				output("\n\nYour forelegs aren't just legs - while not exactly prehensile, your toes are quite long and nimble, providing you with some portion of manual-like dexterity.");
+				output("\n\nYour forelegs aren't just legs - while not exactly prehensile, your toes are quite long and nimble, providing you with a fair portion of manual-like dexterity.");
 				output("\n\nThat part of your body between pairs of your legs is not overly long, so you can sit on your butt comfortably while ‘standing’ on your forelegs.");
 				if (target.hasTail() && target.hasTailFlag(GLOBAL.FLAG_LONG)) output("You can't help but smile seeing your [pc.tails] instinctively wrapping your forelegs in adorably animalistic fashion while in such position.");
 				output("\n\nThe joint point of your humanoid and tauric parts is very flexible, as well as your spine generally - you can effortlessly reach any part of your body... And not just with your hands, by the way.");
